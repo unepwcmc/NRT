@@ -10,7 +10,7 @@
     "url": "git@github.com:unepwcmc/NRT.git"
   },
   "dependencies": {
-    "express": "~>3",
+    "express": "~>3"
   },
   "devDependencies": {
   },
