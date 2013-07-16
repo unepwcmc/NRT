@@ -20,3 +20,12 @@ responsibility. These are mapped to paths by route_bindings.coffee
 
 #### models/
 mysql ORM initialization
+
+
+## Tests
+Tests go in the test/ folder (unsurprisingly). We're using mocha with the qunit
+interface and using the chai assertion syntax.
+
+Run them with 
+
+`npm test`
