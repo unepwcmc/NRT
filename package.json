@@ -11,6 +11,10 @@
   },
   "dependencies": {
     "express": "~>3",
+    "express-resource": "1.0.0",
+    "sequelize-mysql": "1.6.0",
+    "sequelize": "1.6.0",
+    "passport": "0.1.17",
     "less": "1.4.1",
     "less-middleware": "0.1.12",
     "handlebars": "1.0.12",
@@ -19,6 +23,11 @@
     "wrench": "1.5.1"
   },
   "devDependencies": {
+    "Faker": "0.5.11",
+    "mocha": "1.12.0",
+    "chai": "1.7.2",
+    "sinon-chai": "2.4.0",
+    "sinon": ">=1.4.0 <2"
   },
   "engines": {
     "node": ">=0.8"
