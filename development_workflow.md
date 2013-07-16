@@ -3,6 +3,9 @@
 ## Tabs (nope)
 No tabs please, 2 spaces in all languages (HTML, CSS, Coffeescript...)
 
+## Line-length
+80 characters
+
 ## Commit workflow 
 Work on feature branches, commit often with small commits with only one change
 to the code. When you're ready to merge your code into the master branch,
