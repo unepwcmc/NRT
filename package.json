@@ -10,7 +10,13 @@
     "url": "git@github.com:unepwcmc/NRT.git"
   },
   "dependencies": {
-    "express": "~>3"
+    "express": "~>3",
+    "less": "1.4.1",
+    "less-middleware": "0.1.12",
+    "handlebars": "1.0.12",
+    "consolidate": "0.9.0",
+    "coffee-script": "1.6.x",
+    "wrench": "1.5.1"
   },
   "devDependencies": {
   },
