@@ -8,7 +8,5 @@ sequelize = new Sequelize("NRT", "nrt", "password",
   dialect: "mysql"
 )
 
-console.log sequelize
-
-exports.sequelize = sequelize
+module.exports = sequelize
 
