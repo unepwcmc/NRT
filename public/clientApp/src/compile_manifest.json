@@ -1,4 +1,9 @@
 [
-  "templates/test",
-  "views/test_view"
+  "models/narrative",
+  "collections/narrative_collection",
+  "templates/section",
+  "views/section_view",
+  "templates/narrative",
+  "views/narrative_view",
+  "controllers/reports_controller"
 ]

@@ -1,10 +1,11 @@
 window.Backbone ||= {}
 window.Backbone.Views ||= {}
 
-class Backbone.Views.TestView extends Backbone.View
-  template: Handlebars.templates['test.hbs']
+class Backbone.Views.NarrativeView extends Backbone.View
+  template: Handlebars.templates['narrative.hbs']
 
   initialize: (options) ->
+    @narrative = options.narrative
     @render()
 
   render: ->
