@@ -1,11 +1,11 @@
+fs = require('fs')
+require("sequelize-mysql").mysql
 Sequelize = require("sequelize-mysql").sequelize
-mysql = require("sequelize-mysql").mysql
-sequelize = new Sequelize("NRT", "nrt", "password",
-  
-  # mysql is the default dialect, but you know...
-  # for demo purporses we are defining it nevertheless :)
-  # so: we want mysql!
-  dialect: "mysql"
-)
 
-module.exports = exports = sequelize
+module.exports = exports = (env) ->
+  dbConfig = JSON.parse(
+    fs.readFileSync('./config/database.json', 'UTF8')
+  )[env]
+  new Sequelize(dbConfig.name, dbConfig.username, dbConfig.password,
+    dialect: "mysql"
+  )
