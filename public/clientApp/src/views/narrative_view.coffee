@@ -11,24 +11,23 @@ class Backbone.Views.NarrativeView extends Backbone.View
 
   initialize: (options) ->
     @narrative = options.narrative
-    @editMode = true
 
     @narrative.bind('change', @render)
     @render()
 
   render: =>
-    if @editMode
+    if @narrative.get('editing')
       @$el.html(@editTemplate(@narrative.toJSON()))
     else
       @$el.html(@template(@narrative.toJSON()))
     return @
 
   saveNarrative: (event) =>
-    @editMode = false
     @narrative.set('body', @$el.find('.body-text-field').val())
+    @narrative.set('editing', false)
 
   startEdit: =>
-    @editMode = true
+    @narrative.set('editing', true)
     @render()
 
   onClose: ->
