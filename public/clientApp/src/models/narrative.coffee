@@ -2,5 +2,8 @@ window.Backbone.Models || = {}
 
 class window.Backbone.Models.Narrative extends Backbone.Model
   defaults:
-    body: "Narrative goes here."
+    content: "Narrative goes here."
+    title: "title"
     editing: true
+
+  url: "/api/narrative"

@@ -9,4 +9,3 @@ sequelize = new Sequelize("NRT", "nrt", "password",
 )
 
 module.exports = exports = sequelize
-
