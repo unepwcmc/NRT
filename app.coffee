@@ -4,11 +4,12 @@ http = require('http')
 path = require('path')
 lessMiddleware = require('less-middleware')
 
-# Our custom modules
-sequelize = require('./models/models.coffee')
-bindRoutesForApp = require('./route_bindings.coffee')
 
+sequelize = require('./model_bindings.coffee')
 GLOBAL.sequelize = sequelize
+narrative = require('./models/narrative.coffee')
+
+bindRoutesForApp = require('./route_bindings.coffee')
 
 app = express()
 
