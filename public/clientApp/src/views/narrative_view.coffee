@@ -7,6 +7,7 @@ class Backbone.Views.NarrativeView extends Backbone.View
 
   events:
     "click .save-narrative": "saveNarrative"
+    "click .body-text": "startEdit"
 
   initialize: (options) ->
     @narrative = options.narrative
@@ -24,7 +25,11 @@ class Backbone.Views.NarrativeView extends Backbone.View
 
   saveNarrative: (event) =>
     @editMode = false
-    @narrative.set('body', @$el.find('.body-text').val())
+    @narrative.set('body', @$el.find('.body-text-field').val())
+
+  startEdit: =>
+    @editMode = true
+    @render()
 
   onClose: ->
     
