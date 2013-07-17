@@ -23,7 +23,7 @@ class Backbone.Views.NarrativeView extends Backbone.View
     return @
 
   saveNarrative: (event) =>
-    @narrative.set('body', @$el.find('.body-text-field').val())
+    @narrative.set('body', @$el.find('.body-text-field').val().replace(/^\s+|\s+$/g, ''))
     @narrative.set('editing', false)
 
   startEdit: =>
