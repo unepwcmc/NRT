@@ -1,23 +1,24 @@
 Narrative = require("../../models/narrative")
 
-exports.new = (req, res) ->
-  console.log req
-  Narrative.create(
-    title: req.query.title 
-    content: req.query.content).success (narrative) -> 
-      res.send(JSON.stringify(
-        narrative: narrative
-      ))
+exports.index = (req, res) ->
+  Narrative.findAll().success (narratives) ->
+    res.send(JSON.stringify(narratives))
 
 exports.create = (req, res) ->
-  res.send('create narrative')
+  params = req.body
+  Narrative.create(
+    title: params.title 
+    content: params.content
+  ).success (narrative) -> 
+    res.send(JSON.stringify(
+      narrative: narrative
+    ))
 
 exports.show = (req, res) ->
   Narrative.find(req.query.id).success (narrative) ->
-    res.send(narrative)
-
-exports.edit = (req, res) ->
-  res.send('edit narrative ' + req.params.id)
+    res.send(JSON.stringify(
+      narrative: narrative
+    ))
 
 exports.update = (req, res) ->
   res.send('update narrative ' + req.params.id)
