@@ -18,10 +18,8 @@ grant usage on *.* to nrt@localhost identified by "password";
 npm install -g coffee-script
 npm install -g diorama
 npm install -g supervisor
-
 # Setup dependencies
 npm install
-
 # start server
 supervisor app.coffee
 ```
