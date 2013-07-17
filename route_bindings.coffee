@@ -1,4 +1,3 @@
-Resource = require('express-resource')
 
 narrativeApi = require('./routes/api/narrative')
 indicatorRoutes = require('./routes/indicators.coffee')
