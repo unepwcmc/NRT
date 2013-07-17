@@ -21,6 +21,8 @@ responsibility. These are mapped to paths by route_bindings.coffee
 #### models/
 mysql ORM initialization
 
+#### public/clientApp
+A [BackboneDiorama](https://github.com/th3james/BackboneDiorama/) application
 
 ## Tests
 Tests go in the test/ folder (unsurprisingly). We're using mocha with the qunit
