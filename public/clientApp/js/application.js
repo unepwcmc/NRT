@@ -19,7 +19,8 @@
     }
 
     Narrative.prototype.defaults = {
-      body: "Narrative goes here."
+      body: "Narrative goes here.",
+      editing: true
     };
 
     return Narrative;
@@ -119,13 +120,12 @@
 
     NarrativeView.prototype.initialize = function(options) {
       this.narrative = options.narrative;
-      this.editMode = true;
       this.narrative.bind('change', this.render);
       return this.render();
     };
 
     NarrativeView.prototype.render = function() {
-      if (this.editMode) {
+      if (this.narrative.get('editing')) {
         this.$el.html(this.editTemplate(this.narrative.toJSON()));
       } else {
         this.$el.html(this.template(this.narrative.toJSON()));
@@ -134,12 +134,12 @@
     };
 
     NarrativeView.prototype.saveNarrative = function(event) {
-      this.editMode = false;
-      return this.narrative.set('body', this.$el.find('.body-text-field').val());
+      this.narrative.set('body', this.$el.find('.body-text-field').val());
+      return this.narrative.set('editing', false);
     };
 
     NarrativeView.prototype.startEdit = function() {
-      this.editMode = true;
+      this.narrative.set('editing', true);
       return this.render();
     };
 
