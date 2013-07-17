@@ -3,15 +3,17 @@ cons = require("consolidate")
 http = require('http')
 path = require('path')
 lessMiddleware = require('less-middleware')
+require('express-resource')
 
-
-sequelize = require('./model_bindings.coffee')
-GLOBAL.sequelize = sequelize
-narrative = require('./models/narrative.coffee')
-
-bindRoutesForApp = require('./route_bindings.coffee')
+# App requires
 
 app = express()
+
+sequelize = require('./model_bindings.coffee')(app.get('env'))
+GLOBAL.sequelize = sequelize
+bindRoutesForApp = require('./route_bindings.coffee')
+narrative = require('./models/narrative.coffee')
+
 
 app.set('port', process.env.PORT || 3000)
 
