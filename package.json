@@ -13,6 +13,7 @@
   "dependencies": {
     "express": "~>3",
     "express-resource": "1.0.0",
+    "mysql": "2.0.0-alpha7",
     "sequelize-mysql": "1.6.0",
     "sequelize": "1.6.0",
     "passport": "0.1.17",
@@ -28,7 +29,8 @@
     "mocha": "1.12.0",
     "chai": "1.7.2",
     "sinon-chai": "2.4.0",
-    "sinon": ">=1.4.0 <2"
+    "sinon": ">=1.4.0 <2",
+    "supervisor": "0.5.3"
   },
   "engines": {
     "node": ">=0.8"

@@ -1,9 +1,16 @@
+Resource = require('express-resource')
+
+narrativeApi = require('./routes/api/narrative')
 indicatorRoutes = require('./routes/indicators.coffee')
 reportRoutes = require('./routes/reports.coffee')
 
-console.log indicatorRoutes
+
+
 
 module.exports = exports = (app) ->
+  # REST API
+  app.resource 'api/narrative', narrativeApi, { format: 'json' }
+
   app.get "/", indicatorRoutes.index
   app.get "/indicators/", indicatorRoutes.index
 
