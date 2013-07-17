@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Report show page</title>
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+    <script src="/clientApp/js/lib/jquery-1.9.1.min.js"></script>
+    <script src="/clientApp/js/lib/json2.js"></script>
+    <script src="/clientApp/js/lib/underscore-min.js"></script>
+    <script src="/clientApp/js/lib/backbone-min.js"></script>
+    <script src="/clientApp/js/lib/handlebars.js"></script>
+
+    <script src="/clientApp/js/lib/diorama.js"></script>
+
+    <script src="/clientApp/js/application.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        var view = new Backbone.Views.TestView();
+        $('body').append(view.el);
+        view.render();
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Report {{ report_id }}</h1>
+  </body>
+</html>

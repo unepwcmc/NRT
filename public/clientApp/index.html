@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+  <head>
+    <title>BackboneDiorama</title>
+
+    <style type="text/css">
+      body {
+        background: #f0f0f0;
+        font-family: Helvetica, sans-serif;
+      }
+
+      .container {
+        width: 600px;
+        margin: 0 auto 0 auto;
+        background: white;
+        padding: 20px;
+        border: 3px solid rgb(156, 153, 153);
+      }
+
+      h1 {
+        margin-top: 0;
+      }
+
+      ol li {
+        margin-bottom: 15px;
+      }
+    </style>
+
+    <script src="js/lib/jquery-1.9.1.min.js"></script>
+    <script src="js/lib/json2.js"></script>
+    <script src="js/lib/underscore-min.js"></script>
+    <script src="js/lib/backbone-min.js"></script>
+    <script src="js/lib/handlebars.js"></script>
+
+    <script src="js/lib/diorama.js"></script>
+
+    <script src="js/application.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        /**
+         * Start your application here
+         * ===========================
+         *
+         * var myController = new Backbone.Controllers.YourController()
+         *
+         */
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Backbone Diorama</h1>
+
+      <h2>Ahoy!</h2>
+      You're running a BackboneDiorama project.
+
+      <h3>How to get up and running</h3>
+
+      <ol>
+        <li>
+          Use diorama generators to create your controllers and views, e.g.
+          <ul>
+            <li><code>diorama generate controller ControllerName Action1 </code></li>
+          </ul>
+          Run <code>diorama generate</code> to see a full list of generators
+        </li>
+        <li>
+          Start the diorama compile watcher to compile your Coffeescript and templates
+          <ul>
+            <li><code>diorama compile watch</code></li>
+          </ul>
+        </li>
+        <li>
+          Open up <code>index.html</code> and start hacking! Your compiled
+          application will be included automatically.
+        </li>
+      </ol>
+
+      <h3>Documentation</h3>
+      <p>
+        The diorama command run without arguments will list the commands, most of which will echo their
+        usage when run without arguments.
+      </p>
+      <p>
+        Alternatively, check out the online docs:
+      </p>
+
+      <ul>
+        <li><a href="http://github.com/th3james/BackboneDiorama#backbonediorama">Diorama on Github</a></li>
+      </ul>
+    </div>
+  </body>
+</html>
+
