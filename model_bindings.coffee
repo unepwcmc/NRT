@@ -9,4 +9,3 @@ module.exports = exports = (env) ->
   new Sequelize(dbConfig.name, dbConfig.username, dbConfig.password,
     dialect: "mysql"
   )
-
