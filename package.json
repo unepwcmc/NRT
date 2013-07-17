@@ -30,6 +30,7 @@
     "chai": "1.7.2",
     "sinon-chai": "2.4.0",
     "sinon": ">=1.4.0 <2",
+    "zombie": "1.4.1",
     "supervisor": "0.5.3"
   },
   "engines": {
