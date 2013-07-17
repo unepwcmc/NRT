@@ -4,6 +4,7 @@
   "templates/section",
   "views/section_view",
   "templates/narrative",
+  "templates/narrative-edit",
   "views/narrative_view",
   "controllers/reports_controller"
 ]
