@@ -3,9 +3,12 @@
 ### Setup
 
 - Install and setup [NVM](https://github.com/creationix/nvm), we're targeting
-the newest stable node, which at the time of writing is v0.10.13
+  the newest stable node, which at the time of writing is v0.10.13
 - `npm install` in the project dir to get the libs
-- `npm install -g handlebars coffee-script backbone-diorama` to compile the client application
+- `npm install -g handlebars coffee-script backbone-diorama` to compile the
+  client application
+- Create config/database.json entries for 'development' and 'test'
+  environments. You will need to create the tables you named by hand.
 
 ## Running the application
 
