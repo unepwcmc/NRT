@@ -9,6 +9,7 @@
   client application
 - Create config/database.json entries for 'development' and 'test'
   environments. You will need to create the tables you named by hand.
+- Install mysql locally (`brew install mysql`, or `sudo apt-get install mysql-serverz)
 
 ## Running the application
 
