@@ -11,11 +11,11 @@ the newest stable node, which at the time of writing is v0.10.13
 
 ##### Start the server
 
-`node app.coffee'
+`node app.coffee`
 
 ##### Compile diorama applications
 
-`cd public/clientApp && diorama compile watch
+`cd public/clientApp && diorama compile watch`
 
 ## Application structure
 
