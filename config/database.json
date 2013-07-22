@@ -3,5 +3,11 @@
     "name": "nrt_development",
     "username": "nrt",
     "password": "password"
+  },
+
+  "test": {
+    "name": "nrt_test",
+    "username": "nrt",
+    "password": "password"
   }
 }

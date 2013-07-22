@@ -13,8 +13,6 @@ app = express()
 sequelize = require('./model_bindings.coffee')(app.get('env'))
 GLOBAL.sequelize = sequelize
 bindRoutesForApp = require('./route_bindings.coffee')
-narrative = require('./models/narrative.coffee')
-
 
 app.set('port', process.env.PORT || 3000)
 
