@@ -10,12 +10,12 @@ module.exports = (grunt) ->
         expand: true
         cwd: 'test'
         src: '**/*.coffee'
-        dest: 'public/test/js'
+        dest: 'public/test/js/src'
         ext: '.js'
 
     concat:
       tests:
-        src: [ 'public/test/js/**/*.js' ]
+        src: 'public/test/js/src/**/*.js'
         dest: 'public/test/js/tests.js'
 
     shell:
