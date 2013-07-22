@@ -8,7 +8,7 @@ module.exports = (grunt) ->
     coffee:
       test:
         expand: true
-        cwd: 'test'
+        cwd: 'clientTests'
         src: '**/*.coffee'
         dest: 'public/test/js/src'
         ext: '.js'
@@ -23,7 +23,7 @@ module.exports = (grunt) ->
         command: 'cd public/clientApp && diorama compile'
 
     watch:
-      files: ['public/**/*.coffee'],
+      files: ['public/**/*.coffee', 'clientTests/**/*.coffee'],
       tasks: 'default'
   )
 
