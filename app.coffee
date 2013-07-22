@@ -4,6 +4,7 @@ http = require('http')
 path = require('path')
 lessMiddleware = require('less-middleware')
 require('express-resource')
+sass = require('node-sass')
 
 # App requires
 
@@ -23,6 +24,12 @@ app.engine "hbs", cons.handlebars
 app.set "view engine", "hbs"
 app.set "views", __dirname + "/views"
 
+app.use(sass.middleware(
+  src: 'public/sass'
+  dest: path.join(__dirname, 'public/css')
+  debug: true
+))
+
 app.use express.favicon()
 app.use express.logger("dev")
 app.use express.bodyParser()
@@ -40,3 +47,5 @@ bindRoutesForApp(app)
 
 http.createServer(app).listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")
+
+
