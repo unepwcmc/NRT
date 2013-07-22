@@ -31,7 +31,13 @@
     "sinon-chai": "2.4.0",
     "sinon": ">=1.4.0 <2",
     "zombie": "1.4.1",
-    "supervisor": "0.5.3"
+    "supervisor": "0.5.3",
+    "grunt": "0.4.1",
+    "grunt-shell": "~0.3.1",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-coffee": "~0.6.6",
+    "grunt-contrib-watch": "~0.3.1"
   },
   "engines": {
     "node": ">=0.8"
