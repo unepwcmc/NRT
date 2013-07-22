@@ -4,25 +4,18 @@
 
 - Install and setup [NVM](https://github.com/creationix/nvm), we're targeting
 the newest stable node, which at the time of writing is v0.10.13
+- `npm install` in the project dir to get the libs
+- `npm install -g backbone-diorama` to compile the client application
 
-- Setup mysql database
-```sql
-create database nrt_development;
-CREATE USER 'nrt'@'localhost' IDENTIFIED BY 'password';
-grant usage on *.* to nrt@localhost identified by "password";
-```
+## Running the application
 
-- Setup node environment and start server
-```sh
-# Few node globals
-npm install -g coffee-script
-npm install -g diorama
-npm install -g supervisor
-# Setup dependencies
-npm install
-# start server
-supervisor app.coffee
-```
+##### Start the server
+
+`node app.coffee'
+
+##### Compile diorama applications
+
+`cd public/clientApp && diorama compile watch
 
 ## Application structure
 
