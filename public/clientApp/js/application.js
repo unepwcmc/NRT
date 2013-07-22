@@ -168,7 +168,7 @@
       var narratives, sectionView;
 
       this.mainRegion = new Backbone.Diorama.ManagedRegion();
-      $('body').append(this.mainRegion.$el);
+      $('#user-section').prepend(this.mainRegion.$el);
       narratives = new Backbone.Collections.NarrativeCollection();
       narratives.fetch();
       sectionView = new Backbone.Views.SectionView({

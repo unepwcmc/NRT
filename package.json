@@ -22,7 +22,8 @@
     "handlebars": "1.0.12",
     "consolidate": "0.9.0",
     "coffee-script": "1.6.x",
-    "wrench": "1.5.1"
+    "wrench": "1.5.1",
+    "node-sass": "0.5.4"
   },
   "devDependencies": {
     "Faker": "0.5.11",
