@@ -170,6 +170,7 @@
       this.mainRegion = new Backbone.Diorama.ManagedRegion();
       $('#user-section').prepend(this.mainRegion.$el);
       narratives = new Backbone.Collections.NarrativeCollection();
+      narratives.fetch();
       sectionView = new Backbone.Views.SectionView({
         narratives: narratives
       });
