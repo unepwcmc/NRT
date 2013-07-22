@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/ --compilers coffee:coffee-script --require coffee-script --ui qunit"
+    "test": "NODE_ENV=test mocha test/ --compilers coffee:coffee-script --require coffee-script --ui qunit"
   },
   "repository": {
     "type": "git",
