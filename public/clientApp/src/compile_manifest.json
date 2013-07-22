@@ -6,5 +6,10 @@
   "templates/narrative",
   "templates/narrative-edit",
   "views/narrative_view",
+  "lib/chart_data_parser",
+  "lib/data/sample_esri_service",
+  "templates/bar_chart",
+  "lib/bar_chart",
+  "views/bar_chart_view",
   "controllers/reports_controller"
 ]
