@@ -1,0 +1,22 @@
+\documentclass[landscape]{article}
+
+\usepackage{tikz-uml}
+\pagestyle{empty}
+
+\begin{document}
+\begin{tikzpicture}
+\umlclass{Employee}{fname \\ lname \\ age \\ sex}{}
+\umlclass[x=-5,y=0]{Department}{name \\ number}{}
+\umlclass[x=-10,y=0]{Location}{add1 \\ add2 \\ state \\zip }{}
+\umlclass[x=-5,y=5]{Project}{name \\ number}{}
+\umlclass[x=0,y=-5]{Dependent}{sex \\ relationship \\ age \\ fname \\ lname}{}
+\umluniassoc[arg2= worksfor, mult2=1, pos = 0.7]{Employee}{Department}
+\umluniaggreg[arg2=dependents, mult2=0..*]{Employee}{Dependent}
+\umluniassoc[arg2= manager, mult2=1, pos=0.7, angle1=90, angle2=140, loopsize=4cm]{Employee}{Employee}
+\umluniaggreg[arg2=locations, mult2=0..*, geometry=-|, pos=1.8]{Project}{Location}
+\umluniaggreg[arg2=locations, mult2=0..*, pos = 0.7]{Department}{Location}
+\umluniassoc[arg2= controls, mult2=0..*]{Department}{Project}
+
+\end{tikzpicture}
+
+\end{document}
