@@ -5,6 +5,9 @@
     "jquery": "2.0.3",
     "handlebars.js": "1.0.0",
     "tooltip": "https://raw.github.com/twitter/bootstrap/v2.3.2/js/bootstrap-tooltip.js",
-    "diorama": "https://raw.github.com/th3james/BackboneDiorama/0.1.0/lib/diorama.js"
+    "diorama": "https://raw.github.com/th3james/BackboneDiorama/0.1.0/lib/diorama.js",
+    "mocha": "latest",
+    "chai": "1.7.2",
+    "sinon": "1.6.0"
   }
 }
