@@ -73,8 +73,7 @@
     SectionView.prototype.initialize = function(options) {
       this.narratives = options.narratives;
       this.narratives.bind('add', this.render);
-      this.narratives.bind('sync', this.render);
-      return this.render();
+      return this.narratives.bind('sync', this.render);
     };
 
     SectionView.prototype.render = function() {
@@ -341,6 +340,7 @@
       sectionView = new Backbone.Views.SectionView({
         narratives: narratives
       });
+      this.mainRegion.showView(sectionView);
       this.vizRegion = new Backbone.Diorama.ManagedRegion();
       this.vizRegion.$el.attr("class", "viz");
       $('body').append(this.vizRegion.$el);

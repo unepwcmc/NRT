@@ -11,8 +11,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     @narratives = options.narratives
 
     @narratives.bind('add', @render)
-    @narratives.bind('sync', @render)
-    @render()
+    @narratives.bind('sync', @render)  
 
   render: =>
     @closeSubViews()
