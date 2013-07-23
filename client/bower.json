@@ -8,6 +8,6 @@
     "diorama": "https://raw.github.com/th3james/BackboneDiorama/0.1.0/lib/diorama.js",
     "mocha": "latest",
     "chai": "1.7.2",
-    "sinon": "1.6.0"
+    "sinon": "https://raw.github.com/cjohansen/sinon-web/master/releases/sinon-1.7.3.js"
   }
 }

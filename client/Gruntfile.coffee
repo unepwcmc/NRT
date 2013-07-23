@@ -45,6 +45,11 @@ module.exports = (grunt) ->
           cwd: 'dist/'
           dest: '../server/public'
           src: ['**/*']
+        ,
+          expand: true
+          cwd: 'test/'
+          dest: '../server/public/js'
+          src: 'tests.js'
         ]
 
     sass:
