@@ -1,14 +1,9 @@
 (function() {
-  var assert;
+  var assert, createAndShowReportViewForReport, createAndShowSectionViewForSection;
 
   assert = chai.assert;
 
   suite('Backbone.Models.Report');
-
-}).call(this);
-
-(function() {
-  var assert, createAndShowReportViewForReport;
 
   assert = chai.assert;
 
@@ -61,6 +56,31 @@
       }
     }
     assert(subViewExists);
+    return view.close();
+  });
+
+  assert = chai.assert;
+
+  createAndShowSectionViewForSection = function(section) {
+    var view;
+    view = new Backbone.Views.SectionView({
+      section: section
+    });
+    view.render();
+    $('#test-container').html(view.el);
+    return view;
+  };
+
+  suite('Section View');
+
+  test("Can see the section title", function() {
+    var section, title, view;
+    title = "My Lovely Section";
+    section = new Backbone.Models.Section({
+      title: title
+    });
+    view = createAndShowSectionViewForSection(section);
+    assert.match($('#test-container').text(), new RegExp(".*" + title + ".*"));
     return view.close();
   });
 
