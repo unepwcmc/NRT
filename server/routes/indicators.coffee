@@ -6,4 +6,3 @@ exports.index = (req, res) ->
 exports.show = (req, res) ->
   res.render "indicator",
     indicator: req.params.id
-    

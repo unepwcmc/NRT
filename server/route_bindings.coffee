@@ -1,5 +1,4 @@
-passport = require('passport')
-BasicStrategy = require('passport-http').BasicStrategy
+passport = require('./initializers/authentication')
 
 narrativeApi = require('./routes/api/narrative')
 indicatorRoutes = require('./routes/indicators.coffee')
@@ -7,25 +6,6 @@ reportRoutes = require('./routes/reports.coffee')
 testRoutes = require('./routes/tests.coffee')
 
 module.exports = exports = (app) ->
-  passport.use(
-    new BasicStrategy(
-      (username, password, done) ->
-        User = require('./models/user')
-
-        User.find(where: {email: username}).success((user) ->
-          if !user
-            return done(null, false, { message: 'Incorrect username.' })
-
-          if !user.validPassword(password)
-            return done(null, false, { message: 'Incorrect password.' })
-
-          return done(null, user)
-        ).failure((error) ->
-          return done(null, false)
-        )
-    )
-  )
-
   # REST API
   app.resource 'api/narrative', narrativeApi, { format: 'json' }
 
