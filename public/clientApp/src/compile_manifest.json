@@ -1,6 +1,8 @@
 [
   "models/report",
   "models/narrative",
+  "models/section",
+  "collections/section_collection",
   "collections/narrative_collection",
   "templates/section",
   "views/section_view",

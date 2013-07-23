@@ -3,10 +3,6 @@
 
   assert = chai.assert;
 
-  suite('Backbone.Model.Report');
-
-  test('Can add sections', function() {
-    return console.log("TODO");
-  });
+  suite('Backbone.Models.Report');
 
 }).call(this);

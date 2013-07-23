@@ -1,9 +1,9 @@
-!function(){var e=Handlebars.template,t=Handlebars.templates=Handlebars.templates||{};t["section.hbs"]=e(function(e,t,a,n,i){function r(e,t,n){var i,r,s="";return s+="\n  ",r={hash:{narrative:e},data:t},s+=p((i=a.addSubViewTo||e.addSubViewTo,i?i.call(e,n.thisView,"NarrativeView",r):l.call(e,"addSubViewTo",n.thisView,"NarrativeView",r)))+"\n"}this.compilerInfo=[4,">= 1.0.0"],a=this.merge(a,e.helpers),i=i||{};var s,o="",l=a.helperMissing,p=this.escapeExpression,c=this;return o+="<h1>Section</h1>\n",s=a.each.call(t,t.narratives,{hash:{},inverse:c.noop,fn:c.programWithDepth(1,r,i,t),data:i}),(s||0===s)&&(o+=s),o+='\n<a class="btn add-narrative">\n	Add Narrative\n</a>\n'}),t["report.hbs"]=e(function(e,t,a,n,i){this.compilerInfo=[4,">= 1.0.0"],a=this.merge(a,e.helpers),i=i||{};var r,s="",o="function",l=this.escapeExpression;return s+='<div class="report-title">\n  <div class="time-period">January - March 2013</div>\n  <h1>'+l((r=t.report,r=null==r||r===!1?r:r.title,typeof r===o?r.apply(t):r))+'</h1>\n  <div class="report-extra">\n    <div class="last-update"><a href="#" data-toggle="tooltip" title="Last update"><i class="icon-time append"></i></a>1st of April, 18:23</div>\n    <div class="who"><a href="#" data-toggle="tooltip" title="Report owner"><i class="icon-user append"></i></a>Dr. Anybody</div>\n  </div>\n</div>\n<section>\n  <div class="section-title">\n    <h2>Brief</h2>\n  </div>\n  <p>'+l((r=t.report,r=null==r||r===!1?r:r.brief,typeof r===o?r.apply(t):r))+"</p>\n</section>\n"}),t["narrative.hbs"]=e(function(e,t,a,n,i){this.compilerInfo=[4,">= 1.0.0"],a=this.merge(a,e.helpers),i=i||{};var r,s="",o="function",l=this.escapeExpression;return s+="<p class='content-text'>",(r=a.content)?r=r.call(t,{hash:{},data:i}):(r=t.content,r=typeof r===o?r.apply(t):r),s+=l(r)+"</p>\n"}),t["narrative-edit.hbs"]=e(function(e,t,a,n,i){this.compilerInfo=[4,">= 1.0.0"],a=this.merge(a,e.helpers),i=i||{};var r,s="",o="function",l=this.escapeExpression;return s+="<textarea class='content-text-field'>",(r=a.content)?r=r.call(t,{hash:{},data:i}):(r=t.content,r=typeof r===o?r.apply(t):r),s+=l(r)+"</textarea>\n<a class='btn btn-primary save-narrative'>Save changes</a>\n"}),t["bar_chart.hbs"]=e(function(e,t,a,n,i){this.compilerInfo=[4,">= 1.0.0"],a=this.merge(a,e.helpers),i=i||{};var r="";return r})}();
+!function(){var e=Handlebars.template,t=Handlebars.templates=Handlebars.templates||{};t["section.hbs"]=e(function(e,t,a,n,i){function r(e,t,n){var i,r,s="";return s+="\n  ",r={hash:{narrative:e},data:t},s+=c((i=a.addSubViewTo||e.addSubViewTo,i?i.call(e,n.thisView,"NarrativeView",r):l.call(e,"addSubViewTo",n.thisView,"NarrativeView",r)))+"\n"}this.compilerInfo=[4,">= 1.0.0"],a=this.merge(a,e.helpers),i=i||{};var s,o="",l=a.helperMissing,c=this.escapeExpression,h=this;return o+="<h1>Section</h1>\n",s=a.each.call(t,t.narratives,{hash:{},inverse:h.noop,fn:h.programWithDepth(1,r,i,t),data:i}),(s||0===s)&&(o+=s),o+='\n<a class="btn add-narrative">\n	Add Narrative\n</a>\n'}),t["report.hbs"]=e(function(e,t,a,n,i){function r(e,t,n){var i,r,s="";return s+="\n  ",r={hash:{section:e},data:t},s+=h((i=a.addSubViewTo||e.addSubViewTo,i?i.call(e,n.thisView,"SectionView",r):c.call(e,"addSubViewTo",n.thisView,"SectionView",r)))+"\n"}this.compilerInfo=[4,">= 1.0.0"],a=this.merge(a,e.helpers),i=i||{};var s,o,l="",c=a.helperMissing,h=this.escapeExpression,p="function",d=this;return l+='<div class="report-title">\n  <div class="time-period">January - March 2013</div>\n  <h1>'+h((s=t.report,s=null==s||s===!1?s:s.title,typeof s===p?s.apply(t):s))+'</h1>\n  <div class="report-extra">\n    <div class="last-update"><a href="#" data-toggle="tooltip" title="Last update"><i class="icon-time append"></i></a>1st of April, 18:23</div>\n    <div class="who"><a href="#" data-toggle="tooltip" title="Report owner"><i class="icon-user append"></i></a>Dr. Anybody</div>\n  </div>\n</div>\n<section>\n  <div class="section-title">\n    <h2>Brief</h2>\n  </div>\n  <p>'+h((s=t.report,s=null==s||s===!1?s:s.brief,typeof s===p?s.apply(t):s))+"</p>\n</section>\n",o=a.each.call(t,t.sections,{hash:{},inverse:d.noop,fn:d.programWithDepth(1,r,i,t),data:i}),(o||0===o)&&(l+=o),l+="\n"}),t["narrative.hbs"]=e(function(e,t,a,n,i){this.compilerInfo=[4,">= 1.0.0"],a=this.merge(a,e.helpers),i=i||{};var r,s="",o="function",l=this.escapeExpression;return s+="<p class='content-text'>",(r=a.content)?r=r.call(t,{hash:{},data:i}):(r=t.content,r=typeof r===o?r.apply(t):r),s+=l(r)+"</p>\n"}),t["narrative-edit.hbs"]=e(function(e,t,a,n,i){this.compilerInfo=[4,">= 1.0.0"],a=this.merge(a,e.helpers),i=i||{};var r,s="",o="function",l=this.escapeExpression;return s+="<textarea class='content-text-field'>",(r=a.content)?r=r.call(t,{hash:{},data:i}):(r=t.content,r=typeof r===o?r.apply(t):r),s+=l(r)+"</textarea>\n<a class='btn btn-primary save-narrative'>Save changes</a>\n"}),t["bar_chart.hbs"]=e(function(e,t,a,n,i){this.compilerInfo=[4,">= 1.0.0"],a=this.merge(a,e.helpers),i=i||{};var r="";return r})}();
 
 ;
 // Generated by CoffeeScript 1.6.3
 (function() {
-  var _base, _base1, _base2, _base3, _base4, _base5, _base6, _base7, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6,
+  var _base, _base1, _base2, _base3, _base4, _base5, _base6, _base7, _base8, _base9, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
@@ -44,16 +44,48 @@
 
   })(Backbone.Model);
 
+  (_base2 = window.Backbone).Models || (_base2.Models = {});
+
+  window.Backbone.Models.Section = (function(_super) {
+    __extends(Section, _super);
+
+    function Section() {
+      _ref2 = Section.__super__.constructor.apply(this, arguments);
+      return _ref2;
+    }
+
+    return Section;
+
+  })(Backbone.Model);
+
   window.Backbone || (window.Backbone = {});
 
-  (_base2 = window.Backbone).Collections || (_base2.Collections = {});
+  (_base3 = window.Backbone).Collections || (_base3.Collections = {});
+
+  Backbone.Collections.SectionCollection = (function(_super) {
+    __extends(SectionCollection, _super);
+
+    function SectionCollection() {
+      _ref3 = SectionCollection.__super__.constructor.apply(this, arguments);
+      return _ref3;
+    }
+
+    SectionCollection.prototype.model = Backbone.Models.Section;
+
+    return SectionCollection;
+
+  })(Backbone.Collection);
+
+  window.Backbone || (window.Backbone = {});
+
+  (_base4 = window.Backbone).Collections || (_base4.Collections = {});
 
   Backbone.Collections.NarrativeCollection = (function(_super) {
     __extends(NarrativeCollection, _super);
 
     function NarrativeCollection() {
-      _ref2 = NarrativeCollection.__super__.constructor.apply(this, arguments);
-      return _ref2;
+      _ref4 = NarrativeCollection.__super__.constructor.apply(this, arguments);
+      return _ref4;
     }
 
     NarrativeCollection.prototype.model = Backbone.Models.Narrative;
@@ -66,7 +98,7 @@
 
   window.Backbone || (window.Backbone = {});
 
-  (_base3 = window.Backbone).Views || (_base3.Views = {});
+  (_base5 = window.Backbone).Views || (_base5.Views = {});
 
   Backbone.Views.SectionView = (function(_super) {
     __extends(SectionView, _super);
@@ -74,8 +106,8 @@
     function SectionView() {
       this.addNarrative = __bind(this.addNarrative, this);
       this.render = __bind(this.render, this);
-      _ref3 = SectionView.__super__.constructor.apply(this, arguments);
-      return _ref3;
+      _ref5 = SectionView.__super__.constructor.apply(this, arguments);
+      return _ref5;
     }
 
     SectionView.prototype.template = Handlebars.templates['section.hbs'];
@@ -85,7 +117,8 @@
     };
 
     SectionView.prototype.initialize = function(options) {
-      this.narratives = options.narratives;
+      this.section = options.section;
+      this.narratives = new Backbone.Collections.NarrativeCollection();
       this.narratives.bind('add', this.render);
       return this.narratives.bind('sync', this.render);
     };
@@ -116,15 +149,15 @@
 
   window.Backbone || (window.Backbone = {});
 
-  (_base4 = window.Backbone).Views || (_base4.Views = {});
+  (_base6 = window.Backbone).Views || (_base6.Views = {});
 
   Backbone.Views.ReportView = (function(_super) {
     __extends(ReportView, _super);
 
     function ReportView() {
       this.render = __bind(this.render, this);
-      _ref4 = ReportView.__super__.constructor.apply(this, arguments);
-      return _ref4;
+      _ref6 = ReportView.__super__.constructor.apply(this, arguments);
+      return _ref6;
     }
 
     ReportView.prototype.template = Handlebars.templates['report.hbs'];
@@ -135,10 +168,16 @@
     };
 
     ReportView.prototype.render = function() {
+      var sections;
       this.closeSubViews();
+      sections = [];
+      if (this.report.get('sections')) {
+        sections = this.report.get('sections');
+      }
       this.$el.html(this.template({
         thisView: this,
-        report: this.report.toJSON()
+        report: this.report.toJSON(),
+        sections: sections
       }));
       this.renderSubViews();
       return this;
@@ -154,7 +193,7 @@
 
   window.Backbone || (window.Backbone = {});
 
-  (_base5 = window.Backbone).Views || (_base5.Views = {});
+  (_base7 = window.Backbone).Views || (_base7.Views = {});
 
   Backbone.Views.NarrativeView = (function(_super) {
     __extends(NarrativeView, _super);
@@ -163,8 +202,8 @@
       this.startEdit = __bind(this.startEdit, this);
       this.saveNarrative = __bind(this.saveNarrative, this);
       this.render = __bind(this.render, this);
-      _ref5 = NarrativeView.__super__.constructor.apply(this, arguments);
-      return _ref5;
+      _ref7 = NarrativeView.__super__.constructor.apply(this, arguments);
+      return _ref7;
     }
 
     NarrativeView.prototype.template = Handlebars.templates['narrative.hbs'];
@@ -342,7 +381,7 @@
 
   window.Backbone || (window.Backbone = {});
 
-  (_base6 = window.Backbone).Views || (_base6.Views = {});
+  (_base8 = window.Backbone).Views || (_base8.Views = {});
 
   window.nrtViz || (window.nrtViz = {});
 
@@ -350,8 +389,8 @@
     __extends(BarChartView, _super);
 
     function BarChartView() {
-      _ref6 = BarChartView.__super__.constructor.apply(this, arguments);
-      return _ref6;
+      _ref8 = BarChartView.__super__.constructor.apply(this, arguments);
+      return _ref8;
     }
 
     BarChartView.prototype.initialize = function(options) {
@@ -377,29 +416,30 @@
 
   window.Backbone || (window.Backbone = {});
 
-  (_base7 = window.Backbone).Controllers || (_base7.Controllers = {});
+  (_base9 = window.Backbone).Controllers || (_base9.Controllers = {});
 
   Backbone.Controllers.ReportsController = (function(_super) {
     __extends(ReportsController, _super);
 
     function ReportsController() {
-      var barchartView, narratives, report, reportView, sectionView, width;
+      var barchartView, report, reportView, width;
       report = new Backbone.Models.Report({
         title: "Test Report",
-        brief: "This is for testing"
+        brief: "This is for testing",
+        sections: [new Backbone.Models.Section()]
       });
       reportView = new Backbone.Views.ReportView({
         report: report
       });
       $('.report-content').prepend(reportView.el);
-      this.tmpSectionRegion = new Backbone.Diorama.ManagedRegion();
-      $('#user-section').prepend(this.tmpSectionRegion.$el);
-      narratives = new Backbone.Collections.NarrativeCollection();
-      narratives.fetch();
-      sectionView = new Backbone.Views.SectionView({
-        narratives: narratives
-      });
-      this.tmpSectionRegion.showView(sectionView);
+      /*
+      narratives  = new Backbone.Collections.NarrativeCollection()
+      narratives.fetch()
+      sectionView = new Backbone.Views.SectionView(narratives: narratives)
+      
+      @tmpSectionRegion.showView(sectionView)
+      */
+
       this.vizRegion = new Backbone.Diorama.ManagedRegion();
       this.vizRegion.$el.attr("class", "viz");
       $('body').append(this.vizRegion.$el);
@@ -414,7 +454,7 @@
 
   })(Backbone.Diorama.Controller);
 
-  Handlebars.registerHelper("debug ", function(optionalValue) {
+  Handlebars.registerHelper("debug", function(optionalValue) {
     console.log("Current Context");
     console.log("====================");
     console.log(this);

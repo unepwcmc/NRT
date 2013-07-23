@@ -12,3 +12,6 @@
   </div>
   <p>{{report.brief}}</p>
 </section>
+{{#each sections}}
+  {{addSubViewTo ../thisView "SectionView" section=this}}
+{{/each}}
