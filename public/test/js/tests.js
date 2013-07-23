@@ -29,8 +29,8 @@
       report: report
     });
     $('#test-container').html(view.el);
-    debugger;
-    return assert.match(new RegExp(".*" + overviewText + ".*"), $('#test-container').text());
+    assert.match($('#test-container').text(), new RegExp(".*" + overviewText + ".*"));
+    return view.close();
   });
 
 }).call(this);
