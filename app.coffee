@@ -4,6 +4,7 @@ http = require('http')
 path = require('path')
 lessMiddleware = require('less-middleware')
 require('express-resource')
+sass = require('node-sass')
 
 # App requires
 
@@ -12,8 +13,6 @@ app = express()
 sequelize = require('./model_bindings.coffee')(app.get('env'))
 GLOBAL.sequelize = sequelize
 bindRoutesForApp = require('./route_bindings.coffee')
-narrative = require('./models/narrative.coffee')
-
 
 app.set('port', process.env.PORT || 3000)
 
@@ -24,6 +23,12 @@ app.engine "hbs", cons.handlebars
 # set .html as the default extension 
 app.set "view engine", "hbs"
 app.set "views", __dirname + "/views"
+
+app.use(sass.middleware(
+  src: 'public/sass'
+  dest: path.join(__dirname, 'public/css')
+  debug: true
+))
 
 app.use express.favicon()
 app.use express.logger("dev")
@@ -42,3 +47,5 @@ bindRoutesForApp(app)
 
 http.createServer(app).listen app.get("port"), ->
   console.log "Express server listening on port " + app.get("port")
+
+

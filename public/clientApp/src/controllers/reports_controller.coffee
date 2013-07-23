@@ -4,7 +4,7 @@ window.Backbone.Controllers ||= {}
 class Backbone.Controllers.ReportsController extends Backbone.Diorama.Controller
   constructor: ->
     @mainRegion = new Backbone.Diorama.ManagedRegion()
-    $('body').append(@mainRegion.$el)
+    $('#user-section').prepend(@mainRegion.$el)
 
     narratives  = new Backbone.Collections.NarrativeCollection()
     narratives.fetch()

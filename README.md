@@ -3,28 +3,23 @@
 ### Setup
 
 - Install and setup [NVM](https://github.com/creationix/nvm), we're targeting
-the newest stable node, which at the time of writing is v0.10.13
+  the newest stable node, which at the time of writing is v0.10.13
+- `npm install` in the project dir to get the libs
+- `npm install -g handlebars coffee-script grunt-cli backbone-diorama` to compile the
+  client application
+- Create config/database.json entries for 'development' and 'test'
+  environments. You will need to create the tables you named by hand.
+- Install mysql locally (`brew install mysql`, or `sudo apt-get install mysql-serverz)
 
-- Setup mysql database
-```sql
-create database nrt_development;
-CREATE USER 'nrt'@'localhost' IDENTIFIED BY 'password';
-grant usage on *.* to nrt@localhost identified by "password";
-```
+## Running the application
 
-- Setup node environment and start server
-```sh
-# Few node globals
-npm install -g coffee-script
-npm install -g diorama
-npm install -g supervisor
+##### Start the server
 
-# Setup dependencies
-npm install
+`node app.coffee`
 
-# start server
-supervisor app.coffee
-```
+##### Compile coffeescripts
+
+`grunt watch`
 
 ## Application structure
 
@@ -45,9 +40,22 @@ mysql ORM initialization
 A [BackboneDiorama](https://github.com/th3james/BackboneDiorama/) application
 
 ## Tests
-Tests go in the test/ folder (unsurprisingly). We're using mocha with the qunit
+
+### Server
+In the test/ folder (unsurprisingly). We're using mocha with the qunit
 interface and using the chai assertion syntax.
 
 Run them with 
 
 `npm test`
+
+### Client
+#### Running 'em
+Fire up the app server in the test environment:
+
+`NODE_ENV=test coffee app.coffee`
+
+Then visit http://localhost:3000/tests
+
+#### Writing 'em
+The tests are written in mocha, using the qunit syntax with chai for asserts. Write tests in coffeescript in the clientTests/ folder.
