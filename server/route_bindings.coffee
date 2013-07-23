@@ -9,8 +9,8 @@ module.exports = exports = (app) ->
   # REST API
   app.resource 'api/narrative', narrativeApi, { format: 'json' }
 
-  app.get "/", passport.authenticate('basic', { session: false }), indicatorRoutes.index
-  app.get "/indicators/", passport.authenticate('basic', { session: false }), indicatorRoutes.index
+  app.get "/", indicatorRoutes.index
+  app.get "/indicators/", indicatorRoutes.index
 
   app.get "/indicator/:id", indicatorRoutes.show
 
