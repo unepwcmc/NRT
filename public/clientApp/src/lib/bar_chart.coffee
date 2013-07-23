@@ -26,7 +26,6 @@ nrtViz.barChart  = (conf={}) ->
     .tickFormat(conf.format)
 
   chart = (selection) ->
-    #console.log selection
     xScale = conf.xScale
     yScale = conf.yScale
     margin = conf.margin
@@ -40,7 +39,6 @@ nrtViz.barChart  = (conf={}) ->
     yScale.domain [ 0, d3.max(data, (d) -> d.Percentage) ]  # TODO
     # Select the svg element, if it exists.
     svg = selection.selectAll("svg").data [data]
-    console.log svg
     # Otherwise, create the skeletal chart.
     gEnter = svg.enter().append("svg").append("g")
     gEnter.append("g").attr "class", "x axis"

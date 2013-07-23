@@ -243,7 +243,6 @@
         })
       ]);
       svg = selection.selectAll("svg").data([data]);
-      console.log(svg);
       gEnter = svg.enter().append("svg").append("g");
       gEnter.append("g").attr("class", "x axis");
       gEnter.append("g").attr("class", "y axis");
