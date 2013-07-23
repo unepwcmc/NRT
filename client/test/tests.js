@@ -3,11 +3,7 @@
 
   assert = chai.assert;
 
-  suite('Backbone.Model.Report');
-
-  test('Can add sections', function() {
-    return console.log("TODO");
-  });
+  suite('Backbone.Models.Report');
 
 }).call(this);
 
@@ -46,6 +42,25 @@
     });
     view = createAndShowReportViewForReport(report);
     assert.match($('#test-container').text(), new RegExp(".*" + briefText + ".*"));
+    return view.close();
+  });
+
+  test("Report sections views are rendered", function() {
+    var report, section, subView, subViewExists, view, _i, _len, _ref;
+    section = new Backbone.Models.Section();
+    report = new Backbone.Models.Report({
+      sections: [section]
+    });
+    view = createAndShowReportViewForReport(report);
+    subViewExists = false;
+    _ref = view.subViews;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      subView = _ref[_i];
+      if (subView.constructor.name === "SectionView") {
+        subViewExists = true;
+      }
+    }
+    assert(subViewExists);
     return view.close();
   });
 
