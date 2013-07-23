@@ -9,5 +9,6 @@
   "templates/narrative",
   "templates/narrative-edit",
   "views/narrative_view",
-  "controllers/reports_controller"
+  "controllers/reports_controller",
+  "helpers/handlebars_debug"
 ]
