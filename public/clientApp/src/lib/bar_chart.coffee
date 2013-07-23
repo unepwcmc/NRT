@@ -7,8 +7,8 @@ nrtViz.barChart  = (conf={}) ->
     # Properties go clockwise from the top, as in CSS.
     margin:
      top: 20
-     right: 100  # leaving space for a legend
-     bottom: 20
+     right: 20
+     bottom: 40
      left: 30
     width: 760 #- margin.left - margin.right
     height: 500 #- margin.top - margin.bottom

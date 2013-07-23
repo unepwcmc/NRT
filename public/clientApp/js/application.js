@@ -264,8 +264,8 @@
     conf = _.extend(conf, {
       margin: {
         top: 20,
-        right: 100,
-        bottom: 20,
+        right: 20,
+        bottom: 40,
         left: 30
       },
       width: 760,
