@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "d3": "3.2.7",
-    "backbone-associations": "0.5.1"
-  }
-}
