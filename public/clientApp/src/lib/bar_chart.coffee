@@ -19,8 +19,11 @@ nrtViz.barChart  = (conf={}) ->
     
   }
 
+  calculateHeight = nrtViz.utils.calculateHeight
+
   width = conf.width - conf.margin.left
-  height = conf.height - conf.margin.top
+  # calculateHeight: (width, widthRatio, heightRatio) ->
+  height = calculateHeight(conf.width, 2, 1.2) - conf.margin.top
   xAxis = d3.svg.axis().scale(conf.xScale).orient("bottom")
   yAxis = d3.svg.axis().scale(conf.yScale).orient("left")
     .tickFormat(conf.format)

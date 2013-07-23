@@ -9,6 +9,7 @@
   "templates/narrative",
   "templates/narrative-edit",
   "views/narrative_view",
+  "lib/utils",
   "lib/chart_data_parser",
   "lib/data/sample_esri_service",
   "templates/bar_chart",

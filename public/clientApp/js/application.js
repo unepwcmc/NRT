@@ -211,6 +211,14 @@
 
   window.nrtViz || (window.nrtViz = {});
 
+  nrtViz.utils = {
+    calculateHeight: function(width, widthRatio, heightRatio) {
+      return width / widthRatio * heightRatio;
+    }
+  };
+
+  window.nrtViz || (window.nrtViz = {});
+
   nrtViz.chartDataParser = function(data) {
     return _.map(data.features, function(el) {
       return el.attributes;
@@ -257,7 +265,7 @@
   window.nrtViz || (window.nrtViz = {});
 
   nrtViz.barChart = function(conf) {
-    var chart, height, width, xAxis, yAxis;
+    var calculateHeight, chart, height, width, xAxis, yAxis;
     if (conf == null) {
       conf = {};
     }
@@ -274,8 +282,9 @@
       xScale: d3.scale.ordinal(),
       yScale: d3.scale.linear()
     });
+    calculateHeight = nrtViz.utils.calculateHeight;
     width = conf.width - conf.margin.left;
-    height = conf.height - conf.margin.top;
+    height = calculateHeight(conf.width, 2, 1.2) - conf.margin.top;
     xAxis = d3.svg.axis().scale(conf.xScale).orient("bottom");
     yAxis = d3.svg.axis().scale(conf.yScale).orient("left").tickFormat(conf.format);
     chart = function(selection) {
