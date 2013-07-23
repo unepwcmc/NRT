@@ -1,19 +1,36 @@
 assert = chai.assert
 
+createAndShowReportViewForReport = (report) ->
+  view = new Backbone.Views.ReportView(report: report)
+  $('#test-container').html(view.el)
+  return view
+
 suite('Report View')
 
-test("Can see a report's overview", ->
-  report = new Backbone.Models.Report
-  overviewText = "Hey, I'm an overview"
-  report.set('overview', overviewText)
+test("Can see a report's title", ->
+  title = "My Lovely Report"
+  report = new Backbone.Models.Report(title: title)
 
-  view = new Backbone.Views.ReportView(report: report)
-
-  $('#test-container').html(view.el)
+  view = createAndShowReportViewForReport(report)
   
   assert.match(
     $('#test-container').text(),
-    new RegExp(".*#{overviewText}.*")
+    new RegExp(".*#{title}.*")
   )
+
+  view.close()
+)
+
+test("Can see a report's brief", ->
+  briefText = "Hey, I'm the brief"
+  report = new Backbone.Models.Report(brief: briefText)
+
+  view = createAndShowReportViewForReport(report)
+  
+  assert.match(
+    $('#test-container').text(),
+    new RegExp(".*#{briefText}.*")
+  )
+
   view.close()
 )
