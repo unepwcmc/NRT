@@ -2,9 +2,13 @@
 <html>
   <head>
     <title>Report show page</title>
+
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,300' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/css/main.css">
+
+    <link rel='stylesheet' href='/css/charts.css' />
+    <script src="/clientApp/js/lib/d3/d3.min.js"></script>
 
     <script src="/clientApp/js/lib/jquery-1.9.1.min.js"></script>
     <script src="/clientApp/js/lib/json2.js"></script>
@@ -28,24 +32,6 @@
     </header>
     <div class="content">
         <div class="report-content">
-            <div class="report-title">
-                <div class="time-period">January - March 2013</div>
-                <h1>Marine water quality report {{ report_id }}</h1>
-                <div class="report-extra">
-                    <div class="last-update"><a href="#" data-toggle="tooltip" title="Last update"><i class="icon-time append"></i></a>1st of April, 18:23</div>
-                    <div class="who"><a href="#" data-toggle="tooltip" title="Report owner"><i class="icon-user append"></i></a>Dr. Anybody</div>
-                </div>
-            </div>
-            <section>
-                <div class="section-title">
-                    <h2>Introduction</h2>
-                </div>
-                <p>Enviroment Agency Abu Dabhi plubishes this quarterly Marine Water Quality (MWQ) report four times a year to present the MWQ status during the previous three-months based on the results of MWQ monitoring along the Abu Dabhi Emirate coast. The <a href="#">marine water quality</a> stations are distributed throughout the territorial waters of the Emirate. This report focuses on six MWQ parameters (europhic and bacterial) for which recommended standars have been established to protect marine biota and human health.</p>
-                <!--<p><button>Share something</button></p>-->
-                <p>Euttophic parameters are nutrients, especially various compounds of nitrogen, which result largely from human activities. High levels of nutrients in marine water can result in enhanced growth of aquatic plants, especially phytoplankton (algae). As a result, phytoplankton populations increase rapidly, and the excess, unconsumed plant material can result in problem such as diminished water clarity and dissolved oxygen (DO) depletion in bottom waters. Severe eutrophic conditions may also contribute to the formation of harmful algal blooms (HABs), which may include toxic algal species that can cause foul odors, skin rashes from contact with the water, fish kills, and shellfish poisoning , and can disrupt the normal operation of desalination plants by clogging their seawater filtration systems.</p>
-                <p>Increasing eutrophication and higher frequencies of harmful algal blooms has been observed in Abu Dabhi waters over recent years. This quarterly report cover the following eutrophic parameters: phosphate-P, ammonia-N, chlorophyll-a, nitrate-N and a dissolved oxygen.</p>
-                <p>EAD has been and will continue to be alert to bacterial levels in order to control public health risks of recreational exposure to marine water. This quarterly report presents observed levels of enterococci - the best indicator of sewage contamination of marine water.</p>
-            </section>
             <section id='user-section'>
             </section>
             <section>
