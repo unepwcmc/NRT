@@ -1,10 +1,14 @@
 [
+  "models/report",
   "models/narrative",
   "collections/narrative_collection",
   "templates/section",
   "views/section_view",
+  "templates/report",
+  "views/report_view",
   "templates/narrative",
   "templates/narrative-edit",
   "views/narrative_view",
-  "controllers/reports_controller"
+  "controllers/reports_controller",
+  "helpers/handlebars_debug"
 ]
