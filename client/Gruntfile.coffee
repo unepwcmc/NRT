@@ -20,7 +20,7 @@ module.exports = (grunt) ->
         src: ['dist/js/templates.js', 'dist/js/application.js']
         dest: 'dist/js/application.js'
       test:
-        src: ['test/**/*.coffee']
+        src: ['test/src/**/*.coffee']
         dest: 'test/tests.coffee'
 
     handlebars:
