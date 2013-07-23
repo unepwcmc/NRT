@@ -2,6 +2,11 @@ module.exports = (grunt) ->
   grunt.initConfig(
     pkg: grunt.file.readJSON('package.json')
 
+    clean:
+      options:
+        force: true
+      dist: ['dist/', '../server/public']
+
     coffee:
       source:
         src: 'dist/js/application.coffee'
@@ -74,5 +79,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-sass')
 
-  grunt.registerTask('build', ['concat:source', 'coffee:source', 'handlebars', 'concat:dist', 'sass', 'concat:test', 'coffee:test', 'copy'])
+  grunt.registerTask('build', ['clean', 'concat:source', 'coffee:source', 'handlebars', 'concat:dist', 'sass', 'concat:test', 'coffee:test', 'copy'])
   grunt.registerTask('default', ['build', 'watch'])
