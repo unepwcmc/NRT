@@ -233,4 +233,15 @@
 
   })(Backbone.Diorama.Controller);
 
+  Handlebars.registerHelper("debug ", function(optionalValue) {
+    console.log("Current Context");
+    console.log("====================");
+    console.log(this);
+    if (optionalValue) {
+      console.log("Value");
+      console.log("====================");
+      return console.log(optionalValue);
+    }
+  });
+
 }).call(this);
