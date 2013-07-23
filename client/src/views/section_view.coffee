@@ -3,6 +3,7 @@ window.Backbone.Views ||= {}
 
 class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
   template: Handlebars.templates['section.hbs']
+  tagName: 'section'
 
   events:
     "click .add-narrative": "addNarrative"
