@@ -21,3 +21,9 @@ test("Can see the section title", ->
 
   view.close()
 )
+
+test("Can see the section visualisation")
+test("Can see the section narrative")
+test("Can edit the section")
+test("Can view report containing this section")
+test("Can navigate to Dashboard, Reports, Indicators and Bookmarks")
