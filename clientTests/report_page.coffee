@@ -21,15 +21,15 @@ test("Can see a report's title", ->
   view.close()
 )
 
-test("Can see a report's overview", ->
-  overviewText = "Hey, I'm an overview"
-  report = new Backbone.Models.Report(overview: overviewText)
+test("Can see a report's brief", ->
+  briefText = "Hey, I'm the brief"
+  report = new Backbone.Models.Report(brief: briefText)
 
   view = createAndShowReportViewForReport(report)
   
   assert.match(
     $('#test-container').text(),
-    new RegExp(".*#{overviewText}.*")
+    new RegExp(".*#{briefText}.*")
   )
 
   view.close()

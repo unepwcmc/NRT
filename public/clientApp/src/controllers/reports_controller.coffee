@@ -5,7 +5,7 @@ class Backbone.Controllers.ReportsController extends Backbone.Diorama.Controller
   constructor: ->
     report = new Backbone.Models.Report(
       title: "Test Report"
-      overview: "This is for testing"
+      brief: "This is for testing"
     )
 
     reportView = new Backbone.Views.ReportView(report: report)

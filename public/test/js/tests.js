@@ -25,14 +25,14 @@
     return view.close();
   });
 
-  test("Can see a report's overview", function() {
-    var overviewText, report, view;
-    overviewText = "Hey, I'm an overview";
+  test("Can see a report's brief", function() {
+    var briefText, report, view;
+    briefText = "Hey, I'm the brief";
     report = new Backbone.Models.Report({
-      overview: overviewText
+      brief: briefText
     });
     view = createAndShowReportViewForReport(report);
-    assert.match($('#test-container').text(), new RegExp(".*" + overviewText + ".*"));
+    assert.match($('#test-container').text(), new RegExp(".*" + briefText + ".*"));
     return view.close();
   });
 
