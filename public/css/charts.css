@@ -1,0 +1,20 @@
+.axis path {
+  fill: none;
+  stroke: #34495E;
+  shape-rendering: crispEdges; }
+
+.axis line {
+  fill: none;
+  stroke: #34495E;
+  shape-rendering: crispEdges; }
+
+.x.axis path {
+  display: none; }
+
+text {
+  fill: #34495E; }
+
+
+div.viz {
+  width: 800px;
+}
