@@ -70,6 +70,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-sass')
 
-  grunt.registerTask('build', ['concat:source', 'coffee:source', 'handlebars', 'concat:dist', 'sass', 'copy'])
+  grunt.registerTask('build', ['concat:source', 'coffee:source', 'handlebars', 'concat:dist', 'sass', 'concat:test', 'coffee:test', 'copy'])
   grunt.registerTask('default', ['build', 'watch'])
-  grunt.registerTask('test', ['concat:test', 'coffee:test'])
