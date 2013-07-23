@@ -11,9 +11,9 @@ test("Can see a report's overview", ->
 
   $('#test-container').html(view.el)
   
-  debugger
   assert.match(
-    new RegExp(".*#{overviewText}.*"),
-    $('#test-container').text()
+    $('#test-container').text(),
+    new RegExp(".*#{overviewText}.*")
   )
+  view.close()
 )
