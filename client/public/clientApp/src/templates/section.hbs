@@ -1,0 +1,7 @@
+<h1>Section</h1>
+{{#each narratives}}
+  {{addSubViewTo ../thisView "NarrativeView" narrative=this}}
+{{/each}}
+<a class="btn add-narrative">
+	Add Narrative
+</a>
