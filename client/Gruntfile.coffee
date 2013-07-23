@@ -30,12 +30,16 @@ module.exports = (grunt) ->
         options:
           namespace: 'Handlebars.templates'
           processName: (filename) ->
-            filename
-              .replace(/^src\/templates\//, '')
+            filename.replace(/^src\/templates\//, '')
 
     copy:
       dist:
         files: [
+          expand: true
+          cwd: 'src/images/'
+          dest: 'dist/images'
+          src: '**/*'
+        ,
           expand: true
           cwd: 'src/vendor/'
           dest: 'dist/'
