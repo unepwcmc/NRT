@@ -3,21 +3,6 @@
 
   assert = chai.assert;
 
-  assert(Backbone.Models.Narrative);
-
-  suite('Backbone.Models.Narrative');
-
-  test('Exists', function() {
-    return assert(Backbone.Models.Narrative);
-  });
-
-}).call(this);
-
-(function() {
-  var assert;
-
-  assert = chai.assert;
-
   suite('Report View');
 
   test("Can see a report's overview", function() {
