@@ -1,14 +1,7 @@
 (function() {
-  var assert, createAndShowReportViewForReport, factoryReport;
+  var assert, createAndShowReportViewForReport;
 
   assert = chai.assert;
-
-  factoryReport = function(attributes) {
-    var report;
-    report = new Backbone.Models.Report;
-    report.set(attributes);
-    return report;
-  };
 
   createAndShowReportViewForReport = function(report) {
     var view;
@@ -24,7 +17,7 @@
   test("Can see a report's title", function() {
     var report, title, view;
     title = "My Lovely Report";
-    report = factoryReport({
+    report = new Backbone.Models.Report({
       title: title
     });
     view = createAndShowReportViewForReport(report);
@@ -35,7 +28,7 @@
   test("Can see a report's overview", function() {
     var overviewText, report, view;
     overviewText = "Hey, I'm an overview";
-    report = factoryReport({
+    report = new Backbone.Models.Report({
       overview: overviewText
     });
     view = createAndShowReportViewForReport(report);

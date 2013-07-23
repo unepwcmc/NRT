@@ -1,10 +1,5 @@
 assert = chai.assert
 
-factoryReport = (attributes) ->
-  report = new Backbone.Models.Report
-  report.set(attributes)
-  return report
-
 createAndShowReportViewForReport = (report) ->
   view = new Backbone.Views.ReportView(report: report)
   $('#test-container').html(view.el)
@@ -14,7 +9,7 @@ suite('Report View')
 
 test("Can see a report's title", ->
   title = "My Lovely Report"
-  report = factoryReport(title: title)
+  report = new Backbone.Models.Report(title: title)
 
   view = createAndShowReportViewForReport(report)
   
@@ -28,7 +23,7 @@ test("Can see a report's title", ->
 
 test("Can see a report's overview", ->
   overviewText = "Hey, I'm an overview"
-  report = factoryReport(overview: overviewText)
+  report = new Backbone.Models.Report(overview: overviewText)
 
   view = createAndShowReportViewForReport(report)
   
