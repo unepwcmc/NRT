@@ -11,9 +11,8 @@ class Backbone.Controllers.ReportsController extends Backbone.Diorama.Controller
 
     sectionView = new Backbone.Views.SectionView(narratives: narratives)
 
+    # First visualization test
     @vizRegion = new Backbone.Diorama.ManagedRegion()
-    @vizRegion.$el.attr("id", "chart")
     $('body').append(@vizRegion.$el)
     barchartView = new Backbone.Views.BarChartView()
-
     @vizRegion.showView(barchartView)

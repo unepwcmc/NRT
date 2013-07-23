@@ -1,8 +1,8 @@
 window.nrtViz ||= {}
 
-nrtViz.barChart  = (config={}) ->
+nrtViz.barChart  = (conf={}) ->
 
-  config = _.extend config, {
+  conf = _.extend conf, {
     # Follows d3 margin convention: http://bl.ocks.org/mbostock/3019563
     # Properties go clockwise from the top, as in CSS.
     margin:
@@ -19,17 +19,17 @@ nrtViz.barChart  = (config={}) ->
     
   }
 
-  width = config.width - config.margin.left
-  height = config.height - config.margin.top
-  xAxis = d3.svg.axis().scale(config.xScale).orient("bottom")
-  yAxis = d3.svg.axis().scale(config.yScale).orient("left")
-    .tickFormat(config.format)
+  width = conf.width - conf.margin.left
+  height = conf.height - conf.margin.top
+  xAxis = d3.svg.axis().scale(conf.xScale).orient("bottom")
+  yAxis = d3.svg.axis().scale(conf.yScale).orient("left")
+    .tickFormat(conf.format)
 
   chart = (selection) ->
     #console.log selection
-    xScale = config.xScale
-    yScale = config.yScale
-    margin = config.margin
+    xScale = conf.xScale
+    yScale = conf.yScale
+    margin = conf.margin
     # rangeRoundBands [min, max], padding, outer-padding
     xScale.rangeRoundBands [0, width], .1, .02
     yScale.range [height, 0]
@@ -38,7 +38,6 @@ nrtViz.barChart  = (config={}) ->
     # Data input domains
     xScale.domain data.map (d) -> d.Year  # TODO
     yScale.domain [ 0, d3.max(data, (d) -> d.Percentage) ]  # TODO
-
     # Select the svg element, if it exists.
     svg = selection.selectAll("svg").data [data]
     console.log svg
@@ -77,6 +76,16 @@ nrtViz.barChart  = (config={}) ->
       .attr("width", xScale.rangeBand())
       .attr("y", (d) -> yScale(d.Percentage) + margin.top )
       .attr "height", (d) -> height - yScale(d.Percentage)
+
+  chart.width = (c) ->
+    return width  unless arguments.length
+    width = c - conf.margin.left - conf.margin.right
+    chart
+
+  chart.height = (c) ->
+    return height  unless arguments.length
+    height = c - conf.margin.top - conf.margin.bottom
+    chart
 
   {
     chart: chart

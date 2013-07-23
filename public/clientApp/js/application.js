@@ -205,12 +205,12 @@
 
   window.nrtViz || (window.nrtViz = {});
 
-  nrtViz.barChart = function(config) {
+  nrtViz.barChart = function(conf) {
     var chart, height, width, xAxis, yAxis;
-    if (config == null) {
-      config = {};
+    if (conf == null) {
+      conf = {};
     }
-    config = _.extend(config, {
+    conf = _.extend(conf, {
       margin: {
         top: 20,
         right: 100,
@@ -223,15 +223,15 @@
       xScale: d3.scale.ordinal(),
       yScale: d3.scale.linear()
     });
-    width = config.width - config.margin.left;
-    height = config.height - config.margin.top;
-    xAxis = d3.svg.axis().scale(config.xScale).orient("bottom");
-    yAxis = d3.svg.axis().scale(config.yScale).orient("left").tickFormat(config.format);
+    width = conf.width - conf.margin.left;
+    height = conf.height - conf.margin.top;
+    xAxis = d3.svg.axis().scale(conf.xScale).orient("bottom");
+    yAxis = d3.svg.axis().scale(conf.yScale).orient("left").tickFormat(conf.format);
     chart = function(selection) {
       var bar, data, g, gEnter, margin, svg, xScale, yScale;
-      xScale = config.xScale;
-      yScale = config.yScale;
-      margin = config.margin;
+      xScale = conf.xScale;
+      yScale = conf.yScale;
+      margin = conf.margin;
       xScale.rangeRoundBands([0, width], .1, .02);
       yScale.range([height, 0]);
       data = selection.datum();
@@ -271,6 +271,20 @@
         return height - yScale(d.Percentage);
       });
     };
+    chart.width = function(c) {
+      if (!arguments.length) {
+        return width;
+      }
+      width = c - conf.margin.left - conf.margin.right;
+      return chart;
+    };
+    chart.height = function(c) {
+      if (!arguments.length) {
+        return height;
+      }
+      height = c - conf.margin.top - conf.margin.bottom;
+      return chart;
+    };
     return {
       chart: chart
     };
@@ -292,14 +306,14 @@
 
     BarChartView.prototype.initialize = function(options) {
       this.barChart = nrtViz.barChart();
-      this.selection = d3.select(this.el);
-      return console.log(this.barChart, this.selection);
+      return this.selection = d3.select(this.el);
     };
 
     BarChartView.prototype.render = function() {
       var data;
       data = nrtViz.chartDataParser(window.SAMPLE_DATA);
       this.selection.data([data]);
+      this.barChart.chart.width(600);
       this.selection.call(this.barChart.chart);
       return this;
     };
@@ -327,7 +341,6 @@
         narratives: narratives
       });
       this.vizRegion = new Backbone.Diorama.ManagedRegion();
-      this.vizRegion.$el.attr("id", "chart");
       $('body').append(this.vizRegion.$el);
       barchartView = new Backbone.Views.BarChartView();
       this.vizRegion.showView(barchartView);

@@ -1,15 +1,15 @@
 .axis path {
   fill: none;
-  stroke: #9c9c9c;
+  stroke: #34495E;
   shape-rendering: crispEdges; }
 
 .axis line {
   fill: none;
-  stroke: #9c9c9c;
+  stroke: #34495E;
   shape-rendering: crispEdges; }
 
 .x.axis path {
   display: none; }
 
 text {
-  fill: #f38417; }
+  fill: #34495E; }
