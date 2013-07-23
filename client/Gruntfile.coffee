@@ -2,28 +2,58 @@ module.exports = (grunt) ->
   grunt.initConfig(
     pkg: grunt.file.readJSON('package.json')
 
-    clean:
-      folder: ['public/clientApp/test/js/']
-
     coffee:
+      source:
+        src: 'dist/js/application.coffee'
+        dest: 'dist/js/application.js'
+        ext: '.js'
       test:
-        expand: true
-        cwd: 'clientTests'
-        src: '**/*.coffee'
-        dest: 'public/test/js/src'
+        src: 'test/tests.coffee'
+        dest: 'test/tests.js'
         ext: '.js'
 
     concat:
-      tests:
-        src: 'public/test/js/src/**/*.js'
-        dest: 'public/test/js/tests.js'
+      source:
+        src: grunt.file.readJSON('src/compile_manifest.json')
+        dest: 'dist/js/application.coffee'
+      dist:
+        src: ['dist/js/templates.js', 'dist/js/application.js']
+        dest: 'dist/js/application.js'
+      test:
+        src: ['test/**/*.coffee']
+        dest: 'test/tests.coffee'
 
-    shell:
-      makeDir:
-        command: 'cd public/clientApp && diorama compile'
+    handlebars:
+      source:
+        files:
+          'dist/js/templates.js': ['src/templates/*.hbs']
+        options:
+          namespace: 'Handlebars.templates'
+          processName: (filename) ->
+            filename
+              .replace(/^src\/templates\//, '')
+
+    copy:
+      dist:
+        files: [
+          expand: true
+          cwd: 'src/vendor/'
+          dest: 'dist/'
+          src: ['**/*']
+        ,
+          expand: true
+          cwd: 'dist/'
+          dest: '../server/dist'
+          src: ['**/*']
+        ]
+
+    sass:
+      dist:
+        files:
+          'dist/css/main.css': 'src/sass/main.scss'
 
     watch:
-      files: ['public/**/*.coffee', 'clientTests/**/*.coffee'],
+      files: ['src/**/*', 'test/**/*'],
       tasks: 'default'
   )
 
@@ -31,7 +61,10 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-contrib-concat')
   grunt.loadNpmTasks('grunt-contrib-watch')
-  grunt.loadNpmTasks('grunt-shell')
+  grunt.loadNpmTasks('grunt-contrib-handlebars')
+  grunt.loadNpmTasks('grunt-contrib-copy')
+  grunt.loadNpmTasks('grunt-sass')
 
-  grunt.registerTask('default', ['clean', 'coffee', 'shell', 'concat'])
-
+  grunt.registerTask('build', ['concat:source', 'coffee:source', 'handlebars', 'concat:dist', 'sass', 'copy'])
+  grunt.registerTask('default', ['build', 'watch'])
+  grunt.registerTask('test', ['concat:test', 'coffee:test'])

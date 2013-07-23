@@ -1,10 +1,7 @@
 [
-  "models/narrative",
-  "collections/narrative_collection",
-  "templates/section",
-  "views/section_view",
-  "templates/narrative",
-  "templates/narrative-edit",
-  "views/narrative_view",
-  "controllers/reports_controller"
+  "src/models/narrative.coffee",
+  "src/collections/narrative_collection.coffee",
+  "src/views/section_view.coffee",
+  "src/views/narrative_view.coffee",
+  "src/controllers/reports_controller.coffee"
 ]
