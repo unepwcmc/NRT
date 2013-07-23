@@ -306,14 +306,15 @@
 
     BarChartView.prototype.initialize = function(options) {
       this.barChart = nrtViz.barChart();
-      return this.selection = d3.select(this.el);
+      this.selection = d3.select(this.el);
+      return this.width = options.width;
     };
 
     BarChartView.prototype.render = function() {
       var data;
       data = nrtViz.chartDataParser(window.SAMPLE_DATA);
       this.selection.data([data]);
-      this.barChart.chart.width(600);
+      this.barChart.chart.width(this.width);
       this.selection.call(this.barChart.chart);
       return this;
     };
@@ -332,7 +333,7 @@
     __extends(ReportsController, _super);
 
     function ReportsController() {
-      var barchartView, narratives, sectionView;
+      var barchartView, narratives, sectionView, width;
       this.mainRegion = new Backbone.Diorama.ManagedRegion();
       $('#user-section').prepend(this.mainRegion.$el);
       narratives = new Backbone.Collections.NarrativeCollection();
@@ -341,8 +342,12 @@
         narratives: narratives
       });
       this.vizRegion = new Backbone.Diorama.ManagedRegion();
+      this.vizRegion.$el.attr("class", "viz");
       $('body').append(this.vizRegion.$el);
-      barchartView = new Backbone.Views.BarChartView();
+      width = this.vizRegion.$el.width();
+      barchartView = new Backbone.Views.BarChartView({
+        width: width
+      });
       this.vizRegion.showView(barchartView);
     }
 
