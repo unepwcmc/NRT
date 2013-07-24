@@ -2,7 +2,7 @@
 # Register Handlebars helpers
 # 
 
-Handlebars.registerHelper "debug ", (optionalValue) ->
+Handlebars.registerHelper "debug", (optionalValue) ->
   console.log("Current Context")
   console.log("====================")
   console.log(this)

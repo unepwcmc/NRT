@@ -2,6 +2,11 @@ module.exports = (grunt) ->
   grunt.initConfig(
     pkg: grunt.file.readJSON('package.json')
 
+    clean:
+      options:
+        force: true
+      dist: ['dist/', '../server/public']
+
     coffee:
       source:
         src: 'dist/js/application.coffee'
@@ -30,17 +35,23 @@ module.exports = (grunt) ->
         options:
           namespace: 'Handlebars.templates'
           processName: (filename) ->
-            filename
-              .replace(/^src\/templates\//, '')
+            filename.replace(/^src\/templates\//, '')
 
     copy:
       dist:
         files: [
           expand: true
+          cwd: 'src/images/'
+          dest: 'dist/images'
+          src: '**/*'
+        ,
+          expand: true
           cwd: 'src/vendor/'
           dest: 'dist/'
           src: ['**/*']
-        ,
+        ]
+      release:
+        files: [
           expand: true
           cwd: 'dist/'
           dest: '../server/public'
@@ -56,6 +67,7 @@ module.exports = (grunt) ->
       dist:
         files:
           'dist/css/main.css': 'src/sass/main.scss'
+          'dist/css/report.css': 'src/sass/report.scss'
 
     watch:
       files: ['src/**/*', 'test/**/*'],
@@ -70,6 +82,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-sass')
 
-  grunt.registerTask('build', ['concat:source', 'coffee:source', 'handlebars', 'concat:dist', 'sass', 'copy'])
+  grunt.registerTask('build', ['clean', 'concat:source', 'coffee:source', 'handlebars', 'concat:dist', 'sass', 'concat:test', 'coffee:test', 'copy:dist', 'copy:release'])
   grunt.registerTask('default', ['build', 'watch'])
-  grunt.registerTask('test', ['concat:test', 'coffee:test'])

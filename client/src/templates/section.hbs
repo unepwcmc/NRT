@@ -1,7 +1,11 @@
-<h1>Section</h1>
+<div class="section-title">
+    <small><i class="icon-time append"></i></a>Last updated on 1st of April, 18:23 by Dr. Anybody</small>
+    <h2>{{section.title}}</h2>
+    <h3>Nitrate-N concentrations (µg/L) in Abu Dabhi Emirate waters.</h3>
+</div>
 {{#each narratives}}
   {{addSubViewTo ../thisView "NarrativeView" narrative=this}}
 {{/each}}
 <a class="btn add-narrative">
-	Add Narrative
+  Add Narrative
 </a>
