@@ -5,6 +5,7 @@
   "src/views/section_view.coffee",
   "src/views/report_view.coffee",
   "src/views/narrative_view.coffee",
+  "src/lib/utils.coffee",
   "src/lib/chart_data_parser.coffee",
   "src/lib/data/sample_esri_service.coffee",
   "src/lib/bar_chart.coffee",
