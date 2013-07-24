@@ -2,14 +2,15 @@
 
 ### Setup
 
-- Install and setup [NVM](https://github.com/creationix/nvm), we're targeting
-  the newest stable node, which at the time of writing is v0.10.13
-- `npm install` in the project dir to get the libs
-- `npm install -g handlebars coffee-script grunt-cli backbone-diorama` to compile the
-  client application
-- Create config/database.json entries for 'development' and 'test'
-  environments. You will need to create the tables you named by hand.
-- Install mysql locally (`brew install mysql`, or `sudo apt-get install mysql-serverz)
+* Install and setup [NVM](https://github.com/creationix/nvm)
+  * We're targeting v0.10.13
+* `npm install -g handlebars coffee-script grunt-cli`
+* `npm install` in the `client/` and `server/` dirs to get the libs
+* `bower install` in the `client/` directory
+* Copy `server/config/database.json.example` to
+  `server/config/database.json` and fill it with your local mysql
+  config. You will need to create the tables you named by hand.
+* Install mysql locally (`brew install mysql`, or `sudo apt-get install mysql-server)
 
 ## Running the application
 
@@ -19,9 +20,11 @@
 
 ##### Compile coffeescripts
 
-`grunt watch`
+`grunt`
 
 ## Application structure
+
+### Server
 
 #### app.coffee
 Application entry point. Includes required modules and starts the server
@@ -30,35 +33,43 @@ Application entry point. Includes required modules and starts the server
 Binds the server paths (e.g. '/indicators/') to the routes in the route folder
 
 #### routes/
-Contains the 'actions' in the application, grouped into modules by their 
+Contains the 'actions' in the application, grouped into modules by their
 responsibility. These are mapped to paths by route_bindings.coffee
 
 #### models/
 mysql ORM initialization
 
-#### public/clientApp
+### Client
+
 A [BackboneDiorama](https://github.com/th3james/BackboneDiorama/) application
 
 ## Tests
 
 ### Server
-In the test/ folder (unsurprisingly). We're using mocha with the qunit
+
+In the `test/` folder (unsurprisingly). We're using mocha with the qunit
 interface and using the chai assertion syntax.
 
-Run them with 
+Run them with
 
 `npm test`
 
 ### Client
+
 #### Running 'em
-Fire up the app server in the test environment:
+
+Ensure you've run `grunt` to compile the tests, and fire up the app
+server in the test environment:
 
 `NODE_ENV=test coffee app.coffee`
 
 Then visit http://localhost:3000/tests
 
 #### Writing 'em
-The tests are written in mocha, using the qunit syntax with chai for asserts. Write tests in coffeescript in the clientTests/ folder.
+
+The tests are written in mocha, using the qunit syntax with chai for
+asserts. Write tests in coffeescript in the `clientTests/` folder and
+compile them with `grunt`.
 
 ## Development workflow
 
@@ -68,7 +79,7 @@ No tabs please, 2 spaces in all languages (HTML, CSS, Coffeescript...)
 ### Line-length
 80 characters
 
-### Commit workflow 
+### Commit workflow
 Work on feature branches, commit often with small commits with only one change
 to the code. When you're ready to merge your code into the master branch,
 submit a pull request and have someone else review it.
