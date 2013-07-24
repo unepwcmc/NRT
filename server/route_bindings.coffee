@@ -9,7 +9,7 @@ testRoutes = require('./routes/tests.coffee')
 
 module.exports = exports = (app) ->
   ensureAuthenticated = (req, res, next) ->
-    return next() if app.settings.env == 'development'
+    return next() unless app.settings.env == 'production'
 
     passport.
       authenticate('basic', { session: false }).
