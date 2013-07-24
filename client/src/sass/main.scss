@@ -1,19 +1,9 @@
-/* Welcome to Compass.
- * In this file you should write your main styles. (or centralize your imports)
- * Import this file using the following HTML or equivalent:
- * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-
-@import "tooltip";
+@import "reset";
 @import "font-awesome";
+@import "mixins";
+@import "variables";
 
-//COLORS
-$green: #5aa565;
-$buttonBlue: #007dbb;
-$linkBlue: #008fd6;
-$lightGrey: #eee;
-$grey: #949494;
-$iconColor: #444;
-$mainFont: #333;
+//COMMON STYLES FOR ALL PAGES
 
 body, html{
     width: 100%;
@@ -23,37 +13,27 @@ body, html{
 body{
     font-family: 'Open sans';
     font-size: 1.15em;
-    line-height: 1.7em;
+    line-height: 1.6em;
     color: $mainFont;
     color: rgba(0,0,0,0.8);
 }
 
 a{
-    color: $linkBlue;
     text-decoration: none;
-    border-bottom: 1px solid $linkBlue;
-    &:hover{
-        color: lighten($linkBlue, 10);
-        text-decoration: none;
-        border-bottom: 1px solid lighten($linkBlue, 15);
-    }
+    color: $mainFont;
+    color: rgba(0,0,0,0.8);
 }
 
 i.append{
     padding-right: 10px;
 }
 
+i.post-append{
+    padding-left: 10px;
+}
+
 .clear{
-    *zoom: 1;
-    &:before,
-    &:after {
-        display: table;
-        content: "";
-        line-height: 0;
-    }
-    &:after {
-        clear: both;
-    }
+    @include clearfix;
 }
 
 small{
@@ -72,14 +52,19 @@ button{
     padding: 15px 40px;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.5s;
-    -webkit-transition: background-color 0.5s;
+    @include transition(background-color 0.5s);
     &.grey{
         padding: 5px 15px;
         background-color: transparent;
         border: 1px solid #c3c3c3;
         color: #c3c3c3;
         font-weight: 400;
+        span{
+            display: none;
+            &.show{
+                display: inline;
+            }
+        }
         i{
             &.icon-bookmark{
                 display: none;
@@ -90,7 +75,7 @@ button{
             border-color: $buttonBlue;
             color: $buttonBlue;
         }
-        &:active{
+        &:active, &.active{
             background-color: $buttonBlue;
             border-color: $buttonBlue;
             color: white;
@@ -107,26 +92,10 @@ button{
     &:hover{
         background-color: $linkBlue;
     }
-    &:active{
+    &:active, &.active{
         background-color: #00679b;
         color: #eee;
     }
-}
-
-*.unselectable {
-   -moz-user-select: -moz-none;
-   -khtml-user-select: none;
-   -webkit-user-select: none;
-   -o-user-select: none;
-   user-select: none;
-}
-
-*.unselectable * {
-   -moz-user-select: text;
-   -khtml-user-select: text;
-   -webkit-user-select: text;
-   -o-user-select: text;
-   user-select: text;
 }
 
 ::selection{
@@ -137,30 +106,12 @@ button{
     background: #b6daee;
 }
 
+.arabic{
+    text-align: right;
+}
+
 header, section, footer{
     display: block;
-}
-
-header{
-    width: 100%;
-    height: 420px;
-    position: relative;
-    background-image: url('../img/bkg.jpg');
-    background-size: cover;
-    background-position: center center;
-}
-
-.caption{
-    font-size: 0.85em;
-    position: absolute;
-    display: inline-block;
-    bottom: 0;
-    right: 0;
-    background-color: rgba(0,0,0,0.65);
-    padding: 0 60px 0 20px;
-    font-weight: 300;
-    border-top-left-radius: 4px;
-    color: #fff;
 }
 
 h1{
@@ -179,16 +130,12 @@ h2{
 
 h3{
     font-size: 1.1em;
-    line-height: 1.4em;
+    line-height: 1.5em;
     color: $grey;
 }
 
-ul{
-    list-style: disc;
-    padding: 0 0 30px 40px;
-    li{
-        padding: 15px;
-    }
+h4{
+    font-size: 1.1em;
 }
 
 p{
@@ -201,68 +148,253 @@ strong{
 }
 
 .content{
-    width: 1040px;
+    width: 980px;
     padding: 30px 20px;
     margin: 0 auto;
     outline: 0;
     word-wrap: break-word;
-}
-
-.report-content{
-    width: 700px;
-    padding: 0 20px;
-}
-
-.report-sidebar{
-    width: 260px;
-    padding: 45px 20px 0 20px;
-}
-
-.report-content, .report-sidebar{
-    float: left;
-}
-
-.report-title{
-    border-bottom: 1px solid #eee;
-    padding-bottom: 20px;
-    margin-bottom: 10px;
-}
-
-.report-extra{
-    font-size: 0.85em;
-    color: $grey;
     a{
-        color: $grey;
-        border-bottom: none;
+        color: $linkBlue;
+        text-decoration: none;
+        border-bottom: 1px solid $linkBlue;
+        &:hover{
+            color: lighten($linkBlue, 10);
+            text-decoration: none;
+            border-bottom: 1px solid lighten($linkBlue, 15);
+        }
     }
-    i{
-        color: $iconColor;
-        font-size: 1.15em;
+    ul{
+        list-style: disc;
+        padding: 0 0 30px 40px;
+        li{
+            padding: 15px;
+        }
     }
 }
 
-.time-period{
-    color: $grey;
-    padding-bottom: 5px;
+.arabic{
+    .double-column{
+        .column{
+            float: right;
+            &.left{
+                padding: 20px 0 0 30px;
+            }
+            &.right{
+                padding: 20px 30px 0 0;
+            }
+        }
+    }
+}
+
+.double-column{
+    .column{
+        @include box-sizing(border-box);
+        width: 50%;
+        float: left;
+        &.left{
+            padding: 20px 30px 0 0;
+        }
+        &.right{
+            padding: 20px 0 0 30px;
+        }
+    }
+}
+
+.arabic .menu{
+    right: 0;
+    left: auto;
+    .main-menu-container, .search{
+        float: right;
+    }
+}
+
+.menu{
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    .main-menu-container, .search{
+        float: left;
+    }
+    .main-menu, .search-header{
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    }
+    .main-menu-container{
+        position: relative;
+    }
+    .main-menu{
+        overflow: hidden;
+        font-family: "PT Sans";
+        text-align: center;
+        background-color: #008BDC;
+        color: $white;
+        font-size: 1.3em;
+        border-bottom: 1px solid #0073BB;
+        position: relative;
+        cursor: pointer;
+        overflow-x: hidden;
+        @include transition(width 0.5s);
+        .full-name{
+            display: inline-block;
+            font-size: 0.75em;
+            padding: 0 20px;
+            display: none;
+            overflow: hidden;
+            min-width: 180px;
+            vertical-align: middle;
+            .name{
+                max-width: 140px;
+                display: inline-block;
+                vertical-align: middle;
+                @include text-overflow;
+            }
+            i{
+                font-size: 0.85em;
+                line-height: 60px;
+                vertical-align: middle;
+            }
+        }
+        .initials{
+            font-size: 1.4em;
+            position: relative;
+            top: 2px;
+        }
+        &:hover, &.opened{
+            @include transition(width 0.5s);
+            width: 220px;
+            .full-name{
+                display: inline-block;
+            }
+            .initials{
+                display: none;
+            }
+        }
+    }
+    ul{
+        text-align: left;
+        width: 100%;
+        min-width: 200px;
+        display: none;
+        list-style: none;
+        position: absolute;
+        left: 0;
+        top: 61px;
+        li{
+            a{
+                color: $white;
+                display: inline-block;
+                padding: 0 20px;
+                line-height: 60px;
+                width: 100%;
+                @include box-sizing(border-box);
+                .icon{
+                    display: inline-block;
+                    width: 24px;
+                    text-align: center;
+                    padding-right: 15px;
+                }
+            }
+            background-color: #333;
+            border-bottom: 1px solid #222222;
+            &:hover{
+                background-color: #111;
+            }
+            &:last-child{
+                border-bottom: none;
+            }
+        }
+    }
+    .search-container{
+        width: 700px;
+        height: 60px;
+        overflow: hidden;
+    }
+    .search-box{
+        display: none;
+    }
+    .search-header{
+        overflow: hidden;
+        color: #BBB;
+        background-color: #fff;
+        border-bottom: 1px solid #DDD;
+        border-right: 1px solid #DDD;
+        @include transition(width 0.5s);
+        .search-icon, input[type="text"], .close-search{
+            float: left;
+        }
+        .search-icon{
+            width: 60px;
+            height: 60px;
+            overflow: hidden;
+            text-align: center;
+            cursor: pointer;
+        }
+        input[type="text"]{
+            width: 550px;
+            font-size: 1.2em;
+            border: none;
+            border-left: 1px solid #BBB;
+            padding: 0 20px;
+            position: relative;
+            top: 15px;
+            color: rgba(0,0,0,0.25);
+            &:focus, &.filled{
+                color: $mainFont;
+                color: rgba(0,0,0,0.8);
+            }
+        }
+        .close-search{
+            color: #DDD;
+            cursor: pointer;
+            &:hover{
+                color: $mainFont;
+            }
+        }
+        &.opened{
+            @include transition(width 0.5s);
+            width: 700px;
+        }
+        i{
+            display: inline-block;
+            font-size: 1.4em;
+            position: relative;
+            top: 2px;
+        }
+    }
+}
+
+.arabic section{
+    small{
+        right: 0;
+    }
 }
 
 section{
-    margin: 30px 0;
+    padding: 15px 0;
     position: relative;
     small{
         display: none;
         color: #c3c3c3;
         position: absolute;
         left: 0;
-        top: -35px;
+        top: -18px;
         i{
             color: $buttonBlue;
             font-size: 1.3em;
         }
     }
+    .view{
+        display: none;
+    }
     &:hover{
         small{
             display: block;
+        }
+        .view{
+            display: inline-block;
         }
     }
     img{
@@ -272,37 +404,19 @@ section{
 
 .section-title{
     padding-bottom: 30px;
+
 }
 
-.report-sidebar button{
-    display: block;
-    margin: 0;
-}
-
-.recent-changes{
-    margin-top: 88px;
-    font-size: 0.75em;
-    line-height: 1.4em;
-    color: $grey;
+.tag{
+    display: inline-block;
+    line-height: 1em;
+    font-size: 0.55em;
+    padding: 2px 5px 4px 5px;
+    border-radius: 3px;
     vertical-align: middle;
-    i{
-        color: $iconColor;
-        font-size: 1.3em;
-        vertical-align: middle;
-    }
-    ul{
-        padding: 0;
-        li{
-            list-style: none;
-            padding: 0 0 8px 0;
-        }
-    }
-}
-
-.recent-changes-title{
-    padding-bottom: 5px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid $lightGrey;
+    background-color: $buttonBlue;
+    border: 1px solid $buttonBlue;
+    color: $white;
 }
 
 @import "charts";

@@ -1,34 +1,55 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Report show page</title>
+{{!< main}}
 
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,300' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/css/main.css">
+{{#contentFor 'header'}}
 
-    <script src="/js/lib/d3.min.js"></script>
-    <script src="/js/lib/jquery.min.js"></script>
-    <script src="/js/lib/bootstrap.tooltip.js"></script>
-    <script src="/js/lib/underscore-min.js"></script>
-    <script src="/js/lib/backbone-min.js"></script>
-    <script src="/js/lib/backbone-associations.js"></script>
-    <script src="/js/lib/handlebars.js"></script>
-    <script src="/js/lib/diorama.js"></script>
-    <script src="/js/application.js"></script>
+  <link rel="stylesheet" href="/css/report.css">
+  
+  <script src="/js/lib/d3.min.js"></script>
+  <script src="/js/lib/underscore-min.js"></script>
+  <script src="/js/lib/backbone-min.js"></script>
+  <script src="/js/lib/backbone-associations-min.js"></script>
+  <script src="/js/lib/handlebars.js"></script>
+  <script src="/js/lib/diorama.js"></script>
+  <script src="/js/application.js"></script>
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+       new Backbone.Controllers.ReportsController();
+    });
+  </script>
 
-    <script type="text/javascript">
-      $(document).ready(function(){
-         new Backbone.Controllers.ReportsController();
-      });
-    </script>
-  </head>
-  <body>
+{{/contentFor}}
+
     <header>
         <div class="caption">Abu Dhabi 2013</div>
     </header>
     <div class="content">
         <div class="report-content">
+            <div class="report-title">
+                <div class="time-period">January - March 2013</div>
+                <h1>Marine water quality report</h1>
+                <div class="report-extra">
+                    <div class="last-update">
+                        <span>Last update</span>
+                        <i class="icon-time append"></i>1st of April, 18:23
+                    </div>
+                    <div class="clear"></div>
+                    <div class="who">
+                        <span>Report owner</span>
+                        <i class="icon-user append"></i>Dr. Anybody
+                    </div>
+                </div>
+            </div>
+            <section>
+                <div class="section-title">
+                    <h2>Introduction</h2>
+                </div>
+                <p>Enviroment Agency Abu Dabhi plubishes this quarterly Marine Water Quality (MWQ) report four times a year to present the MWQ status during the previous three-months based on the results of MWQ monitoring along the Abu Dabhi Emirate coast. The <a href="#">marine water quality</a> stations are distributed throughout the territorial waters of the Emirate. This report focuses on six MWQ parameters (europhic and bacterial) for which recommended standars have been established to protect marine biota and human health.</p>
+                <!--<p><button>Share something</button></p>-->
+                <p>Euttophic parameters are nutrients, especially various compounds of nitrogen, which result largely from human activities. High levels of nutrients in marine water can result in enhanced growth of aquatic plants, especially phytoplankton (algae). As a result, phytoplankton populations increase rapidly, and the excess, unconsumed plant material can result in problem such as diminished water clarity and dissolved oxygen (DO) depletion in bottom waters. Severe eutrophic conditions may also contribute to the formation of harmful algal blooms (HABs), which may include toxic algal species that can cause foul odors, skin rashes from contact with the water, fish kills, and shellfish poisoning , and can disrupt the normal operation of desalination plants by clogging their seawater filtration systems.</p>
+                <p>Increasing eutrophication and higher frequencies of harmful algal blooms has been observed in Abu Dabhi waters over recent years. This quarterly report cover the following eutrophic parameters: phosphate-P, ammonia-N, chlorophyll-a, nitrate-N and a dissolved oxygen.</p>
+                <p>EAD has been and will continue to be alert to bacterial levels in order to control public health risks of recreational exposure to marine water. This quarterly report presents observed levels of enterococci - the best indicator of sewage contamination of marine water.</p>
+            </section>
             <section id='user-section'>
             </section>
             <section>
@@ -41,7 +62,7 @@
         </div>
         <div class="report-sidebar">
             <button class="grey">
-                <i class="icon-bookmark-empty append"></i><i class="icon-bookmark append"></i>Bookmark this report
+                <i class="icon-bookmark-empty append"></i><i class="icon-bookmark append"></i><span class="show">Bookmark this report</span><span>Bookmarked report</span>
             </button>
             <div class="recent-changes">
                 <div class="recent-changes-title">
@@ -55,22 +76,31 @@
             </div>
         </div>
         <div class="clear"></div>
-        <!--<h1>من الى هتلر مسرح جديدة. أم فرنسية والجنود وتم. قد ذلك إستعمل لألمانيا</h1>
-        <p>من الى هتلر مسرح جديدة. أم فرنسية والجنود وتم. قد ذلك إستعمل لألمانيا. الربيع، المبرمة الدولارات حيث و, القصف الأحمر شيء قد. أي جزيرتي بريطانيا، تشيكوسلوفاكيا لمّ, من شرسة أحكم الأثنان بحق.
+    </div>
+    <div class="related-reports">
+        <div class="double-column">
+            <h2>You may also want to see...</h2>
+            <div class="column left">
+                <div class="related-report">
+                    <h4><a href="">Marine water quality report 4 <span class="tag">view report</span></a></h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus mi urna, consequat feugiat ante feugiat eu. In eget nibh sit amet sapien feugiat vestibulum vel nec ante.</p>
+                </div>
+            </div>
+            <div class="column right">
+                <div class="related-report">
+                    <h4><a href="">Marine water quality report 3 <span class="tag">view report</span></a></h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus mi urna, consequat feugiat ante feugiat eu. In eget nibh sit amet sapien feugiat vestibulum vel nec ante.</p>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
 
-    بـ وكسبت الإنزال يكن, فقد الألماني المتساقطة، و. إيو ما تحرّك لإعلان وبلجيكا،, الدنمارك ناجازاكي وصل ٣٠. وقد في المقيتة المدنيين, بـ لها عُقر لأداء الألمانية،. حشد بـ الضغوط النمسا بأضرار, بعد و تشيرشل اسبوعين الإطلاق. وجزر عصبة تعداد أضف ما. وصل تم العدّ ولاتّساع, فكانت الشتوية اليابانية و إيو.
-
-    العام، المعركة، المقاومة كل الا, من فقد دخول بوزيرها, لكل بالرغم بالقنابل الأمامية عل. أي ساعة بمعارضة القوقازية جوي. كلّ بالقصف البلطيق ولاتّساع من. حول وقبل بالمحور و, عن برلين إستيلاء الأمريكي انه. بحق ووصف وبدأت الأمريكي، ثم. بشرية جديداً كل غير, كل وقد معقل وانتهاءً المنتصرة.
-
-    هذا أملاً إعادة إذ. عام سقوط ترتيب وبولندا و, خلاف معارضة للأراضي و كان. هذه لم بشرية ستالينجراد،, وقد في وبعض ويعزى ويتّفق. ما خسائر تشكيل الألمان عرض, عن وتنامت الأيديولوجية، ذلك.
-
-    ما قام مشارف والمعدات. وقبل معزّزة الإقتصادي قصف أم, شبح تم الشطر الغربي مليارات. ذلك وبعض الساحل أن, تم الخاسر الواقعة بها. للحرب المنتصر البريطاني غزو أم, فعل وانهاء بالرّغم هو, هو سقطت العالمي والجنود أما. إذ حتى الغالي الجنود الياباني, التي المجتمع كان هو, إذ يبق بدفع لقهر وبداية.</p>-->
-        
-        <script>
-            $('.report-extra').tooltip({
-                selector: "a[data-toggle=tooltip]"
-            });
-        </script>
+    <script>
+      $('.report-extra').tooltip({
+        selector: "a[data-toggle=tooltip]"
+      });
+    </script>
     </div>
   </body>
 </html>
