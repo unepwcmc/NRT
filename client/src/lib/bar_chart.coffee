@@ -30,18 +30,18 @@ nrtViz.barChart  = (conf={}) ->
   yAxis = d3.svg.axis().scale(conf.yScale).orient("left")
     .tickFormat(conf.format)
 
-  setSvg = (selection, data) ->
+  setSvgDomElement = (selection, data) ->
     svg = selection.selectAll("svg").data data
     svg.enter().append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     
-  setGOuter = (selection, data) ->
+  setOuterGDomElement = (selection, data) ->
     g = selection.selectAll('g.wrapper').data [data]
     g.enter().append('g').attr("class", "wrapper")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
-  setgAxis = (selection, data) ->
+  setGAxisDomElement = (selection, data) ->
     gAxis = selection.selectAll('g.axis').data [data]
     gAxis.enter().append('g').attr("class", "axis")
     gAxis.append("g").attr("class", "x axis")
@@ -55,11 +55,11 @@ nrtViz.barChart  = (conf={}) ->
       .call(yAxis)
     gAxis
 
-  setGBars = (selection, data) ->
+  setGBarsDomElement = (selection, data) ->
     gBars = selection.selectAll('g.bars').data [data]
     gBars.enter().append("g").attr("class", "bars")
 
-  setBars =  (args) ->
+  setBarsDomElements =  (args) ->
     bars = args.selection.selectAll('.bar').data args.data
     bars.enter()
       .append("rect")
@@ -90,16 +90,16 @@ nrtViz.barChart  = (conf={}) ->
     xScale.domain data.map (d) -> d[xKey]  # TODO
     yScale.domain [ 0, d3.max(data, (d) -> d[yKey]) ]  # TODO
     # svg generators
-    svg = setSvg selection, [data]
-    gOuter = setGOuter svg, [data]
-    gAxis = setgAxis gOuter, [data]
-    gBars = setGBars gOuter, [data]
+    svg = setSvgDomElement selection, [data]
+    gOuter = setOuterGDomElement svg, [data]
+    gAxis = setGAxisDomElement gOuter, [data]
+    gBars = setGBarsDomElement gOuter, [data]
     args =
       selection: gBars
       xScale: xScale
       yScale: yScale
       data: data
-    bars = setBars args
+    bars = setBarsDomElements args
 
   chart.width = (c) ->
     return width  unless arguments.length
