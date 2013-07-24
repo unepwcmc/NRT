@@ -3,7 +3,6 @@ window.Backbone.Faker ||= {}
 
 class Backbone.Faker.Reports
   @create: =>
-    sections = 
     new Backbone.Models.Report(
       title: "#{@getRandomReportContent('title_prefix')} #{@getRandomReportContent('title_suffix')}"
       brief: @getRandomReportContent('brief')
