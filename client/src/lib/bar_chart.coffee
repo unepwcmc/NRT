@@ -31,6 +31,8 @@ nrtViz.barChart  = (conf={}) ->
   chart = (selection) ->
     xScale = conf.xScale
     yScale = conf.yScale
+    xKey = conf.xKey
+    yKey = conf.yKey
     margin = conf.margin
     # rangeRoundBands [min, max], padding, outer-padding
     xScale.rangeRoundBands [0, width], .1, .1
@@ -38,8 +40,8 @@ nrtViz.barChart  = (conf={}) ->
     # Equivalent to: selection.node().__data__ 
     data = selection.datum()
     # Data input domains
-    xScale.domain data.map (d) -> d.Year  # TODO
-    yScale.domain [ 0, d3.max(data, (d) -> d.Percentage) ]  # TODO
+    xScale.domain data.map (d) -> d[xKey]  # TODO
+    yScale.domain [ 0, d3.max(data, (d) -> d[yKey]) ]  # TODO
     # Select the svg element, if it exists.
     svg = selection.selectAll("svg").data [data]
     # Otherwise, create the skeletal chart.
@@ -61,11 +63,11 @@ nrtViz.barChart  = (conf={}) ->
       .call(yAxis)
     # bars!
     bar = svg.selectAll('.bar').data data
-    #  .data (data) -> data.Percentage
+    #  .data (data) -> data[yKey]
     bar.enter()
       .append("rect")
-      .attr("class", (d) -> "bar b_#{d.Year}")
-      .attr("x", (d) -> xScale(d.Year) + margin.left)
+      .attr("class", (d) -> "bar b_#{d[xKey]}")
+      .attr("x", (d) -> xScale(d[xKey]) + margin.left)
       .attr("width", 0)
       .attr("y", (d) -> height )
       .attr("height", (d) -> 0)
@@ -73,10 +75,10 @@ nrtViz.barChart  = (conf={}) ->
     bar.exit().remove()
     bar.transition()
       .duration(500)
-      .attr("x", (d) -> xScale(d.Year) + margin.left)
+      .attr("x", (d) -> xScale(d[xKey]) + margin.left)
       .attr("width", xScale.rangeBand())
-      .attr("y", (d) -> yScale(d.Percentage) + margin.top )
-      .attr "height", (d) -> height - yScale(d.Percentage)
+      .attr("y", (d) -> yScale(d[yKey]) + margin.top )
+      .attr "height", (d) -> height - yScale(d[yKey])
 
   chart.width = (c) ->
     return width  unless arguments.length
