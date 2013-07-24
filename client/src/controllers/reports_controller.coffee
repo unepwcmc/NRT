@@ -3,13 +3,7 @@ window.Backbone.Controllers ||= {}
 
 class Backbone.Controllers.ReportsController extends Backbone.Diorama.Controller
   constructor: ->
-    report = new Backbone.Models.Report(
-      title: "Test Report"
-      brief: "This is for testing"
-      sections: [new Backbone.Models.Section(
-        title: "Test Section"
-      )]
-    )
+    report = @createExampleReport()
 
     reportView = new Backbone.Views.ReportView(report: report)
     $('.report-content').prepend(reportView.el)
@@ -29,3 +23,13 @@ class Backbone.Controllers.ReportsController extends Backbone.Diorama.Controller
     width = @vizRegion.$el.width()
     barchartView = new Backbone.Views.BarChartView({width: width})
     @vizRegion.showView(barchartView)
+
+  createExampleReport: ->
+    new Backbone.Models.Report(
+      title: "Test Report"
+      brief: "This is for testing"
+      sections: [new Backbone.Models.Section(
+        title: "Test Section"
+        visualisations: [new Backbone.Models.Visualisation()]
+      )]
+    )
