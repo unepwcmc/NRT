@@ -8,7 +8,9 @@ class Backbone.Views.BarChartView extends Backbone.View
   #template: Handlebars.templates['bar_chart.hbs']
 
   initialize: (options) ->
-    @barChart = nrtViz.barChart()
+    @barChart = nrtViz.barChart
+     xKey: "Year"
+     yKey: "Percentage"
     @selection = d3.select(@el)
     @width = options.width
 
