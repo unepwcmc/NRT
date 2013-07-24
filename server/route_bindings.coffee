@@ -12,10 +12,10 @@ module.exports = exports = (app) ->
   app.resource 'api/narrative', narrativeApi, { format: 'json' }
 
   app.get "/", dashboardRoutes.index
-  app.get "/dashboard/", dashboardRoutes.index
-  app.get "/indicators/", indicatorRoutes.index
-  app.get "/reports/", reportRoutes.index
-  app.get "/bookmarks/", bookmarkRoutes.index
+  app.get "/dashboard", dashboardRoutes.index
+  app.get "/indicators", indicatorRoutes.index
+  app.get "/reports", reportRoutes.index
+  app.get "/bookmarks", bookmarkRoutes.index
 
   app.get "/indicator/:id", indicatorRoutes.show
 
