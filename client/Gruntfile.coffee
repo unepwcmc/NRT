@@ -49,7 +49,9 @@ module.exports = (grunt) ->
           cwd: 'src/vendor/'
           dest: 'dist/'
           src: ['**/*']
-        ,
+        ]
+      release:
+        files: [
           expand: true
           cwd: 'dist/'
           dest: '../server/public'
@@ -79,5 +81,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-sass')
 
-  grunt.registerTask('build', ['clean', 'concat:source', 'coffee:source', 'handlebars', 'concat:dist', 'sass', 'concat:test', 'coffee:test', 'copy'])
+  grunt.registerTask('build', ['clean', 'concat:source', 'coffee:source', 'handlebars', 'concat:dist', 'sass', 'concat:test', 'coffee:test', 'copy:dist', 'copy:release'])
   grunt.registerTask('default', ['build', 'watch'])
