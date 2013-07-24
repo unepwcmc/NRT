@@ -19,9 +19,40 @@ class Backbone.Faker.Reports
     _.times count, =>
       section = new Backbone.Models.Section
         title: @getRandomSectionContent('title')
-        visualisations: [new Backbone.Models.Visualisation()]
+        visualisations: @createVisualisations()
       sections.push section
     sections
+
+  @createVisualisations: =>
+    count = Math.floor(Math.random()*1) + 1
+    visualisations = []
+    _.times count, =>
+      visualisations.push new Backbone.Models.Visualisation(
+        data: @createFakeData()
+      )
+    visualisations
+
+  @createFakeData: =>
+    features = []
+    year = 2010
+    _.times Math.floor(Math.random()*5) + 3, ->
+      features.push(
+        attributes:
+          Percentage: Math.floor(Math.random()*99) + 1
+          Year: year
+      )
+      year = year + 1
+
+    fields: [
+        name: "Percentage"
+        type: "esriFieldTypeDouble"
+        unit: "percentage"
+      ,
+        name: "Year"
+        type: "esriFieldTypeString"
+        unit: "year"
+      ]
+      features: features
 
   @getRandomSectionContent: (component) =>
     component = @section_content[component]

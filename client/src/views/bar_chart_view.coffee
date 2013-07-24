@@ -11,13 +11,12 @@ class Backbone.Views.BarChartView extends Backbone.View
     @barChart = nrtViz.barChart
      xKey: "Year"
      yKey: "Percentage"
-    @selection = d3.select(@el)
     @width = options.width
+    @visualisation = options.visualisation
 
   render: ->
-    # I think data should go into a backbone model, so render would be tied to
-    # model updates.
-    data = nrtViz.chartDataParser window.SAMPLE_DATA
+    @selection = d3.select(@el)
+    data = @visualisation.formatDataForChart()
     @selection.data [data]
 
     @barChart.chart.width @width
