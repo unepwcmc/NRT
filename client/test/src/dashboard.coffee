@@ -9,7 +9,8 @@ test("Can view my recent indicators")
 test("Can navigate to Dashboard, Reports, Indicators and Bookmarks")
 
 suite('Dashboard: notifications')
-test("Can")
+test("Can see requests for me to write sections")
+test("Requests to write sections have title and requester and date")
 
 suite('Dashboard: work-in-progress')
 
