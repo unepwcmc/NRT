@@ -15,7 +15,7 @@ test("Can see barchart view", ->
 
   subViewExists = false
   for subView in view.subViews
-    if subView.constructor.name is "BarChartView"
+    if subView.constructor.name is "BarChartView" and subView.visualisation is visualisation
       subViewExists = true
 
   assert subViewExists, "could not find bar-chart sub-view for section"
