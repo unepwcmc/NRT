@@ -38,7 +38,21 @@ test("Can see the section visualisation", ->
   view.close()
 )
 
-test("Can see the section narrative")
+test("Can see the section narrative", ->
+  narrative = new Backbone.Models.Narrative()
+  section = new Backbone.Models.Section(narratives: [narrative])
+
+  view = createAndShowSectionViewForSection(section)
+
+  subViewExists = false
+  for subView in view.subViews
+    if subView.constructor.name == "NarrativeView"
+      subViewExists = true
+
+  assert subViewExists
+
+  view.close()
+)
 test("Can edit the section")
 test("Can view report containing this section")
 test("Can navigate to Dashboard, Reports, Indicators and Bookmarks")

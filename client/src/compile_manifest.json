@@ -1,9 +1,9 @@
 [
   "src/models/report.coffee",
   "src/models/narrative.coffee",
+  "src/collections/narrative_collection.coffee",
   "src/models/section.coffee",
   "src/models/visualisation.coffee",
-  "src/collections/narrative_collection.coffee",
   "src/views/section_view.coffee",
   "src/views/report_view.coffee",
   "src/views/narrative_view.coffee",
