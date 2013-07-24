@@ -1,8 +1,8 @@
 
 exports.index = (req, res) ->
-  res.render "index",
+  res.render "indicators",
     title: "Hello world, I'm a index page"
 
 exports.show = (req, res) ->
-  res.render "indicator",
+  res.render "indicators/show",
     indicator: req.params.id

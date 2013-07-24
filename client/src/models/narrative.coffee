@@ -1,6 +1,6 @@
 window.Backbone.Models || = {}
 
-class window.Backbone.Models.Narrative extends Backbone.Model
+class window.Backbone.Models.Narrative extends Backbone.RelationalModel
   defaults:
     content: "Narrative goes here."
     title: "title"

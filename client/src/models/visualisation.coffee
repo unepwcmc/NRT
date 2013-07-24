@@ -1,3 +1,3 @@
 window.Backbone.Models || = {}
 
-class window.Backbone.Models.Visualisation extends Backbone.Model
+class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
