@@ -30,3 +30,6 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
           Percentage: 132
           Year: 2013
       ]
+
+  formatDataForChart: ->
+    _.map(@get("data").features, (el) -> el.attributes)
