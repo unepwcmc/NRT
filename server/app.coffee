@@ -16,7 +16,10 @@ bindRoutesForApp = require('./route_bindings.coffee')
 app.set('port', process.env.PORT || 3000)
 
 # assign the handlebars engine to .html files
-app.engine "hbs", hbs.express3(partialsDir: __dirname + '/views/partials')
+app.engine "hbs", hbs.express3(
+  partialsDir: __dirname + '/views/partials'
+  layoutsDir: __dirname + '/views/layouts'
+)
 app.set "view engine", "hbs"
 app.set "views", __dirname + "/views"
 

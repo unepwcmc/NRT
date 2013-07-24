@@ -1,27 +1,25 @@
-{{> head }}
+{{!< main}}
 
-    <link rel="stylesheet" href="/css/report.css">
+{{#contentFor 'header'}}
 
-    <script src="/js/lib/d3.min.js"></script>
-    <script src="/js/lib/underscore-min.js"></script>
-    <script src="/js/lib/backbone-min.js"></script>
-    <script src="/js/lib/backbone-associations-min.js"></script>
-    <script src="/js/lib/handlebars.js"></script>
-    <script src="/js/lib/diorama.js"></script>
-    <script src="/js/application.js"></script>
+  <link rel="stylesheet" href="/css/report.css">
+  
+  <script src="/js/lib/d3.min.js"></script>
+  <script src="/js/lib/underscore-min.js"></script>
+  <script src="/js/lib/backbone-min.js"></script>
+  <script src="/js/lib/backbone-associations-min.js"></script>
+  <script src="/js/lib/handlebars.js"></script>
+  <script src="/js/lib/diorama.js"></script>
+  <script src="/js/application.js"></script>
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+       new Backbone.Controllers.ReportsController();
+    });
+  </script>
 
-    <script type="text/javascript">
-      $(document).ready(function(){
-         new Backbone.Controllers.ReportsController();
-      });
-    </script>
-  </head>
-  <body>
-    {{> menu}}
+{{/contentFor}}
 
-    <header>
-        <div class="caption">Abu Dhabi 2013</div>
-    </header>
     <div class="content">
         <div class="report-content">
             <div class="report-title">

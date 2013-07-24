@@ -20,7 +20,7 @@
     "less": "1.4.1",
     "less-middleware": "0.1.12",
     "handlebars": "1.0.12",
-    "express-handlebars": "0.0.2",
+    "express-hbs": "0.2.0",
     "coffee-script": "1.6.x",
     "wrench": "1.5.1",
     "node-sass": "0.5.4",
