@@ -13,5 +13,6 @@
   "src/lib/bar_chart.coffee",
   "src/views/bar_chart_view.coffee",
   "src/controllers/reports_controller.coffee",
-  "src/helpers/handlebars_debug.coffee"
+  "src/helpers/handlebars_debug.coffee",
+  "src/lib/fake_reports.coffee"
 ]

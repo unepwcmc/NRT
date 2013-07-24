@@ -25,11 +25,4 @@ class Backbone.Controllers.ReportsController extends Backbone.Diorama.Controller
     @vizRegion.showView(barchartView)
 
   createExampleReport: ->
-    new Backbone.Models.Report(
-      title: "Test Report"
-      brief: "This is for testing"
-      sections: [new Backbone.Models.Section(
-        title: "Test Section"
-        visualisations: [new Backbone.Models.Visualisation()]
-      )]
-    )
+    Backbone.Faker.Reports.create()
