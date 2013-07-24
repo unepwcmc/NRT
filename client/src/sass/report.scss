@@ -1,0 +1,221 @@
+//COMMON CONTENT
+
+@import "mixins";
+@import "variables";
+
+//REPORT STYLES
+
+header{
+    width: 100%;
+    height: 420px;
+    position: relative;
+    background-image: url('/images/bkg.jpg');
+    background-size: cover;
+    background-position: center center;
+}
+
+.arabic .caption{
+    left: 0;
+    right: auto;
+    padding: 0 20px 0 60px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 4px;
+}
+
+.caption{
+    font-size: 0.85em;
+    position: absolute;
+    display: inline-block;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.65);
+    padding: 0 60px 0 20px;
+    font-weight: 300;
+    border-top-left-radius: 4px;
+    color: #fff;
+}
+
+.report-content{
+    width: 650px;
+    padding: 0 20px;
+    *{
+        max-width: 650px;
+    }
+}
+
+.report-sidebar{
+    width: 250px;
+    padding: 45px 20px 0 20px;
+}
+
+.arabic .report-sidebar{
+    button{
+        float: right;
+    }
+}
+
+.arabic{
+    .report-content, .report-sidebar{
+        float: right;
+    }
+}
+
+.report-content, .report-sidebar{
+    float: left;
+}
+
+.report-title{
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+}
+
+.report-extra{
+    font-size: 0.85em;
+    color: $grey;
+    .last-update, .who{
+        position: relative;
+        display: inline-block;
+        &:hover{
+            span{
+                @include opacity(100);
+                -webkit-animation: show 0.3s linear;
+                animation: show 0.3s linear;
+            }
+        }
+        span{
+            @include opacity(0);
+            display: inline-block;
+            text-align: center;
+            width: 80px;
+            position: absolute;
+            top: -22px;
+            left: -32px;
+            font-size: 0.7em;
+            line-height: 1em;
+            padding: 6px 0 7px 0;
+            background-color: rgba(0,0,0,0.8);
+            color: $white;
+            border-radius: 3px;
+            &:after{
+                position: absolute;
+                top: 100%;
+                left: 36px;
+                content: '';
+                width: 0;
+                height: 0;
+                border-top: solid 4px rgba(0,0,0,0.8);
+                border-left: solid 4px transparent;
+                border-right: solid 4px transparent;
+            }
+        }
+    }
+    a{
+        color: $grey;
+        border-bottom: none;
+    }
+    i{
+        color: $iconColor;
+        font-size: 1.15em;
+    }
+}
+
+.time-period{
+    color: $grey;
+    padding-bottom: 5px;
+}
+
+.report-sidebar button{
+    display: block;
+    margin: 0;
+}
+
+.recent-changes{
+    margin-top: 81px;
+    font-size: 0.75em;
+    line-height: 1.4em;
+    color: $grey;
+    vertical-align: middle;
+    i{
+        color: $iconColor;
+        font-size: 1.3em;
+        vertical-align: middle;
+    }
+    ul{
+        padding: 0;
+        li{
+            list-style: none;
+            padding: 0 0 8px 0;
+        }
+    }
+}
+
+.recent-changes-title{
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid $lightGrey;
+}
+
+.related-reports{
+    background-color: $bkgGrey;
+    border-top: 1px solid $lightGrey;
+    padding: 60px 20px;
+    .double-column{
+        margin: 0 auto;
+        width: 980px;
+        padding: 0 20px;
+        @include box-sizing(border-box);
+    }
+    .related-report{
+        padding-bottom: 20px;
+        &:last-child{
+            padding-bottom: 0;
+        }
+    }
+    h4{
+        padding-bottom: 5px;
+        vertical-align: middle;
+        a{
+            color: $mainFont;
+            border-bottom: none;
+            &:hover{
+                span{
+                    @include opacity(100);
+                }
+            }
+        }
+        span{
+            @include opacity(0);
+            margin-left: 5px;
+            @include transition(all 0.5s);
+        }
+    }
+    p{
+        font-size: 0.75em;
+        line-height: 1.6em;
+        color: $mediumGrey;
+        padding-bottom: 0;
+    }
+}
+
+@-webkit-keyframes show{
+    0%{
+        top: -25px;
+        opacity: 0;
+    }
+    100%{
+        top: -22px;
+        opacity: 1;
+    }
+}
+
+@keyframes show{
+    0%{
+        top: -25px;
+        @include opacity(0);
+    }
+    100%{
+        top: -22px;
+        @include opacity(100);
+    }
+}
