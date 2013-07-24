@@ -55,3 +55,9 @@ test("Report sections views are rendered", ->
 )
 
 test("Can navigate to Dashboard, Reports, Indicators and Bookmarks")
+
+test("I can use report period")
+test("I can use report author")
+test("I can use report image")
+test("I can use report introduction")
+test("I can use report conclusion")
