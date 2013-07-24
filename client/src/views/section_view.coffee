@@ -20,7 +20,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
       thisView: @
       section: @section.toJSON()
       narratives: @section.get('narratives').models
-      visualisations: @section.get('visualisations')
+      visualisations: @section.get('visualisations').models
     ))
     @renderSubViews()
 

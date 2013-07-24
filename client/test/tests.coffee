@@ -160,10 +160,10 @@ test("Can see the section visualisation", ->
 
   subViewExists = false
   for subView in view.subViews
-    if subView.constructor.name == "VisualisationView"
+    if subView.constructor.name is "VisualisationView" and subView.visualisation is visualisation
       subViewExists = true
 
-  assert subViewExists
+  assert subViewExists, "could not find visualisation sub-view for section"
 
   view.close()
 )
@@ -176,10 +176,10 @@ test("Can see the section narrative", ->
 
   subViewExists = false
   for subView in view.subViews
-    if subView.constructor.name == "NarrativeView"
+    if subView.constructor.name == "NarrativeView" and subView.narrative is narrative
       subViewExists = true
 
-  assert subViewExists
+  assert subViewExists, "could not find narrative sub-view for section"
 
   view.close()
 )

@@ -5,6 +5,7 @@ class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
   template: Handlebars.templates['visualisation.hbs']
 
   initialize: (options) ->
+    @visualisation = options.visualisation
     @render()
 
   render: =>
