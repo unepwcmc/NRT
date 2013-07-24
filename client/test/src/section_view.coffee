@@ -22,7 +22,22 @@ test("Can see the section title", ->
   view.close()
 )
 
-test("Can see the section visualisation")
+test("Can see the section visualisation", ->
+  visualisation = new Backbone.Models.Visualisation()
+  section = new Backbone.Models.Section(visualisations: [visualisation])
+
+  view = createAndShowSectionViewForSection(section)
+
+  subViewExists = false
+  for subView in view.subViews
+    if subView.constructor.name == "VisualisationView"
+      subViewExists = true
+
+  assert subViewExists
+
+  view.close()
+)
+
 test("Can see the section narrative")
 test("Can edit the section")
 test("Can view report containing this section")

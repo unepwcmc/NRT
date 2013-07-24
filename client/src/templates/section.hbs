@@ -6,6 +6,9 @@
 {{#each narratives}}
   {{addSubViewTo ../thisView "NarrativeView" narrative=this}}
 {{/each}}
+{{#each visualisations}}
+  {{addSubViewTo ../thisView "VisualisationView" visualisation=this}}
+{{/each}}
 <a class="btn add-narrative">
   Add Narrative
 </a>
