@@ -20,10 +20,10 @@ nrtViz.barChart  = (conf={}) ->
   }
 
   calculateHeight = nrtViz.utils.calculateHeight
-
   width = conf.width - conf.margin.left
   # calculateHeight: (width, widthRatio, heightRatio) ->
-  height = calculateHeight(conf.width, 2, 1.2) - conf.margin.top
+  height = calculateHeight(conf.width, 2, 1.2) - conf.margin.bottom
+
   xAxis = d3.svg.axis().scale(conf.xScale).orient("bottom")
   yAxis = d3.svg.axis().scale(conf.yScale).orient("left")
     .tickFormat(conf.format)
@@ -33,7 +33,7 @@ nrtViz.barChart  = (conf={}) ->
     yScale = conf.yScale
     margin = conf.margin
     # rangeRoundBands [min, max], padding, outer-padding
-    xScale.rangeRoundBands [0, width], .1, .02
+    xScale.rangeRoundBands [0, width], .1, .1
     yScale.range [height, 0]
     # Equivalent to: selection.node().__data__ 
     data = selection.datum()
