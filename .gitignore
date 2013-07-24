@@ -2,3 +2,5 @@ node_modules
 client/dist/
 server/public/
 server/config/database.json
+client/test/tests.coffee
+client/test/tests.js

@@ -1,6 +1,7 @@
 [
   "src/models/report.coffee",
   "src/models/narrative.coffee",
+  "src/models/section.coffee",
   "src/collections/narrative_collection.coffee",
   "src/views/section_view.coffee",
   "src/views/report_view.coffee",

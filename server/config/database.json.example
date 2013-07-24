@@ -1,12 +1,21 @@
 {
   "development": {
+    "host": "localhost",
     "name": "nrt_development",
     "username": "nrt",
     "password": "password"
   },
 
   "test": {
+    "host": "localhost",
     "name": "nrt_test",
+    "username": "nrt",
+    "password": "password"
+  },
+
+  "production": {
+    "host": "",
+    "name": "nrt_production",
     "username": "nrt",
     "password": "password"
   }

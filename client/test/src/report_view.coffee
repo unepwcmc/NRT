@@ -35,6 +35,9 @@ test("Can see a report's brief", ->
   view.close()
 )
 
+test("If report cover image exists, can view")
+test("If report cover image doesn't exist, can see no image")
+
 test("Report sections views are rendered", ->
   section = new Backbone.Models.Section()
   report = new Backbone.Models.Report(sections: [section])
@@ -50,3 +53,5 @@ test("Report sections views are rendered", ->
 
   view.close()
 )
+
+test("Can navigate to Dashboard, Reports, Indicators and Bookmarks")
