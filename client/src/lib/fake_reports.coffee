@@ -33,6 +33,16 @@ class Backbone.Faker.Reports
     visualisations
 
   @createFakeData: =>
+    features = []
+    year = 2010
+    _.times Math.floor(Math.random()*5) + 3, ->
+      features.push(
+        attributes:
+          Percentage: Math.floor(Math.random()*99) + 1
+          Year: year
+      )
+      year = year + 1
+
     fields: [
         name: "Percentage"
         type: "esriFieldTypeDouble"
@@ -42,23 +52,7 @@ class Backbone.Faker.Reports
         type: "esriFieldTypeString"
         unit: "year"
       ]
-      features: [
-        attributes:
-          Percentage: Math.floor(Math.random()*99) + 1
-          Year: 2010
-      ,
-        attributes:
-          Percentage: Math.floor(Math.random()*99) + 1
-          Year: 2011
-      ,
-        attributes:
-          Percentage: Math.floor(Math.random()*99) + 1
-          Year: 2012
-      ,
-        attributes:
-          Percentage: Math.floor(Math.random()*99) + 1
-          Year: 2013
-      ]
+      features: features
 
   @getRandomSectionContent: (component) =>
     component = @section_content[component]
