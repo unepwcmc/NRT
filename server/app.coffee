@@ -1,5 +1,5 @@
 express = require("express")
-cons = require("consolidate")
+exphbs  = require('express3-handlebars')
 http = require('http')
 path = require('path')
 lessMiddleware = require('less-middleware')
@@ -16,7 +16,7 @@ bindRoutesForApp = require('./route_bindings.coffee')
 app.set('port', process.env.PORT || 3000)
 
 # assign the handlebars engine to .html files
-app.engine "hbs", cons.handlebars
+app.engine "hbs", exphbs()
 app.set "view engine", "hbs"
 app.set "views", __dirname + "/views"
 
