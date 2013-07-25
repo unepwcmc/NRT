@@ -56,8 +56,8 @@ button{
     &.grey{
         padding: 5px 15px;
         background-color: transparent;
-        border: 1px solid #c3c3c3;
-        color: #c3c3c3;
+        border: 1px solid $lightishGrey;
+        color: $lightishGrey;
         font-weight: 400;
         span{
             display: none;
@@ -377,7 +377,7 @@ section{
     position: relative;
     small{
         display: none;
-        color: #c3c3c3;
+        color: $lightishGrey;
         position: absolute;
         left: 0;
         top: -18px;
@@ -403,8 +403,7 @@ section{
 }
 
 .section-title{
-    padding-bottom: 30px;
-
+  padding-bottom: 20px;
 }
 
 .tag{
