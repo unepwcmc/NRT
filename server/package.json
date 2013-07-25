@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit",
-    "start": "coffee app.coffee"
+    "start": "./bin/server"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,8 @@
     "coffee-script": "1.6.x",
     "wrench": "1.5.1",
     "node-sass": "0.5.4",
-    "passport-http": "0.2.2"
+    "passport-http": "0.2.2",
+    "underscore": "1.5.1"
   },
   "devDependencies": {
     "Faker": "0.5.11",
@@ -34,7 +35,8 @@
     "sinon-chai": "2.4.0",
     "sinon": ">=1.4.0 <2",
     "zombie": "1.4.1",
-    "supervisor": "0.5.3"
+    "supervisor": "0.5.3",
+    "request": "2.25.0"
   },
   "engines": {
     "node": ">=0.8"

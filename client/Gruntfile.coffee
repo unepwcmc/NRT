@@ -70,7 +70,7 @@ module.exports = (grunt) ->
           'dist/css/report.css': 'src/sass/report.scss'
 
     watch:
-      files: ['src/**/*', 'test/**/*'],
+      files: ['src/**/*', 'test/src/**/*'],
       tasks: 'default'
   )
 
@@ -82,5 +82,4 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-sass')
 
-  grunt.registerTask('build', ['clean', 'concat:source', 'coffee:source', 'handlebars', 'concat:dist', 'sass', 'concat:test', 'coffee:test', 'copy:dist', 'copy:release'])
-  grunt.registerTask('default', ['build', 'watch'])
+  grunt.registerTask('default', ['clean', 'concat:source', 'coffee:source', 'handlebars', 'concat:dist', 'sass', 'concat:test', 'coffee:test', 'copy:dist', 'copy:release'])
