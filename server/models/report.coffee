@@ -6,13 +6,13 @@ Report = sequelize.define('Report',
     allowNull: false
   brief: 
     type: Sequelize.TEXT 
-    allowNull: false
+    allowNull: true
   introduction: 
     type: Sequelize.TEXT 
-    allowNull: false
+    allowNull: true
   conclusion: 
     type: Sequelize.TEXT 
-    allowNull: false
+    allowNull: true
   id: 
     type: Sequelize.STRING
     primaryKey: true
