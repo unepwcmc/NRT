@@ -53,6 +53,19 @@ test("Can see the section narrative", ->
 
   view.close()
 )
+
+test(".addNarrative creates a narrative record on the section", ->
+  section = new Backbone.Models.Section()
+
+  view = createAndShowSectionViewForSection(section)
+
+  assert.equal section.get('narratives').models.length, 0
+
+  view.addNarrative()
+
+  assert.equal section.get('narratives').models.length, 1
+)
+
 test("Can edit the section")
 test("Can view report containing this section")
 test("Can navigate to Dashboard, Reports, Indicators and Bookmarks")

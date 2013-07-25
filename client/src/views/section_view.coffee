@@ -28,7 +28,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
 
   addNarrative: =>
     newNarrative = new Backbone.Models.Narrative()
-    @narratives.push(newNarrative)
+    @section.get('narratives').add(newNarrative)
 
   onClose: ->
     @closeSubViews()
