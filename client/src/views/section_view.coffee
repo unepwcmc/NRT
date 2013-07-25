@@ -15,7 +15,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
 
   render: =>
     @closeSubViews()
-    noContent = !@section.get('narrative')? and !@section.get('visualisation')
+    noContent = !@section.get('narrative')? and !@section.get('visualisation')?
     @$el.html(@template(
       thisView: @
       section: @section.toJSON()
