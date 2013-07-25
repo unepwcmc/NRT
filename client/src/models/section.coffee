@@ -2,12 +2,12 @@ window.Backbone.Models || = {}
 
 class window.Backbone.Models.Section extends Backbone.RelationalModel
   relations: [
-      key: 'narratives'
-      type: Backbone.HasMany
+      key: 'narrative'
+      type: Backbone.HasOne
       relatedModel: 'Backbone.Models.Narrative'
-      collectionType: 'Backbone.Collections.NarrativeCollection'
       reverseRelation:
         key: 'section'
+        type: Backbone.HasOne
     ,
       key: 'visualisations'
       type: Backbone.HasMany
