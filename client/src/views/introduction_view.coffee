@@ -13,7 +13,6 @@ class Backbone.Views.IntroductionView extends Backbone.View
   initialize: (options) ->
     @report = options.report
 
-    @report.bind('change', @render)
     @render()
 
   render: (options = {}) =>
@@ -32,6 +31,7 @@ class Backbone.Views.IntroductionView extends Backbone.View
     )
 
     @report.save()
+    @render()
 
   startEdit: =>
     @render(edit: true)
