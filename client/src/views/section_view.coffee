@@ -24,11 +24,11 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
       visualisation: @section.get('visualisation')
     ))
     @renderSubViews()
-
-    return @
+    return this
 
   addNarrative: =>
-    @section.set('narrative', new Backbone.Models.Narrative())
+    narrative = new Backbone.Models.Narrative()
+    @section.set('narrative', narrative)
     @render()
 
   addVisualisation: =>
