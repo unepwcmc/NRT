@@ -14,8 +14,12 @@ test('.create', ->
     conclusion: 'This report is lovely afterall.'
 
   Report.create(report_attributes).success( ->
-    Report.findAndCountAll().success((count)->
-      assert.equal 1, count
-    )
+    Report.findAndCountAll().
+      success((count)->
+        assert.equal 1, count
+      ).
+      failure( ->
+        throw 'Report saving failed'
+      )
   )
 )

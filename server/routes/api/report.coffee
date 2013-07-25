@@ -4,17 +4,18 @@ exports.index = (req, res) ->
   Report.findAll().success (reports) ->
     res.send(JSON.stringify(reports))
 
+Report.required_fields = ['title']
 exports.create = (req, res) ->
   params = req.body
 
   errors = []
-  ['title'].forEach( (attribute) ->
+  Report.required_fields.forEach( (attribute) ->
     unless params.hasOwnProperty(attribute)
       errors.push("#{attribute} is required")
   )
 
   if errors.length > 0
-    return res.send(
+    return res.send(500,
       JSON.stringify(errors: errors)
     )
 
@@ -23,12 +24,15 @@ exports.create = (req, res) ->
     brief: params.brief
     introduction: params.introduction
     conclusion: params.conclusion
-  ).success (report) ->
+  ).success((report) ->
     res.send(
       JSON.stringify(
         report: report
       )
     )
+  ).failure((err) ->
+    res.send(500, JSON.stringify(errors: [err]))
+  )
 
 exports.show = (req, res) ->
   Report.find(req.query.id).success (report) ->
