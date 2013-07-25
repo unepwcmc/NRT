@@ -60,17 +60,19 @@ test(".addNarrative creates a narrative record on the section", ->
   assert.equal section.get('narrative').constructor.name, 'Narrative'
 )
 
-test(".addNarrative renders in edit mode and .resize is called", ->
+test(".addNarrative calls render and resize in edit mode", ->
 
   spy = sinon.spy(Backbone.Views.NarrativeView::, 'resize')
 
   section = new Backbone.Models.Section()
   view = createAndShowSectionViewForSection(section)
-  narrative = view.addNarrative()
+  view.addNarrative()
   narrativeView = view.subViews[0]  # Is there a getSubView('view name') method?
   
-  assert.isTrue narrative.get('editing')
+  assert.isTrue view.section.get('narrative').get('editing')
   sinon.assert.calledOnce(spy, "resize")
+
+  Backbone.Views.NarrativeView::.resize.restore()
 )
 
 test("Can see the section visualisation", ->

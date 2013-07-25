@@ -45,9 +45,10 @@ class Backbone.Views.NarrativeView extends Backbone.View
     @text.css("height", "auto")
     @text.css("height", @text[0].scrollHeight + "px")
   
-  # 0-timeout to get the already changed text 
+  # Used to push the resize method onto the event queue, 
+  # ensuring it actually gets evaluated after the events have completed.
   delayedResize: ->
-    window.setTimeout @resize, 0
+    setTimeout @resize, 0
 
   onClose: ->
 
