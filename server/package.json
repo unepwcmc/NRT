@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit",
-    "start": "coffee app.coffee"
+    "start": "./bin/server"
   },
   "repository": {
     "type": "git",
