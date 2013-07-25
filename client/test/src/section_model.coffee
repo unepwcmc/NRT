@@ -23,3 +23,15 @@ test("When initialised with an array of narratives, creates a narrative collecti
   section = new Backbone.Models.Section(narratives: narratives)
   assert.equal section.get('narratives').constructor.name, 'NarrativeCollection'
 )
+
+test("Can POST section to database", (done)->
+  section = new Backbone.Models.Section(title: "test report title", report_id: 5)
+  section.save(null,
+    success: (model, response, options) ->
+      assert _.isEqual(model.attributes, section.attributes), "Returned different attributes"
+      assert.equal response.status, 201
+      done()
+    error: ->
+      throw 'Section saved failed'
+  )
+)

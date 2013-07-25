@@ -1,6 +1,9 @@
 window.Backbone.Models || = {}
 
 class window.Backbone.Models.Section extends Backbone.RelationalModel
+  url: ->
+    'api/section'
+
   relations: [
       key: 'narratives'
       type: Backbone.HasMany
