@@ -3,7 +3,6 @@ ENV = process.env.NODE_ENV
 GLOBAL.sequelize ||= require('../model_bindings.coffee')(ENV)
 
 app = require('../app.coffee')
-async = require('async')
 test_server = null
 
 
