@@ -15,12 +15,14 @@
       </div>
     </div>
 
-    <section>
-      <div class="section-title">
-        <h2>Introduction</h2>
-      </div>
-      {{report.introduction}}
-    </section>
+    {{#if report.introduction}}
+      <section>
+        <div class="section-title">
+          <h2>Introduction</h2>
+        </div>
+        {{report.introduction}}
+      </section>
+    {{/if}}
 
     <section>
       <div class="section-title">
