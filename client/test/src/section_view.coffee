@@ -72,7 +72,7 @@ test(".addNarrative calls render and resize in edit mode", ->
   assert.isTrue view.section.get('narrative').get('editing')
   sinon.assert.calledOnce(spy, "resize")
 
-  Backbone.Views.NarrativeView::.resize.restore()
+  Backbone.Views.NarrativeView::resize.restore()
 )
 
 test("Can see the section visualisation", ->
