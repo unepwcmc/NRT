@@ -40,4 +40,5 @@ exports.createApp = ->
 
 exports.start = (port, callback) ->
   app = exports.createApp()
-  http.createServer(app).listen port, callback
+  server = http.createServer(app).listen port, (err) ->
+      callback err, server
