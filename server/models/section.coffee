@@ -11,6 +11,6 @@ Section = sequelize.define('Section',
     primaryKey: true
 )
 
-Narrative.sync()
+Section.sync()
 
-module.exports = Narrative
+module.exports = Section
