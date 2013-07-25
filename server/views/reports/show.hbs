@@ -1,9 +1,8 @@
 {{!< main}}
 
 {{#contentFor 'header'}}
-
   <link rel="stylesheet" href="/css/report.css">
-  
+
   <script src="/js/lib/d3.min.js"></script>
   <script src="/js/lib/underscore-min.js"></script>
   <script src="/js/lib/backbone-min.js"></script>
@@ -11,96 +10,19 @@
   <script src="/js/lib/handlebars.js"></script>
   <script src="/js/lib/diorama.js"></script>
   <script src="/js/application.js"></script>
-  
+
   <script type="text/javascript">
     $(document).ready(function(){
        new Backbone.Controllers.ReportsController();
     });
   </script>
-
 {{/contentFor}}
 
-    <header>
-        <div class="caption">Abu Dhabi 2013</div>
-    </header>
-    <div class="content">
-        <div class="report-content">
-            <div class="report-title">
-                <div class="time-period">January - March 2013</div>
-                <h1>Marine water quality report</h1>
-                <div class="report-extra">
-                    <div class="last-update">
-                        <span>Last update</span>
-                        <i class="icon-time append"></i>1st of April, 18:23
-                    </div>
-                    <div class="clear"></div>
-                    <div class="who">
-                        <span>Report owner</span>
-                        <i class="icon-user append"></i>Dr. Anybody
-                    </div>
-                </div>
-            </div>
-            <section>
-                <div class="section-title">
-                    <h2>Introduction</h2>
-                </div>
-                <p>Enviroment Agency Abu Dabhi plubishes this quarterly Marine Water Quality (MWQ) report four times a year to present the MWQ status during the previous three-months based on the results of MWQ monitoring along the Abu Dabhi Emirate coast. The <a href="#">marine water quality</a> stations are distributed throughout the territorial waters of the Emirate. This report focuses on six MWQ parameters (europhic and bacterial) for which recommended standars have been established to protect marine biota and human health.</p>
-                <!--<p><button>Share something</button></p>-->
-                <p>Euttophic parameters are nutrients, especially various compounds of nitrogen, which result largely from human activities. High levels of nutrients in marine water can result in enhanced growth of aquatic plants, especially phytoplankton (algae). As a result, phytoplankton populations increase rapidly, and the excess, unconsumed plant material can result in problem such as diminished water clarity and dissolved oxygen (DO) depletion in bottom waters. Severe eutrophic conditions may also contribute to the formation of harmful algal blooms (HABs), which may include toxic algal species that can cause foul odors, skin rashes from contact with the water, fish kills, and shellfish poisoning , and can disrupt the normal operation of desalination plants by clogging their seawater filtration systems.</p>
-                <p>Increasing eutrophication and higher frequencies of harmful algal blooms has been observed in Abu Dabhi waters over recent years. This quarterly report cover the following eutrophic parameters: phosphate-P, ammonia-N, chlorophyll-a, nitrate-N and a dissolved oxygen.</p>
-                <p>EAD has been and will continue to be alert to bacterial levels in order to control public health risks of recreational exposure to marine water. This quarterly report presents observed levels of enterococci - the best indicator of sewage contamination of marine water.</p>
-            </section>
-            <section id='user-section'>
-            </section>
-            <section>
-                <div class="section-title">
-                    <h2>Conclusion</h2>
-                </div>
-                <p>The marine environment is an important economic and cultural component of Abu Dabhi. Thus, monitoring marine water quality is vital to the continuation and sustainability of the Emirate's fisheries, other marine biota and human health issues can all arise from elevated concentrations, of certain pollutants and water quality parameters. Therefore, the monitoring of marine water quality is an important longterm strategy for maintaning the health of Abu Dabhi's Marine Enviroment.</p>
-                <p>من الى هتلر مسرح جديدة. أم فرنسية والجنود وتم. قد ذلك إستعمل لألمانيا. الربيع، المبرمة الدولارات حيث و, القصف الأحمر شيء قد. أي جزيرتي بريطانيا، تشيكوسلوفاكيا لمّ, من شرسة أحكم الأثنان بحق.</p>
-            </section>
-        </div>
-        <div class="report-sidebar">
-            <button class="grey">
-                <i class="icon-bookmark-empty append"></i><i class="icon-bookmark append"></i><span class="show">Bookmark this report</span><span>Bookmarked report</span>
-            </button>
-            <div class="recent-changes">
-                <div class="recent-changes-title">
-                    <i class="icon-edit append"></i>Recent changes
-                </div>
-                <ul>
-                    <li><strong>4 days ago</strong>: Dr. Anybody changed Amonia-P section.</li>
-                    <li><strong>10 days ago</strong>: Dr. Anybody published Nitrato-N section.</li>
-                    <li><strong>1 month ago</strong>: Dr. Anybody published this report.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="clear"></div>
-    </div>
-    <div class="related-reports">
-        <div class="double-column">
-            <h2>You may also want to see...</h2>
-            <div class="column left">
-                <div class="related-report">
-                    <h4><a href="">Marine water quality report 4 <span class="tag">view report</span></a></h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus mi urna, consequat feugiat ante feugiat eu. In eget nibh sit amet sapien feugiat vestibulum vel nec ante.</p>
-                </div>
-            </div>
-            <div class="column right">
-                <div class="related-report">
-                    <h4><a href="">Marine water quality report 3 <span class="tag">view report</span></a></h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam rhoncus mi urna, consequat feugiat ante feugiat eu. In eget nibh sit amet sapien feugiat vestibulum vel nec ante.</p>
-                </div>
-            </div>
-            <div class="clear"></div>
-        </div>
-    </div>
+<div id="report-container">
+</div>
 
-    <script>
-      $('.report-extra').tooltip({
-        selector: "a[data-toggle=tooltip]"
-      });
-    </script>
-    </div>
-  </body>
-</html>
+<script>
+  $('.report-extra').tooltip({
+    selector: "a[data-toggle=tooltip]"
+  });
+</script>
