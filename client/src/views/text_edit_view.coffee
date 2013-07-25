@@ -1,16 +1,17 @@
 window.Backbone ||= {}
 window.Backbone.Views ||= {}
 
-class Backbone.Views.IntroductionView extends Backbone.View
-  template: Handlebars.templates['introduction.hbs']
-  editTemplate: Handlebars.templates['introduction-edit.hbs']
+class Backbone.Views.TextEditView extends Backbone.View
+  template: Handlebars.templates['text-content.hbs']
+  editTemplate: Handlebars.templates['text-edit.hbs']
 
   events:
-    "click .save-introduction": "saveIntroduction"
+    "click .save-content": "saveContent"
+    "click .add-content": "startEdit"
     "click .content-text": "startEdit"
-    "click .add-introduction": "startEdit"
 
   initialize: (options) ->
+    @type   = options.type
     @report = options.report
 
     @render()
@@ -19,12 +20,12 @@ class Backbone.Views.IntroductionView extends Backbone.View
     template = @template
     template = @editTemplate if options.edit
 
-    @$el.html(template(introduction: @report.get('introduction')))
+    @$el.html(template(content: @report.get(@type), type: @type))
 
     return @
 
-  saveIntroduction: (event) =>
-    @report.set('introduction',
+  saveContent: (event) =>
+    @report.set(@type,
       @$el.find('.content-text-field').
       val().
       replace(/^\s+|\s+$/g, '')

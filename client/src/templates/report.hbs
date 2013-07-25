@@ -28,19 +28,26 @@
       <div class="section-title">
         <h2>Introduction</h2>
       </div>
-      {{addSubViewTo thisView "IntroductionView" report=thisView.report}}
+      {{addSubViewTo thisView "TextEditView" type='introduction' report=thisView.report}}
     </section>
 
     <section>
       <div class="section-title">
         <h2>Brief</h2>
       </div>
-      {{addSubViewTo thisView "BriefView" report=thisView.report}}
+      {{addSubViewTo thisView "TextEditView" type='brief' report=thisView.report}}
     </section>
 
     {{#each sections}}
       {{addSubViewTo ../thisView "SectionView" section=this}}
     {{/each}}
+
+    <section>
+      <div class="section-title">
+        <h2>Conclusion</h2>
+      </div>
+      {{addSubViewTo thisView "TextEditView" type='conclusion' report=thisView.report}}
+    </section>
   </div>
 
   <div class="report-sidebar">
