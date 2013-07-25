@@ -3,14 +3,18 @@ ENV = process.env.NODE_ENV
 GLOBAL.sequelize ||= require('../model_bindings.coffee')(ENV)
 
 app = require('../app.coffee')
+async = require('async')
+test_server = null
 
-teardownDb = ->
-  sequelize.sync({force: true})
 
-startServer = (callback) ->
-  app.start(3001, callback)
+beforeEach( (done) ->
+  sequelize.sync({force: true}).success( ->
+    app.start 3001, (err, server) ->
+      test_server = server
+      done(err)
+  )
+)
 
-before( (done) ->
-  teardownDb()
-  startServer(done)
+afterEach( (done) ->
+  test_server.close done
 )

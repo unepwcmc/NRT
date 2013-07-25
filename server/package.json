@@ -36,7 +36,8 @@
     "sinon": ">=1.4.0 <2",
     "zombie": "1.4.1",
     "supervisor": "0.5.3",
-    "request": "2.25.0"
+    "request": "2.25.0",
+    "async": "0.2.9"
   },
   "engines": {
     "node": ">=0.8"
