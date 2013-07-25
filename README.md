@@ -15,11 +15,11 @@
 
 ##### Start the server
 
-`coffee app.coffee`
+`cd server/ && npm start`
 
 ##### Compile coffeescripts
 
-`grunt`
+`cd client && grunt`
 
 ## Application structure
 
