@@ -19,6 +19,9 @@ class Backbone.Faker.Reports
     _.times count, =>
       section = new Backbone.Models.Section
         title: @getRandomSectionContent('title')
+        narrative:
+          content: _.times(14, -> "This is all the narrative you're going to get. Seriously. ").join(" ")
+          editing: false
         visualisations: @createVisualisations()
       sections.push section
     sections
