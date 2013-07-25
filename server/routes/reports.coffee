@@ -5,3 +5,7 @@ exports.index = (req, res) ->
 exports.show = (req, res) ->
   res.render "reports/show",
     report_id: req.params.id
+
+exports.present = (req, res) ->
+  res.render "reports/present",
+    report_id: req.params.id

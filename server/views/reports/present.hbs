@@ -1,0 +1,23 @@
+{{!< presentation}}
+
+{{#contentFor 'header'}}
+  <link rel="stylesheet" href="/css/report.css">
+
+  <script src="/js/lib/d3.min.js"></script>
+  <script src="/js/lib/underscore-min.js"></script>
+  <script src="/js/lib/backbone-min.js"></script>
+  <script src="/js/lib/backbone-relational.js"></script>
+  <script src="/js/lib/handlebars.js"></script>
+  <script src="/js/lib/diorama.js"></script>
+  <script src="/js/application.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+       new Backbone.Controllers.ReportsPresentationController();
+    });
+  </script>
+{{/contentFor}}
+
+<div id="report-presentation-container">
+  Doing the thing thing thing
+</div>
