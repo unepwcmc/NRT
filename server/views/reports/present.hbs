@@ -1,0 +1,29 @@
+{{!< presentation}}
+
+{{#contentFor 'header'}}
+  <link rel="stylesheet" href="/css/reveal.min.css">
+  <link rel="stylesheet" href="/css/theme/simple.css" id="theme">
+  <link rel="stylesheet" href="/css/main.css">
+
+
+  <script src="/js/lib/d3.min.js"></script>
+  <script src="/js/lib/underscore-min.js"></script>
+  <script src="/js/lib/backbone-min.js"></script>
+  <script src="/js/lib/backbone-relational.js"></script>
+  <script src="/js/lib/handlebars.js"></script>
+  <script src="/js/lib/diorama.js"></script>
+  <script src="/js/application.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+       new Backbone.Controllers.ReportsPresentationController();
+    });
+  </script>
+
+  <script src="/lib/js/head.min.js"></script>
+  <script src="/js/reveal_abused.js"></script>
+
+{{/contentFor}}
+
+<div class='reveal' id="report-presentation-container">
+</div>
