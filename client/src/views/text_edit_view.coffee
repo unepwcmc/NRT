@@ -17,8 +17,7 @@ class Backbone.Views.TextEditView extends Backbone.View
     @render()
 
   render: (options = {}) =>
-    template = @template
-    template = @editTemplate if options.edit
+    template = options.edit ? @editTemplate : @template
 
     @$el.html(template(content: @report.get(@type), type: @type))
 
