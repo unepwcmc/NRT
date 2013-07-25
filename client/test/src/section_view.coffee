@@ -22,22 +22,6 @@ test("Can see the section title", ->
   view.close()
 )
 
-test("Can see the section visualisation", ->
-  visualisation = new Backbone.Models.Visualisation()
-  section = new Backbone.Models.Section(visualisations: [visualisation])
-
-  view = createAndShowSectionViewForSection(section)
-
-  subViewExists = false
-  for subView in view.subViews
-    if subView.constructor.name is "VisualisationView" and subView.visualisation is visualisation
-      subViewExists = true
-
-  assert subViewExists, "could not find visualisation sub-view for section"
-
-  view.close()
-)
-
 test("When section has narrative, can see the narrative", ->
   narrative = new Backbone.Models.Narrative()
   section = new Backbone.Models.Section(narrative: narrative)
@@ -74,6 +58,22 @@ test(".addNarrative creates a narrative record on the section", ->
   view.addNarrative()
 
   assert.equal section.get('narrative').constructor.name, 'Narrative'
+)
+
+test("Can see the section visualisation", ->
+  visualisation = new Backbone.Models.Visualisation()
+  section = new Backbone.Models.Section(visualisations: [visualisation])
+
+  view = createAndShowSectionViewForSection(section)
+
+  subViewExists = false
+  for subView in view.subViews
+    if subView.constructor.name is "VisualisationView" and subView.visualisation is visualisation
+      subViewExists = true
+
+  assert subViewExists, "could not find visualisation sub-view for section"
+
+  view.close()
 )
 
 test("Can edit the section")
