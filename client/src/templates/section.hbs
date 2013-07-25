@@ -5,10 +5,13 @@
 </div>
 {{#if narrative}}
   {{addSubViewTo ../thisView "NarrativeView" narrative=../narrative}}
+{{else}}
+  <div class="section-actions">
+    <span class="add-narrative">
+      Type Narrative for this indicator here
+    </span>
+  </div>
 {{/if}}
-<a class="btn add-narrative">
-  Add Narrative
-</a>
 {{#each visualisations}}
   {{addSubViewTo ../thisView "VisualisationView" visualisation=this}}
 {{/each}}

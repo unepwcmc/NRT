@@ -43,6 +43,18 @@ header{
     }
 }
 
+.section-actions {
+  margin-bottom: 100px;
+  .add-narrative {
+    &:hover {
+      color: darken($lightishGrey, 10);
+      cursor: pointer;
+    }
+
+    color: $lightishGrey;
+  }
+}
+
 .report-sidebar{
     width: 250px;
     padding: 45px 20px 0 20px;

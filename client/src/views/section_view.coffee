@@ -4,6 +4,7 @@ window.Backbone.Views ||= {}
 class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
   template: Handlebars.templates['section.hbs']
   tagName: 'section'
+  className: 'section-view'
 
   events:
     "click .add-narrative": "addNarrative"
@@ -25,6 +26,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
 
   addNarrative: =>
     @section.set('narrative', new Backbone.Models.Narrative())
+    @render()
 
   onClose: ->
     @closeSubViews()

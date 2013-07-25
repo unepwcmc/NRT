@@ -38,7 +38,7 @@ test("Can see the section visualisation", ->
   view.close()
 )
 
-test("Can see the section narrative", ->
+test("When section has narrative, can see the narrative", ->
   narrative = new Backbone.Models.Narrative()
   section = new Backbone.Models.Section(narrative: narrative)
 
@@ -52,6 +52,16 @@ test("Can see the section narrative", ->
   assert subViewExists, "could not find narrative sub-view for section"
 
   view.close()
+)
+
+test("When section has no narrative, I should see the 'add-narrative' element", ->
+  section = new Backbone.Models.Section()
+
+  view = createAndShowSectionViewForSection(section)
+
+  assert.equal(
+    $('#test-container').find('.add-narrative').length, 1, "Could not see .add-narrative element"
+  )
 )
 
 test(".addNarrative creates a narrative record on the section", ->
