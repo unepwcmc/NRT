@@ -3,15 +3,28 @@
     <h2>{{section.title}}</h2>
     <h3>Nitrate-N concentrations (µg/L) in Abu Dabhi Emirate waters.</h3>
 </div>
-{{#if narrative}}
-  {{addSubViewTo thisView "NarrativeView" narrative=narrative}}
-{{else}}
+{{#if noContent}}
   <div class="section-actions">
     <span class="add-narrative">
-      Type Narrative for this indicator here
+      Type Narrative for this indicator here or
+    </span>
+    <span class="add-visualisation">
+      add a visualisation
     </span>
   </div>
+{{else}}
+  {{#if narrative}}
+    {{addSubViewTo thisView "NarrativeView" narrative=narrative}}
+  {{else}}
+    <div class="add-narrative">
+      Type Narrative for this indicator here
+    </div>
+  {{/if}}
+  {{#if visualisation}}
+    {{addSubViewTo thisView "VisualisationView" visualisation=visualisation}}
+  {{else}}
+    <div class="add-visualisation">
+      add a visualisation
+    </div>
+  {{/if}}
 {{/if}}
-{{#each visualisations}}
-  {{addSubViewTo ../thisView "VisualisationView" visualisation=this}}
-{{/each}}
