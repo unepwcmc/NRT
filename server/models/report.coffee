@@ -14,7 +14,7 @@ Report = sequelize.define('Report',
     type: Sequelize.TEXT 
     allowNull: true
   id: 
-    type: Sequelize.STRING
+    type: Sequelize.INTEGER
     primaryKey: true
 )
 
