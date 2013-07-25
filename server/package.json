@@ -35,7 +35,8 @@
     "sinon-chai": "2.4.0",
     "sinon": ">=1.4.0 <2",
     "zombie": "1.4.1",
-    "supervisor": "0.5.3"
+    "supervisor": "0.5.3",
+    "request": "2.25.0"
   },
   "engines": {
     "node": ">=0.8"
