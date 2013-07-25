@@ -2,24 +2,22 @@ assert = chai.assert
 
 suite('Section Model')
 
-test("Has many visualisations", ->
-  section = new Backbone.Models.Section()
-  assert.equal 'VisualisationCollection', section.get('visualisations').constructor.name
-)
+test("When initialised with visualisation attributes,
+  it creates a Backbone.Models.Visualisation model in the visualisation attribute", ->
+  visualisationAttributes = data: {some: 'data'}
+  section = new Backbone.Models.Section(visualisation: visualisationAttributes)
 
-test("When initialised with an array of visualisations, creates a visualisation collection", ->
-  visualisations = [new Backbone.Models.Visualisation()]
-  section = new Backbone.Models.Section(visualisations: visualisations)
-  assert.equal section.get('visualisations').constructor.name, 'VisualisationCollection'
+  assert.equal section.get('visualisation').constructor.name, 'Visualisation'
+  assert.equal section.get('visualisation').get('data'), visualisationAttributes.data
 )
 
 test("When initialised with narrative attributes,
   it creates a Backbone.Models.Narrative model in the narrative attribute", ->
-  narrativeAttributes = text: "I'm narrative text"
+  narrativeAttributes = content: "I'm narrative text"
   section = new Backbone.Models.Section(narrative: narrativeAttributes)
 
   assert.equal section.get('narrative').constructor.name, 'Narrative'
-  assert.equal section.get('narrative').get('text'), narrativeAttributes.text
+  assert.equal section.get('narrative').get('content'), narrativeAttributes.content
 )
 
 test("Can POST section to database", (done)->
