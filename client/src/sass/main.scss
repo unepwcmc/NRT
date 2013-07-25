@@ -41,6 +41,17 @@ small{
     color: $grey;
 }
 
+textarea.content-text-field {
+  border: none;
+  overflow: hidden;
+  padding: 0;
+  outline: none;
+  width: 100%;
+  padding-bottom: 10px;
+  padding-top: 20px;
+  resize: none;
+}
+
 button{
     -webkit-appearance: none;
     border: none;
