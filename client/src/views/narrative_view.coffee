@@ -49,4 +49,6 @@ class Backbone.Views.NarrativeView extends Backbone.View
   delayedResize: ->
     window.setTimeout @resize, 0
 
+  onClose: ->
+
 
