@@ -19,7 +19,7 @@
 
 ##### Compile coffeescripts
 
-`cd client && grunt`
+`cd client && grunt watch`
 
 ## Application structure
 
