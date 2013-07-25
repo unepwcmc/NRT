@@ -54,7 +54,6 @@ class Backbone.Views.NarrativeView extends Backbone.View
 
   startEdit: =>
     @narrative.set('editing', true)
-    @render()
 
   onClose: ->
 
