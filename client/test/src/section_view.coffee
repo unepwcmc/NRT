@@ -38,9 +38,9 @@ test("Can see the section visualisation", ->
   view.close()
 )
 
-test("Can see the section narrative", ->
+test("When section has narrative, can see the narrative", ->
   narrative = new Backbone.Models.Narrative()
-  section = new Backbone.Models.Section(narratives: [narrative])
+  section = new Backbone.Models.Section(narrative: narrative)
 
   view = createAndShowSectionViewForSection(section)
 
@@ -53,6 +53,29 @@ test("Can see the section narrative", ->
 
   view.close()
 )
+
+test("When section has no narrative, I should see the 'add-narrative' element", ->
+  section = new Backbone.Models.Section()
+
+  view = createAndShowSectionViewForSection(section)
+
+  assert.equal(
+    $('#test-container').find('.add-narrative').length, 1, "Could not see .add-narrative element"
+  )
+)
+
+test(".addNarrative creates a narrative record on the section", ->
+  section = new Backbone.Models.Section()
+
+  view = createAndShowSectionViewForSection(section)
+
+  assert.isNull section.get('narrative')
+
+  view.addNarrative()
+
+  assert.equal section.get('narrative').constructor.name, 'Narrative'
+)
+
 test("Can edit the section")
 test("Can view report containing this section")
 test("Can navigate to Dashboard, Reports, Indicators and Bookmarks")
