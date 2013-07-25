@@ -15,7 +15,7 @@
 
 ##### Start the server
 
-`node app.coffee`
+`coffee app.coffee`
 
 ##### Compile coffeescripts
 
