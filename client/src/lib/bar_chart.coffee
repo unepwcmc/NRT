@@ -22,7 +22,7 @@ nrtViz.barChart  = (conf={}) ->
   calculateHeight = nrtViz.utils.calculateHeight
   width = conf.width - conf.margin.left - conf.margin.right
   # calculateHeight: (width, widthRatio, heightRatio) ->
-  height = calculateHeight(conf.width, 2, 1.2) - conf.margin.bottom - 
+  height = calculateHeight(conf.width, 2, 1) - conf.margin.bottom - 
     conf.margin.top
   xKey = conf.xKey
   yKey = conf.yKey
