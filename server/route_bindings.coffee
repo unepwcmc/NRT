@@ -1,5 +1,6 @@
 passport = require('./initializers/authentication')
 
+sectionApi = require('./routes/api/section')
 narrativeApi = require('./routes/api/narrative')
 dashboardRoutes = require('./routes/dashboard.coffee')
 indicatorRoutes = require('./routes/indicators.coffee')
@@ -17,6 +18,7 @@ module.exports = exports = (app) ->
 
   # REST API
   app.resource 'api/narrative', narrativeApi, { format: 'json' }
+  app.resource 'api/section', sectionApi, { format: 'json' }
 
   app.get "/", ensureAuthenticated, dashboardRoutes.index
   app.get "/dashboard", ensureAuthenticated, dashboardRoutes.index
