@@ -56,7 +56,8 @@ test("If report cover image exists, can view image and caption", ->
 )
 
 test("If report cover image doesn't exist, can see no image", ->
-  report = new Backbone.Models.Report()
+  imgLocation = ""
+  report = new Backbone.Models.Report(img: imgLocation)
 
   view = createAndShowReportViewForReport(report)
 
