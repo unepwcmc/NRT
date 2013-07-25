@@ -6,6 +6,7 @@
   "src/collections/visualisation_collection.coffee",
   "src/models/section.coffee",
   "src/views/section_view.coffee",
+  "src/views/section_presentation_view.coffee",
   "src/views/report_view.coffee",
   "src/views/report_presentation_view.coffee",
   "src/views/narrative_view.coffee",
