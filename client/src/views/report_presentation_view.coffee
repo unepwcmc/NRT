@@ -3,6 +3,7 @@ window.Backbone.Views ||= {}
 
 class Backbone.Views.ReportPresentationView extends Backbone.Diorama.NestingView
   template: Handlebars.templates['report-presentation.hbs']
+  el: "<div class='slides'>"
 
   initialize: (options) ->
     @report = options.report
@@ -16,6 +17,9 @@ class Backbone.Views.ReportPresentationView extends Backbone.Diorama.NestingView
       sections: @report.get('sections')
     ))
     @renderSubViews()
+
+    reveal = RevealAbused()
+    _.delay reveal.initialize, 500
 
     return @
 

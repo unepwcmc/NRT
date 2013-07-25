@@ -1,17 +1,9 @@
-<div class="section-title">
-    <small><i class="icon-time append"></i></a>Last updated on 1st of April, 18:23 by Dr. Anybody</small>
-    <h2>{{section.title}}</h2>
-    <h3>Nitrate-N concentrations (µg/L) in Abu Dabhi Emirate waters.</h3>
-</div>
+<h2>{{section.title}}</h2>
+<h3>Nitrate-N concentrations (µg/L) in Abu Dabhi Emirate waters.</h3>
 {{#if narrative}}
   {{addSubViewTo ../thisView "NarrativeView" narrative=../narrative}}
-{{else}}
-  <div class="section-actions">
-    <span class="add-narrative">
-      Type Narrative for this indicator here
-    </span>
-  </div>
 {{/if}}
 {{#each visualisations}}
   {{addSubViewTo ../thisView "VisualisationView" visualisation=this}}
 {{/each}}
+

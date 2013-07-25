@@ -31,7 +31,7 @@ module.exports = (grunt) ->
     handlebars:
       source:
         files:
-          'dist/js/templates.js': ['src/templates/*.hbs']
+          'dist/js/templates.js': ['src/templates/**/*.hbs']
         options:
           namespace: 'Handlebars.templates'
           processName: (filename) ->
