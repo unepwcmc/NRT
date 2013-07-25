@@ -9,7 +9,7 @@ exports.index = (req, res) ->
 exports.create = (req, res) ->
   obj = _.pick(req.body, 'title', 'content')
   Section.create(obj).success (section) ->
-    res.send(JSON.stringify(
+    res.send(201, JSON.stringify(
       section: section
     ))
 

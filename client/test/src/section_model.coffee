@@ -29,7 +29,7 @@ test("Can POST section to database", (done)->
   section.save(null,
     success: (model, response, options) ->
       assert _.isEqual(model.attributes, section.attributes), "Returned different attributes"
-      assert.equal response.status, 201
+      assert.equal options.xhr.status, 201
       done()
     error: ->
       throw 'Section saved failed'
