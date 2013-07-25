@@ -1,9 +1,9 @@
+<section>
+<h2>{{section.title}}</h2>
 {{#each visualisations}}
-  <section>
-  <h2>{{section.title}}</h2>
   {{addSubViewTo ../thisView "VisualisationView" visualisation=this}}
-  </section>
 {{/each}}
+</section>
 <section>
 <h2>{{section.title}}</h2>
 {{#if narrative}}

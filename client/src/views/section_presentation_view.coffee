@@ -2,7 +2,7 @@ window.Backbone ||= {}
 window.Backbone.Views ||= {}
 
 class Backbone.Views.SectionPresentationView extends Backbone.Diorama.NestingView
-  template: Handlebars.templates['section.hbs']
+  template: Handlebars.templates['section-presentation.hbs']
   tagName: 'section'
   className: 'section-view'
 
@@ -17,6 +17,7 @@ class Backbone.Views.SectionPresentationView extends Backbone.Diorama.NestingVie
     @$el.html(@template(
       thisView: @
       section: @section.toJSON()
+      narrative: @section.get('narrative')
       visualisations: @section.get('visualisations').models
     ))
     @renderSubViews()
