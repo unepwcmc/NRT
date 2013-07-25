@@ -7,6 +7,8 @@
   "src/models/section.coffee",
   "src/views/section_view.coffee",
   "src/views/report_view.coffee",
+  "src/views/brief_view.coffee",
+  "src/views/introduction_view.coffee",
   "src/views/narrative_view.coffee",
   "src/views/visualisation_view.coffee",
   "src/lib/utils.coffee",
