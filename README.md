@@ -9,7 +9,7 @@
 * Copy `server/config/database.json.example` to
   `server/config/database.json` and fill it with your local mysql
   config. You will need to create the tables you named by hand.
-* Install mysql locally (`brew install mysql`, or `sudo apt-get install mysql-server)
+* Install mysql locally (`brew install mysql`, or `sudo apt-get install mysql-server`)
 
 ## Running the application
 
@@ -67,7 +67,7 @@ Then visit http://localhost:3000/tests
 #### Writing 'em
 
 The tests are written in mocha, using the qunit syntax with chai for
-asserts. Write tests in coffeescript in the `clientTests/` folder and
+asserts. Write tests in coffeescript in the `test/` folder and
 compile them with `grunt`.
 
 ## Development workflow

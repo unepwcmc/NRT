@@ -6,11 +6,13 @@ class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
 
   initialize: (options) ->
     @visualisation = options.visualisation
-    @render()
 
   render: =>
     @closeSubViews()
-    @$el.html(@template(thisView: @))
+    @$el.html(@template(
+      thisView: @
+      visualisation: @visualisation
+    ))
     @renderSubViews()
 
     return @
