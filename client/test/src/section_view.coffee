@@ -40,7 +40,7 @@ test("Can see the section visualisation", ->
 
 test("Can see the section narrative", ->
   narrative = new Backbone.Models.Narrative()
-  section = new Backbone.Models.Section(narratives: [narrative])
+  section = new Backbone.Models.Section(narrative: narrative)
 
   view = createAndShowSectionViewForSection(section)
 
@@ -59,11 +59,11 @@ test(".addNarrative creates a narrative record on the section", ->
 
   view = createAndShowSectionViewForSection(section)
 
-  assert.equal section.get('narratives').models.length, 0
+  assert.isNull section.get('narrative')
 
   view.addNarrative()
 
-  assert.equal section.get('narratives').models.length, 1
+  assert.equal section.get('narrative').constructor.name, 'Narrative'
 )
 
 test("Can edit the section")

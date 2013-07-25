@@ -11,15 +11,12 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
   initialize: (options) ->
     @section = options.section
 
-    @section.get('narratives').bind('add', @render)
-    @section.get('narratives').bind('sync', @render)
-
   render: =>
     @closeSubViews()
     @$el.html(@template(
       thisView: @
       section: @section.toJSON()
-      narratives: @section.get('narratives').models
+      narrative: @section.get('narrative')
       visualisations: @section.get('visualisations').models
     ))
     @renderSubViews()
@@ -27,8 +24,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     return @
 
   addNarrative: =>
-    newNarrative = new Backbone.Models.Narrative()
-    @section.get('narratives').add(newNarrative)
+    @section.set('narrative', new Backbone.Models.Narrative())
 
   onClose: ->
     @closeSubViews()

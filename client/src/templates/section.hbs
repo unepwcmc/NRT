@@ -3,9 +3,9 @@
     <h2>{{section.title}}</h2>
     <h3>Nitrate-N concentrations (µg/L) in Abu Dabhi Emirate waters.</h3>
 </div>
-{{#each narratives}}
-  {{addSubViewTo ../thisView "NarrativeView" narrative=this}}
-{{/each}}
+{{#if narrative}}
+  {{addSubViewTo ../thisView "NarrativeView" narrative=../narrative}}
+{{/if}}
 <a class="btn add-narrative">
   Add Narrative
 </a>
