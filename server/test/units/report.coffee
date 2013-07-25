@@ -17,9 +17,11 @@ test('.create', ->
     Report.findAndCountAll().
       success((count)->
         assert.equal 1, count
-      ).
-      failure( ->
-        throw 'Report saving failed'
+      ).failure( ->
+        throw 'Failed to find Reports'
       )
+  ).
+  failure( ->
+    throw 'Report saving failed'
   )
 )
