@@ -45,13 +45,29 @@ header{
 
 .section-actions {
   margin-bottom: 100px;
+
+  .add-visualisation,
   .add-narrative {
+    color: $lightishGrey;
+
     &:hover {
       color: darken($lightishGrey, 10);
       cursor: pointer;
     }
+  }
 
-    color: $lightishGrey;
+  .add-visualisation {
+    border: 1px solid lighten($lightishGrey, 10);
+    padding: 2px 5px;
+    border-radius: 3px;
+
+    &:hover {
+      border-color: $lightishGrey;
+    }
+
+    i {
+      margin-right: 3px;
+    }
   }
 }
 

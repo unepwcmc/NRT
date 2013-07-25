@@ -9,22 +9,26 @@
       Type Narrative for this indicator here or
     </span>
     <span class="add-visualisation">
-      add a visualisation
+      <i class="icon-table"></i>add a visualisation
     </span>
   </div>
 {{else}}
   {{#if narrative}}
     {{addSubViewTo thisView "NarrativeView" narrative=narrative}}
   {{else}}
-    <div class="add-narrative">
-      Type Narrative for this indicator here
+    <div class="section-actions">
+      <span class="add-narrative">
+        Type Narrative for this indicator here
+      </span>
     </div>
   {{/if}}
   {{#if visualisation}}
     {{addSubViewTo thisView "VisualisationView" visualisation=visualisation}}
   {{else}}
-    <div class="add-visualisation">
-      add a visualisation
+    <div class="section-actions">
+      <span class="add-visualisation">
+        <i class="icon-table"></i>add a visualisation
+      </span>
     </div>
   {{/if}}
 {{/if}}
