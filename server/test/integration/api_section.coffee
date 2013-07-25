@@ -6,6 +6,10 @@ url = require('url')
 _ = require('underscore')
 
 
+appurl = (path) ->
+  url.resolve('http://localhost:3001', path)
+
+
 suite('API - Section')
 test('create, read', (done) ->
   data =
@@ -14,27 +18,24 @@ test('create, read', (done) ->
     narratives: []
     visualisations: []
 
-  appurl = (path) ->
-    url.resolve('http://localhost:3001', path)
-
-  request.post
+  request.post {
     url: appurl('/api/section')
     json: true
-    body: data,
-    (err, res, body) ->
-      id = body.section.id
-      assert.equal res.statusCode, 201
+    body: data
+  }, (err, res, body) ->
+    id = body.section.id
+    assert.equal res.statusCode, 201
 
-      request.get
-        url: appurl('/api/section/' + id)
-        json: true,
-        (err, res, body) ->
-          section = body.section
-          assert.equal section.id, id
-          assert.equal section.title, data.title
-          assert.equal section.report_id, data.report_id
-          assert.equal res.statusCode, 200
-          done()
+    request.get {
+      url: appurl('/api/section/' + id)
+      json: true
+    }, (err, res, body) ->
+      section = body.section
+      assert.equal section.id, id
+      assert.equal section.title, data.title
+      assert.equal section.report_id, data.report_id
+      assert.equal res.statusCode, 200
+      done()
 )
 
 test('list', (done) ->
@@ -43,9 +44,6 @@ test('list', (done) ->
     report_id: 5
     narratives: []
     visualisations: []
-
-  appurl = (path) ->
-    url.resolve('http://localhost:3001', path)
 
   opts =
     url: appurl('/api/section')
@@ -65,14 +63,14 @@ test('list', (done) ->
     assert.equal res1.statusCode, 201
     assert.equal res2.statusCode, 201
 
-    request.get
+    request.get {
       url: appurl('/api/section')
-      json: true,
-      (err, res, body) ->
-        assert.equal res.statusCode, 200
-        assert.equal body.length, 2
-        assert.equal body[0].id, body1.section.id
-        assert.equal body[1].id, body2.section.id
-        done()
+      json: true
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 200
+      assert.equal body.length, 2
+      assert.equal body[0].id, body1.section.id
+      assert.equal body[1].id, body2.section.id
+      done()
   )
 )
