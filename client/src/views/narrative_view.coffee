@@ -7,6 +7,7 @@ class Backbone.Views.NarrativeView extends Backbone.View
 
   events:
     "click .save-narrative": "saveNarrative"
+    "click .content-text": "startEdit"
     # textarea resize-related events
     "change textarea.content-text-field": "resize"
     "cut textarea.content-text-field": "delayedResize"
@@ -33,9 +34,10 @@ class Backbone.Views.NarrativeView extends Backbone.View
     return @
 
   saveNarrative: (event) =>
-    @narrative.set('title', "title")
-    @narrative.set('content', 
-      @$el.find('.content-text-field').val().replace(/^\s+|\s+$/g, ''))
+    @narrative.set(
+      content: @$el.find('.content-text-field').val().replace(/^\s+|\s+$/g, '')
+      editing: false
+    )
     @narrative.save()
 
   # Following 2 methods are used for dynamically resize the textarea.
@@ -49,6 +51,10 @@ class Backbone.Views.NarrativeView extends Backbone.View
   # ensuring it actually gets evaluated after the events have completed.
   delayedResize: ->
     setTimeout @resize, 0
+
+  startEdit: =>
+    @narrative.set('editing', true)
+    @render()
 
   onClose: ->
 
