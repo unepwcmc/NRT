@@ -32,6 +32,7 @@ module.exports = exports = (app) ->
 
   app.get "/indicator/:id", ensureAuthenticated, indicatorRoutes.show
 
+  app.get "/report/new", ensureAuthenticated, reportRoutes.new
   app.get "/report/:id", ensureAuthenticated, reportRoutes.show
   app.get "/report/:id/present", ensureAuthenticated, reportRoutes.present
 
