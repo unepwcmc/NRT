@@ -37,6 +37,7 @@ p {
 div.row {
 
   @include lastUpdateIcon($padding, $margin, $linkBlue);
+  @include reportIndicatorSectionList($buttonBlue);
 
   border-bottom: 1px solid #eee;
   padding-bottom: $padding;
@@ -104,29 +105,9 @@ div.row {
       }
     }
   }
-
-  section {
-    padding-top: .3em;
-    margin-top: 1.1em;
-    .section-title {
-      padding-bottom: 0;
-    }
-    .bookmarked {
-      i {
-        color: $buttonBlue;
-      }
-    }
-  }
   
   .clear {
     clear: both;
-  }
-
-  .reports {
-    p {
-      padding: .2em 2em .2em .2em;
-      margin: .4em 2em .4em .4em;
-    }
   }
  
 }
@@ -141,11 +122,5 @@ div.row-1 {
       color: $grey;
       padding: .3em 0;
     } 
-  }
-}
-
-div.row.row-2 {
-  h3 {
-    font-weight: bold;
   }
 }
