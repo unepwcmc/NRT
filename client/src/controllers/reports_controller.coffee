@@ -2,11 +2,6 @@ window.Backbone ||= {}
 window.Backbone.Controllers ||= {}
 
 class Backbone.Controllers.ReportsController extends Backbone.Diorama.Controller
-  constructor: ->
-    report = @createExampleReport()
-
-    reportView = new Backbone.Views.ReportView(report: report)
-    $('#report-container').prepend(reportView.el)
-
-  createExampleReport: ->
-    Backbone.Faker.Reports.create()
+  constructor: (options) ->
+    reportsListView = new Backbone.Views.ReportListView(reports: options.reports)
+    $('.report-content').prepend(reportsListView.el)

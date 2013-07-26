@@ -1,6 +1,9 @@
 exports.index = (req, res) ->
-  res.render "reports/index",
-    title: "Report show page"
+  Report = require('../models/report.coffee')
+  Report.findAll().success (reports) ->
+    res.render "reports/index",
+      reportsJSON: JSON.stringify(reports)
+      title: "Report show page"
 
 exports.show = (req, res) ->
   res.render "reports/show",

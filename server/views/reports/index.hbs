@@ -1,0 +1,46 @@
+{{!< main}}
+
+{{#contentFor 'header'}}
+  <link rel="stylesheet" href="/css/report.css">
+
+  <script src="/js/lib/underscore-min.js"></script>
+  <script src="/js/lib/backbone-min.js"></script>
+  <script src="/js/lib/backbone-relational.js"></script>
+  <script src="/js/lib/handlebars.js"></script>
+  <script src="/js/lib/diorama.js"></script>
+  <script src="/js/application.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+        new Backbone.Controllers.ReportsController({reports: {{{reportsJSON}}} });
+    });
+  </script>
+{{/contentFor}}
+
+<div class="content">
+  <div class="report-list-title">
+    <h1>Reports</h1>
+
+    <button class="grey">
+      <i class="icon-file-text-alt append"></i><span class="show">New Report</span>
+    </button>
+  </div>
+
+  <div class="report-content">
+    <section>
+      <div class="section-title">
+          <small><i class="icon-time append"></i></a>Last updated on 1st of April, 18:23 by Dr. Anybody</small>
+          <h2>Title</h2>
+          <h3>Nitrate-N concentrations (µg/L) in Abu Dabhi Emirate waters.</h3>
+      </div>
+
+      <p class='content-text'>Test</p>
+    </section>
+  </div>
+
+  <div class="report-sidebar">
+    Filterz here
+  </div>
+
+  <div class="clear"></div>
+</div>
