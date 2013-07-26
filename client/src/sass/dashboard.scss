@@ -1,0 +1,26 @@
+//COMMON CONTENT
+
+@import "mixins";
+@import "variables";
+
+
+.dashboard-title {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+  margin-bottom: 10px;
+}
+
+.column-2 {
+    width: 100%;
+    min-width: 500px;
+}
+
+.content-left {
+    float: left;
+    width: 50%;
+    border-right: 1px solid black;
+}
+
+.content-right {
+    float: left;
+}
