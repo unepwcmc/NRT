@@ -10,6 +10,15 @@
   margin-bottom: 10px;
 }
 
+section {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 60px;
+  margin-bottom: 10px;
+  i {
+    padding-right: 15px;
+  }
+}
+
 .column-2 {
     width: 100%;
     min-width: 500px;
