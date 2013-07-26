@@ -3,32 +3,92 @@
 @import "mixins";
 @import "variables";
 
+$padding-bottom: 1.333em;
+$margin-bottom: 0.667em;
+$title-padding-bottom: $padding-bottom * .6;
+$title-margin-bottom: $margin-bottom * .6;
+$padding-right: 1.333em;
+$green: #55b265;
+$orange: #ffbd4c;
+
+h3 {
+  color: #333;
+}
 
 .dashboard-title {
   border-bottom: 1px solid #eee;
-  padding-bottom: 20px;
-  margin-bottom: 10px;
+  padding-bottom: $title-padding-bottom;
+  margin-bottom: $title-margin-bottom;
 }
 
 section {
   border-bottom: 1px solid #eee;
-  padding-bottom: 60px;
-  margin-bottom: 10px;
+  padding-bottom: $padding-bottom;
+  margin-bottom: $margin-bottom;
   i {
-    padding-right: 15px;
+    padding-right: 1em;
   }
-}
+  .content-title {
+    padding-bottom: $title-padding-bottom;
+    margin-bottom: $title-margin-bottom;
+  }
+  h3 {
+    i {
+      padding-right: .5em;
+    }
+  }
+  div.green {i {color: $green;}}
+  div.orange {i {color: $orange;}}
 
-.column-2 {
-    width: 100%;
-    min-width: 500px;
-}
+  .report, .indicator {
+    padding-bottom: $padding-bottom * .6;
+    margin-bottom: $margin-bottom * .6;
+  }
 
-.content-left {
+  .indicator {
+    p {
+      padding: 0;
+    }
+  }
+
+  .report-bar-container {
+    border: 1px solid $lightGrey;
+    border-radius: 12px;
+    
+    .report-bar {
+      //border: 1px solid $green;
+      border-radius: 12px;
+      height: .8em;
+      padding: .1em 0;
+      text-align: left;
+      line-height: 0;
+      
+      p {
+        font-size: 0.75em;
+        padding: 0;
+        padding-top: 0.5em;
+        line-height: 0;
+        padding-left: 1.7em;
+        color: white;
+      }
+
+    }
+
+  }
+
+  .content-left {
     float: left;
     width: 50%;
+    padding-right: $padding-right;
+  }
+  
+  .content-right {
+      float: left;
+  }
+  
+  .clear {
+    clear: both;
+  }
+  
 }
 
-.content-right {
-    float: left;
-}
