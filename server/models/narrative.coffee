@@ -5,7 +5,7 @@ Narrative = sequelize.define('Narrative',
     type: Sequelize.STRING 
     allowNull: false
   content:
-    type: Sequelize.STRING 
+    type: Sequelize.TEXT 
     allowNull: false
   id: 
     type: Sequelize.STRING
