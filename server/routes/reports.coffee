@@ -1,5 +1,5 @@
 exports.index = (req, res) ->
-  res.render "reports",
+  res.render "reports/index",
     title: "Report show page"
 
 exports.show = (req, res) ->
