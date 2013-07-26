@@ -5,6 +5,7 @@
   "src/models/visualisation.coffee",
   "src/collections/visualisation_collection.coffee",
   "src/models/section.coffee",
+  "src/collections/section_collection.coffee",
   "src/views/section_view.coffee",
   "src/views/section_presentation_view.coffee",
   "src/views/report_view.coffee",
