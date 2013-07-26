@@ -1,3 +1,197 @@
 {{!< main}}
 
-<h1>Dashboard page!</h1>
+{{#contentFor 'header'}}
+  <link rel="stylesheet" href="/css/dashboard.css">
+{{/contentFor}}
+
+
+<div class="content">
+
+  <div class="dashboard-title">
+    <h1>Dashboard</h1>
+  </div>
+
+  <div class="row row-1">
+    <div class="content-left column">
+      <div class="content-title">
+        <h2><i class="icon-tasks"></i>Work in progress</h2>
+      </div>
+      <div class="report green">
+        <h3><i class="icon-file-text-alt"></i>Marine water quality report</h2>
+        <div class="report-bar-container">
+          <div class="report-bar" style="width: 76%; background-color: #55b265"><p>76%</p></div>
+        </div>
+      </div>
+      <div class="report green">
+        <h3><i class="icon-file-text-alt"></i>Mira indicator report</h2>
+        <div class="report-bar-container">
+          <div class="report-bar" style="width: 40%; background-color: #ffbd4c"><p>40%</p></div>
+        </div>
+      </div>
+      <div class="indicator">
+        <h3><i class="icon-bar-chart"></i>Land water quality report</h2>
+        <p>Marine water quality report</p>
+      </div>
+      <div class="report orange">
+        <h3><i class="icon-file-text-alt"></i>Land water quality report</h2>
+        <div class="report-bar-container">
+          <div class="report-bar" style="width: 45%; background-color: #ffbd4c"><p>45%</p></div>
+        </div>
+      </div>
+      <a href="#">See all</a>
+    </div>
+  
+    <div class="content-right column">
+      <div class="content-title">
+        <h2><i class="icon-exchange"></i>Notifications</h2>
+      </div>
+      <ul>
+        <li>Ammonia-N narrative report from Dr reports</li>
+        <li>More reports</li>
+        <li>And more indicators from Mr indicator</li>
+        <li>Ammonia-N narrative report from Dr reports</li>
+        <li>More reports update by myself</li>
+        <li>And more indicators from Mr indicator</li>
+      </ul>
+      <a href="#">See all</a>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+  <div class="row row-2">
+
+    <div class="content-left column">
+      <div class="content-title">
+        <h2><i class="icon-file-text-alt"></i>Latest edited reports</h2>
+
+        <div class="period-of-time">
+          <div class="last-update"><p><i class="icon-time"></i>Today</p></div>
+          <section class="reports">
+            <div class="section-title">
+              <small>
+                <i class="icon-time append"></i>Last updated on 1st of April, 18:23 by Dr. Anybody
+              </small>
+              <h3>Ammonia-N report</h3>
+              <h4>2012 | <i class="icon-bookmark"></i> Bookmark this report</h4>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it.</p>
+            </div>
+          </section>
+          <section class="reports">
+            <div class="section-title">
+              <small>
+                <i class="icon-time append"></i>Last updated on 1st of April, 18:23 by Dr. Anybody
+              </small>
+              <h3>Water quality report</h3>
+              <h4 class="bookmarked">2012 | <i class="icon-bookmark"></i></h4>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it.</p>
+            </div>
+          </section>
+          <section class="reports">
+            <div class="section-title">
+              <small>
+                <i class="icon-time append"></i>Last updated on 1st of April, 18:23 by Dr. Anybody
+              </small>
+              <h3>Ammonia-N report</h3>
+              <h4>2012 | <i class="icon-bookmark"></i> Bookmark this report</h4>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it.</p>
+            </div>
+          </section>
+        </div>
+
+        <div class="period-of-time">
+          <div class="last-update"><p><i class="icon-time"></i>Yesterday</p></div>
+          <section class="reports">
+            <div class="section-title">
+              <small>
+                <i class="icon-time append"></i>Last updated on 1st of April, 18:23 by Dr. Anybody
+              </small>
+              <h3>Ammonia-N report</h3>
+              <h4>2012 | <i class="icon-bookmark"></i> Bookmark this report</h4>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it.</p>
+            </div>
+          </section>
+          <section class="reports">
+            <div class="section-title">
+              <small>
+                <i class="icon-time append"></i>Last updated on 1st of April, 18:23 by Dr. Anybody
+              </small>
+              <h3>Water quality report</h3>
+              <h4 class="bookmarked">2012 | <i class="icon-bookmark"></i></h4>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it.</p>
+            </div>
+          </section>
+        </div>
+
+      </div>
+    </div>
+  
+    <div class="content-right column">
+      <div class="content-title">
+        <h2><i class="icon-bar-chart"></i>Latest edited indicators</h2>
+
+        <div class="period-of-time">
+          <div class="last-update"><p><i class="icon-time"></i>Today</p></div>
+          <section class="reports">
+            <div class="section-title">
+              <small>
+                <i class="icon-time append"></i>Last updated on 1st of April, 18:23 by Dr. Anybody
+              </small>
+              <h3>Ammonia-N report</h3>
+              <h4>2012 | <i class="icon-bookmark"></i> Bookmark this indicator</h4>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it.</p>
+            </div>
+          </section>
+          <section class="reports">
+            <div class="section-title">
+              <small>
+                <i class="icon-time append"></i>Last updated on 1st of April, 18:23 by Dr. Anybody
+              </small>
+              <h3>Water quality report</h3>
+              <h4 class="bookmarked">2012 | <i class="icon-bookmark"></i></h4>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it.</p>
+            </div>
+          </section>
+          <section class="reports">
+            <div class="section-title">
+              <small>
+                <i class="icon-time append"></i>Last updated on 1st of April, 18:23 by Dr. Anybody
+              </small>
+              <h3>Ammonia-N report</h3>
+              <h4>2012 | <i class="icon-bookmark"></i> Bookmark this report</h4>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it.</p>
+            </div>
+          </section>
+        </div>
+
+        <div class="period-of-time">
+          <div class="last-update"><p><i class="icon-time"></i>Yesterday</p></div>
+          <section class="reports">
+            <div class="section-title">
+              <small>
+                <i class="icon-time append"></i>Last updated on 1st of April, 18:23 by Dr. Anybody
+              </small>
+              <h3>Ammonia-N report</h3>
+              <h4>2012 | <i class="icon-bookmark"></i> Bookmark this indicator</h4>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it.</p>
+            </div>
+          </section>
+          <section class="reports">
+            <div class="section-title">
+              <small>
+                <i class="icon-time append"></i>Last updated on 1st of April, 18:23 by Dr. Anybody
+              </small>
+              <h3>Water quality report</h3>
+              <h4 class="bookmarked">2012 | <i class="icon-bookmark"></i></h4>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it.</p>
+            </div>
+          </section>
+        </div>
+
+      </div>
+    </div>
+    <div class="clear"></div>
+
+  </div>
+
+</div>
