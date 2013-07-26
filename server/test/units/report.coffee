@@ -4,7 +4,8 @@ _ = require('underscore')
 
 
 suite('Report')
-test('.create', ->
+test('.create', (done) ->
+  Report = require '../../models/report'
   report_attributes =
     title: 'Lovely Report'
     brief: 'Gtta b brf n dis dscrption'
@@ -14,10 +15,12 @@ test('.create', ->
     conclusion: 'This report is lovely afterall.'
 
   Report.create(report_attributes).success( ->
-    Report.findAndCountAll().
+    Report.count().
       success((count)->
         assert.equal 1, count
-      ).failure( ->
+        done()
+      ).failure( (err) ->
+        throw err
         throw 'Failed to find Reports'
       )
   ).
