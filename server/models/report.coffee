@@ -40,7 +40,6 @@ Report = sequelize.define('Report', {
            `Sections`.`id` AS `Sections.id`,
            `Sections`.`createdAt` AS `Sections.createdAt`,
            `Sections`.`updatedAt` AS `Sections.updatedAt`,
-           `Narratives`.`title` AS `Narratives.title`,
            `Narratives`.`content` AS `Narratives.content`,
            `Narratives`.`id` AS `Narratives.id`,
            `Narratives`.`section_id` AS `Narratives.section_id`
@@ -88,7 +87,9 @@ Report.parseFatSQL = (rows) ->
 
   # for each section, attach the narratives
   report.sections = sections.map (section) ->
-    section.narratives = _.where narratives, {section_id: section.id}
+    narratives = _.where(narratives, section_id: section.id)
+    # Should only be max one for now
+    section.narrative = (if narratives.length > 0 then narratives[0] else null )
     section
 
   return report

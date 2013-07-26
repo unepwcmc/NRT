@@ -46,7 +46,6 @@ test('.parseFatSQL', ->
       },
       "Narratives": {
         "section_id": 1,
-        "title": "narrative one",
         "content": "blah blah",
         "id": 1
       }
@@ -65,7 +64,6 @@ test('.parseFatSQL', ->
       },
       "Narratives": {
         "section_id": null,
-        "title": null,
         "content": null,
         "id": null
       }
@@ -83,14 +81,10 @@ test('.parseFatSQL', ->
         "id": 1,
         "createdAt": "2013-07-26T08:45:19.000Z",
         "updatedAt": "2013-07-26T08:45:19.000Z",
-        "narratives": [
-          {
-            "section_id": 1,
-            "title": "narrative one",
-            "content": "blah blah",
-            "id": 1
-          }
-        ]
+        "narrative":
+          "section_id": 1,
+          "content": "blah blah",
+          "id": 1
       },
       {
         "title": "section two",
@@ -98,7 +92,7 @@ test('.parseFatSQL', ->
         "id": 2,
         "createdAt": "2013-07-26T08:45:24.000Z",
         "updatedAt": "2013-07-26T08:45:24.000Z"
-        "narratives": []
+        "narrative": null
       }
     ]
   }
