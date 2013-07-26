@@ -68,6 +68,7 @@ module.exports = (grunt) ->
         files:
           'dist/css/main.css': 'src/sass/main.scss'
           'dist/css/report.css': 'src/sass/report.scss'
+          'dist/css/dashboard.css': 'src/sass/dashboard.scss'
 
     watch:
       files: ['src/**/*', 'test/src/**/*'],

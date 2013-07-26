@@ -18,6 +18,7 @@ class Backbone.Faker.Reports
     count ||= Math.floor(Math.random()*14) + 1
     _.times count, =>
       section = new Backbone.Models.Section
+        id: Math.floor(Math.random()*100000)
         title: @getRandomSectionContent('title')
         narrative:
           content: _.times(14, -> "This is all the narrative you're going to get. Seriously. ").join(" ")

@@ -158,6 +158,26 @@ strong{
     font-weight: 600;
 }
 
+em{
+    font-style: italic;
+}
+
+::-webkit-input-placeholder {
+   color: rgba(0,0,0,0.25);
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: rgba(0,0,0,0.25);
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: rgba(0,0,0,0.25);
+}
+
+:-ms-input-placeholder {
+   color: rgba(0,0,0,0.25);
+}
+
 .content{
     width: 980px;
     padding: 30px 20px;
@@ -233,9 +253,46 @@ strong{
         line-height: 60px;
         box-shadow: 0 1px 1px rgba(0,0,0,0.05);
     }
-    .main-menu-container{
+
+    .main-menu-container {
         position: relative;
+        ul{
+            text-align: left;
+            width: 100%;
+            min-width: 200px;
+            display: none;
+            list-style: none;
+            position: absolute;
+            left: 0;
+            top: 61px;
+            li{
+                a{
+                    color: $white;
+                    display: inline-block;
+                    padding: 0 20px;
+                    line-height: 60px;
+                    width: 100%;
+                    @include box-sizing(border-box);
+                }
+                background-color: #333;
+                border-bottom: 1px solid #222222;
+                &:hover{
+                    background-color: #111;
+                }
+                &:last-child{
+                    border-bottom: none;
+                }
+            }
+        }
     }
+
+    ul li .icon{
+        display: inline-block;
+        width: 24px;
+        text-align: center;
+        padding-right: 15px;
+    }
+
     .main-menu{
         overflow: hidden;
         font-family: "PT Sans";
@@ -271,6 +328,7 @@ strong{
         .initials{
             font-size: 1.4em;
             position: relative;
+            line-height: 60px;
             top: 2px;
         }
         &:hover, &.opened{
@@ -284,47 +342,113 @@ strong{
             }
         }
     }
-    ul{
-        text-align: left;
-        width: 100%;
-        min-width: 200px;
-        display: none;
-        list-style: none;
-        position: absolute;
-        left: 0;
-        top: 61px;
-        li{
-            a{
-                color: $white;
-                display: inline-block;
-                padding: 0 20px;
-                line-height: 60px;
-                width: 100%;
-                @include box-sizing(border-box);
-                .icon{
-                    display: inline-block;
-                    width: 24px;
-                    text-align: center;
-                    padding-right: 15px;
-                }
-            }
-            background-color: #333;
-            border-bottom: 1px solid #222222;
-            &:hover{
-                background-color: #111;
-            }
-            &:last-child{
-                border-bottom: none;
-            }
-        }
-    }
+
     .search-container{
-        width: 700px;
+        width: 800px;
         height: 60px;
         overflow: hidden;
     }
-    .search-box{
+    .search-box-container{
         display: none;
+    }
+    .filtered{
+        .search-filters{
+            display: block;
+            float: left;
+        }
+        .search-box{
+            float: left;
+            width: 600px;
+            ul li .result-info{
+                width: 449px;
+            }
+        }
+    }
+    .search-filters{
+        display: none;
+        width: 201px;
+        background-color: #0068A6;
+        color: $white;
+        ul{
+            li{
+                cursor: pointer;
+                padding: 0 20px;
+                line-height: 60px;
+                border-bottom: 1px solid #00558B;
+                &:hover{
+                    background-color: #00558B;
+                }
+                &.selected{
+                    background-color: #003659;
+                }
+                &:last-child{
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+    .search-box{
+        width: 100%;
+        background-color: $white;
+        border: 1px solid #DDD;
+        border-top: none;
+        @include box-sizing(border-box);
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+        position: relative;
+        z-index: 2;
+        ul{
+            li{
+                border-bottom: 1px solid #DDD;
+                @include clearfix;
+                & > div{
+                    float: left;
+                }
+                .result-type, .result-bookmark{
+                    width: 13px;
+                    padding: 20px 23px;
+                }
+                .result-bookmark{
+                    i{
+                        cursor: pointer;
+                    }
+                    .icon-bookmark{
+                        color: $buttonBlue;
+                    }
+                    .icon-bookmark-empty{
+                        color: #C3C3C3;
+                        &:hover{
+                            color: $buttonBlue;
+                        }
+                    }
+                }
+                .result-info{
+                    width: 650px;
+                    padding: 20px 15px;
+                    border-left: 1px solid #DDD;
+                    p{
+                        padding-bottom: 0;
+                        font-size: 0.75em;
+                        line-height: 1.3em;
+                    }
+                }
+                .result-title{
+                    font-weight: 600;
+                    font-size: 0.85em;
+                }
+            }
+        }
+        .more-results{
+            text-align: center;
+            padding: 8px 0;
+            a{
+                color: $linkBlue;
+                &:hover{
+                    color: lighten($linkBlue, 10);
+                }
+            }
+        }
     }
     .search-header{
         overflow: hidden;
@@ -332,8 +456,11 @@ strong{
         background-color: #fff;
         border-bottom: 1px solid #DDD;
         border-right: 1px solid #DDD;
+        position: relative;
+        z-index: 3;
+        @include clearfix;
         @include transition(width 0.5s);
-        .search-icon, input[type="text"], .close-search{
+        .search-icon, input[type="text"], .search-close, .search-input{
             float: left;
         }
         .search-icon{
@@ -343,30 +470,51 @@ strong{
             text-align: center;
             cursor: pointer;
         }
-        input[type="text"]{
-            width: 550px;
-            font-size: 1.2em;
-            border: none;
-            border-left: 1px solid #BBB;
-            padding: 0 20px;
+        .search-input{
             position: relative;
             top: 15px;
-            color: rgba(0,0,0,0.25);
-            &:focus, &.filled{
-                color: $mainFont;
-                color: rgba(0,0,0,0.8);
+            border-left: 1px solid #BBB;
+        }
+        .tag{
+            display: none;
+            font-size: 0.85em;
+            margin-left: 15px;
+            padding: 4px 5px 6px 5px;
+            position: relative;
+            top: 2px;
+            font-weight: 300;
+            cursor: pointer;
+            i{
+                position: relative;
+                top: 0;
+                font-size: 0.8em;
+                padding: 0 2px;
             }
         }
-        .close-search{
+        .tag, input[type="text"]{
+            float: left;
+        }
+        input[type="text"]{
+            width: 540px;
+            font-size: 1.2em;
+            border: none;
+            padding: 0 15px;
+            color: $mainFont;
+            color: rgba(0,0,0,0.8);
+        }
+        .search-close{
             color: #DDD;
             cursor: pointer;
+            display: none;
+            float: right;
+            padding-right: 20px;
             &:hover{
                 color: $mainFont;
             }
         }
         &.opened{
             @include transition(width 0.5s);
-            width: 700px;
+            width: 800px;
         }
         i{
             display: inline-block;
