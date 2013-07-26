@@ -1,3 +1,2 @@
 exports.index = (req, res) ->
-  res.render "dashboard",
-    title: "Dashboard show page"
+  res.render "dashboard"

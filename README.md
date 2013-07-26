@@ -70,6 +70,28 @@ The tests are written in mocha, using the qunit syntax with chai for
 asserts. Write tests in coffeescript in the `test/` folder and
 compile them with `grunt`.
 
+## User Management
+
+A simple user management system is in place, with a CRUD (minus the U)
+API. A secret token is required to authenticate yourself and manage
+users. This token is set by an environment variable, `AUTH_TOKEN`.
+
+For example, run your app as so:
+
+    AUTH_TOKEN=my-very-secret-token npm start
+
+#### Listing all users
+
+    curl http://<domain>/users\?token\=my-very-secret-token
+
+#### Adding a user
+
+    curl -X POST -d "email=hats@boats.com&password=password" http://<domain>/users\?token\=my-very-secret-token
+
+#### Deleting a user
+
+    curl -i -X DELETE http://<domain>/users/<id>\?token\=my-very-secret-token
+
 ## Development workflow
 
 ### Tabs (nope)

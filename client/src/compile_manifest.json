@@ -11,6 +11,7 @@
   "src/views/section_presentation_view.coffee",
   "src/views/report_item_view.coffee",
   "src/views/report_list_view.coffee",
+  "src/views/section_navigation_view.coffee",
   "src/views/report_view.coffee",
   "src/views/report_presentation_view.coffee",
   "src/views/text_edit_view.coffee",

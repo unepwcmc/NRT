@@ -1,0 +1,13 @@
+<div class="heading">
+  <i class="toggle icon-caret-down"></i>
+  <span class='title'>Section List</span>
+</div>
+<ol>
+  {{#each sections}}
+    <li class='section-numbering'>
+      <div class='section'>
+        <a href="#section-{{id}}">{{title}}</a>
+      </div>
+    </li>
+  {{/each}}
+</ol>
