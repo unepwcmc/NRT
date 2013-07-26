@@ -115,7 +115,7 @@ div.row {
     float: left;
     //width: 50%;
     width: 50%;
-    padding-right: $padding-right;
+    //padding-right: $padding-right;
   }
   
   .content-right {
@@ -150,6 +150,18 @@ div.row {
  
 }
 
+div.row-1 {
+  .column {
+    padding-right: $padding-right;
+  }
+  ul {
+    padding: 0 0 .2em 1em;
+    li {
+      color: $grey;
+      padding: .3em 0;
+    } 
+  }
+}
 
 div.row.row-2{
   h3 {
