@@ -12,7 +12,6 @@ class Backbone.Views.SectionNavigationView extends Backbone.View
     @render()
 
   render: ->
-    console.log 'rendered'
     @$el.html(@template(
       sections: @sections.map (s)->
         id: s.get('id')
