@@ -35,7 +35,14 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
       )
 
   addSection: =>
-    @report.get('sections').add(new Backbone.Models.Section())
+    if @report.get('id')?
+      section = new Backbone.Models.Section(report_id: @report.get('id'))
+      @report.get('sections').add(section)
+      section.save()
+    else
+      @report.save(null,
+        success: @addSection
+      )
 
   onClose: ->
     @closeSubViews()
