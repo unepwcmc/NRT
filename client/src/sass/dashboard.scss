@@ -1,12 +1,11 @@
 //COMMON CONTENT
-
 @import "mixins";
 @import "variables";
 
-$padding-bottom: 1.333em;
-$margin-bottom: 0.667em;
-$title-padding-bottom: 0.799em;
-$title-margin-bottom: 0.4em;
+$padding: 1.333em;
+$margin: 0.667em;
+$title-padding: 0.799em;
+$title-margin: 0.4em;
 $padding-right: 1.333em;
 $green: #55b265;
 $orange: #ffbd4c;
@@ -31,37 +30,47 @@ p {
 
 .dashboard-title {
   border-bottom: 1px solid #eee;
-  padding-bottom: $title-padding-bottom;
-  margin-bottom: $title-margin-bottom;
+  padding-bottom: $title-padding;
+  margin-bottom: $title-margin;
 }
 
 div.row {
-  border-bottom: 1px solid #eee;
-  padding-bottom: $padding-bottom;
-  margin-bottom: $margin-bottom;
 
-  i {
-    padding-right: 1em;
+  border-bottom: 1px solid #eee;
+  padding-bottom: $padding;
+  margin-bottom: $margin;
+
+  div.green {i {color: $green;}}
+  div.orange {i {color: $orange;}}
+
+  h2 {
+    padding-bottom: $padding * .4;
+    margin-bottom: $margin * .4;
   }
-  .content-title {
-    padding-bottom: $title-padding-bottom;
-    margin-bottom: $title-margin-bottom;
-  }
+
   h3 {
     i {
       padding-right: .5em;
     }
   }
-  h2 {
-    padding-bottom: $padding-bottom * .4;
-    margin-bottom: $margin-bottom * .4;
+  
+  i {
+    padding-right: 1em;
   }
-  div.green {i {color: $green;}}
-  div.orange {i {color: $orange;}}
 
-  .report, .indicator {
-    padding-bottom: $padding-bottom * .6;
-    margin-bottom: $margin-bottom * .6;
+  .content-left {
+    float: left;
+    width: 50%;
+  }
+  
+  .content-right {
+    float: left;
+    max-width: 50%;
+  }
+
+  .content-title {
+    padding-bottom: $title-padding;
+    margin-bottom: $title-margin;
   }
 
   .indicator {
@@ -70,10 +79,15 @@ div.row {
     }
   }
 
+  .report, .indicator {
+    padding-bottom: $padding * .6;
+    margin-bottom: $margin * .6;
+  }
+
   div.last-update {
     display: inline-block;
-    padding: $padding-bottom * .6 0;
-    margin: $margin-bottom * .6 0;
+    padding: $padding * .6 0;
+    margin: $margin * .6 0;
     p {
       color: $linkBlue;
       border: 1px solid $linkBlue;
@@ -89,15 +103,12 @@ div.row {
   .report-bar-container {
     border: 1px solid $lightGrey;
     border-radius: 12px;
-    
     .report-bar {
-      //border: 1px solid $green;
       border-radius: 12px;
       height: .8em;
       padding: .1em 0;
       text-align: left;
       line-height: 0;
-      
       p {
         padding: 0;
         padding-top: 0.5em;
@@ -105,24 +116,8 @@ div.row {
         padding-left: 1.7em;
         color: white;
       }
-
     }
-
   }
-
-
-  .content-left {
-    float: left;
-    //width: 50%;
-    width: 50%;
-    //padding-right: $padding-right;
-  }
-  
-  .content-right {
-    float: left;
-    max-width: 50%;
-  }
-
 
   section {
     padding-top: .3em;
@@ -163,10 +158,8 @@ div.row-1 {
   }
 }
 
-div.row.row-2{
+div.row.row-2 {
   h3 {
     font-weight: bold;
   }
-
 }
-
