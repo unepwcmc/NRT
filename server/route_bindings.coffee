@@ -15,7 +15,7 @@ module.exports = exports = (app) ->
     return next() unless app.settings.env == 'production'
 
     passport.
-      authenticate('basic', { session: false }).
+      authenticate('basic').
       call(@, req, res, next)
 
   # REST API
