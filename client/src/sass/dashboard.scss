@@ -36,6 +36,8 @@ p {
 
 div.row {
 
+  @include lastUpdateIcon($padding, $margin, $linkBlue);
+
   border-bottom: 1px solid #eee;
   padding-bottom: $padding;
   margin-bottom: $margin;
@@ -82,22 +84,6 @@ div.row {
   .report, .indicator {
     padding-bottom: $padding * .6;
     margin-bottom: $margin * .6;
-  }
-
-  div.last-update {
-    display: inline-block;
-    padding: $padding * .6 0;
-    margin: $margin * .6 0;
-    p {
-      color: $linkBlue;
-      border: 1px solid $linkBlue;
-      border-radius: 6px;
-      padding: 0 .15em;
-      line-height: 1.6em;
-    }
-    i {
-      padding-right: 0.2em;
-    }
   }
 
   .report-bar-container {

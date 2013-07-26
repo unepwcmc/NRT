@@ -133,3 +133,22 @@
   opacity: $percentage / 100;
   filter: unquote('alpha(opacity=$percentage)');
 }
+
+
+@mixin lastUpdateIcon($padding, $margin, $color) {
+  div.last-update {
+    display: inline-block;
+    padding: $padding * .6 0;
+    margin: $margin * .6 0;
+    p {
+      color: $linkBlue;
+      border: 1px solid $color;
+      border-radius: 6px;
+      padding: 0 .15em;
+      line-height: 1.6em;
+    }
+    i {
+      padding-right: 0.2em;
+    }
+  }
+}
