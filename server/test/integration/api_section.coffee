@@ -2,24 +2,19 @@ assert = require('chai').assert
 helpers = require '../helpers'
 request = require('request')
 async = require('async')
-url = require('url')
 _ = require('underscore')
-
-
-appurl = (path) ->
-  url.resolve('http://localhost:3001', path)
 
 
 suite('API - Section')
 test('create, read', (done) ->
   data =
-    title: "test section title"
+    title: "test section title 1"
     report_id: 5
     narratives: []
     visualisations: []
 
   request.post {
-    url: appurl('/api/section')
+    url: helpers.appurl('/api/section')
     json: true
     body: data
   }, (err, res, body) ->
@@ -27,7 +22,7 @@ test('create, read', (done) ->
     assert.equal res.statusCode, 201
 
     request.get {
-      url: appurl('/api/section/' + id)
+      url: helpers.appurl('/api/section/' + id)
       json: true
     }, (err, res, body) ->
       section = body.section
@@ -40,13 +35,13 @@ test('create, read', (done) ->
 
 test('list', (done) ->
   data =
-    title: "test section title"
+    title: "test section title 2"
     report_id: 5
     narratives: []
     visualisations: []
 
   opts =
-    url: appurl('/api/section')
+    url: helpers.appurl('/api/section')
     json: true
     body: data
 
@@ -64,7 +59,7 @@ test('list', (done) ->
     assert.equal res2.statusCode, 201
 
     request.get {
-      url: appurl('/api/section')
+      url: helpers.appurl('/api/section')
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 200

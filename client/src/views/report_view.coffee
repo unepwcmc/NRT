@@ -6,6 +6,7 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
 
   initialize: (options) ->
     @report = options.report
+    @report.bind('change', @updateUrl)
     @render()
 
   render: =>
@@ -18,6 +19,16 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
     @renderSubViews()
 
     return @
+
+  # TODO This isn't a great long-term approach, since it won't work in IE
+  # plus, it should probably defer to a router
+  updateUrl: =>
+    if @report.get('id')?
+      window.history.replaceState(
+        {},
+        "Report #{@report.get('id')}",
+        "/report/#{@report.get('id')}"
+      )
 
   onClose: ->
     @closeSubViews()
