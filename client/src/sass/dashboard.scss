@@ -11,6 +11,10 @@ $padding-right: 1.333em;
 $green: #55b265;
 $orange: #ffbd4c;
 
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+
 h3 {
   color: #333;
 }
@@ -78,12 +82,14 @@ section {
 
   .content-left {
     float: left;
+    //width: 50%;
     width: 50%;
     padding-right: $padding-right;
   }
   
   .content-right {
-      float: left;
+    float: left;
+    max-width: 50%;
   }
   
   .clear {
