@@ -39,22 +39,10 @@ module.exports = exports = (app) ->
   if app.settings.env == 'test'
     app.get "/tests", testRoutes.test
 
-  authenticateToken = (token) ->
-    env_token = process.env.AUTH_TOKEN
-
-    if env_token? && token?
-      return env_token == token
-
-    return false
-
-  useTokenAuthentication = (req, res, next) ->
-    if authenticateToken(req.query.token || null)
-      next()
-    else
-      res.send(401, 'Unauthorised')
-
   # User CRUD
   # express-resource doesn't support using middlewares
+  useTokenAuthentication = require('./lib/token_authentication.coffee')
+
   app.get "/users", useTokenAuthentication, userRoutes.index
   app.get "/users/:id", useTokenAuthentication, userRoutes.show
 
