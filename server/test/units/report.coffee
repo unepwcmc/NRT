@@ -1,5 +1,6 @@
 assert = require('chai').assert
 helpers = require '../helpers'
+_ = require('underscore')
 
 Report = require '../../models/report'
 
@@ -24,4 +25,81 @@ test('.create', ->
   failure( ->
     throw 'Report saving failed'
   )
+)
+
+test('.parseFatSQL', ->
+  actual = Report.parseFatSQL([
+    {
+      "title": "foo",
+      "id": 1,
+      "createdAt": "2013-07-26T08:27:53.000Z",
+      "updatedAt": "2013-07-26T08:27:53.000Z",
+      "Sections": {
+        "title": "section one",
+        "report_id": 1,
+        "id": 1,
+        "createdAt": "2013-07-26T08:45:19.000Z",
+        "updatedAt": "2013-07-26T08:45:19.000Z"
+      },
+      "Narratives": {
+        "section_id": 1,
+        "title": "narrative one",
+        "content": "blah blah",
+        "id": 1
+      }
+    },
+    {
+      "title": "foo",
+      "id": 1,
+      "createdAt": "2013-07-26T08:27:53.000Z",
+      "updatedAt": "2013-07-26T08:27:53.000Z",
+      "Sections": {
+        "title": "section two",
+        "report_id": 1,
+        "id": 2,
+        "createdAt": "2013-07-26T08:45:24.000Z",
+        "updatedAt": "2013-07-26T08:45:24.000Z"
+      },
+      "Narratives": {
+        "section_id": null,
+        "title": null,
+        "content": null,
+        "id": null
+      }
+    }
+  ])
+  expected = {
+    "title": "foo"
+    "id": 1
+    "createdAt": "2013-07-26T08:27:53.000Z",
+    "updatedAt": "2013-07-26T08:27:53.000Z",
+    "sections": [
+      {
+        "title": "section one",
+        "report_id": 1,
+        "id": 1,
+        "createdAt": "2013-07-26T08:45:19.000Z",
+        "updatedAt": "2013-07-26T08:45:19.000Z",
+        "narratives": [
+          {
+            "section_id": 1,
+            "title": "narrative one",
+            "content": "blah blah",
+            "id": 1
+          }
+        ]
+      },
+      {
+        "title": "section two",
+        "report_id": 1,
+        "id": 2,
+        "createdAt": "2013-07-26T08:45:24.000Z",
+        "updatedAt": "2013-07-26T08:45:24.000Z"
+        "narratives": []
+      }
+    ]
+  }
+  assert _.isEqual(expected, actual),
+    "Expected #{JSON.stringify(expected, null, 2)}
+     to equal #{JSON.stringify(actual, null, 2)}"
 )

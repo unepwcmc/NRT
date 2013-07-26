@@ -12,8 +12,9 @@ appurl = (path) ->
 
 suite('API - Section')
 test('create, read', (done) ->
+  console.log('running create, read')
   data =
-    title: "test section title"
+    title: "test section title 1"
     report_id: 5
     narratives: []
     visualisations: []
@@ -39,8 +40,9 @@ test('create, read', (done) ->
 )
 
 test('list', (done) ->
+  console.log('running list')
   data =
-    title: "test section title"
+    title: "test section title 2"
     report_id: 5
     narratives: []
     visualisations: []
@@ -67,6 +69,7 @@ test('list', (done) ->
       url: appurl('/api/section')
       json: true
     }, (err, res, body) ->
+      console.log body
       assert.equal res.statusCode, 200
       assert.equal body.length, 2
       assert.equal body[0].id, body1.section.id
