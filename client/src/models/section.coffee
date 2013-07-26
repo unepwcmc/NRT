@@ -1,6 +1,9 @@
 window.Backbone.Models || = {}
 
 class window.Backbone.Models.Section extends Backbone.RelationalModel
+  default:
+    title: "New Section"
+
   url: ->
     'api/section'
 

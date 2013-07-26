@@ -4,9 +4,13 @@ window.Backbone.Views ||= {}
 class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
   template: Handlebars.templates['report.hbs']
 
+  events:
+    "click .add-report-section": "addSection"
+
   initialize: (options) ->
     @report = options.report
     @report.bind('change', @updateUrl)
+    @report.get('sections').bind('add', @render)
     @render()
 
   render: =>
@@ -29,6 +33,9 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
         "Report #{@report.get('id')}",
         "/report/#{@report.get('id')}"
       )
+
+  addSection: =>
+    @report.get('sections').add(new Backbone.Models.Section())
 
   onClose: ->
     @closeSubViews()

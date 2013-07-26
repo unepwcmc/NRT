@@ -101,4 +101,15 @@ test("I can use report introduction", ->
   view.close()
 )
 
+test(".addSection adds a section to the report", ->
+  report = new Backbone.Models.Report()
+  reportView = new Backbone.Views.ReportView(report: report)
+
+  assert.equal report.get('sections').length, 0
+
+  reportView.addSection()
+
+  assert.equal report.get('sections').length, 1
+)
+
 test("I can use report conclusion")
