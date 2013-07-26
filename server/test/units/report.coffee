@@ -2,7 +2,6 @@ assert = require('chai').assert
 helpers = require '../helpers'
 _ = require('underscore')
 
-Report = require '../../models/report'
 
 suite('Report')
 test('.create', ->
@@ -28,6 +27,7 @@ test('.create', ->
 )
 
 test('.parseFatSQL', ->
+  Report = require '../../models/report'
   actual = Report.parseFatSQL([
     {
       "title": "foo",
