@@ -1,7 +1,13 @@
-<ul>
+<div class="heading">
+  <i class="toggle icon-caret-down"></i>
+  <span class='title'>Section List</span>
+</div>
+<ol>
   {{#each sections}}
-    <li>
-      <a href="#{{id}}">{{title}}
+    <li class='section-numbering'>
+      <div class='section'>
+        <a href="#{{id}}">{{title}}</a>
+      </div>
     </li>
   {{/each}}
-</ul>
+</ol>
