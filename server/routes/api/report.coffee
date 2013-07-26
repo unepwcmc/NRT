@@ -25,9 +25,9 @@ exports.create = (req, res) ->
     introduction: params.introduction
     conclusion: params.conclusion
   ).success((report) ->
-    res.send(
+    res.send(201,
       JSON.stringify(
-        report: report
+        report
       )
     )
   ).failure((err) ->

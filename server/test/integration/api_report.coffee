@@ -5,6 +5,26 @@ url = require('url')
 
 suite('API - Report')
 
+test('new', (done) ->
+  data =
+    title: "new report"
+
+  Report = require('../../models/report')
+  request.post({
+    url: helpers.appurl('api/report/')
+    json: true
+    body: data
+  },(err, res, body) ->
+    id = body.id
+
+    assert.equal res.statusCode, 201
+
+    Report.find(id).success((report) ->
+      assert.equal report.title, data.title
+      done()
+    )
+  )
+)
 test('update', (done) ->
   data =
     title: "test section title 1"

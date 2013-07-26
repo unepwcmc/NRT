@@ -15,6 +15,12 @@ exports.show = (req, res) ->
     res.render "404"
   )
 
+exports.new = (req, res) ->
+  res.render "reports/show",
+    reportData: JSON.stringify(
+      title: "A new report"
+    )
+
 exports.present = (req, res) ->
   res.render "reports/present",
     report_id: req.params.id
