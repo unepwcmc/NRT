@@ -1,5 +1,6 @@
 app = require('../app')
 test_server = null
+url = require('url')
 
 before( (done) ->
   app.start 3001, (err, server) ->
@@ -14,3 +15,6 @@ after( (done) ->
 beforeEach( (done) ->
   global.sequelize.sync({force: true}).success(() -> done())
 )
+
+exports.appurl = (path) ->
+  url.resolve('http://localhost:3001', path)

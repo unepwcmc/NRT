@@ -2,17 +2,11 @@ assert = require('chai').assert
 helpers = require '../helpers'
 request = require('request')
 async = require('async')
-url = require('url')
 _ = require('underscore')
-
-
-appurl = (path) ->
-  url.resolve('http://localhost:3001', path)
 
 
 suite('API - Section')
 test('create, read', (done) ->
-  console.log('running create, read')
   data =
     title: "test section title 1"
     report_id: 5
@@ -20,7 +14,7 @@ test('create, read', (done) ->
     visualisations: []
 
   request.post {
-    url: appurl('/api/section')
+    url: helpers.appurl('/api/section')
     json: true
     body: data
   }, (err, res, body) ->
@@ -28,7 +22,7 @@ test('create, read', (done) ->
     assert.equal res.statusCode, 201
 
     request.get {
-      url: appurl('/api/section/' + id)
+      url: helpers.appurl('/api/section/' + id)
       json: true
     }, (err, res, body) ->
       section = body.section
@@ -40,7 +34,6 @@ test('create, read', (done) ->
 )
 
 test('list', (done) ->
-  console.log('running list')
   data =
     title: "test section title 2"
     report_id: 5
@@ -48,7 +41,7 @@ test('list', (done) ->
     visualisations: []
 
   opts =
-    url: appurl('/api/section')
+    url: helpers.appurl('/api/section')
     json: true
     body: data
 
@@ -66,10 +59,9 @@ test('list', (done) ->
     assert.equal res2.statusCode, 201
 
     request.get {
-      url: appurl('/api/section')
+      url: helpers.appurl('/api/section')
       json: true
     }, (err, res, body) ->
-      console.log body
       assert.equal res.statusCode, 200
       assert.equal body.length, 2
       assert.equal body[0].id, body1.section.id
