@@ -94,9 +94,26 @@ header{
 }
 
 .report-title{
-    border-bottom: 1px solid #eee;
-    padding-bottom: 20px;
-    margin-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+  margin-bottom: 10px;
+
+  .time-period {
+    input {
+      color: #808080;
+    }
+  }
+
+  .time-period,
+  h1 {
+    input {
+      border: 0;
+    }
+
+    a {
+      font-size: 0.3em;
+    }
+  }
 }
 
 .report-extra{

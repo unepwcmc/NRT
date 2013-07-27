@@ -1,9 +1,7 @@
-{{#if content}}
-  <p class='content-text'>{{content}}</p>
-{{else}}
-  <div class="section-actions">
-    <span class="add-content">
-      Type {{type}} here
-    </span>
-  </div>
-{{/if}}
+<div class="add-content">
+  {{#if content}}
+    {{content}}
+  {{else}}
+    Type {{className}} here
+  {{/if}}
+</div>

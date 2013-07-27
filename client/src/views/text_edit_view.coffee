@@ -9,29 +9,46 @@ class Backbone.Views.TextEditView extends Backbone.View
     "click .save-content": "saveContent"
     "click .add-content": "startEdit"
     "click .content-text": "startEdit"
-    "change textarea.content-text-field": "resize"
-    "cut textarea.content-text-field": "delayedResize"
-    "paste textarea.content-text-field": "delayedResize"
-    "drop textarea.content-text-field": "delayedResize"
-    "keydown textarea.content-text-field": "delayedResize"
+    "change .content-text-field": "resize"
+    "cut .content-text-field": "delayedResize"
+    "paste .content-text-field": "delayedResize"
+    "drop .content-text-field": "delayedResize"
+    "keydown .content-text-field": "delayedResize"
+    "blur :input": "addPlaceholder"
 
   initialize: (options) ->
     @type   = options.type
     @report = options.report
+    @className = options.className
 
     @render()
 
   render: (options = {}) =>
-    template = if options.edit then @editTemplate else @template
+    content = @report.get(@className) || ""
 
-    @$el.html(template(content: @report.get(@type), type: @type))
+    if options.edit
+      tag = @constructInputTag(@type, content)
+      @$el.html(@editTemplate(tag: tag))
+    else
+      @$el.html(@template(content: content, className: @className))
 
-    @text = @$el.find("textarea.content-text-field")
+    @text = @$el.find(":input")
     @text.focus()
     @text.select()
     @resize()
 
     return @
+
+  addPlaceholder: ->
+    input = @$el.find(':input')
+    if input.val().length == 0
+      input.val("Type #{@className} here")
+
+  constructInputTag: (type, content) ->
+    if type == 'input'
+      return "<input type='text' value='#{content}' />"
+    else
+      return "<textarea>#{content}</textarea>"
 
   # Following 2 methods are used for dynamically resize the textarea.
   # From: http://goo.gl/9gRC4H
@@ -47,8 +64,8 @@ class Backbone.Views.TextEditView extends Backbone.View
     setTimeout @resize, 0
 
   saveContent: (event) =>
-    @report.set(@type,
-      @$el.find('.content-text-field').
+    @report.set(@className,
+      @$el.find(':input').
       val().
       replace(/^\s+|\s+$/g, '')
     )

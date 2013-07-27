@@ -17,6 +17,9 @@ Report = sequelize.define('Report', {
   conclusion:
     type: Sequelize.TEXT
     allowNull: true
+  period:
+    type: Sequelize.TEXT
+    allowNull: true
   id:
     type: Sequelize.INTEGER
     primaryKey: true
