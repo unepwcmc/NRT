@@ -93,25 +93,23 @@
 
         <div class="period-of-time">
           <div class="last-update"><p><i class="icon-time"></i>Today</p></div>
-          
           {{#each indicators}}
           <section class="indicators report-indicator-list">
             <div class="section-title">
               <small>
                 <i class="icon-time append"></i>Last updated on 1st of April, 18:23 by Dr. Anybody
               </small>
-              <h3>{{title}}</h3>
-              <h4><span class="bold">Indicator type</span>| <i class="icon-bookmark"></i> Watch this indicator</h4>
-              <p>{{description}}</p>
+              <h3><a href="#">Narrative for {{title}}</a></h3>
+              <h4><span class="bold"><a href="#">{{title}}</a></span>| <i class="icon-bookmark"></i> Watch this indicator</h4>
+              <p>This is the description for the <span style="font-style: italic;">{{title}}</span> indicator.</p>
+              <p class="report-link">Published in <a href="#">Report</a></p>
             </div>
           </section>
           {{/each}}
-          
-
+        </div>
       </div>
     </div>
     <div class="clear"></div>
-
   </div>
 
 </div>

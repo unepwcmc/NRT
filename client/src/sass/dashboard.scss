@@ -23,7 +23,7 @@ h4 {
   line-height: 1.3em;
   color: $grey;
   span.bold {
-      font-weight: bold;
+    font-weight: bold;
   }
 }
 
@@ -279,3 +279,27 @@ div.row.row-2 {
     }
   }
 }
+
+.section-title {
+  h4 a, h3 a, .report-link a {
+    text-decoration: none;
+    border: none;
+  }
+  h4 a, .report-link a {
+    color: $grey;
+  }
+  h3 a {
+    color: rgba(0,0,0,0.8);
+  }
+  .report-link {
+    a:hover {
+      color: $linkBlue;
+      border-bottom: 1px solid $linkBlue;
+    }
+    a {
+      font-weight: bold;
+    }
+  }
+}
+
+  
