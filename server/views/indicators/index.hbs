@@ -1,0 +1,74 @@
+{{!< main}}
+
+{{#contentFor 'header'}}
+  <link rel="stylesheet" href="/css/report.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+
+  <script type='text/javascript'>
+    $(document).ready(function(){
+        $('.report-bookmark').click(function(event){
+          var isBookmarked = $(event.currentTarget).find('i')
+            .toggleClass('selected').hasClass('selected');
+          if (isBookmarked) {
+            $(event.currentTarget).find('span').text("Bookmarked (not implemented yet)");
+          } else {
+            $(event.currentTarget).find('span').text('Bookmark this indicator');
+          };
+        });
+    });
+  </script>
+{{/contentFor}}
+
+
+<div class="content">
+  <div class="report-list-title">
+    <h1>Indicators</h1>
+
+    <button class="grey">
+      <i class="icon-file-text-alt append"></i><span class="show">New Indicator</span>
+    </button>
+  </div>
+
+  <div class="indicators-container">
+    <div class="report-content">
+      {{#indicators}}
+        <section class='reports'>
+          <div class="section-title">
+            <small>
+              <i class="icon-time append"></i>Last updated on 1st of April, 18:23 by Dr. Anybody
+            </small>
+            <h3>{{title}}</h3>
+            <h4>2012 |
+              <div class="report-bookmark">
+                <i class="icon-bookmark"></i> <span>Bookmark this indicator</span>
+              </div>
+            </h4>
+            {{description}}
+          </div>
+        </section>
+      {{/indicators}}
+    </div>
+
+
+    <div class="report-sidebar">
+      <div class="filters">
+        <h3>Filter indicators</h3>
+
+        <ul>
+          <li><i class="icon-bookmark"></i> Bookmarked</li>
+          <li><i class="icon-user"></i> Owned by me</li>
+        </ul>
+
+        <ul>
+          <li><i class="icon-cloud"></i> Atmosphere</li>
+          <li><i class="icon-bar-chart"></i> Biodiversity</li>
+          <li><i class="icon-beaker"></i> Water</li>
+          <li><i class="icon-stethoscope"></i> Health</li>
+          <li><i class="icon-trash"></i> Waste</li>
+          <li><i class="icon-bolt"></i> Energy</li>
+          <li><i class="icon-truck"></i> Transport</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
