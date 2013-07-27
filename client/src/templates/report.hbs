@@ -9,6 +9,7 @@
     <div class="report-title">
       <div class="time-period">January - March 2013</div>
       <h1>{{report.title}}</h1>
+      {{addSubViewTo thisView "TextEditView" type='title' report=thisView.report}}
       <div class="report-extra">
         <div class="last-update"><a href="#" data-toggle="tooltip" title="Last update"><i class="icon-time append"></i></a>1st of April, 18:23</div>
         <div class="who"><a href="#" data-toggle="tooltip" title="Report owner"><i class="icon-user append"></i></a>Dr. Anybody</div>
@@ -41,6 +42,7 @@
     {{#each sections}}
       {{addSubViewTo ../thisView "SectionView" section=this}}
     {{/each}}
+    <button class="add-report-section">Add Section</button>
 
     <section>
       <div class="section-title">

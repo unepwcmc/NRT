@@ -25,9 +25,9 @@ exports.create = (req, res) ->
     introduction: params.introduction
     conclusion: params.conclusion
   ).success((report) ->
-    res.send(
+    res.send(201,
       JSON.stringify(
-        report: report
+        report
       )
     )
   ).failure((err) ->
@@ -43,7 +43,17 @@ exports.show = (req, res) ->
     )
 
 exports.update = (req, res) ->
-  res.send('update report ' + req.params.id)
+  Report.find(req.params.report).success((report) ->
+    report.updateAttributes(req.body).success(->
+      res.send(200, JSON.stringify(report))
+    ).error((error) ->
+      console.error error
+      res.send(500, "Couldn't save the report")
+    )
+  ).error((error) ->
+    console.error error
+    res.send(404, "Couldn't find report #{req.params.report}")
+  )
 
 exports.destroy = (req, res) ->
   res.send('destroy report ' + req.params.id)
