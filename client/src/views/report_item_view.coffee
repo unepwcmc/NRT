@@ -13,15 +13,10 @@ class Backbone.Views.ReportItemView extends Backbone.View
     @render()
 
   toggleBookmarked: ->
-    @bookmarked = !@bookmarked
-    @render()
+    @model.set('bookmarked', true)
 
   render: =>
-    @$el.html(@template(report: @model))
-
-    if @bookmarked
-      $(".report-bookmark i").addClass("selected")
-      $(".report-bookmark span").text("Bookmarked")
+    @$el.html(@template(report: @model.toJSON()))
 
     return @
 
