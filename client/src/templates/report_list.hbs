@@ -1,0 +1,22 @@
+<div class="report-content">
+  {{#each reports}}
+    {{addSubViewTo ../thisView "ReportItemView" report=this}}
+  {{/each}}
+</div>
+
+<div class="report-sidebar">
+  <div class="filters">
+    <h3>Filter reports</h3>
+
+    <ul>
+      <li><i class="icon-calendar"></i> From</li>
+      <li><i class="icon-calendar"></i> To</li>
+    </ul>
+
+    <ul>
+      <li><i class="icon-edit"></i> Drafts</li>
+      <li><i class="icon-bookmark"></i> Bookmarked</li>
+      <li><i class="icon-user"></i> Published by me</li>
+    </ul>
+  </div>
+</div>
