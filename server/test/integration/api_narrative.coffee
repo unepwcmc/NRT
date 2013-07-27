@@ -27,3 +27,29 @@ test('create', (done) ->
     )
   )
 )
+
+test('update', (done) ->
+  Narrative = require('../../models/narrative')
+  Narrative.create(
+    content: "a narrative"
+    section_id: 5
+  ).success((narrative) ->
+    newAttributes =
+      content: "this is the new content"
+      section_id: 6
+
+    request.put({
+      url: helpers.appurl("api/narrative/#{narrative.id}")
+      json: true
+      body: newAttributes
+    },(err, res, body) ->
+      assert.equal res.statusCode, 200
+
+      Narrative.find(narrative.id).success((reloadedNarrative) ->
+        assert.equal reloadedNarrative.content, newAttributes.content
+        assert.equal reloadedNarrative.section_id, newAttributes.section_id
+        done()
+      )
+    )
+  )
+)

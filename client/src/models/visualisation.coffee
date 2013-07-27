@@ -33,3 +33,6 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
 
   formatDataForChart: ->
     _.map(@get("data").features, (el) -> el.attributes)
+
+  url: '/api/visualisation'
+

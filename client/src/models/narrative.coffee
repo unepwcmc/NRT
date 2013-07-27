@@ -4,6 +4,10 @@ class window.Backbone.Models.Narrative extends Backbone.RelationalModel
   defaults:
     content: ""
     title: "title"
-    editing: true
+    editing: false
 
-  url: "/api/narrative"
+  url: ->
+    if @get('id')
+      "/api/narrative/#{@get('id')}"
+    else
+      "/api/narrative"

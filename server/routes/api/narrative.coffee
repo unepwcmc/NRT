@@ -27,7 +27,17 @@ exports.show = (req, res) ->
     ))
 
 exports.update = (req, res) ->
-  res.send('update narrative ' + req.params.id)
+  Narrative.find(req.params.narrative).success((narrative) ->
+    narrative.updateAttributes(req.body).success(->
+      res.send(200, JSON.stringify(narrative))
+    ).error((error) ->
+      console.error error
+      res.send(500, "Couldn't save the narrative")
+    )
+  ).error((error) ->
+    console.error error
+    res.send(404, "Couldn't find narrative #{req.params.narrative}")
+  )
 
 exports.destroy = (req, res) ->
   res.send('destroy narrative ' + req.params.id)
