@@ -1,7 +1,13 @@
+Indicator = require('../models/indicator')
 
 exports.index = (req, res) ->
-  res.render "indicators",
-    title: "Hello world, I'm a index page"
+  Indicator.findAll().success((indicators)->
+    res.render "indicators",
+      indicators: indicators
+  ).error((error)->
+    console.error error
+    res.render(500, "Error fetching the indicators")
+  )
 
 exports.show = (req, res) ->
   res.render "indicators/show",
