@@ -31,7 +31,9 @@ p {
 .dashboard-title {
   border-bottom: 1px solid #eee;
   padding-bottom: $title-padding;
-  margin-bottom: $title-margin;
+  margin-top: 40px;
+  margin-bottom: 30px;
+
   h1 {
     display: inline-block;
   }
@@ -59,6 +61,14 @@ p {
 }
 
 div.row {
+  .column {
+    padding: 15px;
+
+    ul {
+      line-height: 0.8em;
+    }
+  }
+
   div.last-update {
     padding: $padding * .6 0;
     margin: $margin * .6 0;
@@ -83,7 +93,7 @@ div.row {
   }
 
   i {
-    padding-right: 1em;
+    padding-right: 0.5em;
   }
 
   .content-left {
