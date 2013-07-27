@@ -19,18 +19,20 @@ class Backbone.Views.TextEditView extends Backbone.View
   initialize: (options) ->
     @type   = options.type
     @report = options.report
-    @className = options.className
+    @attributeName = options.attributeName
 
     @render()
 
   render: (options = {}) =>
-    content = @report.get(@className) || ""
+    content = @report.get(@attributeName) || ""
 
     if options.edit
-      tag = @constructInputTag(@type, content)
-      @$el.html(@editTemplate(tag: tag))
+      @$el.html(@editTemplate(
+        isInput: (@type is 'input')
+        content: content
+      ))
     else
-      @$el.html(@template(content: content, className: @className))
+      @$el.html(@template(content: content, attributeName: @attributeName))
 
     @text = @$el.find(":input")
     @text.focus()
@@ -42,13 +44,7 @@ class Backbone.Views.TextEditView extends Backbone.View
   addPlaceholder: ->
     input = @$el.find(':input')
     if input.val().length == 0
-      input.val("Type #{@className} here")
-
-  constructInputTag: (type, content) ->
-    if type == 'input'
-      return "<input type='text' value='#{content}' />"
-    else
-      return "<textarea>#{content}</textarea>"
+      input.val("Type #{@attributeName} here")
 
   # Following 2 methods are used for dynamically resize the textarea.
   # From: http://goo.gl/9gRC4H
@@ -64,7 +60,7 @@ class Backbone.Views.TextEditView extends Backbone.View
     setTimeout @resize, 0
 
   saveContent: (event) =>
-    @report.set(@className,
+    @report.set(@attributeName,
       @$el.find(':input').
       val().
       replace(/^\s+|\s+$/g, '')

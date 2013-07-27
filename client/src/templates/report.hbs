@@ -7,9 +7,9 @@
 <div class="content">
   <div class="report-content">
     <div class="report-title">
-      <div class="time-period">{{addSubViewTo thisView "TextEditView" type="input" className="period" report=thisView.report}}</div>
+      <div class="time-period">{{addSubViewTo thisView "TextEditView" type="input" attributeName="period" report=thisView.report}}</div>
       <h1>{{addSubViewTo thisView "TextEditView" type="input"
-        className="title" report=thisView.report}}</h1>
+        attributeName="title" report=thisView.report}}</h1>
       <div class="report-extra">
         <div class="last-update"><a href="#" data-toggle="tooltip" title="Last update"><i class="icon-time append"></i></a>1st of April, 18:23</div>
         <div class="who"><a href="#" data-toggle="tooltip" title="Report owner"><i class="icon-user append"></i></a>Dr. Anybody</div>
@@ -21,7 +21,7 @@
         <h2>Introduction</h2>
       </div>
       {{addSubViewTo thisView "TextEditView" type='textarea'
-        className="introduction" report=thisView.report}}
+        attributeName="introduction" report=thisView.report}}
     </section>
 
     {{#each sections}}
@@ -34,7 +34,7 @@
         <h2>Conclusion</h2>
       </div>
       {{addSubViewTo thisView "TextEditView" type='textarea'
-        className='conclusion' report=thisView.report}}
+        attributeName='conclusion' report=thisView.report}}
     </section>
   </div>
 
@@ -46,7 +46,7 @@
     <div class="brief fixed-section">
       <h4>Brief</h4>
       {{addSubViewTo thisView "TextEditView" type='textarea'
-        className='brief' report=thisView.report}}
+        attributeName='brief' report=thisView.report}}
     </div>
 
     <div id="section-navigation-container">

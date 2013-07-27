@@ -1,2 +1,6 @@
-{{{tag}}}
+{{#if isInput}}
+  <input type='text' value='{{content}}' />
+{{else}}
+  <textarea>{{content}}</textarea>
+{{/if}}
 <a class='btn btn-primary save-content'>Save changes</a>
