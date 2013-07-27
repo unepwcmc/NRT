@@ -42,12 +42,17 @@ Report = sequelize.define('Report', {
            `Sections`.`updatedAt` AS `Sections.updatedAt`,
            `Narratives`.`content` AS `Narratives.content`,
            `Narratives`.`id` AS `Narratives.id`,
-           `Narratives`.`section_id` AS `Narratives.section_id`
+           `Narratives`.`section_id` AS `Narratives.section_id`,
+           `Visualisations`.`data` AS `Visualisations.data`,
+           `Visualisations`.`id` AS `Visualisations.id`,
+           `Visualisations`.`section_id` AS `Visualisations.section_id`
          FROM `Reports`
          LEFT OUTER JOIN `Sections`
            ON `Reports`.`id` = `Sections`.`report_id`
          LEFT OUTER JOIN `Narratives`
            ON `Sections`.`id` = `Narratives`.`section_id`
+         LEFT OUTER JOIN `Visualisations`
+           ON `Sections`.`id` = `Visualisations`.`section_id`
          WHERE `Reports`.`id` = #{id};"
       )
 
@@ -78,18 +83,25 @@ Report.parseFatSQL = (rows) ->
   reports = uniqID compactID rows
   sections = uniqID compactID _.pluck(rows, 'Sections')
   narratives = uniqID compactID _.pluck(rows, 'Narratives')
+  visualisations = uniqID compactID _.pluck(rows, 'Visualisations')
 
   # should only be one report
   report = cloneJSON reports[0]
 
   delete report.Sections
   delete report.Narratives
+  delete report.Visualisations
 
   # for each section, attach the narratives
   report.sections = sections.map (section) ->
-    narratives = _.where(narratives, section_id: section.id)
+    sectionNarratives = _.where(narratives, section_id: section.id)
     # Should only be max one for now
-    section.narrative = (if narratives.length > 0 then narratives[0] else null )
+    section.narrative = (if sectionNarratives.length > 0 then sectionNarratives[0] else null )
+
+    sectionVisualisations = _.where(visualisations, section_id: section.id)
+    # Should only be max one for now
+    section.visualisation = (if sectionVisualisations.length > 0 then sectionVisualisations[0] else null )
+
     section
 
   return report

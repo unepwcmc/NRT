@@ -93,8 +93,10 @@ test("Can see the section visualisation", ->
   view.close()
 )
 
-test(".addVisualisation creates a visualisation record on the section", ->
-  section = new Backbone.Models.Section()
+test(".addVisualisation creates a visualisation record on the section and saves it", ->
+  section = new Backbone.Models.Section(id: 5)
+
+  visualisationSaveSpy = sinon.spy(Backbone.Models.Visualisation::, 'save')
 
   view = createAndShowSectionViewForSection(section)
 
@@ -103,6 +105,8 @@ test(".addVisualisation creates a visualisation record on the section", ->
   view.addVisualisation()
 
   assert.equal section.get('visualisation').constructor.name, 'Visualisation'
+  assert.equal section.get('visualisation').get('section_id'), section.get('id')
+  sinon.assert.calledOnce(visualisationSaveSpy, "resize")
 )
 
 test("Can edit the section")
