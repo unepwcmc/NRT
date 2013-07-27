@@ -8,6 +8,7 @@ dashboardRoutes = require('./routes/dashboard.coffee')
 indicatorRoutes = require('./routes/indicators.coffee')
 bookmarkRoutes  = require('./routes/bookmarks.coffee')
 reportRoutes    = require('./routes/reports.coffee')
+userRoutes      = require('./routes/users.coffee')
 testRoutes      = require('./routes/tests.coffee')
 
 module.exports = exports = (app) ->
@@ -15,7 +16,7 @@ module.exports = exports = (app) ->
     return next() unless app.settings.env == 'production'
 
     passport.
-      authenticate('basic', { session: false }).
+      authenticate('basic').
       call(@, req, res, next)
 
   # REST API
@@ -31,9 +32,20 @@ module.exports = exports = (app) ->
 
   app.get "/indicator/:id", ensureAuthenticated, indicatorRoutes.show
 
+  app.get "/report/new", ensureAuthenticated, reportRoutes.new
   app.get "/report/:id", ensureAuthenticated, reportRoutes.show
   app.get "/report/:id/present", ensureAuthenticated, reportRoutes.present
 
   # Tests
   if app.settings.env == 'test'
     app.get "/tests", testRoutes.test
+
+  # User CRUD
+  # express-resource doesn't support using middlewares
+  useTokenAuthentication = require('./lib/token_authentication.coffee')
+
+  app.get "/users", useTokenAuthentication, userRoutes.index
+  app.get "/users/:id", useTokenAuthentication, userRoutes.show
+
+  app.post "/users", useTokenAuthentication, userRoutes.create
+  app.delete "/users/:id", useTokenAuthentication, userRoutes.destroy

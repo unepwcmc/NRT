@@ -1,15 +1,19 @@
 Sequelize = require("sequelize-mysql").sequelize
 
 Narrative = sequelize.define('Narrative',
-  title: 
-    type: Sequelize.STRING 
+  title:
+    type: Sequelize.STRING
     allowNull: false
   content:
-    type: Sequelize.STRING 
+    type: Sequelize.TEXT
     allowNull: false
-  id: 
+  id:
     type: Sequelize.STRING
     primaryKey: true
+  section_id:
+    type: Sequelize.INTEGER
+    references: "Section"
+    referencesKey: "id"
 )
 
 Narrative.sync()

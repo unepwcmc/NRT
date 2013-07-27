@@ -2,8 +2,8 @@ window.Backbone ||= {}
 window.Backbone.Controllers ||= {}
 
 class Backbone.Controllers.ReportsController extends Backbone.Diorama.Controller
-  constructor: ->
-    report = @createExampleReport()
+  constructor: (reportData)->
+    report = new Backbone.Models.Report(reportData)
 
     reportView = new Backbone.Views.ReportView(report: report)
     sectionNavigationView = new Backbone.Views.SectionNavigationView(sections: report.get('sections'))
@@ -12,5 +12,7 @@ class Backbone.Controllers.ReportsController extends Backbone.Diorama.Controller
 
 
 
-  createExampleReport: ->
-    Backbone.Faker.Reports.create()
+  createExampleReport: (reportId)->
+    report = Backbone.Faker.Reports.create()
+    report.set('id', reportId)
+    report.set('title', report.get('title') + reportId)
