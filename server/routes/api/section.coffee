@@ -10,13 +10,13 @@ exports.create = (req, res) ->
   obj = _.pick(req.body, 'title', 'report_id')
   Section.create(obj).success (section) ->
     res.send(201, JSON.stringify(
-      section: section
+      section
     ))
 
 exports.show = (req, res) ->
   Section.find(req.params.section).success (section) ->
     res.send(JSON.stringify(
-      section: section
+      section
     ))
 
 exports.update = (req, res) ->

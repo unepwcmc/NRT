@@ -94,9 +94,33 @@ header{
 }
 
 .report-title{
-    border-bottom: 1px solid #eee;
-    padding-bottom: 20px;
-    margin-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+  margin-bottom: 10px;
+
+  .time-period {
+    input {
+      color: #808080;
+    }
+  }
+
+  .time-period,
+  h1 {
+    input {
+      border: 0;
+    }
+
+    a {
+      font-size: 0.3em;
+    }
+  }
+}
+
+.fixed-section {
+  textarea {
+    border: 0;
+    width: 100%;
+  }
 }
 
 .report-list-title {
@@ -195,6 +219,20 @@ header{
     padding-bottom: 5px;
     margin-bottom: 15px;
     border-bottom: 1px solid $lightGrey;
+}
+
+.brief {
+  margin-top: 20px;
+  font-size: 0.75em;
+  line-height: 1.4em;
+  color: $grey;
+  vertical-align: middle;
+
+  h4 {
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid $lightGrey;
+  }
 }
 
 .related-reports{

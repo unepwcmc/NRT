@@ -6,6 +6,9 @@ class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
 
   initialize: (options) ->
     @visualisation = options.visualisation
+    # If we haven't fixed the JSON saving bug - will be removed
+    if typeof @visualisation.get('data') is 'string'
+      @visualisation.set('data', Backbone.Faker.Reports.createFakeData())
 
   render: =>
     @closeSubViews()

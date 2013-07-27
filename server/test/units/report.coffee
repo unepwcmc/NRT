@@ -48,6 +48,11 @@ test('.parseFatSQL', ->
         "section_id": 1,
         "content": "blah blah",
         "id": 1
+      },
+      "Visualisations": {
+        "section_id": null,
+        "data": null,
+        "id": null
       }
     },
     {
@@ -66,6 +71,11 @@ test('.parseFatSQL', ->
         "section_id": null,
         "content": null,
         "id": null
+      },
+      "Visualisations": {
+        "section_id": 2,
+        "data": "some object data",
+        "id": 1
       }
     }
   ])
@@ -85,6 +95,7 @@ test('.parseFatSQL', ->
           "section_id": 1,
           "content": "blah blah",
           "id": 1
+        "visualisation": null
       },
       {
         "title": "section two",
@@ -93,6 +104,10 @@ test('.parseFatSQL', ->
         "createdAt": "2013-07-26T08:45:24.000Z",
         "updatedAt": "2013-07-26T08:45:24.000Z"
         "narrative": null
+        "visualisation":
+          "section_id": 2
+          "data": "some object data"
+          "id": 1
       }
     ]
   }

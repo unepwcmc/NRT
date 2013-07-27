@@ -18,14 +18,14 @@ test('create, read', (done) ->
     json: true
     body: data
   }, (err, res, body) ->
-    id = body.section.id
+    id = body.id
     assert.equal res.statusCode, 201
 
     request.get {
       url: helpers.appurl('/api/section/' + id)
       json: true
     }, (err, res, body) ->
-      section = body.section
+      section = body
       assert.equal section.id, id
       assert.equal section.title, data.title
       assert.equal section.report_id, data.report_id
@@ -64,8 +64,8 @@ test('list', (done) ->
     }, (err, res, body) ->
       assert.equal res.statusCode, 200
       assert.equal body.length, 2
-      assert.equal body[0].id, body1.section.id
-      assert.equal body[1].id, body2.section.id
+      assert.equal body[0].id, body1.id
+      assert.equal body[1].id, body2.id
       done()
   )
 )

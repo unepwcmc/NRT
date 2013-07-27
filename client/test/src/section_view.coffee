@@ -48,7 +48,7 @@ test("When section has no narrative, I should see the 'add-narrative' element", 
   )
 )
 
-test(".addNarrative creates a narrative record on the section", ->
+test(".addNarrative creates a narrative record on the section and sets editing to true", ->
   section = new Backbone.Models.Section(id: 12)
 
   view = createAndShowSectionViewForSection(section)
@@ -59,6 +59,7 @@ test(".addNarrative creates a narrative record on the section", ->
 
   assert.equal section.get('narrative').constructor.name, 'Narrative'
   assert.equal section.get('narrative').get('section_id'), section.get('id')
+  assert.equal section.get('narrative').get('editing'), true
 )
 
 test(".addNarrative calls render and resize in edit mode", ->
@@ -92,8 +93,10 @@ test("Can see the section visualisation", ->
   view.close()
 )
 
-test(".addVisualisation creates a visualisation record on the section", ->
-  section = new Backbone.Models.Section()
+test(".addVisualisation creates a visualisation record on the section and saves it", ->
+  section = new Backbone.Models.Section(id: 5)
+
+  visualisationSaveSpy = sinon.spy(Backbone.Models.Visualisation::, 'save')
 
   view = createAndShowSectionViewForSection(section)
 
@@ -102,6 +105,8 @@ test(".addVisualisation creates a visualisation record on the section", ->
   view.addVisualisation()
 
   assert.equal section.get('visualisation').constructor.name, 'Visualisation'
+  assert.equal section.get('visualisation').get('section_id'), section.get('id')
+  sinon.assert.calledOnce(visualisationSaveSpy, "resize")
 )
 
 test("Can edit the section")
