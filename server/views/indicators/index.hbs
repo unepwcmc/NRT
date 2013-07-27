@@ -17,7 +17,19 @@
   
   <div class="report-content">
     {{#indicators}}
-      <section><h2>{{title}}</h2></section>
+      <section class='reports'>
+        <div class="section-title">
+          <small>
+            <i class="icon-time append"></i>Last updated on 1st of April, 18:23 by Dr. Anybody
+          </small>
+          <h3>{{title}}</h3>
+          <h4>2012 |
+            <div class="report-bookmark">
+              <i class="icon-bookmark"></i> <span>Bookmark this indicator</span>
+            </div>
+          </h4>
+        </div>
+      </section>
     {{/indicators}}
   </div>
 </div>
