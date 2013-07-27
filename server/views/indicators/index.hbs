@@ -3,6 +3,20 @@
 {{#contentFor 'header'}}
   <link rel="stylesheet" href="/css/report.css">
   <link rel="stylesheet" href="/css/dashboard.css">
+
+  <script type='text/javascript'>
+    $(document).ready(function(){
+        $('.report-bookmark').click(function(event){
+          var isBookmarked = $(event.currentTarget).find('i')
+            .toggleClass('selected').hasClass('selected');
+          if (isBookmarked) {
+            $(event.currentTarget).find('span').text("Bookmarked (not implemented yet)");
+          } else {
+            $(event.currentTarget).find('span').text('Bookmark this indicator');
+          };
+        });
+    });
+  </script>
 {{/contentFor}}
 
 
