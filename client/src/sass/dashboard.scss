@@ -43,8 +43,10 @@ p {
 
 div.row {
 
-  @include lastUpdateIcon($padding, $margin, $linkBlue);
-  @include reportIndicatorSectionList($buttonBlue);
+  div.last-update {
+    padding: $padding * .6 0;
+    margin: $margin * .6 0;
+  }
 
   border-bottom: 1px solid #eee;
   padding-bottom: $padding;
@@ -131,3 +133,4 @@ div.row:first-child {
     } 
   }
 }
+
