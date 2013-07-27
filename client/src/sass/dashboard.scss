@@ -112,7 +112,7 @@ div.row {
  
 }
 
-div.row-1 {
+div.row:first-child {
   .column {
     padding-right: $padding-right;
   }
