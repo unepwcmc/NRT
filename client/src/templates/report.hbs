@@ -7,36 +7,21 @@
 <div class="content">
   <div class="report-content">
     <div class="report-title">
-      <div class="time-period">January - March 2013</div>
-      <h1>{{report.title}}</h1>
-      {{addSubViewTo thisView "TextEditView" type='title' report=thisView.report}}
+      <div class="time-period">{{addSubViewTo thisView "TextEditView" type="input" attributeName="period" report=thisView.report}}</div>
+      <h1>{{addSubViewTo thisView "TextEditView" type="input"
+        attributeName="title" report=thisView.report}}</h1>
       <div class="report-extra">
         <div class="last-update"><a href="#" data-toggle="tooltip" title="Last update"><i class="icon-time append"></i></a>1st of April, 18:23</div>
         <div class="who"><a href="#" data-toggle="tooltip" title="Report owner"><i class="icon-user append"></i></a>Dr. Anybody</div>
       </div>
     </div>
 
-    {{#if report.introduction}}
-      <section>
-        <div class="section-title">
-          <h2>Introduction</h2>
-        </div>
-        {{report.introduction}}
-      </section>
-    {{/if}}
-
-    <section>
+    <section class="fixed-section">
       <div class="section-title">
         <h2>Introduction</h2>
       </div>
-      {{addSubViewTo thisView "TextEditView" type='introduction' report=thisView.report}}
-    </section>
-
-    <section>
-      <div class="section-title">
-        <h2>Brief</h2>
-      </div>
-      {{addSubViewTo thisView "TextEditView" type='brief' report=thisView.report}}
+      {{addSubViewTo thisView "TextEditView" type='textarea'
+        attributeName="introduction" report=thisView.report}}
     </section>
 
     {{#each sections}}
@@ -44,11 +29,12 @@
     {{/each}}
     <button class="add-report-section">Add Section</button>
 
-    <section>
+    <section class="fixed-section">
       <div class="section-title">
         <h2>Conclusion</h2>
       </div>
-      {{addSubViewTo thisView "TextEditView" type='conclusion' report=thisView.report}}
+      {{addSubViewTo thisView "TextEditView" type='textarea'
+        attributeName='conclusion' report=thisView.report}}
     </section>
   </div>
 
@@ -56,8 +42,16 @@
     <button class="grey">
       <i class="icon-bookmark-empty append"></i><i class="icon-bookmark append"></i><span class="show">Bookmark this report</span><span>Bookmarked report</span>
     </button>
+
+    <div class="brief fixed-section">
+      <h4>Brief</h4>
+      {{addSubViewTo thisView "TextEditView" type='textarea'
+        attributeName='brief' report=thisView.report}}
+    </div>
+
     <div id="section-navigation-container">
     </div>
+
     <div class="recent-changes">
       <div class="recent-changes-title">
         <i class="icon-edit append"></i>Recent changes
