@@ -1,8 +1,11 @@
 window.Backbone.Models || = {}
 
 class window.Backbone.Models.Section extends Backbone.RelationalModel
+  defaults:
+    title: "New Section"
+
   url: ->
-    'api/section'
+    '/api/section'
 
   relations: [
       key: 'narrative'
