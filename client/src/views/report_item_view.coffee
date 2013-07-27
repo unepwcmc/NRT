@@ -16,7 +16,11 @@ class Backbone.Views.ReportItemView extends Backbone.View
     @model.set('bookmarked', true)
 
   render: =>
-    @$el.html(@template(report: @model.toJSON()))
+    @$el.html(@template(
+      report: @model.toJSON()
+      # This will be replaced with an actual user lookup
+      author: @model.get('author')
+    ))
 
     return @
 

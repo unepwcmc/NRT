@@ -9,31 +9,88 @@ createAndShowReportListView = (reports) ->
 suite('Report Index')
 
 test("List titles of all reports", ->
-  title1 = 'Lovely, lovely report'
-  title2 = 'Horrible, horrible report'
+  title = 'Lovely, lovely report'
 
-  reports = new Backbone.Collections.ReportCollection([{
-    title: title1
-  },{
-    title: title2
-  }])
+  reports = [{
+    title: title
+  }]
 
-  view = createAndShowSectionNavigationView(reports)
+  view = createAndShowReportListView(reports)
 
   assert.match(
     $('#test-container').text(),
-    new RegExp(".*#{title1}.*")
+    new RegExp(".*#{title}.*")
   )
 
-  assert.match(
-    $('#test-container').text(),
-    new RegExp(".*#{title2}.*")
-  )
   view.close()
 )
 
-test("Can see creator and completed_at date for each report")
+test("Shows message when no reports are available")
+test("Can see the formatted completed_at datetime")
 
-test("Can see if report is bookmarked/favourited")
+test("Can see creator for each report", ->
+  author = "Kanye Quest"
 
-test("Can navigate to report view")
+  reports = [{
+    author: author
+  }]
+
+  view = createAndShowReportListView(reports)
+
+  assert.match(
+    $('#test-container').text(),
+    new RegExp(".*#{author}.*")
+  )
+
+  view.close()
+)
+
+test("Can see if report is bookmarked/favourited", ->
+  reports = [{
+    bookmarked: true
+  }]
+
+  view = createAndShowReportListView(reports)
+
+  assert.match(
+    $('#test-container').text(),
+    new RegExp(".*Bookmarked.*")
+  )
+
+  view.close()
+)
+
+test("Can see report period", ->
+  time_period = '3030'
+
+  reports = [{
+    period: time_period
+  }]
+
+  view = createAndShowReportListView(reports)
+
+  assert.match(
+    $('#test-container').text(),
+    new RegExp(".*#{time_period}.*")
+  )
+
+  view.close()
+)
+
+test("Can navigate to report view", ->
+  id = 1
+
+  reports = [{
+    id: id
+    title: "Kanye West's Kanye Quest"
+  }]
+
+  view = createAndShowReportListView(reports)
+
+  assert.match(
+    $('#test-container').html(),
+    new RegExp(".*/reports/#{id}.*")
+  )
+
+  view.close()
+)
