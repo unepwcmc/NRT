@@ -21,6 +21,10 @@ groupReportsByDate = (reports) ->
   obj
 
 exports.index = (req, res) ->
-  Report.findAll().success (reports) ->
+  Report.findAll().success((reports) ->
     res.render "dashboard",
       reports: reports
+  ).error((error)->
+    console.error error
+    res.render(500, "Error fetching the reports")
+  )
