@@ -123,6 +123,18 @@ header{
   }
 }
 
+.report-list-title {
+  position: relative;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #eee;
+
+  button {
+    position: absolute;
+    right: 0;
+    top: 13px;
+  }
+}
+
 .report-extra{
     font-size: 0.85em;
     color: $grey;

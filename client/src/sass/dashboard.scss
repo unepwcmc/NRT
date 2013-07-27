@@ -59,7 +59,6 @@ p {
 }
 
 div.row {
-
   div.last-update {
     padding: $padding * .6 0;
     margin: $margin * .6 0;
@@ -82,7 +81,7 @@ div.row {
       padding-right: .5em;
     }
   }
-  
+
   i {
     padding-right: 1em;
   }
@@ -91,7 +90,7 @@ div.row {
     float: left;
     width: 50%;
   }
-  
+
   .content-right {
     float: left;
     max-width: 50%;
@@ -131,11 +130,30 @@ div.row {
       }
     }
   }
-  
+
+  section {
+    padding-top: .3em;
+    margin-top: 1.1em;
+    .section-title {
+      padding-bottom: 0;
+    }
+    .bookmarked {
+      i {
+        color: $buttonBlue;
+      }
+    }
+  }
+
   .clear {
     clear: both;
   }
- 
+
+  .reports {
+    p {
+      padding: .2em 2em .2em .2em;
+      margin: .4em 2em .4em .4em;
+    }
+  }
 }
 
 div.row:first-child {
@@ -147,10 +165,104 @@ div.row:first-child {
     li {
       color: $grey;
       padding: .3em 0;
-    } 
+    }
   }
 }
 
+div.row.row-2 {
+  h3 {
+    font-weight: bold;
+  }
+}
 
+.reports {
+  .report-bookmark {
+    display: inline-block;
+  }
 
+  .report-bookmark,
+  .icon-bookmark {
+    &:hover {
+      color: $buttonBlue;
+      cursor: pointer;
+    }
+  }
+}
 
+.reports .icon-bookmark {
+  &.selected {
+    color: $buttonBlue;
+  }
+}
+
+.reports-container,
+.indicators-container {
+  .report-content {
+    padding-left: 0;
+    margin-top: 30px;
+
+    .section-title h3 {
+      a {
+        border-bottom: 0;
+      }
+
+      a,
+      a:hover {
+        color: rgba(0,0,0,0.8)
+      }
+
+      a:hover {
+        border-bottom: 1px solid rgba(0,0,0,0.8);
+      }
+    }
+  }
+
+  .report-sidebar {
+    padding-right: 0;
+    width: 290px;
+
+    .filters {
+      border: 1px solid #0A5789;
+
+      h3 {
+        color: #00558b;
+        font-weight: bold;
+      }
+
+      ul {
+        border-top: 1px solid #0A5789;
+        list-style-type: none;
+        padding: 0;
+        border-bottom: 10px solid #00558b;
+
+        &:last-of-type {
+          border-bottom: none;
+        }
+
+        li {
+          padding-top: 10px;
+          padding-bottom: 10px;
+          background-color: #0068a6;
+          color: white;
+          font-weight: bold;
+          border-bottom: 1px solid #00558b;
+          font-size: 0.8em;
+
+          &:hover {
+            cursor: pointer;
+            background-color: #043857;
+            border-bottom: 1px solid #0A558B;
+          }
+
+          i {
+            margin-right: 15px;
+          }
+        }
+      }
+
+      h3 {
+        margin: 10px;
+      }
+    }
+  }
+}
