@@ -116,6 +116,13 @@ header{
   }
 }
 
+.fixed-section {
+  textarea {
+    border: 0;
+    width: 100%;
+  }
+}
+
 .report-extra{
     font-size: 0.85em;
     color: $grey;
