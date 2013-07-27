@@ -1,1 +1,18 @@
-Report!
+<section class="reports">
+  <div class="section-title">
+    <small>
+      <i class="icon-time append"></i>Last updated on 1st of April, 18:23 by Dr. Anybody
+    </small>
+    <h3>{{report.title}}</h3>
+    <h4>2012 |
+      <div class="report-bookmark">
+        {{#if report.bookmarked}}
+          <i class="icon-bookmark selected"></i> <span>Bookmarked</span>
+        {{else}}
+          <i class="icon-bookmark"></i> <span>Bookmark this report</span>
+        {{/if}}
+      </div>
+    </h4>
+    {{report.introduction}}
+  </div>
+</section>

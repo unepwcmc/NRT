@@ -35,7 +35,6 @@ p {
 }
 
 div.row {
-
   border-bottom: 1px solid #eee;
   padding-bottom: $padding;
   margin-bottom: $margin;
@@ -53,7 +52,7 @@ div.row {
       padding-right: .5em;
     }
   }
-  
+
   i {
     padding-right: 1em;
   }
@@ -62,7 +61,7 @@ div.row {
     float: left;
     width: 50%;
   }
-  
+
   .content-right {
     float: left;
     max-width: 50%;
@@ -131,7 +130,7 @@ div.row {
       }
     }
   }
-  
+
   .clear {
     clear: both;
   }
@@ -142,7 +141,6 @@ div.row {
       margin: .4em 2em .4em .4em;
     }
   }
- 
 }
 
 div.row-1 {
@@ -154,12 +152,32 @@ div.row-1 {
     li {
       color: $grey;
       padding: .3em 0;
-    } 
+    }
   }
 }
 
 div.row.row-2 {
   h3 {
     font-weight: bold;
+  }
+}
+
+.reports {
+  .report-bookmark {
+    display: inline-block;
+  }
+
+  .report-bookmark,
+  .icon-bookmark {
+    &:hover {
+      color: $buttonBlue;
+      cursor: pointer;
+    }
+  }
+}
+
+.reports .icon-bookmark {
+  &.selected {
+    color: $buttonBlue;
   }
 }

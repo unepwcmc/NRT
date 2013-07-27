@@ -17,7 +17,7 @@ class Backbone.Views.ReportListView extends Backbone.Diorama.NestingView
     @closeSubViews()
     @$el.html(@template(
       thisView: @,
-      reports: @reports.toJSON()
+      reports: @reports.models
     ))
     @renderSubViews()
 
