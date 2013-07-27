@@ -5,8 +5,10 @@ Indicator = sequelize.define('Indicator',
     type: Sequelize.INTEGER
     primaryKey: true
   title:
-    type: Sequelize.TEXT
+    type: Sequelize.STRING
     allowNull: false
+  description:
+    type: Sequelize.TEXT
 )
 
 Indicator.sync()

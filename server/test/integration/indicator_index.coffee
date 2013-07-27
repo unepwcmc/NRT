@@ -38,9 +38,15 @@ createIndicatorModels = (attributes) ->
   }
   return promises
 
-test("With a series of indicators, I should see their titles", (done) ->
+test("With a series of indicators, I should see their titles and description", (done) ->
   createIndicatorModels([
-    {title: 'indicator 1'}, {title: 'indicator 2'}
+    {
+      title: 'indicator 1'
+      description: 'The description for the first indicator'
+    }, {
+      title: 'indicator 2'
+      description: 'Description for another indicator'
+    }
   ]).success((indicators)->
     request.get {
       url: helpers.appurl('/indicators')
@@ -49,6 +55,7 @@ test("With a series of indicators, I should see their titles", (done) ->
 
       for indicator in indicators
         assert.match body, new RegExp(".*#{indicator.title}.*")
+        assert.match body, new RegExp(".*#{indicator.description}.*")
 
       done()
   ).error((error) ->
