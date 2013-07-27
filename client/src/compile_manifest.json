@@ -1,5 +1,6 @@
 [
   "src/models/report.coffee",
+  "src/collections/report_collection.coffee",
   "src/models/narrative.coffee",
   "src/collections/narrative_collection.coffee",
   "src/models/visualisation.coffee",
@@ -8,6 +9,8 @@
   "src/collections/section_collection.coffee",
   "src/views/section_view.coffee",
   "src/views/section_presentation_view.coffee",
+  "src/views/report_item_view.coffee",
+  "src/views/report_list_view.coffee",
   "src/views/section_navigation_view.coffee",
   "src/views/report_view.coffee",
   "src/views/report_presentation_view.coffee",
@@ -19,6 +22,7 @@
   "src/lib/data/sample_esri_service.coffee",
   "src/lib/bar_chart.coffee",
   "src/views/bar_chart_view.coffee",
+  "src/controllers/report_controller.coffee",
   "src/controllers/reports_controller.coffee",
   "src/controllers/reports_presentation_controller.coffee",
   "src/helpers/handlebars_debug.coffee",

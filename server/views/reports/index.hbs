@@ -2,8 +2,8 @@
 
 {{#contentFor 'header'}}
   <link rel="stylesheet" href="/css/report.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
 
-  <script src="/js/lib/d3.min.js"></script>
   <script src="/js/lib/underscore-min.js"></script>
   <script src="/js/lib/backbone-min.js"></script>
   <script src="/js/lib/backbone-relational.js"></script>
@@ -13,16 +13,26 @@
 
   <script type="text/javascript">
     $(document).ready(function(){
-      new Backbone.Controllers.ReportController({{{reportData}}});
+        new Backbone.Controllers.ReportsController({reports: {{{reportsJSON}}} });
     });
   </script>
 {{/contentFor}}
 
-<div id="report-container">
-</div>
+<div class="content">
+  <div class="report-list-title">
+    <h1>Reports</h1>
 
-<script>
-  $('.report-extra').tooltip({
-    selector: "a[data-toggle=tooltip]"
-  });
-</script>
+    <button class="grey">
+      <i class="icon-file-text-alt append"></i><span class="show">New Report</span>
+    </button>
+  </div>
+
+  <div class="report-content">
+  </div>
+
+  <div class="report-sidebar">
+    Filterz here
+  </div>
+
+  <div class="clear"></div>
+</div>
