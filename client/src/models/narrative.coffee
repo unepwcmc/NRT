@@ -6,4 +6,8 @@ class window.Backbone.Models.Narrative extends Backbone.RelationalModel
     title: "title"
     editing: false
 
-  url: "/api/narrative"
+  url: ->
+    if @get('id')
+      "/api/narrative/#{@get('id')}"
+    else
+      "/api/narrative"
