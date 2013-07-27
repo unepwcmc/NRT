@@ -1,6 +1,7 @@
 _ = require('underscore')
 
 Report = require '../models/report'
+Indicator = require('../models/indicator')
 
 # TODO: not completed.
 groupReportsByDate = (reports) ->
@@ -21,10 +22,20 @@ groupReportsByDate = (reports) ->
   obj
 
 exports.index = (req, res) ->
-  Report.findAll().success((reports) ->
-    res.render "dashboard",
-      reports: reports
-  ).error((error)->
+  # TODO: this is a mess, we need a better way of handling this hell of 
+  # nested callbacks!
+  Indicator.seedDummyIndicatorsIfNone().success(->
+    Indicator.findAll().success((indicators)->
+      Report.findAll().success((reports) ->
+        res.render "dashboard",
+          reports: reports
+          indicators: indicators
+        ).error((error)->
+            console.error error
+            res.render(500, "Error fetching the reports")
+          )
+      )
+    ).error((error) ->
     console.error error
-    res.render(500, "Error fetching the reports")
+    res.render(500, "Error seeding DB")
   )
