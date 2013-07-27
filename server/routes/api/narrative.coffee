@@ -9,10 +9,16 @@ exports.create = (req, res) ->
   Narrative.create(
     content: params.content
     section_id: params.section_id
-  ).success (narrative) ->
+  ).success((narrative) ->
     res.send(201,
       JSON.stringify(narrative)
     )
+  ).error((error) ->
+    console.error error
+    res.send(500,
+      "Sorry, there was an error saving the narrative"
+    )
+  )
 
 exports.show = (req, res) ->
   Narrative.find(req.query.id).success (narrative) ->
