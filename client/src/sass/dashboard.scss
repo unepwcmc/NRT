@@ -182,7 +182,8 @@ div.row.row-2 {
   }
 }
 
-.reports-container {
+.reports-container,
+.indicators-container {
   .report-content {
     padding-left: 0;
     margin-top: 30px;
@@ -219,9 +220,10 @@ div.row.row-2 {
         border-top: 1px solid #0A5789;
         list-style-type: none;
         padding: 0;
+        border-bottom: 10px solid #00558b;
 
-        &:first-of-type {
-          border-bottom: 10px solid #00558b;
+        &:last-of-type {
+          border-bottom: none;
         }
 
         li {
