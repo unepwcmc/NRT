@@ -38,6 +38,23 @@ p {
   button {
     float: right;
     margin-top: 0.938em;
+    padding: 5px 15px;
+    background-color: transparent;
+    border: 1px solid $lightishGrey;
+    color: $lightishGrey;
+    font-weight: 400;
+    span{
+      display: inline;
+    }
+    a:hover, a:visited, a:link, a:active {
+      color: $lightishGrey;
+      text-decoration: none;
+      border: none;
+    }
+    a:hover {
+      color: $buttonBlue;
+    }
+
   }
 }
 
@@ -133,4 +150,7 @@ div.row:first-child {
     } 
   }
 }
+
+
+
 
