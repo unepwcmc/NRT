@@ -26,7 +26,8 @@
     "wrench": "1.5.1",
     "node-sass": "0.5.4",
     "passport-http": "0.2.2",
-    "underscore": "1.5.1"
+    "underscore": "1.5.1",
+    "moment": "2.1.0"
   },
   "devDependencies": {
     "Faker": "0.5.11",
