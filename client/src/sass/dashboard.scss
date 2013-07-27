@@ -32,6 +32,13 @@ p {
   border-bottom: 1px solid #eee;
   padding-bottom: $title-padding;
   margin-bottom: $title-margin;
+  h1 {
+    display: inline-block;
+  }
+  button {
+    float: right;
+    margin-top: 0.938em;
+  }
 }
 
 div.row {
