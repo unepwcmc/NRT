@@ -1,0 +1,23 @@
+{{!< main}}
+
+{{#contentFor 'header'}}
+  <link rel="stylesheet" href="/css/report.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+{{/contentFor}}
+
+
+<div class="content">
+  <div class="report-list-title">
+    <h1>Indicators</h1>
+
+    <button class="grey">
+      <i class="icon-file-text-alt append"></i><span class="show">New Indicator</span>
+    </button>
+  </div>
+  
+  <div class="report-content">
+    {{#indicators}}
+      <section><h2>{{title}}</h2></section>
+    {{/indicators}}
+  </div>
+</div>
