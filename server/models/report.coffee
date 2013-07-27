@@ -31,7 +31,7 @@ Report = sequelize.define('Report', {
     get: ->
       moment(@getDataValue('updated_at')).format("MMM Do YY")
 }, {
-  classMethods: {
+  classMethods:
     findFatReport: (id) ->
       result = new EventEmitter()
       result.error = (fn) ->
@@ -76,7 +76,6 @@ Report = sequelize.define('Report', {
           result.emit('success', Report.parseFatSQL(reports))
 
       return result
-  }
 })
 
 Report.hasMany(Section, foreignKey: 'report_id')
