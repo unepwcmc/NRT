@@ -20,6 +20,7 @@ exports.create = (req, res) ->
     )
 
   Report.create(
+    period: params.period
     title: params.title
     brief: params.brief
     introduction: params.introduction
