@@ -5,7 +5,7 @@ url = require('url')
 
 suite('API - Report')
 
-test('new', (done) ->
+test('create', (done) ->
   data =
     title: "new report"
 

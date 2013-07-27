@@ -7,12 +7,18 @@ exports.index = (req, res) ->
 exports.create = (req, res) ->
   params = req.body
   Narrative.create(
-    title: params.title 
     content: params.content
-  ).success (narrative) -> 
-    res.send(JSON.stringify(
-      narrative: narrative
-    ))
+    section_id: params.section_id
+  ).success((narrative) ->
+    res.send(201,
+      JSON.stringify(narrative)
+    )
+  ).error((error) ->
+    console.error error
+    res.send(500,
+      "Sorry, there was an error saving the narrative"
+    )
+  )
 
 exports.show = (req, res) ->
   Narrative.find(req.query.id).success (narrative) ->
