@@ -24,14 +24,6 @@
         className="introduction" report=thisView.report}}
     </section>
 
-    <section class="fixed-section">
-      <div class="section-title">
-        <h2>Brief</h2>
-      </div>
-      {{addSubViewTo thisView "TextEditView" type='textarea'
-        className='brief' report=thisView.report}}
-    </section>
-
     {{#each sections}}
       {{addSubViewTo ../thisView "SectionView" section=this}}
     {{/each}}
@@ -50,8 +42,16 @@
     <button class="grey">
       <i class="icon-bookmark-empty append"></i><i class="icon-bookmark append"></i><span class="show">Bookmark this report</span><span>Bookmarked report</span>
     </button>
+
+    <div class="brief fixed-section">
+      <h4>Brief</h4>
+      {{addSubViewTo thisView "TextEditView" type='textarea'
+        className='brief' report=thisView.report}}
+    </div>
+
     <div id="section-navigation-container">
     </div>
+
     <div class="recent-changes">
       <div class="recent-changes-title">
         <i class="icon-edit append"></i>Recent changes

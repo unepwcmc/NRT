@@ -209,6 +209,20 @@ header{
     border-bottom: 1px solid $lightGrey;
 }
 
+.brief {
+  margin-top: 20px;
+  font-size: 0.75em;
+  line-height: 1.4em;
+  color: $grey;
+  vertical-align: middle;
+
+  h4 {
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid $lightGrey;
+  }
+}
+
 .related-reports{
     background-color: $bkgGrey;
     border-top: 1px solid $lightGrey;
