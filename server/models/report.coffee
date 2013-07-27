@@ -23,12 +23,12 @@ Report = sequelize.define('Report', {
     type: Sequelize.INTEGER
     primaryKey: true
   # TODO: this apparently does not work, any ideas?
-  #updatedAt:
-  #  type: Sequelize.DATE,
-  #  get: ->
-  #    moment(@getDataValue('updated_at')).format("MMM Do YY")
+  updatedAt:
+    type: Sequelize.DATE,
+    get: ->
+      moment(@getDataValue('updated_at')).format("MMM Do YY")
 }, {
-  classMethods:
+  classMethods: {
     findFatReport: (id) ->
       result = new EventEmitter()
       result.error = (fn) ->
@@ -68,8 +68,7 @@ Report = sequelize.define('Report', {
           result.emit('success', Report.parseFatSQL(reports))
 
       return result
-}, getterMethods: {
-    updatedAt: -> 
+  }
 })
 
 Report.hasMany(Section, foreignKey: 'report_id')
