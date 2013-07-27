@@ -264,7 +264,7 @@ em{
             list-style: none;
             position: absolute;
             left: 0;
-            top: 61px;
+            top: 60px;
             li{
                 a{
                     color: $white;
@@ -305,6 +305,7 @@ em{
         cursor: pointer;
         overflow-x: hidden;
         @include transition(width 0.5s);
+
         .full-name{
             display: inline-block;
             font-size: 0.75em;
@@ -313,24 +314,28 @@ em{
             overflow: hidden;
             min-width: 180px;
             vertical-align: middle;
+
             .name{
                 max-width: 140px;
                 display: inline-block;
                 vertical-align: middle;
                 @include text-overflow;
             }
-            i{
+
+            i {
                 font-size: 0.85em;
                 line-height: 60px;
                 vertical-align: middle;
             }
         }
+
         .initials{
             font-size: 1.4em;
             position: relative;
             line-height: 60px;
             top: 2px;
         }
+
         &:hover, &.opened{
             @include transition(width 0.5s);
             width: 220px;

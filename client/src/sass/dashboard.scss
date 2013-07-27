@@ -22,6 +22,9 @@ h4 {
   font-size: .9em;
   line-height: 1.3em;
   color: $grey;
+  span.bold {
+    font-weight: bold;
+  }
 }
 
 p {
@@ -31,7 +34,9 @@ p {
 .dashboard-title {
   border-bottom: 1px solid #eee;
   padding-bottom: $title-padding;
-  margin-bottom: $title-margin;
+  margin-top: 40px;
+  margin-bottom: 30px;
+
   h1 {
     display: inline-block;
   }
@@ -59,6 +64,14 @@ p {
 }
 
 div.row {
+  .column {
+    padding: 15px;
+
+    ul {
+      line-height: 0.8em;
+    }
+  }
+
   div.last-update {
     padding: $padding * .6 0;
     margin: $margin * .6 0;
@@ -83,7 +96,7 @@ div.row {
   }
 
   i {
-    padding-right: 1em;
+    padding-right: 0.5em;
   }
 
   .content-left {
@@ -195,7 +208,8 @@ div.row.row-2 {
   }
 }
 
-.reports-container {
+.reports-container,
+.indicators-container {
   .report-content {
     padding-left: 0;
     margin-top: 30px;
@@ -232,9 +246,10 @@ div.row.row-2 {
         border-top: 1px solid #0A5789;
         list-style-type: none;
         padding: 0;
+        border-bottom: 10px solid #00558b;
 
-        &:first-of-type {
-          border-bottom: 10px solid #00558b;
+        &:last-of-type {
+          border-bottom: none;
         }
 
         li {
@@ -264,3 +279,27 @@ div.row.row-2 {
     }
   }
 }
+
+.section-title {
+  h4 a, h3 a, .report-link a {
+    text-decoration: none;
+    border: none;
+  }
+  h4 a, .report-link a {
+    color: $grey;
+  }
+  h3 a {
+    color: rgba(0,0,0,0.8);
+  }
+  .report-link {
+    a:hover {
+      color: $linkBlue;
+      border-bottom: 1px solid $linkBlue;
+    }
+    a {
+      font-weight: bold;
+    }
+  }
+}
+
+  
