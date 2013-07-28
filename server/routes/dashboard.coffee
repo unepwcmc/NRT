@@ -24,15 +24,19 @@ groupReportsByDate = (reports) ->
 
 # Transforms a `sequelize magic` object into a plain good old JavaScript
 # object, with a formatted date.
-formatReports = (reports) ->
-  formattedReports = _.map reports, (r) -> 
-    formattedReport = {}
-    formattedReport.id = r.id
-    formattedReport.updatedAt = moment(r.updatedAt).format("MMM Do YYYY")
-    formattedReport.title = r.title
-    formattedReport.introduction = r.introduction
-    formattedReport
-  formattedReports
+format = (arr) ->
+  _.map arr, (obj) -> 
+    formattedObj = {}
+    for attr, val of obj.selectedValues
+      if attr == "updatedAt" or attr == "createdAt"
+        formattedObj[attr] = moment(val).format("MMM Do YYYY")
+      else
+        formattedObj[attr] = val
+    formattedObj
+
+
+
+
     
 exports.index = (req, res) ->
   # TODO: this is a mess, we need a better way of handling this hell of 
@@ -41,8 +45,8 @@ exports.index = (req, res) ->
     Indicator.findAll().success((indicators)->
       Report.findAll().success((reports) ->
         res.render "dashboard",
-          reports: formatReports(reports)
-          indicators: indicators
+          reports: format(reports)
+          indicators: format(indicators)
         ).error((error)->
             console.error error  #TODO: This should be logged somewhere
             res.render(500, "Error fetching the reports")
