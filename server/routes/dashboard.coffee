@@ -27,6 +27,7 @@ groupReportsByDate = (reports) ->
 formatReports = (reports) ->
   formattedReports = _.map reports, (r) -> 
     formattedReport = {}
+    formattedReport.id = r.id
     formattedReport.updatedAt = moment(r.updatedAt).format("MMM Do YYYY")
     formattedReport.title = r.title
     formattedReport.introduction = r.introduction
