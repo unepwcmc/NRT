@@ -567,6 +567,12 @@ section{
     }
 }
 
+.save-content {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .section-title{
   padding-bottom: 20px;
 }
