@@ -103,16 +103,17 @@ header{
       color: #808080;
     }
   }
+}
 
-  .time-period,
-  h1 {
-    input {
-      border: 0;
-    }
+.section-title,
+.time-period,
+.report-title h1 {
+  input {
+    border: 0;
+  }
 
-    a {
-      font-size: 0.3em;
-    }
+  a {
+    font-size: 0.3em;
   }
 }
 
