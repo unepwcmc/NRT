@@ -33,6 +33,33 @@ test('create, read', (done) ->
       done()
 )
 
+test('update', (done) ->
+  Section = require('../../models/section')
+
+  Section.create(title: 'old title').success((section)->
+    newTitle = 'new title'
+
+    request.put {
+      url: helpers.appurl("api/section/#{section.id}")
+      json: true
+      body:
+        title: newTitle
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 200
+
+      Section.find(section.id).success((reloadedSection)->
+        assert.equal reloadedSection.title, newTitle
+        done()
+      ).error((error) ->
+        console.error error
+        throw "Unable to recall updated section"
+      )
+  ).error((error) ->
+    console.error error
+    throw "unable to create section"
+  )
+)
+
 test('list', (done) ->
   data =
     title: "test section title 2"

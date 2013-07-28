@@ -1,6 +1,9 @@
 <div class="section-title" id="section-{{section.id}}">
     <small><i class="icon-time append"></i></a>Last updated on 1st of April, 18:23 by Dr. Anybody</small>
-    <h2>{{section.title}}</h2>
+    <h2>
+      {{addSubViewTo thisView "TextEditView" type='input'
+        attributeName='title' model=sectionModel}}
+    </h5>
     <h3>Nitrate-N concentrations (µg/L) in Abu Dabhi Emirate waters.</h3>
 </div>
 {{#if noContent}}
