@@ -10,11 +10,10 @@ exports.index = (req, res) ->
 exports.show = (req, res) ->
   reportId = req.params.id
   Report.findFatReport(reportId).success((reportData)->
-    console.log reportData
     res.render "reports/show",
       reportData: JSON.stringify reportData
   ).error((error) ->
-    console.log error
+    console.error error
     res.render "404"
   )
 
@@ -25,5 +24,11 @@ exports.new = (req, res) ->
     )
 
 exports.present = (req, res) ->
-  res.render "reports/present",
-    report_id: req.params.id
+  reportId = req.params.id
+  Report.findFatReport(reportId).success((reportData)->
+    res.render "reports/present",
+      reportData: JSON.stringify reportData
+  ).error((error) ->
+    console.error error
+    res.render "404"
+  )
