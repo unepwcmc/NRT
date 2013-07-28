@@ -1,3 +1,6 @@
+// Took the excellent reveal.js library and wrapped it in a delicious global 
+// variable to call with a delay in report_presentation_view. Yum.
+
 /*!
  * reveal.js
  * http://lab.hakim.se/reveal-js
@@ -161,7 +164,6 @@ window.RevealAbused = (function(){
 
     // Force a layout when the whole page, incl fonts, has loaded
     // window.addEventListener( 'load', layout, false );
-    console.log("ready to layout");
     layout();
 
     // Copy options over to our config object
