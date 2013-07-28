@@ -33,11 +33,7 @@ format = (arr) ->
       else
         formattedObj[attr] = val
     formattedObj
-
-
-
-
-    
+ 
 exports.index = (req, res) ->
   # TODO: this is a mess, we need a better way of handling this hell of 
   # nested callbacks!

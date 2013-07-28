@@ -16,7 +16,7 @@
     "express-resource": "1.0.0",
     "mysql": "2.0.0-alpha7",
     "sequelize-mysql": "1.6.0",
-    "sequelize": "1.7.0-alpha2",
+    "sequelize": "1.6.0",
     "passport": "0.1.17",
     "less": "1.4.1",
     "less-middleware": "0.1.12",
