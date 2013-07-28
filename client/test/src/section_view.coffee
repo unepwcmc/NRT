@@ -106,9 +106,36 @@ test(".addVisualisation creates a visualisation record on the section and saves 
 
   assert.equal section.get('visualisation').constructor.name, 'Visualisation'
   assert.equal section.get('visualisation').get('section_id'), section.get('id')
-  sinon.assert.calledOnce(visualisationSaveSpy, "resize")
+  sinon.assert.calledOnce(visualisationSaveSpy, "save")
+
+  visualisationSaveSpy.restore()
+  view.close()
 )
 
-test("Can edit the section")
+test("Can edit the section title", (done)->
+  oldTitle = "old title"
+  section = new Backbone.Models.Section(title: oldTitle)
+
+  sectionSaveSpy = sinon.spy(Backbone.Models.Section::, 'save')
+
+  view = createAndShowSectionViewForSection(section)
+
+  # Open the edit view
+  $.when($('#test-container').find('h2 .add-content').trigger('click')).done(->
+    # Edit the title
+    newTitle = 'new title'
+    $('#test-container').find("input[value=\"#{oldTitle}\"]").val(newTitle)
+    
+    $.when($('#test-container').find(".save-content").trigger('click')).done(->
+      assert.equal section.get('title'), newTitle
+      sinon.assert.calledOnce(sectionSaveSpy, "save")
+
+      sectionSaveSpy.restore()
+      view.close()
+      done()
+    )
+  )
+)
+
 test("Can view report containing this section")
 test("Can navigate to Dashboard, Reports, Indicators and Bookmarks")
