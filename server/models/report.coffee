@@ -25,11 +25,6 @@ Report = sequelize.define('Report', {
   id:
     type: Sequelize.INTEGER
     primaryKey: true
-  # TODO: this apparently does not work, any ideas?
-  #updatedAt:
-  #  type: Sequelize.DATE,
-  #  get: ->
-  #    moment(@getDataValue('updated_at')).format("MMM Do YY")
 }, {
   classMethods:
     findFatReport: (id) ->
@@ -76,8 +71,6 @@ Report = sequelize.define('Report', {
           result.emit('success', Report.parseFatSQL(reports))
 
       return result
-}, getterMethods: {
-    updatedAt: -> 
 })
 
 Report.hasMany(Section, foreignKey: 'report_id')
