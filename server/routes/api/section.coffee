@@ -20,7 +20,20 @@ exports.show = (req, res) ->
     ))
 
 exports.update = (req, res) ->
-  res.send('update section ' + req.params.id)
+  obj = _.pick(req.body, 'title', 'report_id')
+  Section.find(req.params.section).success((section) ->
+    section.updateAttributes(obj).success((section) ->
+      res.send(200, JSON.stringify(
+        section
+      ))
+    ).error((error) ->
+      console.error error
+      res.send(500, "Error saving section #{section.title}")
+    )
+  ).error((error)->
+    console.error error
+    res.send(404, "Unable to find section #{req.params.id} to update")
+  )
 
 exports.destroy = (req, res) ->
   res.send('destroy section ' + req.params.id)

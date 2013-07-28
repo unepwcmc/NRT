@@ -18,13 +18,13 @@ class Backbone.Views.TextEditView extends Backbone.View
 
   initialize: (options) ->
     @type   = options.type
-    @report = options.report
+    @model = options.model
     @attributeName = options.attributeName
 
     @render()
 
   render: (options = {}) =>
-    content = @report.get(@attributeName) || ""
+    content = @model.get(@attributeName) || ""
 
     if options.edit
       @$el.html(@editTemplate(
@@ -60,13 +60,13 @@ class Backbone.Views.TextEditView extends Backbone.View
     setTimeout @resize, 0
 
   saveContent: (event) =>
-    @report.set(@attributeName,
+    @model.set(@attributeName,
       @$el.find(':input').
       val().
       replace(/^\s+|\s+$/g, '')
     )
 
-    @report.save()
+    @model.save()
     @render()
 
   startEdit: =>
