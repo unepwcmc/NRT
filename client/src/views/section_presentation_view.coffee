@@ -15,7 +15,7 @@ class Backbone.Views.SectionPresentationView extends Backbone.Diorama.NestingVie
       thisView: @
       section: @section.toJSON()
       narrative: @section.get('narrative')
-      visualisations: @section.get('visualisations')
+      visualisation: @section.get('visualisation')
     ))
     @renderSubViews()
 

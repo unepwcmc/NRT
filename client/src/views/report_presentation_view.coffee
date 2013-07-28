@@ -7,6 +7,7 @@ class Backbone.Views.ReportPresentationView extends Backbone.Diorama.NestingView
 
   initialize: (options) ->
     @report = options.report
+    @image = @report.get('img')()
     @render()
 
   render: =>
@@ -15,6 +16,7 @@ class Backbone.Views.ReportPresentationView extends Backbone.Diorama.NestingView
       thisView: @,
       report: @report.toJSON()
       sections: @report.get('sections').models
+      coverImage: @image
     ))
     @renderSubViews()
 

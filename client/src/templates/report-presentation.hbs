@@ -1,3 +1,20 @@
+<section>
+  <h1>{{report.title}}</h1>
+  <small>updated {{report.updatedAt}}</small>
+  <img src="{{coverImage}}">
+</section>
+
+<section>
+  <h2>Introduction</h2>
+  <p>{{report.introduction}}</p>
+</section>
+
+
 {{#each sections}}
   {{addSubViewTo ../thisView "SectionPresentationView" section=this}}
 {{/each}}
+
+<section>
+  <h2>Conclusion</h2>
+  <p>{{report.conclusion}}</p>
+</section>
