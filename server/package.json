@@ -27,6 +27,7 @@
     "node-sass": "0.5.4",
     "passport-http": "0.2.2",
     "underscore": "1.5.1",
+    "async": "0.2.9",
     "moment": "2.1.0"
   },
   "devDependencies": {
@@ -35,10 +36,8 @@
     "chai": "1.7.2",
     "sinon-chai": "2.4.0",
     "sinon": ">=1.4.0 <2",
-    "zombie": "1.4.1",
     "supervisor": "0.5.3",
     "request": "2.25.0",
-    "async": "0.2.9",
     "cheerio": "0.12.0"
   },
   "engines": {
