@@ -5,7 +5,10 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
     title: "New Section"
 
   url: ->
-    '/api/section'
+    if @get('id')
+      "/api/section/#{@get('id')}"
+    else
+      '/api/section'
 
   relations: [
       key: 'narrative'
