@@ -52,7 +52,8 @@ textarea.content-text-field {
   resize: none;
 }
 
-button{
+button,
+a.button{
     -webkit-appearance: none;
     border: none;
     background-color: $buttonBlue;
