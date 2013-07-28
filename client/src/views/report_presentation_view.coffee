@@ -14,7 +14,7 @@ class Backbone.Views.ReportPresentationView extends Backbone.Diorama.NestingView
     @$el.html(@template(
       thisView: @,
       report: @report.toJSON()
-      sections: @report.get('sections')
+      sections: @report.get('sections').models
     ))
     @renderSubViews()
 

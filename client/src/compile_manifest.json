@@ -24,7 +24,7 @@
   "src/views/bar_chart_view.coffee",
   "src/controllers/report_controller.coffee",
   "src/controllers/reports_controller.coffee",
-  "src/controllers/reports_presentation_controller.coffee",
+  "src/controllers/report_presentation_controller.coffee",
   "src/helpers/handlebars_debug.coffee",
   "src/lib/fake_reports.coffee"
 ]

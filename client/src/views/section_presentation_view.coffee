@@ -6,9 +6,6 @@ class Backbone.Views.SectionPresentationView extends Backbone.Diorama.NestingVie
   tagName: 'section'
   className: 'section-view'
 
-  events:
-    "click .add-narrative": "addNarrative"
-
   initialize: (options) ->
     @section = options.section
 
@@ -18,7 +15,7 @@ class Backbone.Views.SectionPresentationView extends Backbone.Diorama.NestingVie
       thisView: @
       section: @section.toJSON()
       narrative: @section.get('narrative')
-      visualisations: @section.get('visualisations').models
+      visualisations: @section.get('visualisations')
     ))
     @renderSubViews()
 
