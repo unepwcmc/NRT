@@ -1,4 +1,5 @@
 _ = require('underscore')
+moment = require('moment')
 
 Report = require '../models/report'
 Indicator = require('../models/indicator')
@@ -21,6 +22,17 @@ groupReportsByDate = (reports) ->
       obj.lastWeek.push report
   obj
 
+# Transforms a `sequelize magic` object into a plain good old JavaScript
+# object, with a formatted date.
+formatReports = (reports) ->
+  formattedReports = _.map reports, (r) -> 
+    formattedReport = {}
+    formattedReport.updatedAt = moment(r.updatedAt).format("MMM Do YYYY")
+    formattedReport.title = r.title
+    formattedReport.introduction = r.introduction
+    formattedReport
+  formattedReports
+    
 exports.index = (req, res) ->
   # TODO: this is a mess, we need a better way of handling this hell of 
   # nested callbacks!
@@ -28,14 +40,14 @@ exports.index = (req, res) ->
     Indicator.findAll().success((indicators)->
       Report.findAll().success((reports) ->
         res.render "dashboard",
-          reports: reports
+          reports: formatReports(reports)
           indicators: indicators
         ).error((error)->
-            console.error error
+            console.error error  #TODO: This should be logged somewhere
             res.render(500, "Error fetching the reports")
           )
       )
     ).error((error) ->
-    console.error error
+    console.error error  #TODO: This should be logged somewhere
     res.render(500, "Error seeding DB")
   )
