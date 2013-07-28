@@ -36,11 +36,13 @@ p {
   padding-bottom: $title-padding;
   margin-top: 40px;
   margin-bottom: 30px;
+  position: relative;
 
   h1 {
     display: inline-block;
   }
-  .button {
+
+  button {
     float: right;
     margin-top: 0.938em;
     padding: 5px 15px;
@@ -63,6 +65,12 @@ p {
   }
   .button:hover {
     border: 1px solid $buttonBlue;
+  }
+
+  .button {
+    position: absolute;
+    right: 0;
+    top: 10px;
   }
 }
 
