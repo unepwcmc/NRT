@@ -40,12 +40,13 @@ p {
   h1 {
     display: inline-block;
   }
-  button {
+  .button {
     float: right;
     margin-top: 0.938em;
     padding: 5px 15px;
     background-color: transparent;
     border: 1px solid $lightishGrey;
+    border-radius: 12px;
     color: $lightishGrey;
     font-weight: 400;
     span{
@@ -56,10 +57,12 @@ p {
       text-decoration: none;
       border: none;
     }
-    a:hover {
-      color: $buttonBlue;
-    }
-
+  }
+  .button:hover .inner, .button:hover i, .button:hover a {
+    color: $buttonBlue;
+  }
+  .button:hover {
+    border: 1px solid $buttonBlue;
   }
 }
 
