@@ -8,7 +8,6 @@ module.exports =
   formatDate: (arr, format="MMM Do YYYY") ->
     _.map arr, (obj) ->
       obj = obj.selectedValues
-      console.log obj
       _.each obj, (value, key) ->
         if key == "updatedAt" or key == "createdAt"
           @[key] = moment(value).format(format)
