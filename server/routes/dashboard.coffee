@@ -22,18 +22,17 @@ groupReportsByDate = (reports) ->
       obj.lastWeek.push report
   obj
 
-# Transforms a `sequelize magic` object into a plain good old JavaScript
-# object, with a formatted date.
-format = (arr) ->
-  _.map arr, (obj) -> 
-    formattedObj = {}
-    for attr, val of obj.selectedValues
-      if attr == "updatedAt" or attr == "createdAt"
-        formattedObj[attr] = moment(val).format("MMM Do YYYY")
-      else
-        formattedObj[attr] = val
-    formattedObj
- 
+# Takes a sequelize query result array and returns an array
+# of simple JavaScript objects with all dates formatted.
+formatDate = (arr, format="MMM Do YYYY") ->
+  _.map arr, (obj) ->
+    obj = obj.selectedValues
+    _.each obj, (value, key) ->
+      if key == "updatedAt" or key == "createdAt"
+        @[key] = moment(value).format(format)
+    , obj
+    obj
+
 exports.index = (req, res) ->
   # TODO: this is a mess, we need a better way of handling this hell of 
   # nested callbacks!
@@ -41,8 +40,8 @@ exports.index = (req, res) ->
     Indicator.findAll().success((indicators)->
       Report.findAll().success((reports) ->
         res.render "dashboard",
-          reports: format(reports)
-          indicators: format(indicators)
+          reports: formatDate(reports)
+          indicators: formatDate(indicators)
         ).error((error)->
             console.error error  #TODO: This should be logged somewhere
             res.render(500, "Error fetching the reports")
