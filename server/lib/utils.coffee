@@ -3,8 +3,8 @@ moment = require('moment')
 
 module.exports =
 
-  # Takes a sequelize query result array and returns an array
-  # of simple JavaScript objects with all dates formatted.
+  # takes an array of objects (these can be sequelize query results) and
+  # returns an array of objects with all date values formatted
   formatDate: (arr, format="MMM Do YYYY") ->
     _.map arr, (obj) ->
       obj = obj.selectedValues
