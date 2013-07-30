@@ -1,7 +1,7 @@
 utils = require '../lib/utils'
 Report = require '../models/report'
 Indicator = require('../models/indicator')
-console.log utils
+
 
 # TODO: not completed.
 groupReportsByDate = (reports) ->
