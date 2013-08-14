@@ -197,7 +197,7 @@ em{
 
 .content{
     width: 980px;
-    padding: 30px 20px;
+    padding: 75px 20px 30px 20px;
     margin: 0 auto;
     outline: 0;
     word-wrap: break-word;
@@ -627,8 +627,9 @@ section.report-indicator-list {
     font-weight: bold;
   }
   p {
-    padding: .2em 2em .2em .2em;
-    margin: .4em 2em .4em .4em;
+    padding: .2em 2em .2em 0;
+    margin: .4em 2em .4em 0;
+    line-height: 1.5em;
   }
   .section-title {
     padding-bottom: 0;
