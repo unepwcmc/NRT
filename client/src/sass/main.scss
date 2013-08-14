@@ -654,4 +654,40 @@ section.report-indicator-list {
   padding: 30px 20px 0 20px;
 }
 
+.content-sidebar.metadata {
+  color: $grey;
+  font-size: 13px;
+
+  h3 {
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  section {
+    border-bottom: 1px solid $grey;
+    margin-bottom: 30px;
+
+    h3 {
+      border-bottom: 1px solid $grey;
+    }
+  }
+
+  h4 {
+    font-weight:bold;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: 5px 0;
+      border-top: 1px solid $lightGrey;
+    }
+    li:first-child {
+      border-top: 0;
+    }
+  }
+}
+
 @import "charts";
