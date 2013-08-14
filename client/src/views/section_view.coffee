@@ -24,6 +24,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
       noContent: noContent
       narrative: @section.get('narrative')
       visualisation: @section.get('visualisation')
+      indicator: window.randomIndicatorName()
     ))
     @renderSubViews()
     return @
