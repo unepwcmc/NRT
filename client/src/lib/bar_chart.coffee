@@ -59,7 +59,7 @@ nrtViz.barChart  = (conf={}) ->
     gBars = selection.selectAll('g.bars').data [data]
     gBars.enter().append("g").attr("class", "bars")
 
-  setBarsDomElements =  (args) ->
+  setBarsDomElements =  (args, barColor) ->
     bars = args.selection.selectAll('.bar').data args.data
     bars.enter()
       .append("rect")
@@ -68,7 +68,7 @@ nrtViz.barChart  = (conf={}) ->
       .attr("width", 0)
       .attr("y", (d) -> height )
       .attr("height", (d) -> 0)
-      .style "fill", "LightSteelBlue"
+      .style "fill", barColor
     bars.exit().remove()
     bars.transition()
       .duration(500)
@@ -78,7 +78,7 @@ nrtViz.barChart  = (conf={}) ->
       .attr "height", (d) -> height - args.yScale(d[yKey])
     bars
 
-  chart = (selection) ->
+  chart = (selection, barColor) ->
     xScale = conf.xScale
     yScale = conf.yScale
     # rangeRoundBands [min, max], padding, outer-padding
@@ -99,7 +99,7 @@ nrtViz.barChart  = (conf={}) ->
       xScale: xScale
       yScale: yScale
       data: data
-    bars = setBarsDomElements args
+    bars = setBarsDomElements args, barColor
 
   chart.width = (c) ->
     return width  unless arguments.length
