@@ -34,9 +34,9 @@ module.exports = exports = (app) ->
 
   app.get "/indicators/:id", ensureAuthenticated, indicatorRoutes.show
 
-  app.get "/report/new", ensureAuthenticated, reportRoutes.new
-  app.get "/report/:id", ensureAuthenticated, reportRoutes.show
-  app.get "/report/:id/present", ensureAuthenticated, reportRoutes.present
+  app.get "/reports/new", ensureAuthenticated, reportRoutes.new
+  app.get "/reports/:id", ensureAuthenticated, reportRoutes.show
+  app.get "/reports/:id/present", ensureAuthenticated, reportRoutes.present
 
   # Tests
   if app.settings.env == 'test'

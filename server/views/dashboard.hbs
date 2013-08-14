@@ -9,7 +9,7 @@
 
   <header>
     <h1>Dashboard</h1>
-    <a href="/report/new" class="button grey">
+    <a href="/reports/new" class="button grey">
       <i class="icon-file-text-alt"></i> New report
     </a>
   </header>
@@ -22,7 +22,7 @@
 
       {{#each work_in_progress}}
         <div class="report green">
-          <h3><i class="icon-file-text-alt"></i> <a href="/report/{{id}}">{{title}}</a></h2>
+          <h3><i class="icon-file-text-alt"></i> <a href="/reports/{{id}}">{{title}}</a></h2>
           <div class="report-bar-container">
             <div class="report-bar" style="width: {{percent_complete}}%;
               background-color: #02BA6A"><p>{{percent_complete}}%</p></div>
@@ -32,14 +32,14 @@
 
       <a href="/reports">See all</a>
     </div>
-  
+
     <div class="content-right column">
       <div class="content-title">
         <h2><i class="icon-exchange"></i>Notifications</h2>
       </div>
       <ul class="notifications">
         {{#each notifications}}
-          <li><strong>Updated</strong> <a href="/{{type}}/{{id}}">{{title}}</a></li>
+          <li><strong>Updated {{type}}</strong> <a href="/{{type}}s/{{id}}">{{title}}</a></li>
         {{/each}}
       </ul>
     </div>
@@ -61,7 +61,7 @@
                 <small>
                   <i class="icon-time append"></i>Last updated on {{updatedAt}} by Dr. Anybody
                 </small>
-                <h3><a href="/report/{{id}}">{{ title }}</a></h3>
+                <h3><a href="/reports/{{id}}">{{ title }}</a></h3>
                 <h4>{{period}} | <i class="icon-bookmark"></i> Bookmark this report</h4>
                 <p>{{introduction}}</p>
               </div>
