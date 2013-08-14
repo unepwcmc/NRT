@@ -1,11 +1,12 @@
-Report = require('../models/report')
+Report = require('../models/report').model
 
 exports.index = (req, res) ->
-  Report = require('../models/report.coffee')
-  Report.findAll().success (reports) ->
-    res.render "reports/index",
-      reportsJSON: JSON.stringify(reports)
-      title: "Report show page"
+  Report = require('../models/report.coffee').model
+  Report.find (err, reports) ->
+    if !err?
+      res.render "reports/index",
+        reportsJSON: JSON.stringify(reports)
+        title: "Report show page"
 
 exports.show = (req, res) ->
   reportId = req.params.id

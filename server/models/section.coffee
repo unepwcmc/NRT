@@ -1,20 +1,14 @@
-Sequelize = require("sequelize-mysql").sequelize
-Narrative = require("./narrative.coffee")
+Narrative = require("./narrative.coffee").schema
+mongoose = require('mongoose')
 
-Section = sequelize.define('Section',
-  title:
-    type: Sequelize.STRING
-    allowNull: false
-  report_id:
-    type: Sequelize.INTEGER
-    references: "Report"
-    referencesKey: "id"
-  id:
-    type: Sequelize.INTEGER
-    primaryKey: true
+sectionSchema = mongoose.Schema(
+  title: String
+  narratives: [Narrative]
 )
 
-Section.hasMany(Narrative, foreignKey: 'section_id')
-Section.sync()
+Section = mongoose.model('Section', sectionSchema)
 
-module.exports = Section
+module.exports = {
+  schema: sectionSchema
+  model: Section
+}
