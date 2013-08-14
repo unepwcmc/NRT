@@ -1,0 +1,41 @@
+@import "variables";
+
+section.introduction {
+  padding-top: 0;
+}
+
+.content {
+  .indicator-narratives {
+    margin-left: 0;
+    padding-left: 0;
+
+    li {
+      list-style-type: none;
+      padding: 15px 0;
+    }
+
+    header {
+      border: 0;
+    }
+
+    small {
+      top: -21px;
+      font-size: 11px;
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: bold;
+      padding: 0;
+    }
+
+    h4{
+      color: $grey;
+      font-size: 14px;
+    }
+
+    p {
+      padding-bottom: 15px;
+    }
+  }
+}

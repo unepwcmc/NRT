@@ -17,5 +17,10 @@ exports.index = (req, res) ->
   )
 
 exports.show = (req, res) ->
-  res.render "indicators/show",
-    indicator: req.params.id
+  Indicator.find(req.params.id).success((indicator)->
+    res.render "indicators/show",
+      indicator: indicator
+  ).error((error) ->
+    console.error error
+    res.render "404"
+  )
