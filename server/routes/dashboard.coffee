@@ -32,6 +32,9 @@ format = (arr) ->
         formattedObj[attr] = moment(val).format("MMM Do YYYY")
       else
         formattedObj[attr] = val
+
+    percent_complete = (100 - obj.selectedValues.id)
+    formattedObj['percent_complete'] = if percent_complete > 40 then percent_complete else 40
     formattedObj
  
 exports.index = (req, res) ->
@@ -42,6 +45,7 @@ exports.index = (req, res) ->
       Report.findAll().success((reports) ->
         res.render "dashboard",
           reports: format(reports)
+          work_in_progress: _.last(format(reports), 5)
           indicators: format(indicators)
         ).error((error)->
             console.error error  #TODO: This should be logged somewhere
