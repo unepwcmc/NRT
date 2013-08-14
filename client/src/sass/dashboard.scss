@@ -161,7 +161,6 @@ div.row {
       &:hover {
         color: #0aadff;
         text-decoration: none;
-        border-bottom: 1px solid #23b6ff;
       }
     }
   }
@@ -335,7 +334,6 @@ div.row.row-2 {
   .report-link {
     a:hover {
       color: $linkBlue;
-      border-bottom: 1px solid $linkBlue;
     }
     a {
       font-weight: bold;
