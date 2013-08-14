@@ -13,6 +13,7 @@ class Backbone.Views.BarChartView extends Backbone.View
      yKey: "Percentage"
     @width = options.width
     @visualisation = options.visualisation
+    @barColor = if options.barColor? then options.barColor else "LightSteelBlue"
 
   render: ->
     @selection = d3.select(@el)
@@ -20,7 +21,7 @@ class Backbone.Views.BarChartView extends Backbone.View
     @selection.data [data]
 
     @barChart.chart.width @width
-    @selection.call @barChart.chart
+    @selection.call @barChart.chart, @barColor
 
     return @
 

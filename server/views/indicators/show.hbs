@@ -2,6 +2,30 @@
 
 {{#contentFor 'header'}}
   <link rel="stylesheet" href="/css/indicator.css">
+
+  <script src="/js/lib/d3.min.js"></script>
+  <script src="/js/lib/underscore-min.js"></script>
+  <script src="/js/lib/backbone-min.js"></script>
+  <script src="/js/lib/backbone-relational.js"></script>
+  <script src="/js/lib/handlebars.js"></script>
+  <script src="/js/lib/diorama.js"></script>
+  <script src="/js/application.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var visualisation = new Backbone.Models.Visualisation();
+      visualisation.set('data', Backbone.Faker.Reports.createFakeData())
+
+      var bar_chart = new Backbone.Views.BarChartView({
+        visualisation: visualisation,
+        width: 950,
+        barColor: 'pink'
+      });
+      
+      bar_chart.render();
+      $('#visualisation').append(bar_chart.el);
+    });
+  </script>
 {{/contentFor}}
 
 <div class="content">
@@ -13,6 +37,7 @@
         <i class="icon-download append"></i><span class="show">Download the dataset</span>
       </button>
     </header>
+    <div id='visualisation'></div>
 
     <div class='main-content'>
       <section class='introduction'>
