@@ -45,15 +45,20 @@ exports.index = (req, res) ->
     Indicator.findAll().success((indicators)->
       Report.findAll().success((reports) ->
         # Select 5 random items for notifications
-        all_items = indicators.concat(reports)
         notifications = []
-        for i in [1..5]
-          index = Math.floor(Math.random()*all_items.length)
-          item  = all_items[index]
+
+        for i in [1..2]
+          index = Math.floor(Math.random()*reports.length)
+          item  = reports[index]
+          notifications.push item
+
+        for i in [1..3]
+          index = Math.floor(Math.random()*indicators.length)
+          item  = indicators[index]
           notifications.push item
 
         res.render "dashboard",
-          notifications: format(notifications)
+          notifications: _.shuffle(format(notifications))
           reports: _.last(format(reports), 5)
           work_in_progress: _.last(format(reports), 5)
           indicators: _.last(format(indicators), 5)
