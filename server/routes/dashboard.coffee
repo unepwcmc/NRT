@@ -32,6 +32,7 @@ format = (arr) ->
         formattedObj[attr] = moment(val).format("MMM Do YYYY")
       else
         formattedObj[attr] = val
+    formattedObj['type'] = obj['daoFactoryName'].toLowerCase()
     formattedObj
  
 exports.index = (req, res) ->
@@ -40,7 +41,16 @@ exports.index = (req, res) ->
   Indicator.seedDummyIndicatorsIfNone().success(->
     Indicator.findAll().success((indicators)->
       Report.findAll().success((reports) ->
+        # Select 5 random items for notifications
+        all_items = indicators.concat(reports)
+        notifications = []
+        for i in [1..5]
+          index = Math.floor(Math.random()*all_items.length)
+          item  = all_items[index]
+          notifications.push item
+
         res.render "dashboard",
+          notifications: format(notifications)
           reports: format(reports)
           indicators: format(indicators)
         ).error((error)->

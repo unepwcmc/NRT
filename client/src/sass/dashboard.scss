@@ -81,6 +81,22 @@ div.row {
 
     ul {
       line-height: 0.8em;
+
+      &.notifications {
+        padding: 0 0 30px 0;
+
+        li {
+          width: 100%;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          list-style-position: inside;
+
+          a {
+            border-bottom: none;
+          }
+        }
+      }
     }
   }
 

@@ -48,15 +48,11 @@
       <div class="content-title">
         <h2><i class="icon-exchange"></i>Notifications</h2>
       </div>
-      <ul>
-        <li>Ammonia-N narrative report from Dr reports</li>
-        <li>More reports</li>
-        <li>And more indicators from Mr indicator</li>
-        <li>Ammonia-N narrative report from Dr reports</li>
-        <li>More reports update by myself</li>
-        <li>And more indicators from Mr indicator</li>
+      <ul class="notifications">
+        {{#each notifications}}
+          <li><strong>Updated</strong> <a href="/{{type}}/{{id}}">{{title}}</a></li>
+        {{/each}}
       </ul>
-      <a href="#">See all</a>
     </div>
 
     <div class="clear"></div>
