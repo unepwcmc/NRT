@@ -33,6 +33,9 @@ format = (arr) ->
       else
         formattedObj[attr] = val
     formattedObj['type'] = obj['daoFactoryName'].toLowerCase()
+
+    percent_complete = (100 - obj.selectedValues.id)
+    formattedObj['percent_complete'] = if percent_complete > 40 then percent_complete else 40
     formattedObj
  
 exports.index = (req, res) ->
@@ -52,6 +55,7 @@ exports.index = (req, res) ->
         res.render "dashboard",
           notifications: format(notifications)
           reports: format(reports)
+          work_in_progress: _.last(format(reports), 5)
           indicators: format(indicators)
         ).error((error)->
             console.error error  #TODO: This should be logged somewhere
