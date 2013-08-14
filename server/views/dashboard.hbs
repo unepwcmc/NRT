@@ -19,29 +19,18 @@
       <div class="content-title">
         <h2><i class="icon-tasks"></i>Work in progress</h2>
       </div>
-      <div class="report green">
-        <h3><i class="icon-file-text-alt"></i>Marine water quality report</h2>
-        <div class="report-bar-container">
-          <div class="report-bar" style="width: 76%; background-color: #55b265"><p>76%</p></div>
+
+      {{#each work_in_progress}}
+        <div class="report green">
+          <h3><i class="icon-file-text-alt"></i> <a href="/report/{{id}}">{{title}}</a></h2>
+          <div class="report-bar-container">
+            <div class="report-bar" style="width: {{percent_complete}}%;
+              background-color: #55b265"><p>{{percent_complete}}%</p></div>
+          </div>
         </div>
-      </div>
-      <div class="report green">
-        <h3><i class="icon-file-text-alt"></i>Mira indicator report</h2>
-        <div class="report-bar-container">
-          <div class="report-bar" style="width: 40%; background-color: #ffbd4c"><p>40%</p></div>
-        </div>
-      </div>
-      <div class="indicator">
-        <h3><i class="icon-bar-chart"></i>Land water quality report</h2>
-        <p>Marine water quality report</p>
-      </div>
-      <div class="report orange">
-        <h3><i class="icon-file-text-alt"></i>Land water quality report</h2>
-        <div class="report-bar-container">
-          <div class="report-bar" style="width: 45%; background-color: #ffbd4c"><p>45%</p></div>
-        </div>
-      </div>
-      <a href="#">See all</a>
+      {{/each}}
+
+      <a href="/reports">See all</a>
     </div>
   
     <div class="content-right column">

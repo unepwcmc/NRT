@@ -135,6 +135,17 @@ div.row {
   .report, .indicator {
     padding-bottom: $padding * .6;
     margin-bottom: $margin * .6;
+
+    h3 a {
+      color: inherit;
+      border: 0;
+
+      &:hover {
+        color: #0aadff;
+        text-decoration: none;
+        border-bottom: 1px solid #23b6ff;
+      }
+    }
   }
 
   .report-bar-container {
