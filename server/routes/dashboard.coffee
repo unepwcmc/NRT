@@ -34,8 +34,14 @@ format = (arr) ->
         formattedObj[attr] = val
     formattedObj['type'] = obj['daoFactoryName'].toLowerCase()
 
-    percent_complete = (100 - obj.selectedValues.id)
-    formattedObj['percent_complete'] = if percent_complete > 40 then percent_complete else 40
+    percent_complete = Math.floor(Math.random()*(100-40+1)+40)
+    formattedObj['percent_complete'] = percent_complete
+
+    if percent_complete > 60
+      formattedObj['color'] = '#5DB16B'
+    else
+      formattedObj['color'] = '#FDBC56'
+
     formattedObj
  
 exports.index = (req, res) ->

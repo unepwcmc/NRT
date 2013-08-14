@@ -21,11 +21,11 @@
       </div>
 
       {{#each work_in_progress}}
-        <div class="report green">
-          <h3><i class="icon-file-text-alt"></i> <a href="/reports/{{id}}">{{title}}</a></h2>
+        <div class="report">
+          <h3><i class="icon-file-text-alt" style="color: {{color}}"></i> <a href="/reports/{{id}}">{{title}}</a></h2>
           <div class="report-bar-container">
             <div class="report-bar" style="width: {{percent_complete}}%;
-              background-color: #02BA6A"><p>{{percent_complete}}%</p></div>
+              background-color: {{color}}"><p>{{percent_complete}}%</p></div>
           </div>
         </div>
       {{/each}}
