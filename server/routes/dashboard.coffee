@@ -54,9 +54,9 @@ exports.index = (req, res) ->
 
         res.render "dashboard",
           notifications: format(notifications)
-          reports: format(reports)
+          reports: _.last(format(reports), 5)
           work_in_progress: _.last(format(reports), 5)
-          indicators: format(indicators)
+          indicators: _.last(format(indicators), 5)
         ).error((error)->
             console.error error  #TODO: This should be logged somewhere
             res.render(500, "Error fetching the reports")

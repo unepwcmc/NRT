@@ -627,8 +627,9 @@ section.report-indicator-list {
     font-weight: bold;
   }
   p {
-    padding: .2em 2em .2em .2em;
-    margin: .4em 2em .4em .4em;
+    padding: .2em 2em .2em 0;
+    margin: .4em 2em .4em 0;
+    line-height: 1.5em;
   }
   .section-title {
     padding-bottom: 0;

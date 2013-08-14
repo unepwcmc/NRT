@@ -83,7 +83,9 @@ div.row {
       line-height: 0.8em;
 
       &.notifications {
+        font-size: 0.8em;
         padding: 0 0 30px 0;
+        color: $grey;
 
         li {
           width: 100%;
@@ -169,13 +171,13 @@ div.row {
     border-radius: 12px;
     .report-bar {
       border-radius: 12px;
-      height: .8em;
+      height: 1em;
       padding: .1em 0;
       text-align: left;
       line-height: 0;
       p {
         padding: 0;
-        padding-top: 0.5em;
+        padding-top: 0.6em;
         line-height: 0;
         padding-left: 1.7em;
         color: white;
