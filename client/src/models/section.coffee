@@ -1,9 +1,6 @@
 window.Backbone.Models || = {}
 
 class window.Backbone.Models.Section extends Backbone.RelationalModel
-  defaults:
-    title: "New Section"
-
   url: ->
     if @get('id')
       "/api/section/#{@get('id')}"
@@ -25,3 +22,9 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
         key: 'section'
         type: Backbone.HasOne
   ]
+
+  hasTitleOrIndicator: ->
+    if @get('title')
+      return true
+    else
+      return false

@@ -22,6 +22,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
       section: @section.toJSON()
       sectionModel: @section
       noContent: noContent
+      noTitleOrIndicator: !@section.hasTitleOrIndicator()
       narrative: @section.get('narrative')
       visualisation: @section.get('visualisation')
       indicator: window.randomIndicatorName()

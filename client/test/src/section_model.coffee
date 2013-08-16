@@ -2,6 +2,18 @@ assert = chai.assert
 
 suite('Section Model')
 
+test(".hasTitleOrIndicator returns false if there is no title and no indicator assigned", ->
+  section = new Backbone.Models.Section()
+
+  assert.notOk section.hasTitleOrIndicator()
+)
+
+test(".hasTitleOrIndicator returns true if there is a title present", ->
+  section = new Backbone.Models.Section(title: 'title')
+
+  assert.ok section.hasTitleOrIndicator()
+)
+
 test("When initialised with visualisation attributes,
   it creates a Backbone.Models.Visualisation model in the visualisation attribute", ->
   visualisationAttributes = data: {some: 'data'}

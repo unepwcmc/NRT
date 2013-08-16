@@ -8,10 +8,14 @@ exports.index = (req, res) ->
 
 exports.create = (req, res) ->
   obj = _.pick(req.body, 'title', 'report_id')
-  Section.create(obj).success (section) ->
+  Section.create(obj).success((section) ->
     res.send(201, JSON.stringify(
       section
     ))
+  ).error (error) ->
+    res.send(422,
+      error.message
+    )
 
 exports.show = (req, res) ->
   Section.find(req.params.section).success (section) ->
