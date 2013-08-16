@@ -7,6 +7,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
   className: 'section-view'
 
   events:
+    "click .add-title": "startTitleEdit"
     "click .add-narrative": "addNarrative"
     "click .add-visualisation": "addVisualisation"
 
@@ -30,6 +31,10 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     @renderSubViews()
     return @
 
+  startTitleEdit: =>
+    @section.set('title', 'New Section')
+    @render()
+    
   addNarrative: =>
     narrative = new Backbone.Models.Narrative(
       section_id: @section.get('id')

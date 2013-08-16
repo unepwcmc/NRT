@@ -64,6 +64,7 @@ test("When section has no narrative, I should see the 'add-narrative' element", 
   assert.equal(
     $('#test-container').find('.add-narrative').length, 1, "Could not see .add-narrative element"
   )
+  view.close()
 )
 
 test(".addNarrative creates a narrative record on the section and sets editing to true", ->
@@ -78,6 +79,20 @@ test(".addNarrative creates a narrative record on the section and sets editing t
   assert.equal section.get('narrative').constructor.name, 'Narrative'
   assert.equal section.get('narrative').get('section_id'), section.get('id')
   assert.equal section.get('narrative').get('editing'), true
+
+  view.close()
+)
+
+test(".startTitleEdit sets the title to 'New Section' and calls render", ->
+  section = new Backbone.Models.Section()
+  view = createAndShowSectionViewForSection(section)
+
+  spy = sinon.spy(view, 'render')
+  view.startTitleEdit()
+
+  assert.equal section.get('title'), 'New Section'
+  sinon.assert.calledOnce(spy, "render")
+  view.close()
 )
 
 test(".addNarrative calls render and resize in edit mode", ->
