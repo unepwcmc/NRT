@@ -10,13 +10,12 @@ appurl = (path) ->
 
 suite('Report index')
 
-test("Can navigate to Dashboard, Reports, Indicators and Bookmarks", (done) ->
+test("Can navigate to Dashboard, Reports, and Indicators", (done) ->
   request.get {
     url: appurl('/reports')
   }, (err, res, body) ->
     assert.match body, new RegExp(".*href=\"/reports\".*")
     assert.match body, new RegExp(".*href=\"/indicators\".*")
-    assert.match body, new RegExp(".*href=\"/bookmarks\".*")
     assert.match body, new RegExp(".*href=\"/dashboard\".*")
 
     assert.equal res.statusCode, 200
