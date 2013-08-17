@@ -1,5 +1,6 @@
 Section = require("../../models/section").model
 _ = require('underscore')
+async = require('async')
 
 exports.index = (req, res) ->
   Section.find (err, sections) ->
@@ -10,22 +11,32 @@ exports.index = (req, res) ->
     res.send(JSON.stringify(sections))
 
 exports.create = (req, res) ->
-  section = new Section(req.body)
+  params = req.body
+
+  section = new Section(params)
   section.save (err, section) ->
     if err?
       console.error error
       return res.send(500, "Could not create section")
 
-    res.send(201, JSON.stringify(section))
+    Section
+      .findOne(section._id)
+      .populate('indicator narrative visualisation')
+      .exec( (err, section) ->
+        res.send(201, JSON.stringify(section))
+      )
 
 exports.show = (req, res) ->
-  Section.findOne(req.params.section, (err, section) ->
-    if err?
-      console.error error
-      return res.send(500, "Could not retrieve section")
+  Section
+    .findOne(req.params.section)
+    .populate('indicator')
+    .exec( (err, section) ->
+      if err?
+        console.error error
+        return res.send(500, "Could not retrieve section")
 
-    res.send(JSON.stringify(section))
-  )
+      res.send(JSON.stringify(section))
+    )
 
 exports.update = (req, res) ->
   Section.update(

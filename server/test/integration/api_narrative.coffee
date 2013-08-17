@@ -129,4 +129,3 @@ test('destroy', (done) ->
       done()
     )
 )
-

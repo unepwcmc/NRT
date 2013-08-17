@@ -75,8 +75,6 @@ test('index lists all indicators', (done) ->
   )
 )
 
-test('returns full nested sections')
-
 test('can delete a indicator', (done) ->
   createIndicator( (indicator) ->
     request.del({
