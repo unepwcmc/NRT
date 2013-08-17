@@ -6,12 +6,14 @@ _ = require('underscore')
 
 suite('API - Section')
 
+Indicator = require('../../models/indicator').model
+Visualisation = require('../../models/visualisation').model
+Narrative = require('../../models/narrative').model
 Section = require('../../models/section').model
 
 test('posting creates a section', (done) ->
   data =
     title: "test section title 1"
-    report_id: 5
 
   request.post {
     url: helpers.appurl('/api/section')
@@ -42,23 +44,41 @@ createReport = (callback) ->
 
     callback(null, report)
 
-test('POST section with report id nests section in report')
+createIndicator = (callback) ->
+  indicator = new Indicator(
+    title: "new indicator"
+  )
+
+  indicator.save (err, indicator) ->
+    if err?
+      throw 'could not save indicator'
+
+    callback(null, indicator)
+
+createVisualisation = (callback) ->
+  visualisation = new Visualisation(
+    data: "new visualisation"
+  )
+
+  visualisation.save (err, Visualisation) ->
+    if err?
+      throw 'could not save visualisation'
+
+    callback(null, visualisation)
+
+createNarrative = (callback) ->
+  narrative = new Narrative(
+    content: "new narrative"
+  )
+
+  narrative.save (err, narrative) ->
+    if err?
+      throw 'could not save narrative'
+
+    callback(null, narrative)
 
 test('POST section with nested indicator', (done) ->
-  Indicator = require('../../models/indicator').model
-
-  createIndicator = (callback) ->
-    indicator = new Indicator(
-      title: "new indicator"
-    )
-
-    indicator.save (err, indicator) ->
-      if err?
-        throw 'could not save indicator'
-
-      callback(indicator)
-
-  createSectionWithIndicator = (indicator) ->
+  createSectionWithIndicator = (err, indicator) ->
     indicator_id = indicator._id
 
     data =
@@ -82,20 +102,7 @@ test('POST section with nested indicator', (done) ->
 )
 
 test('POST section with nested narrative', (done) ->
-  Narrative = require('../../models/narrative').model
-
-  createNarrative = (callback) ->
-    narrative = new Narrative(
-      content: "new narrative"
-    )
-
-    narrative.save (err, narrative) ->
-      if err?
-        throw 'could not save narrative'
-
-      callback(narrative)
-
-  createSectionWithNarrative = (narrative) ->
+  createSectionWithNarrative = (err, narrative) ->
     narrative_id = narrative._id
 
     data =
@@ -119,20 +126,7 @@ test('POST section with nested narrative', (done) ->
 )
 
 test('POST section with nested visualisation', (done) ->
-  visualisation = require('../../models/visualisation').model
-
-  createVisualisation = (callback) ->
-    visualisation = new visualisation(
-      data: "new visualisation"
-    )
-
-    visualisation.save (err, visualisation) ->
-      if err?
-        throw 'could not save visualisation'
-
-      callback(visualisation)
-
-  createSectionWithVisualisation = (visualisation) ->
+  createSectionWithVisualisation = (err, visualisation) ->
     visualisation_id = visualisation._id
 
     data =
@@ -155,8 +149,12 @@ test('POST section with nested visualisation', (done) ->
   createVisualisation(createSectionWithVisualisation)
 )
 
-createSection = (callback) ->
-  section = new Section(content: "a section")
+createSection = (attributes, callback) ->
+  if arguments.length == 1
+    callback = attributes
+    attributes = undefined
+
+  section = new Section(attributes || content: "a section")
 
   section.save (err, section) ->
     if err?
@@ -210,7 +208,48 @@ test("show returns a section's data", (done) ->
   )
 )
 
-test("show returns a section's nested models")
+test("GET /section/<id> returns a section's nested models", (done) ->
+  createSectionWithSubDocuments = (err, results) ->
+    indicator = results[0]
+    visualisation = results[1]
+    narrative = results[2]
+
+    createSection(
+      {
+        title: 'A section',
+        indicator: indicator._id
+        visualisation: visualisation._id
+        narrative: narrative._id
+      },
+      (section) ->
+        request.get({
+          url: helpers.appurl("api/section/#{section.id}")
+          json: true
+        }, (err, res, body) ->
+          assert.equal res.statusCode, 200
+
+          reloadedSection = body
+          assert.equal reloadedSection._id, section.id
+
+          assert.property body, 'indicator'
+          assert.equal indicator._id, body.indicator._id
+
+          assert.property body, 'visualisation'
+          assert.equal visualisation._id, body.visualisation._id
+
+          assert.property body, 'narrative'
+          assert.equal narrative._id, body.narrative._id
+
+          done()
+        )
+    )
+
+  async.series([
+    createIndicator,
+    createVisualisation,
+    createNarrative
+  ], createSectionWithSubDocuments)
+)
 
 test('can destroy a section', (done) ->
   createSection( (section) ->

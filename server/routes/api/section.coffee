@@ -3,12 +3,16 @@ _ = require('underscore')
 async = require('async')
 
 exports.index = (req, res) ->
-  Section.find (err, sections) ->
-    if err?
-      console.error error
-      return res.send(500, "Could not retrieve sections")
+  Section
+    .find()
+    .populate('indicator narrative visualisation')
+    .exec( (err, sections) ->
+      if err?
+        console.error error
+        return res.send(500, "Could not retrieve sections")
 
-    res.send(JSON.stringify(sections))
+      res.send(JSON.stringify(sections))
+    )
 
 exports.create = (req, res) ->
   params = req.body
@@ -29,7 +33,7 @@ exports.create = (req, res) ->
 exports.show = (req, res) ->
   Section
     .findOne(req.params.section)
-    .populate('indicator')
+    .populate('indicator narrative visualisation')
     .exec( (err, section) ->
       if err?
         console.error error
