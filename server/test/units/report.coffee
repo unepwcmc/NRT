@@ -45,7 +45,7 @@ test('.create with nested section', (done) ->
         prove it cyclically by filling the report with some lovely
         visualisations.'
       conclusion: 'This report is lovely afterall.'
-      sections: section
+      sections: [section]
 
     report = new Report(report_attributes)
     report.save (err, report) ->
@@ -70,5 +70,3 @@ test('.create with nested section', (done) ->
         assertReportHasSection
       ], done)
 )
-
-test('update a nested section')

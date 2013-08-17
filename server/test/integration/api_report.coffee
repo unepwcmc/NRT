@@ -25,9 +25,12 @@ test('create', (done) ->
     )
   )
 )
+
+test('returns full nested sections')
+
 test('update', (done) ->
   data =
-    title: "test section title 1"
+    title: "test report title 1"
 
   Report = require('../../models/report')
   Report.create(data).success((report) ->
