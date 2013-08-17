@@ -1,18 +1,12 @@
-Sequelize = require("sequelize-mysql").sequelize
+mongoose = require('mongoose')
 
-Visualisation = sequelize.define('Visualisation',
-  id:
-    type: Sequelize.INTEGER
-    primaryKey: true
-  data:
-    type: Sequelize.TEXT
-    allowNull: false
-  section_id:
-    type: Sequelize.INTEGER
-    references: "Section"
-    referencesKey: "id"
+visualisationSchema = mongoose.Schema(
+  data: mongoose.Schema.Types.Mixed
 )
 
-Visualisation.sync()
+Visualisation = mongoose.model('Visualisation', visualisationSchema)
 
-module.exports = Visualisation
+module.exports = {
+  schema: visualisationSchema,
+  model: Visualisation
+}
