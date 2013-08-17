@@ -1,6 +1,7 @@
 app = require('../app')
 test_server = null
 url = require('url')
+mongoose = require('mongoose')
 
 before( (done) ->
   app.start 3001, (err, server) ->

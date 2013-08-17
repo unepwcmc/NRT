@@ -8,7 +8,7 @@ reportSchema = mongoose.Schema(
   introduction: String
   conclusion: String
   period: String
-  sections: [Section]
+  sections: [{type: mongoose.Schema.Types.ObjectId, ref: 'Section'}]
 )
 
 Report = mongoose.model('Report', reportSchema)
