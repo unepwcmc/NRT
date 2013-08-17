@@ -48,7 +48,9 @@ header.report-header {
   margin-bottom: 100px;
 
   .add-visualisation,
-  .add-narrative {
+  .add-title,
+  .add-narrative,
+  .search-indicator {
     color: $lightishGrey;
 
     &:hover {
@@ -57,6 +59,7 @@ header.report-header {
     }
   }
 
+  .search-indicator ,
   .add-visualisation {
     border: 1px solid lighten($lightishGrey, 10);
     padding: 2px 5px;

@@ -34,6 +34,8 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
   startTitleEdit: =>
     @section.set('title', 'New Section')
     @render()
+    # Bit of a hack, starts the view in edit mode
+    @$el.find('.section-title h2 .add-content').trigger('click')
     
   addNarrative: =>
     narrative = new Backbone.Models.Narrative(
