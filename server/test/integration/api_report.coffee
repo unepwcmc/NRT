@@ -84,7 +84,12 @@ test('can delete a report', (done) ->
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 204
-      done()
+
+      Report.count( (err, count)->
+        unless err?
+          assert.equal 0, count
+          done()
+      )
     )
   )
 )

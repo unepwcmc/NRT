@@ -54,7 +54,7 @@ test('get dashboard url', (done) ->
 
 suite('Reports section')
 
-test('Page has latest edited reports listed', (done) ->
+test('has latest edited reports listed', (done) ->
   createReportModels([
     {
       title: 'Report 1'
@@ -74,8 +74,3 @@ test('Page has latest edited reports listed', (done) ->
     throw "Unable to create reports"
   )
 )
-
-
-    
-
-

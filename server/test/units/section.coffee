@@ -2,7 +2,6 @@ assert = require('chai').assert
 helpers = require '../helpers'
 _ = require('underscore')
 
-
 suite('Section')
 test('.create', (done) ->
   Section = require('../../models/section').model

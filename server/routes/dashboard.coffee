@@ -1,8 +1,7 @@
 _ = require('underscore')
 moment = require('moment')
 
-Report = require '../models/report'
-Indicator = require('../models/indicator')
+Report = require('../models/report').model
 
 # TODO: not completed.
 groupReportsByDate = (reports) ->
@@ -35,20 +34,11 @@ format = (arr) ->
     formattedObj
  
 exports.index = (req, res) ->
-  # TODO: this is a mess, we need a better way of handling this hell of 
-  # nested callbacks!
-  Indicator.seedDummyIndicatorsIfNone().success(->
-    Indicator.findAll().success((indicators)->
-      Report.findAll().success((reports) ->
-        res.render "dashboard",
-          reports: format(reports)
-          indicators: format(indicators)
-        ).error((error)->
-            console.error error  #TODO: This should be logged somewhere
-            res.render(500, "Error fetching the reports")
-          )
-      )
-    ).error((error) ->
-    console.error error  #TODO: This should be logged somewhere
-    res.render(500, "Error seeding DB")
-  )
+  Report.find (err, reports) ->
+    if err?
+      console.error error
+      return res.render(500, "Error fetching the reports")
+
+    res.render "dashboard",
+      reports: format(reports)
+      indicators: []

@@ -4,39 +4,40 @@ request = require('request')
 async = require('async')
 _ = require('underscore')
 
-
 suite('API - Section')
-test('create, read', (done) ->
+
+Section = require('../../models/section').model
+
+test('posting creates a section', (done) ->
   data =
     title: "test section title 1"
     report_id: 5
-    narratives: []
-    visualisations: []
 
   request.post {
     url: helpers.appurl('/api/section')
     json: true
     body: data
   }, (err, res, body) ->
-    id = body.id
+    id = body._id
     assert.equal res.statusCode, 201
 
-    request.get {
-      url: helpers.appurl('/api/section/' + id)
-      json: true
-    }, (err, res, body) ->
-      section = body
-      assert.equal section.id, id
-      assert.equal section.title, data.title
-      assert.equal section.report_id, data.report_id
-      assert.equal res.statusCode, 200
-      done()
+    section = body
+    assert.equal section._id, id
+    assert.equal section.title, data.title
+
+    done()
 )
 
-test('update', (done) ->
-  Section = require('../../models/section')
+test('add narrative')
+test('add indicator')
+test('add visualisation')
 
-  Section.create(title: 'old title').success((section)->
+test('can update a section', (done) ->
+  section = new Section(title: 'old title')
+  section.save (err, section)->
+    if err?
+      throw "Could not create section"
+
     newTitle = 'new title'
 
     request.put {
@@ -47,52 +48,78 @@ test('update', (done) ->
     }, (err, res, body) ->
       assert.equal res.statusCode, 200
 
-      Section.find(section.id).success((reloadedSection)->
-        assert.equal reloadedSection.title, newTitle
-        done()
-      ).error((error) ->
-        console.error error
-        throw "Unable to recall updated section"
-      )
-  ).error((error) ->
-    console.error error
-    throw "unable to create section"
-  )
+      Section
+        .findOne(section.id)
+        .exec( (err, reloadedSection)->
+          if err?
+            console.error error
+            throw "Unable to recall updated section"
+
+          assert.equal reloadedSection.title, newTitle
+          done()
+        )
 )
 
-test('list', (done) ->
-  data =
-    title: "test section title 2"
-    report_id: 5
-    narratives: []
-    visualisations: []
+test("show returns a section's data", (done) ->
+  section = new Section(content: "a section")
 
-  opts =
-    url: helpers.appurl('/api/section')
-    json: true
-    body: data
+  section.save (err, section) ->
+    if err?
+      throw 'could not save section'
 
-  async.parallel({
-    section1: (cb) -> request.post opts, cb
-    section2: (cb) -> request.post opts, cb
-  }, (err, results) ->
-
-    res1 = results.section1[0]
-    res2 = results.section2[0]
-    body1 = results.section1[1]
-    body2 = results.section2[1]
-
-    assert.equal res1.statusCode, 201
-    assert.equal res2.statusCode, 201
-
-    request.get {
-      url: helpers.appurl('/api/section')
+    request.get({
+      url: helpers.appurl("api/section/#{section.id}")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 200
-      assert.equal body.length, 2
-      assert.equal body[0].id, body1.id
-      assert.equal body[1].id, body2.id
+
+      reloadedSection = body
+      assert.equal reloadedSection._id, section.id
+      assert.equal reloadedSection.content, section.content
+
       done()
-  )
+    )
+)
+
+test('can destroy a section', (done) ->
+  section = new Section(content: "a section")
+
+  section.save (err, section) ->
+    if err?
+      throw 'could not save section'
+
+    request.del({
+      url: helpers.appurl("api/section/#{section.id}")
+      json: true
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 204
+
+      Section.count( (err, count)->
+        unless err?
+          assert.equal 0, count
+          done()
+      )
+    )
+)
+
+test('index lists all sections', (done) ->
+  section = new Section(content: "a section")
+
+  section.save (err, section) ->
+    if err?
+      throw 'could not save section'
+
+    request.get({
+      url: helpers.appurl("api/section")
+      json: true
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 200
+
+      sections = body
+      assert.equal 1, sections.length
+      assert.equal sections[0]._id, section.id
+      assert.equal sections[0].content, section.content
+
+      done()
+    )
 )

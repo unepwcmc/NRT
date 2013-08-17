@@ -1,39 +1,50 @@
-Section = require("../../models/section")
+Section = require("../../models/section").model
 _ = require('underscore')
 
-
 exports.index = (req, res) ->
-  Section.findAll().success (sections) ->
-        res.send(JSON.stringify(sections))
+  Section.find (err, sections) ->
+    if err?
+      console.error error
+      return res.send(500, "Could not retrieve sections")
+
+    res.send(JSON.stringify(sections))
 
 exports.create = (req, res) ->
-  obj = _.pick(req.body, 'title', 'report_id')
-  Section.create(obj).success (section) ->
-    res.send(201, JSON.stringify(
-      section
-    ))
+  section = new Section(req.body)
+  section.save (err, section) ->
+    if err?
+      console.error error
+      return res.send(500, "Could not create section")
+
+    res.send(201, JSON.stringify(section))
 
 exports.show = (req, res) ->
-  Section.find(req.params.section).success (section) ->
-    res.send(JSON.stringify(
-      section
-    ))
+  Section.findOne(req.params.section, (err, section) ->
+    if err?
+      console.error error
+      return res.send(500, "Could not retrieve section")
+
+    res.send(JSON.stringify(section))
+  )
 
 exports.update = (req, res) ->
-  obj = _.pick(req.body, 'title', 'report_id')
-  Section.find(req.params.section).success((section) ->
-    section.updateAttributes(obj).success((section) ->
-      res.send(200, JSON.stringify(
-        section
-      ))
-    ).error((error) ->
-      console.error error
-      res.send(500, "Error saving section #{section.title}")
-    )
-  ).error((error)->
-    console.error error
-    res.send(404, "Unable to find section #{req.params.id} to update")
+  Section.update(
+    {_id: req.params.section},
+    req.body,
+    (err, section) ->
+      if err?
+        console.error error
+        res.send(500, "Error saving section #{section.title}")
+
+      res.send(200, JSON.stringify(section))
   )
 
 exports.destroy = (req, res) ->
-  res.send('destroy section ' + req.params.id)
+  Section.remove(
+    {_id: req.params.section},
+    (err, section) ->
+      if err?
+        res.send(500, "Couldn't delete the section")
+
+      res.send(204)
+  )
