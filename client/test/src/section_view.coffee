@@ -101,11 +101,9 @@ test(".startTitleEdit sets the title to 'New Section' and calls render", ->
   section = new Backbone.Models.Section()
   view = createAndShowSectionViewForSection(section)
 
-  spy = sinon.spy(view, 'render')
   view.startTitleEdit()
 
   assert.equal section.get('title'), 'New Section'
-  sinon.assert.calledOnce(spy, "render")
   view.close()
 )
 
