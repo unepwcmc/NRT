@@ -41,7 +41,7 @@ createReport = (callback) ->
     callback(report)
 
 
-test('show', (done) ->
+test("show returns a report's data", (done) ->
   createReport( (report) ->
     request.get({
       url: helpers.appurl("api/report/#{report.id}")
@@ -58,7 +58,7 @@ test('show', (done) ->
   )
 )
 
-test('list', (done) ->
+test('index lists all reports', (done) ->
   createReport( (report) ->
     request.get({
       url: helpers.appurl("api/report")
@@ -77,7 +77,7 @@ test('list', (done) ->
 
 test('returns full nested sections')
 
-test('destroy', (done) ->
+test('can delete a report', (done) ->
   createReport( (report) ->
     request.del({
       url: helpers.appurl("api/report/#{report.id}")
@@ -89,7 +89,7 @@ test('destroy', (done) ->
   )
 )
 
-test('update', (done) ->
+test('can update a report', (done) ->
   createReport( (report) ->
     new_title = "Updated title"
     request.put({
