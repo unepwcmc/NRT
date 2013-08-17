@@ -1,31 +1,37 @@
-User = require("../models/user")
+User = require("../models/user").model
 
 exports.index = (req, res) ->
-  User.findAll().success (users) ->
+  User.find (err, users) ->
+    if err?
+      return res.send(500, {errors: ["could not retrieve users"]})
+
     res.send(JSON.stringify(users))
 
 exports.show = (req, res) ->
-  User.find(req.params.id).success (user) ->
-    res.send(JSON.stringify(user: user))
+  User.find(req.params.id, (err, user) ->
+    if err?
+      return res.send(500, {errors: ["could not retrieve user"]})
 
-exports.create = (req, res) ->
-  User.create(
-    email: req.body.email
-    password: req.body.password
-  ).success( (user) ->
     res.send(JSON.stringify(user: user))
-  ).failure( (err) ->
-    res.send(JSON.stringify(error: err))
   )
 
+exports.create = (req, res) ->
+  user = new User(
+    email: req.body.email
+    password: req.body.password
+  )
+  user.save (err, user) ->
+    if err?
+      return res.send(500, {errors: ["could not save user"]})
+
+    res.send(JSON.stringify(user: user))
+
 exports.destroy = (req, res) ->
-  User.find(req.params.id).success( (user) ->
-    user.destroy().
-    success( ->
-      res.send(JSON.stringify(message: "user destroyed"))
-    ).failure( (err) ->
-      res.send(JSON.stringify(error: err))
-    )
-  ).failure( (err) ->
-    res.send(JSON.stringify(error: err))
+  User.remove(
+    {_id: req.params.id},
+    (err, user) ->
+      if err?
+        res.send(500, "Couldn't delete the user")
+
+      res.send(204)
   )
