@@ -10,13 +10,16 @@ suite('Indicator index')
 createIndicatorModels = (attributes) ->
   successCallback = errorCallback = promises = null
 
-  Indicator = require('../../models/indicator')
+  Indicator = require('../../models/indicator').model
   createFunctions = _.map(attributes, (attributeSet) ->
     return (callback) ->
-      return Indicator.create(attributeSet)
-        .success((indicators)->
-          callback(null, indicators)
-        ).error(callback)
+      indicator = new Indicator(attributeSet)
+      return indicator.save( (err, indicators) ->
+        if err?
+          callback()
+
+        callback(null, indicators)
+      )
   )
 
   async.parallel(

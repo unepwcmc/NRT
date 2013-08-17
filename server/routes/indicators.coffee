@@ -1,19 +1,14 @@
-Indicator = require('../models/indicator')
+Indicator = require('../models/indicator').model
 _ = require('underscore')
 async = require('async')
 
 exports.index = (req, res) ->
-  Indicator.seedDummyIndicatorsIfNone().success(->
-    Indicator.findAll().success((indicators)->
-      res.render "indicators/index",
-        indicators: indicators
-    ).error((error)->
+  Indicator.find( (err, indicators)->
+    if err?
       console.error error
-      res.render(500, "Error fetching the indicators")
-    )
-  ).error((error) ->
-    console.error error
-    res.render(500, "Error seeding DB")
+      return res.render(500, "Error fetching the indicators")
+
+    res.render "indicators/index", indicators: indicators
   )
 
 exports.show = (req, res) ->
