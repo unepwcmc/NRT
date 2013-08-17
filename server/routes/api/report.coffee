@@ -1,60 +1,49 @@
-Report = require("../../models/report")
+Report = require("../../models/report").model
 
 exports.index = (req, res) ->
-  Report.findAll().success (reports) ->
-    res.send(JSON.stringify(reports))
+  Report.find( (err, reports) ->
+    if err?
+      return res.send(500, "Could not retrieve reports")
 
-Report.required_fields = ['title']
+    res.send(JSON.stringify(reports))
+  )
+
 exports.create = (req, res) ->
   params = req.body
 
-  errors = []
-  Report.required_fields.forEach( (attribute) ->
-    unless params.hasOwnProperty(attribute)
-      errors.push("#{attribute} is required")
-  )
+  report = new Report(params)
+  report.save (err, report) ->
+    if err?
+      return res.send(500, "Could not save report")
 
-  if errors.length > 0
-    return res.send(500,
-      JSON.stringify(errors: errors)
-    )
-
-  Report.create(
-    period: params.period
-    title: params.title
-    brief: params.brief
-    introduction: params.introduction
-    conclusion: params.conclusion
-  ).success((report) ->
-    res.send(201,
-      JSON.stringify(
-        report
-      )
-    )
-  ).failure((err) ->
-    res.send(500, JSON.stringify(errors: [err]))
-  )
+    res.send(201, JSON.stringify(report))
 
 exports.show = (req, res) ->
-  Report.find(req.query.id).success (report) ->
-    res.send(
-      JSON.stringify(
-        report: report
-      )
-    )
+  Report.findOne(req.query.id, (err, report) ->
+    if err?
+      return res.send(500, "Could not retrieve report")
+
+    res.send(JSON.stringify(report))
+  )
 
 exports.update = (req, res) ->
-  Report.find(req.params.report).success((report) ->
-    report.updateAttributes(req.body).success(->
+  Report.update(
+    {_id: req.params.report},
+    req.body,
+    (err, report) ->
+      if err?
+        console.error error
+        res.send(500, "Could not update the report")
+
       res.send(200, JSON.stringify(report))
-    ).error((error) ->
-      console.error error
-      res.send(500, "Couldn't save the report")
-    )
-  ).error((error) ->
-    console.error error
-    res.send(404, "Couldn't find report #{req.params.report}")
   )
 
 exports.destroy = (req, res) ->
-  res.send('destroy report ' + req.params.id)
+  Report.remove(
+    {_id: req.params.report},
+    (err, report) ->
+      if err?
+        res.send(500, "Couldn't delete the report")
+
+      res.send(204)
+  )

@@ -5,11 +5,12 @@ url = require('url')
 
 suite('API - Report')
 
-test('create', (done) ->
+Report = require('../../models/report').model
+
+test('when posting it creates a report', (done) ->
   data =
     title: "new report"
 
-  Report = require('../../models/report')
   request.post({
     url: helpers.appurl('api/report/')
     json: true
@@ -19,8 +20,56 @@ test('create', (done) ->
 
     assert.equal res.statusCode, 201
 
-    Report.find(id).success((report) ->
-      assert.equal report.title, data.title
+    Report
+      .findOne(id)
+      .exec( (err, report) ->
+        assert.equal report.title, data.title
+        done()
+      )
+  )
+)
+
+createReport = (callback) ->
+  report = new Report(
+    title: "new report"
+  )
+
+  report.save (err, report) ->
+    if err?
+      throw 'could not save report'
+
+    callback(report)
+
+
+test('show', (done) ->
+  createReport( (report) ->
+    request.get({
+      url: helpers.appurl("api/report/#{report.id}")
+      json: true
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 200
+
+      reloadedReport = body
+      assert.equal reloadedReport._id, report.id
+      assert.equal reloadedReport.content, report.content
+
+      done()
+    )
+  )
+)
+
+test('list', (done) ->
+  createReport( (report) ->
+    request.get({
+      url: helpers.appurl("api/report")
+      json: true
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 200
+
+      reports = body
+      assert.equal reports[0]._id, report.id
+      assert.equal reports[0].content, report.content
+
       done()
     )
   )
@@ -28,12 +77,20 @@ test('create', (done) ->
 
 test('returns full nested sections')
 
-test('update', (done) ->
-  data =
-    title: "test report title 1"
+test('destroy', (done) ->
+  createReport( (report) ->
+    request.del({
+      url: helpers.appurl("api/report/#{report.id}")
+      json: true
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 204
+      done()
+    )
+  )
+)
 
-  Report = require('../../models/report')
-  Report.create(data).success((report) ->
+test('update', (done) ->
+  createReport( (report) ->
     new_title = "Updated title"
     request.put({
       url: helpers.appurl("/api/report/#{report.id}")
@@ -45,9 +102,11 @@ test('update', (done) ->
 
       assert.equal res.statusCode, 200
 
-      Report.find(id).success((report) ->
-        assert.equal report.title, new_title
-        done()
+      Report
+        .findOne(id)
+        .exec( (err, report) ->
+          assert.equal report.title, new_title
+          done()
       )
     )
   )
