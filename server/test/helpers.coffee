@@ -12,8 +12,22 @@ after( (done) ->
   test_server.close () -> done()
 )
 
+dropDatabase = (connection, done) ->
+  connection.db.dropDatabase (err) ->
+    if err?
+      console.log 'ERROR'
+      console.log err
+    else
+      done()
+
 beforeEach( (done) ->
-  global.sequelize.sync({force: true}).success(() -> done())
+  connection = mongoose.connection
+  state = connection.readyState
+
+  if state == 2
+    connection.on 'open', -> dropDatabase(connection, done)
+  else if state == 1
+    dropDatabase(connection, done)
 )
 
 exports.appurl = (path) ->
