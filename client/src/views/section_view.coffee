@@ -37,7 +37,6 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
 
   startTitleEdit: =>
     @section.set('title', 'New Section')
-    @render()
     # Bit of a hack, starts the view in edit mode
     @$el.find('.section-title h2 .add-content').trigger('click')
 
@@ -61,8 +60,16 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     visualisation = new Backbone.Models.Visualisation(
       section_id: @section.get('id')
     )
+
+    newVisualisationView = new Backbone.Views.ReportEditVisualisationView(
+      visualisation: visualisation
+      indicator: @section.get('indicator')
+    )
+    $('body').append(newVisualisationView.render().el)
+    ###
     @section.set('visualisation', visualisation)
     visualisation.save()
+    ###
 
   onClose: ->
     @closeSubViews()

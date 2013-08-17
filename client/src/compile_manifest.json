@@ -18,6 +18,7 @@
   "src/views/text_edit_view.coffee",
   "src/views/narrative_view.coffee",
   "src/views/visualisation_view.coffee",
+  "src/views/report_edit_visualisation_view.coffee",
   "src/lib/utils.coffee",
   "src/lib/chart_data_parser.coffee",
   "src/lib/data/sample_esri_service.coffee",
