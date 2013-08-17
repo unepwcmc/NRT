@@ -162,9 +162,36 @@ createSection = (attributes, callback) ->
 
     callback(section)
 
-test('update section with new indicator')
-test('update section with new narrative')
-test('update section with new visualisation')
+test('update section with new indicator', (done) ->
+  createSectionWithIndicator = (err, results) ->
+    indicator = results[0]
+    newIndicator = results[1]
+
+    createSection({indicator: indicator._id}, (section) ->
+      request.put {
+        url: helpers.appurl("api/section/#{section.id}")
+        json: true
+        body:
+          indicator: newIndicator._id
+      }, (err, res, body) ->
+        assert.equal res.statusCode, 200
+        assert.property body, 'indicator'
+
+        Section
+          .findOne(section.id)
+          .exec( (err, reloadedSection)->
+            if err?
+              console.error error
+              throw "Unable to recall updated section"
+
+            assert.equal newIndicator._id, reloadedSection.indicator.toString()
+
+            done()
+          )
+    )
+
+  async.series([createIndicator, createIndicator], createSectionWithIndicator)
+)
 
 test('can update a section', (done) ->
   createSection( (section) ->

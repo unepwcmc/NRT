@@ -46,12 +46,17 @@ exports.update = (req, res) ->
   Section.update(
     {_id: req.params.section},
     req.body,
-    (err, section) ->
+    (err, rowsChanged) ->
       if err?
         console.error error
-        res.send(500, "Error saving section #{section.title}")
+        return res.send(501, "Error saving section")
 
-      res.send(200, JSON.stringify(section))
+      Section
+        .findOne(req.params.section)
+        .exec( (err, section) ->
+          unless err?
+            res.send(200, JSON.stringify(section))
+        )
   )
 
 exports.destroy = (req, res) ->
