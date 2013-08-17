@@ -8,6 +8,24 @@ createAndShowSectionViewForSection = (section) ->
 
 suite('Section View')
 
+test("When showing a section without a title or indicator, you see 'Start typing title or add an indicator'", ->
+  section = new Backbone.Models.Section()
+
+  view = createAndShowSectionViewForSection(section)
+
+  assert.match(
+    $('#test-container').find('.add-title').text(),
+    new RegExp(".*Start typing your new section title.*")
+  )
+
+  assert.match(
+    $('#test-container').find('.choose-indicator').text(),
+    new RegExp(".*reference an indicator.*")
+  )
+
+  view.close()
+)
+
 test("Can see the section title", ->
   title = "My Lovely Section"
   section = new Backbone.Models.Section(title: title)
@@ -22,9 +40,23 @@ test("Can see the section title", ->
   view.close()
 )
 
+test("Can see the section indicator title", ->
+  indicatorTitle = "My Lovely Indicator"
+  section = new Backbone.Models.Section(indicator: {title: indicatorTitle})
+
+  view = createAndShowSectionViewForSection(section)
+
+  assert.match(
+    $('#test-container').find('h2').text(),
+    new RegExp(".*#{indicatorTitle}.*")
+  )
+
+  view.close()
+)
+
 test("When section has narrative, can see the narrative", ->
   narrative = new Backbone.Models.Narrative()
-  section = new Backbone.Models.Section(narrative: narrative)
+  section = new Backbone.Models.Section(title: 'title', narrative: narrative)
 
   view = createAndShowSectionViewForSection(section)
 
@@ -39,17 +71,18 @@ test("When section has narrative, can see the narrative", ->
 )
 
 test("When section has no narrative, I should see the 'add-narrative' element", ->
-  section = new Backbone.Models.Section()
+  section = new Backbone.Models.Section(title: 'title')
 
   view = createAndShowSectionViewForSection(section)
 
   assert.equal(
     $('#test-container').find('.add-narrative').length, 1, "Could not see .add-narrative element"
   )
+  view.close()
 )
 
 test(".addNarrative creates a narrative record on the section and sets editing to true", ->
-  section = new Backbone.Models.Section(id: 12)
+  section = new Backbone.Models.Section(id: 12, title: 'title')
 
   view = createAndShowSectionViewForSection(section)
 
@@ -60,13 +93,27 @@ test(".addNarrative creates a narrative record on the section and sets editing t
   assert.equal section.get('narrative').constructor.name, 'Narrative'
   assert.equal section.get('narrative').get('section_id'), section.get('id')
   assert.equal section.get('narrative').get('editing'), true
+
+  view.close()
+)
+
+test(".startTitleEdit sets the title to 'New Section' and calls render", ->
+  section = new Backbone.Models.Section()
+  view = createAndShowSectionViewForSection(section)
+
+  spy = sinon.spy(view, 'render')
+  view.startTitleEdit()
+
+  assert.equal section.get('title'), 'New Section'
+  sinon.assert.calledOnce(spy, "render")
+  view.close()
 )
 
 test(".addNarrative calls render and resize in edit mode", ->
 
   spy = sinon.spy(Backbone.Views.NarrativeView::, 'resize')
 
-  section = new Backbone.Models.Section()
+  section = new Backbone.Models.Section(title: 'title')
   view = createAndShowSectionViewForSection(section)
   view.addNarrative()
   narrativeView = view.subViews[0]  # Is there a getSubView('view name') method?
@@ -79,7 +126,7 @@ test(".addNarrative calls render and resize in edit mode", ->
 
 test("Can see the section visualisation", ->
   visualisation = new Backbone.Models.Visualisation()
-  section = new Backbone.Models.Section(visualisation: visualisation)
+  section = new Backbone.Models.Section(title: 'title', visualisation: visualisation)
 
   view = createAndShowSectionViewForSection(section)
 

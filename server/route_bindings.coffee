@@ -4,6 +4,7 @@ sectionApi = require('./routes/api/section')
 narrativeApi = require('./routes/api/narrative')
 visualisationApi = require('./routes/api/visualisation')
 reportApi = require('./routes/api/report')
+indicatorApi = require('./routes/api/indicator')
 
 dashboardRoutes = require('./routes/dashboard.coffee')
 indicatorRoutes = require('./routes/indicators.coffee')
@@ -25,6 +26,7 @@ module.exports = exports = (app) ->
   app.resource 'api/visualisation', visualisationApi, { format: 'json' }
   app.resource 'api/report', reportApi, { format: 'json' }
   app.resource 'api/section', sectionApi, { format: 'json' }
+  app.resource 'api/indicators', indicatorApi, { format: 'json' }
 
   app.get "/", ensureAuthenticated, dashboardRoutes.index
   app.get "/dashboard", ensureAuthenticated, dashboardRoutes.index
