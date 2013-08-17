@@ -5,17 +5,20 @@
       <span class="add-title">
         Start typing your new section title here or
       </span>
-      <span class="search-indicator">
+      <span class="choose-indicator">
         <i class="icon-table"></i>reference an indicator
       </span>
     </div>
   </div>
 {{else}}
+  {{#if sectionIndicator}}
+      <h2>{{sectionIndicator.title}}</h2>
+  {{else}}
       <h2>
         {{addSubViewTo thisView "TextEditView" type='input'
           attributeName='title' model=sectionModel}}
       </h2>
-      <h3>{{indicator}}</h3>
+  {{/if}}
   </div>
   {{#if noContent}}
     <div class="section-actions">

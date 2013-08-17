@@ -19,7 +19,7 @@ test("When showing a section without a title or indicator, you see 'Start typing
   )
 
   assert.match(
-    $('#test-container').find('.search-indicator').text(),
+    $('#test-container').find('.choose-indicator').text(),
     new RegExp(".*reference an indicator.*")
   )
 
@@ -35,6 +35,20 @@ test("Can see the section title", ->
   assert.match(
     $('#test-container').text(),
     new RegExp(".*#{title}.*")
+  )
+
+  view.close()
+)
+
+test("Can see the section indicator title", ->
+  indicatorTitle = "My Lovely Indicator"
+  section = new Backbone.Models.Section(indicator: {title: indicatorTitle})
+
+  view = createAndShowSectionViewForSection(section)
+
+  assert.match(
+    $('#test-container').find('h2').text(),
+    new RegExp(".*#{indicatorTitle}.*")
   )
 
   view.close()

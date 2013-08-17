@@ -14,6 +14,12 @@ test(".hasTitleOrIndicator returns true if there is a title present", ->
   assert.ok section.hasTitleOrIndicator()
 )
 
+test(".hasTitleOrIndicator returns true if there is an indicator present", ->
+  section = new Backbone.Models.Section(indicator: {title: 'an indicator'})
+
+  assert.ok section.hasTitleOrIndicator()
+)
+
 test("When initialised with visualisation attributes,
   it creates a Backbone.Models.Visualisation model in the visualisation attribute", ->
   visualisationAttributes = data: {some: 'data'}
@@ -30,6 +36,24 @@ test("When initialised with narrative attributes,
 
   assert.equal section.get('narrative').constructor.name, 'Narrative'
   assert.equal section.get('narrative').get('content'), narrativeAttributes.content
+)
+
+test("When setting 'indicator' with indicator attributes,
+  it creates a Backbone.Models.Indicator model in the indicator attribute", ->
+  indicatorAttributes = title: "I'm an indicator"
+  section = new Backbone.Models.Section()
+  section.set('indicator', indicatorAttributes)
+
+  assert.equal section.get('indicator').constructor.name, 'Indicator'
+  assert.equal section.get('indicator').get('title'), indicatorAttributes.title
+)
+
+test("When calling .toJSON on a section with an indicator model attribute,
+  the indicator model should be deserialized to the indicator id", ->
+  indicatorAttributes = id: 5, title: 'hat'
+
+  section = new Backbone.Models.Section(indicator: indicatorAttributes)
+  assert.equal section.toJSON().indicator, indicatorAttributes.id
 )
 
 test("Can POST section to database", (done)->

@@ -33,7 +33,7 @@ test('create, read', (done) ->
       done()
 )
 
-test('create when given no title should return an appropriate erro', (done)->
+test('create when given no title or indicator should return an appropriate erro', (done)->
   request.post {
     url: helpers.appurl('/api/section')
     json: true
@@ -41,7 +41,7 @@ test('create when given no title should return an appropriate erro', (done)->
   }, (err, res, body) ->
     assert.equal res.statusCode, 422
 
-    assert.match res.body, /.*'title' cannot be null.*/
+    assert.match res.body, /.*title or indicator must be present.*/
     done()
 )
 

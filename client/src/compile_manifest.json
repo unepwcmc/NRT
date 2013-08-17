@@ -2,6 +2,7 @@
   "src/models/report.coffee",
   "src/collections/report_collection.coffee",
   "src/models/narrative.coffee",
+  "src/models/indicator.coffee",
   "src/collections/narrative_collection.coffee",
   "src/models/visualisation.coffee",
   "src/collections/visualisation_collection.coffee",
