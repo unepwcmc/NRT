@@ -33,6 +33,18 @@ test('create, read', (done) ->
       done()
 )
 
+test('create when given no title or indicator should return an appropriate erro', (done)->
+  request.post {
+    url: helpers.appurl('/api/section')
+    json: true
+    body: {}
+  }, (err, res, body) ->
+    assert.equal res.statusCode, 422
+
+    assert.match res.body, /.*title or indicator must be present.*/
+    done()
+)
+
 test('update', (done) ->
   Section = require('../../models/section')
 
