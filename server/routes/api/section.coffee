@@ -28,7 +28,7 @@ exports.create = (req, res) ->
         return res.send(500, "Could not create section")
 
       Section
-        .findOne(section._id)
+        .findOne(_id: section._id)
         .populate('indicator narrative visualisation')
         .exec( (err, section) ->
           res.send(201, JSON.stringify(section))
@@ -36,7 +36,7 @@ exports.create = (req, res) ->
 
 exports.show = (req, res) ->
   Section
-    .findOne(req.params.section)
+    .findOne(_id: req.params.section)
     .populate('indicator narrative visualisation')
     .exec( (err, section) ->
       if err?
@@ -58,7 +58,7 @@ exports.update = (req, res) ->
         return res.send(501, "Error saving section")
 
       Section
-        .findOne(req.params.section)
+        .findOne(_id: req.params.section)
         .populate('indicator narrative visualisation')
         .exec( (err, section) ->
           unless err?

@@ -13,7 +13,7 @@ exports.index = (req, res) ->
 
 exports.show = (req, res) ->
   Indicator
-    .findOne(req.params.id)
+    .findOne(_id: req.params.id)
     .exec( (err, indicator)->
       if err?
         console.error error

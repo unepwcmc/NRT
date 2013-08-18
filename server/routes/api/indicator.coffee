@@ -20,7 +20,7 @@ exports.create = (req, res) ->
     res.send(201, JSON.stringify(indicator))
 
 exports.show = (req, res) ->
-  Indicator.findOne(req.params.indicator, (err, indicator) ->
+  Indicator.findOne(_id: req.params.indicator, (err, indicator) ->
     if err?
       return res.send(500, "Could not retrieve indicator")
 

@@ -23,7 +23,7 @@ exports.create = (req, res) ->
       return res.send(500, "Could not save report")
 
     Report
-      .findOne(report._id)
+      .findOne(_id: report._id)
       .populate('sections')
       .exec( (err, report) ->
         res.send(201, JSON.stringify(report))
