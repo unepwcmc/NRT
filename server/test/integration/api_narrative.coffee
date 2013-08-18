@@ -11,7 +11,7 @@ test('POST create', (done) ->
 
   Narrative = require('../../models/narrative').model
   request.post({
-    url: helpers.appurl('api/narrative/')
+    url: helpers.appurl('api/narratives/')
     json: true
     body: data
   },(err, res, body) ->
@@ -44,7 +44,37 @@ test('PUT narrative', (done) ->
       content: "this is the new content"
 
     request.put({
-      url: helpers.appurl("api/narrative/#{narrative.id}")
+      url: helpers.appurl("api/narratives/#{narrative.id}")
+      json: true
+      body: newAttributes
+    },(err, res, body) ->
+      assert.equal res.statusCode, 200
+
+      Narrative
+        .findOne(narrative._id)
+        .exec( (err, reloadedNarrative) ->
+          assert.equal reloadedNarrative.content, newAttributes.content
+          assert.equal reloadedNarrative.section_id, newAttributes.section_id
+          done()
+        )
+    )
+)
+
+test('PUT narrative does not fail when _id given', (done) ->
+  Narrative = require('../../models/narrative').model
+
+  narrative = new Narrative(content: "a narrative")
+
+  narrative.save (err, narrative) ->
+    if err?
+      throw 'could not save narrative'
+
+    newAttributes =
+      content: "this is the new content"
+      _id: narrative.id
+
+    request.put({
+      url: helpers.appurl("api/narratives/#{narrative.id}")
       json: true
       body: newAttributes
     },(err, res, body) ->
@@ -72,7 +102,7 @@ test('GET index', (done) ->
       throw 'could not save narrative'
 
     request.get({
-      url: helpers.appurl("api/narrative")
+      url: helpers.appurl("api/narratives")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 200
@@ -97,7 +127,7 @@ test('GET show', (done) ->
       throw 'could not save narrative'
 
     request.get({
-      url: helpers.appurl("api/narrative/#{narrative.id}")
+      url: helpers.appurl("api/narratives/#{narrative.id}")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 200
@@ -122,7 +152,7 @@ test('DELETE narrative', (done) ->
       throw 'could not save narrative'
 
     request.del({
-      url: helpers.appurl("api/narrative/#{narrative.id}")
+      url: helpers.appurl("api/narratives/#{narrative.id}")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 204

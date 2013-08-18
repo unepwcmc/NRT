@@ -3,9 +3,9 @@ window.Backbone.Models || = {}
 class window.Backbone.Models.Section extends Backbone.RelationalModel
   url: ->
     if @get('id')
-      "/api/section/#{@get('id')}"
+      "/api/sections/#{@get('id')}"
     else
-      '/api/section'
+      '/api/sections'
 
   relations: [
       key: 'narrative'

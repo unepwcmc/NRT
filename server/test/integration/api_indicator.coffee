@@ -122,3 +122,27 @@ test('PUT indicator', (done) ->
     )
   )
 )
+
+test('PUT indicator does not fail when an _id is given', (done) ->
+  createIndicator( (err, indicator) ->
+    new_title = "Updated title"
+    request.put({
+      url: helpers.appurl("/api/indicators/#{indicator.id}")
+      json: true
+      body:
+        _id: indicator.id
+        title: new_title
+    }, (err, res, body) ->
+      id = body.id
+
+      assert.equal res.statusCode, 200
+
+      Indicator
+        .findOne(id)
+        .exec( (err, indicator) ->
+          assert.equal indicator.title, new_title
+          done()
+        )
+    )
+  )
+)

@@ -2,22 +2,28 @@
   {
     "enviroportalId": 14,
     "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
-    "action": "sum",
+    "operation": "sum",
     "unit": "km2",
-    "outFields": "shape.area"
+    "outFields": "shape.area",
+    "dateField": "datedes",
+    "pollFrequency": "annual"
   },
   {
     "enviroportalId": 13,
     "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/13",
-    "action": "sum",
+    "operation": "sum",
     "unit": "km2",
-    "outFields": "shape.area"
+    "outFields": "shape.area",
+    "dateField": "datedes",
+    "pollFrequency": "annual"
   },
   {
     "enviroportalId": 0,
     "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/0",
-    "action": "count",
+    "operation": "count",
     "unit": null,
-    "outFields": null
+    "outFields": null,
+    "dateField": null,
+    "pollFrequency": "annual"
   }
 ]

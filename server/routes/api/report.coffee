@@ -23,54 +23,46 @@ exports.create = (req, res) ->
       return res.send(500, "Could not save report")
 
     Report
-      .findOne(report._id)
+      .findOne(_id: report._id)
       .populate('sections')
       .exec( (err, report) ->
         res.send(201, JSON.stringify(report))
       )
 
 exports.show = (req, res) ->
-  Report
-    .findOne(_id: req.params.report)
-    .exec( (err, report) ->
-      if err?
-        console.error err
-        return res.send(500, "Could not retrieve report")
+  Report.findFatReport(req.params.report, (err, report) ->
+    if err?
+      console.error err
+      return res.send(500, "Could not retrieve report")
 
-      Section
-        .find({_id: {$in: report.sections}})
-        .populate('indicator narrative visualisation')
-        .exec( (err, sections) ->
-          result = report.toObject()
-          result.sections = sections
-
-          res.send(JSON.stringify(result))
-        )
-    )
+    res.send(JSON.stringify(report))
+  )
 
 exports.update = (req, res) ->
-  params = _.omit(req.body, 'sections')
-  update = $set: params
+  reportId = req.params.report
+
+  params = _.omit(req.body, ['sections', '_id'])
+  updateAttributes = $set: params
 
   if req.body.sections?
     sections = _.map(req.body.sections, (section) ->
-      return new mongoose.Types.ObjectId(section)
+      return new mongoose.Types.ObjectId(section._id)
     )
 
-    update.$pushAll = {
+    updateAttributes.$pushAll = {
       sections: sections
     }
 
   Report.update(
-    {_id: req.params.report},
-    update,
+    {_id: reportId},
+    updateAttributes,
     (err, rowsChanged) ->
       if err?
-        console.error error
+        console.error err
         res.send(500, "Could not update the report")
 
       Report
-        .findOne(req.params.report)
+        .findOne(_id: reportId)
         .populate('sections')
         .exec( (err, report) ->
           res.send(200, JSON.stringify(report))

@@ -1,7 +1,6 @@
-Report = require('../models/report').model
+Report = require('../models/report.coffee').model
 
 exports.index = (req, res) ->
-  Report = require('../models/report.coffee').model
   Report.find (err, reports) ->
     if !err?
       res.render "reports/index",
@@ -10,12 +9,13 @@ exports.index = (req, res) ->
 
 exports.show = (req, res) ->
   reportId = req.params.id
-  Report.findFatReport(reportId).success((reportData)->
-    res.render "reports/show",
-      reportData: JSON.stringify reportData
-  ).error((error) ->
-    console.error error
-    res.render "404"
+
+  Report.findFatReport(reportId, (err, report) ->
+    if err?
+      console.error err
+      return res.render(500, "Could not retrieve report")
+
+    res.render "reports/show", reportData: JSON.stringify report
   )
 
 exports.new = (req, res) ->

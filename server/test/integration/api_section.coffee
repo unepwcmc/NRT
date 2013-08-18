@@ -16,7 +16,7 @@ test('POST create', (done) ->
     title: "test section title 1"
 
   request.post {
-    url: helpers.appurl('/api/section')
+    url: helpers.appurl('/api/sections')
     json: true
     body: data
   }, (err, res, body) ->
@@ -32,51 +32,6 @@ test('POST create', (done) ->
     done()
 )
 
-createReport = (callback) ->
-  Report = require('../../models/report').model
-  report = new Report(
-    title: "new report"
-  )
-
-  report.save (err, report) ->
-    if err?
-      throw 'could not save report'
-
-    callback(null, report)
-
-createIndicator = (callback) ->
-  indicator = new Indicator(
-    title: "new indicator"
-  )
-
-  indicator.save (err, indicator) ->
-    if err?
-      throw 'could not save indicator'
-
-    callback(null, indicator)
-
-createVisualisation = (callback) ->
-  visualisation = new Visualisation(
-    data: "new visualisation"
-  )
-
-  visualisation.save (err, Visualisation) ->
-    if err?
-      throw 'could not save visualisation'
-
-    callback(null, visualisation)
-
-createNarrative = (callback) ->
-  narrative = new Narrative(
-    content: "new narrative"
-  )
-
-  narrative.save (err, narrative) ->
-    if err?
-      throw 'could not save narrative'
-
-    callback(null, narrative)
-
 test('POST section with nested indicator', (done) ->
   createSectionWithIndicator = (err, indicator) ->
     indicator_id = indicator._id
@@ -86,7 +41,7 @@ test('POST section with nested indicator', (done) ->
       indicator: indicator_id
 
     request.post {
-      url: helpers.appurl('/api/section')
+      url: helpers.appurl('/api/sections')
       json: true
       body: data
     }, (err, res, body) ->
@@ -98,7 +53,7 @@ test('POST section with nested indicator', (done) ->
 
       done()
 
-  createIndicator(createSectionWithIndicator)
+  helpers.createIndicator(createSectionWithIndicator)
 )
 
 test('POST section with nested narrative', (done) ->
@@ -110,7 +65,7 @@ test('POST section with nested narrative', (done) ->
       narrative: narrative_id
 
     request.post {
-      url: helpers.appurl('/api/section')
+      url: helpers.appurl('/api/sections')
       json: true
       body: data
     }, (err, res, body) ->
@@ -122,7 +77,7 @@ test('POST section with nested narrative', (done) ->
 
       done()
 
-  createNarrative(createSectionWithNarrative)
+  helpers.createNarrative(createSectionWithNarrative)
 )
 
 test('POST section with nested visualisation', (done) ->
@@ -134,7 +89,7 @@ test('POST section with nested visualisation', (done) ->
       visualisation: visualisation_id
 
     request.post {
-      url: helpers.appurl('/api/section')
+      url: helpers.appurl('/api/sections')
       json: true
       body: data
     }, (err, res, body) ->
@@ -146,32 +101,19 @@ test('POST section with nested visualisation', (done) ->
 
       done()
 
-  createVisualisation(createSectionWithVisualisation)
+  helpers.createVisualisation(createSectionWithVisualisation)
 )
-
-createSection = (attributes, callback) ->
-  if arguments.length == 1
-    callback = attributes
-    attributes = undefined
-
-  section = new Section(attributes || content: "a section")
-
-  section.save (err, section) ->
-    if err?
-      throw 'could not save section'
-
-    callback(section)
 
 test('PUT section with new indicator', (done) ->
   createSectionWithIndicator = (err, results) ->
     indicator = results[0]
     newIndicator = results[1]
 
-    createSection(
+    helpers.createSection(
       {title: 'A section', indicator: indicator._id},
-      (section) ->
+      (err, section) ->
         request.put {
-          url: helpers.appurl("api/section/#{section.id}")
+          url: helpers.appurl("api/sections/#{section.id}")
           json: true
           body:
             indicator: newIndicator._id
@@ -184,12 +126,12 @@ test('PUT section with new indicator', (done) ->
           done()
     )
 
-  async.series([createIndicator, createIndicator], createSectionWithIndicator)
+  async.series([helpers.createIndicator, helpers.createIndicator], createSectionWithIndicator)
 )
 
 test('create when given no title or indicator should return an appropriate erro', (done)->
   request.post {
-    url: helpers.appurl('/api/section')
+    url: helpers.appurl('/api/sections')
     json: true
     body: {}
   }, (err, res, body) ->
@@ -200,11 +142,11 @@ test('create when given no title or indicator should return an appropriate erro'
 )
 
 test('PUT section', (done) ->
-  createSection( (section) ->
+  helpers.createSection( (err, section) ->
     newTitle = 'new title'
 
     request.put {
-      url: helpers.appurl("api/section/#{section.id}")
+      url: helpers.appurl("api/sections/#{section.id}")
       json: true
       body:
         title: newTitle
@@ -224,10 +166,37 @@ test('PUT section', (done) ->
   )
 )
 
+test('PUT section does not fail when given an _id', (done) ->
+  helpers.createSection( (err, section) ->
+    newTitle = 'new title'
+
+    request.put {
+      url: helpers.appurl("api/sections/#{section.id}")
+      json: true
+      body:
+        _id: section.id
+        title: newTitle
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 200
+
+      Section
+        .findOne(section.id)
+        .exec( (err, reloadedSection)->
+          if err?
+            console.error error
+            throw "Unable to recall updated section"
+
+          assert.equal reloadedSection.title, newTitle
+          done()
+        )
+  )
+)
+
+
 test("show returns a section's data", (done) ->
-  createSection( (section) ->
+  helpers.createSection( (err, section) ->
     request.get({
-      url: helpers.appurl("api/section/#{section.id}")
+      url: helpers.appurl("api/sections/#{section.id}")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 200
@@ -247,16 +216,16 @@ test("GET /section/<id> returns a section's nested models", (done) ->
     visualisation = results[1]
     narrative = results[2]
 
-    createSection(
+    helpers.createSection(
       {
         title: 'A section',
         indicator: indicator._id
         visualisation: visualisation._id
         narrative: narrative._id
       },
-      (section) ->
+      (err, section) ->
         request.get({
-          url: helpers.appurl("api/section/#{section.id}")
+          url: helpers.appurl("api/sections/#{section.id}")
           json: true
         }, (err, res, body) ->
           assert.equal res.statusCode, 200
@@ -278,16 +247,16 @@ test("GET /section/<id> returns a section's nested models", (done) ->
     )
 
   async.series([
-    createIndicator,
-    createVisualisation,
-    createNarrative
+    helpers.createIndicator,
+    helpers.createVisualisation,
+    helpers.createNarrative
   ], createSectionWithSubDocuments)
 )
 
 test('DELETE section', (done) ->
-  createSection( (section) ->
+  helpers.createSection( (err, section) ->
     request.del({
-      url: helpers.appurl("api/section/#{section.id}")
+      url: helpers.appurl("api/sections/#{section.id}")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 204
@@ -302,9 +271,9 @@ test('DELETE section', (done) ->
 )
 
 test('GET index', (done) ->
-  createSection( (section) ->
+  helpers.createSection( (err, section) ->
     request.get({
-      url: helpers.appurl("api/section")
+      url: helpers.appurl("api/sections")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 200

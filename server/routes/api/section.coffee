@@ -8,7 +8,7 @@ exports.index = (req, res) ->
     .populate('indicator narrative visualisation')
     .exec( (err, sections) ->
       if err?
-        console.error error
+        console.error err
         return res.send(500, "Could not retrieve sections")
 
       res.send(JSON.stringify(sections))
@@ -24,11 +24,11 @@ exports.create = (req, res) ->
     section = new Section(params)
     section.save (err, section) ->
       if err?
-        console.error error
+        console.error err
         return res.send(500, "Could not create section")
 
       Section
-        .findOne(section._id)
+        .findOne(_id: section._id)
         .populate('indicator narrative visualisation')
         .exec( (err, section) ->
           res.send(201, JSON.stringify(section))
@@ -36,27 +36,29 @@ exports.create = (req, res) ->
 
 exports.show = (req, res) ->
   Section
-    .findOne(req.params.section)
+    .findOne(_id: req.params.section)
     .populate('indicator narrative visualisation')
     .exec( (err, section) ->
       if err?
-        console.error error
+        console.error err
         return res.send(500, "Could not retrieve section")
 
       res.send(JSON.stringify(section))
     )
 
 exports.update = (req, res) ->
+  params = _.omit(req.body, '_id')
+
   Section.update(
     {_id: req.params.section},
-    {$set: req.body},
+    {$set: params},
     (err, rowsChanged) ->
       if err?
-        console.error error
+        console.error err
         return res.send(501, "Error saving section")
 
       Section
-        .findOne(req.params.section)
+        .findOne(_id: req.params.section)
         .populate('indicator narrative visualisation')
         .exec( (err, section) ->
           unless err?
