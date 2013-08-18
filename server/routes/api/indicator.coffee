@@ -29,7 +29,7 @@ exports.show = (req, res) ->
 exports.update = (req, res) ->
   Indicator.update(
     {_id: req.params.indicator},
-    req.body,
+    {$set: req.body},
     (err, indicator) ->
       if err?
         console.error error

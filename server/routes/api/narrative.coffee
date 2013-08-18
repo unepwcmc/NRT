@@ -40,7 +40,7 @@ exports.show = (req, res) ->
 exports.update = (req, res) ->
   Narrative.update(
     {_id: req.params.narrative},
-    req.body,
+    {$set: req.body},
     (err, narrative) ->
       if err?
         res.send(500, "Couldn't save the narrative")

@@ -29,7 +29,7 @@ exports.show = (req, res) ->
 exports.update = (req, res) ->
   Visualisation.update(
     {_id: req.params.visualisation},
-    req.body,
+    {$set: req.body},
     (err, visualisation) ->
       if err?
         console.error error
