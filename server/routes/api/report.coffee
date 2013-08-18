@@ -1,14 +1,17 @@
 Report = require("../../models/report").model
+Section = require("../../models/section").model
 _ = require('underscore')
 mongoose = require('mongoose')
 
 exports.index = (req, res) ->
-  Report.find( (err, reports) ->
-    if err?
-      return res.send(500, "Could not retrieve reports")
+  Report
+    .find()
+    .exec( (err, reports) ->
+      if err?
+        return res.send(500, "Could not retrieve reports")
 
-    res.send(JSON.stringify(reports))
-  )
+      res.send(JSON.stringify(reports))
+    )
 
 exports.create = (req, res) ->
   params = req.body
@@ -27,13 +30,23 @@ exports.create = (req, res) ->
       )
 
 exports.show = (req, res) ->
-  Report.findOne(req.query.id, (err, report) ->
-    if err?
-      console.error err
-      return res.send(500, "Could not retrieve report")
+  Report
+    .findOne(_id: req.params.report)
+    .exec( (err, report) ->
+      if err?
+        console.error err
+        return res.send(500, "Could not retrieve report")
 
-    res.send(JSON.stringify(report))
-  )
+      Section
+        .find({_id: {$in: report.sections}})
+        .populate('indicator narrative visualisation')
+        .exec( (err, sections) ->
+          result = report.toObject()
+          result.sections = sections
+
+          res.send(JSON.stringify(result))
+        )
+    )
 
 exports.update = (req, res) ->
   params = _.omit(req.body, 'sections')

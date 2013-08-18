@@ -7,8 +7,12 @@ async = require('async')
 suite('API - Report')
 
 Report = require('../../models/report').model
+Indicator = require('../../models/indicator').model
+Visualisation = require('../../models/visualisation').model
+Narrative = require('../../models/narrative').model
+Section = require('../../models/section').model
 
-test('when posting it creates a report', (done) ->
+test('POST create', (done) ->
   data =
     title: "new report"
 
@@ -43,8 +47,54 @@ createReport = (attributes, callback) ->
 
     callback(report)
 
+createSection = (attributes, callback) ->
+  if arguments.length == 1
+    callback = attributes
+    attributes = undefined
 
-test("show returns a report's data", (done) ->
+  section = new Section(attributes || content: "a section")
+
+  section.save (err, section) ->
+    if err?
+      throw 'could not save section'
+
+    callback(null, section)
+
+createIndicator = (callback) ->
+  indicator = new Indicator(
+    title: "new indicator"
+  )
+
+  indicator.save (err, indicator) ->
+    if err?
+      throw 'could not save indicator'
+
+    callback(null, indicator)
+
+createVisualisation = (callback) ->
+  visualisation = new Visualisation(
+    data: "new visualisation"
+  )
+
+  visualisation.save (err, Visualisation) ->
+    if err?
+      throw 'could not save visualisation'
+
+    callback(null, visualisation)
+
+createNarrative = (callback) ->
+  narrative = new Narrative(
+    content: "new narrative"
+  )
+
+  narrative.save (err, narrative) ->
+    if err?
+      throw 'could not save narrative'
+
+    callback(null, narrative)
+
+
+test("GET show", (done) ->
   createReport( (report) ->
     request.get({
       url: helpers.appurl("api/report/#{report.id}")
@@ -61,7 +111,7 @@ test("show returns a report's data", (done) ->
   )
 )
 
-test('index lists all reports', (done) ->
+test('GET index', (done) ->
   createReport( (report) ->
     request.get({
       url: helpers.appurl("api/report")
@@ -78,25 +128,54 @@ test('index lists all reports', (done) ->
   )
 )
 
-test('GET / returns full nested sections')
-test('GET /report/<id> returns full nested sections')
+test('GET report returns full nested sections', (done) ->
+  createReportWithSection = (err, results) ->
+    indicator = results[0]
+    narrative = results[1]
+    visualisation = results[2]
 
-createSection = (attributes, callback) ->
-  Section = require('../../models/section.coffee').model
+    createSection({
+      indicator: indicator
+      narrative: narrative
+      visualisation: visualisation
+    }, (err, section) ->
+      createReport({sections: [section._id]}, (report) ->
+        request.get({
+          url: helpers.appurl("api/report/#{report.id}")
+          json: true
+        }, (err, res, body) ->
+          assert.equal res.statusCode, 200
 
-  if arguments.length == 1
-    callback = attributes
-    attributes = undefined
+          returnedReport = body
+          assert.equal returnedReport._id, report.id
+          assert.equal returnedReport.content, report.content
 
-  section = new Section(attributes || content: "a section")
+          assert.property returnedReport, 'sections'
+          assert.lengthOf returnedReport.sections, 1
 
-  section.save (err, section) ->
-    if err?
-      throw 'could not save section'
+          returnedSection = returnedReport.sections[0]
+          assert.equal section._id, returnedSection._id
 
-    callback(null, section)
+          assert.property returnedSection, 'narrative'
+          assert.equal narrative._id, returnedSection.narrative._id
 
-test('nesting a section in a report with existing sections', (done) ->
+          assert.property returnedSection, 'indicator'
+          assert.equal indicator._id, returnedSection.indicator._id
+
+          assert.property returnedSection, 'visualisation'
+          assert.equal visualisation._id, returnedSection.visualisation._id
+
+          done()
+        )
+      )
+    )
+
+  async.series([
+    createIndicator, createNarrative, createVisualisation
+  ], createReportWithSection)
+)
+
+test('PUT nesting a section in a report with existing sections', (done) ->
   createReportWithSection = (err, results) ->
     section = results[0]
     newSection = results[1]
@@ -124,7 +203,7 @@ test('nesting a section in a report with existing sections', (done) ->
   async.series([createSection, createSection], createReportWithSection)
 )
 
-test('nesting a section in a report', (done) ->
+test('POST create - nesting a section in a report', (done) ->
   createSection( (err, section) ->
     data =
       title: "new report"
@@ -153,7 +232,7 @@ test('nesting a section in a report', (done) ->
   )
 )
 
-test('can delete a report', (done) ->
+test('DELETE report', (done) ->
   createReport( (report) ->
     request.del({
       url: helpers.appurl("api/report/#{report.id}")
@@ -170,7 +249,7 @@ test('can delete a report', (done) ->
   )
 )
 
-test('can update a report', (done) ->
+test('PUT report', (done) ->
   createReport( (report) ->
     new_title = "Updated title"
     request.put({
