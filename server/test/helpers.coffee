@@ -99,7 +99,7 @@ exports.createSection = (attributes, callback) ->
     if err?
       throw 'could not save section'
 
-    callback(section)
+    callback(null, section)
 
 exports.createIndicatorModels = (attributes) ->
   successCallback = errorCallback = promises = null

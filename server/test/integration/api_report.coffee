@@ -34,53 +34,6 @@ test('POST create', (done) ->
   )
 )
 
-createSection = (attributes, callback) ->
-  if arguments.length == 1
-    callback = attributes
-    attributes = undefined
-
-  section = new Section(attributes || content: "a section")
-
-  section.save (err, section) ->
-    if err?
-      throw 'could not save section'
-
-    callback(null, section)
-
-createIndicator = (callback) ->
-  indicator = new Indicator(
-    title: "new indicator"
-  )
-
-  indicator.save (err, indicator) ->
-    if err?
-      throw 'could not save indicator'
-
-    callback(null, indicator)
-
-createVisualisation = (callback) ->
-  visualisation = new Visualisation(
-    data: "new visualisation"
-  )
-
-  visualisation.save (err, Visualisation) ->
-    if err?
-      throw 'could not save visualisation'
-
-    callback(null, visualisation)
-
-createNarrative = (callback) ->
-  narrative = new Narrative(
-    content: "new narrative"
-  )
-
-  narrative.save (err, narrative) ->
-    if err?
-      throw 'could not save narrative'
-
-    callback(null, narrative)
-
-
 test("GET show", (done) ->
   helpers.createReport( (report) ->
     request.get({
@@ -121,7 +74,7 @@ test('GET report returns full nested sections', (done) ->
     narrative = results[1]
     visualisation = results[2]
 
-    createSection({
+    helpers.createSection({
       indicator: indicator
       narrative: narrative
       visualisation: visualisation
@@ -158,7 +111,7 @@ test('GET report returns full nested sections', (done) ->
     )
 
   async.series([
-    createIndicator, createNarrative, createVisualisation
+    helpers.createIndicator, helpers.createNarrative, helpers.createVisualisation
   ], createReportWithSection)
 )
 
@@ -187,11 +140,11 @@ test('PUT nesting a section in a report with existing sections', (done) ->
         )
     )
 
-  async.series([createSection, createSection], createReportWithSection)
+  async.series([helpers.createSection, helpers.createSection], createReportWithSection)
 )
 
 test('POST create - nesting a section in a report', (done) ->
-  createSection( (err, section) ->
+  helpers.createSection( (err, section) ->
     data =
       title: "new report"
       sections: [section._id]

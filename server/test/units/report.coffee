@@ -86,7 +86,7 @@ test('get "fat" report by report ID', (done) ->
         visualisation: visualisation._id
         narrative: narrative._id
       },
-      (section) ->
+      (err, section) ->
         helpers.createReport( {sections: [section]}, (report) ->
           Report.findFatReport(report._id, (err, fatReport) ->
             assert.equal fatReport._id, report.id

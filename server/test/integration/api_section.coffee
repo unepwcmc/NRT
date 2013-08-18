@@ -111,7 +111,7 @@ test('PUT section with new indicator', (done) ->
 
     helpers.createSection(
       {title: 'A section', indicator: indicator._id},
-      (section) ->
+      (err, section) ->
         request.put {
           url: helpers.appurl("api/section/#{section.id}")
           json: true
@@ -142,7 +142,7 @@ test('create when given no title or indicator should return an appropriate erro'
 )
 
 test('PUT section', (done) ->
-  helpers.createSection( (section) ->
+  helpers.createSection( (err, section) ->
     newTitle = 'new title'
 
     request.put {
@@ -167,7 +167,7 @@ test('PUT section', (done) ->
 )
 
 test("show returns a section's data", (done) ->
-  helpers.createSection( (section) ->
+  helpers.createSection( (err, section) ->
     request.get({
       url: helpers.appurl("api/section/#{section.id}")
       json: true
@@ -196,7 +196,7 @@ test("GET /section/<id> returns a section's nested models", (done) ->
         visualisation: visualisation._id
         narrative: narrative._id
       },
-      (section) ->
+      (err, section) ->
         request.get({
           url: helpers.appurl("api/section/#{section.id}")
           json: true
@@ -227,7 +227,7 @@ test("GET /section/<id> returns a section's nested models", (done) ->
 )
 
 test('DELETE section', (done) ->
-  helpers.createSection( (section) ->
+  helpers.createSection( (err, section) ->
     request.del({
       url: helpers.appurl("api/section/#{section.id}")
       json: true
@@ -244,7 +244,7 @@ test('DELETE section', (done) ->
 )
 
 test('GET index', (done) ->
-  helpers.createSection( (section) ->
+  helpers.createSection( (err, section) ->
     request.get({
       url: helpers.appurl("api/section")
       json: true
