@@ -59,6 +59,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
   addVisualisation: =>
     visualisation = new Backbone.Models.Visualisation(
       section_id: @section.get('id')
+      section: @section
     )
 
     newVisualisationView = new Backbone.Views.ReportEditVisualisationView(

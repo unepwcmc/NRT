@@ -32,14 +32,8 @@ test('.formatDataForChart parses indicator data correctly', ->
 )
 
 test(".getIndicatorData populates the 'data' attribute and triggers 'dataFetched'", (done)->
-  section = new Backbone.Models.Section(
-    indicator: new Backbone.Models.Indicator(
-      id: 50
-    )
-  )
-  visualisation = new Backbone.Models.Visualisation(
-    section: section
-  )
+  visualisation = Helpers.factoryVisualisationWithIndicator()
+  section = visualisation.get('section')
 
   server = sinon.fakeServer.create()
 
@@ -55,10 +49,7 @@ test(".getIndicatorData populates the 'data' attribute and triggers 'dataFetched
     "/api/indicators/#{section.get('indicator').get('id')}/data"
   )
 
-  server.requests[0].respond(
-    200,
-    { "Content-Type": "application/json" },
-    JSON.stringify([{ some: 'data'}])
-  )
+  Helpers.SinonServer.respondWithJson.call(server, {some: 'data'})
+
   server.restore()
 )

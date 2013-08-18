@@ -2,8 +2,7 @@ assert = chai.assert
 
 createAndShowSectionViewForSection = (section) ->
   view = new Backbone.Views.SectionView(section: section)
-  view.render()
-  $('#test-container').html(view.el)
+  Helpers.renderViewToTestContainer(view)
   return view
 
 suite('Section View')

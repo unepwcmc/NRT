@@ -9,20 +9,25 @@ class Backbone.Views.BarChartView extends Backbone.View
   className: 'bar-chart-view'
 
   initialize: (options) ->
+    @visualisation = options.visualisation
+    @listenTo(@visualisation, 'change', @render)
+
     @barChart = nrtViz.barChart
      xKey: "Year"
      yKey: "Percentage"
-    @width = options.width
-    @visualisation = options.visualisation
+    @width = options.width || 250
     @barColor = if options.barColor? then options.barColor else "LightSteelBlue"
 
-  render: ->
-    @selection = d3.select(@el)
-    data = @visualisation.formatDataForChart()
-    @selection.data [data]
+  render: =>
+    if @visualisation.get('data')?
+      @selection = d3.select(@el)
+      data = @visualisation.formatDataForChart()
+      @selection.data [data]
 
-    @barChart.chart.width @width
-    @selection.call @barChart.chart, @barColor
+      @barChart.chart.width @width
+      @selection.call @barChart.chart, @barColor
+    else
+      @visualisation.getIndicatorData()
 
     return @
 
