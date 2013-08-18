@@ -10,6 +10,12 @@ sectionSchema = mongoose.Schema(
   visualisation: {type: mongoose.Schema.Types.ObjectId, ref: 'Visualisation'}
 )
 
+sectionSchema.statics.getValidationErrors = (attributes) ->
+  errors = []
+  unless attributes['title']? or attributes['indicator']
+    errors.push "title or indicator must be present"
+  return errors
+
 Section = mongoose.model('Section', sectionSchema)
 
 module.exports = {

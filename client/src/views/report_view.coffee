@@ -31,7 +31,7 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
       window.history.replaceState(
         {},
         "Report #{@report.get('id')}",
-        "/report/#{@report.get('id')}"
+        "/reports/#{@report.get('id')}"
       )
 
   addSection: =>

@@ -12,6 +12,12 @@ exports.index = (req, res) ->
   )
 
 exports.show = (req, res) ->
-  res.render "indicators/show",
-    indicator: req.params.id
+  Indicator
+    .findOne(req.params.id)
+    .exec( (err, indicator)->
+      if err?
+        console.error error
+        return res.render(500, "Error fetching the indicator")
 
+      res.render "indicators/show", indicator: indicator
+    )

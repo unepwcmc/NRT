@@ -7,42 +7,8 @@ _ = require('underscore')
 
 suite('Indicator index')
 
-createIndicatorModels = (attributes) ->
-  successCallback = errorCallback = promises = null
-
-  Indicator = require('../../models/indicator').model
-  createFunctions = _.map(attributes, (attributeSet) ->
-    return (callback) ->
-      indicator = new Indicator(attributeSet)
-      return indicator.save( (err, indicators) ->
-        if err?
-          callback()
-
-        callback(null, indicators)
-      )
-  )
-
-  async.parallel(
-    createFunctions,
-    (error, results) ->
-      if error?
-        errorCallback(error, results) if errorCallback?
-      else
-        successCallback(results) if successCallback?
-  )
-
-  promises = {
-    success: (callback)->
-      successCallback = callback
-      return promises
-    error: (callback)->
-      errorCallback = callback
-      return promises
-  }
-  return promises
-
 test("With a series of indicators, I should see their titles and description", (done) ->
-  createIndicatorModels([
+  helpers.createIndicatorModels([
     {
       title: 'indicator 1'
       description: 'The description for the first indicator'

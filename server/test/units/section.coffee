@@ -20,3 +20,10 @@ test('.create', (done) ->
       done()
 )
 
+test('.getValidationErrors should return 0 errors if attributes have an indicator id', ->
+  Section = require('../../models/section').model
+  errors = Section.getValidationErrors(
+    indicator: 5
+  )
+  assert.lengthOf errors, 0
+)

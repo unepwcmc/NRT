@@ -19,3 +19,6 @@ class window.Backbone.Models.Report extends Backbone.RelationalModel
       "/api/report/#{@get('id')}"
     else
       "/api/report"
+
+#For backbone relational
+Backbone.Models.Report.setup()
