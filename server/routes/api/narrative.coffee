@@ -29,7 +29,7 @@ exports.create = (req, res) ->
 
 exports.show = (req, res) ->
   Narrative
-    .findOne(_id: req.params.narrative)
+    .findOne(_id: req.params.narratife)
     .exec (err, narrative) ->
       if err?
         return res.send(500,

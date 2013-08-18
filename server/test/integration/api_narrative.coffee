@@ -127,7 +127,7 @@ test('GET show', (done) ->
       throw 'could not save narrative'
 
     request.get({
-      url: helpers.appurl("api/narratives/#{narrative.id}")
+      url: helpers.appurl("api/narratives/#{narrative._id}")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 200
