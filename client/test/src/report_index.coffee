@@ -81,7 +81,7 @@ test("Can navigate to report view", ->
   id = 1
 
   reports = [{
-    id: id
+    _id: id
     title: "Kanye West's Kanye Quest"
   }]
 

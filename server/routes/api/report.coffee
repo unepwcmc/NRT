@@ -44,7 +44,7 @@ exports.update = (req, res) ->
 
   if req.body.sections?
     sections = _.map(req.body.sections, (section) ->
-      return new mongoose.Types.ObjectId(section)
+      return new mongoose.Types.ObjectId(section._id)
     )
 
     update.$pushAll = {

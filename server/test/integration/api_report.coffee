@@ -127,7 +127,7 @@ test('PUT nesting a section in a report with existing sections', (done) ->
           url: helpers.appurl("/api/reports/#{report.id}")
           json: true
           body:
-            sections: [newSection._id]
+            sections: [newSection]
         }, (err, res, body) ->
           id = body.id
 
