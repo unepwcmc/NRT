@@ -70,3 +70,47 @@ test('.create with nested section', (done) ->
         assertReportHasSection
       ], done)
 )
+
+test('get "fat" report by report ID', (done) ->
+  Report = require('../../models/report.coffee').model
+
+  createSectionWithSubDocuments = (err, results) ->
+    indicator = results[0]
+    visualisation = results[1]
+    narrative = results[2]
+
+    helpers.createSection(
+      {
+        title: 'A section',
+        indicator: indicator._id
+        visualisation: visualisation._id
+        narrative: narrative._id
+      },
+      (section) ->
+        helpers.createReport( {sections: [section]}, (report) ->
+          Report.findFatReport(report._id, (err, fatReport) ->
+            assert.equal fatReport._id, report.id
+
+            reloadedSection = fatReport.sections[0]
+            assert.equal reloadedSection._id, section.id
+
+            assert.property reloadedSection, 'indicator'
+            assert.equal indicator._id, reloadedSection.indicator.id
+
+            assert.property reloadedSection, 'visualisation'
+            assert.equal visualisation._id, reloadedSection.visualisation.id
+
+            assert.property reloadedSection, 'narrative'
+            assert.equal narrative._id, reloadedSection.narrative.id
+
+            done()
+          )
+        )
+    )
+
+  async.series([
+    helpers.createIndicator,
+    helpers.createVisualisation,
+    helpers.createNarrative
+  ], createSectionWithSubDocuments)
+)

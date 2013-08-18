@@ -32,51 +32,6 @@ test('POST create', (done) ->
     done()
 )
 
-createReport = (callback) ->
-  Report = require('../../models/report').model
-  report = new Report(
-    title: "new report"
-  )
-
-  report.save (err, report) ->
-    if err?
-      throw 'could not save report'
-
-    callback(null, report)
-
-createIndicator = (callback) ->
-  indicator = new Indicator(
-    title: "new indicator"
-  )
-
-  indicator.save (err, indicator) ->
-    if err?
-      throw 'could not save indicator'
-
-    callback(null, indicator)
-
-createVisualisation = (callback) ->
-  visualisation = new Visualisation(
-    data: "new visualisation"
-  )
-
-  visualisation.save (err, Visualisation) ->
-    if err?
-      throw 'could not save visualisation'
-
-    callback(null, visualisation)
-
-createNarrative = (callback) ->
-  narrative = new Narrative(
-    content: "new narrative"
-  )
-
-  narrative.save (err, narrative) ->
-    if err?
-      throw 'could not save narrative'
-
-    callback(null, narrative)
-
 test('POST section with nested indicator', (done) ->
   createSectionWithIndicator = (err, indicator) ->
     indicator_id = indicator._id
@@ -98,7 +53,7 @@ test('POST section with nested indicator', (done) ->
 
       done()
 
-  createIndicator(createSectionWithIndicator)
+  helpers.createIndicator(createSectionWithIndicator)
 )
 
 test('POST section with nested narrative', (done) ->
@@ -122,7 +77,7 @@ test('POST section with nested narrative', (done) ->
 
       done()
 
-  createNarrative(createSectionWithNarrative)
+  helpers.createNarrative(createSectionWithNarrative)
 )
 
 test('POST section with nested visualisation', (done) ->
@@ -146,28 +101,15 @@ test('POST section with nested visualisation', (done) ->
 
       done()
 
-  createVisualisation(createSectionWithVisualisation)
+  helpers.createVisualisation(createSectionWithVisualisation)
 )
-
-createSection = (attributes, callback) ->
-  if arguments.length == 1
-    callback = attributes
-    attributes = undefined
-
-  section = new Section(attributes || content: "a section")
-
-  section.save (err, section) ->
-    if err?
-      throw 'could not save section'
-
-    callback(section)
 
 test('PUT section with new indicator', (done) ->
   createSectionWithIndicator = (err, results) ->
     indicator = results[0]
     newIndicator = results[1]
 
-    createSection(
+    helpers.createSection(
       {title: 'A section', indicator: indicator._id},
       (section) ->
         request.put {
@@ -184,7 +126,7 @@ test('PUT section with new indicator', (done) ->
           done()
     )
 
-  async.series([createIndicator, createIndicator], createSectionWithIndicator)
+  async.series([helpers.createIndicator, helpers.createIndicator], createSectionWithIndicator)
 )
 
 test('create when given no title or indicator should return an appropriate erro', (done)->
@@ -200,7 +142,7 @@ test('create when given no title or indicator should return an appropriate erro'
 )
 
 test('PUT section', (done) ->
-  createSection( (section) ->
+  helpers.createSection( (section) ->
     newTitle = 'new title'
 
     request.put {
@@ -225,7 +167,7 @@ test('PUT section', (done) ->
 )
 
 test("show returns a section's data", (done) ->
-  createSection( (section) ->
+  helpers.createSection( (section) ->
     request.get({
       url: helpers.appurl("api/section/#{section.id}")
       json: true
@@ -247,7 +189,7 @@ test("GET /section/<id> returns a section's nested models", (done) ->
     visualisation = results[1]
     narrative = results[2]
 
-    createSection(
+    helpers.createSection(
       {
         title: 'A section',
         indicator: indicator._id
@@ -278,14 +220,14 @@ test("GET /section/<id> returns a section's nested models", (done) ->
     )
 
   async.series([
-    createIndicator,
-    createVisualisation,
-    createNarrative
+    helpers.createIndicator,
+    helpers.createVisualisation,
+    helpers.createNarrative
   ], createSectionWithSubDocuments)
 )
 
 test('DELETE section', (done) ->
-  createSection( (section) ->
+  helpers.createSection( (section) ->
     request.del({
       url: helpers.appurl("api/section/#{section.id}")
       json: true
@@ -302,7 +244,7 @@ test('DELETE section', (done) ->
 )
 
 test('GET index', (done) ->
-  createSection( (section) ->
+  helpers.createSection( (section) ->
     request.get({
       url: helpers.appurl("api/section")
       json: true

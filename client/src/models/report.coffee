@@ -15,8 +15,8 @@ class window.Backbone.Models.Report extends Backbone.RelationalModel
   ]
 
   url: =>
-    if @get('id')
-      "/api/report/#{@get('id')}"
+    if @get('_id')
+      "/api/report/#{@get('_id')}"
     else
       "/api/report"
 

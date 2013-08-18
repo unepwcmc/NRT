@@ -34,19 +34,6 @@ test('POST create', (done) ->
   )
 )
 
-createReport = (attributes, callback) ->
-  if arguments.length == 1
-    callback = attributes
-    attributes = undefined
-
-  report = new Report(attributes || title: "new report")
-
-  report.save (err, report) ->
-    if err?
-      throw 'could not save report'
-
-    callback(report)
-
 createSection = (attributes, callback) ->
   if arguments.length == 1
     callback = attributes
@@ -95,7 +82,7 @@ createNarrative = (callback) ->
 
 
 test("GET show", (done) ->
-  createReport( (report) ->
+  helpers.createReport( (report) ->
     request.get({
       url: helpers.appurl("api/report/#{report.id}")
       json: true
@@ -112,7 +99,7 @@ test("GET show", (done) ->
 )
 
 test('GET index', (done) ->
-  createReport( (report) ->
+  helpers.createReport( (report) ->
     request.get({
       url: helpers.appurl("api/report")
       json: true
@@ -139,7 +126,7 @@ test('GET report returns full nested sections', (done) ->
       narrative: narrative
       visualisation: visualisation
     }, (err, section) ->
-      createReport({sections: [section._id]}, (report) ->
+      helpers.createReport({sections: [section._id]}, (report) ->
         request.get({
           url: helpers.appurl("api/report/#{report.id}")
           json: true
@@ -180,7 +167,7 @@ test('PUT nesting a section in a report with existing sections', (done) ->
     section = results[0]
     newSection = results[1]
 
-    createReport(
+    helpers.createReport(
       {title: "A report", sections: [section]},
       (report) ->
         request.put({
@@ -233,7 +220,7 @@ test('POST create - nesting a section in a report', (done) ->
 )
 
 test('DELETE report', (done) ->
-  createReport( (report) ->
+  helpers.createReport( (report) ->
     request.del({
       url: helpers.appurl("api/report/#{report.id}")
       json: true
@@ -250,7 +237,7 @@ test('DELETE report', (done) ->
 )
 
 test('PUT report', (done) ->
-  createReport( (report) ->
+  helpers.createReport( (report) ->
     new_title = "Updated title"
     request.put({
       url: helpers.appurl("/api/report/#{report.id}")

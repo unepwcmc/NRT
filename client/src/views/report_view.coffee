@@ -27,11 +27,11 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
   # TODO This isn't a great long-term approach, since it won't work in IE
   # plus, it should probably defer to a router
   updateUrl: =>
-    if @report.get('id')?
+    if @report.get('_id')?
       window.history.replaceState(
         {},
-        "Report #{@report.get('id')}",
-        "/reports/#{@report.get('id')}"
+        "Report #{@report.get('_id')}",
+        "/reports/#{@report.get('_id')}"
       )
 
   addSection: =>

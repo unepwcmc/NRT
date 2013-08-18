@@ -10,6 +10,19 @@ appurl = (path) ->
 
 suite('Report index')
 
+test("GET show", (done) ->
+  helpers.createReport( (report) ->
+    request.get {
+      url: appurl("/reports/#{report.id}")
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 200
+
+      assert.match body, new RegExp(".*#{report.title}.*")
+
+      done()
+  )
+)
+
 test("Can navigate to Dashboard, Reports, and Indicators", (done) ->
   request.get {
     url: appurl('/reports')

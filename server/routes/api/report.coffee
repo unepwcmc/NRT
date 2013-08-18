@@ -30,23 +30,13 @@ exports.create = (req, res) ->
       )
 
 exports.show = (req, res) ->
-  Report
-    .findOne(_id: req.params.report)
-    .exec( (err, report) ->
-      if err?
-        console.error err
-        return res.send(500, "Could not retrieve report")
+  Report.findFatReport(req.params.report, (err, report) ->
+    if err?
+      console.error err
+      return res.send(500, "Could not retrieve report")
 
-      Section
-        .find({_id: {$in: report.sections}})
-        .populate('indicator narrative visualisation')
-        .exec( (err, sections) ->
-          result = report.toObject()
-          result.sections = sections
-
-          res.send(JSON.stringify(result))
-        )
-    )
+    res.send(JSON.stringify(report))
+  )
 
 exports.update = (req, res) ->
   params = _.omit(req.body, 'sections')
