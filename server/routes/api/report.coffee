@@ -39,28 +39,30 @@ exports.show = (req, res) ->
   )
 
 exports.update = (req, res) ->
+  reportId = req.params.report
+
   params = _.omit(req.body, ['sections', '_id'])
-  update = $set: params
+  updateAttributes = $set: params
 
   if req.body.sections?
     sections = _.map(req.body.sections, (section) ->
       return new mongoose.Types.ObjectId(section._id)
     )
 
-    update.$pushAll = {
+    updateAttributes.$pushAll = {
       sections: sections
     }
 
   Report.update(
-    {_id: req.params.report},
-    update,
+    {_id: reportId},
+    updateAttributes,
     (err, rowsChanged) ->
       if err?
         console.error err
         res.send(500, "Could not update the report")
 
       Report
-        .findOne(req.params.report)
+        .findOne(_id: reportId)
         .populate('sections')
         .exec( (err, report) ->
           res.send(200, JSON.stringify(report))
