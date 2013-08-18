@@ -26,7 +26,8 @@
     "underscore": "1.5.1",
     "async": "0.2.9",
     "moment": "2.1.0",
-    "mongoose": "3.6.16"
+    "mongoose": "3.6.16",
+    "request": "~2.27.0"
   },
   "devDependencies": {
     "Faker": "0.5.11",
