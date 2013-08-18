@@ -35,8 +35,8 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
       )
 
   addSection: =>
-    if @report.get('id')?
-      section = new Backbone.Models.Section(report_id: @report.get('id'))
+    if @report.get('_id')?
+      section = new Backbone.Models.Section(report_id: @report.get('_id'))
       @report.get('sections').add(section)
       section.save()
     else
