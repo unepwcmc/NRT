@@ -16,12 +16,12 @@ after( (done) ->
 )
 
 dropDatabase = (connection, done) ->
-  connection.db.dropDatabase (err) ->
-    if err?
-      console.log 'ERROR'
-      console.log err
-    else
-      done()
+  Report.remove().exec()
+  Indicator.remove().exec()
+  Narrative.remove().exec()
+  Section.remove().exec()
+  Visualisation.remove().exec()
+  done()
 
 beforeEach( (done) ->
   connection = mongoose.connection
