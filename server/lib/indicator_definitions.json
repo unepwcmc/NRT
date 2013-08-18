@@ -1,0 +1,23 @@
+[
+  {
+    "enviroportalId": 14,
+    "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
+    "action": "sum",
+    "unit": "km2",
+    "outFields": "shape.area"
+  },
+  {
+    "enviroportalId": 13,
+    "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/13",
+    "action": "sum",
+    "unit": "km2",
+    "outFields": "shape.area"
+  },
+  {
+    "enviroportalId": 0,
+    "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/0",
+    "action": "count",
+    "unit": null,
+    "outFields": null
+  }
+]

@@ -1,12 +1,35 @@
 mongoose = require('mongoose')
 definitions = require('../lib/indicator_definitions')
 request = require('request')
-
+fs = require('fs')
 
 indicatorSchema = mongoose.Schema(
   title: String
   description: String
 )
+
+indicatorSchema.statics.seedData = (callback) ->
+  # Seed some indicators
+  dummyIndicators = JSON.parse(
+    fs.readFileSync("#{process.cwd()}/lib/sample_indicators.json", 'UTF8')
+  )
+
+  Indicator.count(null, (error, count) ->
+    if error?
+      console.error error
+      return callback(error) 
+
+    if count == 0
+      Indicator.create(dummyIndicators, (error, results) ->
+        if error?
+          console.error error
+          return callback(error) 
+        else
+          return callback(null, results)
+      )
+    else
+      callback()
+  )
 
 Indicator = mongoose.model('Indicator', indicatorSchema)
 
