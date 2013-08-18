@@ -9,7 +9,8 @@
 * Copy `server/config/database.json.example` to
   `server/config/database.json` and fill it with your local mysql
   config. You will need to create the tables you named by hand.
-* Install mysql locally (`brew install mysql`, or `sudo apt-get install mysql-server`)
+* Install mongodb locally (`brew install mongodb`) and start it with
+  `mongod`.
 
 ## Running the application
 
@@ -36,7 +37,7 @@ Contains the 'actions' in the application, grouped into modules by their
 responsibility. These are mapped to paths by route_bindings.coffee
 
 #### models/
-mysql ORM initialization
+Mongoose schemas, and model instantiation.
 
 ### Client
 
@@ -60,7 +61,7 @@ Run them with
 Ensure you've run `grunt` to compile the tests, and fire up the app
 server in the test environment:
 
-`NODE_ENV=test coffee app.coffee`
+`NODE_ENV=test npm start`
 
 Then visit http://localhost:3000/tests
 
