@@ -36,3 +36,5 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
 
   url: '/api/visualisation'
 
+#For backbone relational
+Backbone.Models.Visualisation.setup()

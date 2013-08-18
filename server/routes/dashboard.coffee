@@ -56,12 +56,12 @@ exports.index = (req, res) ->
         for i in [1..2]
           index = Math.floor(Math.random()*reports.length)
           item  = reports[index]
-          notifications.push item
+          notifications.push item if item?
 
         for i in [1..3]
           index = Math.floor(Math.random()*indicators.length)
           item  = indicators[index]
-          notifications.push item
+          notifications.push item if item?
 
         res.render "dashboard",
           notifications: _.shuffle(format(notifications))
