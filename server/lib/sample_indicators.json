@@ -1,1 +1,37 @@
-[{"category": "Atmosphere", "title": "NO2 concentrations"}, {"category": "Atmosphere", "title": "SO2 concentrations"}, {"category": "Atmosphere", "title": "PM10 concentrations "}, {"category": "Atmosphere", "title": "Indoor Air Pollutants "}, {"category": "Atmosphere", "title": "CO"}, {"category": "Atmosphere", "title": "Human Health Ozone(O3)"}, {"category": "Atmosphere", "title": "Ozone concentrations with effects on ecosystems (forest plantations) (OZONE_E)"}, {"category": "Atmosphere", "title": "Ozone concentrations with effects on ecosystems (crop cultivated areas) (OZONE_E)"}, {"category": "Atmosphere", "title": "Phasing out ozone-depleting substances"}, {"category": "Atmosphere", "title": "Asthma and respiratory diseases linked to air pollution"}, {"category": "Atmosphere", "title": "Sound Pollution in residential areas "}, {"category": "Atmosphere", "title": "Sound Pollution in industrial areas "}, {"category": "Atmosphere", "title": "GHG Emissions "}, {"category": "Atmosphere", "title": "Carbon Emissions per capita"}, {"category": "Atmosphere", "title": "Valued land in the coastal zone against the risks of sea level rise"}, {"category": "Atmosphere", "title": "Impact of climate change on temperature-sensitive indicator species"}, {"category": "Biodiversity", "title": "Terrestrial/marine habitats conservation"}, {"category": "Biodiversity", "title": "Habitat rehabilitation and restoration"}, {"category": "Biodiversity", "title": "Abundance of Selected Key Species "}, {"category": "Biodiversity", "title": "Area of Selected Key Ecosystems"}, {"category": "Biodiversity", "title": "Evolution of Estimated Population of Threatened Species TMS (Dugongs)"}, {"category": "Biodiversity", "title": "Evolution of Estimated Population of Threatened Species \u2013 TMS (Marine Turtles)"}, {"category": "Biodiversity", "title": "Evolution of Threatened Species"}, {"category": "Biodiversity", "title": "Halt the overall loss of biodiversity in Abu Dhabi"}, {"category": "Biodiversity", "title": "To restrict loss of bird species in Abu Dhabi"}, {"category": "Biodiversity", "title": "Remove the threat to faunal and floral biodiversity from invasive species"}, {"category": "Biodiversity", "title": "Ensure that no species of wild flora or fauna are endangered by international trade"}, {"category": "Biodiversity", "title": "Number of Alien (Invasive) Species/Abundance"}, {"category": "Productive Natural Resources", "title": "Percent Increase in the Area of Citizen Farms"}, {"category": "Productive Natural Resources", "title": "Percent area with pesticide residue"}, {"category": "Productive Natural Resources", "title": "Forest area expansion"}, {"category": "Productive Natural Resources", "title": "Annual agriculture and forestry subsidies"}, {"category": "Productive Natural Resources", "title": "Limiting the loss of areas of natural vegetation that are not dependent on irrigation"}, {"category": "Productive Natural Resources", "title": "Reducing salinity per hectare in irrigated agricultural areas relative to current levels"}, {"category": "Productive Natural Resources", "title": "Land Use Change"}, {"category": "Productive Natural Resources", "title": "Land Affected by Desertification/Degradation"}, {"category": "Productive Natural Resources", "title": "Use of Fertilizers"}, {"category": "Productive Natural Resources", "title": "Arable and Permanent Crop Land Area"}, {"category": "Productive Natural Resources", "title": "Fish Resource Status"}, {"category": "Productive Natural Resources", "title": "Marine Trophic Index (MTI)"}, {"category": "Productive Natural Resources", "title": "Relative Spawner Biomass per Recruit (Epinephelus coioides)"}, {"category": "Productive Natural Resources", "title": "Relative Spawner Biomass per Recruit (Lethrinus nebulosus)"}, {"category": "Productive Natural Resources", "title": "Relative Spawner Biomass per Recruit (Diagramma pictum)"}, {"category": "Productive Natural Resources", "title": "Limiting the increase in inland soil degradation"}, {"category": "Productive Natural Resources", "title": "Limiting the increase in coastal soil degradation"}]
+[{
+    "category": "Biodiversity",
+    "title": "Protected Areas",
+    "indicatorDefinition": {
+      "enviroportalId": 14,
+      "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
+      "operation": "sum",
+      "unit": "km2",
+      "outFields": "shape.area",
+      "dateField": "datedes",
+      "pollFrequency": "annual"
+    }
+}, {
+    "category": "Biodiversity",
+    "title": "Important Bird Areas",
+    "indicatorDefinition": {
+      "enviroportalId": 13,
+      "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/13",
+      "operation": "sum",
+      "unit": "km2",
+      "outFields": "shape.area",
+      "dateField": "datedes",
+      "pollFrequency": "annual"
+    }
+}, {
+    "category": "Biodiversity",
+    "title": "Important Bird Sites",
+    "indicatorDefinition": {
+      "enviroportalId": 0,
+      "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/0",
+      "operation": "count",
+      "unit": null,
+      "outFields": null,
+      "dateField": null,
+      "pollFrequency": "annual"
+    }
+}]

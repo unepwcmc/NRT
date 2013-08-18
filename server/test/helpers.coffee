@@ -7,6 +7,7 @@ async = require('async')
 
 Report = require('../models/report').model
 Indicator = require('../models/indicator').model
+IndicatorData = require('../models/indicator_data').model
 Visualisation = require('../models/visualisation').model
 Narrative = require('../models/narrative').model
 Section = require('../models/section').model
@@ -25,6 +26,7 @@ dropDatabase = (connection, done) ->
   models = [
     Report,
     Indicator,
+    IndicatorData,
     Narrative,
     Section,
     Visualisation

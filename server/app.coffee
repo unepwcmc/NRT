@@ -44,8 +44,14 @@ exports.createApp = ->
 exports.start = (port, callback) ->
   app = exports.createApp()
   
-  Indicator = require("./models/indicator").model
-  Indicator.seedData(->)
+  seedData()
 
   server = http.createServer(app).listen port, (err) ->
       callback err, server
+
+seedData = ->
+  Indicator = require("./models/indicator").model
+  Indicator.seedData(->)
+
+  IndicatorData = require("./models/indicator_data").model
+  IndicatorData.seedData(->)
