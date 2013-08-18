@@ -67,6 +67,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
       indicator: @section.get('indicator')
     )
     $('body').append(newVisualisationView.render().el)
+    $('body').addClass('stop-scrolling')
     ###
     @section.set('visualisation', visualisation)
     visualisation.save()

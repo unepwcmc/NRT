@@ -6,7 +6,7 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
   template: Handlebars.templates['report_edit_visualisation.hbs']
 
   events:
-    "click .close-vis-edit": "close"
+    "click .close-vis-edit": "closeModal"
 
   initialize: (options) ->
     @indicator = options.indicator
@@ -23,6 +23,10 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
     @renderSubViews()
 
     return @
+
+  closeModal: ->
+    $('body').removeClass('stop-scrolling')
+    @close()
 
   onClose: ->
     @closeSubViews()

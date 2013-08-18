@@ -2,7 +2,7 @@ window.Backbone.Models || = {}
 
 class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
   formatDataForChart: ->
-    _.map(@get("data").features, (el) -> el.attributes)
+     _.map(@get("data"), (el) -> {Year: el.year, Percentage: el.value})
 
   url: '/api/visualisation'
 
