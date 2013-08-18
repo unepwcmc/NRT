@@ -1,0 +1,144 @@
+[
+  {
+    "enviroportalId": 14,
+    "data": [
+      {
+        "year": 2000,
+        "value": 4
+      }, {
+        "year": 2001,
+        "value": 4
+      }, {
+        "year": 2002,
+        "value": 4
+      }, {
+        "year": 2003,
+        "value": 4
+      }, {
+        "year": 2004,
+        "value": 4
+      }, {
+        "year": 2005,
+        "value": 4
+      }, {
+        "year": 2006,
+        "value": 4.6
+      }, {
+        "year": 2007,
+        "value": 4.6
+      }, {
+        "year": 2008,
+        "value": 4.6
+      }, {
+        "year": 2009,
+        "value": 4.6
+      }, {
+        "year": 2010,
+        "value": 5
+      }, {
+        "year": 2011,
+        "value": 5
+      }, {
+        "year": 2012,
+        "value": 5
+      }, {
+        "year": 2013,
+        "value": 5
+      }
+    ]
+  }, {
+    "enviroportalId": 13,
+    "data": [
+      {
+        "year": 2000,
+        "value": 3
+      }, {
+        "year": 2001,
+        "value": 3
+      }, {
+        "year": 2002,
+        "value": 3
+      }, {
+        "year": 2003,
+        "value": 3.4
+      }, {
+        "year": 2004,
+        "value": 3.4
+      }, {
+        "year": 2005,
+        "value": 3.4
+      }, {
+        "year": 2006,
+        "value": 3.6
+      }, {
+        "year": 2007,
+        "value": 3.6
+      }, {
+        "year": 2008,
+        "value": 3.6
+      }, {
+        "year": 2009,
+        "value": 3.6
+      }, {
+        "year": 2010,
+        "value": 4
+      }, {
+        "year": 2011,
+        "value": 4
+      }, {
+        "year": 2012,
+        "value": 4.2
+      }, {
+        "year": 2013,
+        "value": 4.6
+      }
+    ]
+  }, {
+    "enviroportalId": 0,
+    "data": [
+      {
+        "year": 2000,
+        "value": 32
+      }, {
+        "year": 2001,
+        "value": 32
+      }, {
+        "year": 2002,
+        "value": 32
+      }, {
+        "year": 2003,
+        "value": 32
+      }, {
+        "year": 2004,
+        "value": 32
+      }, {
+        "year": 2005,
+        "value": 32
+      }, {
+        "year": 2006,
+        "value": 32
+      }, {
+        "year": 2007,
+        "value": 32
+      }, {
+        "year": 2008,
+        "value": 32
+      }, {
+        "year": 2009,
+        "value": 32
+      }, {
+        "year": 2010,
+        "value": 32
+      }, {
+        "year": 2011,
+        "value": 38
+      }, {
+        "year": 2012,
+        "value": 38
+      }, {
+        "year": 2013,
+        "value": 38
+      }
+    ]
+  }
+]
