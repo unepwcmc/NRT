@@ -5,7 +5,7 @@ async = require('async')
 exports.index = (req, res) ->
   Indicator.find( (err, indicators)->
     if err?
-      console.error error
+      console.error err
       return res.render(500, "Error fetching the indicators")
 
     res.render "indicators/index", indicators: indicators

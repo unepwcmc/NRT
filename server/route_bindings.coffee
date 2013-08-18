@@ -27,6 +27,7 @@ module.exports = exports = (app) ->
   app.resource 'api/reports', reportApi, { format: 'json' }
   app.resource 'api/sections', sectionApi, { format: 'json' }
   app.resource 'api/indicators', indicatorApi, { format: 'json' }
+  app.get "/api/indicators/:id/data", indicatorApi.data
 
   app.get "/", ensureAuthenticated, dashboardRoutes.index
   app.get "/dashboard", ensureAuthenticated, dashboardRoutes.index
