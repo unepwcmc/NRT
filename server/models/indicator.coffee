@@ -6,6 +6,7 @@ fs = require('fs')
 indicatorSchema = mongoose.Schema(
   title: String
   description: String
+  indicatorDefinition: mongoose.Schema.Types.Mixed
 )
 
 indicatorSchema.statics.seedData = (callback) ->
@@ -13,6 +14,13 @@ indicatorSchema.statics.seedData = (callback) ->
   dummyIndicators = JSON.parse(
     fs.readFileSync("#{process.cwd()}/lib/sample_indicators.json", 'UTF8')
   )
+  dummyExternalData = JSON.parse(
+    fs.readFileSync("#{process.cwd()}/lib/indicator_definitions.json", 'UTF8')
+  )
+
+  for indicatorAttributes, index in dummyIndicators 
+    externalIndex = index % dummyExternalData.length
+    indicatorAttributes.indicatorDefinition = dummyExternalData[externalIndex]
 
   Indicator.count(null, (error, count) ->
     if error?
@@ -30,8 +38,6 @@ indicatorSchema.statics.seedData = (callback) ->
     else
       callback()
   )
-
-Indicator = mongoose.model('Indicator', indicatorSchema)
 
 indicatorSchema.methods.getIndicatorData = (callback) ->
   callback null, {
@@ -80,6 +86,8 @@ indicatorSchema.methods.getIndicatorData = (callback) ->
     }
    ]
   }
+
+Indicator = mongoose.model('Indicator', indicatorSchema)
 
 module.exports = {
   schema: indicatorSchema,

@@ -52,12 +52,13 @@ exports.data = (req, res) ->
   Indicator.findOne _id: req.params.id, (err, indicator) ->
     if err?
       console.error err
-      return res.render(404, "Could not find indicator #{req.params.id}")
-
+      return res.send(404, "Could not find indicator #{req.params.id}")
     indicator.getIndicatorData (err, indicatorData) ->
       if err?
         console.error err
-        return res.render(500, "Can't retrieve indicator data for #{req.params.id}")
-      res.render 200, JSON.stringify(indicatorData)
+        return res.send(500, "Can't retrieve indicator data for #{req.params.id}")
+      res.format 
+        json: ->
+          res.send(200, JSON.stringify(indicatorData))
 
   
