@@ -1,4 +1,5 @@
 Narrative = require("../../models/narrative").model
+_ = require('underscore')
 
 exports.index = (req, res) ->
   Narrative
@@ -17,7 +18,7 @@ exports.create = (req, res) ->
   narrative = new Narrative(content: params.content)
   narrative.save (err, narrative) ->
     if err?
-      console.error error
+      console.error err
       return res.send(500,
         "Sorry, there was an error saving the narrative"
       )
@@ -38,9 +39,11 @@ exports.show = (req, res) ->
       res.send(JSON.stringify(narrative))
 
 exports.update = (req, res) ->
+  params = _.omit(req.body, '_id')
+
   Narrative.update(
-    {_id: req.params.narrative},
-    {$set: req.body},
+    {_id: req.params.narratife},
+    {$set: params},
     (err, narrative) ->
       if err?
         res.send(500, "Couldn't save the narrative")

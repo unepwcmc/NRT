@@ -39,7 +39,7 @@ exports.show = (req, res) ->
   )
 
 exports.update = (req, res) ->
-  params = _.omit(req.body, 'sections')
+  params = _.omit(req.body, ['sections', '_id'])
   update = $set: params
 
   if req.body.sections?
@@ -56,7 +56,7 @@ exports.update = (req, res) ->
     update,
     (err, rowsChanged) ->
       if err?
-        console.error error
+        console.error err
         res.send(500, "Could not update the report")
 
       Report

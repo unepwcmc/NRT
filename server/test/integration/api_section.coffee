@@ -16,7 +16,7 @@ test('POST create', (done) ->
     title: "test section title 1"
 
   request.post {
-    url: helpers.appurl('/api/section')
+    url: helpers.appurl('/api/sections')
     json: true
     body: data
   }, (err, res, body) ->
@@ -41,7 +41,7 @@ test('POST section with nested indicator', (done) ->
       indicator: indicator_id
 
     request.post {
-      url: helpers.appurl('/api/section')
+      url: helpers.appurl('/api/sections')
       json: true
       body: data
     }, (err, res, body) ->
@@ -65,7 +65,7 @@ test('POST section with nested narrative', (done) ->
       narrative: narrative_id
 
     request.post {
-      url: helpers.appurl('/api/section')
+      url: helpers.appurl('/api/sections')
       json: true
       body: data
     }, (err, res, body) ->
@@ -89,7 +89,7 @@ test('POST section with nested visualisation', (done) ->
       visualisation: visualisation_id
 
     request.post {
-      url: helpers.appurl('/api/section')
+      url: helpers.appurl('/api/sections')
       json: true
       body: data
     }, (err, res, body) ->
@@ -113,7 +113,7 @@ test('PUT section with new indicator', (done) ->
       {title: 'A section', indicator: indicator._id},
       (err, section) ->
         request.put {
-          url: helpers.appurl("api/section/#{section.id}")
+          url: helpers.appurl("api/sections/#{section.id}")
           json: true
           body:
             indicator: newIndicator._id
@@ -131,7 +131,7 @@ test('PUT section with new indicator', (done) ->
 
 test('create when given no title or indicator should return an appropriate erro', (done)->
   request.post {
-    url: helpers.appurl('/api/section')
+    url: helpers.appurl('/api/sections')
     json: true
     body: {}
   }, (err, res, body) ->
@@ -146,7 +146,7 @@ test('PUT section', (done) ->
     newTitle = 'new title'
 
     request.put {
-      url: helpers.appurl("api/section/#{section.id}")
+      url: helpers.appurl("api/sections/#{section.id}")
       json: true
       body:
         title: newTitle
@@ -166,10 +166,37 @@ test('PUT section', (done) ->
   )
 )
 
+test('PUT section does not fail when given an _id', (done) ->
+  helpers.createSection( (err, section) ->
+    newTitle = 'new title'
+
+    request.put {
+      url: helpers.appurl("api/sections/#{section.id}")
+      json: true
+      body:
+        _id: section.id
+        title: newTitle
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 200
+
+      Section
+        .findOne(section.id)
+        .exec( (err, reloadedSection)->
+          if err?
+            console.error error
+            throw "Unable to recall updated section"
+
+          assert.equal reloadedSection.title, newTitle
+          done()
+        )
+  )
+)
+
+
 test("show returns a section's data", (done) ->
   helpers.createSection( (err, section) ->
     request.get({
-      url: helpers.appurl("api/section/#{section.id}")
+      url: helpers.appurl("api/sections/#{section.id}")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 200
@@ -198,7 +225,7 @@ test("GET /section/<id> returns a section's nested models", (done) ->
       },
       (err, section) ->
         request.get({
-          url: helpers.appurl("api/section/#{section.id}")
+          url: helpers.appurl("api/sections/#{section.id}")
           json: true
         }, (err, res, body) ->
           assert.equal res.statusCode, 200
@@ -229,7 +256,7 @@ test("GET /section/<id> returns a section's nested models", (done) ->
 test('DELETE section', (done) ->
   helpers.createSection( (err, section) ->
     request.del({
-      url: helpers.appurl("api/section/#{section.id}")
+      url: helpers.appurl("api/sections/#{section.id}")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 204
@@ -246,7 +273,7 @@ test('DELETE section', (done) ->
 test('GET index', (done) ->
   helpers.createSection( (err, section) ->
     request.get({
-      url: helpers.appurl("api/section")
+      url: helpers.appurl("api/sections")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 200

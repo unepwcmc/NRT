@@ -1,4 +1,5 @@
 Indicator = require("../../models/indicator").model
+_ = require('underscore')
 
 exports.index = (req, res) ->
   Indicator.find( (err, indicators) ->
@@ -27,12 +28,14 @@ exports.show = (req, res) ->
   )
 
 exports.update = (req, res) ->
+  params = _.omit(req.body, '_id')
+
   Indicator.update(
     {_id: req.params.indicator},
-    {$set: req.body},
+    {$set: params},
     (err, indicator) ->
       if err?
-        console.error error
+        console.error err
         res.send(500, "Could not update the indicator")
 
       res.send(200, JSON.stringify(indicator))

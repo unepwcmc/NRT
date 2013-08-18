@@ -12,7 +12,7 @@ test('POST create', (done) ->
     data: "new visualisation"
 
   request.post({
-    url: helpers.appurl('api/visualisation/')
+    url: helpers.appurl('api/visualisations/')
     json: true
     body: data
   },(err, res, body) ->
@@ -44,7 +44,7 @@ createVisualisation = (callback) ->
 test("GET show", (done) ->
   createVisualisation( (visualisation) ->
     request.get({
-      url: helpers.appurl("api/visualisation/#{visualisation.id}")
+      url: helpers.appurl("api/visualisations/#{visualisation.id}")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 200
@@ -61,7 +61,7 @@ test("GET show", (done) ->
 test('GET index', (done) ->
   createVisualisation( (visualisation) ->
     request.get({
-      url: helpers.appurl("api/visualisation")
+      url: helpers.appurl("api/visualisations")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 200
@@ -78,7 +78,7 @@ test('GET index', (done) ->
 test('DELETE visualisation', (done) ->
   createVisualisation( (visualisation) ->
     request.del({
-      url: helpers.appurl("api/visualisation/#{visualisation.id}")
+      url: helpers.appurl("api/visualisations/#{visualisation.id}")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 204
@@ -96,7 +96,7 @@ test('PUT visualisation', (done) ->
   createVisualisation( (visualisation) ->
     new_data = "Updated data"
     request.put({
-      url: helpers.appurl("/api/visualisation/#{visualisation.id}")
+      url: helpers.appurl("/api/visualisations/#{visualisation.id}")
       json: true
       body:
         data: new_data

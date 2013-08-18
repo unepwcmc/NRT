@@ -17,7 +17,7 @@ test('POST create', (done) ->
     title: "new report"
 
   request.post({
-    url: helpers.appurl('api/report/')
+    url: helpers.appurl('api/reports/')
     json: true
     body: data
   },(err, res, body) ->
@@ -37,7 +37,7 @@ test('POST create', (done) ->
 test("GET show", (done) ->
   helpers.createReport( (report) ->
     request.get({
-      url: helpers.appurl("api/report/#{report.id}")
+      url: helpers.appurl("api/reports/#{report.id}")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 200
@@ -54,7 +54,7 @@ test("GET show", (done) ->
 test('GET index', (done) ->
   helpers.createReport( (report) ->
     request.get({
-      url: helpers.appurl("api/report")
+      url: helpers.appurl("api/reports")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 200
@@ -81,7 +81,7 @@ test('GET report returns full nested sections', (done) ->
     }, (err, section) ->
       helpers.createReport({sections: [section._id]}, (report) ->
         request.get({
-          url: helpers.appurl("api/report/#{report.id}")
+          url: helpers.appurl("api/reports/#{report.id}")
           json: true
         }, (err, res, body) ->
           assert.equal res.statusCode, 200
@@ -124,7 +124,7 @@ test('PUT nesting a section in a report with existing sections', (done) ->
       {title: "A report", sections: [section]},
       (report) ->
         request.put({
-          url: helpers.appurl("/api/report/#{report.id}")
+          url: helpers.appurl("/api/reports/#{report.id}")
           json: true
           body:
             sections: [newSection._id]
@@ -150,7 +150,7 @@ test('POST create - nesting a section in a report', (done) ->
       sections: [section._id]
 
     request.post({
-      url: helpers.appurl('api/report/')
+      url: helpers.appurl('api/reports/')
       json: true
       body: data
     },(err, res, body) ->
@@ -175,7 +175,7 @@ test('POST create - nesting a section in a report', (done) ->
 test('DELETE report', (done) ->
   helpers.createReport( (report) ->
     request.del({
-      url: helpers.appurl("api/report/#{report.id}")
+      url: helpers.appurl("api/reports/#{report.id}")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 204
@@ -193,9 +193,33 @@ test('PUT report', (done) ->
   helpers.createReport( (report) ->
     new_title = "Updated title"
     request.put({
-      url: helpers.appurl("/api/report/#{report.id}")
+      url: helpers.appurl("/api/reports/#{report.id}")
       json: true
       body:
+        title: new_title
+    }, (err, res, body) ->
+      id = body.id
+
+      assert.equal res.statusCode, 200
+
+      Report
+        .findOne(id)
+        .exec( (err, report) ->
+          assert.equal report.title, new_title
+          done()
+      )
+    )
+  )
+)
+
+test('PUT report succeeds with an _id sent', (done) ->
+  helpers.createReport( (report) ->
+    new_title = "Updated title"
+    request.put({
+      url: helpers.appurl("/api/reports/#{report.id}")
+      json: true
+      body:
+        _id: report.id
         title: new_title
     }, (err, res, body) ->
       id = body.id
