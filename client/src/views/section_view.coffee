@@ -48,7 +48,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
       @section.set('indicator', indicatorData)
       @section.save()
     )
-    
+
   addNarrative: =>
     narrative = new Backbone.Models.Narrative(
       section_id: @section.get('id')

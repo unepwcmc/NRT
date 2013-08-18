@@ -2,8 +2,15 @@
   <span class="close-vis-edit">Close</span>
   <header>
     <h2>{{indicator.title}}</h2>
+    <h3>Subtitle</h3>
   </header>
   <div class="visualisation">
     {{addSubViewTo thisView "BarChartView" width=600 visualisation=visualisation}}
   </div>
+  <aside class="filters">
+    <header>
+      <h3>Data filters</h3>
+      <a href="#">Reset all filters</a>
+    </header>
+  </aside>
 </div>

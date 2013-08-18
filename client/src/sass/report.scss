@@ -294,9 +294,9 @@ header.report-header {
     top: 50%;
     left: 50%;
     background-color: #F7F7F7;
-    padding: 3px;
+    padding: 1px;
     width: 900px;
-    height: 550px;
+    height: 576px;
     margin-top: -278px;
     margin-left: -453px;
 
@@ -313,10 +313,43 @@ header.report-header {
       margin-bottom: 0;
     }
 
+    .filters,
+    .visualisation {
+      border: 1px solid $lightishGrey;
+      box-sizing: border-box;
+      height: 455px;
+    }
+
+    aside.filters {
+      width: 300px;
+      float: right;
+      border-left: 0;
+
+      header {
+        padding: 10px 20px;
+        border-bottom: 1px solid $lightishGrey;
+        position: relative;
+
+        h3 {
+          color: $mediumGrey;
+          font-weight: bold;
+        }
+
+        a {
+          color: $differentGrey;
+          text-decoration: underline;
+          font-size: 0.8em;
+          position: absolute;
+          right: 20px;
+          top: 10px;
+        }
+      }
+    }
+
     .visualisation {
       background-color: white;
-      border: 1px solid $lightishGrey;
-      height: 455px;
+      width: 600px;
+      float: left;
 
       .bar-chart-view {
         padding: 50px 10px;
