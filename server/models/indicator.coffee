@@ -16,7 +16,7 @@ indicatorSchema.statics.seedData = (callback) ->
   )
   dummyExternalData = JSON.parse(
     fs.readFileSync("#{process.cwd()}/lib/indicator_definitions.json", 'UTF8')
-  )
+  ).indicators
 
   for indicatorAttributes, index in dummyIndicators 
     externalIndex = index % dummyExternalData.length

@@ -1,29 +1,40 @@
-[
-  {
-    "enviroportalId": 14,
-    "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
-    "operation": "sum",
-    "unit": "km2",
-    "outFields": "shape.area",
-    "dateField": "datedes",
-    "pollFrequency": "annual"
+{
+  "defaultRequest": {
+    "rootUrl": "http://enviroportal.ead./arcgisiis/rest/services",
+    "options": {
+      "f": "pjson",
+      "returnGeometry": "false",
+      "outFields": "name",
+      "where": "objectid+>+0"
+    }
   },
-  {
-    "enviroportalId": 13,
-    "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/13",
-    "operation": "sum",
-    "unit": "km2",
-    "outFields": "shape.area",
-    "dateField": "datedes",
-    "pollFrequency": "annual"
-  },
-  {
-    "enviroportalId": 0,
-    "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/0",
-    "operation": "count",
-    "unit": null,
-    "outFields": null,
-    "dateField": null,
-    "pollFrequency": "annual"
-  }
-]
+  "indicators": [
+    {
+      "enviroportalId": 14,
+      "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
+      "operation": "sum",
+      "unit": "km2",
+      "outFields": "shape.area",
+      "dateField": "datedes",
+      "pollFrequency": "annual"
+    },
+    {
+      "enviroportalId": 13,
+      "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/13",
+      "operation": "sum",
+      "unit": "km2",
+      "outFields": "shape.area",
+      "dateField": "datedes",
+      "pollFrequency": "annual"
+    },
+    {
+      "enviroportalId": 0,
+      "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/0",
+      "operation": "count",
+      "unit": null,
+      "outFields": null,
+      "dateField": null,
+      "pollFrequency": "annual"
+    }
+  ]
+}
