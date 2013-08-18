@@ -5,6 +5,12 @@ mongoose = require('mongoose')
 _ = require('underscore')
 async = require('async')
 
+Report = require('../models/report').model
+Indicator = require('../models/indicator').model
+Visualisation = require('../models/visualisation').model
+Narrative = require('../models/narrative').model
+Section = require('../models/section').model
+
 before( (done) ->
   app.start 3001, (err, server) ->
     test_server = server
@@ -16,11 +22,19 @@ after( (done) ->
 )
 
 dropDatabase = (connection, done) ->
-  Report.remove().exec()
-  Indicator.remove().exec()
-  Narrative.remove().exec()
-  Section.remove().exec()
-  Visualisation.remove().exec()
+  models = [
+    Report,
+    Indicator,
+    Narrative,
+    Section,
+    Visualisation
+  ]
+
+  for model in models
+    model
+      .remove()
+      .exec()
+
   done()
 
 beforeEach( (done) ->
@@ -35,12 +49,6 @@ beforeEach( (done) ->
 
 exports.appurl = (path) ->
   url.resolve('http://localhost:3001', path)
-
-Report = require('../models/report').model
-Indicator = require('../models/indicator').model
-Visualisation = require('../models/visualisation').model
-Narrative = require('../models/narrative').model
-Section = require('../models/section').model
 
 exports.createReport = (attributes, callback) ->
   if arguments.length == 1
