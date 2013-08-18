@@ -16,19 +16,23 @@ exports.index = (req, res) ->
 
 exports.create = (req, res) ->
   params = req.body
+  errors = Section.getValidationErrors(params)
 
-  section = new Section(params)
-  section.save (err, section) ->
-    if err?
-      console.error error
-      return res.send(500, "Could not create section")
+  if errors.length > 0
+    res.send(422, JSON.stringify(errors))
+  else
+    section = new Section(params)
+    section.save (err, section) ->
+      if err?
+        console.error error
+        return res.send(500, "Could not create section")
 
-    Section
-      .findOne(section._id)
-      .populate('indicator narrative visualisation')
-      .exec( (err, section) ->
-        res.send(201, JSON.stringify(section))
-      )
+      Section
+        .findOne(section._id)
+        .populate('indicator narrative visualisation')
+        .exec( (err, section) ->
+          res.send(201, JSON.stringify(section))
+        )
 
 exports.show = (req, res) ->
   Section

@@ -2,6 +2,8 @@ assert = require('chai').assert
 helpers = require '../helpers'
 request = require('request')
 url = require('url')
+_ = require('underscore')
+async = require('async')
 
 suite('API - Indicator')
 
@@ -12,7 +14,7 @@ test('POST create', (done) ->
     title: "new indicator"
 
   request.post({
-    url: helpers.appurl('api/indicator/')
+    url: helpers.appurl('api/indicators/')
     json: true
     body: data
   },(err, res, body) ->
@@ -38,12 +40,12 @@ createIndicator = (callback) ->
     if err?
       throw 'could not save indicator'
 
-    callback(indicator)
+    callback(null, indicator)
 
 test("GET show", (done) ->
-  createIndicator( (indicator) ->
+  createIndicator( (err, indicator) ->
     request.get({
-      url: helpers.appurl("api/indicator/#{indicator.id}")
+      url: helpers.appurl("api/indicators/#{indicator.id}")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 200
@@ -58,26 +60,33 @@ test("GET show", (done) ->
 )
 
 test('GET index', (done) ->
-  createIndicator( (indicator) ->
+  async.series([createIndicator, createIndicator], (err, indicators) ->
     request.get({
-      url: helpers.appurl("api/indicator")
+      url: helpers.appurl("api/indicators")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 200
 
-      indicators = body
-      assert.equal indicators[0]._id, indicator.id
-      assert.equal indicators[0].content, indicator.content
+      indicatorJson = body
 
+      assert.equal indicatorJson.length, indicators.length
+      jsonTitles = _.map(indicatorJson, (indicator)->
+        indicator.title
+      )
+      indicatorTitles = _.map(indicators, (indicator)->
+        indicator.title
+      )
+
+      assert.deepEqual jsonTitles, indicatorTitles
       done()
     )
   )
 )
 
 test('DELETE indicator', (done) ->
-  createIndicator( (indicator) ->
+  createIndicator( (err, indicator) ->
     request.del({
-      url: helpers.appurl("api/indicator/#{indicator.id}")
+      url: helpers.appurl("api/indicators/#{indicator.id}")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 204
@@ -92,10 +101,10 @@ test('DELETE indicator', (done) ->
 )
 
 test('PUT indicator', (done) ->
-  createIndicator( (indicator) ->
+  createIndicator( (err, indicator) ->
     new_title = "Updated title"
     request.put({
-      url: helpers.appurl("/api/indicator/#{indicator.id}")
+      url: helpers.appurl("/api/indicators/#{indicator.id}")
       json: true
       body:
         title: new_title
@@ -109,7 +118,7 @@ test('PUT indicator', (done) ->
         .exec( (err, indicator) ->
           assert.equal indicator.title, new_title
           done()
-      )
+        )
     )
   )
 )

@@ -7,6 +7,8 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
   className: 'section-view'
 
   events:
+    "click .add-title": "startTitleEdit"
+    "click .choose-indicator": "chooseIndicator"
     "click .add-narrative": "addNarrative"
     "click .add-visualisation": "addVisualisation"
 
@@ -17,17 +19,37 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
   render: =>
     @closeSubViews()
     noContent = !@section.get('narrative')? and !@section.get('visualisation')?
+
+    if @section.get('indicator')?
+      sectionIndicatorJSON = @section.get('indicator').toJSON()
     @$el.html(@template(
       thisView: @
       section: @section.toJSON()
+      sectionIndicator: sectionIndicatorJSON
       sectionModel: @section
       noContent: noContent
+      noTitleOrIndicator: !@section.hasTitleOrIndicator()
       narrative: @section.get('narrative')
       visualisation: @section.get('visualisation')
     ))
     @renderSubViews()
     return @
 
+  startTitleEdit: =>
+    @section.set('title', 'New Section')
+    @render()
+    # Bit of a hack, starts the view in edit mode
+    @$el.find('.section-title h2 .add-content').trigger('click')
+
+  chooseIndicator: =>
+    # TODO: Dummy method for now, just grabs a random indicator
+    # Will show a search indicator view
+    $.get('/api/indicators/', (data) =>
+      indicatorData = data[Math.floor((Math.random()*data.length)+1)]
+      @section.set('indicator', indicatorData)
+      @section.save()
+    )
+    
   addNarrative: =>
     narrative = new Backbone.Models.Narrative(
       section_id: @section.get('id')

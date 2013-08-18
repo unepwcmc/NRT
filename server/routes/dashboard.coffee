@@ -31,6 +31,15 @@ format = (arr) ->
         formattedObj[attr] = moment(val).format("MMM Do YYYY")
       else
         formattedObj[attr] = val
+
+    percent_complete = Math.floor(Math.random()*(100-40+1)+40)
+    formattedObj['percent_complete'] = percent_complete
+
+    if percent_complete > 60
+      formattedObj['color'] = '#5DB16B'
+    else
+      formattedObj['color'] = '#FDBC56'
+
     formattedObj
  
 exports.index = (req, res) ->
