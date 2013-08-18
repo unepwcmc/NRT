@@ -11,11 +11,16 @@ body, html{
 }
 
 body{
-    font-family: 'Open sans';
-    font-size: 1.15em;
-    line-height: 1.6em;
-    color: $mainFont;
-    color: rgba(0,0,0,0.8);
+  font-family: 'Open sans';
+  font-size: 1.15em;
+  line-height: 1.6em;
+  color: $mainFont;
+  color: rgba(0,0,0,0.8);
+
+  &.stop-scrolling {
+    height: 100%;
+    overflow: hidden;
+  }
 }
 
 a{
