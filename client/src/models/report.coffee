@@ -5,6 +5,8 @@ class window.Backbone.Models.Report extends Backbone.RelationalModel
     img: -> "/images/bkg#{Math.floor(Math.random()*4)}.jpg"
     bookmarked: false
 
+  idAttribute: '_id'
+
   relations: [
     key: 'sections'
     type: Backbone.HasMany
@@ -16,9 +18,9 @@ class window.Backbone.Models.Report extends Backbone.RelationalModel
 
   url: =>
     if @get('_id')
-      "/api/report/#{@get('_id')}"
+      "/api/reports/#{@get('_id')}"
     else
-      "/api/report"
+      "/api/reports"
 
 #For backbone relational
 Backbone.Models.Report.setup()
