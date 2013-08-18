@@ -7,7 +7,7 @@ suite('API - Visualisation')
 
 Visualisation = require('../../models/visualisation').model
 
-test('when posting it creates a visualisation', (done) ->
+test('POST create', (done) ->
   data =
     data: "new visualisation"
 
@@ -41,7 +41,7 @@ createVisualisation = (callback) ->
     callback(visualisation)
 
 
-test("show returns a visualisation's data", (done) ->
+test("GET show", (done) ->
   createVisualisation( (visualisation) ->
     request.get({
       url: helpers.appurl("api/visualisation/#{visualisation.id}")
@@ -58,7 +58,7 @@ test("show returns a visualisation's data", (done) ->
   )
 )
 
-test('index lists all visualisations', (done) ->
+test('GET index', (done) ->
   createVisualisation( (visualisation) ->
     request.get({
       url: helpers.appurl("api/visualisation")
@@ -75,9 +75,7 @@ test('index lists all visualisations', (done) ->
   )
 )
 
-test('returns full nested sections')
-
-test('can delete a visualisation', (done) ->
+test('DELETE visualisation', (done) ->
   createVisualisation( (visualisation) ->
     request.del({
       url: helpers.appurl("api/visualisation/#{visualisation.id}")
@@ -94,7 +92,7 @@ test('can delete a visualisation', (done) ->
   )
 )
 
-test('can update a visualisation', (done) ->
+test('PUT visualisation', (done) ->
   createVisualisation( (visualisation) ->
     new_data = "Updated data"
     request.put({

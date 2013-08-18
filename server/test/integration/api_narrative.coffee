@@ -5,7 +5,7 @@ url = require('url')
 
 suite('API - Narrative')
 
-test('create', (done) ->
+test('POST create', (done) ->
   data =
     content: "new narrative"
 
@@ -29,7 +29,7 @@ test('create', (done) ->
   )
 )
 
-test('update', (done) ->
+test('PUT narrative', (done) ->
   Narrative = require('../../models/narrative').model
 
   narrative = new Narrative(
@@ -60,7 +60,7 @@ test('update', (done) ->
     )
 )
 
-test('list', (done) ->
+test('GET index', (done) ->
   Narrative = require('../../models/narrative').model
 
   narrative = new Narrative(
@@ -85,7 +85,7 @@ test('list', (done) ->
     )
 )
 
-test('show', (done) ->
+test('GET show', (done) ->
   Narrative = require('../../models/narrative').model
 
   narrative = new Narrative(
@@ -110,7 +110,7 @@ test('show', (done) ->
     )
 )
 
-test('destroy', (done) ->
+test('DELETE narrative', (done) ->
   Narrative = require('../../models/narrative').model
 
   narrative = new Narrative(

@@ -11,7 +11,7 @@ Visualisation = require('../../models/visualisation').model
 Narrative = require('../../models/narrative').model
 Section = require('../../models/section').model
 
-test('posting creates a section', (done) ->
+test('POST create', (done) ->
   data =
     title: "test section title 1"
 
@@ -162,7 +162,7 @@ createSection = (attributes, callback) ->
 
     callback(section)
 
-test('update section with new indicator', (done) ->
+test('PUT section with new indicator', (done) ->
   createSectionWithIndicator = (err, results) ->
     indicator = results[0]
     newIndicator = results[1]
@@ -187,7 +187,7 @@ test('update section with new indicator', (done) ->
   async.series([createIndicator, createIndicator], createSectionWithIndicator)
 )
 
-test('can update a section', (done) ->
+test('PUT section', (done) ->
   createSection( (section) ->
     newTitle = 'new title'
 
@@ -272,7 +272,7 @@ test("GET /section/<id> returns a section's nested models", (done) ->
   ], createSectionWithSubDocuments)
 )
 
-test('can destroy a section', (done) ->
+test('DELETE section', (done) ->
   createSection( (section) ->
     request.del({
       url: helpers.appurl("api/section/#{section.id}")
@@ -289,7 +289,7 @@ test('can destroy a section', (done) ->
   )
 )
 
-test('index lists all sections', (done) ->
+test('GET index', (done) ->
   createSection( (section) ->
     request.get({
       url: helpers.appurl("api/section")

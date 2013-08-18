@@ -7,7 +7,7 @@ suite('API - Indicator')
 
 Indicator = require('../../models/indicator').model
 
-test('when posting it creates a indicator', (done) ->
+test('POST create', (done) ->
   data =
     title: "new indicator"
 
@@ -40,8 +40,7 @@ createIndicator = (callback) ->
 
     callback(indicator)
 
-
-test("show returns a indicator's title", (done) ->
+test("GET show", (done) ->
   createIndicator( (indicator) ->
     request.get({
       url: helpers.appurl("api/indicator/#{indicator.id}")
@@ -58,7 +57,7 @@ test("show returns a indicator's title", (done) ->
   )
 )
 
-test('index lists all indicators', (done) ->
+test('GET index', (done) ->
   createIndicator( (indicator) ->
     request.get({
       url: helpers.appurl("api/indicator")
@@ -75,7 +74,7 @@ test('index lists all indicators', (done) ->
   )
 )
 
-test('can delete a indicator', (done) ->
+test('DELETE indicator', (done) ->
   createIndicator( (indicator) ->
     request.del({
       url: helpers.appurl("api/indicator/#{indicator.id}")
@@ -92,7 +91,7 @@ test('can delete a indicator', (done) ->
   )
 )
 
-test('can update a indicator', (done) ->
+test('PUT indicator', (done) ->
   createIndicator( (indicator) ->
     new_title = "Updated title"
     request.put({
