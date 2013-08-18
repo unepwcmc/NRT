@@ -6,13 +6,13 @@ lessMiddleware = require('less-middleware')
 require('express-resource')
 sass = require('node-sass')
 passport = require('passport')
-
+mongoose = require('mongoose')
 
 exports.createApp = ->
   app = express()
 
-  sequelize = require('./model_bindings.coffee')(app.get('env'))
-  GLOBAL.sequelize = sequelize
+  mongoose.connect("mongodb://localhost/nrt_#{app.get('env')}")
+
   bindRoutesForApp = require('./route_bindings.coffee')
 
   # assign the handlebars engine to .html files

@@ -15,13 +15,16 @@ appurl = (path) ->
 createReportModels = (attributes) ->
   successCallback = errorCallback = promises = null
 
-  Report = require('../../models/report')
+  Report = require('../../models/report').model
   createFunctions = _.map(attributes, (attributeSet) ->
     return (callback) ->
-      return Report.create(attributeSet)
-        .success((indicators)->
-          callback(null, indicators)
-        ).error(callback)
+      report = new Report(attributeSet)
+      return report.save( (err, indicators)->
+        if err?
+          callback()
+
+        callback(null, indicators)
+      )
   )
 
   async.parallel(
@@ -54,7 +57,7 @@ test('get dashboard url', (done) ->
 
 suite('Reports section')
 
-test('Page has latest edited reports listed', (done) ->
+test('has latest edited reports listed', (done) ->
   createReportModels([
     {
       title: 'Report 1'
@@ -74,8 +77,3 @@ test('Page has latest edited reports listed', (done) ->
     throw "Unable to create reports"
   )
 )
-
-
-    
-
-

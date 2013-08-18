@@ -1,29 +1,24 @@
-Sequelize = require("sequelize-mysql").sequelize
-Narrative = require("./narrative.coffee")
+Narrative = require("./narrative.coffee").schema
+Visualisation = require("./visualisation.coffee").schema
+Indicator = require("./indicator.coffee").schema
+mongoose = require('mongoose')
 
-Section = sequelize.define('Section',
-  title:
-    type: Sequelize.STRING
-  report_id:
-    type: Sequelize.INTEGER
-    references: "Report"
-    referencesKey: "id"
-  indicator:
-    type: Sequelize.INTEGER
-    references: "Indicator"
-    referencesKey: "id"
-  id:
-    type: Sequelize.INTEGER
-    primaryKey: true
+sectionSchema = mongoose.Schema(
+  title: String
+  narrative: {type: mongoose.Schema.Types.ObjectId, ref: 'Narrative'}
+  indicator: {type: mongoose.Schema.Types.ObjectId, ref: 'Indicator'}
+  visualisation: {type: mongoose.Schema.Types.ObjectId, ref: 'Visualisation'}
 )
 
-Section.hasMany(Narrative, foreignKey: 'section_id')
-Section.sync()
-
-Section.getValidationErrors = (attributes) ->
+sectionSchema.statics.getValidationErrors = (attributes) ->
   errors = []
   unless attributes['title']? or attributes['indicator']
     errors.push "title or indicator must be present"
   return errors
 
-module.exports = Section
+Section = mongoose.model('Section', sectionSchema)
+
+module.exports = {
+  schema: sectionSchema
+  model: Section
+}

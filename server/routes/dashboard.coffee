@@ -1,8 +1,7 @@
 _ = require('underscore')
 moment = require('moment')
 
-Report = require '../models/report'
-Indicator = require('../models/indicator')
+Report = require('../models/report').model
 
 # TODO: not completed.
 groupReportsByDate = (reports) ->
@@ -32,7 +31,6 @@ format = (arr) ->
         formattedObj[attr] = moment(val).format("MMM Do YYYY")
       else
         formattedObj[attr] = val
-    formattedObj['type'] = obj['daoFactoryName'].toLowerCase()
 
     percent_complete = Math.floor(Math.random()*(100-40+1)+40)
     formattedObj['percent_complete'] = percent_complete
@@ -45,35 +43,11 @@ format = (arr) ->
     formattedObj
  
 exports.index = (req, res) ->
-  # TODO: this is a mess, we need a better way of handling this hell of 
-  # nested callbacks!
-  Indicator.seedDummyIndicatorsIfNone().success(->
-    Indicator.findAll().success((indicators)->
-      Report.findAll().success((reports) ->
-        # Select 5 random items for notifications
-        notifications = []
+  Report.find (err, reports) ->
+    if err?
+      console.error error
+      return res.render(500, "Error fetching the reports")
 
-        for i in [1..2]
-          index = Math.floor(Math.random()*reports.length)
-          item  = reports[index]
-          notifications.push item if item?
-
-        for i in [1..3]
-          index = Math.floor(Math.random()*indicators.length)
-          item  = indicators[index]
-          notifications.push item if item?
-
-        res.render "dashboard",
-          notifications: _.shuffle(format(notifications))
-          reports: _.last(format(reports), 5)
-          work_in_progress: _.last(format(reports), 5)
-          indicators: _.last(format(indicators), 5)
-        ).error((error)->
-            console.error error  #TODO: This should be logged somewhere
-            res.render(500, "Error fetching the reports")
-          )
-      )
-    ).error((error) ->
-    console.error error  #TODO: This should be logged somewhere
-    res.render(500, "Error seeding DB")
-  )
+    res.render "dashboard",
+      reports: format(reports)
+      indicators: []
