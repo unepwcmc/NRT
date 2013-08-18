@@ -5,9 +5,6 @@
 # For operation == 'sum' do X, for operation == 'count' do Y
 # Store result
 
-
-
 request = require('request')
 
-
-exports.result = []
+export.generate = () ->
