@@ -28,3 +28,17 @@ test('.startEdit should set editing to true', ->
 
   assert.equal narrative.get('editing'), true
 )
+
+test("When rendering a markdown narrative, should be rendered as HTML", ->
+  narrativeAttributes = 
+    content: "This is *some* markdown\n\nShould be good."
+
+  narrative = new Backbone.Models.Narrative(narrativeAttributes)
+  view = createAndShowNarrativeViewForNarrative(narrative)
+
+  expectRenderedAs = "<p>This is <em>some</em> markdown</p>\n<p>Should be good.</p>"
+  renderedAs = $('#test-container').find('.content-text').html()
+  
+  assert.equal renderedAs.replace(/^\s+|\s+$/g, ''), expectRenderedAs.replace(/^\s+|\s+$/g, '')
+)
+
