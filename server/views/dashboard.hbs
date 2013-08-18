@@ -7,56 +7,41 @@
 
 <div class="content">
 
-  <div class="dashboard-title">
+  <header>
     <h1>Dashboard</h1>
-    <a href="/report/new" class="button grey">
+    <a href="/reports/new" class="button grey">
       <i class="icon-file-text-alt"></i> New report
     </a>
-  </div>
+  </header>
 
   <div class="row">
     <div class="content-left column">
       <div class="content-title">
         <h2><i class="icon-tasks"></i>Work in progress</h2>
       </div>
-      <div class="report green">
-        <h3><i class="icon-file-text-alt"></i>Marine water quality report</h2>
-        <div class="report-bar-container">
-          <div class="report-bar" style="width: 76%; background-color: #55b265"><p>76%</p></div>
+
+      {{#each work_in_progress}}
+        <div class="report">
+          <h3><i class="icon-file-text-alt" style="color: {{color}}"></i> <a href="/reports/{{id}}">{{title}}</a></h2>
+          <div class="report-bar-container">
+            <div class="report-bar" style="width: {{percent_complete}}%;
+              background-color: {{color}}"><p>{{percent_complete}}%</p></div>
+          </div>
         </div>
-      </div>
-      <div class="report green">
-        <h3><i class="icon-file-text-alt"></i>Mira indicator report</h2>
-        <div class="report-bar-container">
-          <div class="report-bar" style="width: 40%; background-color: #ffbd4c"><p>40%</p></div>
-        </div>
-      </div>
-      <div class="indicator">
-        <h3><i class="icon-bar-chart"></i>Land water quality report</h2>
-        <p>Marine water quality report</p>
-      </div>
-      <div class="report orange">
-        <h3><i class="icon-file-text-alt"></i>Land water quality report</h2>
-        <div class="report-bar-container">
-          <div class="report-bar" style="width: 45%; background-color: #ffbd4c"><p>45%</p></div>
-        </div>
-      </div>
-      <a href="#">See all</a>
+      {{/each}}
+
+      <a href="/reports">See all</a>
     </div>
-  
+
     <div class="content-right column">
       <div class="content-title">
         <h2><i class="icon-exchange"></i>Notifications</h2>
       </div>
-      <ul>
-        <li>Ammonia-N narrative report from Dr reports</li>
-        <li>More reports</li>
-        <li>And more indicators from Mr indicator</li>
-        <li>Ammonia-N narrative report from Dr reports</li>
-        <li>More reports update by myself</li>
-        <li>And more indicators from Mr indicator</li>
+      <ul class="notifications">
+        {{#each notifications}}
+          <li><strong>Updated {{type}}</strong> <a href="/{{type}}s/{{id}}">{{title}}</a></li>
+        {{/each}}
       </ul>
-      <a href="#">See all</a>
     </div>
 
     <div class="clear"></div>
@@ -76,7 +61,7 @@
                 <small>
                   <i class="icon-time append"></i>Last updated on {{updatedAt}} by Dr. Anybody
                 </small>
-                <h3><a href="/report/{{id}}">{{ title }}</a></h3>
+                <h3><a href="/reports/{{id}}">{{ title }}</a></h3>
                 <h4>{{period}} | <i class="icon-bookmark"></i> Bookmark this report</h4>
                 <p>{{introduction}}</p>
               </div>
@@ -99,8 +84,8 @@
               <small>
                 <i class="icon-time append"></i>Last updated on {{updatedAt}} by Dr. Anybody
               </small>
-              <h3><a href="#">Narrative for {{title}}</a></h3>
-              <h4><span class="bold"><a href="#">{{title}}</a></span>| <i class="icon-bookmark"></i> Watch this indicator</h4>
+              <h3><a href="/indicators/{{id}}">Narrative for {{title}}</a></h3>
+              <h4><span class="bold"><a href="/indicators/{{id}}">{{title}}</a></span>| <i class="icon-bookmark"></i> Watch this indicator</h4>
               <p>This is the description for the <span style="font-style: italic;">{{title}}</span> indicator.</p>
               <p class="report-link">Published in <a href="#">Report</a></p>
             </div>

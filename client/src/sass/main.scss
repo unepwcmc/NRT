@@ -126,6 +126,22 @@ header, section, footer{
     display: block;
 }
 
+header {
+  position: relative;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #eee;
+
+  button, .button {
+    position: absolute;
+    right: 0;
+    top: 13px;
+  }
+
+  .button {
+    line-height: 23px;
+  }
+}
+
 h1{
     font-size: 2.7em;
     font-family: 'PT sans', sans-serif;
@@ -181,18 +197,16 @@ em{
 
 .content{
     width: 980px;
-    padding: 30px 20px;
+    padding: 75px 20px 30px 20px;
     margin: 0 auto;
     outline: 0;
     word-wrap: break-word;
     a{
         color: $linkBlue;
         text-decoration: none;
-        border-bottom: 1px solid $linkBlue;
         &:hover{
             color: lighten($linkBlue, 10);
             text-decoration: none;
-            border-bottom: 1px solid lighten($linkBlue, 15);
         }
     }
     ul{
@@ -596,7 +610,7 @@ div.last-update {
     color: $linkBlue;
     border: 1px solid $linkBlue;
     border-radius: 6px;
-    padding: 0 .15em;
+    padding: 0.15em 0.4em;
     line-height: 1.6em;
   }
   i {
@@ -611,8 +625,9 @@ section.report-indicator-list {
     font-weight: bold;
   }
   p {
-    padding: .2em 2em .2em .2em;
-    margin: .4em 2em .4em .4em;
+    padding: .2em 2em .2em 0;
+    margin: .4em 2em .4em 0;
+    line-height: 1.5em;
   }
   .section-title {
     padding-bottom: 0;
@@ -624,5 +639,72 @@ section.report-indicator-list {
   }
 }
 
+.content-sidebar, .main-content {
+  float: left;
+}
+
+.main-content {
+  padding: 30px 20px 0 0;
+  width: 650px;
+}
+
+.content-sidebar {
+  width: 250px;
+  padding: 30px 20px 0 20px;
+}
+
+.content-sidebar.metadata {
+  color: $lightishGrey;
+  font-size: 13px;
+
+  h3 {
+    font-weight: bold;
+    font-size: 16px;
+    color: $mediumGrey;
+  }
+
+  section {
+    border-bottom: 1px solid $differentGrey;
+    margin-bottom: 30px;
+
+    h3 {
+      border-bottom: 1px solid $differentGrey;
+    }
+  }
+
+  h4 {
+    color: $mediumGrey;
+    font-weight:bold;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: 5px 0;
+      border-top: 1px solid $lightGrey;
+
+      .outdated {
+        font-weight: bold;
+        color: $orange;
+
+        .outdated-notice {
+          font-weight: normal;
+          border: 1px solid;
+          border-radius: 3px;
+          font-size: 10px;
+          padding: 1px 4px;
+          position: relative;
+          top: -1px;
+          left: 5px;
+        }
+      }
+    }
+    li:first-child {
+      border-top: 0;
+    }
+  }
+}
 
 @import "charts";

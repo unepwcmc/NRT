@@ -89,7 +89,7 @@ test("Can navigate to report view", ->
 
   assert.match(
     $('#test-container').html(),
-    new RegExp(".*/report/#{id}.*")
+    new RegExp(".*/reports/#{id}.*")
   )
 
   view.close()

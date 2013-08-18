@@ -32,6 +32,16 @@ format = (arr) ->
         formattedObj[attr] = moment(val).format("MMM Do YYYY")
       else
         formattedObj[attr] = val
+    formattedObj['type'] = obj['daoFactoryName'].toLowerCase()
+
+    percent_complete = Math.floor(Math.random()*(100-40+1)+40)
+    formattedObj['percent_complete'] = percent_complete
+
+    if percent_complete > 60
+      formattedObj['color'] = '#5DB16B'
+    else
+      formattedObj['color'] = '#FDBC56'
+
     formattedObj
  
 exports.index = (req, res) ->
@@ -40,9 +50,24 @@ exports.index = (req, res) ->
   Indicator.seedDummyIndicatorsIfNone().success(->
     Indicator.findAll().success((indicators)->
       Report.findAll().success((reports) ->
+        # Select 5 random items for notifications
+        notifications = []
+
+        for i in [1..2]
+          index = Math.floor(Math.random()*reports.length)
+          item  = reports[index]
+          notifications.push item
+
+        for i in [1..3]
+          index = Math.floor(Math.random()*indicators.length)
+          item  = indicators[index]
+          notifications.push item
+
         res.render "dashboard",
-          reports: format(reports)
-          indicators: format(indicators)
+          notifications: _.shuffle(format(notifications))
+          reports: _.last(format(reports), 5)
+          work_in_progress: _.last(format(reports), 5)
+          indicators: _.last(format(indicators), 5)
         ).error((error)->
             console.error error  #TODO: This should be logged somewhere
             res.render(500, "Error fetching the reports")
