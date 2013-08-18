@@ -45,7 +45,7 @@ exports.show = (req, res) ->
 exports.update = (req, res) ->
   Section.update(
     {_id: req.params.section},
-    req.body,
+    {$set: req.body},
     (err, rowsChanged) ->
       if err?
         console.error error
@@ -53,6 +53,7 @@ exports.update = (req, res) ->
 
       Section
         .findOne(req.params.section)
+        .populate('indicator narrative visualisation')
         .exec( (err, section) ->
           unless err?
             res.send(200, JSON.stringify(section))

@@ -167,27 +167,21 @@ test('update section with new indicator', (done) ->
     indicator = results[0]
     newIndicator = results[1]
 
-    createSection({indicator: indicator._id}, (section) ->
-      request.put {
-        url: helpers.appurl("api/section/#{section.id}")
-        json: true
-        body:
-          indicator: newIndicator._id
-      }, (err, res, body) ->
-        assert.equal res.statusCode, 200
-        assert.property body, 'indicator'
+    createSection(
+      {title: 'A section', indicator: indicator._id},
+      (section) ->
+        request.put {
+          url: helpers.appurl("api/section/#{section.id}")
+          json: true
+          body:
+            indicator: newIndicator._id
+        }, (err, res, body) ->
+          assert.equal res.statusCode, 200
+          assert.property body, 'indicator'
 
-        Section
-          .findOne(section.id)
-          .exec( (err, reloadedSection)->
-            if err?
-              console.error error
-              throw "Unable to recall updated section"
+          assert.equal "A section", body.title
 
-            assert.equal newIndicator._id, reloadedSection.indicator.toString()
-
-            done()
-          )
+          done()
     )
 
   async.series([createIndicator, createIndicator], createSectionWithIndicator)
