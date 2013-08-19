@@ -5,9 +5,6 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
     unless options.indicator?
       throw "You must initialise Visualisations with an Indicator"
 
-  formatDataForChart: ->
-     _.map(@get("data"), (el) -> {Year: el.year, Percentage: el.value})
-
   url: '/api/visualisation'
 
   getIndicatorData: ->
