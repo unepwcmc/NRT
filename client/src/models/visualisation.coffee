@@ -13,7 +13,7 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
     )
 
   buildIndicatorDataUrl: ->
-    "/api/indicators/#{@get('section').get('indicator').get('id')}/data"
+    "/api/indicators/#{@get('section').get('indicator').get('_id')}/data"
 
 #For backbone relational
 Backbone.Models.Visualisation.setup()
