@@ -15,6 +15,7 @@ class Backbone.Views.TextEditView extends Backbone.View
     "drop .content-text-field": "delayedResize"
     "keydown .content-text-field": "delayedResize"
     "blur :input": "addPlaceholder"
+    "keyup .content-text-field"  : "saveOnEnter"
 
   initialize: (options) ->
     @type   = options.type
@@ -71,6 +72,10 @@ class Backbone.Views.TextEditView extends Backbone.View
 
   startEdit: =>
     @render(edit: true)
+
+  saveOnEnter: (e) =>
+    if e.keyCode == 13 && @type == 'input'
+      @saveContent()
 
   onClose: ->
     

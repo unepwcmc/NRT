@@ -28,5 +28,6 @@
   "src/controllers/reports_controller.coffee",
   "src/controllers/report_presentation_controller.coffee",
   "src/helpers/handlebars_debug.coffee",
+  "src/helpers/handlebars_markdown.coffee",
   "src/lib/fake_reports.coffee"
 ]
