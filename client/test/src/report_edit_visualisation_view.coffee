@@ -11,12 +11,19 @@ suite('ReportEditVisualisationView')
 test("Shows the given indicator title", ->
   indicatorTitle = "my lovely indicator"
   indicator = new Backbone.Models.Indicator(
+    _id: 5
     title: indicatorTitle
   )
 
-  view = createAndShowVisualisationViewForOptions(
+  section = new Backbone.Models.Section(
     indicator: indicator
-    visualisation: new Backbone.Models.Visualisation()
+  )
+
+  view = createAndShowVisualisationViewForOptions(
+    visualisation: new Backbone.Models.Visualisation(
+      indicator: indicator
+      section: section
+    )
   )
 
   assert.match(

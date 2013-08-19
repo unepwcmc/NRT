@@ -1,18 +1,21 @@
 window.Helpers ||= {}
 
 indicatorId = 0
-Helpers.factorySectionWithIndicator = ->
+Helpers.factoryIndicator = ->
   indicatorId = indicatorId + 1
+  new Backbone.Models.Indicator(
+    _id: indicatorId
+  )
+
+Helpers.factorySectionWithIndicator = ->
   new Backbone.Models.Section(
-    indicator: new Backbone.Models.Indicator(
-      _id: indicatorId
-    )
+    indicator: Helpers.factoryIndicator()
   )
 
 Helpers.factoryVisualisationWithIndicator = ->
   section = Helpers.factorySectionWithIndicator()
   new Backbone.Models.Visualisation(
-    section: section
+    indicator: Helpers.factoryIndicator()
   )
 
 Helpers.renderViewToTestContainer = (view) ->

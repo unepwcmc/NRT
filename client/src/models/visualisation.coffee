@@ -1,6 +1,10 @@
 window.Backbone.Models || = {}
 
 class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
+  initialize: (options={})->
+    unless options.indicator?
+      throw "You must initialise Visualisations with an Indicator"
+
   formatDataForChart: ->
      _.map(@get("data"), (el) -> {Year: el.year, Percentage: el.value})
 
@@ -13,7 +17,7 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
     )
 
   buildIndicatorDataUrl: ->
-    "/api/indicators/#{@get('section').get('indicator').get('_id')}/data"
+    "/api/indicators/#{@get('indicator').get('_id')}/data"
 
 #For backbone relational
 Backbone.Models.Visualisation.setup()

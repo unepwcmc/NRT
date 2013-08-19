@@ -9,7 +9,6 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
     "click .close-vis-edit": "closeModal"
 
   initialize: (options) ->
-    @indicator = options.indicator
     @visualisation = options.visualisation
     @render()
 
@@ -17,7 +16,7 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
     @closeSubViews()
     @$el.html(@template(
       thisView: @
-      indicator: @indicator.toJSON()
+      indicator: @visualisation.get('indicator').toJSON()
       visualisation: @visualisation
     ))
     @renderSubViews()

@@ -2,38 +2,25 @@ assert = chai.assert
 
 suite('Visualisation Model')
 
-test('.formatDataForChart parses indicator data correctly', ->
+test('Passing an indicator into a visualisation
+  should assign it to the visualisation attribute', ->
+  indicator = new Backbone.Models.Indicator()
   visualisation = new Backbone.Models.Visualisation(
-    data:
-      features: [
-        attributes:
-          Percentage: 28
-          Year: 2010
-      ,
-        attributes:
-          Percentage: 26
-          Year: 2011
-      ]
+    indicator: indicator
   )
 
-  expectedData = [
-    Percentage: 28
-    Year: 2010
-  ,
-    Percentage: 26
-    Year: 2011
-  ]
+  assert.strictEqual visualisation.get('indicator').cid, indicator.cid
+)
 
-  assert(
-    _.isEqual(visualisation.formatDataForChart(), expectedData),
-    "Parsed data #{visualisation.formatDataForChart()} is not equal to #{expectedData}"
-  )
-
+test('Initializing a visualisation without an indicator throws an error', ->
+  assert.throw( ->
+    new Backbone.Models.Visualisation()
+  , "You must initialise Visualisations with an Indicator")
 )
 
 test(".getIndicatorData populates the 'data' attribute and triggers 'dataFetched'", (done)->
   visualisation = Helpers.factoryVisualisationWithIndicator()
-  section = visualisation.get('section')
+  indicator = visualisation.get('indicator')
 
   server = sinon.fakeServer.create()
 
@@ -46,7 +33,7 @@ test(".getIndicatorData populates the 'data' attribute and triggers 'dataFetched
 
   assert.equal(
     server.requests[0].url,
-    "/api/indicators/#{section.get('indicator').get('id')}/data"
+    "/api/indicators/#{indicator.get('_id')}/data"
   )
 
   Helpers.SinonServer.respondWithJson.call(server, {some: 'data'})
