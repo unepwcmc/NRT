@@ -7,6 +7,7 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
 
   events:
     "click .close-vis-edit": "closeModal"
+    "click .save": "save"
 
   initialize: (options) ->
     @visualisation = options.visualisation
@@ -22,6 +23,9 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
     @renderSubViews()
 
     return @
+
+  save: ->
+    @visualisation.save()
 
   closeModal: ->
     $('body').removeClass('stop-scrolling')

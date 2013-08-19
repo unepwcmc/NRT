@@ -5,7 +5,7 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
     unless options.indicator?
       throw "You must initialise Visualisations with an Indicator"
 
-  url: '/api/visualisation'
+  urlRoot: '/api/visualisations'
 
   getIndicatorData: ->
     $.get(@buildIndicatorDataUrl(), (data)=>

@@ -46,7 +46,11 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     $.get('/api/indicators/', (data) =>
       indicatorData = data[Math.floor((Math.random()*data.length)+1)]
       @section.set('indicator', indicatorData)
-      @section.save()
+      @section.save(null, 
+        error: (model, xhr, error) ->
+          console.log error
+          alert('Unable to save section, please reload the page')
+      )
     )
 
   addNarrative: =>

@@ -38,10 +38,12 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
     if @report.get('_id')?
       section = new Backbone.Models.Section(report_id: @report.get('_id'))
       @report.get('sections').add(section)
-      section.save()
     else
       @report.save(null,
         success: @addSection
+        error: (err) ->
+          console.log err
+          alert('Unable to save report, please try again')
       )
 
   onClose: ->
