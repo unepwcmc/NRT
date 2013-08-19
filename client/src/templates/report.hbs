@@ -16,26 +16,10 @@
       </div>
     </div>
 
-    <section class="fixed-section">
-      <div class="section-title">
-        <h2>Introduction</h2>
-      </div>
-      {{addSubViewTo thisView "TextEditView" type='textarea'
-        attributeName="introduction" model=thisView.report}}
-    </section>
-
     {{#each sections}}
       {{addSubViewTo ../thisView "SectionView" section=this}}
     {{/each}}
     <button class="add-report-section">Add Section</button>
-
-    <section class="fixed-section">
-      <div class="section-title">
-        <h2>Conclusion</h2>
-      </div>
-      {{addSubViewTo thisView "TextEditView" type='textarea'
-        attributeName='conclusion' model=thisView.report}}
-    </section>
   </div>
 
   <div class="report-sidebar">

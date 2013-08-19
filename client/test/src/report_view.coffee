@@ -83,23 +83,7 @@ test("Report sections views are rendered", ->
 )
 
 test("Can navigate to Dashboard, Reports, Indicators and Bookmarks")
-
 test("I can use report period")
-test("I can use report author")
-
-test("I can use report introduction", ->
-  introText = "I hereby introduce you to this Lovely Report."
-  report = new Backbone.Models.Report(introduction: introText)
-
-  view = createAndShowReportViewForReport(report)
-
-  assert.match(
-    $('#test-container').text(),
-    new RegExp(".*#{introText}.*")
-  )
-
-  view.close()
-)
 
 test(".addSection adds a section to the report", ->
   report = new Backbone.Models.Report(_id: 5)
@@ -112,5 +96,3 @@ test(".addSection adds a section to the report", ->
   assert.equal report.get('sections').length, 1
   assert.equal report.get('sections').at(0).get('report_id'), report.get('_id')
 )
-
-test("I can use report conclusion")

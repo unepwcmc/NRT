@@ -4,8 +4,6 @@ mongoose = require('mongoose')
 reportSchema = mongoose.Schema(
   title: String
   brief: String
-  introduction: String
-  conclusion: String
   period: String
   sections: [{type: mongoose.Schema.Types.ObjectId, ref: 'Section'}]
 )
