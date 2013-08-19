@@ -11,6 +11,7 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
       relatedModel: 'Backbone.Models.Narrative'
       reverseRelation:
         key: 'section'
+        includeInJSON: '_id'
         type: Backbone.HasOne
     ,
       key: 'visualisation'
