@@ -1,15 +1,26 @@
-<div class="add-content">
+{{! Show mode }}
+<div class="show-content">
   {{#if content}}
-    {{#if useWrapperTag}}
-      <{{wrapperTag}}>
+  <{{wrapperTag}}>
+      <div class='markedup-content'>{{{markup content}}}</div>
+    {{else}}
+      Type {{attributeName}} here
     {{/if}}
-
-    {{{markup content}}}
-
-    {{#if useWrapperTag}}
-      </{{wrapperTag}}>
-    {{/if}}
-  {{else}}
-    Type {{attributeName}} here
-  {{/if}}
+  </{{wrapperTag}}>
 </div>
+
+{{! Edit mode }}
+<div class='edit-content startHidden'>
+  <{{wrapperTag}}>
+
+  {{#if isInput}}
+    <input type='text' class='content-text-field' value='{{content}}' />
+  {{else}}
+    <textarea class='content-text-field'>{{content}}</textarea>
+  {{/if}}
+
+  </{{wrapperTag}}>
+
+  <button class="save-content pull-right">Save changes</button>
+</div>
+

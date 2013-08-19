@@ -3,11 +3,10 @@ window.Backbone.Views ||= {}
 
 class Backbone.Views.TextEditView extends Backbone.View
   template: Handlebars.templates['text-content.hbs']
-  editTemplate: Handlebars.templates['text-edit.hbs']
 
   events:
     "click .save-content": "saveContent"
-    "click .add-content": "startEdit"
+    "click .show-content": "startEdit"
     "click .content-text": "startEdit"
     "change .content-text-field": "resize"
     "cut .content-text-field": "delayedResize"
@@ -29,19 +28,11 @@ class Backbone.Views.TextEditView extends Backbone.View
   render: (options = {}) =>
     content = @model.get(@attributeName) || ""
 
-    if options.edit
-      @$el.html(@editTemplate(
-        isInput: (@type is 'input')
-        content: content
-        useWrapperTag: @wrapperTag?
-        wrapperTag: @wrapperTag
-      ))
-    else
-      @$el.html(@template(
-        content: content, attributeName: @attributeName
-        useWrapperTag: @wrapperTag?
-        wrapperTag: @wrapperTag
-      ))
+    @$el.html(@template(
+      isInput: (@type is 'input')
+      content: content
+      wrapperTag: @wrapperTag || 'div'
+    ))
 
     @text = @$el.find(":input").not("button")
     @text.focus()
@@ -50,7 +41,7 @@ class Backbone.Views.TextEditView extends Backbone.View
 
     return @
 
-  addPlaceholder: ->
+  addPlaceholder: =>
     input = @$el.find(':input')
     if input.val().length == 0
       input.val("Type #{@attributeName} here")
@@ -76,14 +67,26 @@ class Backbone.Views.TextEditView extends Backbone.View
     )
 
     @model.save()
-    @render()
+    @finishEdit()
 
   startEdit: =>
-    @render(edit: true)
+    # Populate input with content
+    @$el.find('content-text-field').val(@model.get(@attributeName))
+
+    @$el.find('.show-content').hide()
+    @$el.find('.edit-content').show()
+    @delayedResize()
+
+  finishEdit: =>
+    # Update content with input
+    @$el.find('.markedup-content').html(@model.get(@attributeName))
+    @$el.find('.show-content').show()
+    @$el.find('.edit-content').hide()
+    @delayedResize()
 
   saveOnEnter: (e) =>
     if e.keyCode == 13 && @type == 'input'
       @saveContent()
 
   onClose: ->
-    
+
