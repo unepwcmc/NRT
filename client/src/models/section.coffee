@@ -9,6 +9,7 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
       key: 'narrative'
       type: Backbone.HasOne
       relatedModel: 'Backbone.Models.Narrative'
+      includeInJSON: false
       reverseRelation:
         key: 'section'
         includeInJSON: '_id'

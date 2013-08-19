@@ -29,7 +29,7 @@ test("When calling .toJSON on a section with an indicator model attribute,
   assert.equal section.toJSON().indicator, indicatorAttributes._id
 )
 
-test('.toJSON should not include Visualisation attribute
+test('.toJSON should not include a visualisation attribute
   (as visualisations save themselves with the section._id)', ->
   section = new Backbone.Models.Section(
     visualisation:
@@ -37,6 +37,16 @@ test('.toJSON should not include Visualisation attribute
       indicator: {}
   )
   assert.isUndefined section.toJSON().visualisation
+)
+
+test('.toJSON should not include a narrative attribute
+  (as narratives save themselves with the section._id)', ->
+  section = new Backbone.Models.Section(
+    narrative:
+      _id: 23423
+      content: 'bees'
+  )
+  assert.isUndefined section.toJSON().narrative
 )
 
 test(".hasTitleOrIndicator returns false if there is no title and no indicator assigned", ->
