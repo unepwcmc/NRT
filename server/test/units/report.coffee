@@ -71,7 +71,7 @@ test('.create with nested section', (done) ->
       ], done)
 )
 
-test('get "fat" report by report ID', (done) ->
+test('get "fat" report with all related children by report ID', (done) ->
   Report = require('../../models/report.coffee').model
 
   helpers.createIndicator( (err, indicator) ->
@@ -109,6 +109,29 @@ test('get "fat" report by report ID', (done) ->
                 )
               )
           )
+      )
+    )
+  )
+)
+
+test('get "fat" report with no related children by report ID', (done) ->
+  Report = require('../../models/report.coffee').model
+
+  helpers.createSection((err, section) ->
+    helpers.createReport( {sections: [section]}, (report) ->
+      Report.findFatReport(report._id, (err, fatReport) ->
+        assert.equal fatReport._id, report.id
+
+        reloadedSection = fatReport.sections[0]
+        assert.equal reloadedSection._id, section.id
+
+        assert.lengthOf reloadedSection.indicators, 0
+
+        assert.notProperty reloadedSection, 'visualisation'
+
+        assert.notProperty reloadedSection, 'narrative'
+
+        done()
       )
     )
   )
