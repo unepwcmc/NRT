@@ -74,43 +74,42 @@ test('.create with nested section', (done) ->
 test('get "fat" report by report ID', (done) ->
   Report = require('../../models/report.coffee').model
 
-  createSectionWithSubDocuments = (err, results) ->
-    indicator = results[0]
-    visualisation = results[1]
-    narrative = results[2]
+  helpers.createIndicator( (err, indicator) ->
+    helpers.createSection({
+      title: 'A section',
+      indicators: [indicator]
+    }, (err, section) ->
+      helpers.createVisualisation(
+        {section_id: section._id},
+        (err, visualisation) ->
 
-    helpers.createSection(
-      {
-        title: 'A section',
-        indicator: indicator._id
-        visualisation: visualisation._id
-        narrative: narrative._id
-      },
-      (err, section) ->
-        helpers.createReport( {sections: [section]}, (report) ->
-          Report.findFatReport(report._id, (err, fatReport) ->
-            assert.equal fatReport._id, report.id
+          helpers.createNarrative(
+            {section_id: section._id}
+            (err, narrative) ->
+              helpers.createReport( {sections: [section]}, (report) ->
+                Report.findFatReport(report._id, (err, fatReport) ->
+                  assert.equal fatReport._id, report.id
 
-            reloadedSection = fatReport.sections[0]
-            assert.equal reloadedSection._id, section.id
+                  reloadedSection = fatReport.sections[0]
+                  assert.equal reloadedSection._id, section.id
 
-            assert.property reloadedSection, 'indicator'
-            assert.equal indicator._id, reloadedSection.indicator.id
+                  assert.property reloadedSection, 'indicators'
+                  assert.equal indicator._id.toString(),
+                    reloadedSection.indicators[0]._id.toString()
 
-            assert.property reloadedSection, 'visualisation'
-            assert.equal visualisation._id, reloadedSection.visualisation.id
+                  assert.property reloadedSection, 'visualisation'
+                  assert.equal visualisation._id.toString(),
+                    reloadedSection.visualisation._id.toString()
 
-            assert.property reloadedSection, 'narrative'
-            assert.equal narrative._id, reloadedSection.narrative.id
+                  assert.property reloadedSection, 'narrative'
+                  assert.equal narrative._id.toString(),
+                    reloadedSection.narrative._id.toString()
 
-            done()
+                  done()
+                )
+              )
           )
-        )
+      )
     )
-
-  async.series([
-    helpers.createIndicator,
-    helpers.createVisualisation,
-    helpers.createNarrative
-  ], createSectionWithSubDocuments)
+  )
 )

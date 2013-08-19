@@ -76,10 +76,12 @@ exports.createIndicator = (callback) ->
 
     callback(null, indicator)
 
-exports.createVisualisation = (callback) ->
-  visualisation = new Visualisation(
-    data: "new visualisation"
-  )
+exports.createVisualisation = (attributes, callback) ->
+  if arguments.length == 1
+    callback = attributes
+    attributes = undefined
+
+  visualisation = new Visualisation(attributes || data: "new visualisation")
 
   visualisation.save (err, Visualisation) ->
     if err?
@@ -87,10 +89,12 @@ exports.createVisualisation = (callback) ->
 
     callback(null, visualisation)
 
-exports.createNarrative = (callback) ->
-  narrative = new Narrative(
-    content: "new narrative"
-  )
+exports.createNarrative = (attributes, callback) ->
+  if arguments.length == 1
+    callback = attributes
+    attributes = undefined
+
+  narrative = new Narrative(attributes || content: "new narrative")
 
   narrative.save (err, narrative) ->
     if err?

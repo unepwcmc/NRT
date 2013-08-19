@@ -56,7 +56,7 @@ test('GET report returns full nested sections', (done) ->
     visualisation = results[2]
 
     helpers.createSection({
-      indicator: indicator
+      indicators: [indicator]
       narrative: narrative
       visualisation: visualisation
     }, (err, section) ->
@@ -80,8 +80,8 @@ test('GET report returns full nested sections', (done) ->
           assert.property returnedSection, 'narrative'
           assert.equal narrative._id, returnedSection.narrative._id
 
-          assert.property returnedSection, 'indicator'
-          assert.equal indicator._id, returnedSection.indicator._id
+          assert.property returnedSection, 'indicators'
+          assert.equal indicator._id, returnedSection.indicators[0]._id
 
           assert.property returnedSection, 'visualisation'
           assert.equal visualisation._id, returnedSection.visualisation._id
