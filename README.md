@@ -1,6 +1,6 @@
 # National Reporting Toolkit
 
-### Setup
+## Setup
 
 * Install and setup [NVM](https://github.com/creationix/nvm)
   * We're targeting v0.10.13
@@ -8,6 +8,8 @@
 * `npm install` in the `client/` and `server/` dirs to get the libs
 * Install mongodb locally (`brew install mongodb`) and start it with
   `mongod`.
+
+Most secrets you need are [here](https://docs.google.com/a/peoplesized.com/document/d/1dYMO3PJhRlTDQ2BEUUOcLwqX0IfJ5UP_UYyfQllnXeQ/).
 
 ## Running the application
 
