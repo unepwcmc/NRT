@@ -122,7 +122,7 @@ test(".addNarrative calls render and resize in edit mode", ->
 )
 
 test("Can see the section visualisation", ->
-  visualisation = new Backbone.Models.Visualisation()
+  visualisation = Helpers.factoryVisualisationWithIndicator()
   section = new Backbone.Models.Section(title: 'title', visualisation: visualisation)
 
   view = createAndShowSectionViewForSection(section)
@@ -138,9 +138,10 @@ test("Can see the section visualisation", ->
 )
 
 test(".addVisualisation creates a visualisation record on the section and saves it", ->
-  section = new Backbone.Models.Section(id: 5, title: 'This title is')
-
-  visualisationSaveSpy = sinon.spy(Backbone.Models.Visualisation::, 'save')
+  section = new Backbone.Models.Section(
+    title: 'This title is'
+    indicator: Helpers.factoryIndicator()
+  )
 
   view = createAndShowSectionViewForSection(section)
 
@@ -149,10 +150,7 @@ test(".addVisualisation creates a visualisation record on the section and saves 
   view.addVisualisation()
 
   assert.equal section.get('visualisation').constructor.name, 'Visualisation'
-  assert.equal section.get('visualisation').get('section_id'), section.get('id')
-  sinon.assert.calledOnce(visualisationSaveSpy, "save")
 
-  visualisationSaveSpy.restore()
   view.close()
 )
 

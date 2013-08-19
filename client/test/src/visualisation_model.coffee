@@ -2,6 +2,22 @@ assert = chai.assert
 
 suite('Visualisation Model')
 
+test('Passing no section into visualisation creates a null section attribute', ->
+  visualisation = Helpers.factoryVisualisationWithIndicator()
+  assert.isNull visualisation.get('section')
+)
+
+test('.toJSON returns the section: as section._id instead of the model attributes', ->
+  section = Helpers.factorySectionWithIndicator()
+  section.set('_id', 34)
+  visualisation = new Backbone.Models.Visualisation(
+    section: section
+    indicator: section.get('indicator')
+  )
+
+  assert.strictEqual visualisation.toJSON().section, section.get('_id')
+)
+
 test('Passing an indicator into a visualisation
   should assign it to the visualisation attribute', ->
   indicator = new Backbone.Models.Indicator()

@@ -9,7 +9,12 @@ createAndShowVisualisationViewForVisualisation = (visualisation) ->
 suite('Visualisation View')
 
 test("Can see barchart view", ->
-  visualisation = new Backbone.Models.Visualisation()
+  visualisation = new Backbone.Models.Visualisation(
+    indicator: Helpers.factoryIndicator()
+    data: [
+      year: '3030', value: '20'
+    ]
+  )
 
   view = createAndShowVisualisationViewForVisualisation(visualisation)
 

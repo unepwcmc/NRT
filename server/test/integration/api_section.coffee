@@ -81,7 +81,7 @@ test('POST section with nested narrative', (done) ->
 )
 
 test('POST section with nested visualisation', (done) ->
-  createSectionWithVisualisation = (err, visualisation) ->
+  helpers.createVisualisation( (err, visualisation) ->
     visualisation_id = visualisation._id
 
     data =
@@ -100,8 +100,7 @@ test('POST section with nested visualisation', (done) ->
       assert.equal visualisation_id, body.visualisation._id
 
       done()
-
-  helpers.createVisualisation(createSectionWithVisualisation)
+  )
 )
 
 test('PUT section with new indicator', (done) ->
@@ -121,6 +120,8 @@ test('PUT section with new indicator', (done) ->
           assert.equal res.statusCode, 200
           assert.property body, 'indicator'
 
+          assert.equal body.indicator._id, newIndicator._id
+
           assert.equal "A section", body.title
 
           done()
@@ -129,7 +130,7 @@ test('PUT section with new indicator', (done) ->
   async.series([helpers.createIndicator, helpers.createIndicator], createSectionWithIndicator)
 )
 
-test('create when given no title or indicator should return an appropriate erro', (done)->
+test('create when given no title or indicator should return an appropriate error', (done)->
   request.post {
     url: helpers.appurl('/api/sections')
     json: true

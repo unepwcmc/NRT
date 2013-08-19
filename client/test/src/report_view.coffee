@@ -102,7 +102,7 @@ test("I can use report introduction", ->
 )
 
 test(".addSection adds a section to the report", ->
-  report = new Backbone.Models.Report(id: 5)
+  report = new Backbone.Models.Report(_id: 5)
   reportView = new Backbone.Views.ReportView(report: report)
 
   assert.equal report.get('sections').length, 0
@@ -110,7 +110,7 @@ test(".addSection adds a section to the report", ->
   reportView.addSection()
 
   assert.equal report.get('sections').length, 1
-  assert.equal report.get('sections').at(0).get('report_id'), report.get('id')
+  assert.equal report.get('sections').at(0).get('report_id'), report.get('_id')
 )
 
 test("I can use report conclusion")

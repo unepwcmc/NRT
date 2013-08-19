@@ -1,11 +1,9 @@
 window.Backbone.Models || = {}
 
 class window.Backbone.Models.Section extends Backbone.RelationalModel
-  url: ->
-    if @get('id')
-      "/api/sections/#{@get('id')}"
-    else
-      '/api/sections'
+  urlRoot: '/api/sections'
+
+  idAttribute: '_id'
 
   relations: [
       key: 'narrative'
@@ -18,16 +16,19 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
       key: 'visualisation'
       type: Backbone.HasOne
       relatedModel: 'Backbone.Models.Visualisation'
+      includeInJSON: false
       reverseRelation:
         key: 'section'
+        includeInJSON: '_id'
         type: Backbone.HasOne
     ,
       key: 'indicator'
       type: Backbone.HasOne
       relatedModel: 'Backbone.Models.Indicator'
-      includeInJSON: 'id'
+      includeInJSON: '_id'
       reverseRelation:
         key: 'sections'
+        includeInJSON: false
         type: Backbone.HasMany
   ]
 

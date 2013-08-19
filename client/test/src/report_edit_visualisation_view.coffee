@@ -35,8 +35,9 @@ test("Shows the given indicator title", ->
 
 test("Renders a BarChartView", ->
   view = createAndShowVisualisationViewForOptions(
-    visualisation: new Backbone.Models.Visualisation()
-    indicator: new Backbone.Models.Indicator()
+    visualisation: new Backbone.Models.Visualisation(
+      indicator: new Backbone.Models.Indicator()
+    )
   )
 
   subViewExists = false

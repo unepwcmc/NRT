@@ -2,6 +2,25 @@ assert = chai.assert
 
 suite('Section Model')
 
+test("When intialising a section with nested visualisations,
+  visualisation.toJSON should return section: as section._id", ->
+  sectionAttributes = {
+    _id: 5
+    indicator: {
+      _id: 15
+    }
+    visualisation: {
+      _id: 25
+      indicator: {
+        _id: 15
+      }
+    }
+  }
+  section = new Backbone.Models.Section(sectionAttributes)
+
+  assert.strictEqual section.get('visualisation').toJSON().section, sectionAttributes._id
+)
+
 test(".hasTitleOrIndicator returns false if there is no title and no indicator assigned", ->
   section = new Backbone.Models.Section()
 
@@ -22,11 +41,21 @@ test(".hasTitleOrIndicator returns true if there is an indicator present", ->
 
 test("When initialised with visualisation attributes,
   it creates a Backbone.Models.Visualisation model in the visualisation attribute", ->
-  visualisationAttributes = data: {some: 'data'}
+  visualisationAttributes = data: {some: 'data'}, indicator: Helpers.factoryIndicator()
   section = new Backbone.Models.Section(visualisation: visualisationAttributes)
 
   assert.equal section.get('visualisation').constructor.name, 'Visualisation'
   assert.equal section.get('visualisation').get('data'), visualisationAttributes.data
+)
+
+test('.toJSON should not include Visualisation attribute
+  (as visualisations save themselves with the section._id)', ->
+  section = new Backbone.Models.Section(
+    visualisation:
+      _id: 23423
+      indicator: {}
+  )
+  assert.isUndefined section.toJSON().visualisation
 )
 
 test("When initialised with narrative attributes,
@@ -49,11 +78,11 @@ test("When setting 'indicator' with indicator attributes,
 )
 
 test("When calling .toJSON on a section with an indicator model attribute,
-  the indicator model should be deserialized to the indicator id", ->
-  indicatorAttributes = id: 5, title: 'hat'
+  the indicator model should be deserialized to the indicator _id", ->
+  indicatorAttributes = _id: 5, title: 'hat'
 
   section = new Backbone.Models.Section(indicator: indicatorAttributes)
-  assert.equal section.toJSON().indicator, indicatorAttributes.id
+  assert.equal section.toJSON().indicator, indicatorAttributes._id
 )
 
 test("Can POST section to database", (done)->
