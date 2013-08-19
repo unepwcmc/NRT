@@ -24,7 +24,6 @@ exports.create = (req, res) ->
 
     Report
       .findOne(_id: report._id)
-      .populate('sections')
       .exec( (err, report) ->
         res.send(201, JSON.stringify(report))
       )
@@ -41,17 +40,8 @@ exports.show = (req, res) ->
 exports.update = (req, res) ->
   reportId = req.params.report
 
-  params = _.omit(req.body, ['sections', '_id'])
+  params = _.omit(req.body, ['_id'])
   updateAttributes = $set: params
-
-  if req.body.sections?
-    sections = _.map(req.body.sections, (section) ->
-      return new mongoose.Types.ObjectId(section._id)
-    )
-
-    updateAttributes.$pushAll = {
-      sections: sections
-    }
 
   Report.update(
     {_id: reportId},
@@ -63,7 +53,6 @@ exports.update = (req, res) ->
 
       Report
         .findOne(_id: reportId)
-        .populate('sections')
         .exec( (err, report) ->
           res.send(200, JSON.stringify(report))
         )

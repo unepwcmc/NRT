@@ -16,25 +16,6 @@ test('POST create', (done) ->
   data =
     title: "new report"
 
-  request.post({
-    url: helpers.appurl('api/reports/')
-    json: true
-    body: data
-  },(err, res, body) ->
-    id = body.id
-
-    assert.equal res.statusCode, 201
-
-    Report
-      .findOne(id)
-      .exec( (err, report) ->
-        assert.equal report.title, data.title
-        done()
-      )
-  )
-)
-
-test("GET show", (done) ->
   helpers.createReport( (report) ->
     request.get({
       url: helpers.appurl("api/reports/#{report.id}")
@@ -79,7 +60,7 @@ test('GET report returns full nested sections', (done) ->
       narrative: narrative
       visualisation: visualisation
     }, (err, section) ->
-      helpers.createReport({sections: [section._id]}, (report) ->
+      helpers.createReport({sections: [section]}, (report) ->
         request.get({
           url: helpers.appurl("api/reports/#{report.id}")
           json: true
@@ -123,11 +104,13 @@ test('PUT nesting a section in a report with existing sections', (done) ->
     helpers.createReport(
       {title: "A report", sections: [section]},
       (report) ->
+        updateAttributes = report.toObject()
+        updateAttributes.sections.push newSection.toObject()
+
         request.put({
           url: helpers.appurl("/api/reports/#{report.id}")
           json: true
-          body:
-            sections: [newSection]
+          body: updateAttributes
         }, (err, res, body) ->
           id = body.id
 
@@ -147,7 +130,7 @@ test('POST create - nesting a section in a report', (done) ->
   helpers.createSection( (err, section) ->
     data =
       title: "new report"
-      sections: [section._id]
+      sections: [section.toObject()]
 
     request.post({
       url: helpers.appurl('api/reports/')

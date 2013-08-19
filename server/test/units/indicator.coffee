@@ -37,8 +37,6 @@ test('.getIndicatorData should return all indicator data for this indicator', (d
       if err?
         console.error err
       else
-        console.log indicator
-        console.log indicatorData
         indicator.getIndicatorData((err, data) ->
           assert.ok(
             _.isEqual(data, expectedData), 

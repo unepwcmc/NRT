@@ -1,11 +1,12 @@
 #moment = require('moment')
 mongoose = require('mongoose')
+Section = require('./section.coffee').schema
 
 reportSchema = mongoose.Schema(
   title: String
   brief: String
   period: String
-  sections: [{type: mongoose.Schema.Types.ObjectId, ref: 'Section'}]
+  sections: [Section]
 )
 
 reportSchema.statics.findFatReport = (id, callback) ->

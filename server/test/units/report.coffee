@@ -62,7 +62,7 @@ test('.create with nested section', (done) ->
           callback()
 
       assertReportHasSection = (callback) ->
-        assert.equal section._id, report.sections[0]
+        assert.strictEqual section._id, report.sections[0]._id
         callback()
 
       async.parallel([
