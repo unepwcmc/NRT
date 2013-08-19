@@ -21,6 +21,8 @@ class Backbone.Views.TextEditView extends Backbone.View
     @type   = options.type
     @model = options.model
     @attributeName = options.attributeName
+    if options.wrapperTag?
+      @wrapperTag = options.wrapperTag
 
     @render()
 
@@ -31,11 +33,17 @@ class Backbone.Views.TextEditView extends Backbone.View
       @$el.html(@editTemplate(
         isInput: (@type is 'input')
         content: content
+        useWrapperTag: @wrapperTag?
+        wrapperTag: @wrapperTag
       ))
     else
-      @$el.html(@template(content: content, attributeName: @attributeName))
+      @$el.html(@template(
+        content: content, attributeName: @attributeName
+        useWrapperTag: @wrapperTag?
+        wrapperTag: @wrapperTag
+      ))
 
-    @text = @$el.find(":input")
+    @text = @$el.find(":input").not("button")
     @text.focus()
     @text.select()
     @resize()

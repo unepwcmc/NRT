@@ -1,6 +1,15 @@
+{{#if useWrapperTag}}
+  <{{wrapperTag}}>
+{{/if}}
+
 {{#if isInput}}
   <input type='text' class='content-text-field' value='{{content}}' />
 {{else}}
   <textarea class='content-text-field'>{{content}}</textarea>
 {{/if}}
-<a class='btn btn-primary save-content'>Save changes</a>
+
+{{#if useWrapperTag}}
+  </{{wrapperTag}}>
+{{/if}}
+
+<button class="save-content pull-right">Save changes</button>

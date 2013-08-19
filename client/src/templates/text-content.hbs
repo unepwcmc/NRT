@@ -1,6 +1,14 @@
 <div class="add-content">
   {{#if content}}
+    {{#if useWrapperTag}}
+      <{{wrapperTag}}>
+    {{/if}}
+
     {{{markup content}}}
+
+    {{#if useWrapperTag}}
+      </{{wrapperTag}}>
+    {{/if}}
   {{else}}
     Type {{attributeName}} here
   {{/if}}
