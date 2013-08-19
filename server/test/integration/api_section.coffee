@@ -4,38 +4,134 @@ request = require('request')
 async = require('async')
 _ = require('underscore')
 
-
 suite('API - Section')
-test('create, read', (done) ->
+
+Indicator = require('../../models/indicator').model
+Visualisation = require('../../models/visualisation').model
+Narrative = require('../../models/narrative').model
+Section = require('../../models/section').model
+
+test('POST create', (done) ->
   data =
     title: "test section title 1"
-    report_id: 5
-    narratives: []
-    visualisations: []
 
   request.post {
-    url: helpers.appurl('/api/section')
+    url: helpers.appurl('/api/sections')
     json: true
     body: data
   }, (err, res, body) ->
-    id = body.id
+    id = body._id
     assert.equal res.statusCode, 201
 
-    request.get {
-      url: helpers.appurl('/api/section/' + id)
+    section = body
+    assert.equal section._id, id
+    assert.equal section.title, data.title
+
+    # TODO test to see if added to report
+
+    done()
+)
+
+test('POST section with nested indicator', (done) ->
+  createSectionWithIndicator = (err, indicator) ->
+    indicator_id = indicator._id
+
+    data =
+      title: "test section title 1"
+      indicator: indicator_id
+
+    request.post {
+      url: helpers.appurl('/api/sections')
       json: true
+      body: data
     }, (err, res, body) ->
-      section = body
-      assert.equal section.id, id
-      assert.equal section.title, data.title
-      assert.equal section.report_id, data.report_id
-      assert.equal res.statusCode, 200
+      id = body._id
+      assert.equal res.statusCode, 201
+
+      assert.property body, 'indicator'
+      assert.equal indicator_id, body.indicator._id
+
       done()
+
+  helpers.createIndicator(createSectionWithIndicator)
+)
+
+test('POST section with nested narrative', (done) ->
+  createSectionWithNarrative = (err, narrative) ->
+    narrative_id = narrative._id
+
+    data =
+      title: "test section title 1"
+      narrative: narrative_id
+
+    request.post {
+      url: helpers.appurl('/api/sections')
+      json: true
+      body: data
+    }, (err, res, body) ->
+      id = body._id
+      assert.equal res.statusCode, 201
+
+      assert.property body, 'narrative'
+      assert.equal narrative_id, body.narrative._id
+
+      done()
+
+  helpers.createNarrative(createSectionWithNarrative)
+)
+
+test('POST section with nested visualisation', (done) ->
+  createSectionWithVisualisation = (err, visualisation) ->
+    visualisation_id = visualisation._id
+
+    data =
+      title: "test section title 1"
+      visualisation: visualisation_id
+
+    request.post {
+      url: helpers.appurl('/api/sections')
+      json: true
+      body: data
+    }, (err, res, body) ->
+      id = body._id
+      assert.equal res.statusCode, 201
+
+      assert.property body, 'visualisation'
+      assert.equal visualisation_id, body.visualisation._id
+
+      done()
+
+  helpers.createVisualisation(createSectionWithVisualisation)
+)
+
+test('PUT section with new indicator', (done) ->
+  createSectionWithIndicator = (err, results) ->
+    indicator = results[0]
+    newIndicator = results[1]
+
+    helpers.createSection(
+      {title: 'A section', indicator: indicator._id},
+      (err, section) ->
+        request.put {
+          url: helpers.appurl("api/sections/#{section.id}")
+          json: true
+          body:
+            indicator: newIndicator._id
+        }, (err, res, body) ->
+          assert.equal res.statusCode, 200
+          assert.property body, 'indicator'
+
+          assert.equal "A section", body.title
+
+          done()
+    )
+
+  async.series([helpers.createIndicator, helpers.createIndicator], createSectionWithIndicator)
 )
 
 test('create when given no title or indicator should return an appropriate erro', (done)->
   request.post {
-    url: helpers.appurl('/api/section')
+    url: helpers.appurl('/api/sections')
     json: true
     body: {}
   }, (err, res, body) ->
@@ -45,66 +141,149 @@ test('create when given no title or indicator should return an appropriate erro'
     done()
 )
 
-test('update', (done) ->
-  Section = require('../../models/section')
-
-  Section.create(title: 'old title').success((section)->
+test('PUT section', (done) ->
+  helpers.createSection( (err, section) ->
     newTitle = 'new title'
 
     request.put {
-      url: helpers.appurl("api/section/#{section.id}")
+      url: helpers.appurl("api/sections/#{section.id}")
       json: true
       body:
         title: newTitle
     }, (err, res, body) ->
       assert.equal res.statusCode, 200
 
-      Section.find(section.id).success((reloadedSection)->
-        assert.equal reloadedSection.title, newTitle
-        done()
-      ).error((error) ->
-        console.error error
-        throw "Unable to recall updated section"
-      )
-  ).error((error) ->
-    console.error error
-    throw "unable to create section"
+      Section
+        .findOne(section.id)
+        .exec( (err, reloadedSection)->
+          if err?
+            console.error error
+            throw "Unable to recall updated section"
+
+          assert.equal reloadedSection.title, newTitle
+          done()
+        )
   )
 )
 
-test('list', (done) ->
-  data =
-    title: "test section title 2"
-    report_id: 5
-    narratives: []
-    visualisations: []
+test('PUT section does not fail when given an _id', (done) ->
+  helpers.createSection( (err, section) ->
+    newTitle = 'new title'
 
-  opts =
-    url: helpers.appurl('/api/section')
-    json: true
-    body: data
+    request.put {
+      url: helpers.appurl("api/sections/#{section.id}")
+      json: true
+      body:
+        _id: section.id
+        title: newTitle
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 200
 
-  async.parallel({
-    section1: (cb) -> request.post opts, cb
-    section2: (cb) -> request.post opts, cb
-  }, (err, results) ->
+      Section
+        .findOne(section.id)
+        .exec( (err, reloadedSection)->
+          if err?
+            console.error error
+            throw "Unable to recall updated section"
 
-    res1 = results.section1[0]
-    res2 = results.section2[0]
-    body1 = results.section1[1]
-    body2 = results.section2[1]
+          assert.equal reloadedSection.title, newTitle
+          done()
+        )
+  )
+)
 
-    assert.equal res1.statusCode, 201
-    assert.equal res2.statusCode, 201
 
-    request.get {
-      url: helpers.appurl('/api/section')
+test("show returns a section's data", (done) ->
+  helpers.createSection( (err, section) ->
+    request.get({
+      url: helpers.appurl("api/sections/#{section.id}")
       json: true
     }, (err, res, body) ->
       assert.equal res.statusCode, 200
-      assert.equal body.length, 2
-      assert.equal body[0].id, body1.id
-      assert.equal body[1].id, body2.id
+
+      reloadedSection = body
+      assert.equal reloadedSection._id, section.id
+      assert.equal reloadedSection.content, section.content
+
       done()
+    )
+  )
+)
+
+test("GET /section/<id> returns a section's nested models", (done) ->
+  createSectionWithSubDocuments = (err, results) ->
+    indicator = results[0]
+    visualisation = results[1]
+    narrative = results[2]
+
+    helpers.createSection(
+      {
+        title: 'A section',
+        indicator: indicator._id
+        visualisation: visualisation._id
+        narrative: narrative._id
+      },
+      (err, section) ->
+        request.get({
+          url: helpers.appurl("api/sections/#{section.id}")
+          json: true
+        }, (err, res, body) ->
+          assert.equal res.statusCode, 200
+
+          reloadedSection = body
+          assert.equal reloadedSection._id, section.id
+
+          assert.property body, 'indicator'
+          assert.equal indicator._id, body.indicator._id
+
+          assert.property body, 'visualisation'
+          assert.equal visualisation._id, body.visualisation._id
+
+          assert.property body, 'narrative'
+          assert.equal narrative._id, body.narrative._id
+
+          done()
+        )
+    )
+
+  async.series([
+    helpers.createIndicator,
+    helpers.createVisualisation,
+    helpers.createNarrative
+  ], createSectionWithSubDocuments)
+)
+
+test('DELETE section', (done) ->
+  helpers.createSection( (err, section) ->
+    request.del({
+      url: helpers.appurl("api/sections/#{section.id}")
+      json: true
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 204
+
+      Section.count( (err, count)->
+        unless err?
+          assert.equal 0, count
+          done()
+      )
+    )
+  )
+)
+
+test('GET index', (done) ->
+  helpers.createSection( (err, section) ->
+    request.get({
+      url: helpers.appurl("api/sections")
+      json: true
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 200
+
+      sections = body
+      assert.equal 1, sections.length
+      assert.equal sections[0]._id, section.id
+      assert.equal sections[0].content, section.content
+
+      done()
+    )
   )
 )

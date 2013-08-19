@@ -1,49 +1,77 @@
-Section = require("../../models/section")
+Section = require("../../models/section").model
 _ = require('underscore')
-
+async = require('async')
 
 exports.index = (req, res) ->
-  Section.findAll().success (sections) ->
-        res.send(JSON.stringify(sections))
+  Section
+    .find()
+    .populate('indicator narrative visualisation')
+    .exec( (err, sections) ->
+      if err?
+        console.error err
+        return res.send(500, "Could not retrieve sections")
+
+      res.send(JSON.stringify(sections))
+    )
 
 exports.create = (req, res) ->
-  obj = _.pick(req.body, 'title', 'report_id', 'indicator')
-  errors = Section.getValidationErrors(obj)
+  params = req.body
+  errors = Section.getValidationErrors(params)
 
   if errors.length > 0
     res.send(422, JSON.stringify(errors))
   else
-    Section.create(obj).success((section) ->
-      res.send(201, JSON.stringify(
-        section
-      ))
-    ).error (error) ->
-      console.error error
-      res.send(500,
-        error.message
-      )
+    section = new Section(params)
+    section.save (err, section) ->
+      if err?
+        console.error err
+        return res.send(500, "Could not create section")
+
+      Section
+        .findOne(_id: section._id)
+        .populate('indicator narrative visualisation')
+        .exec( (err, section) ->
+          res.send(201, JSON.stringify(section))
+        )
 
 exports.show = (req, res) ->
-  Section.find(req.params.section).success (section) ->
-    res.send(JSON.stringify(
-      section
-    ))
+  Section
+    .findOne(_id: req.params.section)
+    .populate('indicator narrative visualisation')
+    .exec( (err, section) ->
+      if err?
+        console.error err
+        return res.send(500, "Could not retrieve section")
+
+      res.send(JSON.stringify(section))
+    )
 
 exports.update = (req, res) ->
-  obj = _.pick(req.body, 'title', 'report_id')
-  Section.find(req.params.section).success((section) ->
-    section.updateAttributes(obj).success((section) ->
-      res.send(200, JSON.stringify(
-        section
-      ))
-    ).error((error) ->
-      console.error error
-      res.send(500, "Error saving section #{section.title}")
-    )
-  ).error((error)->
-    console.error error
-    res.send(404, "Unable to find section #{req.params.id} to update")
+  params = _.omit(req.body, '_id')
+
+  Section.update(
+    {_id: req.params.section},
+    {$set: params},
+    (err, rowsChanged) ->
+      if err?
+        console.error err
+        return res.send(501, "Error saving section")
+
+      Section
+        .findOne(_id: req.params.section)
+        .populate('indicator narrative visualisation')
+        .exec( (err, section) ->
+          unless err?
+            res.send(200, JSON.stringify(section))
+        )
   )
 
 exports.destroy = (req, res) ->
-  res.send('destroy section ' + req.params.id)
+  Section.remove(
+    {_id: req.params.section},
+    (err, section) ->
+      if err?
+        res.send(500, "Couldn't delete the section")
+
+      res.send(204)
+  )

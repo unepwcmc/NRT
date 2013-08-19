@@ -4,15 +4,15 @@ request = require('request')
 url = require('url')
 _ = require('underscore')
 
-suite('Indicator index')
+suite('Indicator show')
 
 test("When given a valid indicator, I should get a 200 and see the title", (done)->
-  Indicator = require('../../models/indicator')
+  Indicator = require('../../models/indicator').model
 
   indicatorTitle = "Dat test indicator"
-  Indicator.create(
-    title: indicatorTitle
-  ).success((indicator)->
+  indicator = Indicator(title: indicatorTitle)
+
+  indicator.save( (err, indicator) ->
     request.get {
       url: helpers.appurl("/indicators/#{indicator.id}")
     }, (err, res, body) ->

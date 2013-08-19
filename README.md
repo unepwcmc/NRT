@@ -6,14 +6,10 @@
   * We're targeting v0.10.13
 * `npm install -g handlebars coffee-script grunt-cli`
 * `npm install` in the `client/` and `server/` dirs to get the libs
-* Install mysql locally (`brew install mysql`, or `sudo apt-get install mysql-server`)
-* Copy `server/config/database.json.example` to
-  `server/config/database.json` and fill it with your local mysql
-  config. 
-* Create the tables you named by hand. Using the example above, these
-  would be `nrt_development` and `nrt_test`.
+* Install mongodb locally (`brew install mongodb`) and start it with
+  `mongod`.
 
-Most secrets you are [here](https://docs.google.com/a/peoplesized.com/document/d/1dYMO3PJhRlTDQ2BEUUOcLwqX0IfJ5UP_UYyfQllnXeQ/).
+Most secrets you need are [here](https://docs.google.com/a/peoplesized.com/document/d/1dYMO3PJhRlTDQ2BEUUOcLwqX0IfJ5UP_UYyfQllnXeQ/).
 
 ## Running the application
 
@@ -40,7 +36,7 @@ Contains the 'actions' in the application, grouped into modules by their
 responsibility. These are mapped to paths by route_bindings.coffee
 
 #### models/
-mysql ORM initialization
+Mongoose schemas, and model instantiation.
 
 ### Client
 

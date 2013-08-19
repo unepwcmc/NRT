@@ -1,22 +1,13 @@
-Sequelize = require("sequelize-mysql").sequelize
+mongoose = require('mongoose')
 
-User = sequelize.define('User', {
-  email:
-    type: Sequelize.STRING
-    allowNull: false
-  password:
-    type: Sequelize.STRING
-    allowNull: false
-  id:
-    type: Sequelize.STRING
-    primaryKey: true
-  }, {
-    instanceMethods:
-      validPassword: (password) ->
-        return @password == password
-  }
+userSchema = mongoose.Schema(
+  email: String
+  password: String
 )
 
-User.sync()
+User = mongoose.model('User', userSchema)
 
-module.exports = User
+module.exports = {
+  schema: userSchema
+  model: User
+}

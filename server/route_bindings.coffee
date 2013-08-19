@@ -22,10 +22,10 @@ module.exports = exports = (app) ->
       call(@, req, res, next)
 
   # REST API
-  app.resource 'api/narrative', narrativeApi, { format: 'json' }
-  app.resource 'api/visualisation', visualisationApi, { format: 'json' }
-  app.resource 'api/report', reportApi, { format: 'json' }
-  app.resource 'api/section', sectionApi, { format: 'json' }
+  app.resource 'api/narratives', narrativeApi, { format: 'json' }
+  app.resource 'api/visualisations', visualisationApi, { format: 'json' }
+  app.resource 'api/reports', reportApi, { format: 'json' }
+  app.resource 'api/sections', sectionApi, { format: 'json' }
   app.resource 'api/indicators', indicatorApi, { format: 'json' }
 
   app.get "/", ensureAuthenticated, dashboardRoutes.index
@@ -40,12 +40,12 @@ module.exports = exports = (app) ->
   app.get "/reports/:id", ensureAuthenticated, reportRoutes.show
   app.get "/reports/:id/present", ensureAuthenticated, reportRoutes.present
 
-  # Tests
+  ## Tests
   if app.settings.env == 'test'
     app.get "/tests", testRoutes.test
 
-  # User CRUD
-  # express-resource doesn't support using middlewares
+  ## User CRUD
+  ## express-resource doesn't support using middlewares
   useTokenAuthentication = require('./lib/token_authentication.coffee')
 
   app.get "/users", useTokenAuthentication, userRoutes.index
