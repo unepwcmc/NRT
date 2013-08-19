@@ -6,9 +6,6 @@
   * We're targeting v0.10.13
 * `npm install -g handlebars coffee-script grunt-cli`
 * `npm install` in the `client/` and `server/` dirs to get the libs
-* Copy `server/config/database.json.example` to
-  `server/config/database.json` and fill it with your local mysql
-  config. You will need to create the tables you named by hand.
 * Install mongodb locally (`brew install mongodb`) and start it with
   `mongod`.
 
