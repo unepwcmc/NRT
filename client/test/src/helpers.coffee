@@ -5,7 +5,7 @@ Helpers.factorySectionWithIndicator = ->
   indicatorId = indicatorId + 1
   new Backbone.Models.Section(
     indicator: new Backbone.Models.Indicator(
-      id: indicatorId
+      _id: indicatorId
     )
   )
 

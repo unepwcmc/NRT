@@ -17,7 +17,7 @@ test('when initialised with a visualisation with no data, it fetches the data', 
   Helpers.renderViewToTestContainer(view)
 
   # Check we received a data request
-  indicatorId = visualisation.get('section').get('indicator').get('id')
+  indicatorId = visualisation.get('section').get('indicator').get('_id')
   assert.equal(
     server.requests[0].url,
     "/api/indicators/#{indicatorId}/data"
