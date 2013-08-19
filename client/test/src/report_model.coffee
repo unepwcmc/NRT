@@ -13,3 +13,19 @@ test("When initialised with an array of sections,
   report = new Backbone.Models.Report(sections: sections)
   assert.equal report.get('sections').constructor.name, 'SectionCollection'
 )
+
+test(".toJSON should include nested section objects as their JSON", ->
+  sections = [new Backbone.Models.Section(
+    indicator: new Backbone.Models.Indicator(_id: 5352)
+    title: "dat working"
+  )]
+  report = new Backbone.Models.Report(sections: sections)
+
+  sectionsJSON = _.map sections, (section)->
+    section.toJSON()
+  assert.ok(
+    _.isEqual(report.toJSON().sections, sectionsJSON),
+    "Expected \n#{JSON.stringify(report.toJSON().sections)}\n
+     to equal \n#{JSON.stringify(sectionsJSON)}"
+  )
+)
