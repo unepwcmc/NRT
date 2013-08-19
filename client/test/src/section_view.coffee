@@ -141,7 +141,7 @@ test("Can see the section visualisation", ->
 )
 
 test(".addVisualisation creates a visualisation record on the section and saves it", ->
-  section = new Backbone.Models.Section(id: 5)
+  section = new Backbone.Models.Section(id: 5, title: 'This title is')
 
   visualisationSaveSpy = sinon.spy(Backbone.Models.Visualisation::, 'save')
 
