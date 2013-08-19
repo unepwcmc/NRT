@@ -59,60 +59,67 @@ textarea.content-text-field {
 
 button,
 a.button{
-    -webkit-appearance: none;
-    border: none;
+  -webkit-appearance: none;
+  border: none;
+  background-color: $buttonBlue;
+  color: #fff;
+  font-size: 0.85em;
+  font-weight: 300;
+  font-family: 'Open sans';
+  padding: 15px 40px;
+  border-radius: 4px;
+  cursor: pointer;
+  @include transition(background-color 0.5s);
+
+  padding: 5px 15px;
+  background-color: transparent;
+  border: 1px solid $lightishGrey;
+  color: $lightishGrey;
+  font-weight: 400;
+
+  span{
+    display: none;
+
+    &.show{
+      display: inline;
+    }
+  }
+
+  i{
+    &.icon-bookmark{
+      display: none;
+    }
+  }
+
+  &:hover{
+    background-color: transparent;
+    border-color: $buttonBlue;
+    color: white;
+  }
+
+  &:active, &.active{
     background-color: $buttonBlue;
-    color: #fff;
-    font-size: 0.85em;
-    font-weight: 300;
-    font-family: 'Open sans';
-    padding: 15px 40px;
-    border-radius: 4px;
-    cursor: pointer;
-    @include transition(background-color 0.5s);
-    &.grey{
-        padding: 5px 15px;
-        background-color: transparent;
-        border: 1px solid $lightishGrey;
-        color: $lightishGrey;
-        font-weight: 400;
-        span{
-            display: none;
-            &.show{
-                display: inline;
-            }
-        }
-        i{
-            &.icon-bookmark{
-                display: none;
-            }
-        }
-        &:hover{
-            background-color: transparent;
-            border-color: $buttonBlue;
-            color: $buttonBlue;
-        }
-        &:active, &.active{
-            background-color: $buttonBlue;
-            border-color: $buttonBlue;
-            color: white;
-            i{
-                &.icon-bookmark-empty{
-                    display: none;
-                }
-                &.icon-bookmark{
-                    display: inline;
-                }
-            }
-        }
+    border-color: $buttonBlue;
+    color: white;
+
+    i{
+      &.icon-bookmark-empty{
+        display: none;
+      }
+      &.icon-bookmark{
+        display: inline;
+      }
     }
-    &:hover{
-        background-color: $linkBlue;
-    }
-    &:active, &.active{
-        background-color: #00679b;
-        color: #eee;
-    }
+  }
+
+  &:hover{
+    background-color: $linkBlue;
+  }
+
+  &:active, &.active{
+    background-color: #00679b;
+    color: #eee;
+  }
 }
 
 ::selection{

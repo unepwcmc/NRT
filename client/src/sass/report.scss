@@ -349,6 +349,13 @@ header.report-header {
       background-color: white;
       width: 600px;
       float: left;
+      position: relative;
+
+      button {
+        margin: 10px 10px 0 0;
+        right: 0;
+        position: absolute;
+      }
 
       .bar-chart-view {
         padding: 50px 10px;
