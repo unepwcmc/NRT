@@ -94,10 +94,16 @@ a.button{
   &:hover{
     background-color: transparent;
     border-color: $buttonBlue;
-    color: white;
+    color: $buttonBlue;
   }
 
-  &:active, &.active{
+  &:active{
+    background-color: transparent;
+    border-color: $buttonBlue;
+    color: $buttonBlue;
+  }
+
+  &.active{
     background-color: $buttonBlue;
     border-color: $buttonBlue;
     color: white;
@@ -111,15 +117,7 @@ a.button{
       }
     }
   }
-
-  &:hover{
-    background-color: $linkBlue;
-  }
-
-  &:active, &.active{
-    background-color: #00679b;
-    color: #eee;
-  }
+  
   .pull-right {
     float: right;
   }
