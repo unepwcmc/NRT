@@ -95,12 +95,21 @@ test("When setting 'indicator' with indicator attributes,
   assert.equal section.get('indicator').get('title'), indicatorAttributes.title
 )
 
-test("Can POST section to database", (done)->
-  section = new Backbone.Models.Section(title: "test report title", report_id: 5)
+test(".save should actually call save on the parent report model", (done)->
+  report = new Backbone.Models.Report(
+    sections: [{
+      title: 'dat title'
+    }]
+  )
+  section = report.get('sections').models[0]
+
+  reportSaveSpy = sinon.stub(report, 'save', (attributes, options)->
+    options.success(report, 200, options)
+  )
+
   section.save(null,
     success: (model, response, options) ->
-      assert _.isEqual(model.attributes, section.attributes), "Returned different attributes"
-      assert.equal options.xhr.status, 201
+      assert.ok reportSaveSpy.calledOnce, "Report save not called"
       done()
     error: ->
       throw 'Section saved failed'

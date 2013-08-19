@@ -10,10 +10,8 @@ suite('ReportEditVisualisationView')
 
 test("Shows the given indicator title", ->
   indicatorTitle = "my lovely indicator"
-  indicator = new Backbone.Models.Indicator(
-    _id: 5
-    title: indicatorTitle
-  )
+  indicator = Helpers.factoryIndicator()
+  indicator.set('title', indicatorTitle)
 
   section = new Backbone.Models.Section(
     indicator: indicator
@@ -23,6 +21,7 @@ test("Shows the given indicator title", ->
     visualisation: new Backbone.Models.Visualisation(
       indicator: indicator
       section: section
+      data: []
     )
   )
 

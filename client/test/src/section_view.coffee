@@ -123,6 +123,7 @@ test(".addNarrative calls render and resize in edit mode", ->
 
 test("Can see the section visualisation", ->
   visualisation = Helpers.factoryVisualisationWithIndicator()
+  visualisation.set('data', [])
   section = new Backbone.Models.Section(title: 'title', visualisation: visualisation)
 
   view = createAndShowSectionViewForSection(section)
@@ -156,7 +157,12 @@ test(".addVisualisation creates a visualisation record on the section and saves 
 
 test("Can edit the section title", (done)->
   oldTitle = "old title"
-  section = new Backbone.Models.Section(title: oldTitle)
+  report = new Backbone.Models.Report({
+    sections: [
+      new Backbone.Models.Section(title: oldTitle)
+    ]
+  })
+  section = report.get('sections').models[0]
 
   sectionSaveSpy = sinon.spy(Backbone.Models.Section::, 'save')
 
