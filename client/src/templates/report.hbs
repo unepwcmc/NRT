@@ -8,10 +8,10 @@
   <div class="report-content">
     <div class="report-title">
       <div class="time-period">{{addSubViewTo thisView "TextEditView" type="input" attributeName="period" model=thisView.report}}</div>
-      {{addSubViewTo thisView "TextEditView" type="input"
+      {{addSubViewTo thisView "TextEditView"
         attributeName="title" model=thisView.report wrapperTag="h1"}}
       <div class="report-extra">
-        <div class="last-update"><a href="#" data-toggle="tooltip" title="Last update"><i class="icon-time append"></i></a>1st of April, 18:23</div>
+        <div class="last-update"><a href="#" data-toggle="tooltip" title="Last update"><i class="icon-time append"></i></a>Report edited 1st of April, 18:23</div>
         <div class="who"><a href="#" data-toggle="tooltip" title="Report owner"><i class="icon-user append"></i></a>Dr. Anybody</div>
       </div>
     </div>
@@ -27,8 +27,8 @@
       <i class="icon-bookmark-empty append"></i><i class="icon-bookmark append"></i><span class="show">Bookmark this report</span><span>Bookmarked report</span>
     </button>
 
-    <a href="/reports/{{report.id}}/present" id='present-report'>
-      <i class="icon-fighter-jet append"></i>Present report
+    <a href="/reports/{{report._id}}/present" class='present-report'>
+      <i class="icon-fighter-jet append"></i>View as presentation
     </a>
 
 

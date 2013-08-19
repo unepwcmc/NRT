@@ -97,13 +97,7 @@ a.button{
     color: $buttonBlue;
   }
 
-  &:active{
-    background-color: transparent;
-    border-color: $buttonBlue;
-    color: $buttonBlue;
-  }
-
-  &.active{
+  &:active,&.active{
     background-color: $buttonBlue;
     border-color: $buttonBlue;
     color: white;
@@ -117,7 +111,7 @@ a.button{
       }
     }
   }
-  
+
   .pull-right {
     float: right;
   }
