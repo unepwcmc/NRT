@@ -5,14 +5,20 @@
     <h3>Subtitle</h3>
   </header>
   <div class="visualisation">
-    <select name="visualisation">
-      {{#each visualisationTypes}}
-        <option value="{{this}}" {{selectedIfEqual ../visualisationType this}}>
-          {{this}}
-        </option>
-      {{/each}}
-    </select>
-    <button class="save">Save Visualisation</button>
+    <div class='controls'>
+      <button class="save">Save Visualisation</button>
+      <div class='select'>
+        <i class="{{visualisationType}}"></i>
+        <select name="visualisation">
+          {{#each visualisationTypes}}
+            <option value="{{this}}" {{selectedIfEqual ../visualisationType this}}>
+              {{this}}
+            </option>
+          {{/each}}
+        </select>
+        <i class="icon-chevron-down"></i>
+      </div>
+    </div>
     {{addSubViewTo thisView visualisationViewName width=550 visualisation=visualisation}}
   </div>
 

@@ -36,5 +36,13 @@ class Backbone.Views.MapView extends Backbone.View
       'http://{s}.tiles.mapbox.com/v3/onlyjsmith.map-9zy5lnfp/{z}/{x}/{y}.png'
     ).addTo(@map)
 
+    styleGeojson =
+      "color": "#ff7800"
+      "weight": 1
+      "opacity": 0.65
+
     geojsonFeature = @visualisation.getHighestXRow()[@visualisation.getGeometryField()]
-    L.geoJson(geojsonFeature).addTo(@map)
+    L.geoJson(
+      geojsonFeature
+      style: styleGeojson
+    ).addTo(@map)
