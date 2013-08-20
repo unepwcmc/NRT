@@ -27,7 +27,7 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
   buildIndicatorDataUrl: ->
     "/api/indicators/#{@get('indicator').get('_id')}/data"
 
-  @visualisationTypes: ['BarChart', 'Map', 'Table']
+  @visualisationTypes: ['BarChart', 'Map']#, 'Table']
   
 #For backbone relational
 Backbone.Models.Visualisation.setup()

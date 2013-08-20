@@ -3,20 +3,17 @@ window.Backbone.Views ||= {}
 
 class Backbone.Views.MapView extends Backbone.View
   template: Handlebars.templates['map.hbs']
+  className: 'map-view'
 
   initialize: (options) ->
     @visualisation = options.visualisation
     @listenTo(@visualisation, 'change', @render)
 
-    @barChart = nrtViz.barChart
-     xKey: "year"
-     yKey: "value"
-    @width = options.width || 250
-    @barColor = if options.barColor? then options.barColor else "LightSteelBlue"
 
   render: =>
     if @visualisation.get('data')?
       @$el.html(@template())
+      @renderMap()
     else
       @visualisation.getIndicatorData()
 
@@ -24,3 +21,15 @@ class Backbone.Views.MapView extends Backbone.View
 
   onClose: ->
     
+  renderMap: =>
+    @map = L.map(
+      @$el.find(".map-visualisation")[0]
+    ).fitBounds([
+      [26.204734267107604, 57.44750976562499],
+      [22.19757745335104, 50.877685546875]
+    ])
+
+    L.tileLayer('http://{s}.tiles.mapbox.com/v3/onlyjsmith.map-9zy5lnfp/{z}/{x}/{y}.png', 
+    ).addTo(@map);
+
+    window.m = @map
