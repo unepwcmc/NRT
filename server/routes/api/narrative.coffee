@@ -15,7 +15,7 @@ exports.index = (req, res) ->
 exports.create = (req, res) ->
   params = req.body
 
-  narrative = new Narrative(content: params.content)
+  narrative = new Narrative(params)
   narrative.save (err, narrative) ->
     if err?
       console.error err
