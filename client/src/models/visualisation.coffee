@@ -1,6 +1,14 @@
 window.Backbone.Models || = {}
 
 class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
+
+  relations: [
+      key: 'indicator'
+      type: Backbone.HasOne
+      relatedModel: 'Backbone.Models.Indicator'
+      includeInJSON: Backbone.Models.Indicator::idAttribute
+  ]
+
   initialize: (options={})->
     unless options.indicator?
       throw "You must initialise Visualisations with an Indicator"
