@@ -34,16 +34,17 @@ exports.show = (req, res) ->
   )
 
 exports.update = (req, res) ->
+  visualisationId = req.params.visualisation
   Visualisation.update(
-    {_id: req.params.visualisation},
+    {_id: visualisationId},
     {$set: req.body},
-    (err, visualisation) ->
+    (err, rowsChanged) ->
       if err?
         console.error err
         res.send(500, "Could not update the visualisation")
 
       Visualisation.findFatVisualisation(
-        _id: visualisation._id,
+        _id: visualisationId,
         (err, visualisation) ->
           res.send(200, JSON.stringify(visualisation))
       )
