@@ -6,8 +6,9 @@
   </header>
   <div class="visualisation">
     <div class='controls'>
+      <button class="save">Save Visualisation</button>
       <div class='select'>
-        <i class="icon-world"></i>
+        <i class="{{visualisationType}}"></i>
         <select name="visualisation">
           {{#each visualisationTypes}}
             <option value="{{this}}" {{selectedIfEqual ../visualisationType this}}>
@@ -17,7 +18,6 @@
         </select>
         <i class="icon-chevron-down"></i>
       </div>
-      <button class="save">Save Visualisation</button>
     </div>
     {{addSubViewTo thisView visualisationViewName width=550 visualisation=visualisation}}
   </div>
