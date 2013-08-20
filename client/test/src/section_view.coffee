@@ -122,7 +122,8 @@ test("Can see the section visualisation", ->
   view.close()
 )
 
-test(".addVisualisation creates a visualisation record on the section and saves it", ->
+test(".createVisualisation creates a visualisation record on the section
+  and saves it", ->
   section = new Backbone.Models.Section(
     title: 'This title is'
     indicator: Helpers.factoryIndicator()
@@ -132,7 +133,25 @@ test(".addVisualisation creates a visualisation record on the section and saves 
 
   assert.isNull section.get('visualisation')
 
-  view.addVisualisation()
+  view.createVisualisation()
+
+  assert.equal section.get('visualisation').constructor.name, 'Visualisation'
+
+  view.close()
+)
+
+test(".editVisualisation creates a visualisation if none currently
+  exists", ->
+  section = new Backbone.Models.Section(
+    title: 'This title is'
+    indicator: Helpers.factoryIndicator()
+  )
+
+  view = createAndShowSectionViewForSection(section)
+
+  assert.isNull section.get('visualisation')
+
+  view.editVisualisation()
 
   assert.equal section.get('visualisation').constructor.name, 'Visualisation'
 

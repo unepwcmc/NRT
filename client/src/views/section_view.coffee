@@ -10,7 +10,8 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     "click .add-title": "startTitleEdit"
     "click .choose-indicator": "chooseIndicator"
     "click .add-narrative": "addNarrative"
-    "click .add-visualisation": "addVisualisation"
+    "click .add-visualisation": "editVisualisation"
+    "click .bar-chart-view": "editVisualisation"
 
   initialize: (options) ->
     @section = options.section
@@ -58,16 +59,23 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     )
     @section.set('narrative', narrative)
 
-  addVisualisation: =>
-    visualisation = new Backbone.Models.Visualisation(
+  createVisualisation: =>
+    return new Backbone.Models.Visualisation(
       section: @section
       indicator: @section.get('indicator')
     )
 
-    newVisualisationView = new Backbone.Views.ReportEditVisualisationView(
-      visualisation: visualisation
+  editVisualisation: =>
+    unless @section.get('visualisation')
+      @createVisualisation()
+
+    editVisualisationView = new Backbone.Views.ReportEditVisualisationView(
+      visualisation: @section.get('visualisation')
     )
-    $('body').append(newVisualisationView.render().el)
+
+    @listenToOnce(editVisualisationView, 'close', @render)
+
+    $('body').append(editVisualisationView.render().el)
     $('body').addClass('stop-scrolling')
     ###
     @section.set('visualisation', visualisation)
