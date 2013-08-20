@@ -7,41 +7,41 @@
 //REPORT STYLES
 
 header.report-header {
-    width: 100%;
-    height: 420px;
-    position: relative;
-    background-image: url('/images/bkg.jpg');
-    background-size: cover;
-    background-position: center center;
+  width: 100%;
+  height: 420px;
+  position: relative;
+  background-image: url('/images/bkg.jpg');
+  background-size: cover;
+  background-position: center center;
 }
 
 .arabic .caption{
-    left: 0;
-    right: auto;
-    padding: 0 20px 0 60px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 4px;
+  left: 0;
+  right: auto;
+  padding: 0 20px 0 60px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 4px;
 }
 
 .caption{
-    font-size: 0.85em;
-    position: absolute;
-    display: inline-block;
-    bottom: 0;
-    right: 0;
-    background-color: rgba(0,0,0,0.65);
-    padding: 0 60px 0 20px;
-    font-weight: 300;
-    border-top-left-radius: 4px;
-    color: #fff;
+  font-size: 0.85em;
+  position: absolute;
+  display: inline-block;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.65);
+  padding: 0 60px 0 20px;
+  font-weight: 300;
+  border-top-left-radius: 4px;
+  color: #fff;
 }
 
 .report-content{
-    width: 650px;
-    padding: 0 20px;
-    *{
-        max-width: 650px;
-    }
+  width: 650px;
+  padding: 0 20px;
+  *{
+    max-width: 650px;
+  }
 }
 
 .section-actions {
@@ -331,7 +331,7 @@ header.report-header {
       border-left: 0;
 
       header {
-        padding: 10px 20px;
+        padding: 12px 20px;
         border-bottom: 1px solid $lightishGrey;
         position: relative;
 
@@ -357,14 +357,48 @@ header.report-header {
       float: left;
       position: relative;
 
-      button {
-        margin: 10px 10px 0 0;
-        right: 0;
-        position: absolute;
+      .controls {
+        overflow: hidden;
+        margin: 10px 10px 0;
+
+        button,
+        .select {
+          margin-left: 10px;
+          float: right;
+        }
+
+        .select {
+          padding: 2px 15px;
+
+          &:active {
+            background: none;
+            color: inherit;
+            border-color: inherit;
+          }
+
+          &:hover {
+            select {
+              cursor: pointer;
+              color: $buttonBlue;
+            }
+
+            @include transition(none);
+          }
+        }
+
+        select {
+          color: $lightishGrey;
+          border: 0;
+        }
       }
 
       .bar-chart-view {
         padding: 50px 10px;
+      }
+
+      .map-visualisation {
+        margin-top: 8px;
+        height: 400px;
       }
     }
   }

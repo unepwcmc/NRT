@@ -6,3 +6,7 @@
 
 Handlebars.registerHelper "markup", (optionalValue) ->
   $(marked(this.content)).html()
+
+
+Handlebars.registerHelper "selectedIfEqual", (value1, value2) ->
+  if (value1 == value2) then 'selected' else ''

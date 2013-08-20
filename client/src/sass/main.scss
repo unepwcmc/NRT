@@ -58,7 +58,8 @@ textarea.content-text-field {
 }
 
 button,
-a.button{
+a.button,
+div.select{
   -webkit-appearance: none;
   border: none;
   background-color: $buttonBlue;

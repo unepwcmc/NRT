@@ -2,6 +2,9 @@ window.Backbone.Models || = {}
 
 class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
 
+  defaults:
+    type: 'BarChart'
+
   relations: [
       key: 'indicator'
       type: Backbone.HasOne
@@ -24,5 +27,7 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
   buildIndicatorDataUrl: ->
     "/api/indicators/#{@get('indicator').get('_id')}/data"
 
+  @visualisationTypes: ['BarChart', 'Map']#, 'Table']
+  
 #For backbone relational
 Backbone.Models.Visualisation.setup()

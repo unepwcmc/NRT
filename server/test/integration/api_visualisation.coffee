@@ -11,6 +11,7 @@ Visualisation = require('../../models/visualisation').model
 test('POST create', (done) ->
   data =
     data: "new visualisation"
+    type: 'BarChart'
 
   request.post({
     url: helpers.appurl('api/visualisations/')
@@ -25,6 +26,7 @@ test('POST create', (done) ->
       .findOne(id)
       .exec( (err, visualisation) ->
         assert.equal visualisation.data, data.data
+        assert.equal visualisation.type, data.type
         done()
       )
   )
