@@ -13,7 +13,9 @@ class Backbone.Views.MapView extends Backbone.View
   render: =>
     if @visualisation.get('data')?
       @$el.html(@template())
-      @renderMap()
+      setTimeout(=>
+        @renderMap()
+      , 500)
     else
       @visualisation.getIndicatorData()
 
@@ -24,7 +26,8 @@ class Backbone.Views.MapView extends Backbone.View
   renderMap: =>
     @map = L.map(
       @$el.find(".map-visualisation")[0]
-    ).fitBounds([
+    )
+    @map.fitBounds([
       [26.204734267107604, 57.44750976562499],
       [22.19757745335104, 50.877685546875]
     ])

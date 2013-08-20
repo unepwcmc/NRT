@@ -32,7 +32,7 @@ test("Shows the given indicator title", ->
   view.close()
 )
 
-test("When given a visualisation with type Map,
+test("When given a visualisation with type BarChart,
   it renders a BarChartView subView", ->
   view = createAndShowVisualisationViewForOptions(
     visualisation: new Backbone.Models.Visualisation(
