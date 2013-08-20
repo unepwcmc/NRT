@@ -80,7 +80,7 @@ test("When section has no narrative, I should see the 'add-narrative' element", 
   view.close()
 )
 
-test(".addNarrative creates a narrative record on the section and sets editing to true", ->
+test(".addNarrative creates a narrative record on the section", ->
   section = new Backbone.Models.Section(id: 12, title: 'title')
 
   view = createAndShowSectionViewForSection(section)
@@ -91,7 +91,6 @@ test(".addNarrative creates a narrative record on the section and sets editing t
 
   assert.equal section.get('narrative').constructor.name, 'Narrative'
   assert.equal section.get('narrative').get('section_id'), section.get('id')
-  assert.equal section.get('narrative').get('editing'), true
 
   view.close()
 )
