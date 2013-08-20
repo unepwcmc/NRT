@@ -62,7 +62,8 @@ header.report-header {
   .choose-indicator ,
   .add-visualisation {
     border: 1px solid lighten($lightishGrey, 10);
-    padding: 2px 5px;
+	margin-left: 5px;
+    padding: 5px 10px;
     border-radius: 3px;
 
     &:hover {
@@ -154,8 +155,9 @@ header.report-header {
     font-size: 0.85em;
     color: $grey;
     .last-update, .who{
+		color: #949494;
         position: relative;
-        display: inline-block;
+        display: block;
         &:hover{
             span{
                 @include opacity(100);
@@ -390,4 +392,3 @@ header.report-header {
         top: -22px;
         @include opacity(100);
     }
-}
