@@ -29,20 +29,10 @@ test('POST create', (done) ->
   )
 )
 
-createVisualisation = (callback) ->
-  visualisation = new Visualisation(
-    data: "new visualisation"
-  )
-
-  visualisation.save (err, visualisation) ->
-    if err?
-      throw 'could not save visualisation'
-
-    callback(visualisation)
-
+test('POST create with nested indicator')
 
 test("GET show", (done) ->
-  createVisualisation( (visualisation) ->
+  helpers.createVisualisation( (err, visualisation) ->
     request.get({
       url: helpers.appurl("api/visualisations/#{visualisation.id}")
       json: true
@@ -58,8 +48,10 @@ test("GET show", (done) ->
   )
 )
 
+test("GET show returns nested indicator")
+
 test('GET index', (done) ->
-  createVisualisation( (visualisation) ->
+  helpers.createVisualisation( (err, visualisation) ->
     request.get({
       url: helpers.appurl("api/visualisations")
       json: true
@@ -76,7 +68,7 @@ test('GET index', (done) ->
 )
 
 test('DELETE visualisation', (done) ->
-  createVisualisation( (visualisation) ->
+  helpers.createVisualisation( (err, visualisation) ->
     request.del({
       url: helpers.appurl("api/visualisations/#{visualisation.id}")
       json: true
@@ -93,7 +85,7 @@ test('DELETE visualisation', (done) ->
 )
 
 test('PUT visualisation', (done) ->
-  createVisualisation( (visualisation) ->
+  helpers.createVisualisation( (err, visualisation) ->
     new_data = "Updated data"
     request.put({
       url: helpers.appurl("/api/visualisations/#{visualisation.id}")
@@ -114,3 +106,6 @@ test('PUT visualisation', (done) ->
     )
   )
 )
+
+test('PUT visualisation with new indicator')
+test('PUT visualisation with existing indicator with new indicator')
