@@ -58,7 +58,7 @@ test('get "fat" report with all related children by report ID', (done) ->
       if err?
         throw 'Visualisation save failed'
 
-      Visualisation.findFatVisualisation(visualisation._id, (err, visualisation) ->
+      Visualisation.findFatVisualisation({_id: visualisation._id}, (err, visualisation) ->
         assert.isDefined visualisation.indicator
 
         assert.strictEqual(

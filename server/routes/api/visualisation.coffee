@@ -21,7 +21,7 @@ exports.create = (req, res) ->
     res.send(201, JSON.stringify(visualisation))
 
 exports.show = (req, res) ->
-  Visualisation.findOne(_id: req.params.visualisation, (err, visualisation) ->
+  Visualisation.findFatVisualisation(_id: req.params.visualisation, (err, visualisation) ->
     if err?
       console.error err
       return res.send(500, "Could not retrieve visualisation")

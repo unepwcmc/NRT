@@ -39,7 +39,7 @@ reportSchema.statics.findFatReport = (id, callback) ->
               if narrative?
                 report.sections[index].narrative = narrative.toObject()
 
-              Visualisation.findOne({section: section._id}, (err, visualisation) ->
+              Visualisation.findFatVisualisation({section: section._id}, (err, visualisation) ->
                 return callback(err) if err?
 
                 if visualisation?

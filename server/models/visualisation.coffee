@@ -6,19 +6,15 @@ visualisationSchema = mongoose.Schema(
   indicator: {type: mongoose.Schema.Types.ObjectId, ref: 'Indicator'}
 )
 
-visualisationSchema.statics.findFatVisualisation = (id, callback) ->
-  # Make ID object consistent
-  if typeof id == 'object' && id.constructor.name != "ObjectID"
-    id = id._id
-
+visualisationSchema.statics.findFatVisualisation = (params, callback) ->
   Visualisation
-    .findOne(_id: id)
+    .findOne(params)
     .populate('indicator')
     .exec( (err, narrative) ->
       if err?
         callback(err)
 
-      callback(null, narrative.toObject())
+      callback(null, narrative)
     )
 
 Visualisation = mongoose.model('Visualisation', visualisationSchema)
