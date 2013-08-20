@@ -18,7 +18,11 @@ exports.create = (req, res) ->
       console.error err
       return res.send(500, "Could not save visualisation")
 
-    res.send(201, JSON.stringify(visualisation))
+    Visualisation.findFatVisualisation(
+      _id: visualisation._id,
+      (err, visualisation) ->
+        res.send(201, JSON.stringify(visualisation))
+    )
 
 exports.show = (req, res) ->
   Visualisation.findFatVisualisation(_id: req.params.visualisation, (err, visualisation) ->
@@ -38,7 +42,11 @@ exports.update = (req, res) ->
         console.error err
         res.send(500, "Could not update the visualisation")
 
-      res.send(200, JSON.stringify(visualisation))
+      Visualisation.findFatVisualisation(
+        _id: visualisation._id,
+        (err, visualisation) ->
+          res.send(200, JSON.stringify(visualisation))
+      )
   )
 
 exports.destroy = (req, res) ->
