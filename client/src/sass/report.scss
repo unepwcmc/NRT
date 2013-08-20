@@ -357,12 +357,17 @@ header.report-header {
       float: left;
       position: relative;
 
-      button {
-        margin: 10px 10px 0 0;
-        right: 0;
-        position: absolute;
-      }
+      .controls {
+        overflow: hidden;
+        button {
+          float: right;
+        }
+        .select {
+          float: right;
+          width: 167px;
 
+        }
+      }
       .bar-chart-view {
         padding: 50px 10px;
       }

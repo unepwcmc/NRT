@@ -32,7 +32,15 @@ class Backbone.Views.MapView extends Backbone.View
     L.tileLayer('http://{s}.tiles.mapbox.com/v3/onlyjsmith.map-9zy5lnfp/{z}/{x}/{y}.png', 
     ).addTo(@map);
 
+    styleGeojson =
+      "color": "#ff7800"
+      "weight": 1
+      "opacity": 0.65
+
     geojsonFeature = @visualisation.get('data')
-    L.geoJson(geojsonFeature[geojsonFeature.length-1].geometry).addTo(@map)
+    L.geoJson(
+      geojsonFeature[geojsonFeature.length-1].geometry
+      style: styleGeojson
+    ).addTo(@map)
 
     window.m = @map
