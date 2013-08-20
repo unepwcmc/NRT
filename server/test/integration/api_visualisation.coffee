@@ -154,7 +154,7 @@ test('PUT visualisation', (done) ->
       body:
         data: new_data
     }, (err, res, body) ->
-      id = body.id
+      id = body._id
 
       assert.equal res.statusCode, 200
 
@@ -178,7 +178,7 @@ test('PUT visualisation with indicator reference', (done) ->
         body:
           indicator: indicator._id
       }, (err, res, body) ->
-        id = body.id
+        id = body._id
 
         assert.equal res.statusCode, 200
 
