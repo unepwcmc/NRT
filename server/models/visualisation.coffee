@@ -4,6 +4,7 @@ visualisationSchema = mongoose.Schema(
   data: mongoose.Schema.Types.Mixed
   section: String
   indicator: {type: mongoose.Schema.Types.ObjectId, ref: 'Indicator'}
+  type: String
 )
 
 visualisationSchema.statics.findFatVisualisation = (params, callback) ->

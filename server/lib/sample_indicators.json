@@ -8,7 +8,10 @@
       "unit": "km2",
       "outFields": "shape.area",
       "dateField": "datedes",
-      "pollFrequency": "annual"
+      "pollFrequency": "annual",
+      "xAxis": "year",
+      "yAxis": "value",
+      "geometryField": "geometry"
     }
 }, {
     "category": "Biodiversity",
@@ -20,7 +23,10 @@
       "unit": "km2",
       "outFields": "shape.area",
       "dateField": "datedes",
-      "pollFrequency": "annual"
+      "pollFrequency": "annual",
+      "xAxis": "year",
+      "yAxis": "value",
+      "geometryField": "geometry"
     }
 }, {
     "category": "Biodiversity",
@@ -32,6 +38,9 @@
       "unit": null,
       "outFields": null,
       "dateField": null,
-      "pollFrequency": "annual"
+      "pollFrequency": "annual",
+      "xAxis": "year",
+      "yAxis": "value",
+      "geometryField": "geometry"
     }
 }]
