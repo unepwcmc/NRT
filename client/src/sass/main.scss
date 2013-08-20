@@ -561,12 +561,13 @@ em{
 section{
     padding: 15px 0;
     position: relative;
-    small{
+    margin-top: 20px;
+    small.updated-at{
         display: none;
         color: $lightishGrey;
         position: absolute;
         left: 0;
-        top: -18px;
+        top: -10px;
         i{
             color: $buttonBlue;
             font-size: 1.3em;
