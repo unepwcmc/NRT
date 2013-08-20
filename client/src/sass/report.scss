@@ -49,7 +49,7 @@ header.report-header {
 
   .add-visualisation,
   .add-title,
-  .add-narrative,
+  &.add-narrative,
   .choose-indicator {
     color: $lightishGrey;
 

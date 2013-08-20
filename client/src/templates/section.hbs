@@ -1,6 +1,5 @@
 <div class="section-title" id="section-{{section.id}}">
-  <small class='updated-at'><i class="icon-time append"></i></a>Last updated on 1st of April, 18:23 by Dr. Anybody</small>
-{{#if noTitleOrIndicator}}
+  {{#if noTitleOrIndicator}}
     <div class="section-actions">
       <span class="add-title">
         Start typing your new section title here or
@@ -9,44 +8,52 @@
         <i class="icon-table"></i>reference an indicator
       </span>
     </div>
-  </div>
-{{else}}
-  {{#if sectionIndicator}}
-      <h2>{{sectionIndicator.title}}</h2>
   {{else}}
+    <small class='updated-at'>
+      <i class="icon-time append"></i>
+      Last updated on 1st of April, 18:23 by Dr. Anybody
+    </small>
+
+    {{#if sectionIndicator}}
+      <h2>{{sectionIndicator.title}}</h2>
+    {{else}}
       <h2>
         {{addSubViewTo thisView "TextEditView" type='input'
           attributeName='title' model=sectionModel}}
       </h2>
-  {{/if}}
-  </div>
-  {{#if noContent}}
-    <div class="section-actions">
-      <span class="add-narrative">
-        Type Narrative for this indicator here or
-      </span>
-      <span class="add-visualisation">
-        <i class="icon-table"></i>add a visualisation
-      </span>
-    </div>
-  {{else}}
-    {{#if narrative}}
-      {{addSubViewTo thisView "NarrativeView" narrative=narrative}}
-    {{else}}
-      <div class="section-actions">
-        <span class="add-narrative">
-          Type Narrative for this indicator here
-        </span>
-      </div>
     {{/if}}
-    {{#if visualisation}}
-      {{addSubViewTo thisView "VisualisationView" visualisation=visualisation}}
-    {{else}}
-      <div class="section-actions">
+  {{/if}}
+</div>
+
+{{#unless noTitleOrIndicator}}
+  {{#if noContent}}
+    <div class="section-actions add-narrative">
+      Type Narrative for this indicator here
+
+      {{#if section.indicator}}
+        or
         <span class="add-visualisation">
           <i class="icon-table"></i>add a visualisation
         </span>
+      {{/if}}
+    </div>
+  {{else}}
+    {{#if visualisation}}
+      {{addSubViewTo thisView "VisualisationView" visualisation=visualisation}}
+    {{/if}}
+
+    {{#if narrative}}
+      {{addSubViewTo thisView "NarrativeView" narrative=narrative}}
+    {{else}}
+      <div class="section-actions add-narrative">
+        Type Narrative for this 
+        {{#if section.indicator}}
+          indicator
+        {{else}}
+          section
+        {{/if}}
+        here
       </div>
     {{/if}}
   {{/if}}
-{{/if}}
+{{/unless}}

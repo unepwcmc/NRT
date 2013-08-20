@@ -32,4 +32,5 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
     @close()
 
   onClose: ->
+    @trigger('close')
     @closeSubViews()

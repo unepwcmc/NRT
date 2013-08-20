@@ -15,7 +15,10 @@ exports.show = (req, res) ->
       console.error err
       return res.render(500, "Could not retrieve report")
 
-    res.render "reports/show", reportData: JSON.stringify report
+    if report?
+      res.render "reports/show", reportData: JSON.stringify report
+    else
+      res.render(404)
   )
 
 exports.new = (req, res) ->
