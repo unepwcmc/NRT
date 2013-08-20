@@ -23,7 +23,7 @@ class Backbone.Views.NarrativeView extends Backbone.View
     if @startDelayedSave?
       clearTimeout @startDelayedSave
 
-    @startDelayedSave = setTimeout @saveContent, 1000
+    @startDelayedSave = setTimeout @saveContent, 1500
 
   saveContent: (event) =>
     Backbone.trigger 'save', 'saving'
