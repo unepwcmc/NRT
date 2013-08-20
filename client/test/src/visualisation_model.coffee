@@ -18,6 +18,18 @@ test('.toJSON returns the section: as section._id instead of the model attribute
   assert.strictEqual visualisation.toJSON().section, section.get('_id')
 )
 
+test('.toJSON returns the indicator: as indicator._id instead of the model attributes', ->
+  indicatorId = Helpers.findNextFreeId('Indicator')
+  visualisation = new Backbone.Models.Visualisation(
+    indicator: {
+      _id: indicatorId
+      title: 'hey'
+    }
+  )
+
+  assert.strictEqual visualisation.toJSON().indicator, indicatorId
+)
+
 test('Passing an indicator into a visualisation
   should assign it to the visualisation attribute', ->
   indicator = new Backbone.Models.Indicator()
