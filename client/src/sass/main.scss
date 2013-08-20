@@ -94,10 +94,10 @@ a.button{
   &:hover{
     background-color: transparent;
     border-color: $buttonBlue;
-    color: white;
+    color: $buttonBlue;
   }
 
-  &:active, &.active{
+  &:active,&.active{
     background-color: $buttonBlue;
     border-color: $buttonBlue;
     color: white;
@@ -112,13 +112,8 @@ a.button{
     }
   }
 
-  &:hover{
-    background-color: $linkBlue;
-  }
-
-  &:active, &.active{
-    background-color: #00679b;
-    color: #eee;
+  .pull-right {
+    float: right;
   }
 }
 
@@ -271,10 +266,10 @@ em{
     left: 0;
     top: 0;
     z-index: 10;
-    .main-menu-container, .search{
+    .main-menu-container, .search, .save-status{
         float: left;
     }
-    .main-menu, .search-header{
+    .main-menu, .save-status, .search-header{
         width: 60px;
         height: 60px;
         line-height: 60px;
@@ -374,6 +369,7 @@ em{
             }
         }
     }
+
 
     .search-container{
         width: 800px;
@@ -482,7 +478,7 @@ em{
             }
         }
     }
-    .search-header{
+    .search-header, .save-status{
         overflow: hidden;
         color: #BBB;
         background-color: #fff;
@@ -555,6 +551,36 @@ em{
             top: 2px;
         }
     }
+    .save-status-container {
+      float: left;
+    }
+    .save-status {
+      color: $white;
+      width: 0px;
+      text-align: center;
+      @include transition(background-color 0.3s);
+      &.empty {
+        display: none;
+        background-color: $white;
+        border-bottom: 1px solid $white;
+      }
+      &.saving {
+        display: none;
+        background-color: $savingBlue;
+        border-bottom: 1px solid $savingBlue;
+      }
+      &.saved {
+        display: none;
+        background-color: $green;
+        border-bottom: 1px solid $green;
+      }
+      &.error {
+        display: none;
+        background-color: $black;
+        border-bottom: 1px solid $black;
+      }
+    }
+
 }
 
 .arabic section{
@@ -566,12 +592,13 @@ em{
 section{
     padding: 15px 0;
     position: relative;
-    small{
+    margin-top: 20px;
+    small.updated-at{
         display: none;
         color: $lightishGrey;
         position: absolute;
         left: 0;
-        top: -18px;
+        top: -10px;
         i{
             color: $buttonBlue;
             font-size: 1.3em;

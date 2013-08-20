@@ -76,8 +76,19 @@ header.report-header {
 }
 
 .report-sidebar{
-    width: 250px;
-    padding: 45px 20px 0 20px;
+  width: 250px;
+  padding: 45px 20px 0 20px;
+  button{
+    display: block;
+    margin: 0;
+  }
+  a.present-report {
+    margin-left: 13px;
+    padding-top: 9px;
+    font-size: 14px;
+    color: grey;
+    border-bottom: 0;
+  }
 }
 
 .arabic .report-sidebar{
@@ -192,11 +203,6 @@ header.report-header {
 .time-period{
     color: $grey;
     padding-bottom: 5px;
-}
-
-.report-sidebar button{
-    display: block;
-    margin: 0;
 }
 
 .recent-changes{
@@ -384,12 +390,4 @@ header.report-header {
         top: -22px;
         @include opacity(100);
     }
-}
-
-#present-report {
-  margin-left: 13px;
-  padding-top: 9px;
-  font-size: 14px;
-  color: grey;
-  border-bottom: 0;
 }

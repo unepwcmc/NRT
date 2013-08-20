@@ -5,4 +5,4 @@
 # This uses the 'marked' library from https://github.com/chjj/marked
 
 Handlebars.registerHelper "markup", (optionalValue) ->
-  marked(this.content)
+  $(marked(this.content)).html()

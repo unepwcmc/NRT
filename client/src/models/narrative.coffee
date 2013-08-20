@@ -8,9 +8,9 @@ class window.Backbone.Models.Narrative extends Backbone.RelationalModel
 
   url: ->
     if @get('id')
-      "/api/narrative/#{@get('id')}"
+      "/api/narratives/#{@get('id')}"
     else
-      "/api/narrative"
+      "/api/narratives"
 
 #For backbone relational
 Backbone.Models.Narrative.setup()

@@ -2,80 +2,44 @@ window.Backbone ||= {}
 window.Backbone.Views ||= {}
 
 class Backbone.Views.TextEditView extends Backbone.View
-  template: Handlebars.templates['text-content.hbs']
-  editTemplate: Handlebars.templates['text-edit.hbs']
+  template: Handlebars.templates['text-edit.hbs']
 
   events:
-    "click .save-content": "saveContent"
-    "click .add-content": "startEdit"
-    "click .content-text": "startEdit"
-    "change .content-text-field": "resize"
-    "cut .content-text-field": "delayedResize"
-    "paste .content-text-field": "delayedResize"
-    "drop .content-text-field": "delayedResize"
-    "keydown .content-text-field": "delayedResize"
-    "blur :input": "addPlaceholder"
-    "keyup .content-text-field"  : "saveOnEnter"
+    "blur :input, .content-text-field": "delaySave"
+    "keyup .content-text-field"  : "delaySave"
 
   initialize: (options) ->
-    @type   = options.type
     @model = options.model
     @attributeName = options.attributeName
+    if options.wrapperTag? then @wrapperTag = options.wrapperTag
 
     @render()
 
   render: (options = {}) =>
     content = @model.get(@attributeName) || ""
 
-    if options.edit
-      @$el.html(@editTemplate(
-        isInput: (@type is 'input')
-        content: content
-      ))
-    else
-      @$el.html(@template(content: content, attributeName: @attributeName))
-
-    @text = @$el.find(":input")
-    @text.focus()
-    @text.select()
-    @resize()
+    @$el.html(@template(
+      content: content
+      wrapperTag: @wrapperTag || 'div'
+    ))
 
     return @
 
-  addPlaceholder: ->
-    input = @$el.find(':input')
-    if input.val().length == 0
-      input.val("Type #{@attributeName} here")
+  getContent: =>
+    @$el.find('.content-text-field').text()
 
-  # Following 2 methods are used for dynamically resize the textarea.
-  # From: http://goo.gl/9gRC4H
+  delaySave: =>
+    if @startDelayedSave?
+      clearTimeout @startDelayedSave
 
-  resize: =>
-    if @text.length > 0
-      @text.css("height", "auto")
-      @text.css("height", @text[0].scrollHeight + "px")
-
-  # Used to push the resize method onto the event queue,
-  # ensuring it actually gets evaluated after the events have completed.
-  delayedResize: ->
-    setTimeout @resize, 0
+    @startDelayedSave = setTimeout @saveContent, 1500
 
   saveContent: (event) =>
-    @model.set(@attributeName,
-      @$el.find(':input').
-      val().
-      replace(/^\s+|\s+$/g, '')
-    )
-
-    @model.save()
-    @render()
-
-  startEdit: =>
-    @render(edit: true)
-
-  saveOnEnter: (e) =>
-    if e.keyCode == 13 && @type == 'input'
-      @saveContent()
+    Backbone.trigger 'save', 'saving'
+    @model.set(@attributeName, @getContent())
+    saveState = @model.save()
+    saveState.done ->
+      Backbone.trigger 'save', 'saved'
 
   onClose: ->
-    
+
