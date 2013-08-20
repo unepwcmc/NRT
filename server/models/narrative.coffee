@@ -1,7 +1,7 @@
 mongoose = require('mongoose')
 
 narrativeSchema = mongoose.Schema(
-  section_id: String
+  section: String
   content: String
 )
 

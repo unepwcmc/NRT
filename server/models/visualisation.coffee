@@ -2,7 +2,7 @@ mongoose = require('mongoose')
 
 visualisationSchema = mongoose.Schema(
   data: mongoose.Schema.Types.Mixed
-  section_id: String
+  section: String
 )
 
 Visualisation = mongoose.model('Visualisation', visualisationSchema)

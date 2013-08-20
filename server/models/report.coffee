@@ -14,11 +14,16 @@ reportSchema.statics.findFatReport = (id, callback) ->
   Narrative = require('./narrative.coffee').model
   Visualisation = require('./visualisation.coffee').model
 
+  # Make ID object consistent
+  if typeof id == 'object' && id.constructor.name != "ObjectID"
+    id = id._id
+
   Report
     .findOne(_id: id)
-    .populate('sections.indicators')
+    .populate('sections.indicator')
     .exec( (err, report) ->
       if err?
+        console.log "error populating report"
         return callback(err, null)
 
       report = report.toObject()
@@ -28,13 +33,13 @@ reportSchema.statics.findFatReport = (id, callback) ->
           index = theIndex
           section = theSection
           fetchResultFunctions.push (callback) ->
-            Narrative.findOne({section_id: section._id}, (err, narrative) ->
+            Narrative.findOne({section: section._id}, (err, narrative) ->
               return callback(err) if err?
 
               if narrative?
                 report.sections[index].narrative = narrative.toObject()
 
-              Visualisation.findOne({section_id: section._id}, (err, visualisation) ->
+              Visualisation.findOne({section: section._id}, (err, visualisation) ->
                 return callback(err) if err?
 
                 if visualisation?

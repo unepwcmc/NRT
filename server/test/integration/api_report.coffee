@@ -12,7 +12,7 @@ Visualisation = require('../../models/visualisation').model
 Narrative = require('../../models/narrative').model
 Section = require('../../models/section').model
 
-test('POST create', (done) ->
+test('GET show', (done) ->
   data =
     title: "new report"
 
@@ -50,50 +50,46 @@ test('GET index', (done) ->
 )
 
 test('GET report returns full nested sections', (done) ->
-  createReportWithSection = (err, results) ->
-    indicator = results[0]
-    narrative = results[1]
-    visualisation = results[2]
-
+  createReportWithSection = (err, indicator) ->
     helpers.createSection({
-      indicators: [indicator]
-      narrative: narrative
-      visualisation: visualisation
+      indicator: indicator._id
     }, (err, section) ->
-      helpers.createReport({sections: [section]}, (report) ->
-        request.get({
-          url: helpers.appurl("api/reports/#{report.id}")
-          json: true
-        }, (err, res, body) ->
-          assert.equal res.statusCode, 200
+      helpers.createNarrative( {section: section._id}, (err, narrative) ->
+        helpers.createVisualisation( {section: section._id}, (err, visualisation) ->
+          helpers.createReport({sections: [section]}, (report) ->
+            request.get({
+              url: helpers.appurl("api/reports/#{report.id}")
+              json: true
+            }, (err, res, body) ->
+              assert.equal res.statusCode, 200
 
-          returnedReport = body
-          assert.equal returnedReport._id, report.id
-          assert.equal returnedReport.content, report.content
+              returnedReport = body
+              assert.equal returnedReport._id, report.id
+              assert.equal returnedReport.content, report.content
 
-          assert.property returnedReport, 'sections'
-          assert.lengthOf returnedReport.sections, 1
+              assert.property returnedReport, 'sections'
+              assert.lengthOf returnedReport.sections, 1
 
-          returnedSection = returnedReport.sections[0]
-          assert.equal section._id, returnedSection._id
+              returnedSection = returnedReport.sections[0]
+              assert.equal section._id, returnedSection._id
 
-          assert.property returnedSection, 'narrative'
-          assert.equal narrative._id, returnedSection.narrative._id
+              assert.property returnedSection, 'narrative'
+              assert.equal narrative._id, returnedSection.narrative._id
 
-          assert.property returnedSection, 'indicators'
-          assert.equal indicator._id, returnedSection.indicators[0]._id
+              assert.property returnedSection, 'indicator'
+              assert.equal indicator._id, returnedSection.indicator._id
 
-          assert.property returnedSection, 'visualisation'
-          assert.equal visualisation._id, returnedSection.visualisation._id
+              assert.property returnedSection, 'visualisation'
+              assert.equal visualisation._id, returnedSection.visualisation._id
 
-          done()
+              done()
+            )
+          )
         )
       )
     )
 
-  async.series([
-    helpers.createIndicator, helpers.createNarrative, helpers.createVisualisation
-  ], createReportWithSection)
+  helpers.createIndicator(createReportWithSection)
 )
 
 test('PUT nesting a section in a report with existing sections', (done) ->
@@ -127,10 +123,13 @@ test('PUT nesting a section in a report with existing sections', (done) ->
 )
 
 test('POST create - nesting a section in a report', (done) ->
-  helpers.createSection( (err, section) ->
+  helpers.createIndicator({title: 'dat indicator'}, (err, indicator) ->
     data =
       title: "new report"
-      sections: [section.toObject()]
+      sections: [{
+        title: 'new section'
+        indicator: indicator._id
+      }]
 
     request.post({
       url: helpers.appurl('api/reports/')
@@ -143,7 +142,10 @@ test('POST create - nesting a section in a report', (done) ->
 
       assert.property body, 'sections'
       assert.lengthOf body.sections, 1
-      assert section._id, body.sections[0]._id
+      assert.isDefined body.sections[0]._id, "New Report Section not assigned an ID"
+      assert.equal body.sections[0].title, data.sections[0].title
+
+      assert.equal body.sections[0].indicator.title, indicator.title
 
       Report
         .findOne(id)
@@ -181,16 +183,19 @@ test('PUT report', (done) ->
       body:
         title: new_title
     }, (err, res, body) ->
-      id = body.id
 
       assert.equal res.statusCode, 200
 
-      Report
-        .findOne(id)
-        .exec( (err, report) ->
-          assert.equal report.title, new_title
-          done()
+      Report.count( (err, count)->
+        assert.equal count, 1
+        Report
+          .findOne(report.id)
+          .exec( (err, report) ->
+            assert.equal report.title, new_title
+            done()
+          )
       )
+
     )
   )
 )

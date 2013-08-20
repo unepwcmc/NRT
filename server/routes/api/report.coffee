@@ -23,8 +23,11 @@ exports.create = (req, res) ->
       return res.send(500, "Could not save report")
 
     Report
-      .findOne(_id: report._id)
-      .exec( (err, report) ->
+      .findFatReport(_id: report._id, (err, report) ->
+        if err?
+          console.error err
+          res.send(500, "Update to retrieve created report")
+
         res.send(201, JSON.stringify(report))
       )
 
@@ -49,11 +52,15 @@ exports.update = (req, res) ->
     (err, rowsChanged) ->
       if err?
         console.error err
-        res.send(500, "Could not update the report")
+        return res.send(500, "Could not update the report")
 
       Report
-        .findOne(_id: reportId)
-        .exec( (err, report) ->
+        .findFatReport(_id: reportId, (err, report) ->
+          if err?
+            console.error "Unable to fetch fat report:"
+            console.error err
+            return res.send(500, "Update to retrieve updated report")
+
           res.send(200, JSON.stringify(report))
         )
   )

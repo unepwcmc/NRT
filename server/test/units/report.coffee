@@ -10,10 +10,6 @@ test('.create', (done) ->
   report_attributes =
     title: 'Lovely Report'
     brief: 'Gotta be brief'
-    introduction: 'We postulate that this report is lovely, and will
-      prove it cyclically by filling the report with some lovely
-      visualisations.'
-    conclusion: 'This report is lovely afterall.'
 
   report = new Report(report_attributes)
   report.save (err, report) ->
@@ -31,44 +27,25 @@ test('.create', (done) ->
 
 test('.create with nested section', (done) ->
   Report = require('../../models/report').model
-  Section = require('../../models/section').model
 
-  section = new Section(title: "A section")
-  section.save (err, section) ->
+  report_attributes =
+    title: 'Lovely Report'
+    brief: 'Gotta be brief'
+    sections: [{
+      title: 'dat title'
+    }]
+
+  report = new Report(report_attributes)
+  report.save((err, report) ->
     if err?
+      console.error err
       throw 'Report saving failed'
+      done()
 
-    report_attributes =
-      title: 'Lovely Report'
-      brief: 'Gotta be brief'
-      introduction: 'We postulate that this report is lovely, and will
-        prove it cyclically by filling the report with some lovely
-        visualisations.'
-      conclusion: 'This report is lovely afterall.'
-      sections: [section]
-
-    report = new Report(report_attributes)
-    report.save (err, report) ->
-      if err?
-        throw 'Report saving failed'
-
-      assertSectionCreated = (callback) ->
-        Section.count (err, count) ->
-          if err?
-            throw err
-            throw 'Failed to find Section'
-
-          assert.equal 1, count
-          callback()
-
-      assertReportHasSection = (callback) ->
-        assert.strictEqual section._id, report.sections[0]._id
-        callback()
-
-      async.parallel([
-        assertSectionCreated,
-        assertReportHasSection
-      ], done)
+    assert.strictEqual report.title, report_attributes.title
+    assert.strictEqual report.sections[0].title, report_attributes.sections[0].title
+    done()
+  )
 )
 
 test('get "fat" report with all related children by report ID', (done) ->
@@ -77,14 +54,14 @@ test('get "fat" report with all related children by report ID', (done) ->
   helpers.createIndicator( (err, indicator) ->
     helpers.createSection({
       title: 'A section',
-      indicators: [indicator]
+      indicator: indicator
     }, (err, section) ->
       helpers.createVisualisation(
-        {section_id: section._id},
+        {section: section._id},
         (err, visualisation) ->
 
           helpers.createNarrative(
-            {section_id: section._id}
+            {section: section._id}
             (err, narrative) ->
               helpers.createReport( {sections: [section]}, (report) ->
                 Report.findFatReport(report._id, (err, fatReport) ->
@@ -93,9 +70,9 @@ test('get "fat" report with all related children by report ID', (done) ->
                   reloadedSection = fatReport.sections[0]
                   assert.equal reloadedSection._id, section.id
 
-                  assert.property reloadedSection, 'indicators'
+                  assert.property reloadedSection, 'indicator'
                   assert.equal indicator._id.toString(),
-                    reloadedSection.indicators[0]._id.toString()
+                    reloadedSection.indicator._id.toString()
 
                   assert.property reloadedSection, 'visualisation'
                   assert.equal visualisation._id.toString(),
@@ -125,7 +102,7 @@ test('get "fat" report with no related children by report ID', (done) ->
         reloadedSection = fatReport.sections[0]
         assert.equal reloadedSection._id, section.id
 
-        assert.lengthOf reloadedSection.indicators, 0
+        assert.notProperty reloadedSection, 'indicator'
 
         assert.notProperty reloadedSection, 'visualisation'
 

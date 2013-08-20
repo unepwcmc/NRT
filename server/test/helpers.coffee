@@ -65,10 +65,12 @@ exports.createReport = (attributes, callback) ->
 
     callback(report)
 
-exports.createIndicator = (callback) ->
-  indicator = new Indicator(
-    title: "new indicator"
-  )
+exports.createIndicator = (attributes, callback) ->
+  if arguments.length == 1
+    callback = attributes
+    attributes = undefined
+
+  indicator = new Indicator(attributes || title: "new indicator")
 
   indicator.save (err, indicator) ->
     if err?

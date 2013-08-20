@@ -5,7 +5,7 @@ mongoose = require('mongoose')
 
 sectionSchema = mongoose.Schema(
   title: String
-  indicators: [{type: mongoose.Schema.Types.ObjectId, ref: 'Indicator'}]
+  indicator: {type: mongoose.Schema.Types.ObjectId, ref: 'Indicator'}
 )
 
 sectionSchema.statics.getValidationErrors = (attributes) ->
