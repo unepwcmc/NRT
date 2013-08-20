@@ -2,7 +2,7 @@ window.Backbone ||= {}
 window.Backbone.Views ||= {}
 
 class Backbone.Views.TextEditView extends Backbone.View
-  template: Handlebars.templates['text-content.hbs']
+  template: Handlebars.templates['text-edit.hbs']
 
   events:
     "blur :input, .content-text-field": "delaySave"
