@@ -19,10 +19,7 @@ exports.show = (req, res) ->
   )
 
 exports.new = (req, res) ->
-  res.render "reports/show",
-    reportData: JSON.stringify(
-      title: "A new report"
-    )
+  res.render "reports/show"
 
 exports.present = (req, res) ->
   reportId = req.params.id
