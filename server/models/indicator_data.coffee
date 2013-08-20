@@ -4,7 +4,6 @@ fs = require('fs')
 indicatorDataSchema = mongoose.Schema(
   enviroportalId: Number
   data: mongoose.Schema.Types.Mixed
-  geometry: mongoose.Schema.Types.Mixed
 )
 
 indicatorDataSchema.statics.seedData = (callback) ->
