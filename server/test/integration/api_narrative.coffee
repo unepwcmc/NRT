@@ -8,6 +8,7 @@ suite('API - Narrative')
 test('POST create', (done) ->
   data =
     content: "new narrative"
+    section: "235235235235"
 
   Narrative = require('../../models/narrative').model
   request.post({
@@ -23,6 +24,7 @@ test('POST create', (done) ->
       .findOne(id)
       .exec( (err, narrative) ->
         assert.equal narrative.content, data.content
+        assert.equal narrative.section, data.section
 
         done()
       )
@@ -42,6 +44,7 @@ test('PUT narrative', (done) ->
 
     newAttributes =
       content: "this is the new content"
+      section: "554334224443"
 
     request.put({
       url: helpers.appurl("api/narratives/#{narrative.id}")
@@ -54,7 +57,7 @@ test('PUT narrative', (done) ->
         .findOne(narrative._id)
         .exec( (err, reloadedNarrative) ->
           assert.equal reloadedNarrative.content, newAttributes.content
-          assert.equal reloadedNarrative.section_id, newAttributes.section_id
+          assert.equal reloadedNarrative.section, newAttributes.section
           done()
         )
     )
