@@ -13,7 +13,9 @@ class Backbone.Views.MapView extends Backbone.View
   render: =>
     if @visualisation.get('data')?
       @$el.html(@template())
-      @renderMap()
+      setTimeout(=>
+        @renderMap()
+      , 500)
     else
       @visualisation.getIndicatorData()
 
@@ -24,23 +26,23 @@ class Backbone.Views.MapView extends Backbone.View
   renderMap: =>
     @map = L.map(
       @$el.find(".map-visualisation")[0]
-    ).fitBounds([
+    )
+    @map.fitBounds([
       [26.204734267107604, 57.44750976562499],
       [22.19757745335104, 50.877685546875]
     ])
 
-    L.tileLayer('http://{s}.tiles.mapbox.com/v3/onlyjsmith.map-9zy5lnfp/{z}/{x}/{y}.png', 
-    ).addTo(@map);
+    L.tileLayer(
+      'http://{s}.tiles.mapbox.com/v3/onlyjsmith.map-9zy5lnfp/{z}/{x}/{y}.png'
+    ).addTo(@map)
 
     styleGeojson =
       "color": "#ff7800"
       "weight": 1
       "opacity": 0.65
 
-    geojsonFeature = @visualisation.get('data')
+    geojsonFeature = @visualisation.getHighestXRow()[@visualisation.getGeometryField()]
     L.geoJson(
-      geojsonFeature[geojsonFeature.length-1].geometry
+      geojsonFeature
       style: styleGeojson
     ).addTo(@map)
-
-    window.m = @map
