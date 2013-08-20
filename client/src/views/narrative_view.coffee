@@ -5,7 +5,7 @@ class Backbone.Views.NarrativeView extends Backbone.View
   template: Handlebars.templates['narrative.hbs']
 
   events:
-    "blur :input, .content-text-field": "delaySave"
+    "blur .content-text-field": "delaySave"
     "keyup .content-text-field"  : "delaySave"
 
   initialize: (options) ->
