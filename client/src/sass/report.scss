@@ -396,14 +396,13 @@ header.report-header {
         padding: 50px 10px;
       }
 
-      .map-visualisation {
-        margin-top: 8px;
-        height: 400px;
-      }
     }
   }
 }
-
+.map-visualisation {
+  margin-top: 8px;
+  height: 400px;
+}
 @-webkit-keyframes show{
     0%{
         top: -25px;
