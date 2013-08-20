@@ -77,5 +77,19 @@ test("Default type is 'BarChart'", ->
   assert.strictEqual visualisation.get('type'), 'BarChart'
 )
 
+test(".getHighestXRow should retrieve the row with the highest value of X in the indicator data", ->
+  indicator = Helpers.factoryIndicator(
+    indicatorDefinition:
+      xAxis: 'year'
+  )
+  visualisation = new Backbone.Models.Visualisation(
+    indicator: indicator
+    data:[{
+      year: 1990
+    },{
+      year: 2010
+    }]
+  )
 
-
+  assert.strictEqual visualisation.getHighestXRow().year, 2010
+)

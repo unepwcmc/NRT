@@ -29,10 +29,9 @@ class Backbone.Views.MapView extends Backbone.View
       [22.19757745335104, 50.877685546875]
     ])
 
-    L.tileLayer('http://{s}.tiles.mapbox.com/v3/onlyjsmith.map-9zy5lnfp/{z}/{x}/{y}.png', 
-    ).addTo(@map);
+    L.tileLayer(
+      'http://{s}.tiles.mapbox.com/v3/onlyjsmith.map-9zy5lnfp/{z}/{x}/{y}.png'
+    ).addTo(@map)
 
-    geojsonFeature = @visualisation.get('data')
-    L.geoJson(geojsonFeature[geojsonFeature.length-1].geometry).addTo(@map)
-
-    window.m = @map
+    geojsonFeature = @visualisation.getHighestXRow()[@visualisation.getGeometryField()]
+    L.geoJson(geojsonFeature).addTo(@map)

@@ -27,6 +27,18 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
   buildIndicatorDataUrl: ->
     "/api/indicators/#{@get('indicator').get('_id')}/data"
 
+  getXAxis: ->
+    @get('indicator').get('indicatorDefinition').xAxis
+
+  getGeometryField: ->
+    @get('indicator').get('indicatorDefinition').geometryField
+
+  getHighestXRow: ->
+    xAxis = @getXAxis()
+    _.max(@get('data'), (row)->
+      row[xAxis]
+    )
+
   @visualisationTypes: ['BarChart', 'Map']#, 'Table']
   
 #For backbone relational

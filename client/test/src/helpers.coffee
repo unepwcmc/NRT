@@ -9,9 +9,10 @@ Helpers.findNextFreeId = (modelName) ->
 
   return Helpers.modelIds[modelName]
 
-Helpers.factoryIndicator = ->
+Helpers.factoryIndicator = (attributes = {}) ->
+  attributes._id ||= Helpers.findNextFreeId('Indicator')
   new Backbone.Models.Indicator(
-    _id: Helpers.findNextFreeId('Indicator')
+    attributes
   )
 
 Helpers.factorySectionWithIndicator = ->

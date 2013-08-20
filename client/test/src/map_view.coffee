@@ -4,6 +4,11 @@ suite('Map View')
 
 test('when initialised with a visualisation with no data, it fetches the data', (done)->
   visualisation = Helpers.factoryVisualisationWithIndicator()
+  indicator = visualisation.get('indicator')
+  indicator.set('indicatorDefinition',
+    xAxis: 'year'
+    geometryField: 'geometry'
+  )
 
   getIndicatorDataSpy = sinon.spy(visualisation, 'getIndicatorData')
   visualisation.once('dataFetched', ->
@@ -24,7 +29,7 @@ test('when initialised with a visualisation with no data, it fetches the data', 
   )
   
   # Respond to get data request
-  Helpers.SinonServer.respondWithJson.call(server, [{some: 'data'}])
+  Helpers.SinonServer.respondWithJson.call(server, [{year: 'data', geometry: {}}])
   server.restore()
 
   view.close()
