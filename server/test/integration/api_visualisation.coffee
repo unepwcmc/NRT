@@ -150,11 +150,14 @@ test('DELETE visualisation', (done) ->
 test('PUT visualisation', (done) ->
   helpers.createVisualisation( (err, visualisation) ->
     new_data = "Updated data"
+    newType = "Map"
     request.put({
-      url: helpers.appurl("/api/visualisations/#{visualisation.id}")
+      url: helpers.appurl("/api/visualisations/#{visualisation._id}")
       json: true
       body:
+        _id: visualisation._id
         data: new_data
+        type: newType
     }, (err, res, body) ->
       id = body._id
 
@@ -164,6 +167,7 @@ test('PUT visualisation', (done) ->
         .findOne(id)
         .exec( (err, visualisation) ->
           assert.equal visualisation.data, new_data
+          assert.equal visualisation.type, newType
           done()
       )
     )
