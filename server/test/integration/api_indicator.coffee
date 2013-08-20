@@ -18,12 +18,12 @@ test('POST create', (done) ->
     json: true
     body: data
   },(err, res, body) ->
-    id = body.id
+    id = body._id
 
     assert.equal res.statusCode, 201
 
     Indicator
-      .findOne(id)
+      .findOne(_id: id)
       .exec( (err, indicator) ->
         assert.equal indicator.title, data.title
         done()
