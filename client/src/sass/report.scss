@@ -391,12 +391,3 @@ header.report-header {
         @include opacity(100);
     }
 }
-
-.edit-content, .show-content {
-  &.startHidden {
-    display: none;
-  }
-  .specialCase {
-    float: left;
-  }
-}
