@@ -68,3 +68,14 @@ test(".getIndicatorData populates the 'data' attribute and triggers 'dataFetched
 
   server.restore()
 )
+
+test("Default type is 'BarChart'", ->
+  indicator = new Backbone.Models.Indicator()
+  visualisation = new Backbone.Models.Visualisation(
+    indicator: indicator
+  )
+  assert.strictEqual visualisation.get('type'), 'BarChart'
+)
+
+
+

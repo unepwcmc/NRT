@@ -44,7 +44,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     # TODO: Dummy method for now, just grabs a random indicator
     # Will show a search indicator view
     $.get('/api/indicators/', (data) =>
-      indicatorData = data[Math.floor((Math.random()*data.length)+1)]
+      indicatorData = data[Math.floor((Math.random()*data.length))]
       @section.set('indicator', indicatorData)
       @section.save(null, 
         error: (model, xhr, error) ->

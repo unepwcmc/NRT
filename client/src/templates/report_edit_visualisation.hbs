@@ -5,8 +5,15 @@
     <h3>Subtitle</h3>
   </header>
   <div class="visualisation">
+    <select name="visualisation">
+      {{#each visualisationTypes}}
+        <option value="{{this}}" {{selectedIfEqual ../visualisationType this}}>
+          {{this}}
+        </option>
+      {{/each}}
+    </select>
     <button class="save">Save Visualisation</button>
-    {{addSubViewTo thisView "BarChartView" width=550 visualisation=visualisation}}
+    {{addSubViewTo thisView visualisationViewName width=550 visualisation=visualisation}}
   </div>
 
   <aside class="filters">
