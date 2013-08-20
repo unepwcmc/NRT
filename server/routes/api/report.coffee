@@ -23,9 +23,11 @@ exports.create = (req, res) ->
       return res.send(500, "Could not save report")
 
     Report
-      .findOne(_id: report._id)
-      .populate('sections')
-      .exec( (err, report) ->
+      .findFatReport(_id: report._id, (err, report) ->
+        if err?
+          console.error err
+          res.send(500, "Update to retrieve created report")
+
         res.send(201, JSON.stringify(report))
       )
 
@@ -41,17 +43,8 @@ exports.show = (req, res) ->
 exports.update = (req, res) ->
   reportId = req.params.report
 
-  params = _.omit(req.body, ['sections', '_id'])
+  params = _.omit(req.body, ['_id'])
   updateAttributes = $set: params
-
-  if req.body.sections?
-    sections = _.map(req.body.sections, (section) ->
-      return new mongoose.Types.ObjectId(section._id)
-    )
-
-    updateAttributes.$pushAll = {
-      sections: sections
-    }
 
   Report.update(
     {_id: reportId},
@@ -59,12 +52,15 @@ exports.update = (req, res) ->
     (err, rowsChanged) ->
       if err?
         console.error err
-        res.send(500, "Could not update the report")
+        return res.send(500, "Could not update the report")
 
       Report
-        .findOne(_id: reportId)
-        .populate('sections')
-        .exec( (err, report) ->
+        .findFatReport(_id: reportId, (err, report) ->
+          if err?
+            console.error "Unable to fetch fat report:"
+            console.error err
+            return res.send(500, "Update to retrieve updated report")
+
           res.send(200, JSON.stringify(report))
         )
   )

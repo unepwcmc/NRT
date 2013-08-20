@@ -1,31 +1,58 @@
-#moment = require('moment')
 mongoose = require('mongoose')
+Section = require('./section.coffee').schema
+async = require('async')
 
 reportSchema = mongoose.Schema(
   title: String
   brief: String
   period: String
-  sections: [{type: mongoose.Schema.Types.ObjectId, ref: 'Section'}]
+  sections: [Section]
 )
 
 reportSchema.statics.findFatReport = (id, callback) ->
   Section = require('./section.coffee').model
+  Narrative = require('./narrative.coffee').model
+  Visualisation = require('./visualisation.coffee').model
+
+  # Make ID object consistent
+  if typeof id == 'object' && id.constructor.name != "ObjectID"
+    id = id._id
 
   Report
     .findOne(_id: id)
+    .populate('sections.indicator')
     .exec( (err, report) ->
       if err?
+        console.log "error populating report"
         return callback(err, null)
 
-      Section
-        .find({_id: {$in: report.sections}})
-        .populate('indicator narrative visualisation')
-        .exec( (err, sections) ->
-          result = report.toObject()
-          result.sections = sections
+      report = report.toObject()
+      fetchResultFunctions = []
+      for theSection, theIndex in report.sections
+        (->
+          index = theIndex
+          section = theSection
+          fetchResultFunctions.push (callback) ->
+            Narrative.findOne({section: section._id}, (err, narrative) ->
+              return callback(err) if err?
 
-          callback(null, result)
-        )
+              if narrative?
+                report.sections[index].narrative = narrative.toObject()
+
+              Visualisation.findFatVisualisation({section: section._id}, (err, visualisation) ->
+                return callback(err) if err?
+
+                if visualisation?
+                  report.sections[index].visualisation = visualisation.toObject()
+
+                callback(null, report)
+              )
+            )
+        )()
+
+      async.parallel(fetchResultFunctions, (err, results) ->
+        callback(err, report)
+      )
     )
 
 Report = mongoose.model('Report', reportSchema)

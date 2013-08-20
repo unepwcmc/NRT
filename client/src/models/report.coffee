@@ -14,13 +14,10 @@ class window.Backbone.Models.Report extends Backbone.RelationalModel
     collectionType: 'Backbone.Collections.SectionCollection'
     reverseRelation:
       key: 'report'
+      includeInJSON: false
   ]
 
-  url: =>
-    if @get('_id')
-      "/api/reports/#{@get('_id')}"
-    else
-      "/api/reports"
+  urlRoot: "/api/reports"
 
 #For backbone relational
 Backbone.Models.Report.setup()

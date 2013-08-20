@@ -2,6 +2,7 @@ assert = require('chai').assert
 helpers = require '../helpers'
 request = require('request')
 url = require('url')
+async = require('async')
 
 suite('API - Visualisation')
 
@@ -29,20 +30,41 @@ test('POST create', (done) ->
   )
 )
 
-createVisualisation = (callback) ->
-  visualisation = new Visualisation(
-    data: "new visualisation"
-  )
-
-  visualisation.save (err, visualisation) ->
+test('POST create with nested indicator', (done) ->
+  helpers.createIndicator( (err, indicator) ->
     if err?
-      throw 'could not save visualisation'
+      throw 'Could not create indicator'
 
-    callback(visualisation)
+    request.post({
+      url: helpers.appurl('api/visualisations/')
+      json: true
+      body:
+        data: {walter: 'white'}
+        indicator: indicator._id
+    },(err, res, body) ->
+      id = body.id
 
+      assert.equal res.statusCode, 201
+
+      Visualisation
+        .findOne(id)
+        .populate('indicator')
+        .exec( (err, visualisation) ->
+          assert.isDefined visualisation.indicator
+
+          assert.strictEqual(
+            visualisation.indicator._id.toString(),
+            indicator._id.toString()
+          )
+
+          done()
+        )
+    )
+  )
+)
 
 test("GET show", (done) ->
-  createVisualisation( (visualisation) ->
+  helpers.createVisualisation( (err, visualisation) ->
     request.get({
       url: helpers.appurl("api/visualisations/#{visualisation.id}")
       json: true
@@ -58,8 +80,39 @@ test("GET show", (done) ->
   )
 )
 
+test("GET show returns nested indicator", (done) ->
+  helpers.createIndicator( (err, indicator) ->
+    if err?
+      throw 'Could not create indicator'
+
+    helpers.createVisualisation(
+      {indicator: indicator._id},
+      (err, visualisation) ->
+        request.get({
+          url: helpers.appurl("api/visualisations/#{visualisation.id}")
+          json: true
+        }, (err, res, body) ->
+          assert.equal res.statusCode, 200
+
+          reloadedVisualisation = body
+          assert.equal reloadedVisualisation._id, visualisation.id
+          assert.equal reloadedVisualisation.content, visualisation.content
+
+          assert.isDefined reloadedVisualisation.indicator
+
+          assert.strictEqual(
+            reloadedVisualisation.indicator._id.toString(),
+            indicator._id.toString()
+          )
+
+          done()
+        )
+    )
+  )
+)
+
 test('GET index', (done) ->
-  createVisualisation( (visualisation) ->
+  helpers.createVisualisation( (err, visualisation) ->
     request.get({
       url: helpers.appurl("api/visualisations")
       json: true
@@ -76,7 +129,7 @@ test('GET index', (done) ->
 )
 
 test('DELETE visualisation', (done) ->
-  createVisualisation( (visualisation) ->
+  helpers.createVisualisation( (err, visualisation) ->
     request.del({
       url: helpers.appurl("api/visualisations/#{visualisation.id}")
       json: true
@@ -93,7 +146,7 @@ test('DELETE visualisation', (done) ->
 )
 
 test('PUT visualisation', (done) ->
-  createVisualisation( (visualisation) ->
+  helpers.createVisualisation( (err, visualisation) ->
     new_data = "Updated data"
     request.put({
       url: helpers.appurl("/api/visualisations/#{visualisation.id}")
@@ -113,4 +166,82 @@ test('PUT visualisation', (done) ->
       )
     )
   )
+)
+
+test('PUT visualisation with indicator reference', (done) ->
+  helpers.createIndicator( (err, indicator) ->
+    helpers.createVisualisation( (err, visualisation) ->
+      new_data = "Updated data"
+      request.put({
+        url: helpers.appurl("/api/visualisations/#{visualisation.id}")
+        json: true
+        body:
+          indicator: indicator._id
+      }, (err, res, body) ->
+        id = body.id
+
+        assert.equal res.statusCode, 200
+
+        Visualisation
+          .findOne(id)
+          .populate('indicator')
+          .exec( (err, visualisation) ->
+            assert.isDefined visualisation.indicator
+
+            assert.strictEqual(
+              visualisation.indicator._id.toString(),
+              indicator._id.toString()
+            )
+
+            done()
+        )
+      )
+    )
+  )
+)
+
+test('PUT visualisation with existing indicator with new indicator', (done) ->
+  async.series([
+    helpers.createIndicator,
+    helpers.createIndicator,
+    helpers.createVisualisation
+  ], (err, results) ->
+    if err?
+      console.error err
+      return done()
+
+    updateVisualisation(results, assertVisualisationUpdated)
+  )
+
+  updateVisualisation = (results, callback) ->
+    indicator = results[0]
+    newIndicator = results[1]
+    visualisation = results[2]
+
+    request.put({
+      url: helpers.appurl("/api/visualisations/#{visualisation.id}")
+      json: true
+      body:
+        indicator: newIndicator._id
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 200
+
+      visualisationAttributes = body
+      callback(visualisationAttributes, newIndicator)
+    )
+
+  assertVisualisationUpdated = (visualisation, indicator) ->
+    Visualisation
+      .findOne(visualisation._id)
+      .populate('indicator')
+      .exec( (err, visualisation) ->
+        assert.isDefined visualisation.indicator
+
+        assert.strictEqual(
+          visualisation.indicator._id.toString(),
+            indicator._id.toString()
+        )
+
+        done()
+      )
 )

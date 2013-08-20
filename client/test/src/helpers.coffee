@@ -1,14 +1,22 @@
 window.Helpers ||= {}
 
-indicatorId = 0
+Helpers.findNextFreeId = (modelName) ->
+  Helpers.modelIds ||= {}
+  Helpers.modelIds[modelName] ||= 0
+
+  while Backbone.Models[modelName].findOrCreate(Helpers.modelIds[modelName])?
+    Helpers.modelIds[modelName] = Helpers.modelIds[modelName] + 1
+
+  return Helpers.modelIds[modelName]
+
 Helpers.factoryIndicator = ->
-  indicatorId = indicatorId + 1
   new Backbone.Models.Indicator(
-    _id: indicatorId
+    _id: Helpers.findNextFreeId('Indicator')
   )
 
 Helpers.factorySectionWithIndicator = ->
   new Backbone.Models.Section(
+    _id: Helpers.findNextFreeId('Section')
     indicator: Helpers.factoryIndicator()
   )
 
