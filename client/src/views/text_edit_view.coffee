@@ -10,7 +10,9 @@ class Backbone.Views.TextEditView extends Backbone.View
     'contenteditable': 'true'
 
   events:
+    "click": "replaceContent"
     "blur": "delaySave"
+    "blur": "delayedRender"
     "keyup"  : "delaySave"
 
   initialize: (options) ->
@@ -29,20 +31,36 @@ class Backbone.Views.TextEditView extends Backbone.View
 
     return @
 
+  replaceContent: ->
+    content = @model.get(@attributeName)
+    content = content.replace(/\n/g, "<br>")
+    @$el.html(content)
+
   getContent: =>
-    @$el.text()
+    content = $('<div>')
+      .html(@$el.html())
+    content.html(
+      content.html().replace(/(<br>)|(<br \/>)|(<p>)|(<\/p>)/g, "\r\n")
+    )
+    return content.text()
 
   delaySave: =>
     if @startDelayedSave?
       clearTimeout @startDelayedSave
 
-    @startDelayedSave = setTimeout @saveContent, 1500
+    @startDelayedSave = setTimeout @saveContent, 2000
+
+  delayedRender: =>
+    if @startDelayedRender?
+      clearTimeout @startDelayedRender
+
+    @startDelayedRender = setTimeout @render, 1500
 
   saveContent: (event) =>
     Backbone.trigger 'save', 'saving'
     @model.set(@attributeName, @getContent())
     saveState = @model.save()
-    saveState.done ->
+    saveState.done =>
       Backbone.trigger 'save', 'saved'
 
   onClose: ->

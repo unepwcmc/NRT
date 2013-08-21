@@ -5,7 +5,8 @@
 # This uses the 'marked' library from https://github.com/chjj/marked
 Handlebars.registerHelper "markup", (optionalValue) ->
   if marked?
-    $(marked(this.content)).html()
+    marked.setOptions(breaks: true)
+    return new Handlebars.SafeString(marked(this.content))
 
 Handlebars.registerHelper "selectedIfEqual", (value1, value2) ->
   if (value1 == value2) then 'selected' else ''
