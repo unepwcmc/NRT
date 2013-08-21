@@ -90,5 +90,3 @@ class Backbone.Faker.Reports
       "Number of Alien (Invasive) Species/Abundance",
       "Percent Increase in the Area of Citizen Farms"
     ]
-
-    visualisations: [ new Backbone.Models.Visualisation() ]

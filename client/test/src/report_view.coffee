@@ -94,5 +94,5 @@ test(".addSection adds a section to the report", ->
   reportView.addSection()
 
   assert.equal report.get('sections').length, 1
-  assert.equal report.get('sections').at(0).get('report_id'), report.get('_id')
+  assert.strictEqual report.get('sections').at(0).get('report').get('cid'), report.get('cid')
 )

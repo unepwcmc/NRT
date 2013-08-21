@@ -32,13 +32,14 @@ class Backbone.Views.TextEditView extends Backbone.View
     if @startDelayedSave?
       clearTimeout @startDelayedSave
 
-    @startDelayedSave = setTimeout @saveContent, 1000
+    @startDelayedSave = setTimeout @saveContent, 1500
 
   saveContent: (event) =>
-    console.log 'saved'
+    Backbone.trigger 'save', 'saving'
     @model.set(@attributeName, @getContent())
-
-    @model.save()
+    saveState = @model.save()
+    saveState.done ->
+      Backbone.trigger 'save', 'saved'
 
   onClose: ->
 
