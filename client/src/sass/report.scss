@@ -62,7 +62,7 @@ header.report-header {
   .choose-indicator ,
   .add-visualisation {
     border: 1px solid lighten($lightishGrey, 10);
-	margin-left: 5px;
+    margin-left: 5px;
     padding: 5px 10px;
     border-radius: 3px;
 
@@ -150,56 +150,56 @@ header.report-header {
   }
 }
 
-
 .report-extra{
-    font-size: 0.85em;
+  font-size: 0.85em;
+  color: $grey;
+
+  .last-update, .who{
+    color: #949494;
+    position: relative;
+    display: block;
+    &:hover{
+      span{
+        @include opacity(100);
+        -webkit-animation: show 0.3s linear;
+        animation: show 0.3s linear;
+          }
+      }
+      span{
+        @include opacity(0);
+        display: inline-block;
+        text-align: center;
+        width: 80px;
+        position: absolute;
+        top: -22px;
+        left: -32px;
+        font-size: 0.7em;
+        line-height: 1em;
+        padding: 6px 0 7px 0;
+        background-color: rgba(0,0,0,0.8);
+        color: $white;
+        border-radius: 3px;
+        &:after{
+          position: absolute;
+          top: 100%;
+          left: 36px;
+          content: '';
+          width: 0;
+          height: 0;
+          border-top: solid 4px rgba(0,0,0,0.8);
+          border-left: solid 4px transparent;
+          border-right: solid 4px transparent;
+          }
+      }
+  }
+  a{
     color: $grey;
-    .last-update, .who{
-		color: #949494;
-        position: relative;
-        display: block;
-        &:hover{
-            span{
-                @include opacity(100);
-                -webkit-animation: show 0.3s linear;
-                animation: show 0.3s linear;
-            }
-        }
-        span{
-            @include opacity(0);
-            display: inline-block;
-            text-align: center;
-            width: 80px;
-            position: absolute;
-            top: -22px;
-            left: -32px;
-            font-size: 0.7em;
-            line-height: 1em;
-            padding: 6px 0 7px 0;
-            background-color: rgba(0,0,0,0.8);
-            color: $white;
-            border-radius: 3px;
-            &:after{
-                position: absolute;
-                top: 100%;
-                left: 36px;
-                content: '';
-                width: 0;
-                height: 0;
-                border-top: solid 4px rgba(0,0,0,0.8);
-                border-left: solid 4px transparent;
-                border-right: solid 4px transparent;
-            }
-        }
-    }
-    a{
-        color: $grey;
-        border-bottom: none;
-    }
-    i{
-        color: $iconColor;
-        font-size: 1.15em;
-    }
+    border-bottom: none;
+  }
+  i{
+    color: $iconColor;
+    font-size: 1.15em;
+  }
 }
 
 .time-period{
