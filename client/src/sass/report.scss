@@ -45,7 +45,6 @@ header.report-header {
 }
 
 .section-actions {
-  margin-bottom: 100px;
 
   .add-visualisation,
   .add-title,
@@ -132,7 +131,16 @@ header.report-header {
   }
 }
 
+.report-title h1 {
+	color: #B8B8B8;
+	font-weight: bold;
+}
+
 .section-title {
+	padding-bottom: 0;
+  h2 {
+	padding: 2% 0 0 0;
+}
   a.index {
     font-size: 1.1em;
     font-weight: bold;
@@ -155,6 +163,7 @@ header.report-header {
     font-size: 0.85em;
     color: $grey;
     .last-update, .who{
+		font-size: 90%;
 		color: #949494;
         position: relative;
         display: block;
@@ -199,6 +208,7 @@ header.report-header {
     i{
         color: $iconColor;
         font-size: 1.15em;
+		padding-right: 0.2em;
     }
 }
 
@@ -392,3 +402,22 @@ header.report-header {
         top: -22px;
         @include opacity(100);
     }
+}
+
+p.period-placeholder {
+	color: #B8B8B8;
+	padding-bottom: 0;
+	font-weight: bold;
+}
+
+button.add-report-section {
+	margin: 10% 0;
+}
+
+.section-view{
+	margin-top: 10% 0;
+	padding-bottom: 0;
+	.section-actions {
+		padding: 2% 0;
+	}
+}

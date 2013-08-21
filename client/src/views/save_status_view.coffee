@@ -50,7 +50,7 @@ class Backbone.Views.SaveStatusView extends Backbone.View
   startDecay: =>
     clearTimeout @statusDecay
     if @statusVisible == 'saved'
-      @statusDecay = setTimeout @clearStatus, 3000
+      @statusDecay = setTimeout @clearStatus, 4000
 
   clearStatus: =>
     @$el.find('.save-status').animate(
