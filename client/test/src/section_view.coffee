@@ -80,7 +80,7 @@ test("When section has no narrative, I should see the 'add-narrative' element", 
   view.close()
 )
 
-test(".addNarrative creates a narrative record on the section and sets editing to true", ->
+test(".addNarrative creates a narrative record on the section", ->
   section = new Backbone.Models.Section(id: 12, title: 'title')
 
   view = createAndShowSectionViewForSection(section)
@@ -91,7 +91,6 @@ test(".addNarrative creates a narrative record on the section and sets editing t
 
   assert.equal section.get('narrative').constructor.name, 'Narrative'
   assert.equal section.get('narrative').get('section_id'), section.get('id')
-  assert.equal section.get('narrative').get('editing'), true
 
   view.close()
 )
@@ -123,7 +122,8 @@ test("Can see the section visualisation", ->
   view.close()
 )
 
-test(".addVisualisation creates a visualisation record on the section and saves it", ->
+test(".createVisualisation creates a visualisation record on the section
+  and saves it", ->
   section = new Backbone.Models.Section(
     title: 'This title is'
     indicator: Helpers.factoryIndicator()
@@ -133,7 +133,25 @@ test(".addVisualisation creates a visualisation record on the section and saves 
 
   assert.isNull section.get('visualisation')
 
-  view.addVisualisation()
+  view.createVisualisation()
+
+  assert.equal section.get('visualisation').constructor.name, 'Visualisation'
+
+  view.close()
+)
+
+test(".editVisualisation creates a visualisation if none currently
+  exists", ->
+  section = new Backbone.Models.Section(
+    title: 'This title is'
+    indicator: Helpers.factoryIndicator()
+  )
+
+  view = createAndShowSectionViewForSection(section)
+
+  assert.isNull section.get('visualisation')
+
+  view.editVisualisation()
 
   assert.equal section.get('visualisation').constructor.name, 'Visualisation'
 
