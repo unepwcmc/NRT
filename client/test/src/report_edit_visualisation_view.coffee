@@ -42,7 +42,7 @@ test("Fires a 'close' event when view closed", ->
   callback = sinon.spy()
   view.on('close', callback)
 
-  view.close()
+  view.closeModal()
   assert(callback.called, "Close event not fired")
 )
 
