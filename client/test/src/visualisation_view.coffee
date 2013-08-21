@@ -8,22 +8,40 @@ createAndShowVisualisationViewForVisualisation = (visualisation) ->
 
 suite('Visualisation View')
 
-test("Can see barchart view", ->
-  visualisation = new Backbone.Models.Visualisation(
-    indicator: Helpers.factoryIndicator()
-    data: [
-      year: '3030', value: '20'
-    ]
+test("When given a visualisation with type BarChart,
+  it renders a BarChartView subView", ->
+  view = createAndShowVisualisationViewForVisualisation(
+    new Backbone.Models.Visualisation(
+      type: "BarChart"
+      indicator: new Backbone.Models.Indicator()
+    )
   )
-
-  view = createAndShowVisualisationViewForVisualisation(visualisation)
 
   subViewExists = false
   for subView in view.subViews
-    if subView.constructor.name is "BarChartView" and subView.visualisation is visualisation
+    if subView.constructor.name == "BarChartView"
       subViewExists = true
 
-  assert subViewExists, "could not find bar-chart sub-view for section"
+  assert.ok subViewExists
+
+  view.close()
+)
+
+test("When given a visualisation with type Map,
+  it renders a MapView subView", ->
+  view = createAndShowVisualisationViewForVisualisation(
+    new Backbone.Models.Visualisation(
+      type: "Map"
+      indicator: new Backbone.Models.Indicator()
+    )
+  )
+
+  subViewExists = false
+  for subView in view.subViews
+    if subView.constructor.name == "MapView"
+      subViewExists = true
+
+  assert.ok subViewExists
 
   view.close()
 )

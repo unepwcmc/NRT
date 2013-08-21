@@ -46,9 +46,11 @@ test("Fires a 'close' event when view closed", ->
   assert(callback.called, "Close event not fired")
 )
 
-test("Renders a BarChartView", ->
+test("When given a visualisation with type BarChart,
+  it renders a BarChartView subView", ->
   view = createAndShowVisualisationViewForOptions(
     visualisation: new Backbone.Models.Visualisation(
+      type: "BarChart"
       indicator: new Backbone.Models.Indicator()
     )
   )
@@ -61,4 +63,51 @@ test("Renders a BarChartView", ->
   assert.ok subViewExists
 
   view.close()
+)
+
+test("When given a visualisation with type Map,
+  it renders a MapView subView", ->
+  view = createAndShowVisualisationViewForOptions(
+    visualisation: new Backbone.Models.Visualisation(
+      type: "Map"
+      indicator: new Backbone.Models.Indicator()
+    )
+  )
+
+  subViewExists = false
+  for subView in view.subViews
+    if subView.constructor.name == "MapView"
+      subViewExists = true
+
+  assert.ok subViewExists
+
+  view.close()
+)
+
+test("I see the visualisation type selected", ->
+  view = createAndShowVisualisationViewForOptions(
+    visualisation: new Backbone.Models.Visualisation(
+      type: "Map"
+      indicator: new Backbone.Models.Indicator()
+    )
+  )
+
+  assert.strictEqual view.$el.find('option:selected').val(), "Map"
+  view.close()
+)
+
+test(".updateVisualisationType should set the visualisation type", ->
+  visualisation = new Backbone.Models.Visualisation(
+    type: "Map"
+    indicator: new Backbone.Models.Indicator()
+  )
+  view = createAndShowVisualisationViewForOptions(
+      visualisation: visualisation
+  )
+
+  newType = 'BarChart'
+  view.$el.find("select[name='visualisation']").val(newType)
+  view.updateVisualisationType()
+
+  assert.strictEqual visualisation.get('type'), newType
 )

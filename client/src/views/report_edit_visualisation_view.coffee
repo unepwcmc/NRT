@@ -8,9 +8,11 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
   events:
     "click .close-vis-edit": "closeModal"
     "click .save": "save"
+    "change select[name='visualisation']": 'updateVisualisationType'
 
   initialize: (options) ->
     @visualisation = options.visualisation
+    @listenTo @visualisation, 'change', @render
     @render()
 
   render: =>
@@ -19,6 +21,9 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
       thisView: @
       indicator: @visualisation.get('indicator').toJSON()
       visualisation: @visualisation
+      visualisationType: @visualisation.get('type')
+      visualisationViewName: @visualisation.get('type') + "View"
+      visualisationTypes: Backbone.Models.Visualisation.visualisationTypes
     ))
     @renderSubViews()
 
@@ -34,3 +39,8 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
 
   onClose: ->
     @closeSubViews()
+    @stopListening()
+
+  updateVisualisationType: =>
+    type = @$el.find("select[name='visualisation']").val()
+    @visualisation.set('type', type)
