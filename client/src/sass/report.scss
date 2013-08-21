@@ -306,6 +306,7 @@ header.report-header {
     height: 576px;
     margin-top: -278px;
     margin-left: -453px;
+    z-index: 1001;
 
     .close-vis-edit {
       float:right;
@@ -415,6 +416,11 @@ header.report-header {
 .map-visualisation {
   margin-top: 8px;
   height: 400px;
+
+  /* fix for leaflet controls poking through overlays */
+  .leaflet-top {
+    z-index: 0;
+  }
 }
 
 table{
