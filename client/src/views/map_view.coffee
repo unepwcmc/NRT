@@ -27,6 +27,7 @@ class Backbone.Views.MapView extends Backbone.View
     @map = L.map(
       @$el.find(".map-visualisation")[0],
       scrollWheelZoom: false
+      attributionControl: false
     )
     @map.fitBounds([
       [26.204734267107604, 57.44750976562499],
