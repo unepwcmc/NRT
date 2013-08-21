@@ -68,3 +68,55 @@ test(".getIndicatorData populates the 'data' attribute and triggers 'dataFetched
 
   server.restore()
 )
+
+test("Default type is 'BarChart'", ->
+  indicator = new Backbone.Models.Indicator()
+  visualisation = new Backbone.Models.Visualisation(
+    indicator: indicator
+  )
+  assert.strictEqual visualisation.get('type'), 'BarChart'
+)
+
+test(".getHighestXRow should retrieve the row with the highest value of X in the indicator data", ->
+  indicator = Helpers.factoryIndicator(
+    indicatorDefinition:
+      xAxis: 'year'
+  )
+  visualisation = new Backbone.Models.Visualisation(
+    indicator: indicator
+    data:[{
+      year: 1990
+    },{
+      year: 2010
+    }]
+  )
+
+  assert.strictEqual visualisation.getHighestXRow().year, 2010
+)
+
+test(".mapDataToXAndY should return data as an array of X and Y attributes", ->
+  indicator = Helpers.factoryIndicator(
+    indicatorDefinition:
+      xAxis: 'year'
+      yAxis: 'value'
+  )
+  visualisation = new Backbone.Models.Visualisation(
+    indicator: indicator
+    data:[{
+      year: 1990
+      value: 5
+    },{
+      year: 2010
+      value: 6
+    }]
+  )
+
+  mappedData = visualisation.mapDataToXAndY()
+
+  assert.strictEqual mappedData.length, 2
+  assert.property mappedData[0], 'x'
+  assert.property mappedData[0], 'y'
+
+  assert.strictEqual mappedData[0].x, 1990
+  assert.strictEqual mappedData[0].y, 5
+)

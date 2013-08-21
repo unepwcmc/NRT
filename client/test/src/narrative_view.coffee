@@ -8,27 +8,6 @@ createAndShowNarrativeViewForNarrative = (narrative) ->
 
 suite('Narrative View')
 
-test('.saveNarrative should update the content and editing state', ->
-  narrative = new Backbone.Models.Narrative(editing: true)
-  view = createAndShowNarrativeViewForNarrative(narrative)
-
-  newText = "this is the new narrative text"
-  $('#test-container').find(".content-text-field").val(newText)
-  view.saveNarrative()
-
-  assert.equal narrative.get('content'), newText
-  assert.equal narrative.get('editing'), false
-)
-
-test('.startEdit should set editing to true', ->
-  narrative = new Backbone.Models.Narrative(editing: false)
-  view = createAndShowNarrativeViewForNarrative(narrative)
-
-  view.startEdit()
-
-  assert.equal narrative.get('editing'), true
-)
-
 test("When rendering a markdown narrative, should be rendered as HTML", ->
   narrativeAttributes = 
     content: "This is *some* markdown\n\nShould be good."
@@ -37,8 +16,28 @@ test("When rendering a markdown narrative, should be rendered as HTML", ->
   view = createAndShowNarrativeViewForNarrative(narrative)
 
   expectRenderedAs = "<p>This is <em>some</em> markdown</p>\n<p>Should be good.</p>"
-  renderedAs = $('#test-container').find('.content-text').html()
+  renderedAs = $('#test-container').find('.content-text').text()
   
   assert.equal renderedAs.replace(/^\s+|\s+$/g, ''), expectRenderedAs.replace(/^\s+|\s+$/g, '')
 )
 
+test("Blurring narrative triggers delaySave", (done)->
+  narrative = new Backbone.Models.Narrative()
+
+  delayedSaveStub = sinon.stub(Backbone.Views.NarrativeView::, 'delaySave')
+
+  view = createAndShowNarrativeViewForNarrative(narrative)
+
+  # Edit the title
+  newContent = 'Some exciting new content'
+  $.when(
+    $('#test-container').find(".content-text-field").text(newContent).trigger('blur')
+  ).done(->
+    assert.ok(
+      delayedSaveStub.calledOnce,
+      "Expected delaySave to be called once, but was called #{delayedSaveStub.callCount}"
+    )
+    delayedSaveStub.restore()
+    done()
+  )
+)

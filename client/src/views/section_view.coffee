@@ -10,7 +10,9 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     "click .add-title": "startTitleEdit"
     "click .choose-indicator": "chooseIndicator"
     "click .add-narrative": "addNarrative"
-    "click .add-visualisation": "addVisualisation"
+    "click .add-visualisation": "editVisualisation"
+    "click .bar-chart-view": "editVisualisation"
+    "click .visualisation-table-view": "editVisualisation"
 
   initialize: (options) ->
     @section = options.section
@@ -18,10 +20,11 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
 
   render: =>
     @closeSubViews()
-    noContent = !@section.get('narrative')? and !@section.get('visualisation')?
 
+    noContent = !@section.get('narrative')? and !@section.get('visualisation')?
     if @section.get('indicator')?
       sectionIndicatorJSON = @section.get('indicator').toJSON()
+
     @$el.html(@template(
       thisView: @
       section: @section.toJSON()
@@ -37,14 +40,12 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
 
   startTitleEdit: =>
     @section.set('title', 'New Section')
-    # Bit of a hack, starts the view in edit mode
-    @$el.find('.section-title h2 .add-content').trigger('click')
 
   chooseIndicator: =>
     # TODO: Dummy method for now, just grabs a random indicator
     # Will show a search indicator view
     $.get('/api/indicators/', (data) =>
-      indicatorData = data[Math.floor((Math.random()*data.length)+1)]
+      indicatorData = data[Math.floor((Math.random()*data.length))]
       @section.set('indicator', indicatorData)
       @section.save(null, 
         error: (model, xhr, error) ->
@@ -56,20 +57,26 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
   addNarrative: =>
     narrative = new Backbone.Models.Narrative(
       section_id: @section.get('id')
-      editing: true
     )
     @section.set('narrative', narrative)
 
-  addVisualisation: =>
-    visualisation = new Backbone.Models.Visualisation(
+  createVisualisation: =>
+    return new Backbone.Models.Visualisation(
       section: @section
       indicator: @section.get('indicator')
     )
 
-    newVisualisationView = new Backbone.Views.ReportEditVisualisationView(
-      visualisation: visualisation
+  editVisualisation: =>
+    unless @section.get('visualisation')
+      @createVisualisation()
+
+    editVisualisationView = new Backbone.Views.ReportEditVisualisationView(
+      visualisation: @section.get('visualisation')
     )
-    $('body').append(newVisualisationView.render().el)
+
+    @listenToOnce(editVisualisationView, 'close', @render)
+
+    $('body').append(editVisualisationView.render().el)
     $('body').addClass('stop-scrolling')
     ###
     @section.set('visualisation', visualisation)

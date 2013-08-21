@@ -22,7 +22,6 @@ class Backbone.Faker.Reports
         title: @getRandomSectionContent('title')
         narrative:
           content: _.times(14, -> "This is all the narrative you're going to get. Seriously. ").join(" ")
-          editing: false
         visualisations: @createVisualisations()
       sections.push section
     sections

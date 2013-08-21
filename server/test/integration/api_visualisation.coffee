@@ -11,6 +11,7 @@ Visualisation = require('../../models/visualisation').model
 test('POST create', (done) ->
   data =
     data: "new visualisation"
+    type: 'BarChart'
 
   request.post({
     url: helpers.appurl('api/visualisations/')
@@ -25,6 +26,7 @@ test('POST create', (done) ->
       .findOne(id)
       .exec( (err, visualisation) ->
         assert.equal visualisation.data, data.data
+        assert.equal visualisation.type, data.type
         done()
       )
   )
@@ -148,13 +150,16 @@ test('DELETE visualisation', (done) ->
 test('PUT visualisation', (done) ->
   helpers.createVisualisation( (err, visualisation) ->
     new_data = "Updated data"
+    newType = "Map"
     request.put({
-      url: helpers.appurl("/api/visualisations/#{visualisation.id}")
+      url: helpers.appurl("/api/visualisations/#{visualisation._id}")
       json: true
       body:
+        _id: visualisation._id
         data: new_data
+        type: newType
     }, (err, res, body) ->
-      id = body.id
+      id = body._id
 
       assert.equal res.statusCode, 200
 
@@ -162,6 +167,7 @@ test('PUT visualisation', (done) ->
         .findOne(id)
         .exec( (err, visualisation) ->
           assert.equal visualisation.data, new_data
+          assert.equal visualisation.type, newType
           done()
       )
     )
@@ -178,7 +184,7 @@ test('PUT visualisation with indicator reference', (done) ->
         body:
           indicator: indicator._id
       }, (err, res, body) ->
-        id = body.id
+        id = body._id
 
         assert.equal res.statusCode, 200
 

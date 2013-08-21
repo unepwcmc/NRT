@@ -80,7 +80,7 @@ test("When section has no narrative, I should see the 'add-narrative' element", 
   view.close()
 )
 
-test(".addNarrative creates a narrative record on the section and sets editing to true", ->
+test(".addNarrative creates a narrative record on the section", ->
   section = new Backbone.Models.Section(id: 12, title: 'title')
 
   view = createAndShowSectionViewForSection(section)
@@ -91,7 +91,6 @@ test(".addNarrative creates a narrative record on the section and sets editing t
 
   assert.equal section.get('narrative').constructor.name, 'Narrative'
   assert.equal section.get('narrative').get('section_id'), section.get('id')
-  assert.equal section.get('narrative').get('editing'), true
 
   view.close()
 )
@@ -104,21 +103,6 @@ test(".startTitleEdit sets the title to 'New Section' and calls render", ->
 
   assert.equal section.get('title'), 'New Section'
   view.close()
-)
-
-test(".addNarrative calls render and resize in edit mode", ->
-
-  spy = sinon.spy(Backbone.Views.NarrativeView::, 'resize')
-
-  section = new Backbone.Models.Section(title: 'title')
-  view = createAndShowSectionViewForSection(section)
-  view.addNarrative()
-  narrativeView = view.subViews[0]  # Is there a getSubView('view name') method?
-  
-  assert.isTrue view.section.get('narrative').get('editing')
-  sinon.assert.calledOnce(spy, "resize")
-
-  Backbone.Views.NarrativeView::resize.restore()
 )
 
 test("Can see the section visualisation", ->
@@ -138,7 +122,8 @@ test("Can see the section visualisation", ->
   view.close()
 )
 
-test(".addVisualisation creates a visualisation record on the section and saves it", ->
+test(".createVisualisation creates a visualisation record on the section
+  and saves it", ->
   section = new Backbone.Models.Section(
     title: 'This title is'
     indicator: Helpers.factoryIndicator()
@@ -148,14 +133,32 @@ test(".addVisualisation creates a visualisation record on the section and saves 
 
   assert.isNull section.get('visualisation')
 
-  view.addVisualisation()
+  view.createVisualisation()
 
   assert.equal section.get('visualisation').constructor.name, 'Visualisation'
 
   view.close()
 )
 
-test("Can edit the section title", (done)->
+test(".editVisualisation creates a visualisation if none currently
+  exists", ->
+  section = new Backbone.Models.Section(
+    title: 'This title is'
+    indicator: Helpers.factoryIndicator()
+  )
+
+  view = createAndShowSectionViewForSection(section)
+
+  assert.isNull section.get('visualisation')
+
+  view.editVisualisation()
+
+  assert.equal section.get('visualisation').constructor.name, 'Visualisation'
+
+  view.close()
+)
+
+test("Blurring title triggers delaySave", (done)->
   oldTitle = "old title"
   report = new Backbone.Models.Report({
     sections: [
@@ -164,24 +167,21 @@ test("Can edit the section title", (done)->
   })
   section = report.get('sections').models[0]
 
-  sectionSaveSpy = sinon.spy(Backbone.Models.Section::, 'save')
+  delaySaveStub = sinon.stub(Backbone.Views.TextEditView::, 'delaySave')
 
   view = createAndShowSectionViewForSection(section)
 
-  # Open the edit view
-  $.when($('#test-container').find('h2 .add-content').trigger('click')).done(->
-    # Edit the title
-    newTitle = 'new title'
-    $('#test-container').find("input[value=\"#{oldTitle}\"]").val(newTitle)
-    
-    $.when($('#test-container').find(".save-content").trigger('click')).done(->
-      assert.equal section.get('title'), newTitle
-      sinon.assert.calledOnce(sectionSaveSpy, "save")
-
-      sectionSaveSpy.restore()
-      view.close()
-      done()
+  # Edit the title
+  newTitle = 'new title'
+  $.when(
+    $('#test-container').find(".content-text-field").text(newTitle).trigger('blur')
+  ).done(->
+    assert.ok(
+      delaySaveStub.calledOnce,
+      "Expected delaySave to be called once, but was called #{delaySaveStub.callCount}"
     )
+    delaySaveStub.restore()
+    done()
   )
 )
 
