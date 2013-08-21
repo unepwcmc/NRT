@@ -12,6 +12,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     "click .add-narrative": "addNarrative"
     "click .add-visualisation": "editVisualisation"
     "click .bar-chart-view": "editVisualisation"
+    "click .visualisation-table-view": "editVisualisation"
 
   initialize: (options) ->
     @section = options.section

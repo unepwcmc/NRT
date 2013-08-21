@@ -4,6 +4,8 @@ window.Backbone.Views ||= {}
 class Backbone.Views.TableView extends Backbone.View
   template: Handlebars.templates['table.hbs']
 
+  className: 'visualisation-table-view'
+
   initialize: (options) ->
     @visualisation = options.visualisation
     @listenTo(@visualisation, 'change', @render)

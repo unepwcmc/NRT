@@ -357,6 +357,16 @@ header.report-header {
       float: left;
       position: relative;
 
+      .visualisation-table-view {
+        height: 400px;
+        overflow: scroll;
+        margin: 10px;
+
+        table {
+          width: 578px;
+        }
+      }
+
       .controls {
         overflow: hidden;
         margin: 10px 10px 0;
