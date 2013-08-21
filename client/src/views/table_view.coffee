@@ -14,6 +14,7 @@ class Backbone.Views.TableView extends Backbone.View
         xAxis: @visualisation.getXAxis()
         yAxis: @visualisation.getYAxis()
         dataRows: @visualisation.mapDataToXAndY()
+        indicatorTitle: @visualisation.get('indicator').get('title')
       ))
     else
       @visualisation.getIndicatorData()

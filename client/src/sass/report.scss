@@ -399,10 +399,59 @@ header.report-header {
     }
   }
 }
+
 .map-visualisation {
   margin-top: 8px;
   height: 400px;
 }
+
+table{
+  border: 1px solid #e1e1e1;
+  border-top: none;
+  width: 650px;
+
+  caption{
+    background-color: #007dbb;
+    text-align: center;
+    padding: 12px 10px;
+    color: #fff;
+    font-weight: 300;
+    border: 1px solid #0068A6;
+    border-bottom: none;
+  }
+
+  thead{
+    background-color: #0068A6;
+    color: #fff;
+  }
+
+  th{
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 0.85em;
+    font-weight: 400;
+    line-height: 1.2em;
+    border: 1px solid #00558B;
+  }
+
+  tbody {
+    tr:nth-child(odd) {
+      background-color: #f7f7f7;
+    }
+  }
+
+  tr td{
+    font-size: 0.85em;
+    line-height: 1.4em;
+    padding: 10px;
+    border: 1px solid #e1e1e1;
+
+    &.center{
+      text-align: center;
+    }
+  }
+}
+
 @-webkit-keyframes show{
     0%{
         top: -25px;

@@ -46,13 +46,22 @@ test('Should render visualisation data into a table', ->
       year: 2014
       value: 8
   }])
-  visualisation.get('indicator').set('indicatorDefinition',
-    xAxis: 'year'
-    yAxis: 'value'
+
+  indicator = visualisation.get('indicator')
+  indicator.set(
+    indicatorDefinition:
+      xAxis: 'year'
+      yAxis: 'value'
+    title: 'An indicatr'
   )
 
   view = new Backbone.Views.TableView(visualisation: visualisation)
   Helpers.renderViewToTestContainer(view)
+
+  assert.strictEqual(
+    $('#test-container').find('table caption').text(),
+    indicator.get('title')
+  )
 
   headerText = $('#test-container').find('table thead').text()
 
