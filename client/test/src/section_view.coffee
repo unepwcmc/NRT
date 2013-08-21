@@ -61,7 +61,7 @@ test("When section has narrative, can see the narrative", ->
 
   subViewExists = false
   for subView in view.subViews
-    if subView.constructor.name == "NarrativeView" and subView.narrative is narrative
+    if subView.constructor.name == "TextEditView" and subView.model is narrative
       subViewExists = true
 
   assert subViewExists, "could not find narrative sub-view for section"

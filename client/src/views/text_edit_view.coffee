@@ -4,29 +4,33 @@ window.Backbone.Views ||= {}
 class Backbone.Views.TextEditView extends Backbone.View
   template: Handlebars.templates['text-edit.hbs']
 
+  className: 'show-content content-text-field'
+
+  attributes:
+    'contenteditable': 'true'
+
   events:
-    "blur :input, .content-text-field": "delaySave"
-    "keyup .content-text-field"  : "delaySave"
+    "blur": "delaySave"
+    "keyup"  : "delaySave"
 
   initialize: (options) ->
     @model = options.model
     @attributeName = options.attributeName
-    if options.wrapperTag? then @wrapperTag = options.wrapperTag
+    @tagName = options.tagName || 'div'
 
     @render()
 
   render: (options = {}) =>
-    content = @model.get(@attributeName) || ""
+    content = @model.get(@attributeName) || "Type here"
 
     @$el.html(@template(
       content: content
-      wrapperTag: @wrapperTag || 'div'
     ))
 
     return @
 
   getContent: =>
-    @$el.find('.content-text-field').text()
+    @$el.text()
 
   delaySave: =>
     if @startDelayedSave?
