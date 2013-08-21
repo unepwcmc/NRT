@@ -13,11 +13,17 @@ class Backbone.Views.SectionNavigationView extends Backbone.View
 
   render: ->
     @$el.html(@template(
-      sections: @sections.map (s)->
-        id: s.get('id')
-        title: s.get('title')
+      sections: @sections.map (section)->
+        title = section.get('title')
+        if section.get('indicator')?
+          title = section.get('indicator').get('title')
+
+        return {
+          _id: section.get('_id')
+          title: title
+        }
     ))
     return @
 
   onClose: ->
-    @stopListening()    
+    @stopListening()
