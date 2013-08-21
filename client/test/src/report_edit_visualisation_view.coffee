@@ -32,6 +32,20 @@ test("Shows the given indicator title", ->
   view.close()
 )
 
+test("Fires a 'close' event when view closed", ->
+  view = createAndShowVisualisationViewForOptions(
+    visualisation: new Backbone.Models.Visualisation(
+      indicator: new Backbone.Models.Indicator()
+    )
+  )
+
+  callback = sinon.spy()
+  view.on('close', callback)
+
+  view.closeModal()
+  assert(callback.called, "Close event not fired")
+)
+
 test("When given a visualisation with type BarChart,
   it renders a BarChartView subView", ->
   view = createAndShowVisualisationViewForOptions(

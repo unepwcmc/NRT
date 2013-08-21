@@ -34,6 +34,7 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
 
   closeModal: ->
     $('body').removeClass('stop-scrolling')
+    @trigger('close')
     @close()
 
   onClose: ->
