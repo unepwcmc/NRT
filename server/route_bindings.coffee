@@ -7,7 +7,6 @@ indicatorApi = require('./routes/api/indicator')
 
 dashboardRoutes = require('./routes/dashboard.coffee')
 indicatorRoutes = require('./routes/indicators.coffee')
-bookmarkRoutes  = require('./routes/bookmarks.coffee')
 reportRoutes    = require('./routes/reports.coffee')
 userRoutes      = require('./routes/users.coffee')
 testRoutes      = require('./routes/tests.coffee')
@@ -31,7 +30,6 @@ module.exports = exports = (app) ->
   app.get "/dashboard", ensureAuthenticated, dashboardRoutes.index
   app.get "/indicators", ensureAuthenticated, indicatorRoutes.index
   app.get "/reports", ensureAuthenticated, reportRoutes.index
-  app.get "/bookmarks", ensureAuthenticated, bookmarkRoutes.index
 
   app.get "/indicators/:id", ensureAuthenticated, indicatorRoutes.show
 
