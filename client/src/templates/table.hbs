@@ -1,0 +1,17 @@
+<table>
+  <thead>
+    <tr>
+      <th>{{xAxis}}</th>
+      <th>{{yAxis}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{debug}}
+    {{#each dataRows}}
+      <tr>
+        <td class="center">{{this.x}}</td>
+        <td class="center">{{this.y}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

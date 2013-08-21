@@ -84,6 +84,25 @@ test("When given a visualisation with type Map,
   view.close()
 )
 
+test("When given a visualisation with type Table,
+  it renders a TableView subView", ->
+  view = createAndShowVisualisationViewForOptions(
+    visualisation: new Backbone.Models.Visualisation(
+      type: "Table"
+      indicator: new Backbone.Models.Indicator()
+    )
+  )
+
+  subViewExists = false
+  for subView in view.subViews
+    if subView.constructor.name == "TableView"
+      subViewExists = true
+
+  assert.ok subViewExists
+
+  view.close()
+)
+
 test("I see the visualisation type selected", ->
   view = createAndShowVisualisationViewForOptions(
     visualisation: new Backbone.Models.Visualisation(

@@ -31,6 +31,9 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
   getXAxis: ->
     @get('indicator').get('indicatorDefinition').xAxis
 
+  getYAxis: ->
+    @get('indicator').get('indicatorDefinition').yAxis
+
   getGeometryField: ->
     @get('indicator').get('indicatorDefinition').geometryField
 
@@ -40,7 +43,15 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
       row[xAxis]
     )
 
-  @visualisationTypes: ['BarChart', 'Map']#, 'Table']
+  mapDataToXAndY: ->
+    xAxis = @getXAxis()
+    yAxis = @getYAxis()
+    _.map(@get('data'), (row)->
+      x: row[xAxis]
+      y: row[yAxis]
+    )
+
+  @visualisationTypes: ['BarChart', 'Map', 'Table']
   
 #For backbone relational
 Backbone.Models.Visualisation.setup()
