@@ -269,10 +269,10 @@ em{
     left: 0;
     top: 0;
     z-index: 10;
-    .main-menu-container, .search, .save-status{
+    .main-menu-container, .search, .save-status {
         float: left;
     }
-    .main-menu, .save-status, .search-header{
+    .main-menu, .save-status, .search-header {
         width: 60px;
         height: 60px;
         line-height: 60px;
@@ -481,7 +481,7 @@ em{
             }
         }
     }
-    .search-header, .save-status{
+    .search-header, .save-status {
         overflow: hidden;
         color: #BBB;
         background-color: #fff;
@@ -584,6 +584,26 @@ em{
       }
     }
 
+}
+
+.language-selector {
+	padding: 5px 10px;
+	box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+	overflow: hidden;
+	background-color: #ddd;
+	border: 1px solid #d2d2d2;
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 3;
+	@include clearfix;
+	@include transition(width 0.5s);
+	.full-name {
+		a{
+			color: $white;
+			text-align: right;
+		}
+	}
 }
 
 .arabic section{
