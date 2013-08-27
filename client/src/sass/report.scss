@@ -42,7 +42,6 @@ header.report-header {
 }
 
 .section-actions {
-  margin-bottom: 100px;
 
   .add-visualisation,
   .add-title,
@@ -129,7 +128,16 @@ header.report-header {
   }
 }
 
+.report-title h1 {
+	color: #B8B8B8;
+	font-weight: bold;
+}
+
 .section-title {
+	padding-bottom: 0;
+  h2 {
+	padding: 2% 0 0 0;
+}
   a.index {
     font-size: 1.1em;
     font-weight: bold;
@@ -191,12 +199,63 @@ header.report-header {
   }
   a{
     color: $grey;
+
+    .last-update, .who{
+		font-size: 90%;
+		color: #949494;
+        position: relative;
+        display: block;
+        &:hover{
+            span{
+                @include opacity(100);
+                -webkit-animation: show 0.3s linear;
+                animation: show 0.3s linear;
+            }
+        }
+        span{
+            @include opacity(0);
+            display: inline-block;
+            text-align: center;
+            width: 80px;
+            position: absolute;
+            top: -22px;
+            left: -32px;
+            font-size: 0.7em;
+            line-height: 1em;
+            padding: 6px 0 7px 0;
+            background-color: rgba(0,0,0,0.8);
+            color: $white;
+            border-radius: 3px;
+            &:after{
+                position: absolute;
+                top: 100%;
+                left: 36px;
+                content: '';
+                width: 0;
+                height: 0;
+                border-top: solid 4px rgba(0,0,0,0.8);
+                border-left: solid 4px transparent;
+                border-right: solid 4px transparent;
+            }
+        }
+    }
+    a{
+        color: $grey;
+        border-bottom: none;
+    }
+    i{
+        color: $iconColor;
+        font-size: 1.15em;
+		padding-right: 0.2em;
+    }
+
     border-bottom: none;
   }
   i{
     color: $iconColor;
     font-size: 1.15em;
   }
+
 }
 
 .time-period{
@@ -467,6 +526,24 @@ table{
   }
 }
 
+p.period-placeholder {
+	color: #B8B8B8;
+	padding-bottom: 0;
+	font-weight: bold;
+}
+
+button.add-report-section {
+	margin: 10% 0;
+}
+
+.section-view{
+	margin-top: 10% 0;
+	padding-bottom: 0;
+	.section-actions {
+		padding: 2% 0;
+	}
+}
+
 @-webkit-keyframes show{
   0%{
     top: -25px;
@@ -479,12 +556,14 @@ table{
 }
 
 @keyframes show{
-  0%{
-    top: -25px;
-    @include opacity(0);
-  }
-  100%{
-    top: -22px;
-    @include opacity(100);
-  }
+
+    0%{
+        top: -25px;
+        @include opacity(0);
+    }
+    100%{
+        top: -22px;
+        @include opacity(100);
+    }
 }
+
