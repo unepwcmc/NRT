@@ -40,15 +40,25 @@ exports.show = (req, res) ->
 
 exports.update = (req, res) ->
   params = _.omit(req.body, '_id')
+  narrativeId = req.params.narratife
 
   Narrative.update(
-    {_id: req.params.narratife},
+    {_id: narrativeId},
     {$set: params},
-    (err, narrative) ->
+    (err, rowsChanged) ->
       if err?
+        console.error err
         res.send(500, "Couldn't save the narrative")
 
-      res.send(200, JSON.stringify(narrative))
+      Narrative
+        .findOne(_id: narrativeId)
+        .exec( (err, narrative) ->
+          if err?
+            console.error err
+            res.send(500, "Unable to retrieve updated narrative")
+
+          res.send(200, JSON.stringify(narrative))
+        )
   )
 
 exports.destroy = (req, res) ->

@@ -26,10 +26,11 @@ exports.new = (req, res) ->
 
 exports.present = (req, res) ->
   reportId = req.params.id
-  Report.findFatReport(reportId).success((reportData)->
-    res.render "reports/present",
-      reportData: JSON.stringify reportData
-  ).error((error) ->
-    console.error error
-    res.render "404"
+
+  Report.findFatReport(reportId, (err, report)->
+    if err? or !report?
+      console.error err
+      return res.render(500, "Could not retrieve report")
+
+    res.render "reports/present", reportData: JSON.stringify(report)
   )

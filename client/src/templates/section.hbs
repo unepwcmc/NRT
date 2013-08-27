@@ -1,4 +1,4 @@
-<div class="section-title" id="section-{{section.id}}">
+<div class="section-title" id="section-{{section._id}}">
   {{#if noTitleOrIndicator}}
     <div class="section-actions">
       <span class="add-title">
@@ -38,12 +38,9 @@
       {{/if}}
     </div>
   {{else}}
-    {{#if visualisation}}
-      {{addSubViewTo thisView "VisualisationView" visualisation=visualisation}}
-    {{/if}}
-
     {{#if narrative}}
-      {{addSubViewTo thisView "NarrativeView" narrative=narrative}}
+      {{addSubViewTo thisView "TextEditView" type='input'
+        attributeName='content' model=narrative}}
     {{else}}
       <div class="section-actions add-narrative">
         Type Narrative for this 
@@ -54,6 +51,10 @@
         {{/if}}
         here
       </div>
+    {{/if}}
+
+    {{#if visualisation}}
+      {{addSubViewTo thisView "VisualisationView" visualisation=visualisation}}
     {{/if}}
   {{/if}}
 {{/unless}}
