@@ -2,7 +2,7 @@ window.Backbone.Models || = {}
 
 class window.Backbone.Models.Report extends Backbone.RelationalModel
   defaults:
-    img: -> "/images/bkg#{Math.floor(Math.random()*4)}.jpg"
+    img: -> "/images/bkg#{Math.floor(Math.random()*3)}.jpg"
     bookmarked: false
 
   relations: [
