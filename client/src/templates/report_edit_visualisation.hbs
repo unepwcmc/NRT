@@ -22,10 +22,5 @@
     {{addSubViewTo thisView visualisationViewName width=550 visualisation=visualisation}}
   </div>
 
-  <aside class="filters">
-    <header>
-      <h3>Data filters</h3>
-      <a href="#">Reset all filters</a>
-    </header>
-  </aside>
+  {{addSubViewTo thisView "VisualisationFilterView" visualisation=visualisation}}
 </div>

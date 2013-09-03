@@ -35,7 +35,7 @@ test("Shows the given indicator title", ->
 test("Fires a 'close' event when view closed", ->
   view = createAndShowVisualisationViewForOptions(
     visualisation: new Backbone.Models.Visualisation(
-      indicator: new Backbone.Models.Indicator()
+      indicator: Helpers.factoryIndicator()
     )
   )
 
@@ -51,16 +51,11 @@ test("When given a visualisation with type BarChart,
   view = createAndShowVisualisationViewForOptions(
     visualisation: new Backbone.Models.Visualisation(
       type: "BarChart"
-      indicator: new Backbone.Models.Indicator()
+      indicator: Helpers.factoryIndicator()
     )
   )
-
-  subViewExists = false
-  for subView in view.subViews
-    if subView.constructor.name == "BarChartView"
-      subViewExists = true
-
-  assert.ok subViewExists
+     
+  assert.ok Helpers.viewHasSubViewOfClass(view, "BarChartView")
 
   view.close()
 )
@@ -70,7 +65,7 @@ test("When given a visualisation with type Map,
   view = createAndShowVisualisationViewForOptions(
     visualisation: new Backbone.Models.Visualisation(
       type: "Map"
-      indicator: new Backbone.Models.Indicator()
+      indicator: Helpers.factoryIndicator()
     )
   )
 
@@ -89,7 +84,7 @@ test("When given a visualisation with type Table,
   view = createAndShowVisualisationViewForOptions(
     visualisation: new Backbone.Models.Visualisation(
       type: "Table"
-      indicator: new Backbone.Models.Indicator()
+      indicator: Helpers.factoryIndicator()
     )
   )
 
@@ -107,7 +102,7 @@ test("I see the visualisation type selected", ->
   view = createAndShowVisualisationViewForOptions(
     visualisation: new Backbone.Models.Visualisation(
       type: "Map"
-      indicator: new Backbone.Models.Indicator()
+      indicator: Helpers.factoryIndicator()
     )
   )
 
@@ -118,7 +113,7 @@ test("I see the visualisation type selected", ->
 test(".updateVisualisationType should set the visualisation type", ->
   visualisation = new Backbone.Models.Visualisation(
     type: "Map"
-    indicator: new Backbone.Models.Indicator()
+    indicator: Helpers.factoryIndicator()
   )
   view = createAndShowVisualisationViewForOptions(
       visualisation: visualisation
