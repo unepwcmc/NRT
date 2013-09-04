@@ -23,11 +23,12 @@ Helpers.factorySectionWithIndicator = ->
     indicator: Helpers.factoryIndicator()
   )
 
-Helpers.factoryVisualisationWithIndicator = ->
-  section = Helpers.factorySectionWithIndicator()
-  new Backbone.Models.Visualisation(
-    indicator: Helpers.factoryIndicator()
-  )
+Helpers.factoryVisualisationWithIndicator = (attributes = {}) ->
+  attributes.indicator ||= Helpers.factoryIndicator()
+  attributes.data ||=
+    results: []
+    
+  new Backbone.Models.Visualisation(attributes)
 
 Helpers.renderViewToTestContainer = (view) ->
   view.render()

@@ -18,10 +18,9 @@ test("Shows the given indicator title", ->
   )
 
   view = createAndShowVisualisationViewForOptions(
-    visualisation: new Backbone.Models.Visualisation(
+    visualisation: Helpers.factoryVisualisationWithIndicator(
       indicator: indicator
       section: section
-      data: []
     )
   )
 
@@ -111,9 +110,8 @@ test("I see the visualisation type selected", ->
 )
 
 test(".updateVisualisationType should set the visualisation type", ->
-  visualisation = new Backbone.Models.Visualisation(
+  visualisation = Helpers.factoryVisualisationWithIndicator(
     type: "Map"
-    indicator: Helpers.factoryIndicator()
   )
   view = createAndShowVisualisationViewForOptions(
       visualisation: visualisation

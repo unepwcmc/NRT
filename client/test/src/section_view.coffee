@@ -107,7 +107,7 @@ test(".startTitleEdit sets the title to 'New Section' and calls render", ->
 
 test("Can see the section visualisation", ->
   visualisation = Helpers.factoryVisualisationWithIndicator()
-  visualisation.set('data', [])
+  visualisation.set('data', results: [])
   section = new Backbone.Models.Section(title: 'title', visualisation: visualisation)
 
   view = createAndShowSectionViewForSection(section)
@@ -184,6 +184,3 @@ test("Blurring title triggers delaySave", (done)->
     done()
   )
 )
-
-test("Can view report containing this section")
-test("Can navigate to Dashboard, Reports, Indicators and Bookmarks")
