@@ -34,4 +34,3 @@ test('when initialised with a visualisation with no data, it fetches the data', 
 
   view.close()
 )
-
