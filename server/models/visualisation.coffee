@@ -5,6 +5,7 @@ visualisationSchema = mongoose.Schema(
   section: String
   indicator: {type: mongoose.Schema.Types.ObjectId, ref: 'Indicator'}
   type: String
+  map_bounds: []
 )
 
 visualisationSchema.statics.findFatVisualisation = (params, callback) ->
