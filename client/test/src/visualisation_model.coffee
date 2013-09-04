@@ -84,11 +84,12 @@ test(".getHighestXRow should retrieve the row with the highest value of X in the
   )
   visualisation = new Backbone.Models.Visualisation(
     indicator: indicator
-    data:[{
-      year: 1990
-    },{
-      year: 2010
-    }]
+    data:
+      results: [{
+        year: 1990
+      },{
+        year: 2010
+      }]
   )
 
   assert.strictEqual visualisation.getHighestXRow().year, 2010
@@ -102,13 +103,14 @@ test(".mapDataToXAndY should return data as an array of X and Y attributes", ->
   )
   visualisation = new Backbone.Models.Visualisation(
     indicator: indicator
-    data:[{
-      year: 1990
-      value: 5
-    },{
-      year: 2010
-      value: 6
-    }]
+    data:
+      results: [{
+        year: 1990
+        value: 5
+      },{
+        year: 2010
+        value: 6
+      }]
   )
 
   mappedData = visualisation.mapDataToXAndY()

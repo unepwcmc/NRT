@@ -39,14 +39,14 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
 
   getHighestXRow: ->
     xAxis = @getXAxis()
-    _.max(@get('data'), (row)->
+    _.max(@get('data').results, (row)->
       row[xAxis]
     )
 
   mapDataToXAndY: ->
     xAxis = @getXAxis()
     yAxis = @getYAxis()
-    _.map(@get('data'), (row)->
+    _.map(@get('data').results, (row)->
       x: row[xAxis]
       y: row[yAxis]
     )

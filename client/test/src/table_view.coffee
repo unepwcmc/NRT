@@ -39,7 +39,7 @@ test('when initialised with a visualisation with no data, it fetches the data', 
 
 test('Should render visualisation data into a table', ->
   visualisation = Helpers.factoryVisualisationWithIndicator()
-  visualisation.set('data', [{
+  visualisation.set('data', results: [{
       year: 2015
       value: 10
     },{

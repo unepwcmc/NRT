@@ -20,7 +20,7 @@ class Backbone.Views.BarChartView extends Backbone.View
   render: =>
     if @visualisation.get('data')?
       @selection = d3.select(@el)
-      data = @visualisation.get('data')
+      data = @visualisation.get('data').results
       @selection.data [data]
 
       @barChart.chart.width @width
