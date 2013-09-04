@@ -49,7 +49,7 @@ test("GET show", (done) ->
 )
 
 test('GET index', (done) ->
-  async.series([createIndicator, createIndicator], (err, indicators) ->
+  async.series([helpers.createIndicator, helpers.createIndicator], (err, indicators) ->
     request.get({
       url: helpers.appurl("api/indicators")
       json: true
@@ -73,7 +73,7 @@ test('GET index', (done) ->
 )
 
 test('DELETE indicator', (done) ->
-  createIndicator( (err, indicator) ->
+  helpers.createIndicator( (err, indicator) ->
     request.del({
       url: helpers.appurl("api/indicators/#{indicator.id}")
       json: true
@@ -90,7 +90,7 @@ test('DELETE indicator', (done) ->
 )
 
 test('PUT indicator', (done) ->
-  createIndicator( (err, indicator) ->
+  helpers.createIndicator( (err, indicator) ->
     new_title = "Updated title"
     request.put({
       url: helpers.appurl("/api/indicators/#{indicator.id}")
@@ -113,7 +113,7 @@ test('PUT indicator', (done) ->
 )
 
 test('PUT indicator does not fail when an _id is given', (done) ->
-  createIndicator( (err, indicator) ->
+  helpers.createIndicator( (err, indicator) ->
     new_title = "Updated title"
     request.put({
       url: helpers.appurl("/api/indicators/#{indicator.id}")
