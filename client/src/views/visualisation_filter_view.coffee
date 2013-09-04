@@ -17,6 +17,7 @@ class Backbone.Views.VisualisationFilterView extends Backbone.Diorama.NestingVie
       @$el.html(@template(
         thisView: @
         fields: @getFieldData()
+        visualisation: @visualisation
       ))
       @renderSubViews()
       return @
