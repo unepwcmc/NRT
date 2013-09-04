@@ -21,8 +21,6 @@ class Backbone.Views.MapView extends Backbone.View
 
     return @
 
-  onClose: ->
-    
   renderMap: =>
     @map = L.map(
       @$el.find(".map-visualisation")[0],
@@ -34,20 +32,21 @@ class Backbone.Views.MapView extends Backbone.View
       'http://{s}.tiles.mapbox.com/v3/onlyjsmith.map-9zy5lnfp/{z}/{x}/{y}.png'
     ).addTo(@map)
 
-    @map.on('moveend', =>
-      bounds = @map.getBounds()
-      minll = bounds.getSouthWest()
-      maxll = bounds.getNorthEast()
-      bbox = [
-        [minll.lat,minll.lng],
-        [maxll.lat, maxll.lng]
-      ]
-
-      @visualisation.set('map_bounds', bbox)
-    )
+    @map.on('moveend', @saveMapBounds)
 
     @fitToBounds()
     @renderDataToMap()
+
+  saveMapBounds: =>
+    bounds = @map.getBounds()
+    minll = bounds.getSouthWest()
+    maxll = bounds.getNorthEast()
+    bbox = [
+      [minll.lat,minll.lng],
+      [maxll.lat, maxll.lng]
+    ]
+
+    @visualisation.set('map_bounds', bbox)
 
   fitToBounds: =>
     if @visualisation.get('map_bounds')?
@@ -71,3 +70,6 @@ class Backbone.Views.MapView extends Backbone.View
       geojsonFeature
       style: styleGeojson
     ).addTo(@map)
+
+  onClose: ->
+    @map.off('moveend')
