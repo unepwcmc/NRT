@@ -20,9 +20,10 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
   urlRoot: '/api/visualisations'
 
   getIndicatorData: ->
-    $.get(@buildIndicatorDataUrl(), (data)=>
+    $.get(@buildIndicatorDataUrl()).done((data)=>
       @set('data', data)
-      @trigger('dataFetched')
+    ).fail((jqXHR, textStatus, error) ->
+      throw new Error("Error fetching indicator data: #{error}")
     )
 
   buildIndicatorDataUrl: ->
@@ -39,14 +40,14 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
 
   getHighestXRow: ->
     xAxis = @getXAxis()
-    _.max(@get('data'), (row)->
+    _.max(@get('data').results, (row)->
       row[xAxis]
     )
 
   mapDataToXAndY: ->
     xAxis = @getXAxis()
     yAxis = @getYAxis()
-    _.map(@get('data'), (row)->
+    _.map(@get('data').results, (row)->
       x: row[xAxis]
       y: row[yAxis]
     )

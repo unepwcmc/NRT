@@ -11,6 +11,8 @@ Helpers.findNextFreeId = (modelName) ->
 
 Helpers.factoryIndicator = (attributes = {}) ->
   attributes._id ||= Helpers.findNextFreeId('Indicator')
+  attributes.indicatorDefinition ||=
+    fields: []
   new Backbone.Models.Indicator(
     attributes
   )
@@ -21,17 +23,28 @@ Helpers.factorySectionWithIndicator = ->
     indicator: Helpers.factoryIndicator()
   )
 
-Helpers.factoryVisualisationWithIndicator = ->
-  section = Helpers.factorySectionWithIndicator()
-  new Backbone.Models.Visualisation(
-    indicator: Helpers.factoryIndicator()
-  )
+Helpers.factoryVisualisationWithIndicator = (attributes = {}) ->
+  attributes._id ||= Helpers.findNextFreeId('Visualisation')
+  attributes.indicator ||= Helpers.factoryIndicator()
+  unless attributes.hasOwnProperty? 'data'
+    attributes.data =
+      results: []
+      bounds: {}
+    
+  new Backbone.Models.Visualisation(attributes)
 
 Helpers.renderViewToTestContainer = (view) ->
   view.render()
   $('#test-container').html(view.el)
 
 window.Helpers.SinonServer ||= {}
+
+Helpers.viewHasSubViewOfClass = (view, subViewClassName) ->
+  subViewExists = false
+  for subView in view.subViews
+    if subView.constructor.name == subViewClassName
+      subViewExists = true
+  return subViewExists
 
 # Used to extend Sinon Servers with common response method
 Helpers.SinonServer.respondWithJson = (jsonData) ->

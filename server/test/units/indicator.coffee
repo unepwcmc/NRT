@@ -46,3 +46,58 @@ test('.getIndicatorData should return all indicator data for this indicator', (d
         )
   )
 )
+
+test('.calculateIndicatorDataBounds should return the upper and lower bounds of data', (done) ->
+  indicatorData = [
+    {
+      "year": 2000,
+      "value": 2
+    }, {
+      "year": 2001,
+      "value": 9
+    }, {
+      "year": 2002,
+      "value": 4
+    }
+  ]
+
+  indicator = new Indicator(
+    indicatorDefinition:
+      enviroportalId: 14
+      fields: [{
+        name: 'year'
+        type: 'integer'
+      }, {
+        name: "value",
+        type: "integer"
+      }]
+  )
+  indicatorData = new IndicatorData(
+    enviroportalId: 14, data: indicatorData
+  )
+
+  async.parallel([
+        (cb) -> indicator.save(cb)
+      ,
+        (cb) -> indicatorData.save(cb)
+    ], (err, results) ->
+      if err?
+        console.error err
+      else
+        indicator.calculateIndicatorDataBounds((err, data) ->
+          assert.property(
+            data, 'year'
+          )
+          assert.property(
+            data, 'value'
+          )
+
+          assert.strictEqual(data.year.min, 2000)
+          assert.strictEqual(data.year.max, 2002)
+
+          assert.strictEqual(data.value.min, 2)
+          assert.strictEqual(data.value.max, 9)
+          done()
+        )
+  )
+)

@@ -78,6 +78,17 @@ exports.createIndicator = (attributes, callback) ->
 
     callback(null, indicator)
 
+exports.createIndicatorData = (attributes, callback) ->
+  attributes.data ||= []
+
+  IndicatorData.create(attributes, (error, results) ->
+    if error?
+      console.error error
+      throw 'could not save indicator data'
+
+    callback(error, results)
+  )
+
 exports.createVisualisation = (attributes, callback) ->
   if arguments.length == 1
     callback = attributes
