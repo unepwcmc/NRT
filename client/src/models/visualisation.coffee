@@ -19,11 +19,19 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
 
   urlRoot: '/api/visualisations'
 
-  getIndicatorData: ->
-    $.get(@buildIndicatorDataUrl(), (data)=>
-      @set('data', data)
-      @trigger('dataFetched')
-    )
+  getIndicatorData: (callback)->
+    if @get('data')?
+      callback(null, @get('data'))
+    else
+      $.get(@buildIndicatorDataUrl()).done((data)=>
+        @set('data', data)
+        callback(null, data)
+      ).fail((jqXHR, textStatus, errorThrown)->
+        callback(
+          message: "Error fetching indicator data"
+          errors: [textStatus, errorThrown]
+        )
+      )
 
   buildIndicatorDataUrl: ->
     "/api/indicators/#{@get('indicator').get('_id')}/data"

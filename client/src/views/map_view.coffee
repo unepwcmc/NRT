@@ -9,15 +9,13 @@ class Backbone.Views.MapView extends Backbone.View
     @visualisation = options.visualisation
 
   render: =>
-    if @visualisation.get('data')?
+    @visualisation.getIndicatorData((error, data)=>
       @$el.html(@template())
 
       setTimeout(=>
         @renderMap()
       , 500)
-    else
-      @visualisation.getIndicatorData()
-      @render()
+    )
 
     return @
 
@@ -72,4 +70,4 @@ class Backbone.Views.MapView extends Backbone.View
     ).addTo(@map)
 
   onClose: ->
-    @map.off('moveend')
+    @map.off('moveend') if @map?

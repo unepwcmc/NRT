@@ -11,15 +11,14 @@ class Backbone.Views.TableView extends Backbone.View
     @listenTo(@visualisation, 'change', @render)
 
   render: =>
-    if @visualisation.get('data')?
+    @visualisation.getIndicatorData((error, data) =>
       @$el.html(@template(
         xAxis: @visualisation.getXAxis()
         yAxis: @visualisation.getYAxis()
         dataRows: @visualisation.mapDataToXAndY()
         indicatorTitle: @visualisation.get('indicator').get('title')
       ))
-    else
-      @visualisation.getIndicatorData()
+    )
 
     return @
 

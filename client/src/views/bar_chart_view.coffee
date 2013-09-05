@@ -18,15 +18,14 @@ class Backbone.Views.BarChartView extends Backbone.View
     @barColor = if options.barColor? then options.barColor else "LightSteelBlue"
 
   render: =>
-    if @visualisation.get('data')?
+    @visualisation.getIndicatorData((error, data) =>
       @selection = d3.select(@el)
       data = @visualisation.get('data').results
       @selection.data [data]
 
       @barChart.chart.width @width
       @selection.call @barChart.chart, @barColor
-    else
-      @visualisation.getIndicatorData()
+    )
 
     return @
 

@@ -140,24 +140,6 @@ test(".createVisualisation creates a visualisation record on the section
   view.close()
 )
 
-test(".editVisualisation creates a visualisation if none currently
-  exists", ->
-  section = new Backbone.Models.Section(
-    title: 'This title is'
-    indicator: Helpers.factoryIndicator()
-  )
-
-  view = createAndShowSectionViewForSection(section)
-
-  assert.isNull section.get('visualisation')
-
-  view.editVisualisation()
-
-  assert.equal section.get('visualisation').constructor.name, 'Visualisation'
-
-  view.close()
-)
-
 test("Blurring title triggers delaySave", (done)->
   oldTitle = "old title"
   report = new Backbone.Models.Report({
