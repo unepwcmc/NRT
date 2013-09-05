@@ -7,10 +7,11 @@ class Backbone.Views.IntegerFilterView extends Backbone.View
   initialize: (options) ->
     @fieldAttributes = options.attributes
     @visualisation = options.visualisation
+    @listenTo @visualisation, 'change:data', @render
     @render()
 
   render: ->
-    @visualisation.getIndicatorData((error, data)=>
+    if @visualisation.get('data')
       min = @getMinValue()
       max = @getMaxValue()
       @$el.html(@template(
@@ -20,7 +21,9 @@ class Backbone.Views.IntegerFilterView extends Backbone.View
         minOptions: @buildOptionsRange(min,max,min)
         maxOptions: @buildOptionsRange(min,max,max)
       ))
-    )
+    else
+      @visualisation.getIndicatorData()
+
     return @
 
   getMinValue: ->
@@ -37,4 +40,4 @@ class Backbone.Views.IntegerFilterView extends Backbone.View
     return options
 
   onClose: ->
-    
+    @stopListening

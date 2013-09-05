@@ -7,15 +7,17 @@ class Backbone.Views.MapView extends Backbone.View
 
   initialize: (options) ->
     @visualisation = options.visualisation
+    @listenTo(@visualisation, 'change:data', @render)
 
   render: =>
-    @visualisation.getIndicatorData((error, data)=>
+    if @visualisation.get('data')?
       @$el.html(@template())
 
       setTimeout(=>
         @renderMap()
       , 500)
-    )
+    else
+      @visualisation.getIndicatorData()
 
     return @
 
@@ -71,3 +73,4 @@ class Backbone.Views.MapView extends Backbone.View
 
   onClose: ->
     @map.off('moveend') if @map?
+    @stopListening()

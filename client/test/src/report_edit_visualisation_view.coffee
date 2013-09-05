@@ -33,9 +33,7 @@ test("Shows the given indicator title", ->
 
 test("Fires a 'close' event when view closed", ->
   view = createAndShowVisualisationViewForOptions(
-    visualisation: new Backbone.Models.Visualisation(
-      indicator: Helpers.factoryIndicator()
-    )
+    visualisation: Helpers.factoryVisualisationWithIndicator()
   )
 
   callback = sinon.spy()
@@ -122,4 +120,5 @@ test(".updateVisualisationType should set the visualisation type", ->
   view.updateVisualisationType()
 
   assert.strictEqual visualisation.get('type'), newType
+  view.close()
 )

@@ -39,56 +39,25 @@ test('Passing an indicator into a visualisation
   assert.strictEqual visualisation.get('indicator').cid, indicator.cid
 )
 
-test('Initializing a visualisation without an indicator throws an error', ->
-  assert.throw( ->
-    new Backbone.Models.Visualisation()
-  , "You must initialise Visualisations with an Indicator")
-)
-
-test(".getIndicatorData when 'data' attribute is not populated 
-  queries the server to populate the 'data' attribute", (done)->
-  visualisation = Helpers.factoryVisualisationWithIndicator(
-    data: null
-  )
+test(".getIndicatorData populates the 'data' attribute", (done)->
+  visualisation = Helpers.factoryVisualisationWithIndicator()
   indicator = visualisation.get('indicator')
 
   server = sinon.fakeServer.create()
 
-  visualisation.getIndicatorData((error, data) ->
-    assert.isNull error
+  visualisation.on('change:data', ->
     assert.isDefined visualisation.get('data')
-    assert.ok _.isEqual data, visualisation.get('data')
+    visualisation.off('change:data')
     done()
   )
+  visualisation.getIndicatorData()
 
   assert.equal(
     server.requests[0].url,
     "/api/indicators/#{indicator.get('_id')}/data"
   )
 
-  Helpers.SinonServer.respondWithJson.call(server, {some: 'data'})
-
-  server.restore()
-)
-
-test(".getIndicatorData when 'data' attribute is populated 
-  should all the callback with the data immediately, without querying the server", (done)->
-  visualisation = Helpers.factoryVisualisationWithIndicator()
-  indicator = visualisation.get('indicator')
-
-  server = sinon.fakeServer.create()
-
-  visualisation.getIndicatorData((error, data) ->
-    assert.isNull error
-    assert.isDefined visualisation.get('data')
-    assert.ok _.isEqual data, visualisation.get('data')
-    done()
-  )
-
-  assert.lengthOf(
-    server.requests,
-    0
-  )
+  Helpers.SinonServer.respondWithJson.call(server, results: {some: 'data'})
 
   server.restore()
 )
