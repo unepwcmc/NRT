@@ -46,9 +46,8 @@ test("Fires a 'close' event when view closed", ->
 test("When given a visualisation with type BarChart,
   it renders a BarChartView subView", ->
   view = createAndShowVisualisationViewForOptions(
-    visualisation: new Backbone.Models.Visualisation(
+    visualisation: Helpers.factoryVisualisationWithIndicator(
       type: "BarChart"
-      indicator: Helpers.factoryIndicator()
     )
   )
      
@@ -60,9 +59,8 @@ test("When given a visualisation with type BarChart,
 test("When given a visualisation with type Map,
   it renders a MapView subView", ->
   view = createAndShowVisualisationViewForOptions(
-    visualisation: new Backbone.Models.Visualisation(
+    visualisation: Helpers.factoryVisualisationWithIndicator(
       type: "Map"
-      indicator: Helpers.factoryIndicator()
     )
   )
 
@@ -79,9 +77,8 @@ test("When given a visualisation with type Map,
 test("When given a visualisation with type Table,
   it renders a TableView subView", ->
   view = createAndShowVisualisationViewForOptions(
-    visualisation: new Backbone.Models.Visualisation(
+    visualisation: Helpers.factoryVisualisationWithIndicator(
       type: "Table"
-      indicator: Helpers.factoryIndicator()
     )
   )
 
@@ -97,9 +94,8 @@ test("When given a visualisation with type Table,
 
 test("I see the visualisation type selected", ->
   view = createAndShowVisualisationViewForOptions(
-    visualisation: new Backbone.Models.Visualisation(
+    visualisation: Helpers.factoryVisualisationWithIndicator(
       type: "Map"
-      indicator: Helpers.factoryIndicator()
     )
   )
 
@@ -112,7 +108,7 @@ test(".updateVisualisationType should set the visualisation type", ->
     type: "Map"
   )
   view = createAndShowVisualisationViewForOptions(
-      visualisation: visualisation
+    visualisation: visualisation
   )
 
   newType = 'BarChart'

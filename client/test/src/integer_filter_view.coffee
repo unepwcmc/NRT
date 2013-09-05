@@ -41,4 +41,5 @@ test('when given a visualisation with bounds it renders 2 select options', ->
     integerFilterView.$el.find('select[name="year-max"] option[selected]').val(),
     '2005'
   )
+  integerFilterView.close()
 )
