@@ -11,7 +11,7 @@ class Backbone.Views.IntegerFilterView extends Backbone.View
     @render()
 
   render: ->
-    if @visualisation.get('data')
+    if @visualisation.get('data')?
       min = @getMinValue()
       max = @getMaxValue()
       @$el.html(@template(
