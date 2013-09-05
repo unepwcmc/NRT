@@ -27,7 +27,7 @@ Helpers.factoryVisualisationWithIndicator = (attributes = {}) ->
   attributes._id ||= Helpers.findNextFreeId('Visualisation')
   attributes.indicator ||= Helpers.factoryIndicator()
   unless attributes.hasOwnProperty? 'data'
-    attributes.data ||=
+    attributes.data =
       results: []
       bounds: {}
     
