@@ -26,9 +26,10 @@ Helpers.factorySectionWithIndicator = ->
 Helpers.factoryVisualisationWithIndicator = (attributes = {}) ->
   attributes._id ||= Helpers.findNextFreeId('Visualisation')
   attributes.indicator ||= Helpers.factoryIndicator()
-  attributes.data ||=
-    results: []
-    bounds: {}
+  unless attributes.hasOwnProperty? 'data'
+    attributes.data ||=
+      results: []
+      bounds: {}
     
   new Backbone.Models.Visualisation(attributes)
 
