@@ -3,7 +3,10 @@ assert = chai.assert
 suite('Map View')
 
 test('when initialised with a visualisation with no data, it fetches the data', (done)->
-  visualisation = Helpers.factoryVisualisationWithIndicator()
+  visualisation = Helpers.factoryVisualisationWithIndicator(
+    data: null
+  )
+
   indicator = visualisation.get('indicator')
   indicator.set('indicatorDefinition',
     xAxis: 'year'
@@ -11,7 +14,7 @@ test('when initialised with a visualisation with no data, it fetches the data', 
   )
 
   getIndicatorDataSpy = sinon.spy(visualisation, 'getIndicatorData')
-  visualisation.once('dataFetched', ->
+  visualisation.once('change:data', ->
     assert.ok getIndicatorDataSpy.calledOnce
     done()
   )

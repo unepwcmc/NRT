@@ -11,9 +11,8 @@ suite('Visualisation View')
 test("When given a visualisation with type BarChart,
   it renders a BarChartView subView", ->
   view = createAndShowVisualisationViewForVisualisation(
-    new Backbone.Models.Visualisation(
+    Helpers.factoryVisualisationWithIndicator(
       type: "BarChart"
-      indicator: new Backbone.Models.Indicator()
     )
   )
 
@@ -30,9 +29,8 @@ test("When given a visualisation with type BarChart,
 test("When given a visualisation with type Map,
   it renders a MapView subView", ->
   view = createAndShowVisualisationViewForVisualisation(
-    new Backbone.Models.Visualisation(
+    Helpers.factoryVisualisationWithIndicator(
       type: "Map"
-      indicator: new Backbone.Models.Indicator()
     )
   )
 

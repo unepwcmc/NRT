@@ -3,10 +3,12 @@ assert = chai.assert
 suite('Bar Chart View')
 
 test('when initialised with a visualisation with no data, it fetches the data', (done)->
-  visualisation = Helpers.factoryVisualisationWithIndicator()
+  visualisation = Helpers.factoryVisualisationWithIndicator(
+    data: null
+  )
 
   getIndicatorDataSpy = sinon.spy(visualisation, 'getIndicatorData')
-  visualisation.once('dataFetched', ->
+  visualisation.once('change:data', ->
     assert.ok getIndicatorDataSpy.calledOnce
     done()
   )

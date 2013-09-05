@@ -18,10 +18,9 @@ test("Shows the given indicator title", ->
   )
 
   view = createAndShowVisualisationViewForOptions(
-    visualisation: new Backbone.Models.Visualisation(
+    visualisation: Helpers.factoryVisualisationWithIndicator(
       indicator: indicator
       section: section
-      data: []
     )
   )
 
@@ -34,9 +33,7 @@ test("Shows the given indicator title", ->
 
 test("Fires a 'close' event when view closed", ->
   view = createAndShowVisualisationViewForOptions(
-    visualisation: new Backbone.Models.Visualisation(
-      indicator: new Backbone.Models.Indicator()
-    )
+    visualisation: Helpers.factoryVisualisationWithIndicator()
   )
 
   callback = sinon.spy()
@@ -49,18 +46,12 @@ test("Fires a 'close' event when view closed", ->
 test("When given a visualisation with type BarChart,
   it renders a BarChartView subView", ->
   view = createAndShowVisualisationViewForOptions(
-    visualisation: new Backbone.Models.Visualisation(
+    visualisation: Helpers.factoryVisualisationWithIndicator(
       type: "BarChart"
-      indicator: new Backbone.Models.Indicator()
     )
   )
-
-  subViewExists = false
-  for subView in view.subViews
-    if subView.constructor.name == "BarChartView"
-      subViewExists = true
-
-  assert.ok subViewExists
+     
+  assert.ok Helpers.viewHasSubViewOfClass(view, "BarChartView")
 
   view.close()
 )
@@ -68,9 +59,8 @@ test("When given a visualisation with type BarChart,
 test("When given a visualisation with type Map,
   it renders a MapView subView", ->
   view = createAndShowVisualisationViewForOptions(
-    visualisation: new Backbone.Models.Visualisation(
+    visualisation: Helpers.factoryVisualisationWithIndicator(
       type: "Map"
-      indicator: new Backbone.Models.Indicator()
     )
   )
 
@@ -87,9 +77,8 @@ test("When given a visualisation with type Map,
 test("When given a visualisation with type Table,
   it renders a TableView subView", ->
   view = createAndShowVisualisationViewForOptions(
-    visualisation: new Backbone.Models.Visualisation(
+    visualisation: Helpers.factoryVisualisationWithIndicator(
       type: "Table"
-      indicator: new Backbone.Models.Indicator()
     )
   )
 
@@ -105,9 +94,8 @@ test("When given a visualisation with type Table,
 
 test("I see the visualisation type selected", ->
   view = createAndShowVisualisationViewForOptions(
-    visualisation: new Backbone.Models.Visualisation(
+    visualisation: Helpers.factoryVisualisationWithIndicator(
       type: "Map"
-      indicator: new Backbone.Models.Indicator()
     )
   )
 
@@ -116,12 +104,11 @@ test("I see the visualisation type selected", ->
 )
 
 test(".updateVisualisationType should set the visualisation type", ->
-  visualisation = new Backbone.Models.Visualisation(
+  visualisation = Helpers.factoryVisualisationWithIndicator(
     type: "Map"
-    indicator: new Backbone.Models.Indicator()
   )
   view = createAndShowVisualisationViewForOptions(
-      visualisation: visualisation
+    visualisation: visualisation
   )
 
   newType = 'BarChart'
@@ -129,4 +116,5 @@ test(".updateVisualisationType should set the visualisation type", ->
   view.updateVisualisationType()
 
   assert.strictEqual visualisation.get('type'), newType
+  view.close()
 )

@@ -9,7 +9,6 @@ test('Passing no section into visualisation creates a null section attribute', -
 
 test('.toJSON returns the section: as section._id instead of the model attributes', ->
   section = Helpers.factorySectionWithIndicator()
-  section.set('_id', 34)
   visualisation = new Backbone.Models.Visualisation(
     section: section
     indicator: section.get('indicator')
@@ -40,21 +39,15 @@ test('Passing an indicator into a visualisation
   assert.strictEqual visualisation.get('indicator').cid, indicator.cid
 )
 
-test('Initializing a visualisation without an indicator throws an error', ->
-  assert.throw( ->
-    new Backbone.Models.Visualisation()
-  , "You must initialise Visualisations with an Indicator")
-)
-
-test(".getIndicatorData populates the 'data' attribute and triggers 'dataFetched'", (done)->
+test(".getIndicatorData populates the 'data' attribute", (done)->
   visualisation = Helpers.factoryVisualisationWithIndicator()
   indicator = visualisation.get('indicator')
 
   server = sinon.fakeServer.create()
 
-  visualisation.on('dataFetched', ->
+  visualisation.on('change:data', ->
     assert.isDefined visualisation.get('data')
-    visualisation.off('dataFetched')
+    visualisation.off('change:data')
     done()
   )
   visualisation.getIndicatorData()
@@ -64,7 +57,7 @@ test(".getIndicatorData populates the 'data' attribute and triggers 'dataFetched
     "/api/indicators/#{indicator.get('_id')}/data"
   )
 
-  Helpers.SinonServer.respondWithJson.call(server, {some: 'data'})
+  Helpers.SinonServer.respondWithJson.call(server, results: {some: 'data'})
 
   server.restore()
 )
@@ -84,11 +77,12 @@ test(".getHighestXRow should retrieve the row with the highest value of X in the
   )
   visualisation = new Backbone.Models.Visualisation(
     indicator: indicator
-    data:[{
-      year: 1990
-    },{
-      year: 2010
-    }]
+    data:
+      results: [{
+        year: 1990
+      },{
+        year: 2010
+      }]
   )
 
   assert.strictEqual visualisation.getHighestXRow().year, 2010
@@ -102,13 +96,14 @@ test(".mapDataToXAndY should return data as an array of X and Y attributes", ->
   )
   visualisation = new Backbone.Models.Visualisation(
     indicator: indicator
-    data:[{
-      year: 1990
-      value: 5
-    },{
-      year: 2010
-      value: 6
-    }]
+    data:
+      results: [{
+        year: 1990
+        value: 5
+      },{
+        year: 2010
+        value: 6
+      }]
   )
 
   mappedData = visualisation.mapDataToXAndY()

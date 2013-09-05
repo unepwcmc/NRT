@@ -4,7 +4,6 @@ http = require('http')
 path = require('path')
 lessMiddleware = require('less-middleware')
 require('express-resource')
-sass = require('node-sass')
 passport = require('passport')
 mongoose = require('mongoose')
 

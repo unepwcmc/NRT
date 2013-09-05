@@ -8,20 +8,23 @@ class Backbone.Views.TableView extends Backbone.View
 
   initialize: (options) ->
     @visualisation = options.visualisation
-    @listenTo(@visualisation, 'change', @render)
+    @listenTo(@visualisation, 'change:data', @render)
 
   render: =>
     if @visualisation.get('data')?
-      @$el.html(@template(
-        xAxis: @visualisation.getXAxis()
-        yAxis: @visualisation.getYAxis()
-        dataRows: @visualisation.mapDataToXAndY()
-        indicatorTitle: @visualisation.get('indicator').get('title')
-      ))
+      @renderTable()
     else
       @visualisation.getIndicatorData()
 
     return @
 
+  renderTable: ->
+    @$el.html(@template(
+      xAxis: @visualisation.getXAxis()
+      yAxis: @visualisation.getYAxis()
+      dataRows: @visualisation.mapDataToXAndY()
+      indicatorTitle: @visualisation.get('indicator').get('title')
+    ))
+
   onClose: ->
-    
+    @stopListening()
