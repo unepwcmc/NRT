@@ -42,17 +42,14 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     @section.set('title', 'New Section')
 
   chooseIndicator: =>
-    # TODO: Dummy method for now, just grabs a random indicator
-    # Will show a search indicator view
-    $.get('/api/indicators/', (data) =>
-      indicatorData = data[Math.floor((Math.random()*data.length))]
-      @section.set('indicator', indicatorData)
-      @section.save(null, 
-        error: (model, xhr, error) ->
-          console.log error
-          alert('Unable to save section, please reload the page')
-      )
+    return if @section.get('indicator')
+
+    indicatorSelectorView = new Backbone.Views.IndicatorSelectorView(
+      section: @section
     )
+
+    $('body').append(indicatorSelectorView.render().el)
+    $('body').addClass('stop-scrolling')
 
   addNarrative: =>
     narrative = new Backbone.Models.Narrative(
