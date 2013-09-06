@@ -51,7 +51,10 @@ indicatorSchema.methods.getIndicatorData = (filters, callback) ->
 filterIndicatorData = (data, filters) ->
   for field, operations of filters
     for operation, value of operations
-      data = filterOperations[operation](data, field, value)
+      if filterOperations[operation]?
+        data = filterOperations[operation](data, field, value)
+      else
+        console.error "No function to perform filter operation '#{operation}'"
 
   return data
  
@@ -60,6 +63,10 @@ filterOperations =
   min: (data, field, value) ->
     _.filter(data, (row) ->
       row[field] >= value
+    )
+  max: (data, field, value) ->
+    _.filter(data, (row) ->
+      row[field] <= value
     )
 
 indicatorSchema.methods.calculateIndicatorDataBounds = (callback) ->
