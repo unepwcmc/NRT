@@ -64,6 +64,10 @@ filterOperations =
     _.filter(data, (row) ->
       row[field] >= value
     )
+  max: (data, field, value) ->
+    _.filter(data, (row) ->
+      row[field] <= value
+    )
 
 indicatorSchema.methods.calculateIndicatorDataBounds = (callback) ->
   @getIndicatorData((error, data) =>
