@@ -7,12 +7,12 @@ class Backbone.Views.MapView extends Backbone.View
 
   initialize: (options) ->
     @visualisation = options.visualisation
-    @listenTo(@visualisation, 'change', @render)
-
+    @listenTo(@visualisation, 'change:data', @render)
 
   render: =>
     if @visualisation.get('data')?
       @$el.html(@template())
+
       setTimeout(=>
         @renderMap()
       , 500)
@@ -21,23 +21,45 @@ class Backbone.Views.MapView extends Backbone.View
 
     return @
 
-  onClose: ->
-    
   renderMap: =>
     @map = L.map(
       @$el.find(".map-visualisation")[0],
       scrollWheelZoom: false
       attributionControl: false
     )
-    @map.fitBounds([
-      [26.204734267107604, 57.44750976562499],
-      [22.19757745335104, 50.877685546875]
-    ])
 
     L.tileLayer(
       'http://{s}.tiles.mapbox.com/v3/onlyjsmith.map-9zy5lnfp/{z}/{x}/{y}.png'
     ).addTo(@map)
 
+    @map.on('moveend', @saveMapBounds)
+
+    @fitToBounds()
+    @renderDataToMap()
+
+  saveMapBounds: =>
+    bounds = @map.getBounds()
+    minll = bounds.getSouthWest()
+    maxll = bounds.getNorthEast()
+    bbox = [
+      [minll.lat,minll.lng],
+      [maxll.lat, maxll.lng]
+    ]
+
+    @visualisation.set('map_bounds', bbox)
+
+  fitToBounds: =>
+    if @visualisation.get('map_bounds')?
+      bounds = @visualisation.get('map_bounds')
+    else
+      bounds = [
+        [26.204734267107604, 57.44750976562499],
+        [22.19757745335104, 50.877685546875]
+      ]
+
+    @map.fitBounds(bounds)
+
+  renderDataToMap: ->
     styleGeojson =
       "color": "#ff7800"
       "weight": 1
@@ -48,3 +70,7 @@ class Backbone.Views.MapView extends Backbone.View
       geojsonFeature
       style: styleGeojson
     ).addTo(@map)
+
+  onClose: ->
+    @map.off('moveend') if @map?
+    @stopListening()

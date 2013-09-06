@@ -60,8 +60,16 @@ exports.data = (req, res) ->
       if err?
         console.error err
         return res.send(500, "Can't retrieve indicator data for #{req.params.id}")
-      res.format 
-        json: ->
-          res.send(200, JSON.stringify(indicatorData))
+      
+      indicator.calculateIndicatorDataBounds (err, bounds) ->
+        if err?
+          console.error err
+          return res.send(500, "unable to retrieve result bounds for indicator #{req.params.id}")
+        
+        res.format
+          json: ->
+            res.send(200, JSON.stringify(
+              results: indicatorData
+              bounds: bounds
+            ))
 
-  

@@ -31,19 +31,8 @@ test('POST create', (done) ->
   )
 )
 
-createIndicator = (callback) ->
-  indicator = new Indicator(
-    title: "new indicator"
-  )
-
-  indicator.save (err, indicator) ->
-    if err?
-      throw 'could not save indicator'
-
-    callback(null, indicator)
-
 test("GET show", (done) ->
-  createIndicator( (err, indicator) ->
+  helpers.createIndicator( (err, indicator) ->
     request.get({
       url: helpers.appurl("api/indicators/#{indicator.id}")
       json: true
@@ -60,7 +49,7 @@ test("GET show", (done) ->
 )
 
 test('GET index', (done) ->
-  async.series([createIndicator, createIndicator], (err, indicators) ->
+  async.series([helpers.createIndicator, helpers.createIndicator], (err, indicators) ->
     request.get({
       url: helpers.appurl("api/indicators")
       json: true
@@ -84,7 +73,7 @@ test('GET index', (done) ->
 )
 
 test('DELETE indicator', (done) ->
-  createIndicator( (err, indicator) ->
+  helpers.createIndicator( (err, indicator) ->
     request.del({
       url: helpers.appurl("api/indicators/#{indicator.id}")
       json: true
@@ -101,7 +90,7 @@ test('DELETE indicator', (done) ->
 )
 
 test('PUT indicator', (done) ->
-  createIndicator( (err, indicator) ->
+  helpers.createIndicator( (err, indicator) ->
     new_title = "Updated title"
     request.put({
       url: helpers.appurl("/api/indicators/#{indicator.id}")
@@ -124,7 +113,7 @@ test('PUT indicator', (done) ->
 )
 
 test('PUT indicator does not fail when an _id is given', (done) ->
-  createIndicator( (err, indicator) ->
+  helpers.createIndicator( (err, indicator) ->
     new_title = "Updated title"
     request.put({
       url: helpers.appurl("/api/indicators/#{indicator.id}")
@@ -143,6 +132,47 @@ test('PUT indicator does not fail when an _id is given', (done) ->
           assert.equal indicator.title, new_title
           done()
         )
+    )
+  )
+)
+
+test('GET indicator/:id/data returns the indicator data and bounds', (done) ->
+  enviroportalId = 5
+  theData = [{
+    year: 2000
+    value: 4
+  }]
+
+  indicatorDataAttrbutes =
+    enviroportalId: enviroportalId
+    data: theData
+
+  helpers.createIndicator({
+    indicatorDefinition: {
+      enviroportalId: enviroportalId
+      fields: [{
+        name: 'year'
+        type: 'integer'
+      },{
+        name: 'value'
+        type: 'integer'
+      }]
+    }
+  }, (err, indicator) ->
+
+    helpers.createIndicatorData(indicatorDataAttrbutes, (error, indicatorData) ->
+
+      request.get({
+        url: helpers.appurl("/api/indicators/#{indicator.id}/data")
+        json: true
+      }, (err, res, body) ->
+        assert.equal res.statusCode, 200
+
+        assert.property(body, 'results')
+        assert.property(body, 'bounds')
+
+        done()
+      )
     )
   )
 )

@@ -1,6 +1,7 @@
 mongoose = require('mongoose')
 request = require('request')
 fs = require('fs')
+_ = require('underscore')
 IndicatorData = require('./indicator_data').model
 
 indicatorSchema = mongoose.Schema(
@@ -41,6 +42,30 @@ indicatorSchema.methods.getIndicatorData = (callback) ->
     else
       callback null, res.data
  
+indicatorSchema.methods.calculateIndicatorDataBounds = (callback) ->
+  @getIndicatorData((error, data) =>
+    bounds = {}
+
+    unless @indicatorDefinition.fields?
+      return console.log("Indicator definition does not list fields, cannot get bounds")
+
+    for field in @indicatorDefinition.fields
+      bounds[field.name] = boundAggregators[field.type](data, field.name, field.name)
+
+    callback(null, bounds)
+  )
+
+# Functions to aggregate the data bounds of different types of fields
+boundAggregators =
+  integer: (data, fieldName) ->
+    bounds = {}
+    bounds.min = _.min(data, (row) ->
+      row[fieldName]
+    )[fieldName]
+    bounds.max = _.max(data, (row) ->
+      row[fieldName]
+    )[fieldName]
+    return bounds
 
 Indicator = mongoose.model('Indicator', indicatorSchema)
 

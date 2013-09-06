@@ -6,6 +6,8 @@
   "src/models/indicator.coffee",
   "src/collections/indicator_collection.coffee",
   "src/models/visualisation.coffee",
+  "src/views/visualisation_filter_view.coffee",
+  "src/views/integer_filter_view.coffee",
   "src/collections/visualisation_collection.coffee",
   "src/models/section.coffee",
   "src/collections/section_collection.coffee",

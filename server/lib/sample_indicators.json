@@ -11,7 +11,17 @@
       "pollFrequency": "annual",
       "xAxis": "year",
       "yAxis": "value",
-      "geometryField": "geometry"
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "name": "year",
+          "type": "integer"
+        },
+        {
+          "name": "value",
+          "type": "integer"
+        }
+      ]
     }
 }, {
     "category": "Biodiversity",
@@ -26,7 +36,17 @@
       "pollFrequency": "annual",
       "xAxis": "year",
       "yAxis": "value",
-      "geometryField": "geometry"
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "name": "year",
+          "type": "integer"
+        },
+        {
+          "name": "value",
+          "type": "integer"
+        }
+      ]
     }
 }, {
     "category": "Biodiversity",
@@ -41,6 +61,16 @@
       "pollFrequency": "annual",
       "xAxis": "year",
       "yAxis": "value",
-      "geometryField": "geometry"
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "name": "year",
+          "type": "integer"
+        },
+        {
+          "name": "value",
+          "type": "integer"
+        }
+      ]
     }
 }]

@@ -1,0 +1,9 @@
+<header>
+  <h3>Data filters</h3>
+  <a href="#">Reset all filters</a>
+  <ul class='filter-fields'>
+    {{#each fields}}
+      {{addSubViewTo ../thisView subViewName attributes=this visualisation=../visualisation}}
+    {{/each}}
+  </ul>
+</header>

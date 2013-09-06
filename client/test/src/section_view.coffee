@@ -121,7 +121,7 @@ test(".startTitleEdit sets the title to 'New Section' and calls render", ->
 
 test("Can see the section visualisation", ->
   visualisation = Helpers.factoryVisualisationWithIndicator()
-  visualisation.set('data', [])
+  visualisation.set('data', results: [])
   section = new Backbone.Models.Section(title: 'title', visualisation: visualisation)
 
   view = createAndShowSectionViewForSection(section)
@@ -154,24 +154,6 @@ test(".createVisualisation creates a visualisation record on the section
   view.close()
 )
 
-test(".editVisualisation creates a visualisation if none currently
-  exists", ->
-  section = new Backbone.Models.Section(
-    title: 'This title is'
-    indicator: Helpers.factoryIndicator()
-  )
-
-  view = createAndShowSectionViewForSection(section)
-
-  assert.isNull section.get('visualisation')
-
-  view.editVisualisation()
-
-  assert.equal section.get('visualisation').constructor.name, 'Visualisation'
-
-  view.close()
-)
-
 test("Blurring title triggers delaySave", (done)->
   oldTitle = "old title"
   report = new Backbone.Models.Report({
@@ -198,5 +180,3 @@ test("Blurring title triggers delaySave", (done)->
     done()
   )
 )
-
-test("Can view report containing this section")

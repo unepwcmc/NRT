@@ -9,7 +9,7 @@ class Backbone.Views.BarChartView extends Backbone.View
 
   initialize: (options) ->
     @visualisation = options.visualisation
-    @listenTo(@visualisation, 'change', @render)
+    @listenTo(@visualisation, 'change:data', @render)
 
     @barChart = nrtViz.barChart
      xKey: "year"
@@ -19,16 +19,19 @@ class Backbone.Views.BarChartView extends Backbone.View
 
   render: =>
     if @visualisation.get('data')?
-      @selection = d3.select(@el)
-      data = @visualisation.get('data')
-      @selection.data [data]
-
-      @barChart.chart.width @width
-      @selection.call @barChart.chart, @barColor
+      @renderChart()
     else
       @visualisation.getIndicatorData()
 
     return @
 
+  renderChart: ->
+    @selection = d3.select(@el)
+    data = @visualisation.get('data').results
+    @selection.data [data]
+
+    @barChart.chart.width @width
+    @selection.call @barChart.chart, @barColor
+
   onClose: ->
-    
+    @stopListening()
