@@ -169,6 +169,55 @@ test('GET indicator/:id/data returns the indicator data and bounds', (done) ->
         assert.equal res.statusCode, 200
 
         assert.property(body, 'results')
+        assert.ok(_.isEqual body.results, theData)
+        assert.property(body, 'bounds')
+
+        done()
+      )
+    )
+  )
+)
+
+test('GET indicator/:id/data with an integer filter filters the result', (done) ->
+  enviroportalId = 5
+  theData = [{
+    year: 2000
+    value: 4
+  },{
+    year: 2002
+    value: 50
+  }]
+
+  indicatorDataAttrbutes =
+    enviroportalId: enviroportalId
+    data: theData
+
+  helpers.createIndicator({
+    indicatorDefinition: {
+      enviroportalId: enviroportalId
+      fields: [{
+        name: 'year'
+        type: 'integer'
+      },{
+        name: 'value'
+        type: 'integer'
+      }]
+    }
+  }, (err, indicator) ->
+
+    helpers.createIndicatorData(indicatorDataAttrbutes, (error, indicatorData) ->
+
+      request.get({
+        url: helpers.appurl("/api/indicators/#{indicator.id}/data?filters[value][min]=5")
+        json: true
+      }, (err, res, body) ->
+        assert.equal res.statusCode, 200
+
+        # Assert only the value about 40 is returned
+        assert.ok(_.isEqual(
+          body.results,
+          [theData[1]]
+        ), "Expected \n#{body.results} \nto equal \n#{[theData[1]]}")
         assert.property(body, 'bounds')
 
         done()

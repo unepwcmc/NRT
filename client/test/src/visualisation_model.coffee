@@ -115,3 +115,12 @@ test(".mapDataToXAndY should return data as an array of X and Y attributes", ->
   assert.strictEqual mappedData[0].x, 1990
   assert.strictEqual mappedData[0].y, 5
 )
+
+test('.setFilterParameter when filter is undefined 
+  creates the object and insert the correct values', ->
+  visualisation = Helpers.factoryVisualisationWithIndicator()
+
+  visualisation.setFilterParameter('year', 'min', 2004)
+
+  assert.strictEqual visualisation.get('filters').year.min, 2004
+)
