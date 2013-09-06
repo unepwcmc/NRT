@@ -186,4 +186,3 @@ test("Blurring title triggers delaySave", (done)->
 )
 
 test("Can view report containing this section")
-test("Can navigate to Dashboard, Reports, Indicators and Bookmarks")
