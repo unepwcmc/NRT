@@ -1,0 +1,14 @@
+<div class="editor">
+  <span class="close">Close</span>
+  <header>
+    <h2>Select an indicator</h2>
+  </header>
+  <ul class="indicators">
+    {{#each indicators}}
+      {{addSubViewTo ../thisView "IndicatorSelectorItemView"
+        indicator=this
+        section=../section
+      }}
+    {{/each}}
+  </ul>
+</div>

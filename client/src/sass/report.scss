@@ -286,7 +286,7 @@ header.report-header {
     }
 }
 
-.report-edit-visualisation {
+.modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -305,7 +305,7 @@ header.report-header {
     margin-left: -453px;
     z-index: 1001;
 
-    .close-vis-edit {
+    .close {
       float:right;
       margin-top: -30px;
       margin-right: 5px;
@@ -317,95 +317,151 @@ header.report-header {
       border: 0;
       margin-bottom: 0;
     }
+  }
+}
 
-    .filters,
-    .visualisation {
-      border: 1px solid $lightishGrey;
-      box-sizing: border-box;
-      height: 455px;
-    }
+.indicator-selector {
+  .indicators {
+    height: 480px;
+    overflow: scroll;
+    border: 1px solid #DDD;
+    width: 100%;
+    background-color: $white;
+    @include box-sizing(border-box);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    position: relative;
+    z-index: 2;
+    list-style-type: none;
+    padding: 0;
 
-    aside.filters {
-      width: 300px;
-      float: right;
-      border-left: 0;
+    li {
+      border-bottom: 1px solid #DDD;
+      @include clearfix;
+      padding: 0;
 
-      header {
-        padding: 12px 20px;
-        border-bottom: 1px solid $lightishGrey;
-        position: relative;
+      & > div {
+        float: left;
+      }
 
-        h3 {
-          color: $mediumGrey;
-          font-weight: bold;
+      .icon {
+        width: 13px;
+        padding: 20px 23px;
+      }
+
+      .info {
+        width: 808px;
+        padding: 20px 15px;
+        border-left: 1px solid #DDD;
+
+        &:hover {
+          background: $linkBlue;
+          color: white;
+          cursor: pointer;
         }
 
-        a {
-          color: $differentGrey;
-          text-decoration: underline;
-          font-size: 0.8em;
-          position: absolute;
-          right: 20px;
-          top: 10px;
+        p {
+          padding-bottom: 0;
+          font-size: 0.75em;
+          line-height: 1.3em;
         }
       }
-    }
 
-    .visualisation {
-      background-color: white;
-      width: 600px;
-      float: left;
+      .h4 {
+        font-weight: 600;
+        font-size: 0.85em;
+      }
+    }
+  }
+}
+
+.report-edit-visualisation {
+  .filters,
+  .visualisation {
+    border: 1px solid $lightishGrey;
+    box-sizing: border-box;
+    height: 455px;
+  }
+
+  aside.filters {
+    width: 300px;
+    float: right;
+    border-left: 0;
+
+    header {
+      padding: 12px 20px;
+      border-bottom: 1px solid $lightishGrey;
       position: relative;
 
-      .visualisation-table-view {
-        height: 400px;
-        overflow: scroll;
-        margin: 10px;
-
-        table {
-          width: 578px;
-        }
+      h3 {
+        color: $mediumGrey;
+        font-weight: bold;
       }
 
-      .controls {
-        overflow: hidden;
-        margin: 10px 10px 0;
+      a {
+        color: $differentGrey;
+        text-decoration: underline;
+        font-size: 0.8em;
+        position: absolute;
+        right: 20px;
+        top: 10px;
+      }
+    }
+  }
 
-        button,
-        .select {
-          margin-left: 10px;
-          float: right;
+  .visualisation {
+    background-color: white;
+    width: 600px;
+    float: left;
+    position: relative;
+
+    .visualisation-table-view {
+      height: 400px;
+      overflow: scroll;
+      margin: 10px;
+
+      table {
+        width: 578px;
+      }
+    }
+
+    .controls {
+      overflow: hidden;
+      margin: 10px 10px 0;
+
+      button,
+      .select {
+        margin-left: 10px;
+        float: right;
+      }
+
+      .select {
+        padding: 2px 15px;
+
+        &:active {
+          background: none;
+          color: inherit;
+          border-color: inherit;
         }
 
-        .select {
-          padding: 2px 15px;
-
-          &:active {
-            background: none;
-            color: inherit;
-            border-color: inherit;
+        &:hover {
+          select {
+            cursor: pointer;
+            color: $buttonBlue;
           }
 
-          &:hover {
-            select {
-              cursor: pointer;
-              color: $buttonBlue;
-            }
-
-            @include transition(none);
-          }
-        }
-
-        select {
-          color: $lightishGrey;
-          border: 0;
+          @include transition(none);
         }
       }
 
-      .bar-chart-view {
-        padding: 50px 10px;
+      select {
+        color: $lightishGrey;
+        border: 0;
       }
+    }
 
+    .bar-chart-view {
+      padding: 50px 10px;
     }
   }
 }
