@@ -19,7 +19,7 @@ class Backbone.Views.IndicatorSelectorItemView extends Backbone.View
     @section.save()
 
   render: =>
-    @$el.html(@template(title: @indicator.title))
+    @$el.html(@template(title: @indicator.get('title')))
 
   onClose: ->
      

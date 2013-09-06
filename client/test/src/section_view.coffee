@@ -95,6 +95,20 @@ test(".addNarrative creates a narrative record on the section", ->
   view.close()
 )
 
+test("chooseIndicator creates a modal indicator selector view", ->
+  section = new Backbone.Models.Section(id: 12, title: 'title')
+
+  view = createAndShowSectionViewForSection(section)
+
+  assert.isNull section.get('indicator')
+
+  view.chooseIndicator()
+
+  assert.strictEqual $('#test-container .modal').length, 1, "modal DOM element exists"
+
+  view.close()
+)
+
 test(".startTitleEdit sets the title to 'New Section' and calls render", ->
   section = new Backbone.Models.Section()
   view = createAndShowSectionViewForSection(section)

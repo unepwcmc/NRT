@@ -48,7 +48,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
       section: @section
     )
 
-    $('body').append(indicatorSelectorView.render().el)
+    @$el.append(indicatorSelectorView.render().el)
     $('body').addClass('stop-scrolling')
 
   addNarrative: =>
