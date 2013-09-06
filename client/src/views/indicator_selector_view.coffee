@@ -18,6 +18,8 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     )
 
   render: =>
+    $('body').addClass('stop-scrolling')
+
     @closeSubViews()
     @$el.html(@template(
       thisView: @

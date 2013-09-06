@@ -332,47 +332,44 @@ header.report-header {
     border-bottom-right-radius: 4px;
     position: relative;
     z-index: 2;
+    list-style-type: none;
+    padding: 0;
 
-    ul {
-      list-style-type: none;
+    li {
+      border-bottom: 1px solid #DDD;
+      @include clearfix;
       padding: 0;
 
-      li {
-        border-bottom: 1px solid #DDD;
-        @include clearfix;
-        padding: 0;
+      & > div {
+        float: left;
+      }
 
-        & > div {
-          float: left;
+      .icon {
+        width: 13px;
+        padding: 20px 23px;
+      }
+
+      .info {
+        width: 808px;
+        padding: 20px 15px;
+        border-left: 1px solid #DDD;
+
+        &:hover {
+          background: $linkBlue;
+          color: white;
+          cursor: pointer;
         }
 
-        .icon {
-          width: 13px;
-          padding: 20px 23px;
+        p {
+          padding-bottom: 0;
+          font-size: 0.75em;
+          line-height: 1.3em;
         }
+      }
 
-        .info {
-          width: 808px;
-          padding: 20px 15px;
-          border-left: 1px solid #DDD;
-
-          &:hover {
-            background: $linkBlue;
-            color: white;
-            cursor: pointer;
-          }
-
-          p {
-            padding-bottom: 0;
-            font-size: 0.75em;
-            line-height: 1.3em;
-          }
-        }
-
-        .h4 {
-          font-weight: 600;
-          font-size: 0.85em;
-        }
+      .h4 {
+        font-weight: 600;
+        font-size: 0.85em;
       }
     }
   }

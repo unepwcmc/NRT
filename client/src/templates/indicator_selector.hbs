@@ -3,14 +3,12 @@
   <header>
     <h2>Select an indicator</h2>
   </header>
-  <div class="indicators">
-    <ul>
-      {{#each indicators}}
-        {{addSubViewTo ../thisView "IndicatorSelectorItemView"
-          indicator=this
-          section=../section
-        }}
-      {{/each}}
-    </ul>
-  </div>
+  <ul class="indicators">
+    {{#each indicators}}
+      {{addSubViewTo ../thisView "IndicatorSelectorItemView"
+        indicator=this
+        section=../section
+      }}
+    {{/each}}
+  </ul>
 </div>
