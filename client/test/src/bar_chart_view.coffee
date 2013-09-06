@@ -24,7 +24,7 @@ test('when initialised with a visualisation with no data, it fetches the data', 
     server.requests[0].url,
     "/api/indicators/#{indicatorId}/data"
   )
-  
+
   # Respond to get data request
   Helpers.SinonServer.respondWithJson.call(server, [{some: 'data'}])
   server.restore()
