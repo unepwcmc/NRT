@@ -52,6 +52,14 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
       y: row[yAxis]
     )
 
+  setFilterParameter: (field, operation, value)->
+    filters = @get('filters')
+    filters ||= {}
+    filters[field] ||= {}
+    filters[field][operation] = value
+
+    @set('filters', filters)
+
   @visualisationTypes: ['BarChart', 'Map', 'Table']
   
 #For backbone relational

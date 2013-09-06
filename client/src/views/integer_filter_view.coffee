@@ -4,6 +4,9 @@ window.Backbone.Views ||= {}
 class Backbone.Views.IntegerFilterView extends Backbone.View
   template: Handlebars.templates['integer_filter.hbs']
 
+  events:
+    "change select": "updateFilters"
+
   initialize: (options) ->
     @fieldAttributes = options.attributes
     @visualisation = options.visualisation
@@ -39,5 +42,12 @@ class Backbone.Views.IntegerFilterView extends Backbone.View
       options.push(value: value, selected: isSelected)
     return options
 
+  updateFilters: (event) =>
+    $target = $(event.currentTarget)
+    value = $target.val()
+    nameComponents = $target.attr('name').split('-')
+    operation = nameComponents[1]
+    @visualisation.setFilterParameter(@fieldAttributes.name, operation, value)
+    
   onClose: ->
     @stopListening
