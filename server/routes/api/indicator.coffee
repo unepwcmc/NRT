@@ -56,7 +56,8 @@ exports.data = (req, res) ->
     if err?
       console.error err
       return res.send(404, "Could not find indicator #{req.params.id}")
-    indicator.getIndicatorData (err, indicatorData) ->
+
+    indicator.getIndicatorData req.query.filters, (err, indicatorData) ->
       if err?
         console.error err
         return res.send(500, "Can't retrieve indicator data for #{req.params.id}")

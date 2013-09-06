@@ -25,7 +25,7 @@ indicatorSchema.statics.seedData = (callback) ->
       Indicator.create(dummyIndicators, (error, results) ->
         if error?
           console.error error
-          return callback(error) 
+          return callback(error)
         else
           return callback(null, results)
       )
@@ -33,15 +33,35 @@ indicatorSchema.statics.seedData = (callback) ->
       callback()
   )
 
-indicatorSchema.methods.getIndicatorData = (callback) ->
+indicatorSchema.methods.getIndicatorData = (filters, callback) ->
+  if arguments.length == 1
+    callback = filters
+    filters = {}
 
   IndicatorData.findOne enviroportalId: @indicatorDefinition.enviroportalId, (err, res) ->
     if err?
       console.error err
       callback err
     else
-      callback null, res.data
+      data = filterIndicatorData(res.data, filters)
+
+      callback null, data
+
+# Filter the given data according to the given filters
+filterIndicatorData = (data, filters) ->
+  for field, operations of filters
+    for operation, value of operations
+      data = filterOperations[operation](data, field, value)
+
+  return data
  
+# Functions which filter indicator data using different operations
+filterOperations =
+  min: (data, field, value) ->
+    _.filter(data, (row) ->
+      row[field] >= value
+    )
+
 indicatorSchema.methods.calculateIndicatorDataBounds = (callback) ->
   @getIndicatorData((error, data) =>
     bounds = {}

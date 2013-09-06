@@ -7,7 +7,7 @@ _ = require('underscore')
 
 suite('Indicator')
 
-test('.getIndicatorData should return all indicator data for this indicator', (done) ->
+test('.getIndicatorData with no filters returns all indicator data for this indicator', (done) ->
   expectedData = [
     {
       "year": 2000,
@@ -22,7 +22,7 @@ test('.getIndicatorData should return all indicator data for this indicator', (d
   ]
 
   indicator = new Indicator(
-    indicatorDefinition: 
+    indicatorDefinition:
       enviroportalId: 14
   )
   indicatorData = new IndicatorData(
@@ -39,8 +39,54 @@ test('.getIndicatorData should return all indicator data for this indicator', (d
       else
         indicator.getIndicatorData((err, data) ->
           assert.ok(
-            _.isEqual(data, expectedData), 
+            _.isEqual(data, expectedData),
             "Expected \n#{JSON.stringify(data)} \nto equal \n#{JSON.stringify(expectedData)}"
+          )
+          done()
+        )
+  )
+)
+
+test('.getIndicatorData with an integer filter \'min\' value
+  returns the data correctly filtered', (done) ->
+  fullData = [
+    {
+      "year": 2000,
+      "value": 3
+    }, {
+      "year": 2001,
+      "value": 4
+    }, {
+      "year": 2002,
+      "value": 7
+    }
+  ]
+  expectedFilteredData = [fullData[1], fullData[2]]
+
+  indicator = new Indicator(
+    indicatorDefinition:
+      enviroportalId: 14
+  )
+  indicatorData = new IndicatorData(
+    enviroportalId: 14, data: fullData
+  )
+
+  filters =
+    value:
+      min: '4'
+
+  async.parallel([
+        (cb) -> indicator.save(cb)
+      ,
+        (cb) -> indicatorData.save(cb)
+    ], (err, results) ->
+      if err?
+        console.error err
+      else
+        indicator.getIndicatorData(filters, (err, data) ->
+          assert.ok(
+            _.isEqual(data, expectedFilteredData),
+            "Expected \n#{JSON.stringify(data)} \nto equal \n#{JSON.stringify(expectedFilteredData)}"
           )
           done()
         )
