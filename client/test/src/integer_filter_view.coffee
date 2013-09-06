@@ -50,6 +50,30 @@ test('when given a visualisation with bounds it renders 2 select options', ->
   integerFilterView.close()
 )
 
+test('when given a visualisation with filters set, the correct values are selected', ->
+  visualisation = Helpers.factoryVisualisationWithIndicator(
+    indicator: yearValueIndicator
+    data: YearValueFixture.data
+  )
+  visualisation.setFilterParameter('year', 'min', 2003)
+
+  integerFilterView = new Backbone.Views.IntegerFilterView(
+    visualisation: visualisation
+    attributes:
+      name: 'year'
+      type: 'integer'
+  )
+
+  Helpers.renderViewToTestContainer(integerFilterView)
+
+  assert.strictEqual(
+    integerFilterView.$el.find('select[name="year-min"] option[selected]').val(),
+    '2003'
+  )
+
+  integerFilterView.close()
+)
+
 test('when changing the min value it should update the visualisation
   filter parameters', ->
   visualisation = Helpers.factoryVisualisationWithIndicator(
