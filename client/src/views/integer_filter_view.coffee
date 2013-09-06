@@ -48,6 +48,7 @@ class Backbone.Views.IntegerFilterView extends Backbone.View
     nameComponents = $target.attr('name').split('-')
     operation = nameComponents[1]
     @visualisation.setFilterParameter(@fieldAttributes.name, operation, value)
+    @visualisation.getIndicatorData()
     
   onClose: ->
     @stopListening

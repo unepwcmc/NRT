@@ -27,7 +27,12 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
     )
 
   buildIndicatorDataUrl: ->
-    "/api/indicators/#{@get('indicator').get('_id')}/data"
+    url = "/api/indicators/#{@get('indicator').get('_id')}/data"
+    if @get('filters')?
+      url += "?#{
+        $.param {filters: @get('filters')}
+      }"
+    return url
 
   getXAxis: ->
     @get('indicator').get('indicatorDefinition').xAxis
