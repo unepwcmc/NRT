@@ -22,6 +22,8 @@ exports.createApp = ->
   app.set "view engine", "hbs"
   app.set "views", __dirname + "/views"
 
+  require('./initializers/i18n')
+
   app.use express.favicon()
   app.use express.logger("dev")
   app.use express.bodyParser()

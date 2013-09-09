@@ -25,7 +25,7 @@
     "async": "0.2.9",
     "mongoose": "3.6.16",
     "request": "~2.27.0",
-    "i18next": "1.6.8"
+    "i18n": "0.4.1"
   },
   "devDependencies": {
     "Faker": "0.5.11",
