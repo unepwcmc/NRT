@@ -6,6 +6,7 @@ lessMiddleware = require('less-middleware')
 require('express-resource')
 passport = require('passport')
 mongoose = require('mongoose')
+i18n = require('i18n')
 
 exports.createApp = ->
   app = express()
@@ -22,14 +23,15 @@ exports.createApp = ->
   app.set "view engine", "hbs"
   app.set "views", __dirname + "/views"
 
-  require('./initializers/i18n')
-
   app.use express.favicon()
   app.use express.logger("dev")
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use express.cookieParser("your secret here")
   app.use express.session()
+
+  app.use i18n.init
+  require('./initializers/i18n')
 
   app.use passport.initialize()
   app.use passport.session()

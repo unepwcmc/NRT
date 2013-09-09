@@ -9,7 +9,10 @@ i18n.configure(
   updateFiles: false
 )
 
-hbs.registerHelper('t', (text, options) ->
-  translation = i18n.__(text)
-  return new hbs.SafeString(translation)
+hbs.registerHelper('t', () ->
+  return i18n.__.apply(this, arguments)
+)
+
+hbs.registerHelper('pluralise', () ->
+  return i18n.__n.apply(this, arguments)
 )
