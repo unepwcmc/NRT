@@ -92,7 +92,10 @@ test('when changing the min value it should update the visualisation
 
   minYearSelect = integerFilterView.$el.find('select[name="year-min"] option[selected]')
   minYearSelect.val(2004)
+
+  server = sinon.fakeServer.create() # Ignore triggered requests
   minYearSelect.trigger('change')
+  server.restore()
 
   assert.strictEqual visualisation.get('filters').year.min, '2004'
 )
