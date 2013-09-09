@@ -1,38 +1,5 @@
 window.Helpers ||= {}
 
-Helpers.findNextFreeId = (modelName) ->
-  Helpers.modelIds ||= {}
-  Helpers.modelIds[modelName] ||= 0
-
-  while Backbone.Models[modelName].findOrCreate(Helpers.modelIds[modelName])?
-    Helpers.modelIds[modelName] = Helpers.modelIds[modelName] + 1
-
-  return Helpers.modelIds[modelName]
-
-Helpers.factoryIndicator = (attributes = {}) ->
-  attributes._id ||= Helpers.findNextFreeId('Indicator')
-  attributes.indicatorDefinition ||=
-    fields: []
-  new Backbone.Models.Indicator(
-    attributes
-  )
-
-Helpers.factorySectionWithIndicator = ->
-  new Backbone.Models.Section(
-    _id: Helpers.findNextFreeId('Section')
-    indicator: Helpers.factoryIndicator()
-  )
-
-Helpers.factoryVisualisationWithIndicator = (attributes = {}) ->
-  attributes._id ||= Helpers.findNextFreeId('Visualisation')
-  attributes.indicator ||= Helpers.factoryIndicator()
-  unless attributes.hasOwnProperty? 'data'
-    attributes.data =
-      results: []
-      bounds: {}
-    
-  new Backbone.Models.Visualisation(attributes)
-
 Helpers.renderViewToTestContainer = (view) ->
   view.render()
   $('#test-container').html(view.el)
@@ -53,4 +20,39 @@ Helpers.SinonServer.respondWithJson = (jsonData) ->
     { "Content-Type": "application/json" },
     JSON.stringify(jsonData)
   )
+
+window.Factory ||= {}
+
+Factory.findNextFreeId = (modelName) ->
+  Factory.modelIds ||= {}
+  Factory.modelIds[modelName] ||= 0
+
+  while Backbone.Models[modelName].findOrCreate(Factory.modelIds[modelName])?
+    Factory.modelIds[modelName] = Factory.modelIds[modelName] + 1
+
+  return Factory.modelIds[modelName]
+
+Factory.indicator = (attributes = {}) ->
+  attributes._id ||= Factory.findNextFreeId('Indicator')
+  attributes.indicatorDefinition ||=
+    fields: []
+  new Backbone.Models.Indicator(
+    attributes
+  )
+
+Factory.section = ->
+  new Backbone.Models.Section(
+    _id: Factory.findNextFreeId('Section')
+    indicator: Factory.indicator()
+  )
+
+Factory.visualisation = (attributes = {}) ->
+  attributes._id ||= Factory.findNextFreeId('Visualisation')
+  attributes.indicator ||= Factory.indicator()
+  unless attributes.hasOwnProperty? 'data'
+    attributes.data =
+      results: []
+      bounds: {}
+    
+  new Backbone.Models.Visualisation(attributes)
 

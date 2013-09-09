@@ -120,7 +120,7 @@ test(".startTitleEdit sets the title to 'New Section' and calls render", ->
 )
 
 test("Can see the section visualisation", ->
-  visualisation = Helpers.factoryVisualisationWithIndicator()
+  visualisation = Factory.visualisation()
   visualisation.set('data', results: [])
   section = new Backbone.Models.Section(title: 'title', visualisation: visualisation)
 
@@ -140,7 +140,7 @@ test(".createVisualisation creates a visualisation record on the section
   and saves it", ->
   section = new Backbone.Models.Section(
     title: 'This title is'
-    indicator: Helpers.factoryIndicator()
+    indicator: Factory.indicator()
   )
 
   view = createAndShowSectionViewForSection(section)

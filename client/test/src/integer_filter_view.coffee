@@ -19,12 +19,12 @@ YearValueFixture =
         min: 50
         min: 400
 
-yearValueIndicator = Helpers.factoryIndicator(
+yearValueIndicator = Factory.indicator(
   indicatorDefinition: YearValueFixture.definition
 )
 
 test('when given a visualisation with bounds it renders 2 select options', ->
-  visualisation = Helpers.factoryVisualisationWithIndicator(
+  visualisation = Factory.visualisation(
     indicator: yearValueIndicator
     data: YearValueFixture.data
   )
@@ -51,7 +51,7 @@ test('when given a visualisation with bounds it renders 2 select options', ->
 )
 
 test('when given a visualisation with filters set, the correct values are selected', ->
-  visualisation = Helpers.factoryVisualisationWithIndicator(
+  visualisation = Factory.visualisation(
     indicator: yearValueIndicator
     data: YearValueFixture.data
   )
@@ -76,7 +76,7 @@ test('when given a visualisation with filters set, the correct values are select
 
 test('when changing the min value it should update the visualisation
   filter parameters', ->
-  visualisation = Helpers.factoryVisualisationWithIndicator(
+  visualisation = Factory.visualisation(
     indicator: yearValueIndicator
     data: YearValueFixture.data
   )

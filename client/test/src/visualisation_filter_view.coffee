@@ -16,7 +16,7 @@ yearValueIndicatorDefinition =
 
 test(".getFieldData should add subViewName to the indicator field list", ->
   visualisation = new Backbone.Models.Visualisation(
-    indicator: Helpers.factoryIndicator(
+    indicator: Factory.indicator(
       indicatorDefinition:
         fields: [
           {
@@ -41,11 +41,11 @@ test("Given an indicator with a field of type 'integer', it should
     year: {min:5, max: 6}
     value: {min:5, max: 6}
   }
-  visualisation = Helpers.factoryVisualisationWithIndicator(
+  visualisation = Factory.visualisation(
     data:
       results: []
       bounds: dummyBounds
-    indicator: Helpers.factoryIndicator(
+    indicator: Factory.indicator(
       indicatorDefinition: yearValueIndicatorDefinition
     )
   )
