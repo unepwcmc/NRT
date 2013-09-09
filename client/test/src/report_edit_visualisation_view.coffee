@@ -10,7 +10,7 @@ suite('ReportEditVisualisationView')
 
 test("Shows the given indicator title", ->
   indicatorTitle = "my lovely indicator"
-  indicator = Helpers.factoryIndicator()
+  indicator = Factory.indicator()
   indicator.set('title', indicatorTitle)
 
   section = new Backbone.Models.Section(
@@ -18,7 +18,7 @@ test("Shows the given indicator title", ->
   )
 
   view = createAndShowVisualisationViewForOptions(
-    visualisation: Helpers.factoryVisualisationWithIndicator(
+    visualisation: Factory.visualisation(
       indicator: indicator
       section: section
     )
@@ -33,7 +33,7 @@ test("Shows the given indicator title", ->
 
 test("Fires a 'close' event when view closed", ->
   view = createAndShowVisualisationViewForOptions(
-    visualisation: Helpers.factoryVisualisationWithIndicator()
+    visualisation: Factory.visualisation()
   )
 
   callback = sinon.spy()
@@ -46,7 +46,7 @@ test("Fires a 'close' event when view closed", ->
 test("When given a visualisation with type BarChart,
   it renders a BarChartView subView", ->
   view = createAndShowVisualisationViewForOptions(
-    visualisation: Helpers.factoryVisualisationWithIndicator(
+    visualisation: Factory.visualisation(
       type: "BarChart"
     )
   )
@@ -59,7 +59,7 @@ test("When given a visualisation with type BarChart,
 test("When given a visualisation with type Map,
   it renders a MapView subView", ->
   view = createAndShowVisualisationViewForOptions(
-    visualisation: Helpers.factoryVisualisationWithIndicator(
+    visualisation: Factory.visualisation(
       type: "Map"
     )
   )
@@ -77,7 +77,7 @@ test("When given a visualisation with type Map,
 test("When given a visualisation with type Table,
   it renders a TableView subView", ->
   view = createAndShowVisualisationViewForOptions(
-    visualisation: Helpers.factoryVisualisationWithIndicator(
+    visualisation: Factory.visualisation(
       type: "Table"
     )
   )
@@ -94,7 +94,7 @@ test("When given a visualisation with type Table,
 
 test("I see the visualisation type selected", ->
   view = createAndShowVisualisationViewForOptions(
-    visualisation: Helpers.factoryVisualisationWithIndicator(
+    visualisation: Factory.visualisation(
       type: "Map"
     )
   )
@@ -104,7 +104,7 @@ test("I see the visualisation type selected", ->
 )
 
 test(".updateVisualisationType should set the visualisation type", ->
-  visualisation = Helpers.factoryVisualisationWithIndicator(
+  visualisation = Factory.visualisation(
     type: "Map"
   )
   view = createAndShowVisualisationViewForOptions(

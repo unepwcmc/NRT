@@ -3,7 +3,7 @@ assert = chai.assert
 suite('Table View')
 
 test('when initialised with a visualisation with no data, it fetches the data', (done)->
-  visualisation = Helpers.factoryVisualisationWithIndicator(
+  visualisation = Factory.visualisation(
     data: null
   )
 
@@ -41,7 +41,7 @@ test('when initialised with a visualisation with no data, it fetches the data', 
 )
 
 test('Should render visualisation data into a table', ->
-  visualisation = Helpers.factoryVisualisationWithIndicator()
+  visualisation = Factory.visualisation()
   visualisation.set('data', results: [{
       year: 2015
       value: 10

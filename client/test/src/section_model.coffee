@@ -69,7 +69,7 @@ test(".hasTitleOrIndicator returns true if there is an indicator present", ->
 
 test("When initialised with visualisation attributes,
   it creates a Backbone.Models.Visualisation model in the visualisation attribute", ->
-  visualisationAttributes = data: {some: 'data'}, indicator: Helpers.factoryIndicator()
+  visualisationAttributes = data: {some: 'data'}, indicator: Factory.indicator()
   section = new Backbone.Models.Section(visualisation: visualisationAttributes)
 
   assert.equal section.get('visualisation').constructor.name, 'Visualisation'

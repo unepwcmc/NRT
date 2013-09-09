@@ -3,7 +3,7 @@ assert = chai.assert
 suite('Map View')
 
 test('when initialised with a visualisation with no data, it fetches the data', (done)->
-  visualisation = Helpers.factoryVisualisationWithIndicator(
+  visualisation = Factory.visualisation(
     data: null
   )
 
