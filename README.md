@@ -70,6 +70,22 @@ The tests are written in mocha, using the qunit syntax with chai for
 asserts. Write tests in coffeescript in the `test/` folder and
 compile them with `grunt`.
 
+## Debugging
+
+### Server
+
+You can use `node-inspector` to debug the server components.
+
+* Install and run `node-inspector`
+    * `npm install -g node-inspector`
+    * `node-inspector &`
+* Run the server with `npm run-script debug`
+* Navigate to [the debugger](http://127.0.0.1:8080/debug?port=5858) in
+  your browser.
+
+You can now check out console logs and use breakpoints (in your code
+with `debugger` and in the inspector itself) inside your browser.
+
 ## User Management
 
 A simple user management system is in place, with a CRUD (minus the U)
