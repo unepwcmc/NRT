@@ -178,7 +178,7 @@ test('GET indicator/:id/data returns the indicator data and bounds', (done) ->
   )
 )
 
-test('GET indicator/:id/data with an integer filter filters the result', (done) ->
+test('GET indicator/:id/data with a \'min\' filter filters the result', (done) ->
   enviroportalId = 5
   theData = [{
     year: 2000
