@@ -12,6 +12,7 @@
   <script type="text/javascript">
     $(document).ready(function(){
       new Backbone.Controllers.ReportsController({reports: {{{reportsJSON}}} });
+      new Backbone.Views.SaveStatusView();
     });
   </script>
 {{/contentFor}}
