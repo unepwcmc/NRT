@@ -3,12 +3,12 @@ assert = chai.assert
 suite('Visualisation Model')
 
 test('Passing no section into visualisation creates a null section attribute', ->
-  visualisation = Helpers.factoryVisualisationWithIndicator()
+  visualisation = Factory.visualisation()
   assert.isNull visualisation.get('section')
 )
 
 test('.toJSON returns the section: as section._id instead of the model attributes', ->
-  section = Helpers.factorySectionWithIndicator()
+  section = Factory.section()
   visualisation = new Backbone.Models.Visualisation(
     section: section
     indicator: section.get('indicator')
@@ -18,7 +18,7 @@ test('.toJSON returns the section: as section._id instead of the model attribute
 )
 
 test('.toJSON returns the indicator: as indicator._id instead of the model attributes', ->
-  indicatorId = Helpers.findNextFreeId('Indicator')
+  indicatorId = Factory.findNextFreeId('Indicator')
   visualisation = new Backbone.Models.Visualisation(
     indicator: {
       _id: indicatorId
@@ -40,7 +40,7 @@ test('Passing an indicator into a visualisation
 )
 
 test(".getIndicatorData populates the 'data' attribute", (done)->
-  visualisation = Helpers.factoryVisualisationWithIndicator()
+  visualisation = Factory.visualisation()
   indicator = visualisation.get('indicator')
 
   server = sinon.fakeServer.create()
@@ -63,7 +63,7 @@ test(".getIndicatorData populates the 'data' attribute", (done)->
 )
 
 test(".buildIndicatorDataUrl appends visualisation filter parameters to url", ->
-  visualisation = Helpers.factoryVisualisationWithIndicator()
+  visualisation = Factory.visualisation()
   visualisation.setFilterParameter('year', 'min', 2003)
   visualisation.setFilterParameter('value', 'max', 50)
 
@@ -84,7 +84,7 @@ test("Default type is 'BarChart'", ->
 )
 
 test(".getHighestXRow should retrieve the row with the highest value of X in the indicator data", ->
-  indicator = Helpers.factoryIndicator(
+  indicator = Factory.indicator(
     indicatorDefinition:
       xAxis: 'year'
   )
@@ -102,7 +102,7 @@ test(".getHighestXRow should retrieve the row with the highest value of X in the
 )
 
 test(".mapDataToXAndY should return data as an array of X and Y attributes", ->
-  indicator = Helpers.factoryIndicator(
+  indicator = Factory.indicator(
     indicatorDefinition:
       xAxis: 'year'
       yAxis: 'value'
@@ -131,7 +131,7 @@ test(".mapDataToXAndY should return data as an array of X and Y attributes", ->
 
 test('.setFilterParameter when filter is undefined 
   creates the object and insert the correct values', ->
-  visualisation = Helpers.factoryVisualisationWithIndicator()
+  visualisation = Factory.visualisation()
 
   visualisation.setFilterParameter('year', 'min', 2004)
 

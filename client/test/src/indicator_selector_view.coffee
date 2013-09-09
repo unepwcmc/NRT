@@ -4,7 +4,7 @@ suite('IndicatorSelectorView')
 
 test('Renders a list of indicators', ->
   section = new Backbone.Models.Section(
-    _id: Helpers.findNextFreeId('Section')
+    _id: Factory.findNextFreeId('Section')
   )
 
   server = sinon.fakeServer.create()
