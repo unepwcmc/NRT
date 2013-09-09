@@ -10,3 +10,6 @@ Handlebars.registerHelper "markup", (optionalValue) ->
 
 Handlebars.registerHelper "selectedIfEqual", (value1, value2) ->
   if (value1 == value2) then 'selected' else ''
+
+Handlebars.registerHelper "t", () ->
+  return new Handlebars.SafeString(i18n.t.apply(this, arguments))

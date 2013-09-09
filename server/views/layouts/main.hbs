@@ -13,6 +13,18 @@
     <script src="/js/lib/marked.js"></script>
     <script src="/js/lib/underscore-min.js"></script>
     <script src="/js/lib/backbone-min.js"></script>
+    <script src="/js/lib/i18next.min.js"></script>
+
+    <script>
+      $(document).ready( function() {
+        i18n.init({
+          useLocalStorage: true,
+          fallbackLng: 'en',
+          resGetPath: 'locales/__lng__.json',
+          cookieName: 'nrt_locale'
+        });
+      });
+    </script>
 
     {{{block "header"}}}
 
