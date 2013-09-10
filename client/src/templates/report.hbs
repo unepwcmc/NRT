@@ -16,10 +16,11 @@
       </div>
     </div>
 
-    {{#each sections}}
-      {{addSubViewTo ../thisView "SectionView" section=this}}
+    {{#each sectionsWithViewName}}
+      {{addSubViewTo ../thisView this.viewName section=this.section}}
     {{/each}}
     <button class="add-report-section">Add Section</button>
+    <button class="add-report-chapter">Add Chapter</button>
   </div>
 
   <div class="report-sidebar">
