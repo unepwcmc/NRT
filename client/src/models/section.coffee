@@ -5,6 +5,9 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
 
   idAttribute: '_id'
 
+  defaults:
+    type: 'Section'
+
   relations: [
       key: 'narrative'
       type: Backbone.HasOne

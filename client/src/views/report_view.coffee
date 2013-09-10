@@ -6,6 +6,7 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
 
   events:
     "click .add-report-section": "addSection"
+    "click .add-report-chapter": "addChapter"
 
   initialize: (options) ->
     @report = options.report
@@ -18,11 +19,16 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
     @$el.html(@template(
       thisView: @,
       report: @report.toJSON()
-      sections: @report.get('sections').models
+      sectionsWithViewName: @getSectionsWithViewNames()
     ))
     @renderSubViews()
 
     return @
+
+  getSectionsWithViewNames: ->
+    sectionsWithViewNames = _.map(@report.get('sections').models, (section) ->
+      viewName: "#{section.get('type')}View", section: section
+    )
 
   # TODO This isn't a great long-term approach, since it won't work in IE
   # plus, it should probably defer to a router
@@ -41,6 +47,18 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
     else
       @report.save(null,
         success: @addSection
+        error: (err) ->
+          console.log err
+          alert('Unable to save report, please try again')
+      )
+
+  addChapter: =>
+    if @report.get('_id')?
+      section = new Backbone.Models.Section(type: 'Chapter')
+      @report.get('sections').add(section)
+    else
+      @report.save(null,
+        success: @addChapter
         error: (err) ->
           console.log err
           alert('Unable to save report, please try again')

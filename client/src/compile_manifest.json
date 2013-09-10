@@ -14,6 +14,7 @@
   "src/views/indicator_selector_item_view.coffee",
   "src/views/indicator_selector_view.coffee",
   "src/views/section_view.coffee",
+  "src/views/chapter_view.coffee",
   "src/views/section_presentation_view.coffee",
   "src/views/report_item_view.coffee",
   "src/views/report_list_view.coffee",
