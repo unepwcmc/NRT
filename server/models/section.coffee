@@ -5,6 +5,7 @@ mongoose = require('mongoose')
 
 sectionSchema = mongoose.Schema(
   title: String
+  type: String
   indicator: {type: mongoose.Schema.Types.ObjectId, ref: 'Indicator'}
 )
 

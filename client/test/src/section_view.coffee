@@ -153,30 +153,3 @@ test(".createVisualisation creates a visualisation record on the section
 
   view.close()
 )
-
-test("Blurring title triggers delaySave", (done)->
-  oldTitle = "old title"
-  report = new Backbone.Models.Report({
-    sections: [
-      new Backbone.Models.Section(title: oldTitle)
-    ]
-  })
-  section = report.get('sections').models[0]
-
-  delaySaveStub = sinon.stub(Backbone.Views.TextEditView::, 'delaySave')
-
-  view = createAndShowSectionViewForSection(section)
-
-  # Edit the title
-  newTitle = 'new title'
-  $.when(
-    $('#test-container').find(".content-text-field").text(newTitle).trigger('blur')
-  ).done(->
-    assert.ok(
-      delaySaveStub.calledOnce,
-      "Expected delaySave to be called once, but was called #{delaySaveStub.callCount}"
-    )
-    delaySaveStub.restore()
-    done()
-  )
-)

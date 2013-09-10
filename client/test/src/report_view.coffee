@@ -72,21 +72,13 @@ test("Report sections views are rendered", ->
 
   view = createAndShowReportViewForReport(report)
 
-  subViewExists = false
-  for subView in view.subViews
-    if subView.constructor.name == "SectionView"
-      subViewExists = true
-
-  assert subViewExists
+  assert.ok Helpers.viewHasSubViewOfClass(view, 'SectionView')
 
   view.close()
 )
 
-test("Can navigate to Dashboard, Reports, Indicators and Bookmarks")
-test("I can use report period")
-
 test(".addSection adds a section to the report", ->
-  report = new Backbone.Models.Report(_id: 5)
+  report = Factory.report()
   reportView = new Backbone.Views.ReportView(report: report)
 
   assert.equal report.get('sections').length, 0
@@ -95,4 +87,32 @@ test(".addSection adds a section to the report", ->
 
   assert.equal report.get('sections').length, 1
   assert.strictEqual report.get('sections').at(0).get('report').get('cid'), report.get('cid')
+  assert.equal report.get('sections').at(0).get('type'), "Section"
+)
+
+test(".addChapter adds a section with type 'chapter' to the report", ->
+  report = Factory.report()
+  reportView = new Backbone.Views.ReportView(report: report)
+
+  assert.equal report.get('sections').length, 0
+
+  reportView.addChapter()
+
+  assert.equal report.get('sections').length, 1
+  assert.strictEqual report.get('sections').at(0).get('report').get('cid'), report.get('cid')
+  assert.equal report.get('sections').at(0).get('type'), "Chapter"
+)
+
+test("Given a report with a section of type 'Chapter',
+  it renders a ChapterView sub view", ->
+  report = Factory.report(
+    sections: Factory.section(type: 'Chapter')
+  )
+
+  reportView = new Backbone.Views.ReportView(report: report)
+
+  reportView.render()
+  assert.ok Helpers.viewHasSubViewOfClass(reportView, 'ChapterView')
+
+  reportView.close()
 )

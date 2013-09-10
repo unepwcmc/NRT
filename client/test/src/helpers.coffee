@@ -32,6 +32,12 @@ Factory.findNextFreeId = (modelName) ->
 
   return Factory.modelIds[modelName]
 
+Factory.report = (attributes = {}) ->
+  attributes._id ||= Factory.findNextFreeId('Report')
+  new Backbone.Models.Report(
+    attributes
+  )
+
 Factory.indicator = (attributes = {}) ->
   attributes._id ||= Factory.findNextFreeId('Indicator')
   attributes.indicatorDefinition ||=
@@ -40,10 +46,11 @@ Factory.indicator = (attributes = {}) ->
     attributes
   )
 
-Factory.section = ->
+Factory.section = (attributes = {}) ->
+  attributes._id ||= Factory.findNextFreeId('Section')
+  attributes.indicator ||= Factory.indicator()
   new Backbone.Models.Section(
-    _id: Factory.findNextFreeId('Section')
-    indicator: Factory.indicator()
+    attributes
   )
 
 Factory.visualisation = (attributes = {}) ->
