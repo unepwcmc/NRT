@@ -9,6 +9,7 @@ dashboardRoutes = require('./routes/dashboard.coffee')
 indicatorRoutes = require('./routes/indicators.coffee')
 reportRoutes    = require('./routes/reports.coffee')
 userRoutes      = require('./routes/users.coffee')
+staticRoutes    = require('./routes/static.coffee')
 testRoutes      = require('./routes/tests.coffee')
 
 module.exports = exports = (app) ->
@@ -26,7 +27,7 @@ module.exports = exports = (app) ->
   app.resource 'api/indicators', indicatorApi, { format: 'json' }
   app.get "/api/indicators/:id/data", indicatorApi.data
 
-  app.get "/", ensureAuthenticated, dashboardRoutes.index
+  app.get "/", ensureAuthenticated, staticRoutes.about
   app.get "/dashboard", ensureAuthenticated, dashboardRoutes.index
   app.get "/indicators", ensureAuthenticated, indicatorRoutes.index
   app.get "/reports", ensureAuthenticated, reportRoutes.index
