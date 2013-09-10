@@ -6,6 +6,7 @@ lessMiddleware = require('less-middleware')
 require('express-resource')
 passport = require('passport')
 mongoose = require('mongoose')
+i18n = require('i18n')
 
 exports.createApp = ->
   app = express()
@@ -29,6 +30,9 @@ exports.createApp = ->
   app.use express.cookieParser("your secret here")
   app.use express.session()
 
+  app.use i18n.init
+  require('./initializers/i18n')
+
   app.use passport.initialize()
   app.use passport.session()
 
@@ -42,7 +46,7 @@ exports.createApp = ->
 
 exports.start = (port, callback) ->
   app = exports.createApp()
-  
+
   seedData()
 
   server = http.createServer(app).listen port, (err) ->
