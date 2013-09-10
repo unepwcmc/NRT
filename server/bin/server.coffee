@@ -1,5 +1,3 @@
-#!/usr/bin/env coffee
-
 app = require('../app.coffee')
 port = process.env.PORT || 3000
 
