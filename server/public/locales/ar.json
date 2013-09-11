@@ -5,5 +5,11 @@
   "dashboard.latest_edited_reports": "آخر التقارير التعديل",
   "dashboard.latest_edited_indicators": "أحدث مؤشرات التعديل",
   "dashboard.see_all": "انظر جميع",
-  "header.new_report": "تقرير جديد"
+
+  "header.new_report": "تقرير جديد",
+
+  "menu.dashboard": "لوحة أجهزة القياس",
+  "menu.reports": "تقارير",
+  "menu.indicators": "مؤشرات",
+  "menu.bookmarks": "الإشارات المرجعية"
 }

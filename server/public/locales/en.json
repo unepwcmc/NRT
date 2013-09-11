@@ -5,5 +5,11 @@
   "dashboard.latest_edited_reports": "Latest edited reports",
   "dashboard.latest_edited_indicators": "Latest edited indicators",
   "dashboard.see_all": "See all",
-  "header.new_report": "New report"
+
+  "header.new_report": "New report",
+
+  "menu.dashboard": "Dashboard",
+  "menu.reports": "Reports",
+  "menu.indicators": "Indicators",
+  "menu.bookmarks": "Bookmarks"
 }
