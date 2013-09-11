@@ -44,7 +44,7 @@ test('updates when section list changes', ->
 
   view = createAndShowSectionNavigationView(sections)
 
-  sections.add 
+  sections.add
     title: title3
 
   assert.match(
@@ -62,4 +62,19 @@ test('updates when section list changes', ->
     new RegExp(".*#{title3}.*")
   )
   view.close()
+)
+
+test('.getOrderedCids returns the section CIDs in the order they are in the DOM', ->
+  sections = new Backbone.Collections.SectionCollection([{
+    title: 'Section 1'
+  }, {
+    title: 'Section 2'
+  }])
+
+  view = createAndShowSectionNavigationView(sections)
+  orderedCids = view.getOrderedCids()
+
+  assert.lengthOf orderedCids, 2
+  assert.strictEqual sections.get(orderedCids[0]).get('title'), 'Section 1'
+  assert.strictEqual sections.get(orderedCids[1]).get('title'), 'Section 2'
 )
