@@ -4,7 +4,7 @@
 </div>
 <ol>
   {{#each sections}}
-    <li class='section-numbering'>
+    <li data-section-cid="{{cid}}" class='{{type}}' draggable="true">
       <div class='section'>
         <a href="#section-{{_id}}">{{title}}</a>
       </div>
