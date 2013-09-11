@@ -2,10 +2,10 @@
   {{#if noTitleOrIndicator}}
     <div class="section-actions">
       <span class="add-title">
-        Start typing your new section title here or
+        {{{t "report/section/add_title"}}}
       </span>
       <span class="choose-indicator">
-        <i class="icon-table"></i>reference an indicator
+        <i class="icon-table"></i> {{{t "report/section/reference_indicator"}}}
       </span>
     </div>
   {{else}}
@@ -28,12 +28,12 @@
 {{#unless noTitleOrIndicator}}
   {{#if noContent}}
     <div class="section-actions add-narrative">
-      Type Narrative for this indicator here
+      {{{t "report/section/type_narrative_indicator"}}}
 
       {{#if section.indicator}}
-        or
+        {{{t "report/section/or"}}}
         <span class="add-visualisation">
-          <i class="icon-table"></i>add a visualisation
+          <i class="icon-table"></i>{{{t "report/section/add_vis"}}}
         </span>
       {{/if}}
     </div>
@@ -43,13 +43,13 @@
         attributeName='content' model=narrative}}
     {{else}}
       <div class="section-actions add-narrative">
-        Type Narrative for this 
+        {{{t "report/section/type_narrative"}}}
         {{#if section.indicator}}
-          indicator
+          {{{t "report/section/indicator"}}}
         {{else}}
-          section
+          {{{t "report/section/section"}}}
         {{/if}}
-        here
+        {{{t "report/section/here"}}}
       </div>
     {{/if}}
 

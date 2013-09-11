@@ -2,6 +2,6 @@
 # * Set users locale
 #
 exports.index = (req, res) ->
-  if req.query.locale?
-    res.cookie('nrt_locale', req.query.locale)
+  if req.params.locale?
+    res.cookie('nrt_locale', req.params.locale)
     res.redirect('back')

@@ -41,6 +41,7 @@ p {
 
   h1 {
     display: inline-block;
+    font-weight: bold;
   }
 
   button {
@@ -77,7 +78,7 @@ p {
 
 div.row {
   .column {
-    padding: 15px;
+    padding: 40px 15px;
 
     ul {
       line-height: 0.8em;
@@ -103,8 +104,11 @@ div.row {
   }
 
   div.last-update {
-    padding: $padding * .6 0;
-    margin: $margin * .6 0;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    top: -19px;
+    left: 40px;
   }
 
   border-bottom: 1px solid #eee;
@@ -203,8 +207,7 @@ div.row {
 
   .reports {
     p {
-      padding: .2em 2em .2em .2em;
-      margin: .4em 2em .4em .4em;
+      margin: 15px 0 0 0;
     }
   }
 }

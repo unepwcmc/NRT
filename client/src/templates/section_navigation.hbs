@@ -1,10 +1,10 @@
 <div class="heading">
   <i class="toggle icon-caret-down"></i>
-  <span class='title'>Section List</span>
+  <span class='title'>{{{t "report/section_list"}}}</span>
 </div>
 <ol>
   {{#each sections}}
-    <li class='section-numbering'>
+    <li data-section-cid="{{cid}}" class='{{type}}' draggable="true">
       <div class='section'>
         <a href="#section-{{_id}}">{{title}}</a>
       </div>

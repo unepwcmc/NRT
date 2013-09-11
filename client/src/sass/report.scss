@@ -42,8 +42,6 @@ header.report-header {
 }
 
 .section-actions {
-  margin-bottom: 100px;
-
   .add-visualisation,
   .add-title,
   &.add-narrative,
@@ -90,25 +88,30 @@ header.report-header {
 }
 
 .arabic .report-sidebar{
-    button{
-        float: right;
-    }
+  button{
+    float: right;
+  }
 }
 
 .arabic{
-    .report-content, .report-sidebar{
-        float: right;
-    }
+  .report-content, .report-sidebar{
+    float: right;
+  }
 }
 
 .report-content, .report-sidebar{
-    float: left;
+  float: left;
 }
 
 .report-title{
   border-bottom: 1px solid #eee;
   padding-bottom: 20px;
   margin-bottom: 10px;
+
+  h1 {
+    color: #B8B8B8;
+    font-weight: bold;
+  }
 
   .time-period {
     input {
@@ -130,9 +133,15 @@ header.report-header {
 }
 
 .section-title {
+  padding-bottom: 0;
+
   a.index {
     font-size: 1.1em;
     font-weight: bold;
+  }
+
+  h2 {
+    padding: 2% 0 0 0;
   }
 
   h3 a {
@@ -155,79 +164,87 @@ header.report-header {
     color: #949494;
     position: relative;
     display: block;
+
     &:hover{
       span{
         @include opacity(100);
         -webkit-animation: show 0.3s linear;
         animation: show 0.3s linear;
-          }
       }
-      span{
-        @include opacity(0);
-        display: inline-block;
-        text-align: center;
-        width: 80px;
+    }
+
+    span{
+      @include opacity(0);
+      display: inline-block;
+      text-align: center;
+      width: 80px;
+      position: absolute;
+      top: -22px;
+      left: -32px;
+      font-size: 0.7em;
+      line-height: 1em;
+      padding: 6px 0 7px 0;
+      background-color: rgba(0,0,0,0.8);
+      color: $white;
+      border-radius: 3px;
+
+      &:after{
         position: absolute;
-        top: -22px;
-        left: -32px;
-        font-size: 0.7em;
-        line-height: 1em;
-        padding: 6px 0 7px 0;
-        background-color: rgba(0,0,0,0.8);
-        color: $white;
-        border-radius: 3px;
-        &:after{
-          position: absolute;
-          top: 100%;
-          left: 36px;
-          content: '';
-          width: 0;
-          height: 0;
-          border-top: solid 4px rgba(0,0,0,0.8);
-          border-left: solid 4px transparent;
-          border-right: solid 4px transparent;
-          }
+        top: 100%;
+        left: 36px;
+        content: '';
+        width: 0;
+        height: 0;
+        border-top: solid 4px rgba(0,0,0,0.8);
+        border-left: solid 4px transparent;
+        border-right: solid 4px transparent;
       }
+    }
   }
+
   a{
     color: $grey;
     border-bottom: none;
   }
+
   i{
     color: $iconColor;
     font-size: 1.15em;
+    padding-right: 0.2em;
   }
 }
 
 .time-period{
-    color: $grey;
-    padding-bottom: 5px;
+  color: $grey;
+  padding-bottom: 5px;
 }
 
 .recent-changes{
-    margin-top: 81px;
-    font-size: 0.75em;
-    line-height: 1.4em;
-    color: $grey;
+  margin-top: 81px;
+  font-size: 0.75em;
+  line-height: 1.4em;
+  color: $grey;
+  vertical-align: middle;
+
+  i{
+    color: $iconColor;
+    font-size: 1.3em;
     vertical-align: middle;
-    i{
-        color: $iconColor;
-        font-size: 1.3em;
-        vertical-align: middle;
+  }
+
+  ul{
+    padding: 0;
+    li{
+      list-style: none;
+      padding: 0 0 8px 0;
     }
-    ul{
-        padding: 0;
-        li{
-            list-style: none;
-            padding: 0 0 8px 0;
-        }
-    }
+  }
 }
 
 .recent-changes-title{
-    padding-bottom: 5px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid $lightGrey;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid $lightGrey;
 }
 
 .brief {
@@ -476,6 +493,12 @@ header.report-header {
   }
 }
 
+.chapter-heading h2 {
+  line-height: 40px;
+  border-bottom: 1px dotted #DDD;
+  margin-top:35px;
+}
+
 table{
   border: 1px solid #e1e1e1;
   border-top: none;
@@ -520,6 +543,25 @@ table{
     &.center{
       text-align: center;
     }
+  }
+}
+
+p.period-placeholder {
+  color: #B8B8B8;
+  padding-bottom: 0;
+  font-weight: bold;
+}
+
+button.add-report-section {
+  margin: 10% 0;
+}
+
+.section-view {
+  margin-top: 10% 0;
+  padding-bottom: 0;
+
+  .section-actions {
+    padding: 2% 0;
   }
 }
 
