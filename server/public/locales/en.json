@@ -1,3 +1,9 @@
 {
-  "dashboard.title": "Dashboard"
+  "dashboard.title": "Dashboard",
+  "dashboard.work_in_progress": "Work in progress",
+  "dashboard.notifications": "Notifications",
+  "dashboard.latest_edited_reports": "Latest edited reports",
+  "dashboard.latest_edited_indicators": "Latest edited indicators",
+  "dashboard.see_all": "See all",
+  "header.new_report": "New report"
 }
