@@ -3,7 +3,7 @@ i18n = require('i18n')
 
 i18n.configure(
   locales:['en', 'ar']
-  defaultLocale: 'en'
+  defaultLocale: 'ar'
   directory: __dirname + '/../public/locales'
   cookie: 'nrt_locale'
   updateFiles: false
