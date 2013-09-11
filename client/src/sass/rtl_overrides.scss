@@ -1,0 +1,57 @@
+i.append {
+  padding: 0;
+  padding-left: 0.5em;
+}
+
+h1, h2, h4,
+.menu .submenu,
+.section-navigation .heading,
+.recent-changes-title {
+  direction: rtl;
+}
+
+.report-content {
+  h1, h2 {
+    direction: ltr;
+  }
+}
+
+header,
+.dashboard-title {
+  button, .button {
+    position: absolute;
+    left: 0;
+    right: inherit;
+    top: 13px;
+  }
+}
+
+div.row {
+  i {
+    padding-right: 0;
+    padding-left: 0.5em;
+  }
+}
+
+.menu {
+  ul li {
+    text-align: right;
+
+    .icon {
+      padding-right: 0;
+      padding-left: 15px;
+    }
+  }
+}
+
+.reports-container,
+.indicators-container {
+  .report-sidebar {
+    direction: rtl;
+
+    .filters ul li i {
+      margin-right: 0;
+      margin-left: 15px;
+    }
+  }
+}
