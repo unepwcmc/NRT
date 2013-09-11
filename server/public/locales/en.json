@@ -1,1 +1,58 @@
-{}
+{
+  "dashboard/title": "Dashboard",
+  "dashboard/work_in_progress": "Work in progress",
+  "dashboard/notifications": "Notifications",
+  "dashboard/latest_edited_reports": "Latest edited reports",
+  "dashboard/latest_edited_indicators": "Latest edited indicators",
+  "dashboard/see_all": "See all",
+
+  "reports/title": "Reports",
+  "reports/filters/title": "Filter reports",
+  "reports/filters/date_from": "From",
+  "reports/filters/date_to": "To",
+  "reports/filters/drafts": "Drafts",
+  "reports/filters/bookmarked": "Bookmarked",
+  "reports/filters/self_published": "Published by me",
+
+  "report/bookmark_this_report": "Bookmark this report",
+  "report/type_here": "Type here",
+  "report/see_also": "You may also want to see...",
+  "report/add_section": "Add Section",
+  "report/add_chapter": "Add Chapter Heading",
+  "report/present": "View as presentation",
+  "report/recent_changes": "Recent changes",
+  "report/brief": "Brief",
+  "report/section_list": "Section List",
+
+  "report/section/add_title": "Start typing your new section title here or",
+  "report/section/reference_indicator": "reference an indicator",
+  "report/section/type_narrative_indicator": "Type Narrative for this indicator here",
+  "report/section/type_narrative": "Type Narrative for this",
+  "report/section/or": "or",
+  "report/section/add_vis": "add a visualisation",
+  "report/section/indicator": "indicator",
+  "report/section/section": "section",
+  "report/section/here": "here",
+
+  "indicators/title": "Indicators",
+  "indicators/filters/title": "Filter indicators",
+  "indicators/filters/bookmarked": "Bookmarked",
+  "indicators/filters/owned": "Owned by me",
+  "indicators/filters/atmosphere": "Atmosphere",
+  "indicators/filters/biodiversity": "Biodiversity",
+  "indicators/filters/water": "Water",
+  "indicators/filters/health": "Health",
+  "indicators/filters/waste": "Waste",
+  "indicators/filters/energy": "Energy",
+  "indicators/filters/transport": "Transport",
+
+  "indicator/bookmark_this_indicator": "Bookmark this indicator",
+
+  "header/new_report": "New report",
+  "header/new_indicator": "New indicator",
+
+  "menu/dashboard": "Dashboard",
+  "menu/reports": "Reports",
+  "menu/indicators": "Indicators",
+  "menu/bookmarks": "Bookmarks"
+}

@@ -7,7 +7,7 @@
     "test": "NODE_ENV=test mocha test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit",
     "start": "coffee ./bin/server.coffee",
     "debug": "coffee --nodejs --debug ./bin/server.coffee",
-    "development": "supervisor -e 'node|js|coffee|hbs' ./bin/server.coffee"
+    "development": "supervisor -e 'node|js|json|coffee|hbs' ./bin/server.coffee"
   },
   "repository": {
     "type": "git",
