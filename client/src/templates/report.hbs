@@ -20,7 +20,7 @@
       {{addSubViewTo ../thisView this.viewName section=this.section}}
     {{/each}}
     <button class="add-report-section">Add Section</button>
-    <button class="add-report-chapter">Add Chapter</button>
+    <button class="add-report-chapter">Add Chapter Heading</button>
   </div>
 
   <div class="report-sidebar">
@@ -39,8 +39,7 @@
         attributeName='brief' model=thisView.report}}
     </div>
 
-    <div id="section-navigation-container">
-    </div>
+    {{ addSubViewTo thisView "SectionNavigationView" sections=sections}}
 
     <div class="recent-changes">
       <div class="recent-changes-title">

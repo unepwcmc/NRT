@@ -6,9 +6,7 @@ class Backbone.Controllers.ReportController extends Backbone.Diorama.Controller
     report = new Backbone.Models.Report(reportData)
 
     reportView = new Backbone.Views.ReportView(report: report)
-    sectionNavigationView = new Backbone.Views.SectionNavigationView(sections: report.get('sections'))
     $('#report-container').prepend(reportView.el)
-    $('#section-navigation-container').prepend(sectionNavigationView.el)
 
   createExampleReport: (reportId)->
     report = Backbone.Faker.Reports.create()
