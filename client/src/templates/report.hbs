@@ -19,8 +19,8 @@
     {{#each sectionsWithViewName}}
       {{addSubViewTo ../thisView this.viewName section=this.section}}
     {{/each}}
-    <button class="add-report-section">Add Section</button>
-    <button class="add-report-chapter">Add Chapter</button>
+    <button class="add-report-section">{{{t "report/add_section"}}}</button>
+    <button class="add-report-chapter">{{{t "report/add_chapter"}}}</button>
   </div>
 
   <div class="report-sidebar">
@@ -29,12 +29,12 @@
     </button>
 
     <a href="/reports/{{report._id}}/present" class='present-report'>
-      <i class="icon-fighter-jet append"></i>View as presentation
+      <i class="icon-fighter-jet append"></i>{{{t "report/present"}}}
     </a>
 
 
     <div class="brief fixed-section">
-      <h4>Brief</h4>
+      <h4>{{{t "report/brief"}}}</h4>
       {{addSubViewTo thisView "TextEditView" type='textarea'
         attributeName='brief' model=thisView.report}}
     </div>
@@ -44,7 +44,7 @@
 
     <div class="recent-changes">
       <div class="recent-changes-title">
-        <i class="icon-edit append"></i>Recent changes
+        <i class="icon-edit append"></i>{{{t "report/recent_changes"}}}
       </div>
       <ul>
         <li><strong>4 days ago</strong>: Dr. Anybody changed Amonia-P section.</li>
@@ -58,7 +58,7 @@
 
 <div class="related-reports">
   <div class="double-column">
-    <h2>You may also want to see...</h2>
+    <h2>{{{t "report/see_also"}}}</h2>
     <div class="column left">
       <div class="related-report">
         <h4><a href="">Marine water quality report 4 <span class="tag">view report</span></a></h4>
