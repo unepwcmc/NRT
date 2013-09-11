@@ -10,7 +10,12 @@
 
   "report/bookmark_this_report": "Bookmark this report",
 
+  "indicators/title": "Indicators",
+
+  "indicator/bookmark_this_indicator": "Bookmark this indicator",
+
   "header/new_report": "New report",
+  "header/new_indicator": "New indicator",
 
   "menu/dashboard": "Dashboard",
   "menu/reports": "Reports",

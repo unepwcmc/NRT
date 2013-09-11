@@ -8,7 +8,14 @@
 
   "reports/title": "تقارير",
 
+  "report/bookmark_this_report": "المرجعية في هذا التقرير",
+
+  "indicators/title": "مؤشرات",
+
+  "indicator/bookmark_this_indicator": "المرجعية في هذا المؤشر",
+
   "header/new_report": "تقرير جديد",
+  "header/new_indicator": "مؤشر جديد",
 
   "menu/dashboard": "لوحة أجهزة القياس",
   "menu/reports": "تقارير",
