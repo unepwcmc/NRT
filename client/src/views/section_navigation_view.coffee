@@ -32,6 +32,7 @@ class Backbone.Views.SectionNavigationView extends Backbone.View
   updateOrder: (event) =>
     cids = @getOrderedCids()
     @sections.reorderByCid(cids)
+    @saveReport()
 
   getOrderedCids: ->
     orderedCids = []
@@ -39,6 +40,15 @@ class Backbone.Views.SectionNavigationView extends Backbone.View
       orderedCids.push($(li).attr('data-section-cid'))
     )
     return orderedCids
+
+  saveReport: ->
+    firstSection = @sections.at(0)
+    if firstSection?
+      report = firstSection.get('report')
+      Backbone.trigger 'save', 'saving'
+      report.save().done(
+        Backbone.trigger 'save', 'saved'
+      )
 
   onClose: ->
     @stopListening()
