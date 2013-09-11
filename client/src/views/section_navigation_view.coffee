@@ -9,6 +9,7 @@ class Backbone.Views.SectionNavigationView extends Backbone.View
     @sections = options.sections
 
     @listenTo @sections, 'add', @render
+    @listenTo @sections, 'reset', @render
     @render()
 
   render: ->
@@ -29,6 +30,7 @@ class Backbone.Views.SectionNavigationView extends Backbone.View
 
   updateOrder: (event) =>
     cids = @getOrderedCids()
+    @sections.reorderByCid(cids)
 
   getOrderedCids: ->
     orderedCids = []
