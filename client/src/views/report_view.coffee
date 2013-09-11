@@ -20,6 +20,7 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
       thisView: @,
       report: @report.toJSON()
       sectionsWithViewName: @getSectionsWithViewNames()
+      sections: @report.get('sections')
     ))
     @renderSubViews()
 
