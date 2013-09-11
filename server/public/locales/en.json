@@ -1,17 +1,19 @@
 {
-  "dashboard.title": "Dashboard",
-  "dashboard.work_in_progress": "Work in progress",
-  "dashboard.notifications": "Notifications",
-  "dashboard.latest_edited_reports": "Latest edited reports",
-  "dashboard.latest_edited_indicators": "Latest edited indicators",
-  "dashboard.see_all": "See all",
+  "dashboard/title": "Dashboard",
+  "dashboard/work_in_progress": "Work in progress",
+  "dashboard/notifications": "Notifications",
+  "dashboard/latest_edited_reports": "Latest edited reports",
+  "dashboard/latest_edited_indicators": "Latest edited indicators",
+  "dashboard/see_all": "See all",
 
-  "reports.title": "Reports",
+  "reports/title": "Reports",
 
-  "header.new_report": "New report",
+  "report/bookmark_this_report": "Bookmark this report",
 
-  "menu.dashboard": "Dashboard",
-  "menu.reports": "Reports",
-  "menu.indicators": "Indicators",
-  "menu.bookmarks": "Bookmarks"
+  "header/new_report": "New report",
+
+  "menu/dashboard": "Dashboard",
+  "menu/reports": "Reports",
+  "menu/indicators": "Indicators",
+  "menu/bookmarks": "Bookmarks"
 }
