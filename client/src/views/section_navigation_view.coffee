@@ -23,6 +23,7 @@ class Backbone.Views.SectionNavigationView extends Backbone.View
           cid: section.cid
           _id: section.get('_id')
           title: title
+          type: section.get('type')
         }
     ))
     @$el.find('ol').sortable().bind('sortupdate', @updateOrder)
