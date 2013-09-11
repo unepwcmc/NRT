@@ -1,8 +1,3 @@
-i.append {
-  padding: 0;
-  padding-left: 0.5em;
-}
-
 h1, h2, h4,
 .menu .submenu,
 .section-navigation .heading,
@@ -10,6 +5,11 @@ h1, h2, h4,
   direction: rtl;
 }
 
+.section-title h4 {
+  direction: ltr;
+}
+
+.indicator,
 .report-content {
   h1, h2 {
     direction: ltr;
@@ -19,10 +19,27 @@ h1, h2, h4,
 header,
 .dashboard-title {
   button, .button {
-    position: absolute;
     left: 0;
     right: inherit;
-    top: 13px;
+  }
+}
+
+.indicator {
+  button {
+    left: inherit;
+    right: 0;
+  }
+
+  h3, h4 {
+    direction: rtl;
+    text-align: right;
+  }
+
+  .indicator-narratives {
+    h4 {
+      text-align: left;
+      direction: ltr;
+    }
   }
 }
 
@@ -40,6 +57,11 @@ div.row {
     .icon {
       padding-right: 0;
       padding-left: 15px;
+
+      i.append {
+        padding: 0;
+        padding-left: 0.5em;
+      }
     }
   }
 }
