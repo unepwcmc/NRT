@@ -17,13 +17,25 @@ class Backbone.Views.SectionNavigationView extends Backbone.View
         title = section.get('title')
         if section.get('indicator')?
           title = section.get('indicator').get('title')
-
+  
         return {
+          cid: section.cid
           _id: section.get('_id')
           title: title
         }
     ))
+    @$el.find('ol').sortable().bind('sortupdate', @updateOrder)
     return @
+
+  updateOrder: (event) =>
+    cids = @getOrderedCids()
+
+  getOrderedCids: ->
+    orderedCids = []
+    @$el.find('li').each((index, li)->
+      orderedCids.push($(li).attr('data-section-cid'))
+    )
+    return orderedCids
 
   onClose: ->
     @stopListening()
