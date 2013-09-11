@@ -38,7 +38,7 @@ module.exports = exports = (app) ->
   app.get "/reports/:id", ensureAuthenticated, reportRoutes.show
   app.get "/reports/:id/present", ensureAuthenticated, reportRoutes.present
 
-  app.get "/locale", ensureAuthenticated, localeRoutes.index
+  app.get "/locale/:locale", ensureAuthenticated, localeRoutes.index
 
   ## Tests
   if app.settings.env == 'test'

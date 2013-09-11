@@ -5,7 +5,14 @@ module.exports = (grunt) ->
     clean:
       options:
         force: true
-      dist: ['dist/', '../server/public']
+      dist: [
+        'dist/',
+        '../server/public/css',
+        '../server/public/font',
+        '../server/public/images',
+        '../server/public/js',
+        '../server/public/lib'
+      ]
 
     coffee:
       source:

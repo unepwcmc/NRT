@@ -23,7 +23,7 @@ class Backbone.Views.TextEditView extends Backbone.View
     @render()
 
   render: (options = {}) =>
-    content = @model.get(@attributeName) || "Type here"
+    content = @model.get(@attributeName) || i18n.t("report/type_here")
 
     @$el.html(@template(
       content: content

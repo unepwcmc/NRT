@@ -16,13 +16,10 @@
     <script src="/js/lib/i18next.min.js"></script>
 
     <script>
-      $(document).ready( function() {
-        i18n.init({
-          useLocalStorage: true,
-          fallbackLng: 'en',
-          resGetPath: 'locales/__lng__.json',
-          cookieName: 'nrt_locale'
-        });
+      i18n.init({
+        fallbackLng: 'en',
+        resGetPath: '/locales/__lng__.json',
+        cookieName: 'nrt_locale'
       });
     </script>
 
@@ -30,230 +27,239 @@
 
   </head>
   <body>
-  <div class="menu">
-    <div class="main-menu-container">
-        <div class="main-menu">
-            <span class="initials"><i class="icon-home"></i></span>
-            <span class="full-name"><span class="name">NRT: Abu Dhabi</span> <i class="icon-chevron-down post-append"></i></span>
-        </div>
 
-        <ul class="submenu">
-            <li><a href="/dashboard"><span class="icon"><i class="icon-dashboard append"></i></span>Dashboard</a></li>
-            <li><a href="/reports"><span class="icon"><i class="icon-file-text-alt append"></i></span>Reports</a></li>
-            <li><a href="/indicators"><span class="icon"><i class="icon-bar-chart append"></i></span>Indicators</a></li>
-            <li><a style="color: #5a5a5a;"><span class="icon"><i class="icon-bookmark append"></i></span>Bookmarks</a></li>
-        </ul>
+    <div class='language-selector'>
+      {{#if settings.localeIsArabic}}
+        <a href="/locale/en">English</a>
+      {{else}}
+        <a href="/locale/ar">العربية</a>
+      {{/if}}
     </div>
 
-    <div class='save-status-container'>
+    <div class="menu">
+      <div class="main-menu-container">
+          <div class="main-menu">
+              <span class="initials"><i class="icon-home"></i></span>
+              <span class="full-name"><span class="name">NRT: Abu Dhabi</span> <i class="icon-chevron-down post-append"></i></span>
+          </div>
 
+          <ul class="submenu">
+              <li><a href="/dashboard"><span class="icon"><i class="icon-dashboard append"></i></span>{{{t "menu/dashboard"}}}</a></li>
+              <li><a href="/reports"><span class="icon"><i class="icon-file-text-alt append"></i></span>{{{t "menu/reports"}}}</a></li>
+              <li><a href="/indicators"><span class="icon"><i class="icon-bar-chart append"></i></span>{{{t "menu/indicators"}}}</a></li>
+              <li><a style="color: #5a5a5a;"><span class="icon"><i class="icon-bookmark append"></i></span>{{{t "menu/bookmarks"}}}</a></li>
+          </ul>
+      </div>
+
+      <div class='save-status-container'>
+
+      </div>
+
+      <div class="search filtered">
+          <div class="search-header">
+              <div class="search-container">
+                  <div class="search-icon">
+                      <i class="icon-search"></i>
+                  </div>
+                  <div class="search-input">
+                      <div class="tag reports">reports <i class="icon-remove"></i></div>
+                      <div class="tag indicators">indicators <i class="icon-remove"></i></div>
+                      <div class="tag bookmarks">bookmarks <i class="icon-remove"></i></div>
+                      <input type="text" placeholder="Search for a report or an indicator">
+                      <div class="clear"></div>
+                  </div>
+                  <div class="search-close" style="display: none;">
+                      <i class="icon-remove"></i>
+                  </div>
+                  <div class="clear"></div>
+              </div>
+          </div>
+          <div class="search-box-container" style="display: none;">
+              <div class="search-filters">
+                  <ul>
+                      <li class="selected"><span class="icon"><i class=" icon-globe append"></i></span>All results</li>
+                      <li><span class="icon"><i class="icon-file-text-alt append"></i></span>Reports</li>
+                      <li><span class="icon"><i class="icon-bar-chart append"></i></span>Indicators</li>
+                      <li><span class="icon"><i class="icon-bookmark append"></i></span>Bookmarks</li>
+                  </ul>
+              </div>
+              <div class="search-box">
+                  <ul>
+                      <li>
+                          <div class="result-type">
+                              <i class="icon-file-text-alt"></i>
+                          </div>
+                          <div class="result-info">
+                              <div class="result-title">Enviromental report 1</div>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac porttitor neque, quis molestie nulla. Donec a nisi nec orci gravida luctus.</p>
+                          </div>
+                          <div class="result-bookmark">
+                              <i class="icon-bookmark-empty"></i>
+                          </div>
+                      </li>
+                      <li>
+                          <div class="result-type">
+                              <i class="icon-file-text-alt"></i>
+                          </div>
+                          <div class="result-info">
+                              <div class="result-title">Enviromental report 2</div>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac porttitor neque, quis molestie nulla. Donec a nisi nec orci gravida luctus.</p>
+                          </div>
+                          <div class="result-bookmark">
+                              <i class="icon-bookmark-empty"></i>
+                          </div>
+                      </li>
+                      <li>
+                          <div class="result-type">
+                              <i class="icon-file-text-alt"></i>
+                          </div>
+                          <div class="result-info">
+                              <div class="result-title">Enviromental report 3</div>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac porttitor neque, quis molestie nulla. Donec a nisi nec orci gravida luctus.</p>
+                          </div>
+                          <div class="result-bookmark">
+                              <i class="icon-bookmark"></i>
+                          </div>
+                      </li>
+                      <li>
+                          <div class="result-type">
+                              <i class="icon-file-text-alt"></i>
+                          </div>
+                          <div class="result-info">
+                              <div class="result-title">Enviromental report 4</div>
+                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac porttitor neque, quis molestie nulla. Donec a nisi nec orci gravida luctus.</p>
+                          </div>
+                          <div class="result-bookmark">
+                              <i class="icon-bookmark-empty"></i>
+                          </div>
+                      </li>
+                  </ul>
+                  <div class="more-results">
+                      <a href="">See more results for: "searched text" on filter</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="clear"></div>
     </div>
 
-    <div class="search filtered">
-        <div class="search-header">
-            <div class="search-container">
-                <div class="search-icon">
-                    <i class="icon-search"></i>
-                </div>
-                <div class="search-input">
-                    <div class="tag reports">reports <i class="icon-remove"></i></div>
-                    <div class="tag indicators">indicators <i class="icon-remove"></i></div>
-                    <div class="tag bookmarks">bookmarks <i class="icon-remove"></i></div>
-                    <input type="text" placeholder="Search for a report or an indicator">
-                    <div class="clear"></div>
-                </div>
-                <div class="search-close" style="display: none;">
-                    <i class="icon-remove"></i>
-                </div>
-                <div class="clear"></div>
-            </div>
-        </div>
-        <div class="search-box-container" style="display: none;">
-            <div class="search-filters">
-                <ul>
-                    <li class="selected"><span class="icon"><i class=" icon-globe append"></i></span>All results</li>
-                    <li><span class="icon"><i class="icon-file-text-alt append"></i></span>Reports</li>
-                    <li><span class="icon"><i class="icon-bar-chart append"></i></span>Indicators</li>
-                    <li><span class="icon"><i class="icon-bookmark append"></i></span>Bookmarks</li>
-                </ul>
-            </div>
-            <div class="search-box">
-                <ul>
-                    <li>
-                        <div class="result-type">
-                            <i class="icon-file-text-alt"></i>
-                        </div>
-                        <div class="result-info">
-                            <div class="result-title">Enviromental report 1</div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac porttitor neque, quis molestie nulla. Donec a nisi nec orci gravida luctus.</p>
-                        </div>
-                        <div class="result-bookmark">
-                            <i class="icon-bookmark-empty"></i>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="result-type">
-                            <i class="icon-file-text-alt"></i>
-                        </div>
-                        <div class="result-info">
-                            <div class="result-title">Enviromental report 2</div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac porttitor neque, quis molestie nulla. Donec a nisi nec orci gravida luctus.</p>
-                        </div>
-                        <div class="result-bookmark">
-                            <i class="icon-bookmark-empty"></i>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="result-type">
-                            <i class="icon-file-text-alt"></i>
-                        </div>
-                        <div class="result-info">
-                            <div class="result-title">Enviromental report 3</div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac porttitor neque, quis molestie nulla. Donec a nisi nec orci gravida luctus.</p>
-                        </div>
-                        <div class="result-bookmark">
-                            <i class="icon-bookmark"></i>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="result-type">
-                            <i class="icon-file-text-alt"></i>
-                        </div>
-                        <div class="result-info">
-                            <div class="result-title">Enviromental report 4</div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ac porttitor neque, quis molestie nulla. Donec a nisi nec orci gravida luctus.</p>
-                        </div>
-                        <div class="result-bookmark">
-                            <i class="icon-bookmark-empty"></i>
-                        </div>
-                    </li>
-                </ul>
-                <div class="more-results">
-                    <a href="">See more results for: "searched text" on filter</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="clear"></div>
-  </div>
+    {{{body}}}
 
-  {{{body}}}
+    <script>
+      /* OPENS MAIN MENU */
+      $(".main-menu").bind("click",function(){
+          $(this).toggleClass("opened");
+          $(this).find(".full-name i").toggleClass("icon-chevron-down");
+          $(this).find(".full-name i").toggleClass("icon-chevron-up");
+          $('.submenu').slideToggle(300);
+      });
 
-  <script>
-    /* OPENS MAIN MENU */
-    $(".main-menu").bind("click",function(){
-        $(this).toggleClass("opened");
-        $(this).find(".full-name i").toggleClass("icon-chevron-down");
-        $(this).find(".full-name i").toggleClass("icon-chevron-up");
-        $('.submenu').slideToggle(300);
-    });
+      /* TOGGLE OPEN/CLOSE SEARCH */
+      $(".search-icon").bind("click",function(){
+          $(".search-header").toggleClass("opened");
+          if($(".search-header").hasClass("opened")){
+              setTimeout(function() {
+                  $(".search input").focus();
+              }, 500);
+          } else {
+              $(".search-box-container").hide();
+              $(".search-close").hide();
+              $(".search input").val("");
+          }
+      });
 
-    /* TOGGLE OPEN/CLOSE SEARCH */
-    $(".search-icon").bind("click",function(){
-        $(".search-header").toggleClass("opened");
-        if($(".search-header").hasClass("opened")){
-            setTimeout(function() {
-                $(".search input").focus();
-            }, 500);
-        } else {
-            $(".search-box-container").hide();
-            $(".search-close").hide();
-            $(".search input").val("");
-        }
-    });
+      /* DELETES SEARCH INPUT CONTENT AND CLOSES SEARCH BOX */
+      $(".search-close").bind("click",function(){
+          $(".search input").val("");
+          if(($(".search input").val() === "") && ($(".search-box").is(":visible"))){
+              $(".search-box-container").stop().slideUp();
+              $(".search-close").hide();
+              if($(".search .tag").is(":visible")){
+                  $(".search .tag").hide();
+                  setTimeout(function() {
+                      $(".search").addClass("filtered");
+                  }, 500);
+              }
+              setTimeout(function() {
+                  $(".search input").focus();
+              }, 500);
+          }
+      });
 
-    /* DELETES SEARCH INPUT CONTENT AND CLOSES SEARCH BOX */
-    $(".search-close").bind("click",function(){
-        $(".search input").val("");
-        if(($(".search input").val() === "") && ($(".search-box").is(":visible"))){
-            $(".search-box-container").stop().slideUp();
-            $(".search-close").hide();
-            if($(".search .tag").is(":visible")){
-                $(".search .tag").hide();
-                setTimeout(function() {
-                    $(".search").addClass("filtered");
-                }, 500);
-            }
-            setTimeout(function() {
-                $(".search input").focus();
-            }, 500);
-        }
-    });
+      /* CHANGES BOOKMARK BUTTON STATUS */
+      $("button").bind("click",function(){
+          $(this).toggleClass("active");
+          $(this).find("span").toggleClass("show");
+      });
 
-    /* CHANGES BOOKMARK BUTTON STATUS */
-    $("button").bind("click",function(){
-        $(this).toggleClass("active");
-        $(this).find("span").toggleClass("show");
-    });
+      $(".result-bookmark").bind("click",function(){
+          $(this).find("i").toggleClass("icon-bookmark-empty");
+          $(this).find("i").toggleClass("icon-bookmark");
+      });
 
-    $(".result-bookmark").bind("click",function(){
-        $(this).find("i").toggleClass("icon-bookmark-empty");
-        $(this).find("i").toggleClass("icon-bookmark");
-    });
+      /* SHOWS THE SEARCH BOX WHEN TYPING IN SEARCH INPUT / HIDES IT WHEN IS EMPTY */
+      $(".search input").bind("keyup", function(e) {
+          var value = $(this).val();
+          if((value != "") && !($(".search-box-container").is(":visible"))){
+              $(".search-box-container").stop().slideDown();
+              $(".search-close").show();
+          }
+          else if((value === "") && ($(".search-box-container").is(":visible"))){
+              $(".search-box-container").stop().slideUp();
+              $(".search-close").hide();
+          }
+          else if((value != "") && ($(".search-box-container").is(":visible"))){
+              if((value == "reports:") || (value == "bookmarks:") || (value == "indicators:")){
+                  var tagValue = value;
+                  tagValue = tagValue.replace(':', ' <i class="icon-remove"></i>');
+                  $(this).parent().find(".tag").html(tagValue);
+                  $(this).parent().find(".tag").show();
+                  $(".search input").val("");
+                  $(".search-box-container").stop().slideUp();
+                  setTimeout(function() {
+                      $(".search input").focus();
+                      $(".search").removeClass("filtered");
+                  }, 500);
+              }
+          }
+          if((value === "") && ($(".search .tag").is(":visible"))){
+              if(e.keyCode == 8){
+                  if(!$(".search-box-container").is(":visible")){
+                      $(".search").addClass("filtered");
+                      $(".search input").focus();
+                      $(".search .tag").hide();
+                  }
+              }
+          }
+      });
 
-    /* SHOWS THE SEARCH BOX WHEN TYPING IN SEARCH INPUT / HIDES IT WHEN IS EMPTY */
-    $(".search input").bind("keyup", function(e) {
-        var value = $(this).val();
-        if((value != "") && !($(".search-box-container").is(":visible"))){
-            $(".search-box-container").stop().slideDown();
-            $(".search-close").show();
-        }
-        else if((value === "") && ($(".search-box-container").is(":visible"))){
-            $(".search-box-container").stop().slideUp();
-            $(".search-close").hide();
-        }
-        else if((value != "") && ($(".search-box-container").is(":visible"))){
-            if((value == "reports:") || (value == "bookmarks:") || (value == "indicators:")){
-                var tagValue = value;
-                tagValue = tagValue.replace(':', ' <i class="icon-remove"></i>');
-                $(this).parent().find(".tag").html(tagValue);
-                $(this).parent().find(".tag").show();
-                $(".search input").val("");
-                $(".search-box-container").stop().slideUp();
-                setTimeout(function() {
-                    $(".search input").focus();
-                    $(".search").removeClass("filtered");
-                }, 500);
-            }
-        }
-        if((value === "") && ($(".search .tag").is(":visible"))){
-            if(e.keyCode == 8){
-                if(!$(".search-box-container").is(":visible")){
-                    $(".search").addClass("filtered");
-                    $(".search input").focus();
-                    $(".search .tag").hide();
-                }
-            }
-        }
-    });
+      /* DELETES FILTER TAG */
+      $(".search .tag").bind("click",function(){
+          if($(".search-box-container").is(":visible")){
+              $(".search-box-container").stop().slideUp();
+              $(this).hide();
+              setTimeout(function() {
+                  $(".search").addClass("filtered");
+                  $(".search input").focus();
+                  $(".search-box-container").stop().slideDown();
+              }, 500);
+          }
+          else{
+              $(".search").addClass("filtered");
+              $(".search input").focus();
+              $(this).hide();
+          }
+      });
 
-    /* DELETES FILTER TAG */
-    $(".search .tag").bind("click",function(){
-        if($(".search-box-container").is(":visible")){
-            $(".search-box-container").stop().slideUp();
-            $(this).hide();
-            setTimeout(function() {
-                $(".search").addClass("filtered");
-                $(".search input").focus();
-                $(".search-box-container").stop().slideDown();
-            }, 500);
-        }
-        else{
-            $(".search").addClass("filtered");
-            $(".search input").focus();
-            $(this).hide();
-        }
-    });
+      /* ACTIVATES A FILTER FOR SEARCH */
+      $(".search-filters li").bind("click",function(){
+          $(".search-filters li").removeClass("selected");
+          $(this).addClass("selected");
 
-    /* ACTIVATES A FILTER FOR SEARCH */
-    $(".search-filters li").bind("click",function(){
-        $(".search-filters li").removeClass("selected");
-        $(this).addClass("selected");
-
-        $('.tag').hide();
-        $('.tag.'+$(this).text().toLowerCase()).toggle();
-    });
-  </script>
+          $('.tag').hide();
+          $('.tag.'+$(this).text().toLowerCase()).toggle();
+      });
+    </script>
 
   </body>
 </html>

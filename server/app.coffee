@@ -31,14 +31,14 @@ exports.createApp = ->
   app.use express.session()
 
   app.use i18n.init
-  require('./initializers/i18n')
+  require('./initializers/i18n')(app)
 
   app.use passport.initialize()
   app.use passport.session()
 
   app.use app.router
-  app.use express.static(path.join(__dirname, "public"))
 
+  app.use express.static(path.join(__dirname, "public"))
   app.use express.errorHandler()  if "development" is app.get("env")
 
   bindRoutesForApp(app)
