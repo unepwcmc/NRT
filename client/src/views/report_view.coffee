@@ -10,8 +10,9 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
 
   initialize: (options) ->
     @report = options.report
-    @report.bind('change', @updateUrl)
-    @report.get('sections').bind('add', @render)
+    @listenTo(@report, 'change', @updateUrl)
+    @listenTo(@report.get('sections'), 'add', @render)
+    @listenTo(@report.get('sections'), 'reset', @render)
     @render()
 
   render: =>
@@ -66,4 +67,5 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
       )
 
   onClose: ->
+    @stopListening()
     @closeSubViews()
