@@ -33,6 +33,7 @@ module.exports = exports = (app) ->
   app.get "/indicators", ensureAuthenticated, indicatorRoutes.index
   app.get "/reports", ensureAuthenticated, reportRoutes.index
 
+  app.get "/indicators/:id.csv", ensureAuthenticated, indicatorRoutes.showCSV
   app.get "/indicators/:id", ensureAuthenticated, indicatorRoutes.show
 
   app.get "/reports/new", ensureAuthenticated, reportRoutes.new
