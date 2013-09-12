@@ -26,6 +26,9 @@ reportSchema.statics.findFatReport = (id, callback) ->
         console.log "error populating report"
         return callback(err, null)
 
+      unless report?
+        return callback({message: "Report does not exist"}, {})
+
       report = report.toObject()
       fetchResultFunctions = []
       for theSection, theIndex in report.sections
