@@ -40,14 +40,19 @@
     <!-- Application -->
     <script src="/js/application.js"></script>
 
+    <script>
+      i18n.setLng('en');
+    </script>
+
     <!-- Tests -->
     <script src="/js/tests.js"></script>
 
     <!-- trigger the mocha runner -->
     <script>
-      mocha.run();
+      i18n.onReady(function() {
+        mocha.run();
+      });
     </script>
-
 
   </body>
 </html>
