@@ -74,7 +74,6 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     @listenToOnce(editVisualisationView, 'close', @render)
 
     $('body').append(editVisualisationView.render().el)
-    $('body').addClass('stop-scrolling')
     ###
     @section.set('visualisation', visualisation)
     visualisation.save()
