@@ -8,7 +8,6 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
   events:
     "click .close": "closeModal"
     "click .save": "save"
-    "click .download": "download"
     "change select[name='visualisation']": 'updateVisualisationType'
 
   initialize: (options) ->
@@ -32,9 +31,6 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
 
   save: ->
     @visualisation.save()
-
-  download: ->
-    window.location = @visualisation.buildIndicatorCSVDownloadUrl()
 
   closeModal: ->
     $('body').removeClass('stop-scrolling')
