@@ -33,9 +33,9 @@
     <header>
       <h1>{{indicator.title}}</h1>
 
-      <button class="grey">
-        <i class="icon-download append"></i><span class="show">{{{t "indicator/download"}}}</span>
-      </button>
+      <a href="/indicators/{{indicator._id}}.csv" class="button grey">
+        <i class="icon-file-text-alt"></i> {{{t "indicator/download"}}}
+      </a>
     </header>
 
     <div class='main-content'>

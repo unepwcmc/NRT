@@ -26,6 +26,14 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
       throw new Error("Error fetching indicator data: #{error}")
     )
 
+  buildIndicatorCSVDownloadUrl: ->
+    url = "/indicators/#{@get('indicator').get('_id')}.csv"
+    if @get('filters')?
+      url += "?#{
+        $.param {filters: @get('filters')}
+      }"
+    return url
+
   buildIndicatorDataUrl: ->
     url = "/api/indicators/#{@get('indicator').get('_id')}/data"
     if @get('filters')?
