@@ -52,6 +52,15 @@
   "indicators/filters/energy": "Energy",
   "indicators/filters/transport": "Transport",
 
+  "indicator/download": "Download the dataset",
+  "indicator/narratives": "Narratives for this indicator",
+  "indicator/owned_by": "Indicator owned by",
+  "indicator/metadata": "Metadata",
+  "indicator/metadata/category": "Category",
+  "indicator/metadata/most_recent": "Most recent data collected",
+  "indicator/metadata/oldest_data": "Oldest data collected",
+  "indicator/similar": "Similar Indicators",
+
   "indicator/bookmark_this_indicator": "Bookmark this indicator",
 
   "header/new_report": "New report",

@@ -52,6 +52,15 @@
   "indicators/filters/energy": "طاقة",
   "indicators/filters/transport": "نقل",
 
+  "indicator/download": "تحميل ورقة العمل",
+  "indicator/narratives": "السرد لهذا المؤشر",
+  "indicator/owned_by": "مؤشر يملكها",
+  "indicator/metadata": "البيانات الوصفية",
+  "indicator/metadata/category": "فئة",
+  "indicator/metadata/most_recent": "أحدث البيانات التي تم جمعها",
+  "indicator/metadata/oldest_data": "أقدم البيانات التي تم جمعها",
+  "indicator/similar": "مؤشرات مماثلة",
+
   "indicator/bookmark_this_indicator": "المرجعية في هذا المؤشر",
 
   "header/new_report": "تقرير جديد",

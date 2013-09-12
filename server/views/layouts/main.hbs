@@ -16,14 +16,36 @@
     <script src="/js/lib/i18next.min.js"></script>
 
     <script>
+      i18n.readyCallbacks = [];
+      i18n.isReady = false;
+
+      i18n.onReady = function(callback) {
+        if (i18n.isReady === true) {
+          callback();
+        } else {
+          i18n.readyCallbacks.push(callback);
+        }
+      };
+
       i18n.init({
         fallbackLng: 'en',
         resGetPath: '/locales/__lng__.json',
         cookieName: 'nrt_locale'
+      }).done(function(){
+        var i, il;
+        i18n.isReady = true;
+
+        for(i=0,il=i18n.readyCallbacks.length;i<il;i++) {
+          i18n.readyCallbacks[i]();
+        }
       });
     </script>
 
     {{{block "header"}}}
+
+    {{#if settings.localeIsArabic}}
+      <link rel="stylesheet" href="/css/rtl_overrides.css">
+    {{/if}}
 
   </head>
   <body>
