@@ -41,6 +41,15 @@
     {{#if narrative}}
       {{addSubViewTo thisView "TextEditView" type='input'
         attributeName='content' model=narrative}}
+      {{#unless visualisation}}
+        {{#if section.indicator }}
+          <div class="section-actions add-narrative">
+            <span class="add-visualisation">
+              <i class="icon-table"></i>{{{t "report/section/add_vis"}}}
+            </span>
+          </div>
+        {{/if}}
+      {{/unless}}
     {{else}}
       <div class="section-actions add-narrative">
         {{{t "report/section/type_narrative"}}}
