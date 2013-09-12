@@ -34,6 +34,12 @@
   "report/section/section": "قسم",
   "report/section/here": "هنا",
 
+  "report/indicator/title": "اختيار مؤشر",
+  "report/visualisation/save": "حفظ التصور",
+  "report/visualisation/filters/title": "مرشحات البيانات",
+  "report/visualisation/filters/reset": "مسح كل الاختيارات",
+  "report/modal/close": "غلق",
+
   "indicators/title": "مؤشرات",
   "indicators/filters/title": "مؤشرات فلتر",
   "indicators/filters/bookmarked": "إشارة مرجعية",

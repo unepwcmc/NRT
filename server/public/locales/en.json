@@ -34,6 +34,12 @@
   "report/section/section": "section",
   "report/section/here": "here",
 
+  "report/indicator/title": "Select an indicator",
+  "report/visualisation/save": "Save Visualisation",
+  "report/visualisation/filters/title": "Data filters",
+  "report/visualisation/filters/reset": "Reset all filters",
+  "report/modal/close": "Close",
+
   "indicators/title": "Indicators",
   "indicators/filters/title": "Filter indicators",
   "indicators/filters/bookmarked": "Bookmarked",
