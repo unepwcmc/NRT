@@ -16,7 +16,7 @@ test("When initialised with an array of sections,
 
 test(".toJSON should include nested section objects as their JSON", ->
   sections = [new Backbone.Models.Section(
-    indicator: new Backbone.Models.Indicator(_id: 5352)
+    indicator: new Backbone.Models.Indicator()
     title: "dat working"
   )]
   report = new Backbone.Models.Report(sections: sections)

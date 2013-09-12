@@ -5,7 +5,7 @@ suite('Section Model')
 test("When intialising a section with nested visualisations,
   visualisation.toJSON should return section: as section._id", ->
   sectionAttributes = {
-    _id: 5
+    _id: Factory.findNextFreeId('Section')
     indicator: {
       _id: 15
     }
