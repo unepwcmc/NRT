@@ -26,6 +26,7 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
       visualisationTypes: Backbone.Models.Visualisation.visualisationTypes
     ))
     @renderSubViews()
+    $('body').addClass('stop-scrolling')
 
     return @
 
@@ -33,11 +34,11 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
     @visualisation.save()
 
   closeModal: ->
-    $('body').removeClass('stop-scrolling')
     @trigger('close')
     @close()
 
   onClose: ->
+    $('body').removeClass('stop-scrolling')
     @closeSubViews()
     @stopListening()
 
