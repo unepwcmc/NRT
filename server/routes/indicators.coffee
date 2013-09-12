@@ -31,7 +31,7 @@ exports.showCSV = (req, res) ->
         console.error error
         return res.render(500, "Error fetching the indicator")
 
-      indicator.getIndicatorDataForCSV req.params.filters, (err, indicatorData) ->
+      indicator.getIndicatorDataForCSV req.query.filters, (err, indicatorData) ->
         if err?
           console.error err
           return res.send(500, "Can't retrieve indicator data for #{req.params.id}")
