@@ -7,7 +7,6 @@ exports.index = (req, res) ->
     if err?
       console.error err
       return res.render(500, "Error fetching the indicators")
-
     res.render "indicators/index", indicators: indicators
   )
 

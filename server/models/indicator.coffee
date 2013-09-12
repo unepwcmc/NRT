@@ -2,6 +2,7 @@ mongoose = require('mongoose')
 request = require('request')
 fs = require('fs')
 _ = require('underscore')
+async = require('async')
 IndicatorData = require('./indicator_data').model
 
 indicatorSchema = mongoose.Schema(
@@ -19,7 +20,7 @@ indicatorSchema.statics.seedData = (callback) ->
   Indicator.count(null, (error, count) ->
     if error?
       console.error error
-      return callback(error) 
+      return callback(error)
 
     if count == 0
       Indicator.create(dummyIndicators, (error, results) ->
@@ -74,7 +75,9 @@ indicatorSchema.methods.calculateIndicatorDataBounds = (callback) ->
     bounds = {}
 
     unless @indicatorDefinition.fields?
-      return console.log("Indicator definition does not list fields, cannot get bounds")
+      errorMsg = "Indicator definition does not list fields, cannot get bounds"
+      console.error(errorMsg)
+      callback(errorMsg)
 
     for field in @indicatorDefinition.fields
       bounds[field.name] = boundAggregators[field.type](data, field.name, field.name)
@@ -93,6 +96,42 @@ boundAggregators =
       row[fieldName]
     )[fieldName]
     return bounds
+
+# Probably going to need a refactor at some point
+indicatorSchema.methods.getCurrentYAxis = (callback) ->
+  @getIndicatorData((error, data) =>
+    if error?
+      callback(error)
+
+    mostCurrentData = _.max(data, (row)=>
+      row[@indicatorDefinition.xAxis]
+    )
+    callback(null, mostCurrentData[@indicatorDefinition.yAxis])
+  )
+
+# Add currentYValue to a collection of indicators
+indicatorSchema.statics.calculateCurrentValues = (indicators, callback) ->
+  currentValueGatherers = []
+  for indicator in indicators
+    currentValueGatherers.push((->
+      theIndicator = indicator #Closure indicator variable
+
+      return (callback) ->
+        theIndicator.getCurrentYAxis((error, value)->
+          if error?
+            console.error error
+            callback(error)
+
+          theIndicator.currentValue = value
+          callback()
+        )
+    )())
+
+  async.parallel(
+    currentValueGatherers
+    , (err, items) ->
+      callback(null, indicators)
+  )
 
 Indicator = mongoose.model('Indicator', indicatorSchema)
 
