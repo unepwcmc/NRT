@@ -7,6 +7,107 @@ _ = require('underscore')
 
 suite('Indicator')
 
+test('.getIndicatorDataForCSV with no filters returns all indicator data in a 2D array', (done) ->
+  data = [
+    {
+      "year": 2000,
+      "value": 4
+    }, {
+      "year": 2001,
+      "value": 4
+    }, {
+      "year": 2002,
+      "value": 4
+    }
+  ]
+
+  expectedData = [
+    ['year', 'value'],
+    [2000,4],
+    [2001,4],
+    [2002,4]
+  ]
+
+  indicator = new Indicator(
+    indicatorDefinition:
+      xAxis: 'year'
+      yAxis: 'value'
+      enviroportalId: 14
+  )
+  indicatorData = new IndicatorData(
+    enviroportalId: 14, data: data
+  )
+
+  async.parallel([
+        (cb) -> indicator.save(cb)
+      ,
+        (cb) -> indicatorData.save(cb)
+    ], (err, results) ->
+      if err?
+        console.error err
+      else
+        indicator.getIndicatorDataForCSV( (err, indicatorData) ->
+          assert.ok(
+            _.isEqual(indicatorData, expectedData),
+            "Expected \n#{JSON.stringify(indicatorData)} \nto equal \n#{JSON.stringify(expectedData)}"
+          )
+          done()
+        )
+  )
+)
+
+test('.getIndicatorDataForCSV with filters returns data matching filters in a 2D array', (done) ->
+  data = [
+    {
+      "year": 2000,
+      "value": 3
+    }, {
+      "year": 2001,
+      "value": 4
+    }, {
+      "year": 2002,
+      "value": 4
+    }
+  ]
+
+  expectedData = [
+    ['year', 'value'],
+    [2001,4],
+    [2002,4]
+  ]
+
+  indicator = new Indicator(
+    indicatorDefinition:
+      xAxis: 'year'
+      yAxis: 'value'
+      enviroportalId: 14
+  )
+  indicatorData = new IndicatorData(
+    enviroportalId: 14, data: data
+  )
+
+  filters =
+    value:
+      min: '4'
+
+  async.parallel([
+        (cb) -> indicator.save(cb)
+      ,
+        (cb) -> indicatorData.save(cb)
+    ], (err, results) ->
+      if err?
+        console.error err
+      else
+        indicator.getIndicatorDataForCSV( filters, (err, indicatorData) ->
+          assert.ok(
+            _.isEqual(indicatorData, expectedData),
+            "Expected \n#{JSON.stringify(indicatorData)} \nto equal \n#{JSON.stringify(expectedData)}"
+          )
+          done()
+        )
+  )
+)
+
 test('.getIndicatorData with no filters returns all indicator data for this indicator', (done) ->
   expectedData = [
     {
