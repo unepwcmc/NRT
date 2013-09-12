@@ -28,13 +28,13 @@
   </script>
 {{/contentFor}}
 
-<div class="content">
+<div class="content indicator">
   <article>
     <header>
       <h1>{{indicator.title}}</h1>
 
       <button class="grey">
-        <i class="icon-download append"></i><span class="show">Download the dataset</span>
+        <i class="icon-download append"></i><span class="show">{{{t "indicator/download"}}}</span>
       </button>
     </header>
 
@@ -42,22 +42,34 @@
       <div id='visualisation'></div>
       <section class='introduction'>
         <strong>
-          Sed posuere consectetur est at lobortis. Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Maecenas sed diam eget risus varius blandit sit amet non magna. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Etiam porta sem malesuada magna mollis euismod.
+          Sed posuere consectetur est at lobortis. Etiam porta sem
+          malesuada magna mollis euismod. Cras mattis consectetur purus
+          sit amet fermentum. Vivamus sagittis lacus vel augue laoreet
+          rutrum faucibus dolor auctor. Maecenas sed diam eget risus
+          varius blandit sit amet non magna. Vivamus sagittis lacus vel
+          augue laoreet rutrum faucibus dolor auctor. Etiam porta sem
+          malesuada magna mollis euismod.
         </strong>
       </section>
 
       <section>
         <h2>Guidance for use</h2>
-        <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Sed posuere consectetur est at lobortis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed posuere consectetur est at lobortis.</p>
+        <p>Integer posuere erat a ante venenatis dapibus posuere velit
+        aliquet. Sed posuere consectetur est at lobortis. Cum sociis
+        natoque penatibus et magnis dis parturient montes, nascetur
+        ridiculus mus. Sed posuere consectetur est at lobortis.</p>
       </section>
 
       <section>
         <h2>Rationale</h2>
-        <p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec sed odio dui.</p>
+        <p>Maecenas sed diam eget risus varius blandit sit amet non
+        magna. Cras justo odio, dapibus ac facilisis in, egestas eget
+        quam. Cum sociis natoque penatibus et magnis dis parturient
+        montes, nascetur ridiculus mus. Donec sed odio dui.</p>
       </section>
 
       <section>
-        <h2>Narratives for this indicator</h2>
+        <h2>{{{t "indicator/narratives"}}}</h2>
         <ul class="indicator-narratives">
           <li>
             <header>
@@ -89,24 +101,24 @@
     </div>
 
     <aside class="content-sidebar metadata">
-      <h3>Indicator owned by</h3>
+      <h3>{{{t "indicator/owned_by"}}}</h3>
       <p>
         <i class="icon-user append"></i>
         Dr. Anybody
       </p>
 
       <section>
-        <h3>Metadata</h3>
+        <h3>{{{t "indicator/metadata"}}}</h3>
         <ul>
           <li>
-            <h4>Category</h4>
+            <h4>{{{t "indicator/metadata/category"}}}</h4>
             <span>
               <i class="icon-cloud append"></i>
               Atmosphere
             </span>
           </li>
           <li>
-            <h4>Most recent data collected</h4>
+          <h4>{{{t "indicator/metadata/most_recent"}}}</h4>
             <span class="outdated">
               3 June 2013
               <span class="outdated-notice">
@@ -116,14 +128,14 @@
             </span>
           </li>
           <li>
-            <h4>Oldest data collected</h4>
+            <h4>{{{t "indicator/metadata/oldest_data"}}}</h4>
             <span>3 June 2013</span>
           </li>
         </ul>
       </section>
 
       <section>
-        <h3>Similar Indicators</h3>
+        <h3>{{{t "indicator/similar"}}}</h3>
         <ul>
           <li>
             Average evaporation rate
