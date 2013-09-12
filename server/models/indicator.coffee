@@ -34,6 +34,23 @@ indicatorSchema.statics.seedData = (callback) ->
       callback()
   )
 
+indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
+  if arguments.length == 1
+    callback = filters
+    filters = {}
+
+  @getIndicatorData(filters, (err, indicatorData) =>
+    xAxis = @indicatorDefinition.xAxis
+    yAxis = @indicatorDefinition.yAxis
+
+    rows = [[xAxis, yAxis]]
+
+    for row in indicatorData
+      rows.push [row[xAxis], row[yAxis]]
+
+    callback(err, rows)
+  )
+
 indicatorSchema.methods.getIndicatorData = (filters, callback) ->
   if arguments.length == 1
     callback = filters
