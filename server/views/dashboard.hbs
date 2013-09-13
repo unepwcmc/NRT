@@ -17,39 +17,6 @@
   <div class="row">
     <div class="content-left column">
       <div class="content-title">
-        <h2><i class="icon-tasks"></i>{{{t "dashboard/work_in_progress"}}}</h2>
-      </div>
-
-      {{#each work_in_progress}}
-        <div class="report">
-          <h3><i class="icon-file-text-alt" style="color: {{color}}"></i> <a href="/reports/{{id}}">{{title}}</a></h2>
-          <div class="report-bar-container">
-            <div class="report-bar" style="width: {{percent_complete}}%;
-              background-color: {{color}}"><p>{{percent_complete}}%</p></div>
-          </div>
-        </div>
-      {{/each}}
-
-      <a href="/reports">{{{t "dashboard/see_all"}}}</a>
-    </div>
-
-    <div class="content-right column">
-      <div class="content-title">
-        <h2><i class="icon-exchange"></i>{{{t "dashboard/work_in_progress"}}}</h2>
-      </div>
-      <ul class="notifications">
-        {{#each notifications}}
-          <li><strong>Updated {{type}}</strong> <a href="/{{type}}s/{{id}}">{{title}}</a></li>
-        {{/each}}
-      </ul>
-    </div>
-
-    <div class="clear"></div>
-  </div>
-
-  <div class="row">
-    <div class="content-left column">
-      <div class="content-title">
         <h2><i class="icon-file-text-alt"></i>{{{t "dashboard/latest_edited_reports"}}}</h2>
         <div class="period-of-time">
           <div class="last-update"><p><i class="icon-time"></i>Today</p></div>
@@ -83,10 +50,17 @@
               <small>
                 <i class="icon-time append"></i>Last updated on {{updatedAt}} by Dr. Anybody
               </small>
-              <h3><a href="/indicators/{{id}}">Narrative for {{title}}</a></h3>
-              <h4><span class="bold"><a href="/indicators/{{id}}">{{title}}</a></span>| <i class="icon-bookmark"></i> Watch this indicator</h4>
-              <p>This is the description for the <span style="font-style: italic;">{{title}}</span> indicator.</p>
-              <p class="report-link">Published in <a href="#">Report</a></p>
+              <div class="clear"></div>
+              <span class="indicator-value">
+                {{currentValue}}<br>
+                <small>{{indicatorDefinition.unit}}</small>
+              </span>
+              <span class="indicator-info">
+                <h3><a href="/indicators/{{id}}">Narrative for {{title}}</a></h3>
+                <h4><span class="bold"><a href="/indicators/{{id}}">{{title}}</a></span>| <i class="icon-bookmark"></i> Watch this indicator</h4>
+                <p>This is the description for the <span style="font-style: italic;">{{title}}</span> indicator.</p>
+                <p class="report-link">Published in <a href="#">Report</a></p>
+              </span>
             </div>
           </section>
           {{/each}}

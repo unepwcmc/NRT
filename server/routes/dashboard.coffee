@@ -18,7 +18,7 @@ exports.index = (req, res) ->
       if err?
         callback(err)
 
-      callback(null, indicators)
+      Indicator.calculateCurrentValues(indicators, callback)
     )
 
   async.parallel(
