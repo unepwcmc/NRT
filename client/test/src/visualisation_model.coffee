@@ -75,6 +75,19 @@ test(".buildIndicatorDataUrl appends visualisation filter parameters to url", ->
   assert.strictEqual(decodeURI(visualisation.buildIndicatorDataUrl()), expectedUrl)
 )
 
+test(".buildIndicatorDataUrl appends file extension and params to url", ->
+  visualisation = Factory.visualisation()
+  visualisation.setFilterParameter('year', 'min', 2003)
+  visualisation.setFilterParameter('value', 'max', 50)
+
+  expectedUrl =
+    "/api/indicators/#{
+      visualisation.get('indicator').get('_id')
+    }/data.csv?filters[year][min]=2003&filters[value][max]=50"
+
+  assert.strictEqual(decodeURI(visualisation.buildIndicatorDataUrl('csv')), expectedUrl)
+)
+
 test("Default type is 'BarChart'", ->
   indicator = new Backbone.Models.Indicator()
   visualisation = new Backbone.Models.Visualisation(
