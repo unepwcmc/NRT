@@ -36,6 +36,8 @@
 
   "report/indicator/title": "اختيار مؤشر",
   "report/visualisation/save": "حفظ التصور",
+  "report/visualisation/download_data": "تحميل البيانات",
+  "report/visualisation/view_data": "عرض البيانات",
   "report/visualisation/filters/title": "مرشحات البيانات",
   "report/visualisation/filters/reset": "مسح كل الاختيارات",
   "report/modal/close": "غلق",
