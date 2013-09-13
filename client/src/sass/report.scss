@@ -405,6 +405,54 @@ header.report-header {
     float: right;
     border-left: 0;
 
+    .styled-select {
+      background: url(/images/chevron.png) no-repeat right #fff;
+      background-size: 20px 10px;
+      border: 1px solid $lightishGrey;
+      overflow: hidden;
+      border-radius: 3px;
+
+      &:hover {
+        background-image: url(/images/chevron_blue.png);
+        cursor: pointer;
+        border-color: $buttonBlue;
+
+        select {
+          color: $buttonBlue;
+        }
+      }
+
+      select {
+        &:hover {
+          cursor: pointer;
+          border-color: $buttonBlue;
+          color: $buttonBlue;
+        }
+
+        color: $lightishGrey;
+        padding: 0px 21px 0px 5px;
+        background: transparent;
+        border: none;
+      }
+    }
+
+    .filter-fields {
+      padding: 21px;
+
+      li {
+        margin-bottom: 20px;
+
+        h4 {
+          color: #c3c3c3;
+          text-transform: capitalize;
+          border-bottom: 1px solid #eee;
+          margin-bottom: 12px;
+          padding-bottom: 5px;
+          font-weight: 600;
+        }
+      }
+    }
+
     header {
       padding: 12px 20px;
       border-bottom: 1px solid $lightishGrey;

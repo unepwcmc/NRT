@@ -4,6 +4,8 @@ window.Backbone.Views ||= {}
 class Backbone.Views.IntegerFilterView extends Backbone.View
   template: Handlebars.templates['integer_filter.hbs']
 
+  tagName: 'li'
+
   events:
     "change select": "updateFilters"
 

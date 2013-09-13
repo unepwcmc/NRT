@@ -1,11 +1,17 @@
 <h4>{{name}}</h4>
-Min: <select name="{{name}}-min">
-  {{#each minOptions}}
-    <option value="{{value}}" {{selected}}>{{value}}</option>
-  {{/each}}
-</select>
-Max: <select name="{{name}}-max">
-  {{#each maxOptions}}
-    <option value="{{value}}" {{selected}}>{{value}}</option>
-  {{/each}}
-</select>
+Min: 
+  <span class="styled-select">
+    <select name="{{name}}-min">
+      {{#each minOptions}}
+        <option value="{{value}}" {{selected}}>{{value}}</option>
+      {{/each}}
+    </select>
+  </span>
+Max: 
+  <span class="styled-select">
+    <select name="{{name}}-max">
+      {{#each maxOptions}}
+        <option value="{{value}}" {{selected}}>{{value}}</option>
+      {{/each}}
+    </select>
+  </span>
