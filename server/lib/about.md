@@ -32,10 +32,5 @@ To start you could:
 
 With a more accurate and comprehensive flow of data, informed decision-making can occur: environmental information is the currency required by planners to deliver an environmentally sound development agenda . Outputs from NRT can be used to provide the evidence base for new plans, as well as providing a platform to monitor and demonstrate the success of implementation through indicator reports. As such NRT can catalyse global efforts to reduce environmental impact and deliver real gains to the wellbeing of human populations without compromising the ecological base we all depend on.  In this way NRT can provide useful tools to enable the transition to a Green Economy based on environmentally responsible economic development, paving the way to “the future we want”.
 
-To get started [click here](/dashboard) to view the dashboard page, where you can see all the latest updates to reports and indicators in NRt. 
+To get started [click here](/dashboard) to view the dashboard page, where you can see all the latest updates to reports and indicators in NRT. 
 
-
-
-
-
- 
