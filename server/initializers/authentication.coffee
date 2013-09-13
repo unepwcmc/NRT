@@ -5,20 +5,26 @@ passport.serializeUser (user, done) ->
   done(null, user.id)
 
 passport.deserializeUser (id, done) ->
-  User = require('../models/user')
-  User.find(id).
-    success( (user) ->
+  User = require('../models/user').model
+  User
+    .find(id)
+    .exec( (err, user) ->
+      if err?
+        console.error err
+        return done(err)
+
       done(null, user)
-    ).
-    failure( (err) ->
-      done(err)
     )
 
 passport.use(
   new BasicStrategy(
     (username, password, done) ->
-      User = require('../models/user')
-      User.find(where: {email: username}).success((user) ->
+      User = require('../models/user').model
+      User.find({email: username}, (err, user) ->
+        if err?
+          console.error err
+          return done(err)
+
         if !user
           return done(null, false, { message: 'Incorrect username.' })
 
@@ -26,8 +32,6 @@ passport.use(
           return done(null, false, { message: 'Incorrect password.' })
 
         return done(null, user)
-      ).failure((error) ->
-        return done(null, false)
       )
   )
 )
