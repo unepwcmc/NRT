@@ -27,13 +27,13 @@ module.exports = exports = (app) ->
   app.resource 'api/reports', reportApi, { format: 'json' }
   app.resource 'api/indicators', indicatorApi, { format: 'json' }
   app.get "/api/indicators/:id/data", indicatorApi.data
+  app.get "/api/indicators/:id/data.csv", indicatorApi.dataAsCSV
 
   app.get "/", ensureAuthenticated, staticRoutes.about
   app.get "/dashboard", ensureAuthenticated, dashboardRoutes.index
   app.get "/indicators", ensureAuthenticated, indicatorRoutes.index
   app.get "/reports", ensureAuthenticated, reportRoutes.index
 
-  app.get "/indicators/:id.csv", ensureAuthenticated, indicatorRoutes.showCSV
   app.get "/indicators/:id", ensureAuthenticated, indicatorRoutes.show
 
   app.get "/reports/new", ensureAuthenticated, reportRoutes.new

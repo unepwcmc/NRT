@@ -22,19 +22,3 @@ exports.show = (req, res) ->
 
       res.render "indicators/show", indicator: indicator
     )
-
-exports.showCSV = (req, res) ->
-  Indicator
-    .findOne(_id: req.params.id)
-    .exec( (err, indicator)->
-      if err?
-        console.error error
-        return res.render(500, "Error fetching the indicator")
-
-      indicator.getIndicatorDataForCSV req.params.filters, (err, indicatorData) ->
-        if err?
-          console.error err
-          return res.send(500, "Can't retrieve indicator data for #{req.params.id}")
-
-        res.csv(indicatorData)
-    )

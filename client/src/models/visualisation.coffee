@@ -26,8 +26,9 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
       throw new Error("Error fetching indicator data: #{error}")
     )
 
-  buildIndicatorDataUrl: ->
-    url = "/api/indicators/#{@get('indicator').get('_id')}/data"
+  buildIndicatorDataUrl: (fileExtension) ->
+    fileExtension = if fileExtension? then ".#{fileExtension}" else ""
+    url = "/api/indicators/#{@get('indicator').get('_id')}/data#{fileExtension}"
     if @get('filters')?
       url += "?#{
         $.param {filters: @get('filters')}
