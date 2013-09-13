@@ -14,7 +14,7 @@ class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
       @visualisation.set('data', Backbone.Faker.Reports.createFakeData())
 
   download: ->
-    window.location = @visualisation.buildIndicatorDataUrl('csv')
+    window.location = @visualisation.buildIndicatorDataUrl()
 
   render: =>
     @closeSubViews()
