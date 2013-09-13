@@ -51,6 +51,22 @@ exports.destroy = (req, res) ->
       res.send(204)
   )
 
+exports.dataAsCSV = (req, res) ->
+  Indicator
+    .findOne(_id: req.params.id)
+    .exec( (err, indicator)->
+      if err?
+        console.error error
+        return res.render(500, "Error fetching the indicator")
+
+      indicator.getIndicatorDataForCSV req.query.filters, (err, indicatorData) ->
+        if err?
+          console.error err
+          return res.send(500, "Can't retrieve indicator data for #{req.params.id}")
+
+        res.csv(indicatorData)
+    )
+
 exports.data = (req, res) ->
   Indicator.findOne _id: req.params.id, (err, indicator) ->
     if err?
@@ -67,10 +83,7 @@ exports.data = (req, res) ->
           console.error err
           return res.send(500, "unable to retrieve result bounds for indicator #{req.params.id}")
 
-        res.format
-          json: ->
-            res.send(200, JSON.stringify(
-              results: indicatorData
-              bounds: bounds
-            ))
-
+        res.send(200, JSON.stringify(
+          results: indicatorData
+          bounds: bounds
+        ))

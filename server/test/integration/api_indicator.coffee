@@ -8,6 +8,7 @@ async = require('async')
 suite('API - Indicator')
 
 Indicator = require('../../models/indicator').model
+IndicatorData = require('../../models/indicator_data').model
 
 test('POST create', (done) ->
   data =
@@ -223,5 +224,56 @@ test('GET indicator/:id/data with a \'min\' filter filters the result', (done) -
         done()
       )
     )
+  )
+)
+
+test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
+  data = [
+    {
+      "year": 2000,
+      "value": 3
+    }, {
+      "year": 2001,
+      "value": 4
+    }, {
+      "year": 2002,
+      "value": 4
+    }
+  ]
+
+  expectedData = """
+    "year","value"\r\n"2000","3"\r\n"2001","4"\r\n"2002","4"\r\n
+  """
+
+  indicator = new Indicator(
+    indicatorDefinition:
+      xAxis: 'year'
+      yAxis: 'value'
+      enviroportalId: 14
+  )
+  indicatorData = new IndicatorData(
+    enviroportalId: 14, data: data
+  )
+
+  async.parallel([
+        (cb) -> indicator.save(cb)
+      ,
+        (cb) -> indicatorData.save(cb)
+    ], (err, results) ->
+      if err?
+        console.error err
+      else
+        request.get {
+          url: helpers.appurl("/api/indicators/#{indicator.id}/data.csv")
+        }, (err, res, body) ->
+          assert.equal res.statusCode, 200
+
+          assert.strictEqual(
+             body,
+             expectedData,
+             "Expected \n#{body} \nto equal \n #{expectedData}"
+          )
+
+          done()
   )
 )
