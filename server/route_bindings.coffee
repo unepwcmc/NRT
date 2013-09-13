@@ -43,7 +43,7 @@ module.exports = exports = (app) ->
   app.get "/locale/:locale", ensureAuthenticated, localeRoutes.index
 
   ## Tests
-  if app.settings.env == 'test'
+  unless app.settings.env == 'production'
     app.get "/tests", testRoutes.test
 
   ## User CRUD

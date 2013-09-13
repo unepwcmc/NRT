@@ -52,6 +52,7 @@
   "indicators/filters/energy": "Energy",
   "indicators/filters/transport": "Transport",
 
+  "indicator/view": "View the dataset",
   "indicator/download": "Download the dataset",
   "indicator/narratives": "Narratives for this indicator",
   "indicator/owned_by": "Indicator owned by",

@@ -580,8 +580,13 @@ button.add-report-section {
     height: 34px;
     margin: 10px 0;
 
-    .download-visualisation {
+    button {
       float: right;
+      margin-right: 10px;
+
+      &:first-of-type {
+        margin-right: 0;
+      }
     }
   }
 

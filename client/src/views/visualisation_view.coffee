@@ -5,7 +5,8 @@ class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
   template: Handlebars.templates['visualisation.hbs']
 
   events:
-    "click .download-visualisation": "download"
+    "click .download-indicator": "downloadAsCsv"
+    "click .view-indicator": "downloadAsJson"
 
   initialize: (options) ->
     @visualisation = options.visualisation
@@ -13,8 +14,11 @@ class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
     if typeof @visualisation.get('data') is 'string'
       @visualisation.set('data', Backbone.Faker.Reports.createFakeData())
 
-  download: ->
+  downloadAsJson: ->
     window.location = @visualisation.buildIndicatorDataUrl()
+
+  downloadAsCsv: ->
+    window.location = @visualisation.buildIndicatorDataUrl('csv')
 
   render: =>
     @closeSubViews()

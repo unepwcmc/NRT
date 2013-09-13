@@ -52,6 +52,7 @@
   "indicators/filters/energy": "طاقة",
   "indicators/filters/transport": "نقل",
 
+  "indicator/view": "عرض البينات.",
   "indicator/download": "تحميل ورقة العمل",
   "indicator/narratives": "السرد لهذا المؤشر",
   "indicator/owned_by": "مؤشر يملكها",

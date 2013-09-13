@@ -5,6 +5,21 @@ section.introduction {
 }
 
 .content {
+  &.indicator {
+    header {
+      a {
+        float: right;
+        position: relative;
+        top: -63px;
+        margin-right: 20px;
+
+        &:first-of-type {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
   .indicator-narratives {
     margin-left: 0;
     padding-left: 0;
