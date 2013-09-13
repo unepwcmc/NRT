@@ -137,7 +137,7 @@ test('PUT indicator does not fail when an _id is given', (done) ->
   )
 )
 
-test('GET indicator/:id/data returns the indicator data and bounds', (done) ->
+test('GET indicator/:id/data returns the indicator data and bounds as JSON', (done) ->
   enviroportalId = 5
   theData = [{
     year: 2000
@@ -168,6 +168,8 @@ test('GET indicator/:id/data returns the indicator data and bounds', (done) ->
         json: true
       }, (err, res, body) ->
         assert.equal res.statusCode, 200
+
+        assert.match(res.headers['content-type'], new RegExp('json'))
 
         assert.property(body, 'results')
         assert.ok(_.isEqual body.results, theData)
