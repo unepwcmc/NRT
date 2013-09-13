@@ -13,14 +13,14 @@ passport.deserializeUser (id, done) ->
         console.error err
         return done(err)
 
-      done(null, user)
+      return done(null, user)
     )
 
 passport.use(
   new BasicStrategy(
     (username, password, done) ->
       User = require('../models/user').model
-      User.find({email: username}, (err, user) ->
+      User.findOne({email: username}, (err, user) ->
         if err?
           console.error err
           return done(err)

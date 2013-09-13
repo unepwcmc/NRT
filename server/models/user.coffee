@@ -5,6 +5,9 @@ userSchema = mongoose.Schema(
   password: String
 )
 
+userSchema.methods.validPassword = (password) ->
+  @password == password
+
 User = mongoose.model('User', userSchema)
 
 module.exports = {
