@@ -13,17 +13,7 @@
 
   <script type="text/javascript">
     $(document).ready(function(){
-      var visualisation = new Backbone.Models.Visualisation();
-      visualisation.set('data', Backbone.Faker.Reports.createFakeData())
-
-      var bar_chart = new Backbone.Views.BarChartView({
-        visualisation: visualisation,
-        width: 650,
-        barColor: 'pink'
-      });
-
-      bar_chart.render();
-      $('#visualisation').append(bar_chart.el);
+      new Backbone.Controllers.IndicatorshowController({{{ indicatorJSON }}});
     });
   </script>
 {{/contentFor}}

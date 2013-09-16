@@ -19,5 +19,7 @@ exports.show = (req, res) ->
         console.error err
         return res.render(500, "Error fetching the indicator")
 
-      res.render "indicators/show", indicator: indicator
+      res.render("indicators/show", 
+        indicator: indicator, indicatorJSON: JSON.stringify(indicator)
+      )
     )
