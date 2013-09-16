@@ -125,10 +125,6 @@ div.select{
   background: #b6daee;
 }
 
-.arabic{
-  text-align: right;
-}
-
 header, section, footer{
   display: block;
 }
@@ -137,6 +133,7 @@ header {
   position: relative;
   margin-bottom: 10px;
   border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
 
   button, .button {
     position: absolute;
@@ -149,36 +146,36 @@ header {
   }
 }
 
-h1{
+h1 {
   font-size: 2.7em;
   font-family: 'PT sans', sans-serif;
   line-height: 1.2em;
   padding-bottom: 15px;
 }
 
-h2{
+h2 {
   font-size: 1.75em;
   font-family: 'PT sans', sans-serif;
   line-height: 1.2em;
   padding-bottom: 5px;
 }
 
-h3{
+h3 {
   font-size: 1.1em;
   line-height: 1.5em;
   color: $grey;
 }
 
-h4{
-  font-size: 1.1em;
+h4 {
+  color: #808080;
+  font-size: 0.9em;
 }
 
-strong{
-  font-weight: 600;
-}
-
-em{
-  font-style: italic;
+h1, h2, h3, h4, h5 {
+  i {
+    font-size: 1.3em;
+    color: $iconColor;
+  }
 }
 
 ::-webkit-input-placeholder {
@@ -856,5 +853,51 @@ section.report-indicator-list {
   }
 }
 
+table {
+  border: 1px solid #e1e1e1;
+  border-top: none;
+  width: 650px;
+
+  caption{
+    background-color: #007dbb;
+    text-align: center;
+    padding: 12px 10px;
+    color: #fff;
+    font-weight: 300;
+    border: 1px solid #0068A6;
+    border-bottom: none;
+  }
+
+  thead{
+    background-color: #0068A6;
+    color: #fff;
+  }
+
+  th{
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 0.85em;
+    font-weight: 400;
+    line-height: 1.2em;
+    border: 1px solid #00558B;
+  }
+
+  tbody {
+    tr:nth-child(odd) {
+      background-color: #f7f7f7;
+    }
+  }
+
+  tr td{
+    font-size: 0.85em;
+    line-height: 1.4em;
+    padding: 10px;
+    border: 1px solid #e1e1e1;
+
+    &.center{
+      text-align: center;
+    }
+  }
+}
 
 @import "charts";
