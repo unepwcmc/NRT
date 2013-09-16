@@ -5,12 +5,12 @@
 
 //COMMON STYLES FOR ALL PAGES
 
-body, html{
+body, html {
   width: 100%;
   height: 100%;
 }
 
-body{
+body {
   font-family: 'Open sans';
   font-size: 1.15em;
   line-height: 1.6em;
@@ -23,25 +23,25 @@ body{
   }
 }
 
-a{
+a {
   text-decoration: none;
   color: $mainFont;
   color: rgba(0,0,0,0.8);
 }
 
-i.append{
+i.append {
   padding-right: 10px;
 }
 
-i.post-append{
+i.post-append {
   padding-left: 10px;
 }
 
-.clear{
+.clear {
   @include clearfix;
 }
 
-small{
+small {
   font-size: 0.75em;
   color: $grey;
 }
@@ -58,7 +58,7 @@ small{
 
 button,
 a.button,
-div.select{
+div.select {
   -webkit-appearance: none;
   border: none;
   background-color: $buttonBlue;
@@ -178,22 +178,6 @@ h1, h2, h3, h4, h5 {
   }
 }
 
-::-webkit-input-placeholder {
-  color: rgba(0,0,0,0.25);
-}
-
-:-moz-placeholder { /* Firefox 18- */
-  color: rgba(0,0,0,0.25);
-}
-
-::-moz-placeholder {  /* Firefox 19+ */
-  color: rgba(0,0,0,0.25);
-}
-
-:-ms-input-placeholder {
-  color: rgba(0,0,0,0.25);
-}
-
 .content{
   width: 980px;
   padding: 75px 20px 30px 20px;
@@ -219,21 +203,6 @@ h1, h2, h3, h4, h5 {
   }
 }
 
-.arabic{
-  .double-column{
-    .column{
-      float: right;
-      &.left{
-        padding: 20px 0 0 30px;
-      }
-
-      &.right{
-        padding: 20px 30px 0 0;
-      }
-    }
-  }
-}
-
 .double-column{
   .column{
     @include box-sizing(border-box);
@@ -247,15 +216,6 @@ h1, h2, h3, h4, h5 {
     &.right{
       padding: 20px 0 0 30px;
     }
-  }
-}
-
-.arabic .menu{
-  right: 0;
-  left: auto;
-
-  .main-menu-container, .search{
-    float: right;
   }
 }
 
@@ -634,21 +594,6 @@ h1, h2, h3, h4, h5 {
   top: 0;
   right: 0;
   z-index: 3;
-  @include clearfix;
-  @include transition(width 0.5s);
-
-  .full-name {
-    a {
-      color: $white;
-      text-align: right;
-    }
-  }
-}
-
-.arabic section{
-  small {
-    right: 0;
-  }
 }
 
 section{
@@ -673,7 +618,7 @@ section{
     display: none;
   }
 
-  &:hover{
+  &:hover {
     small{
       display: block;
     }
@@ -694,28 +639,9 @@ section{
   }
 }
 
-.section-title{
-  padding-bottom: 20px;
-
-  h3 {
-    font-weight: bold;
-  }
-}
-
-.tag{
+.last-update {
   display: inline-block;
-  line-height: 1em;
-  font-size: 0.55em;
-  padding: 2px 5px 4px 5px;
-  border-radius: 3px;
-  vertical-align: middle;
-  background-color: $buttonBlue;
-  border: 1px solid $buttonBlue;
-  color: $white;
-}
 
-div.last-update {
-  display: inline-block;
   p {
     color: $linkBlue;
     border: 1px solid $linkBlue;
@@ -723,6 +649,7 @@ div.last-update {
     padding: 0.15em 0.4em;
     line-height: 1.6em;
   }
+
   i {
     padding-right: 0.2em;
   }
@@ -896,6 +823,45 @@ table {
 
     &.center{
       text-align: center;
+    }
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,0.5);
+  z-index: 99;
+
+  header {
+    height: 100%;
+  }
+
+  .editor {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: #F7F7F7;
+    width: 900px;
+    height: 576px;
+    margin-top: -278px;
+    margin-left: -453px;
+    z-index: 1001;
+
+    .close {
+      float:right;
+      margin-top: -30px;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+
+    header {
+      padding: 25px;
+      border: 0;
+      margin-bottom: 0;
     }
   }
 }
