@@ -57,7 +57,7 @@ indicatorSchema.methods.getIndicatorData = (filters, callback) ->
     callback = filters
     filters = {}
 
-  IndicatorData.findOne enviroportalId: @indicatorDefinition.enviroportalId, (err, res) ->
+  IndicatorData.findOne externalId: @indicatorDefinition.externalId, (err, res) ->
     if err?
       console.error err
       callback err
