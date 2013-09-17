@@ -224,6 +224,12 @@ article {
     }
   }
 
+  header {
+    &:first-of-type {
+      height: 45px;
+    }
+  }
+
   .visualisation {
     background-color: white;
     width: 600px;
