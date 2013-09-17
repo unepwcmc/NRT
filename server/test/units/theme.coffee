@@ -39,14 +39,10 @@ test('.getFatThemes returns all the themes with their indicators populated', (do
           console.error err
           throw new Error(err)
 
-        console.dir returnedThemes[0]
-
         assert.lengthOf returnedThemes, 2
 
         assert.strictEqual returnedThemes[0].title, themeAttributes[0].title
         assert.strictEqual returnedThemes[1].title, themeAttributes[1].title
-
-
 
         assert.lengthOf returnedThemes[0].indicators, 1
         assert.lengthOf returnedThemes[1].indicators, 1

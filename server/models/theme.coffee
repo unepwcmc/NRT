@@ -7,6 +7,7 @@ Indicator = require('./indicator').model
 
 themeSchema = mongoose.Schema(
   title: String
+  externalId: Number
 )
 
 themeSchema.statics.seedData = (callback) ->
