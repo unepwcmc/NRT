@@ -1,14 +1,15 @@
 Indicator = require('../models/indicator').model
+Theme = require('../models/theme').model
 _ = require('underscore')
 async = require('async')
 csv = require('express-csv')
 
 exports.index = (req, res) ->
-  Indicator.find( (err, indicators)->
+  Theme.getFatThemes( (err, themes) ->
     if err?
       console.error err
-      return res.render(500, "Error fetching the indicators")
-    res.render "indicators/index", indicators: indicators
+      return res.render(500, "Error fetching the themes")
+    res.render "indicators/index", themes: themes
   )
 
 exports.show = (req, res) ->
