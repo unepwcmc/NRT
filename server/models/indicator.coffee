@@ -9,6 +9,7 @@ indicatorSchema = mongoose.Schema(
   title: String
   description: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
+  theme: {type: mongoose.Schema.Types.ObjectId, ref: 'Theme'}
 )
 
 indicatorSchema.statics.seedData = (callback) ->

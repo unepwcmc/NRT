@@ -1,6 +1,7 @@
 assert = require('chai').assert
 helpers = require '../helpers'
 Theme = require('../../models/theme').model
+Indicator = require('../../models/indicator').model
 helpers = require '../helpers'
 async = require('async')
 _ = require('underscore')
@@ -21,16 +22,16 @@ test('.getFatThemes returns all the themes with their indicators populated', (do
       console.error err
       throw new Error(err)
     
-    
     indicatorAttributes = [{
       title: "I'm an indicator of theme 1"
-      theme_id: themes[0]._id
+      theme: themes[0]._id
     },{
       title: "theme 2 indicator"
-      theme_id: themes[1]._id
+      theme: themes[1]._id
     }]
 
-    helpers.createIndicatorModels(theme1SubIndicatorAttributes).done((subIndicators)->
+    helpers.createIndicatorModels(indicatorAttributes).success((subIndicators)->
+
       Theme.getFatThemes((err, returnedThemes) ->
         if err
           console.error err
@@ -45,7 +46,9 @@ test('.getFatThemes returns all the themes with their indicators populated', (do
         assert.lengthOf returnedThemes[1].indicators, 1
 
         assert.strictEqual returnedThemes[0].indicators[0].title, indicatorAttributes[0].title
-        assert.strictEqual returnedThemes[1].indicators[1].title, indicatorAttributes[1].title
+        assert.strictEqual returnedThemes[1].indicators[0].title, indicatorAttributes[1].title
+
+        done()
       )
     )
   )

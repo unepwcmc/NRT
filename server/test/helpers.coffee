@@ -11,7 +11,7 @@ IndicatorData = require('../models/indicator_data').model
 Visualisation = require('../models/visualisation').model
 Narrative = require('../models/narrative').model
 Section = require('../models/section').model
-Theme = require('../../models/theme').model
+Theme = require('../models/theme').model
 
 before( (done) ->
   app.start 3001, (err, server) ->
@@ -30,7 +30,8 @@ dropDatabase = (connection, done) ->
     IndicatorData,
     Narrative,
     Section,
-    Visualisation
+    Visualisation,
+    Theme
   ]
 
   for model in models
@@ -164,9 +165,9 @@ exports.createIndicatorModels = (attributes) ->
 
 exports.createThemesFromAttributes = (attributes, callback) ->
   themeCreateFunctions = []
-  for attributes in themeAttributes
+  for attribute in attributes
     themeCreateFunctions.push (->
-      theAttributes = attributes
+      theAttributes = attribute
       return (cb) ->
         Theme.create(theAttributes, cb)
     )()
