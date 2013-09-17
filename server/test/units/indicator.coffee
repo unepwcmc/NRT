@@ -248,3 +248,22 @@ test('.calculateIndicatorDataBounds should return the upper and lower bounds of 
         )
   )
 )
+
+test('.create with nested section', (done) ->
+  indicator_attributes =
+    sections: [{
+      title: 'dat title'
+    }]
+
+  indicator = new Indicator(indicator_attributes)
+  indicator.save((err, indicator) ->
+    if err?
+      console.error err
+      throw 'indicator saving failed'
+      done()
+
+    assert.strictEqual indicator.title, indicator_attributes.title
+    assert.strictEqual indicator.sections[0].title, indicator_attributes.sections[0].title
+    done()
+  )
+)

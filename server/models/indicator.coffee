@@ -4,11 +4,13 @@ fs = require('fs')
 _ = require('underscore')
 async = require('async')
 IndicatorData = require('./indicator_data').model
+Section = require('./section').schema
 
 indicatorSchema = mongoose.Schema(
   title: String
   description: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
+  sections: [Section]
 )
 
 indicatorSchema.statics.seedData = (callback) ->

@@ -229,6 +229,28 @@ test('GET indicator/:id/data with a \'min\' filter filters the result', (done) -
   )
 )
 
+test('GET indicator/:id with nested sections returns sections', (done) ->
+  helpers.createSection( {title: "A title"}, (err, section) ->
+    helpers.createIndicator({sections: [section]}, (err, indicator) ->
+      request.get({
+        url: helpers.appurl("api/indicators/#{indicator.id}")
+        json: true
+      }, (err, res, body) ->
+        assert.equal res.statusCode, 200
+
+        returnedIndicator = body
+        assert.equal returnedIndicator._id, indicator.id
+        assert.equal returnedIndicator.content, indicator.content
+
+        assert.property returnedIndicator, 'sections'
+        assert.lengthOf returnedIndicator.sections, 1
+
+        done()
+      )
+    )
+  )
+)
+
 test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
   data = [
     {
