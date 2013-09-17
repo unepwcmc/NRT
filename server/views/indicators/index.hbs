@@ -30,44 +30,17 @@
 
   <div class="indicators-container">
     <div class="report-content">
-      {{#indicators}}
-        <section class='reports'>
-          <div class="section-title">
-            <small>
-              <i class="icon-time append"></i>Last updated on 1st of April, 18:23 by Dr. Anybody
-            </small>
-            <h3><a href="/indicators/{{id}}">{{title}}</a></h3>
-            <h4>2012 |
-              <div class="report-bookmark">
-                <i class="icon-bookmark"></i> <span>{{{t "indicator/bookmark_this_indicator"}}}</span>
-              </div>
-            </h4>
-            {{description}}
-          </div>
-        </section>
-      {{/indicators}}
+      {{#themes}}
+        <h2>{{title}}</h2>
+        {{#indicators}}
+          <h3>{{title}}</h3>
+        {{/indicators}}
+      {{/themes}}
     </div>
 
 
     <div class="report-sidebar">
-      <div class="filters">
-        <h3>{{{t "indicators/filters/title"}}}</h3>
-
-        <ul>
-          <li><i class="icon-bookmark"></i> {{{t "indicators/filters/bookmarked"}}}</li>
-          <li><i class="icon-user"></i> {{{t "indicators/filters/owned"}}}</li>
-        </ul>
-
-        <ul>
-          <li><i class="icon-cloud"></i> {{{t "indicators/filters/atmosphere"}}} </li>
-          <li><i class="icon-bar-chart"></i> {{{t "indicators/filters/biodiversity"}}} </li>
-          <li><i class="icon-beaker"></i> {{{t "indicators/filters/water"}}} </li>
-          <li><i class="icon-stethoscope"></i> {{{t "indicators/filters/health"}}} </li>
-          <li><i class="icon-trash"></i> {{{t "indicators/filters/waste"}}} </li>
-          <li><i class="icon-bolt"></i> {{{t "indicators/filters/energy"}}} </li>
-          <li><i class="icon-truck"></i> {{{t "indicators/filters/transport"}}} </li>
-        </ul>
-      </div>
+      xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     </div>
   </div>
 </div>
