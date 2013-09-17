@@ -219,31 +219,41 @@ h1, h2, h3, h4, h5 {
   }
 }
 
+.main-menu, .save-status, .language-selector {
+  height: 60px;
+  line-height: 60px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+
 .menu {
   position: fixed;
   left: 0;
   top: 0;
   z-index: 10;
+  width: 100%;
+  background: white;
 
-  .main-menu-container, .search, .save-status {
+  .main-menu-container, .save-status {
     float: left;
   }
 
-  .main-menu, .save-status, .search-header {
-    width: 60px;
-    height: 60px;
-    line-height: 60px;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+  .submenu {
+    display: none;
   }
 
   .main-menu-container {
     position: relative;
 
+    &:hover {
+      .submenu {
+        display: block;
+      }
+    }
+
     ul {
       text-align: left;
       width: 100%;
-      min-width: 200px;
-      display: none;
+      min-width: 180px;
       list-style: none;
       position: absolute;
       left: 0;
@@ -281,193 +291,23 @@ h1, h2, h3, h4, h5 {
   }
 
   .main-menu {
-    overflow: hidden;
     font-family: "PT Sans";
     text-align: center;
     background-color: #008BDC;
     color: $white;
-    font-size: 1.3em;
     border-bottom: 1px solid #0073BB;
     position: relative;
     cursor: pointer;
-    overflow-x: hidden;
-    @include transition(width 0.5s);
+    width: 180px;
 
-    .full-name {
-      display: inline-block;
-      font-size: 0.75em;
-      padding: 0 20px;
-      display: none;
-      overflow: hidden;
-      min-width: 180px;
-      vertical-align: middle;
-
-      .name {
-        max-width: 140px;
-        display: inline-block;
-        vertical-align: middle;
-        @include text-overflow;
-      }
-
-      i {
-        font-size: 0.85em;
-        line-height: 60px;
-        vertical-align: middle;
-      }
-    }
-
-    .initials {
-      font-size: 1.4em;
-      position: relative;
+    i {
+      font-size: 0.85em;
       line-height: 60px;
-      top: 2px;
-    }
-
-    &:hover, &.opened{
-      @include transition(width 0.5s);
-      width: 220px;
-
-      .full-name{
-        display: inline-block;
-      }
-
-      .initials{
-        display: none;
-      }
+      vertical-align: middle;
     }
   }
 
-  .search-container{
-    width: 800px;
-    height: 60px;
-    overflow: hidden;
-  }
-
-  .search-box-container{
-    display: none;
-  }
-
-  .filtered{
-    .search-filters{
-      display: block;
-      float: left;
-    }
-
-    .search-box{
-      float: left;
-      width: 600px;
-
-      ul li .result-info{
-        width: 449px;
-      }
-    }
-  }
-
-  .search-filters{
-    display: none;
-    width: 201px;
-    background-color: #0068A6;
-    color: $white;
-
-    ul {
-      li {
-        cursor: pointer;
-        padding: 0 20px;
-        line-height: 60px;
-        border-bottom: 1px solid #00558B;
-        &:hover{
-          background-color: #00558B;
-        }
-
-        &.selected{
-          background-color: #003659;
-        }
-
-        &:last-child{
-          border-bottom: none;
-        }
-      }
-    }
-  }
-
-  .search-box{
-    width: 100%;
-    background-color: $white;
-    border: 1px solid #DDD;
-    border-top: none;
-    @include box-sizing(border-box);
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.05);
-    position: relative;
-    z-index: 2;
-
-    ul {
-      li {
-        border-bottom: 1px solid #DDD;
-        @include clearfix;
-
-        & > div {
-          float: left;
-        }
-
-        .result-type, .result-bookmark{
-          width: 13px;
-          padding: 20px 23px;
-        }
-
-        .result-bookmark{
-          i {
-            cursor: pointer;
-          }
-
-          .icon-bookmark{
-            color: $buttonBlue;
-          }
-
-          .icon-bookmark-empty{
-            color: #C3C3C3;
-
-            &:hover{
-              color: $buttonBlue;
-            }
-          }
-        }
-
-        .result-info{
-          width: 650px;
-          padding: 20px 15px;
-          border-left: 1px solid #DDD;
-
-          p {
-            padding-bottom: 0;
-            font-size: 0.75em;
-            line-height: 1.3em;
-          }
-        }
-
-        .result-title{
-          font-weight: 600;
-          font-size: 0.85em;
-        }
-      }
-    }
-
-    .more-results {
-      text-align: center;
-      padding: 8px 0;
-
-      a{
-        color: $linkBlue;
-
-        &:hover{
-          color: lighten($linkBlue, 10);
-        }
-      }
-    }
-  }
-
-  .search-header, .save-status {
+  .save-status {
     overflow: hidden;
     color: #BBB;
     background-color: #fff;
@@ -478,69 +318,14 @@ h1, h2, h3, h4, h5 {
     @include clearfix;
     @include transition(width 0.5s);
 
-    .search-icon, input[type="text"], .search-close, .search-input{
+    input[type="text"] {
       float: left;
-    }
-
-    .search-icon{
-      width: 60px;
-      height: 60px;
-      overflow: hidden;
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .search-input{
-      position: relative;
-      top: 15px;
-      border-left: 1px solid #BBB;
-    }
-
-    .tag{
-      display: none;
-      font-size: 0.85em;
-      margin-left: 15px;
-      padding: 4px 5px 6px 5px;
-      position: relative;
-      top: 2px;
-      font-weight: 300;
-      cursor: pointer;
-
-      i {
-        position: relative;
-        top: 0;
-        font-size: 0.8em;
-        padding: 0 2px;
-      }
-    }
-
-    .tag, input[type="text"]{
-      float: left;
-    }
-
-    input[type="text"]{
       width: 540px;
       font-size: 1.2em;
       border: none;
       padding: 0 15px;
       color: $mainFont;
       color: rgba(0,0,0,0.8);
-    }
-
-    .search-close{
-      color: #DDD;
-      cursor: pointer;
-      display: none;
-      float: right;
-      padding-right: 20px;
-      &:hover{
-        color: $mainFont;
-      }
-    }
-
-    &.opened{
-      @include transition(width 0.5s);
-      width: 800px;
     }
 
     i{
@@ -585,7 +370,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .language-selector {
-  padding: 5px 10px;
+  padding: 0 10px;
   box-shadow: 0 1px 1px rgba(0,0,0,0.05);
   overflow: hidden;
   background-color: #ddd;
@@ -593,7 +378,7 @@ h1, h2, h3, h4, h5 {
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 3;
+  z-index: 11;
 }
 
 section{
