@@ -35,6 +35,7 @@ themeSchema.statics.seedData = (callback) ->
 
 themeSchema.statics.getFatThemes = (callback) ->
   Theme.find({})
+    .sort(_id: 1)
     .exec( (err, themes) -> 
       populateFunctions = []
       for theme, index in themes
