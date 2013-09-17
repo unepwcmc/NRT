@@ -11,6 +11,7 @@
   "src/collections/visualisation_collection.coffee",
   "src/models/section.coffee",
   "src/collections/section_collection.coffee",
+  "src/views/indicator_view.coffee",
   "src/views/indicator_selector_item_view.coffee",
   "src/views/indicator_selector_view.coffee",
   "src/views/section_view.coffee",

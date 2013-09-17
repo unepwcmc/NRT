@@ -31,10 +31,6 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
       type: Backbone.HasOne
       relatedModel: 'Backbone.Models.Indicator'
       includeInJSON: '_id'
-      reverseRelation:
-        key: 'sections'
-        includeInJSON: false
-        type: Backbone.HasMany
   ]
 
   hasTitleOrIndicator: ->
