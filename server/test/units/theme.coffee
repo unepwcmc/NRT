@@ -13,8 +13,10 @@ suite('Theme')
 test('.getFatThemes returns all the themes with their indicators populated', (done) ->
   themeAttributes = [{
     title: 'Theme 1'
+    externalId: 1
   },{
     title: 'Theme 2'
+    externalId: 2
   }]
 
   helpers.createThemesFromAttributes(themeAttributes, (err, themes) ->
@@ -24,10 +26,10 @@ test('.getFatThemes returns all the themes with their indicators populated', (do
     
     indicatorAttributes = [{
       title: "I'm an indicator of theme 1"
-      theme: themes[0]._id
+      theme: themes[0].externalId
     },{
       title: "theme 2 indicator"
-      theme: themes[1]._id
+      theme: themes[1].externalId
     }]
 
     helpers.createIndicatorModels(indicatorAttributes).success((subIndicators)->
@@ -37,10 +39,14 @@ test('.getFatThemes returns all the themes with their indicators populated', (do
           console.error err
           throw new Error(err)
 
+        console.dir returnedThemes[0]
+
         assert.lengthOf returnedThemes, 2
 
         assert.strictEqual returnedThemes[0].title, themeAttributes[0].title
         assert.strictEqual returnedThemes[1].title, themeAttributes[1].title
+
+
 
         assert.lengthOf returnedThemes[0].indicators, 1
         assert.lengthOf returnedThemes[1].indicators, 1

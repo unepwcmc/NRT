@@ -9,6 +9,29 @@ themeSchema = mongoose.Schema(
   title: String
 )
 
+themeSchema.statics.seedData = (callback) ->
+  # Seed some indicators
+  dummyThemes = JSON.parse(
+    fs.readFileSync("#{process.cwd()}/lib/sample_themes.json", 'UTF8')
+  )
+
+  Theme.count(null, (error, count) ->
+    if error?
+      console.error error
+      return callback(error)
+
+    if count == 0
+      Theme.create(dummyThemes, (error, results) ->
+        if error?
+          console.error error
+          return callback(error)
+        else
+          return callback(null, results)
+      )
+    else
+      callback()
+  )
+
 themeSchema.statics.getFatThemes = (callback) ->
   Theme.find({})
     .exec( (err, themes) -> 
@@ -20,7 +43,7 @@ themeSchema.statics.getFatThemes = (callback) ->
           theIndex = index
           populateFunctions.push(
             (cb) -> 
-              Indicator.find(theme: theTheme._id).exec( (err, indicators) ->
+              Indicator.find(theme: theTheme.externalId).exec( (err, indicators) ->
                 themes[theIndex].indicators = indicators
                 cb()
               )
