@@ -23,7 +23,7 @@ exports.create = (req, res) ->
       return res.send(500, "Could not save report")
 
     Report
-      .findFatReport(_id: report._id, (err, report) ->
+      .findFatModel(_id: report._id, (err, report) ->
         if err?
           console.error err
           res.send(500, "Update to retrieve created report")
@@ -32,7 +32,7 @@ exports.create = (req, res) ->
       )
 
 exports.show = (req, res) ->
-  Report.findFatReport(req.params.report, (err, report) ->
+  Report.findFatModel(req.params.report, (err, report) ->
     if err?
       console.error err
       return res.send(500, "Could not retrieve report")
@@ -55,7 +55,7 @@ exports.update = (req, res) ->
         return res.send(500, "Could not update the report")
 
       Report
-        .findFatReport(_id: reportId, (err, report) ->
+        .findFatModel(_id: reportId, (err, report) ->
           if err?
             console.error "Unable to fetch fat report:"
             console.error err

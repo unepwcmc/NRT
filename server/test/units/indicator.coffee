@@ -267,3 +267,38 @@ test('.create with nested section', (done) ->
     done()
   )
 )
+
+test('get "fat" indicator with all related children by indicator ID', (done) ->
+  helpers.createSection({
+    title: 'A section'
+  }, (err, section) ->
+    helpers.createVisualisation(
+      {section: section._id},
+      (err, visualisation) ->
+        helpers.createNarrative(
+          {section: section._id}
+          (err, narrative) ->
+            helpers.createIndicator({
+              sections: [section]
+            }, (err, indicator) ->
+              Indicator.findFatModel(indicator._id, (err, fatIndicator) ->
+                assert.equal fatIndicator._id, indicator.id
+
+                reloadedSection = fatIndicator.sections[0]
+                assert.equal reloadedSection._id, section.id
+
+                assert.property reloadedSection, 'visualisation'
+                assert.equal visualisation._id.toString(),
+                  reloadedSection.visualisation._id.toString()
+
+                assert.property reloadedSection, 'narrative'
+                assert.equal narrative._id.toString(),
+                  reloadedSection.narrative._id.toString()
+
+                done()
+              )
+            )
+        )
+    )
+  )
+)

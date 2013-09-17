@@ -5,6 +5,7 @@ _ = require('underscore')
 async = require('async')
 IndicatorData = require('./indicator_data').model
 Section = require('./section').schema
+sectionNestingModel = require('../mixins/section_nesting_model.coffee')
 
 indicatorSchema = mongoose.Schema(
   title: String
@@ -12,6 +13,8 @@ indicatorSchema = mongoose.Schema(
   indicatorDefinition: mongoose.Schema.Types.Mixed
   sections: [Section]
 )
+
+_.extend(indicatorSchema.statics, sectionNestingModel)
 
 indicatorSchema.statics.seedData = (callback) ->
   # Seed some indicators
