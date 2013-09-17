@@ -3,7 +3,7 @@ window.Backbone.Controllers ||= {}
 
 
 class Backbone.Controllers.IndicatorshowController extends Backbone.Diorama.Controller
-  constructor: (indicatorData, ind) ->
+  constructor: (indicatorData) ->
     indicator = new Backbone.Models.Indicator indicatorData
     visualisation = new Backbone.Models.Visualisation indicator: indicator
     visualisationView = new Backbone.Views.VisualisationView(
