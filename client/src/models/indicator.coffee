@@ -3,6 +3,8 @@ window.Backbone.Models || = {}
 class window.Backbone.Models.Indicator extends Backbone.RelationalModel
   idAttribute: '_id'
 
+  urlRoot: '/api/indicators'
+
   relations: [
     key: 'sections'
     type: Backbone.HasMany
