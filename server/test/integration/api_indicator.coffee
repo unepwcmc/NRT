@@ -138,19 +138,19 @@ test('PUT indicator does not fail when an _id is given', (done) ->
 )
 
 test('GET indicator/:id/data returns the indicator data and bounds as JSON', (done) ->
-  enviroportalId = 5
+  externalId = 5
   theData = [{
     year: 2000
     value: 4
   }]
 
   indicatorDataAttrbutes =
-    enviroportalId: enviroportalId
+    externalId: externalId
     data: theData
 
   helpers.createIndicator({
     indicatorDefinition: {
-      enviroportalId: enviroportalId
+      externalId: externalId
       fields: [{
         name: 'year'
         type: 'integer'
@@ -182,7 +182,7 @@ test('GET indicator/:id/data returns the indicator data and bounds as JSON', (do
 )
 
 test('GET indicator/:id/data with a \'min\' filter filters the result', (done) ->
-  enviroportalId = 5
+  externalId = 5
   theData = [{
     year: 2000
     value: 4
@@ -192,12 +192,12 @@ test('GET indicator/:id/data with a \'min\' filter filters the result', (done) -
   }]
 
   indicatorDataAttrbutes =
-    enviroportalId: enviroportalId
+    externalId: externalId
     data: theData
 
   helpers.createIndicator({
     indicatorDefinition: {
-      enviroportalId: enviroportalId
+      externalId: externalId
       fields: [{
         name: 'year'
         type: 'integer'
@@ -251,10 +251,10 @@ test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
     indicatorDefinition:
       xAxis: 'year'
       yAxis: 'value'
-      enviroportalId: 14
+      externalId: 14
   )
   indicatorData = new IndicatorData(
-    enviroportalId: 14, data: data
+    externalId: 14, data: data
   )
 
   async.parallel([

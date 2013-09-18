@@ -2,7 +2,7 @@ mongoose = require('mongoose')
 fs = require('fs')
 
 indicatorDataSchema = mongoose.Schema(
-  enviroportalId: Number
+  externalId: Number
   data: mongoose.Schema.Types.Mixed
 )
 

@@ -15,10 +15,6 @@ $orange: #ffbd4c;
   box-sizing: border-box;
 }
 
-h3 {
-  color: #333;
-}
-
 h4 {
   font-size: .9em;
   line-height: 1.3em;
@@ -30,50 +26,6 @@ h4 {
 
 p {
   font-size: .75em;
-}
-
-.dashboard-title {
-  border-bottom: 1px solid #eee;
-  padding-bottom: $title-padding;
-  margin-top: 40px;
-  margin-bottom: 30px;
-  position: relative;
-
-  h1 {
-    display: inline-block;
-    font-weight: bold;
-  }
-
-  button {
-    float: right;
-    margin-top: 0.938em;
-    padding: 5px 15px;
-    background-color: transparent;
-    border: 1px solid $lightishGrey;
-    border-radius: 12px;
-    color: $lightishGrey;
-    font-weight: 400;
-    span{
-      display: inline;
-    }
-    a:hover, a:visited, a:link, a:active {
-      color: $lightishGrey;
-      text-decoration: none;
-      border: none;
-    }
-  }
-  .button:hover .inner, .button:hover i, .button:hover a {
-    color: $buttonBlue;
-  }
-  .button:hover {
-    border: 1px solid $buttonBlue;
-  }
-
-  .button {
-    position: absolute;
-    right: 0;
-    top: 10px;
-  }
 }
 
 div.row {
