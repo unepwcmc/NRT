@@ -1,11 +1,11 @@
 [{
     "category": "Biodiversity",
-    "title": "Protected Areas",
+    "title": "To ensure conservation of key representative terrestrial habitats in the Emirate",
     "indicatorDefinition": {
-      "enviroportalId": 14,
+      "externalId": 14,
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
-      "unit": "km2",
+      "unit": "% Protection by Key Representative Inland Habitats",
       "outFields": "shape.area",
       "dateField": "datedes",
       "pollFrequency": "annual",
@@ -25,12 +25,12 @@
     }
 }, {
     "category": "Biodiversity",
-    "title": "Important Bird Areas",
+    "title": "To ensure annual PM10 concentrations do not exceed ambient air quality standards",
     "indicatorDefinition": {
-      "enviroportalId": 13,
+      "externalId": 13,
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/13",
       "operation": "sum",
-      "unit": "km2",
+      "unit": "μg/m3 (annual avg.)",
       "outFields": "shape.area",
       "dateField": "datedes",
       "pollFrequency": "annual",
@@ -50,12 +50,12 @@
     }
 }, {
     "category": "Biodiversity",
-    "title": "Important Bird Sites",
+    "title": "To restrict loss of bird species in Abu Dhabi",
     "indicatorDefinition": {
-      "enviroportalId": 0,
+      "externalId": 0,
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/0",
       "operation": "count",
-      "unit": null,
+      "unit": "Wild bird index relative to 1.00 in base year",
       "outFields": null,
       "dateField": null,
       "pollFrequency": "annual",

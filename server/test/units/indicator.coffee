@@ -32,10 +32,10 @@ test('.getIndicatorDataForCSV with no filters returns all indicator data in a 2D
     indicatorDefinition:
       xAxis: 'year'
       yAxis: 'value'
-      enviroportalId: 14
+      externalId: 14
   )
   indicatorData = new IndicatorData(
-    enviroportalId: 14, data: data
+    externalId: 14, data: data
   )
 
   async.parallel([
@@ -80,10 +80,10 @@ test('.getIndicatorDataForCSV with filters returns data matching filters in a 2D
     indicatorDefinition:
       xAxis: 'year'
       yAxis: 'value'
-      enviroportalId: 14
+      externalId: 14
   )
   indicatorData = new IndicatorData(
-    enviroportalId: 14, data: data
+    externalId: 14, data: data
   )
 
   filters =
@@ -124,10 +124,10 @@ test('.getIndicatorData with no filters returns all indicator data for this indi
 
   indicator = new Indicator(
     indicatorDefinition:
-      enviroportalId: 14
+      externalId: 14
   )
   indicatorData = new IndicatorData(
-    enviroportalId: 14, data: expectedData
+    externalId: 14, data: expectedData
   )
 
   async.parallel([
@@ -166,10 +166,10 @@ test('.getIndicatorData with an integer filter \'min\' value
 
   indicator = new Indicator(
     indicatorDefinition:
-      enviroportalId: 14
+      externalId: 14
   )
   indicatorData = new IndicatorData(
-    enviroportalId: 14, data: fullData
+    externalId: 14, data: fullData
   )
 
   filters =
@@ -210,7 +210,7 @@ test('.calculateIndicatorDataBounds should return the upper and lower bounds of 
 
   indicator = new Indicator(
     indicatorDefinition:
-      enviroportalId: 14
+      externalId: 14
       fields: [{
         name: 'year'
         type: 'integer'
@@ -220,7 +220,7 @@ test('.calculateIndicatorDataBounds should return the upper and lower bounds of 
       }]
   )
   indicatorData = new IndicatorData(
-    enviroportalId: 14, data: indicatorData
+    externalId: 15, data: indicatorData
   )
 
   async.parallel([

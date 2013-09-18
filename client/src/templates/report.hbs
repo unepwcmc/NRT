@@ -4,27 +4,36 @@
   </header>
 {{/if}}
 
-<div class="content">
-  <div class="report-content">
-    <div class="report-title">
-      <div class="time-period">{{addSubViewTo thisView "TextEditView" type="input" attributeName="period" model=thisView.report}}</div>
+<article>
+  <div class="main-content">
+    <header>
+      {{addSubViewTo thisView "TextEditView" type="input"
+        attributeName="period" model=thisView.report tagName="h4"}}
+
       {{addSubViewTo thisView "TextEditView"
         attributeName="title" model=thisView.report tagName="h1"}}
-      <div class="report-extra">
-        <div class="last-update"><a href="#" data-toggle="tooltip" title="Last update"><i class="icon-time append"></i></a>Report edited 1st of April, 18:23</div>
-        <div class="who"><a href="#" data-toggle="tooltip" title="Report owner"><i class="icon-user append"></i></a>Dr. Anybody</div>
-      </div>
-    </div>
+
+      <h4>
+        <i class="icon-time append"></i>
+        Report edited 1st of April, 18:23
+      </h4>
+
+      <h4>
+        <i class="icon-user append"></i>
+        Dr. Anybody
+      </h4>
+    </header>
 
     {{#each sectionsWithViewName}}
       {{addSubViewTo ../thisView this.viewName section=this.section}}
     {{/each}}
+
     <button class="add-report-section">{{{t "report/add_section"}}}</button>
     <button class="add-report-chapter">{{{t "report/add_chapter"}}}</button>
   </div>
 
-  <div class="report-sidebar">
-    <button class="grey">
+  <aside>
+    <button>
       <i class="icon-bookmark-empty append"></i><i class="icon-bookmark append"></i><span class="show">{{{t "report/bookmark_this_report"}}}</span><span>Bookmarked report</span>
     </button>
 
@@ -32,28 +41,24 @@
       <i class="icon-fighter-jet append"></i>{{{t "report/present"}}}
     </a>
 
+    <h5>{{{t "report/brief"}}}</h5>
+    {{addSubViewTo thisView "TextEditView" type='textarea'
+      attributeName='brief' model=thisView.report}}
 
-    <div class="brief fixed-section">
-      <h4>{{{t "report/brief"}}}</h4>
-      {{addSubViewTo thisView "TextEditView" type='textarea'
-        attributeName='brief' model=thisView.report}}
-    </div>
+    {{addSubViewTo thisView "SectionNavigationView" sections=sections}}
 
-    {{ addSubViewTo thisView "SectionNavigationView" sections=sections}}
+    <h5>
+      <i class="icon-edit append"></i>
+      {{{t "report/recent_changes"}}}
+    </h5>
 
-    <div class="recent-changes">
-      <div class="recent-changes-title">
-        <i class="icon-edit append"></i>{{{t "report/recent_changes"}}}
-      </div>
-      <ul>
-        <li><strong>4 days ago</strong>: Dr. Anybody changed Amonia-P section.</li>
-        <li><strong>10 days ago</strong>: Dr. Anybody published Nitrato-N section.</li>
-        <li><strong>1 month ago</strong>: Dr. Anybody published this report.</li>
-      </ul>
-    </div>
-  </div>
-  <div class="clear"></div>
-</div>
+    <ul class="recent-changes">
+      <li><strong>4 days ago</strong>: Dr. Anybody changed Amonia-P section.</li>
+      <li><strong>10 days ago</strong>: Dr. Anybody published Nitrato-N section.</li>
+      <li><strong>1 month ago</strong>: Dr. Anybody published this report.</li>
+    </ul>
+  </aside>
+</article>
 
 <div class="related-reports">
   <div class="double-column">

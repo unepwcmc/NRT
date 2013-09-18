@@ -2,7 +2,7 @@ passport = require('passport')
 BasicStrategy = require('passport-http').BasicStrategy
 
 passport.serializeUser (user, done) ->
-  done(null, user.id)
+  done(null, user._id)
 
 passport.deserializeUser (id, done) ->
   User = require('../models/user').model
@@ -11,7 +11,7 @@ passport.deserializeUser (id, done) ->
     .exec( (err, user) ->
       if err?
         console.error err
-        return done(err)
+        return done(err, false)
 
       return done(null, user)
     )
@@ -23,7 +23,7 @@ passport.use(
       User.findOne({email: username}, (err, user) ->
         if err?
           console.error err
-          return done(err)
+          return done(err, false)
 
         if !user
           return done(null, false, { message: 'Incorrect username.' })
