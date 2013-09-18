@@ -18,5 +18,17 @@ class Backbone.Views.IndicatorView extends Backbone.Diorama.NestingView
     @renderSubViews()
     return @
 
+  addSection: =>
+    if @indicator.get('_id')?
+      section = new Backbone.Models.Section()
+      @indicator.get('sections').push(section)
+    else
+      @indicator.save(null,
+        success: @addSection
+        error: (err) ->
+          console.log err
+          alert('Unable to save indicator, please try again')
+      )
+
   onClose: ->
     @closeSubViews()
