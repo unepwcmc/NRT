@@ -4,13 +4,17 @@ fs = require('fs')
 _ = require('underscore')
 async = require('async')
 IndicatorData = require('./indicator_data').model
-Section = require('./section').schema
 sectionNestingModel = require('../mixins/section_nesting_model.coffee')
+
+sectionSchema = mongoose.Schema(
+  title: String
+  type: String
+)
 
 indicatorSchema = mongoose.Schema(
   title: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
-  sections: [Section]
+  sections: [sectionSchema]
   theme: Number
 )
 
