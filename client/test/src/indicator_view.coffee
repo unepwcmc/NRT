@@ -19,6 +19,6 @@ test(".addSection adds a section to the indicator", ->
   indicatorView.addSection()
 
   assert.lengthOf indicator.get('sections'), 1
-  assert.strictEqual indicator.get('sections')[0].get('indicator').get('cid'), indicator.get('cid')
-  assert.equal indicator.get('sections')[0].get('type'), "Section"
+  assert.strictEqual indicator.get('sections').at(0).get('parent').get('cid'), indicator.get('cid')
+  assert.equal indicator.get('sections').at(0).get('type'), "Section"
 )

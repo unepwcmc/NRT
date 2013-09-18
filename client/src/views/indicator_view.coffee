@@ -4,15 +4,19 @@ window.Backbone.Views ||= {}
 class Backbone.Views.IndicatorView extends Backbone.Diorama.NestingView
   template: Handlebars.templates['indicator.hbs']
 
+  events:
+    'click .add-indicator-section': 'addSection'
+
   initialize: (options) ->
     @indicator = options.indicator
+    @listenTo(@indicator.get('sections'), 'add', @render)
     @render()
 
   render: ->
     @closeSubViews()
     @$el.html(@template(
       thisView: @
-      sections: @indicator.get('sections')
+      sections: @indicator.get('sections').models
     ))
 
     @renderSubViews()
@@ -21,7 +25,7 @@ class Backbone.Views.IndicatorView extends Backbone.Diorama.NestingView
   addSection: =>
     if @indicator.get('_id')?
       section = new Backbone.Models.Section()
-      @indicator.get('sections').push(section)
+      @indicator.get('sections').add(section)
     else
       @indicator.save(null,
         success: @addSection
@@ -31,4 +35,5 @@ class Backbone.Views.IndicatorView extends Backbone.Diorama.NestingView
       )
 
   onClose: ->
+    @stopListening()
     @closeSubViews()

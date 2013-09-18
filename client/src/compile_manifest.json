@@ -10,6 +10,7 @@
   "src/views/integer_filter_view.coffee",
   "src/collections/visualisation_collection.coffee",
   "src/models/section.coffee",
+  "src/models/indicator_section.coffee",
   "src/collections/section_collection.coffee",
   "src/views/indicator_view.coffee",
   "src/views/indicator_selector_item_view.coffee",
