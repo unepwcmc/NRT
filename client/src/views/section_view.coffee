@@ -18,6 +18,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
   initialize: (options) ->
     @section = options.section
     @section.bind('change', @render)
+    @render()
 
   render: =>
     @closeSubViews()

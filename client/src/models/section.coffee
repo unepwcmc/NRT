@@ -41,6 +41,10 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
 
   # Don't save the section itself, save the whole report
   save: (attributes, options) ->
+    if arguments.length == 1
+      options = attributes
+      attribtues = {}
+
     if @get('parent')?
       @get('parent').save(section: attributes, options)
     else

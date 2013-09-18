@@ -20,6 +20,14 @@ test('when initialised with sections attributes,
   assert.strictEqual indicator.get('sections').at(0).get('parent').constructor.name, "Indicator"
 )
 
+test('when adding a section to an indicator,
+  it correctly sets the parent attribute', ->
+  indicator = new Backbone.Models.Indicator()
+  indicator.get('sections').add({})
+
+  assert.strictEqual indicator.get('sections').at(0).get('parent').cid, indicator.cid
+)
+
 test(".toJSON should include nested section objects as their JSON", ->
   sections = [new Backbone.Models.Section(
     indicator: new Backbone.Models.Indicator()
