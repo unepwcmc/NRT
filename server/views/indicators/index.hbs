@@ -2,32 +2,18 @@
 
 {{#contentFor 'header'}}
   <link rel="stylesheet" href="/css/dashboard.css">
-
-  <script type='text/javascript'>
-    $(document).ready(function(){
-        $('.report-bookmark').click(function(event){
-          var isBookmarked = $(event.currentTarget).find('i')
-            .toggleClass('selected').hasClass('selected');
-          if (isBookmarked) {
-            $(event.currentTarget).find('span').text("Bookmarked (not implemented yet)");
-          } else {
-            $(event.currentTarget).find('span').text('Bookmark this indicator');
-          };
-        });
-    });
-  </script>
 {{/contentFor}}
 
 
 <div class="content">
   <header>
     <h1>{{{t "indicators/title"}}}</h1>
-
-    <button class="grey">
-      <i class="icon-file-text-alt append"></i><span class="show">{{{t "header/new_indicator"}}}</span>
-    </button>
   </header>
 
+  <div class='intro-text'>
+    Here is some text introducing the themes page. Should this actually be the landing page, and then this text would summarise the state of environment.
+
+  </div>
   <div class="indicators-container">
     <div class="report-content">
       {{#themes}}
