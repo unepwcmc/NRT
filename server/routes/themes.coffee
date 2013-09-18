@@ -19,6 +19,7 @@ exports.show = (req, res) ->
       if err?
         console.error err
         return res.render(500, "Error fetching the theme")
-
-      res.render "themes/show", theme: theme
+      theme.getIndicators( (err, indicators) ->
+        res.render "themes/show", theme: theme, indicators: indicators
+      )
     )

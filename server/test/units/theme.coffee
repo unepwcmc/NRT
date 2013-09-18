@@ -56,3 +56,34 @@ test('.getFatThemes returns all the themes with their indicators populated', (do
   )
 
 )
+
+test('.getIndicators returns all Indicators for given Theme', (done) ->
+  themeAttributes = [{
+    title: 'Theme 1'
+    externalId: 1
+  }]
+
+  helpers.createThemesFromAttributes(themeAttributes, (err, themes) ->
+    if err
+      console.error err
+      throw new Error(err)
+
+    indicatorAttributes = [{
+      title: "I'm an indicator of theme 1"
+      theme: themes[0].externalId
+    }]
+
+    helpers.createIndicatorModels(indicatorAttributes).success((subIndicators)->
+
+      themes[0].getIndicators((err, returnedIndicators) ->
+        if err
+          console.error(err)
+          throw new Error(err)
+        assert.lengthOf returnedIndicators, 1
+
+        assert.strictEqual returnedIndicators[0].title, indicatorAttributes[0].title
+        done()
+      )
+    )
+  )
+)

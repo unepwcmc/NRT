@@ -66,35 +66,15 @@
       </section>
 
       <section>
-        <h2>{{{t "theme/narratives"}}}</h2>
-        <ul class="theme-narratives">
-          <li>
-            <header>
-              <small><i class="icon-time append"></i></a>Last updated on 1st of April, 18:23 by Dr. Anybody</small>
-              <h2>
-                Narrative 1
-              </h2>
-              <h4>{{theme.title}}</h4>
-            </header>
-            <p>
-              This is the description of the narrative.
-            </p>
-          </li>
-          <li>
-            <header>
-              <small><i class="icon-time append"></i></a>Last updated on 1st of April, 18:23 by Dr. Anybody</small>
-              <h2>
-                Narrative 2
-              </h2>
-              <h4>{{theme.title}}</h4>
-            </header>
-            <p>
-              This is the description of the narrative.
-            </p>
-          </li>
-        </ul>
-        </ul>
+        <h2>Indicators</h2>
+        <p>Here are the indicators under this Theme.</p>
+        {{#indicators}}
+        <h3>
+          <a href="/indicators/{{id}}">{{title}}</a>
+        </h3>
+        {{/indicators}}
       </section>
+
     </div>
 
     <aside class="content-sidebar metadata">

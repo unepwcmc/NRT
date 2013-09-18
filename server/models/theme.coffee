@@ -56,6 +56,17 @@ themeSchema.statics.getFatThemes = (callback) ->
       )
   )
 
+themeSchema.methods.getIndicators = (callback) ->
+  Indicator.find(theme: @externalId)
+    .sort(_id: 1)
+    .exec( (err, indicators) ->
+      if err?
+        console.error(err)
+        return callback(err)
+      callback(err, indicators)
+    )
+
+
 Theme = mongoose.model('Theme', themeSchema)
 
 module.exports = {
