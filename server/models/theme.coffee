@@ -11,7 +11,7 @@ themeSchema = mongoose.Schema(
 )
 
 themeSchema.statics.seedData = (callback) ->
-  # Seed some indicators
+  # Seed some themes
   dummyThemes = JSON.parse(
     fs.readFileSync("#{process.cwd()}/lib/sample_themes.json", 'UTF8')
   )
