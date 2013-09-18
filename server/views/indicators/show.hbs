@@ -10,12 +10,6 @@
   <script src="/js/lib/handlebars.js"></script>
   <script src="/js/lib/diorama.js"></script>
   <script src="/js/application.js"></script>
-
-  <script type="text/javascript">
-    $(document).ready(function(){
-      new Backbone.Controllers.IndicatorshowController({{{ indicatorJSON }}});
-    });
-  </script>
 {{/contentFor}}
 
 <div class="content indicator">
@@ -33,7 +27,6 @@
     </header>
 
     <div class='main-content'>
-      <div id='visualisation'></div>
       <section class='introduction'>
         <strong>
           Sed posuere consectetur est at lobortis. Etiam porta sem
@@ -143,3 +136,8 @@
   </article>
 </div>
 
+<script type="text/javascript">
+  i18n.onReady(function() {
+    new Backbone.Controllers.IndicatorController({{{ indicatorJSON }}});
+  });
+</script>

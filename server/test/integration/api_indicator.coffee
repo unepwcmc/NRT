@@ -93,11 +93,15 @@ test('DELETE indicator', (done) ->
 test('PUT indicator', (done) ->
   helpers.createIndicator( (err, indicator) ->
     new_title = "Updated title"
+    section_title = "OHAI little brother"
     request.put({
       url: helpers.appurl("/api/indicators/#{indicator.id}")
       json: true
       body:
         title: new_title
+        sections: [
+          title: section_title
+        ]
     }, (err, res, body) ->
       id = body.id
 
@@ -107,6 +111,11 @@ test('PUT indicator', (done) ->
         .findOne(id)
         .exec( (err, indicator) ->
           assert.equal indicator.title, new_title
+
+          assert.lengthOf indicator.sections, 1
+          assert.strictEqual indicator.sections[0].title, section_title
+          assert.property indicator.sections[0], '_id'
+
           done()
         )
     )
