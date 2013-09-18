@@ -30,7 +30,7 @@ module.exports = exports = (app) ->
   app.get "/api/indicators/:id/data", indicatorApi.data
   app.get "/api/indicators/:id/data.csv", indicatorApi.dataAsCSV
 
-  app.get "/", ensureAuthenticated, staticRoutes.about
+  app.get "/", ensureAuthenticated, themeRoutes.index
   app.get "/dashboard", ensureAuthenticated, dashboardRoutes.index
   app.get "/themes", ensureAuthenticated, themeRoutes.index
   app.get "/indicators", ensureAuthenticated, indicatorRoutes.index

@@ -9,7 +9,7 @@
       "unit": "% Protection by Key Representative Inland Habitats",
       "outFields": "shape.area",
       "dateField": "datedes",
-      "pollFrequency": "annual",
+      "period": "annual",
       "xAxis": "year",
       "yAxis": "value",
       "geometryField": "geometry",
