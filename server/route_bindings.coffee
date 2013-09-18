@@ -6,6 +6,7 @@ reportApi = require('./routes/api/report')
 indicatorApi = require('./routes/api/indicator')
 
 dashboardRoutes = require('./routes/dashboard.coffee')
+themeRoutes     = require('./routes/themes.coffee')
 indicatorRoutes = require('./routes/indicators.coffee')
 localeRoutes    = require('./routes/locale.coffee')
 reportRoutes    = require('./routes/reports.coffee')
@@ -31,10 +32,12 @@ module.exports = exports = (app) ->
 
   app.get "/", ensureAuthenticated, staticRoutes.about
   app.get "/dashboard", ensureAuthenticated, dashboardRoutes.index
+  app.get "/themes", ensureAuthenticated, themeRoutes.index
   app.get "/indicators", ensureAuthenticated, indicatorRoutes.index
   app.get "/reports", ensureAuthenticated, reportRoutes.index
 
   app.get "/indicators/:id", ensureAuthenticated, indicatorRoutes.show
+  app.get "/themes/:id", ensureAuthenticated, themeRoutes.show
 
   app.get "/reports/new", ensureAuthenticated, reportRoutes.new
   app.get "/reports/:id", ensureAuthenticated, reportRoutes.show
