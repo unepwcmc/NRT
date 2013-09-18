@@ -61,7 +61,7 @@ test("If report cover image doesn't exist, can see no image", ->
 
   view = createAndShowReportViewForReport(report)
 
-  assert $('#test-container').find('header').length == 0
+  assert $('#test-container').find('header.report-header').length == 0
 
   view.close()
 )
