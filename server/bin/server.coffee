@@ -1,5 +1,6 @@
 app = require('../app.coffee')
 port = process.env.PORT || 3000
+port = 80 if app.get("env") == "production"
 
 app.start(port, (err) ->
   if err
