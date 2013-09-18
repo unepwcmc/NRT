@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Atmosphere",
+    "externalId": 1
+  },
+  {
+    "title": "Biodiversity",
+    "externalId": 2
+  },
+  {
+    "title": "Water",
+    "externalId": 3
+  },
+  {
+    "title": "Health",
+    "externalId": 4
+  },
+  {
+    "title": "Waste",
+    "externalId": 5
+  },
+  {
+    "title": "Energy",
+    "externalId": 6
+  },
+  {
+    "title": "Transport",
+    "externalId": 7
+  }
+]

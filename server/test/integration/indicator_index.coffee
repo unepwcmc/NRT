@@ -7,14 +7,12 @@ _ = require('underscore')
 
 suite('Indicator index')
 
-test("With a series of indicators, I should see their titles and description", (done) ->
+test("With a series of indicators, I should see their titles", (done) ->
   helpers.createIndicatorModels([
     {
       title: 'indicator 1'
-      description: 'The description for the first indicator'
     }, {
       title: 'indicator 2'
-      description: 'Description for another indicator'
     }
   ]).success((indicators)->
     request.get {
@@ -24,7 +22,6 @@ test("With a series of indicators, I should see their titles and description", (
 
       for indicator in indicators
         assert.match body, new RegExp(".*#{indicator.title}.*")
-        assert.match body, new RegExp(".*#{indicator.description}.*")
 
       done()
   ).error((error) ->

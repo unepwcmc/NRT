@@ -220,7 +220,7 @@ test('.calculateIndicatorDataBounds should return the upper and lower bounds of 
       }]
   )
   indicatorData = new IndicatorData(
-    externalId: 15, data: indicatorData
+    externalId: 14, data: indicatorData
   )
 
   async.parallel([

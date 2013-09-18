@@ -7,8 +7,8 @@ IndicatorData = require('./indicator_data').model
 
 indicatorSchema = mongoose.Schema(
   title: String
-  description: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
+  theme: Number
 )
 
 indicatorSchema.statics.seedData = (callback) ->
