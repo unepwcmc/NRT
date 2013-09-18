@@ -9,9 +9,9 @@ sectionNestingModel = require('../mixins/section_nesting_model.coffee')
 
 indicatorSchema = mongoose.Schema(
   title: String
-  description: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
   sections: [Section]
+  theme: Number
 )
 
 _.extend(indicatorSchema.statics, sectionNestingModel)

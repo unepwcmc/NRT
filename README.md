@@ -5,7 +5,7 @@
 * Install and setup NodeJS (0.10.13)
 * `npm install -g handlebars coffee-script grunt-cli`
 * `npm install` in the `client/` and `server/` dirs to get the libs
-* Install mongodb locally (`brew install mongodb`) and start it with
+* Install mongodb locally (on Mac with [Homebrew](http://brew.sh/) installed, `brew install mongodb`) and start it with
   `mongod`.
 
 Most secrets you need are [here](https://docs.google.com/a/peoplesized.com/document/d/1dYMO3PJhRlTDQ2BEUUOcLwqX0IfJ5UP_UYyfQllnXeQ/).
