@@ -7,7 +7,7 @@ _ = require('underscore')
 
 suite('Indicator index')
 
-test("With a series of indicators, I should see their titles and description", (done) ->
+test("With a series of indicators, I should see their titles", (done) ->
   helpers.createIndicatorModels([
     {
       title: 'indicator 1'
