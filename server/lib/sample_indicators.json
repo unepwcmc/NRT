@@ -1,6 +1,7 @@
 [{
     "title": "To ensure conservation of key representative terrestrial habitats in the Emirate",
     "theme": 2,
+    "category": "Biodiversity",
     "indicatorDefinition": {
       "externalId": 14,
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
@@ -25,6 +26,7 @@
     }
 }, {
     "theme": 1,
+    "category": "Biodiversity",
     "title": "To ensure annual PM10 concentrations do not exceed ambient air quality standards",
     "indicatorDefinition": {
       "externalId": 13,
@@ -50,6 +52,7 @@
     }
 }, {
     "theme": 2,
+    "category": "Biodiversity",
     "title": "To restrict loss of bird species in Abu Dhabi",
     "indicatorDefinition": {
       "externalId": 0,

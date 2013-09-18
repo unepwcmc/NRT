@@ -36,6 +36,7 @@
   "src/controllers/report_controller.coffee",
   "src/controllers/reports_controller.coffee",
   "src/controllers/report_presentation_controller.coffee",
+  "src/controllers/indicator_show_controller.coffee",
   "src/helpers/handlebars_debug.coffee",
   "src/helpers/handlebars_global.coffee",
   "src/helpers/i18n.coffee",
