@@ -6,7 +6,6 @@ class Backbone.Views.IndicatorView extends Backbone.Diorama.NestingView
 
   initialize: (options) ->
     @indicator = options.indicator
-    debugger
     @render()
 
   render: ->
