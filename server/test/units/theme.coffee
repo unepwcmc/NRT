@@ -8,8 +8,6 @@ _ = require('underscore')
 
 suite('Theme')
 
-
-
 test('.getFatThemes returns all the themes with their indicators populated', (done) ->
   themeAttributes = [{
     title: 'Theme 1'
@@ -23,7 +21,7 @@ test('.getFatThemes returns all the themes with their indicators populated', (do
     if err
       console.error err
       throw new Error(err)
-    
+
     indicatorAttributes = [{
       title: "I'm an indicator of theme 1"
       theme: themes[0].externalId
@@ -54,7 +52,37 @@ test('.getFatThemes returns all the themes with their indicators populated', (do
       )
     )
   )
+)
 
+test('.getIndicatorsByTheme returns all Indicators for given Theme', (done) ->
+  themeAttributes = [{
+    title: 'Theme 1'
+    externalId: 1
+  }]
+
+  helpers.createThemesFromAttributes(themeAttributes, (err, themes) ->
+    if err
+      console.error err
+      throw new Error(err)
+
+    indicatorAttributes = [{
+      title: "I'm an indicator of theme 1"
+      theme: themes[0].externalId
+    }]
+
+    helpers.createIndicatorModels(indicatorAttributes).success((subIndicators)->
+
+      Theme.getIndicatorsByTheme(themes[0].externalId, (err, returnedIndicators) ->
+        if err
+          console.error(err)
+          throw new Error(err)
+        assert.lengthOf returnedIndicators, 1
+
+        assert.strictEqual returnedIndicators[0].title, indicatorAttributes[0].title
+        done()
+      )
+    )
+  )
 )
 
 test('.getIndicators returns all Indicators for given Theme', (done) ->
