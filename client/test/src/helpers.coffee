@@ -46,6 +46,12 @@ Factory.indicator = (attributes = {}) ->
     attributes
   )
 
+Factory.theme = (attributes = {}) ->
+  attributes._id ||= Factory.findNextFreeId('Theme')
+  new Backbone.Models.Theme(
+    attributes
+  )
+
 Factory.section = (attributes = {}) ->
   attributes._id ||= Factory.findNextFreeId('Section')
   attributes.indicator ||= Factory.indicator()
