@@ -10,71 +10,26 @@
   <script src="/js/lib/handlebars.js"></script>
   <script src="/js/lib/diorama.js"></script>
   <script src="/js/application.js"></script>
-
-  <script type="text/javascript">
-    $(document).ready(function(){
-      var visualisation = new Backbone.Models.Visualisation();
-      visualisation.set('data', Backbone.Faker.Reports.createFakeData())
-
-      var bar_chart = new Backbone.Views.BarChartView({
-        visualisation: visualisation,
-        width: 650,
-        barColor: 'pink'
-      });
-
-      bar_chart.render();
-      $('#visualisation').append(bar_chart.el);
-    });
-  </script>
 {{/contentFor}}
 
 <div class="content theme">
   <article>
     <header>
       <h1>{{theme.title}}</h1>
-
     </header>
 
     <div class='main-content'>
-      <div id='visualisation'></div>
-      <section class='introduction'>
-        <strong>
-          Sed posuere consectetur est at lobortis. Etiam porta sem
-          malesuada magna mollis euismod. Cras mattis consectetur purus
-          sit amet fermentum. Vivamus sagittis lacus vel augue laoreet
-          rutrum faucibus dolor auctor. Maecenas sed diam eget risus
-          varius blandit sit amet non magna. Vivamus sagittis lacus vel
-          augue laoreet rutrum faucibus dolor auctor. Etiam porta sem
-          malesuada magna mollis euismod.
-        </strong>
-      </section>
-
-      <section>
-        <h2>Guidance for use</h2>
-        <p>Integer posuere erat a ante venenatis dapibus posuere velit
-        aliquet. Sed posuere consectetur est at lobortis. Cum sociis
-        natoque penatibus et magnis dis parturient montes, nascetur
-        ridiculus mus. Sed posuere consectetur est at lobortis.</p>
-      </section>
-
-      <section>
-        <h2>Rationale</h2>
-        <p>Maecenas sed diam eget risus varius blandit sit amet non
-        magna. Cras justo odio, dapibus ac facilisis in, egestas eget
-        quam. Cum sociis natoque penatibus et magnis dis parturient
-        montes, nascetur ridiculus mus. Donec sed odio dui.</p>
-      </section>
-
       <section>
         <h2>Indicators</h2>
+
         <p>Here are the indicators under this Theme.</p>
+
         {{#indicators}}
-        <h3>
-          <a href="/indicators/{{id}}">{{title}}</a>
-        </h3>
+          <h3>
+            <a href="/indicators/{{id}}">{{title}}</a>
+          </h3>
         {{/indicators}}
       </section>
-
     </div>
 
     <aside class="content-sidebar metadata">
@@ -126,4 +81,8 @@
   </article>
 </div>
 
-
+<script type="text/javascript">
+  i18n.onReady(function() {
+    new Backbone.Controllers.ThemeController({{{ themeJSON }}});
+  });
+</script>
