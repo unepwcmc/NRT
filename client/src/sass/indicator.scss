@@ -7,14 +7,20 @@ section.introduction {
 .content {
   &.indicator {
     header {
-      a {
-        float: right;
-        position: relative;
-        top: -63px;
-        margin-right: 20px;
+      overflow:hidden;
 
-        &:first-of-type {
-          margin-right: 0;
+      h1 {
+        width: 650px;
+        float:left;
+      }
+
+      .indicator-buttons{
+        float:right;
+        width: 300px;
+        a {
+          position: relative;
+          float: right;
+          margin-bottom: 5px;
         }
       }
     }
