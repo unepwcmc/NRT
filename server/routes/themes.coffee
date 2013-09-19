@@ -19,6 +19,9 @@ exports.show = (req, res) ->
         console.error err
         return res.render(500, "Error fetching the theme")
       theme.getIndicators( (err, indicators) ->
-        res.render "themes/show", theme: theme, indicators: indicators
+        res.render "themes/show",
+          theme: theme,
+          themeJSON: JSON.stringify(theme),
+          indicators: indicators
       )
     )

@@ -43,7 +43,7 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
   save: (attributes, options) ->
     if arguments.length == 1
       options = attributes
-      attribtues = {}
+      attributes = {}
 
     if @get('parent')?
       @get('parent').save(section: attributes, options)

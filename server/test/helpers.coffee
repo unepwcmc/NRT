@@ -163,6 +163,20 @@ exports.createIndicatorModels = (attributes) ->
   }
   return promises
 
+exports.createTheme = (attributes, callback) ->
+  if arguments.length == 1
+    callback = attributes
+    attributes = undefined
+
+  theme = new Theme(attributes || title: "new theme")
+
+  theme.save (err, theme) ->
+    if err?
+      throw 'could not save theme'
+
+    callback(null, theme)
+
+
 exports.createThemesFromAttributes = (attributes, callback) ->
   themeCreateFunctions = []
   for attribute in attributes
