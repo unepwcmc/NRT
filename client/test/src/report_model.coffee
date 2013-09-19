@@ -14,6 +14,20 @@ test("When initialised with an array of sections,
   assert.equal report.get('sections').constructor.name, 'SectionCollection'
 )
 
+test('when initialised with sections attributes,
+  it creates a section with a reference to the indicator parent', ->
+  report = new Backbone.Models.Report(
+    sections: [
+      title: "I'm a child"
+    ]
+  )
+
+  assert.strictEqual report.get('sections').constructor.name, 'SectionCollection'
+  assert.strictEqual report.get('sections').at(0).get('title'), "I'm a child"
+  assert.strictEqual report.get('sections').at(0).get('parent').cid, report.cid
+  assert.strictEqual report.get('sections').at(0).get('parent').constructor.name, "Report"
+)
+
 test(".toJSON should include nested section objects as their JSON", ->
   sections = [new Backbone.Models.Section(
     indicator: new Backbone.Models.Indicator()

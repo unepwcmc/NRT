@@ -33,12 +33,18 @@ exports.update = (req, res) ->
   Indicator.update(
     {_id: req.params.indicator},
     {$set: params},
-    (err, indicator) ->
+    (err, rowsChanges) ->
       if err?
         console.error err
         res.send(500, "Could not update the indicator")
 
-      res.send(200, JSON.stringify(indicator))
+      Indicator.findOne(_id: req.params.indicator, (err, indicator) ->
+        if err?
+          console.error err
+          res.send(500, "Could not retrieve the indicator")
+
+        res.send(200, JSON.stringify(indicator))
+      )
   )
 
 exports.destroy = (req, res) ->

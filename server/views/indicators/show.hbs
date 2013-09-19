@@ -10,12 +10,6 @@
   <script src="/js/lib/handlebars.js"></script>
   <script src="/js/lib/diorama.js"></script>
   <script src="/js/application.js"></script>
-
-  <script type="text/javascript">
-    $(document).ready(function(){
-      new Backbone.Controllers.IndicatorshowController({{{ indicatorJSON }}});
-    });
-  </script>
 {{/contentFor}}
 
 <div class="content indicator">
@@ -33,65 +27,6 @@
     </header>
 
     <div class='main-content'>
-      <div id='visualisation'></div>
-      <section class='introduction'>
-        <strong>
-          Sed posuere consectetur est at lobortis. Etiam porta sem
-          malesuada magna mollis euismod. Cras mattis consectetur purus
-          sit amet fermentum. Vivamus sagittis lacus vel augue laoreet
-          rutrum faucibus dolor auctor. Maecenas sed diam eget risus
-          varius blandit sit amet non magna. Vivamus sagittis lacus vel
-          augue laoreet rutrum faucibus dolor auctor. Etiam porta sem
-          malesuada magna mollis euismod.
-        </strong>
-      </section>
-
-      <section>
-        <h2>Guidance for use</h2>
-        <p>Integer posuere erat a ante venenatis dapibus posuere velit
-        aliquet. Sed posuere consectetur est at lobortis. Cum sociis
-        natoque penatibus et magnis dis parturient montes, nascetur
-        ridiculus mus. Sed posuere consectetur est at lobortis.</p>
-      </section>
-
-      <section>
-        <h2>Rationale</h2>
-        <p>Maecenas sed diam eget risus varius blandit sit amet non
-        magna. Cras justo odio, dapibus ac facilisis in, egestas eget
-        quam. Cum sociis natoque penatibus et magnis dis parturient
-        montes, nascetur ridiculus mus. Donec sed odio dui.</p>
-      </section>
-
-      <section>
-        <h2>{{{t "indicator/narratives"}}}</h2>
-        <ul class="indicator-narratives">
-          <li>
-            <header>
-              <small><i class="icon-time append"></i></a>Last updated on 1st of April, 18:23 by Dr. Anybody</small>
-              <h2>
-                Narrative 1
-              </h2>
-              <h4>{{indicator.title}}</h4>
-            </header>
-            <p>
-              This is the description of the narrative.
-            </p>
-          </li>
-          <li>
-            <header>
-              <small><i class="icon-time append"></i></a>Last updated on 1st of April, 18:23 by Dr. Anybody</small>
-              <h2>
-                Narrative 2
-              </h2>
-              <h4>{{indicator.title}}</h4>
-            </header>
-            <p>
-              This is the description of the narrative.
-            </p>
-          </li>
-        </ul>
-        </ul>
-      </section>
     </div>
 
     <aside class="content-sidebar metadata">
@@ -143,3 +78,8 @@
   </article>
 </div>
 
+<script type="text/javascript">
+  i18n.onReady(function() {
+    new Backbone.Controllers.IndicatorController({{{ indicatorJSON }}});
+  });
+</script>

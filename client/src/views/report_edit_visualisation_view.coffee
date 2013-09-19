@@ -2,7 +2,7 @@ window.Backbone ||= {}
 window.Backbone.Views ||= {}
 
 class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.NestingView
-  className: 'modal report-edit-visualisation'
+  className: 'modal edit-visualisation'
   template: Handlebars.templates['report_edit_visualisation.hbs']
 
   events:

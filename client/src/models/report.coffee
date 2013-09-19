@@ -13,7 +13,7 @@ class window.Backbone.Models.Report extends Backbone.RelationalModel
     relatedModel: 'Backbone.Models.Section'
     collectionType: 'Backbone.Collections.SectionCollection'
     reverseRelation:
-      key: 'report'
+      key: 'parent'
       includeInJSON: false
   ]
 

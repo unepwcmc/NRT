@@ -14,13 +14,20 @@
       Last updated on 1st of April, 18:23 by Dr. Anybody
     </small>
 
-    {{#if sectionIndicator}}
-      <h2>{{sectionIndicator.title}}</h2>
-    {{else}}
+    {{#if isIndicatorPage}}
       <h2>
         {{addSubViewTo thisView "TextEditView" type='input'
           attributeName='title' model=sectionModel}}
       </h2>
+    {{else}}
+      {{#if indicator}}
+        <h2>{{indicator.title}}</h2>
+      {{else}}
+        <h2>
+          {{addSubViewTo thisView "TextEditView" type='input'
+            attributeName='title' model=sectionModel}}
+        </h2>
+      {{/if}}
     {{/if}}
   {{/if}}
 
@@ -29,7 +36,7 @@
       <div class="section-actions add-narrative">
         {{{t "report/section/type_narrative_indicator"}}}
 
-        {{#if section.indicator}}
+        {{#if indicator}}
           {{{t "report/section/or"}}}
           <button class="add-visualisation">
             <i class="icon-table append"></i>{{{t "report/section/add_vis"}}}
@@ -41,7 +48,7 @@
         {{addSubViewTo thisView "TextEditView" type='input'
           attributeName='content' model=narrative}}
         {{#unless visualisation}}
-          {{#if section.indicator }}
+          {{#if indicator }}
             <div class="section-actions add-narrative">
               <button class="add-visualisation">
                 <i class="icon-table append"></i>{{{t "report/section/add_vis"}}}
@@ -52,7 +59,7 @@
       {{else}}
         <div class="section-actions add-narrative">
           {{{t "report/section/type_narrative"}}}
-          {{#if section.indicator}}
+          {{#if indicator}}
             {{{t "report/section/indicator"}}}
           {{else}}
             {{{t "report/section/section"}}}
