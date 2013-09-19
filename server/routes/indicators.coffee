@@ -14,8 +14,7 @@ exports.index = (req, res) ->
 
 exports.show = (req, res) ->
   Indicator
-    .findOne(_id: req.params.id)
-    .exec( (err, indicator)->
+    .findFatModel(_id: req.params.id, (err, indicator) ->
       if err?
         console.error err
         return res.render(500, "Error fetching the indicator")

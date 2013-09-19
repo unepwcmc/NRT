@@ -17,6 +17,14 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
 
   initialize: (options) ->
     @section = options.section
+
+    # Ideally refactored in to two separate views for Reports and
+    # Indicators, and Themes
+    parent = @section.get('parent')
+    @isIndicatorPage = parent? && parent instanceof Backbone.Models.Indicator
+    if @isIndicatorPage
+      @section.set('indicator', @section.get('parent'))
+
     @section.bind('change', @render)
     @render()
 
@@ -27,10 +35,13 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     if @section.get('indicator')?
       sectionIndicatorJSON = @section.get('indicator').toJSON()
 
+    parent = @section.get('parent')
+
     @$el.html(@template(
       thisView: @
       section: @section.toJSON()
-      sectionIndicator: sectionIndicatorJSON
+      indicator: sectionIndicatorJSON
+      isIndicatorPage: @isIndicatorPage
       sectionModel: @section
       noContent: noContent
       noTitleOrIndicator: !@section.hasTitleOrIndicator()

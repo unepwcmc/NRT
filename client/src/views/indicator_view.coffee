@@ -25,6 +25,7 @@ class Backbone.Views.IndicatorView extends Backbone.Diorama.NestingView
   addSection: =>
     if @indicator.get('_id')?
       @indicator.get('sections').add({})
+      @render()
     else
       @indicator.save(null,
         success: @addSection
