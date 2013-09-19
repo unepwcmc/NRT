@@ -66,7 +66,7 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
 
     @set('filters', filters)
 
-  @visualisationTypes: ['BarChart', 'Map', 'Table']
+  @visualisationTypes: ['BarChart', 'LineChart', 'Map', 'Table']
   
 #For backbone relational
 Backbone.Models.Visualisation.setup()

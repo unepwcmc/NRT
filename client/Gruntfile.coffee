@@ -79,6 +79,7 @@ module.exports = (grunt) ->
           'dist/css/about.css': 'src/sass/about.scss'
           'dist/css/indicator.css': 'src/sass/indicator.scss'
           'dist/css/rtl_overrides.css': 'src/sass/rtl_overrides.scss'
+          'dist/css/charts.css': 'src/sass/_charts.scss'
 
     watch:
       files: ['src/**/*', 'test/src/**/*'],
