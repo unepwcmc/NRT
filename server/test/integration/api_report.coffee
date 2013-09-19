@@ -95,25 +95,22 @@ test('GET report returns full nested sections', (done) ->
 test('PUT nesting a section in a report with existing sections', (done) ->
   createReportWithSection = (err, results) ->
     section = results[0]
-    newSection = results[1]
 
     helpers.createReport(
       {title: "A report", sections: [section]},
       (report) ->
         updateAttributes = report.toObject()
-        updateAttributes.sections.push newSection.toObject()
+        updateAttributes.sections.push {title: 'hi'}
 
         request.put({
           url: helpers.appurl("/api/reports/#{report.id}")
           json: true
           body: updateAttributes
         }, (err, res, body) ->
-          id = body.id
-
           assert.equal res.statusCode, 200
           assert.lengthOf body.sections, 2
 
-          assert.equal body.sections[1]._id, newSection._id
+          assert.property body.sections[1], '_id'
 
           done()
         )

@@ -93,11 +93,15 @@ test('DELETE indicator', (done) ->
 test('PUT indicator', (done) ->
   helpers.createIndicator( (err, indicator) ->
     new_title = "Updated title"
+    section_title = "OHAI little brother"
     request.put({
       url: helpers.appurl("/api/indicators/#{indicator.id}")
       json: true
       body:
         title: new_title
+        sections: [
+          title: section_title
+        ]
     }, (err, res, body) ->
       id = body.id
 
@@ -107,6 +111,11 @@ test('PUT indicator', (done) ->
         .findOne(id)
         .exec( (err, indicator) ->
           assert.equal indicator.title, new_title
+
+          assert.lengthOf indicator.sections, 1
+          assert.strictEqual indicator.sections[0].title, section_title
+          assert.property indicator.sections[0], '_id'
+
           done()
         )
     )
@@ -222,6 +231,28 @@ test('GET indicator/:id/data with a \'min\' filter filters the result', (done) -
           [theData[1]]
         ), "Expected \n#{body.results} \nto equal \n#{[theData[1]]}")
         assert.property(body, 'bounds')
+
+        done()
+      )
+    )
+  )
+)
+
+test('GET indicator/:id with nested sections returns sections', (done) ->
+  helpers.createSection( {title: "A title"}, (err, section) ->
+    helpers.createIndicator({sections: [section]}, (err, indicator) ->
+      request.get({
+        url: helpers.appurl("api/indicators/#{indicator.id}")
+        json: true
+      }, (err, res, body) ->
+        assert.equal res.statusCode, 200
+
+        returnedIndicator = body
+        assert.equal returnedIndicator._id, indicator.id
+        assert.equal returnedIndicator.content, indicator.content
+
+        assert.property returnedIndicator, 'sections'
+        assert.lengthOf returnedIndicator.sections, 1
 
         done()
       )

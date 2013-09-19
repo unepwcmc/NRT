@@ -64,7 +64,7 @@ test('get "fat" report with all related children by report ID', (done) ->
             {section: section._id}
             (err, narrative) ->
               helpers.createReport( {sections: [section]}, (report) ->
-                Report.findFatReport(report._id, (err, fatReport) ->
+                Report.findFatModel(report._id, (err, fatReport) ->
                   assert.equal fatReport._id, report.id
 
                   reloadedSection = fatReport.sections[0]
@@ -96,7 +96,7 @@ test('get "fat" report with no related children by report ID', (done) ->
 
   helpers.createSection((err, section) ->
     helpers.createReport( {sections: [section]}, (report) ->
-      Report.findFatReport(report._id, (err, fatReport) ->
+      Report.findFatModel(report._id, (err, fatReport) ->
         assert.equal fatReport._id, report.id
 
         reloadedSection = fatReport.sections[0]
