@@ -302,3 +302,25 @@ test('get "fat" indicator with all related children by indicator ID', (done) ->
     )
   )
 )
+
+test('saving an indicator with section attributes should assign that section an _id', (done) ->
+  helpers.createIndicator(
+    title: "New indicator"
+    sections: [
+      title: "New section"
+    ]
+  , (err, indicator) ->
+    if err?
+      console.error err
+      done()
+
+    assert.strictEqual(
+      indicator.sections[0].title,
+      "New section",
+      "Expected #{indicator.sections[0]}'s title to be 'New Section'"
+    )
+    assert.property indicator.sections[0], '_id'
+    done()
+  )
+
+)
