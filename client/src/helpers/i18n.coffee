@@ -12,6 +12,8 @@ i18n.init(
   resGetPath: '/locales/__lng__.json',
   cookieName: 'nrt_locale'
 ).done(() ->
+  return if i18n.isReady
+
   i18n.isReady = true
 
   for callback in i18n.readyCallbacks

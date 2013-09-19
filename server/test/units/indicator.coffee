@@ -248,3 +248,79 @@ test('.calculateIndicatorDataBounds should return the upper and lower bounds of 
         )
   )
 )
+
+test('.create with nested section', (done) ->
+  indicator_attributes =
+    sections: [{
+      title: 'dat title'
+    }]
+
+  indicator = new Indicator(indicator_attributes)
+  indicator.save((err, indicator) ->
+    if err?
+      console.error err
+      throw 'indicator saving failed'
+      done()
+
+    assert.strictEqual indicator.title, indicator_attributes.title
+    assert.strictEqual indicator.sections[0].title, indicator_attributes.sections[0].title
+    done()
+  )
+)
+
+test('get "fat" indicator with all related children by indicator ID', (done) ->
+  helpers.createSection({
+    title: 'A section'
+  }, (err, section) ->
+    helpers.createVisualisation(
+      {section: section._id},
+      (err, visualisation) ->
+        helpers.createNarrative(
+          {section: section._id}
+          (err, narrative) ->
+            helpers.createIndicator({
+              sections: [section]
+            }, (err, indicator) ->
+              Indicator.findFatModel(indicator._id, (err, fatIndicator) ->
+                assert.equal fatIndicator._id, indicator.id
+
+                reloadedSection = fatIndicator.sections[0]
+                assert.equal reloadedSection._id, section.id
+
+                assert.property reloadedSection, 'visualisation'
+                assert.equal visualisation._id.toString(),
+                  reloadedSection.visualisation._id.toString()
+
+                assert.property reloadedSection, 'narrative'
+                assert.equal narrative._id.toString(),
+                  reloadedSection.narrative._id.toString()
+
+                done()
+              )
+            )
+        )
+    )
+  )
+)
+
+test('saving an indicator with section attributes should assign that section an _id', (done) ->
+  helpers.createIndicator(
+    title: "New indicator"
+    sections: [
+      title: "New section"
+    ]
+  , (err, indicator) ->
+    if err?
+      console.error err
+      done()
+
+    assert.strictEqual(
+      indicator.sections[0].title,
+      "New section",
+      "Expected #{indicator.sections[0]}'s title to be 'New Section'"
+    )
+    assert.property indicator.sections[0], '_id'
+    done()
+  )
+
+)
