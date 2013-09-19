@@ -31,10 +31,6 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
       type: Backbone.HasOne
       relatedModel: 'Backbone.Models.Indicator'
       includeInJSON: '_id'
-      reverseRelation:
-        key: 'sections'
-        includeInJSON: false
-        type: Backbone.HasMany
   ]
 
   hasTitleOrIndicator: ->
@@ -45,10 +41,14 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
 
   # Don't save the section itself, save the whole report
   save: (attributes, options) ->
-    if @get('report')?
-      @get('report').save(section: attributes, options)
+    if arguments.length == 1
+      options = attributes
+      attribtues = {}
+
+    if @get('parent')?
+      @get('parent').save(section: attributes, options)
     else
-      throw "You're trying to save a section without a parent report, this shouldn't happen"
+      throw "You're trying to save a section without a parent parent, this shouldn't happen"
 
 #For backbone relational
 Backbone.Models.Section.setup()

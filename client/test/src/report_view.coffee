@@ -61,7 +61,7 @@ test("If report cover image doesn't exist, can see no image", ->
 
   view = createAndShowReportViewForReport(report)
 
-  assert $('#test-container').find('header').length == 0
+  assert $('#test-container').find('header.report-header').length == 0
 
   view.close()
 )
@@ -86,7 +86,7 @@ test(".addSection adds a section to the report", ->
   reportView.addSection()
 
   assert.equal report.get('sections').length, 1
-  assert.strictEqual report.get('sections').at(0).get('report').get('cid'), report.get('cid')
+  assert.strictEqual report.get('sections').at(0).get('parent').get('cid'), report.get('cid')
   assert.equal report.get('sections').at(0).get('type'), "Section"
 )
 
@@ -99,7 +99,7 @@ test(".addChapter adds a section with type 'chapter' to the report", ->
   reportView.addChapter()
 
   assert.equal report.get('sections').length, 1
-  assert.strictEqual report.get('sections').at(0).get('report').get('cid'), report.get('cid')
+  assert.strictEqual report.get('sections').at(0).get('parent').get('cid'), report.get('cid')
   assert.equal report.get('sections').at(0).get('type'), "Chapter"
 )
 
