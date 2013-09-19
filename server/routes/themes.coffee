@@ -13,8 +13,7 @@ exports.index = (req, res) ->
 
 exports.show = (req, res) ->
   Theme
-    .findOne(_id: req.params.id)
-    .exec( (err, theme)->
+    .findFatModel(_id: req.params.id, (err, theme) ->
       if err?
         console.error err
         return res.render(500, "Error fetching the theme")
