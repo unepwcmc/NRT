@@ -7,6 +7,11 @@ Indicator = require('./indicator').model
 
 themeSchema = mongoose.Schema(
   title: String
+  sections: [mongoose.Schema(
+    title: String
+    type: String
+    indicator: {type: mongoose.Schema.Types.ObjectId, ref: 'Indicator'}
+  )]
   externalId: Number
 )
 
