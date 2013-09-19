@@ -24,13 +24,13 @@ exports.createApp = ->
   app.set "views", __dirname + "/views"
 
   app.use express.favicon()
-  app.use express.logger("dev")
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use express.cookieParser("your secret here")
   app.use express.session()
 
-  app.use i18n.init
+  require('./initializers/logging')(app)
+
   require('./initializers/i18n')(app)
 
   app.use passport.initialize()
