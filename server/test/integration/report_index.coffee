@@ -28,7 +28,7 @@ test("Can navigate to Dashboard, Reports, and Indicators", (done) ->
     url: appurl('/reports')
   }, (err, res, body) ->
     assert.match body, new RegExp(".*href=\"/reports\".*")
-    assert.match body, new RegExp(".*href=\"/indicators\".*")
+    assert.match body, new RegExp(".*href=\"/themes\".*")
     assert.match body, new RegExp(".*href=\"/dashboard\".*")
 
     assert.equal res.statusCode, 200
