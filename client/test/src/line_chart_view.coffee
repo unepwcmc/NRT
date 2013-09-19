@@ -51,6 +51,6 @@ test('when initialised with a visualisation with no data, it fetches the data', 
 
   server.restore()
 
-  # Uncomment to hide the chart in the test page
-  #view.close()
+  # Comment to show the chart in the test page
+  view.close()
 )

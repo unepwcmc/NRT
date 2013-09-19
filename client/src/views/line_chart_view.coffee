@@ -26,7 +26,9 @@ class Backbone.Views.LineChartView extends Backbone.View
     data = @visualisation.get('data').results
     @selection.data [data]
     @lineChart.chart.width @width
-    @selection.call @lineChart.chart, @barColor
+    @lineChart.chart.colour "SteelBlue"
+    @lineChart.chart.areaColour "WhiteSmoke "
+    @selection.call @lineChart.chart
 
   onClose: ->
     @stopListening()

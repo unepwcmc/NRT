@@ -16,6 +16,8 @@ nrtViz.lineChart  = (conf={}) ->
     format: d3.format(".0")
     xScale: d3.scale.linear() #TODO?: d3.time.scale()
     yScale: d3.scale.linear()
+    colour: "LightSteelBlue"
+    areaColour: "Lavender"
   }
 
   margin = conf.margin
@@ -25,13 +27,12 @@ nrtViz.lineChart  = (conf={}) ->
     conf.margin.top
   xKey = conf.xKey
   yKey = conf.yKey
-  # TODO: enable configurations
+  # TODO: enable axis configurations
   xAxis = d3.svg.axis().scale(conf.xScale).tickSize(-height)
-    .tickSubdivide(0).tickFormat(d3.format(""))
+    .tickFormat(d3.format(""))
   yAxis = d3.svg.axis().scale(conf.yScale).orient("left")
     .tickFormat(conf.format)
 
-  # An area generator, for the light fill.
   areaGenerator = d3.svg.area().interpolate("monotone")
   .x((d) ->
     conf.xScale d[xKey]
@@ -41,7 +42,6 @@ nrtViz.lineChart  = (conf={}) ->
     conf.yScale d[yKey]
   )
 
-  # A line generator, for the dark stroke.
   lineGenerator = d3.svg.line().interpolate("monotone")
   .x((d) ->
     conf.xScale d[xKey]
@@ -52,6 +52,7 @@ nrtViz.lineChart  = (conf={}) ->
   setSvgDomElement = (selection, data) ->
     svg = selection.selectAll("svg").data data
     svg.enter().append("svg")
+      .attr("class", "line-chart")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     
@@ -83,41 +84,40 @@ nrtViz.lineChart  = (conf={}) ->
     selection
 
   setAreaDomElement = (selection, data) ->
-    # TODO: do we need entry and exit points?
-    #area = selection.selectAll('path.area').data [data]
+    # TODO: would be nice to have entry and exit points.
     selection.append('path')
+      .datum(data)
       .attr("class", "area")
       .attr("clip-path", "url(#clip)")
-      .attr("d", areaGenerator(data))
-
+      .attr("d", areaGenerator)
+      .style("fill", conf.areaColour)
+      
   setLineDomElement = (selection, data) ->
     selection.append('path')
       .datum(data)
       .attr("class", "line")
-      #.attr("clip-path", "url(#clip)") # TODO
+      .attr("clip-path", "url(#clip)")
       .attr("d", lineGenerator)
+      .style("stroke", conf.colour)
 
 
   chart = (selection) ->
     xScale = conf.xScale
     yScale = conf.yScale
-    # rangeRoundBands [min, max], padding, outer-padding
     xScale.range [0, width]
-    #xScale.rangeRoundBands [0, width], .1, .1
     yScale.range [height, 0]
     # Equivalent to: selection.node().__data__ 
     data = selection.datum()
     # Data input domains
     xScale.domain [data[0][xKey], data[data.length - 1][xKey]]
     xAxis.tickValues _.map(data, (d) -> d[xKey])
-
-    yScale.domain([ 0, d3.max(data, (d) -> d[yKey]) ])#.nice()
+    yScale.domain([ 0, d3.max(data, (d) -> d[yKey]) ]).nice()
     # svg generators
     svg = setSvgDomElement selection, [data]
     gOuter = setOuterGDomElement svg, [data]
-    #svg = setClipPath svg  # TODO
+    svg = setClipPath svg
+    setAreaDomElement gOuter, data
     gAxis = setGAxisDomElement gOuter, [data]
-    #setAreaDomElement svg, [data] # TODO
     setLineDomElement gOuter, data
 
 
@@ -129,6 +129,16 @@ nrtViz.lineChart  = (conf={}) ->
   chart.height = (c) ->
     return height  unless arguments.length
     height = c - conf.margin.top - conf.margin.bottom
+    chart
+
+  chart.colour = (c) ->
+    return colour  unless arguments.length
+    colour = conf.colour = c
+    chart
+
+  chart.areaColour = (c) ->
+    return areaColour  unless arguments.length
+    areaColour = conf.areaColour = c
     chart
 
   {

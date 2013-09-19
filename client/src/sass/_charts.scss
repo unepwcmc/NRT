@@ -11,6 +11,10 @@
 .x.axis path {
   display: none; }
 
+.line-chart .y.axis path.domain {
+  display: none;
+}
+
 text {
   fill: #34495E; }
 
@@ -22,7 +26,7 @@ path.line {
 }
 
 path.area {
-  fill: #e7e7e7;
+  fill: Lavender;
 }
 
 .axis {
@@ -30,7 +34,7 @@ path.area {
 }
 
 .x.axis line {
-  stroke: #eee;
+  stroke: #fff;
 }
 
 .x.axis .minor {
