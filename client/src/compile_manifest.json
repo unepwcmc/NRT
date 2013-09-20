@@ -24,6 +24,7 @@
   "src/views/report_view.coffee",
   "src/views/report_presentation_view.coffee",
   "src/views/text_edit_view.coffee",
+  "src/views/text_editing_view.coffee",
   "src/views/narrative_view.coffee",
   "src/views/visualisation_view.coffee",
   "src/views/report_edit_visualisation_view.coffee",

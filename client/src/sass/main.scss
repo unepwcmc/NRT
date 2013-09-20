@@ -58,9 +58,15 @@ small {
 }
 .content-text-field.editing {
   cursor: text;
-  border: 1px dotted $grey;
+  border: 1px dotted $lightGrey;
   padding: 3px;
   border-radius: 5px;
+}
+
+.text-editing-view {
+  position: fixed;
+  z-index: 1000;
+  background-color: white;
 }
 
 button,

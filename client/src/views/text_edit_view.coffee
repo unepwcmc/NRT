@@ -10,10 +10,7 @@ class Backbone.Views.TextEditView extends Backbone.View
     'contenteditable': 'true'
 
   events:
-    "click": "replaceContent"
-    "blur": "delaySave"
-    "blur": "delayedRender"
-    "keyup"  : "delaySave"
+    "click": "showEditingView"
 
   initialize: (options) ->
     @model = options.model
@@ -31,6 +28,13 @@ class Backbone.Views.TextEditView extends Backbone.View
     ))
 
     return @
+
+  showEditingView: ->
+    @editingView = new Backbone.Views.TextEditingView(
+      tagName: @tagName
+      position: @$el.offset()
+    )
+    @$el.append(@editingView.el)
 
   replaceContent: ->
     unless @$el.hasClass('editing')
