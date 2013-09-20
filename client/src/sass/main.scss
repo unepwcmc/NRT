@@ -54,6 +54,13 @@ small {
   width: 100%;
   padding-bottom: 10px;
   resize: none;
+  cursor: pointer;
+}
+.content-text-field.editing {
+  cursor: text;
+  border: 1px dotted $grey;
+  padding: 3px;
+  border-radius: 5px;
 }
 
 button,

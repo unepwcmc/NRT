@@ -25,6 +25,7 @@ class Backbone.Views.TextEditView extends Backbone.View
   render: (options = {}) =>
     content = @model.get(@attributeName) || i18n.t("report/type_here")
 
+    @$el.removeClass('editing')
     @$el.html(@template(
       content: content
     ))
@@ -32,9 +33,11 @@ class Backbone.Views.TextEditView extends Backbone.View
     return @
 
   replaceContent: ->
-    content = @model.get(@attributeName)
-    content = content.replace(/\n/g, "<br>")
-    @$el.html(content)
+    unless @$el.hasClass('editing')
+      @$el.addClass('editing')
+      content = @model.get(@attributeName)
+      content = content.replace(/\n/g, "<br>")
+      @$el.html(content)
 
   getContent: =>
     content = $('<div>')
