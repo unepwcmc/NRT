@@ -4,6 +4,7 @@ fs = require('fs')
 _ = require('underscore')
 async = require('async')
 Indicator = require('./indicator').model
+sectionNestingModel = require('../mixins/section_nesting_model.coffee')
 
 themeSchema = mongoose.Schema(
   title: String
@@ -14,6 +15,8 @@ themeSchema = mongoose.Schema(
   )]
   externalId: Number
 )
+
+_.extend(themeSchema.statics, sectionNestingModel)
 
 themeSchema.statics.seedData = (callback) ->
   # Seed some themes
@@ -61,16 +64,20 @@ themeSchema.statics.getFatThemes = (callback) ->
       )
   )
 
-themeSchema.methods.getIndicators = (callback) ->
-  Indicator.find(theme: @externalId)
+themeSchema.statics.getIndicatorsByTheme = (themeId, callback) ->
+  Indicator.find(theme: themeId)
     .sort(_id: 1)
     .exec( (err, indicators) ->
       if err?
         console.error(err)
         return callback(err)
+
       callback(err, indicators)
     )
 
+themeSchema.methods.getIndicators = (callback) ->
+  Theme = require('./theme.coffee').model
+  Theme.getIndicatorsByTheme(@externalId, callback)
 
 Theme = mongoose.model('Theme', themeSchema)
 
