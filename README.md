@@ -8,8 +8,6 @@
 * Install mongodb locally (on Mac with [Homebrew](http://brew.sh/) installed, `brew install mongodb`) and start it with
   `mongod`.
 
-Most secrets you need are [here](https://docs.google.com/a/peoplesized.com/document/d/1dYMO3PJhRlTDQ2BEUUOcLwqX0IfJ5UP_UYyfQllnXeQ/).
-
 ## Running the application
 
 #### Start the server
