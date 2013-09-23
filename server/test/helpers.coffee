@@ -132,7 +132,7 @@ exports.createSection = (attributes, callback) ->
     callback(null, section)
 
 exports.createIndicatorModels = (attributes) ->
-  successCallback = errorCallback = promises = null
+  deferred = Q.defer()
 
   createFunctions = _.map(attributes, (attributeSet) ->
     return (callback) ->
@@ -149,20 +149,12 @@ exports.createIndicatorModels = (attributes) ->
     createFunctions,
     (error, results) ->
       if error?
-        errorCallback(error, results) if errorCallback?
+        deferred.reject(new Error(err))
       else
-        successCallback(results) if successCallback?
+        deferred.resolve(results)
   )
 
-  promises = {
-    success: (callback)->
-      successCallback = callback
-      return promises
-    error: (callback)->
-      errorCallback = callback
-      return promises
-  }
-  return promises
+  return deferred.promise
 
 exports.createTheme = (attributes) ->
   deferred = Q.defer()

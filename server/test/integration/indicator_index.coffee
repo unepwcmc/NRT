@@ -27,7 +27,9 @@ test("With a series of indicators, I should see their titles", (done) ->
       theme: themes[1].externalId
     }]
 
-    helpers.createIndicatorModels(indicatorAttributes).success((indicators)->
+    helpers.createIndicatorModels(
+      indicatorAttributes
+    ).then( (indicators)->
       request.get {
         url: helpers.appurl('/indicators')
       }, (err, res, body) ->
@@ -40,7 +42,7 @@ test("With a series of indicators, I should see their titles", (done) ->
           assert.match body, new RegExp(".*#{indicator.title}.*")
 
         done()
-    ).error((error) ->
+    ).fail( (error) ->
       console.error error
       throw "Unable to create themes"
     )
