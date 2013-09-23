@@ -135,3 +135,8 @@ For example, run your app as so:
 #### Deleting a user
 
     curl -i -X DELETE http://<domain>/users/<id>\?token\=my-very-secret-token
+
+
+## Production
+
+WCMC team should already have access to [this document](https://docs.google.com/a/peoplesized.com/document/d/1dYMO3PJhRlTDQ2BEUUOcLwqX0IfJ5UP_UYyfQllnXeQ/)
