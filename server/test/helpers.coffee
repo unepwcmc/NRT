@@ -4,6 +4,7 @@ url = require('url')
 mongoose = require('mongoose')
 _ = require('underscore')
 async = require('async')
+Q = require('q')
 
 Report = require('../models/report').model
 Indicator = require('../models/indicator').model
@@ -163,21 +164,23 @@ exports.createIndicatorModels = (attributes) ->
   }
   return promises
 
-exports.createTheme = (attributes, callback) ->
-  if arguments.length == 1
-    callback = attributes
-    attributes = undefined
+exports.createTheme = (attributes) ->
+  deferred = Q.defer()
 
   theme = new Theme(attributes || title: "new theme")
 
   theme.save (err, theme) ->
     if err?
-      throw 'could not save theme'
+      deferred.reject(new Error(err))
 
-    callback(null, theme)
+    deferred.resolve(theme)
+
+  return deferred.promise
 
 
 exports.createThemesFromAttributes = (attributes, callback) ->
+  deferred = Q.defer()
+
   themeCreateFunctions = []
   for attribute in attributes
     themeCreateFunctions.push (->
@@ -186,4 +189,13 @@ exports.createThemesFromAttributes = (attributes, callback) ->
         Theme.create(theAttributes, cb)
     )()
 
-  async.parallel(themeCreateFunctions, callback)
+  async.parallel(
+    themeCreateFunctions,
+    (err, themes) ->
+      if err?
+        deffered.reject(new Error(err))
+
+      deferred.resolve(themes)
+  )
+
+  return deferred.promise
