@@ -3,7 +3,9 @@ request = require('request')
 fs = require('fs')
 _ = require('underscore')
 async = require('async')
+Q = require('q')
 IndicatorData = require('./indicator_data').model
+Page = require('./page').model
 SectionSchema = require('./section').schema
 sectionNestingModel = require('../mixins/section_nesting_model.coffee')
 
