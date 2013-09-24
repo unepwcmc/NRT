@@ -18,11 +18,9 @@ test("With a series of themes and indicators, I should see their titles", (done)
     externalId: 2
   }]
 
-  helpers.createThemesFromAttributes(themeAttributes, (err, themes) ->
-    if err
-      console.error err
-      throw new Error(err)
-    
+  helpers.createThemesFromAttributes(
+    themeAttributes
+  ).then( (themes) ->
     indicatorAttributes = [{
       title: "I am an indicator of theme 1"
       theme: themes[0].externalId
@@ -31,8 +29,9 @@ test("With a series of themes and indicators, I should see their titles", (done)
       theme: themes[1].externalId
     }]
 
-    helpers.createIndicatorModels(indicatorAttributes).success((indicators)->
-
+    helpers.createIndicatorModels(
+      indicatorAttributes
+    ).then( (indicators)->
       request.get {
         url: helpers.appurl('/themes')
       }, (err, res, body) ->
@@ -45,10 +44,12 @@ test("With a series of themes and indicators, I should see their titles", (done)
           assert.match body, new RegExp(".*#{indicator.title}.*")
 
         done()
-      ).error((error) ->
-        console.error error
-        throw "Unable to create themes"
-      )
-
+    ).fail((error) ->
+      console.error error
+      throw "Unable to create themes"
     )
+  ).fail( (err) ->
+    console.error err
+    throw new Error(err)
   )
+)

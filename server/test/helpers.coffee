@@ -4,6 +4,7 @@ url = require('url')
 mongoose = require('mongoose')
 _ = require('underscore')
 async = require('async')
+Q = require('q')
 
 Report = require('../models/report').model
 Indicator = require('../models/indicator').model
@@ -131,7 +132,7 @@ exports.createSection = (attributes, callback) ->
     callback(null, section)
 
 exports.createIndicatorModels = (attributes) ->
-  successCallback = errorCallback = promises = null
+  deferred = Q.defer()
 
   createFunctions = _.map(attributes, (attributeSet) ->
     return (callback) ->
@@ -148,36 +149,30 @@ exports.createIndicatorModels = (attributes) ->
     createFunctions,
     (error, results) ->
       if error?
-        errorCallback(error, results) if errorCallback?
+        deferred.reject(new Error(err))
       else
-        successCallback(results) if successCallback?
+        deferred.resolve(results)
   )
 
-  promises = {
-    success: (callback)->
-      successCallback = callback
-      return promises
-    error: (callback)->
-      errorCallback = callback
-      return promises
-  }
-  return promises
+  return deferred.promise
 
-exports.createTheme = (attributes, callback) ->
-  if arguments.length == 1
-    callback = attributes
-    attributes = undefined
+exports.createTheme = (attributes) ->
+  deferred = Q.defer()
 
   theme = new Theme(attributes || title: "new theme")
 
   theme.save (err, theme) ->
     if err?
-      throw 'could not save theme'
+      deferred.reject(new Error(err))
 
-    callback(null, theme)
+    deferred.resolve(theme)
+
+  return deferred.promise
 
 
 exports.createThemesFromAttributes = (attributes, callback) ->
+  deferred = Q.defer()
+
   themeCreateFunctions = []
   for attribute in attributes
     themeCreateFunctions.push (->
@@ -186,4 +181,13 @@ exports.createThemesFromAttributes = (attributes, callback) ->
         Theme.create(theAttributes, cb)
     )()
 
-  async.parallel(themeCreateFunctions, callback)
+  async.parallel(
+    themeCreateFunctions,
+    (err, themes) ->
+      if err?
+        deffered.reject(new Error(err))
+
+      deferred.resolve(themes)
+  )
+
+  return deferred.promise

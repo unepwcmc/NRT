@@ -32,7 +32,7 @@ test('POST create', (done) ->
 )
 
 test("GET show", (done) ->
-  helpers.createTheme( (err, theme) ->
+  helpers.createTheme().then( (theme) ->
     request.get({
       url: helpers.appurl("api/themes/#{theme.id}")
       json: true
@@ -45,11 +45,14 @@ test("GET show", (done) ->
 
       done()
     )
+  ).fail( (err) ->
+    console.error err
+    throw new Error(err)
   )
 )
 
 test('GET index', (done) ->
-  async.series([helpers.createTheme, helpers.createTheme], (err, themes) ->
+  helpers.createThemesFromAttributes([{},{}]).then( (themes) ->
     request.get({
       url: helpers.appurl("api/themes")
       json: true
@@ -69,11 +72,14 @@ test('GET index', (done) ->
       assert.deepEqual jsonTitles, themeTitles
       done()
     )
+  ).fail((err) ->
+    console.error err
+    throw new Error(err)
   )
 )
 
 test('DELETE theme', (done) ->
-  helpers.createTheme( (err, theme) ->
+  helpers.createTheme().then( (theme) ->
     request.del({
       url: helpers.appurl("api/themes/#{theme.id}")
       json: true
@@ -86,11 +92,14 @@ test('DELETE theme', (done) ->
           done()
       )
     )
+  ).fail( (err) ->
+    console.error err
+    throw new Error(err)
   )
 )
 
 test('PUT theme', (done) ->
-  helpers.createTheme( (err, theme) ->
+  helpers.createTheme().then( (theme) ->
     new_title = "Updated title"
     section_title = "OHAI little brother"
     request.put({
@@ -118,11 +127,14 @@ test('PUT theme', (done) ->
           done()
         )
     )
+  ).fail( (err) ->
+    console.error err
+    throw new Error(err)
   )
 )
 
 test('PUT theme does not fail when an _id is given', (done) ->
-  helpers.createTheme( (err, theme) ->
+  helpers.createTheme().then( (theme) ->
     new_title = "Updated title"
     request.put({
       url: helpers.appurl("/api/themes/#{theme.id}")
@@ -142,12 +154,15 @@ test('PUT theme does not fail when an _id is given', (done) ->
           done()
         )
     )
+  ).fail( (err) ->
+    console.error err
+    throw new Error(err)
   )
 )
 
 test('GET theme/:id with nested sections returns sections', (done) ->
   helpers.createSection( {title: "A title"}, (err, section) ->
-    helpers.createTheme({sections: [section]}, (err, theme) ->
+    helpers.createTheme({sections: [section]}).then( (theme) ->
       request.get({
         url: helpers.appurl("api/themes/#{theme.id}")
         json: true
@@ -163,6 +178,9 @@ test('GET theme/:id with nested sections returns sections', (done) ->
 
         done()
       )
+    ).fail( (err) ->
+      console.error err
+      throw new Error(err)
     )
   )
 )
