@@ -12,4 +12,4 @@ module.exports = (app) ->
         {flags: 'a'})
     )
   else
-    app.use express.logger("dev") unless app.get('env') is "test"
+    app.use express.logger("dev")
