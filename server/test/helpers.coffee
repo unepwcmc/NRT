@@ -13,6 +13,7 @@ Visualisation = require('../models/visualisation').model
 Narrative = require('../models/narrative').model
 Section = require('../models/section').model
 Theme = require('../models/theme').model
+Page = require('../models/page').model
 
 before( (done) ->
   app.start 3001, (err, server) ->
@@ -32,7 +33,8 @@ dropDatabase = (connection, done) ->
     Narrative,
     Section,
     Visualisation,
-    Theme
+    Theme,
+    Page
   ]
 
   for model in models
@@ -67,6 +69,19 @@ exports.createReport = (attributes, callback) ->
       throw 'could not save report'
 
     callback(report)
+
+exports.createPage = (attributes) ->
+  deferred = Q.defer()
+
+  page = new Page(attributes || title: "new page")
+
+  page.save (err, page) ->
+    if err?
+      deferred.reject(new Error(err))
+
+    deferred.resolve(page)
+
+  return deferred.promise
 
 exports.createIndicator = (attributes, callback) ->
   if arguments.length == 1
