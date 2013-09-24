@@ -48,68 +48,23 @@ test('.create with nested section', (done) ->
   )
 )
 
-test('get "fat" report with all related children by report ID', (done) ->
-  Report = require('../../models/report.coffee').model
+test('.populatePageAttribute when no page is associated should create a new page', (done) ->
+  helpers.createReport {}, (err, indicator) ->
+    if err?
+      console.error err
+      throw err
 
-  helpers.createIndicator( (err, indicator) ->
-    helpers.createSection({
-      title: 'A section',
-      indicator: indicator
-    }, (err, section) ->
-      helpers.createVisualisation(
-        {section: section._id},
-        (err, visualisation) ->
-
-          helpers.createNarrative(
-            {section: section._id}
-            (err, narrative) ->
-              helpers.createReport( {sections: [section]}, (report) ->
-                Report.findFatModel(report._id, (err, fatReport) ->
-                  assert.equal fatReport._id, report.id
-
-                  reloadedSection = fatReport.sections[0]
-                  assert.equal reloadedSection._id, section.id
-
-                  assert.property reloadedSection, 'indicator'
-                  assert.equal indicator._id.toString(),
-                    reloadedSection.indicator._id.toString()
-
-                  assert.property reloadedSection, 'visualisation'
-                  assert.equal visualisation._id.toString(),
-                    reloadedSection.visualisation._id.toString()
-
-                  assert.property reloadedSection, 'narrative'
-                  assert.equal narrative._id.toString(),
-                    reloadedSection.narrative._id.toString()
-
-                  done()
-                )
-              )
-          )
-      )
+    indicator.populatePageAttribute().then((page) ->
+      console.log page
+      assert.property indicator, 'page'
+      assert.strictEqual indicator.page.parent_id, indicator._id
+      assert.strictEqual indicator.page.parent_type, "Report"
+      done()
+    ).fail((err) ->
+      console.error err
+      throw err
     )
-  )
+    
 )
 
-test('get "fat" report with no related children by report ID', (done) ->
-  Report = require('../../models/report.coffee').model
-
-  helpers.createSection((err, section) ->
-    helpers.createReport( {sections: [section]}, (report) ->
-      Report.findFatModel(report._id, (err, fatReport) ->
-        assert.equal fatReport._id, report.id
-
-        reloadedSection = fatReport.sections[0]
-        assert.equal reloadedSection._id, section.id
-
-        assert.notProperty reloadedSection, 'indicator'
-
-        assert.notProperty reloadedSection, 'visualisation'
-
-        assert.notProperty reloadedSection, 'narrative'
-
-        done()
-      )
-    )
-  )
-)
+test('.populatePageAttribute when a page is associated should get the page')

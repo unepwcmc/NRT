@@ -18,6 +18,9 @@ test('POST create', (done) ->
     json: true
     body: data
   },(err, res, body) ->
+    if err?
+      console.error err
+      throw err
     id = body._id
 
     assert.equal res.statusCode, 201
@@ -25,6 +28,9 @@ test('POST create', (done) ->
     Theme
       .findOne(_id: id)
       .exec( (err, theme) ->
+        if err?
+          console.error err
+          throw err
         assert.equal theme.title, data.title
         done()
       )

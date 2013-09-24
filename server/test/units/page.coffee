@@ -119,3 +119,45 @@ test('get "fat" page with no related children by page ID', (done) ->
     )
   )
 )
+
+test('saving a page with section attributes should assign that section an _id', (done) ->
+  helpers.createPage(
+    title: "New page"
+    sections: [
+      title: "New section"
+    ]
+  ).then( (page) ->
+
+    assert.strictEqual(
+      page.sections[0].title,
+      "New section",
+      "Expected #{page.sections[0]}'s title to be 'New Section'"
+    )
+    assert.property page.sections[0], '_id'
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.create with nested section', (done) ->
+  Page = require('../../models/page.coffee').model
+
+  page_attributes =
+    sections: [{
+      title: 'dat title'
+    }]
+
+  page = new Page(page_attributes)
+  page.save((err, page) ->
+    if err?
+      console.error err
+      throw 'page saving failed'
+      done()
+
+    assert.strictEqual page.title, page_attributes.title
+    assert.strictEqual page.sections[0].title, page_attributes.sections[0].title
+    done()
+  )
+)

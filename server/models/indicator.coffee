@@ -159,6 +159,16 @@ indicatorSchema.statics.calculateCurrentValues = (indicators, callback) ->
       callback(null, indicators)
   )
 
+indicatorSchema.methods.populatePageAttribute = () ->
+  deferred = Q.defer()
+
+  @page = new Page(
+    parent_id: @_id
+    parent_type: "Indicator"
+  )
+  deferred.resolve(@page)
+  return deferred.promise
+
 Indicator = mongoose.model('Indicator', indicatorSchema)
 
 module.exports = {

@@ -6,8 +6,8 @@ sectionNestingModel = require('../mixins/section_nesting_model.coffee')
 
 pageSchema = mongoose.Schema(
   title: String
-  brief: String
-  period: String
+  parent_id: mongoose.Schema.Types.ObjectId
+  parent_type: String
   sections: [Section]
 )
 
