@@ -81,7 +81,7 @@ test("When section has no narrative, I should see the 'add-narrative' element", 
 )
 
 test(".addNarrative creates a narrative record on the section", ->
-  section = new Backbone.Models.Section(id: 12, title: 'title')
+  section = Factory.section()
 
   view = createAndShowSectionViewForSection(section)
 
