@@ -6,9 +6,6 @@ class Backbone.Views.TextEditView extends Backbone.View
 
   className: 'show-content content-text-field'
 
-  attributes:
-    'contenteditable': 'true'
-
   events:
     "click": "showEditingView"
 
@@ -22,7 +19,6 @@ class Backbone.Views.TextEditView extends Backbone.View
   render: (options = {}) =>
     content = @model.get(@attributeName) || i18n.t("report/type_here")
 
-    @$el.removeClass('editing')
     @$el.html(@template(
       content: content
     ))
@@ -30,45 +26,40 @@ class Backbone.Views.TextEditView extends Backbone.View
     return @
 
   showEditingView: ->
-    @editingView = new Backbone.Views.TextEditingView(
-      tagName: @tagName
-      position: @$el.offset()
-    )
-    @$el.append(@editingView.el)
+    unless @editingView?
+      @$el.addClass('editing')
+      @editingView = new Backbone.Views.TextEditingView(
+        tagName: @tagName
+        position: @$el.offset()
+        model: @model
+        attributeName: @attributeName
+      )
+      @setupEditingViewBindings()
+      @$el.append(@editingView.el)
+
+  setupEditingViewBindings: =>
+    @listenTo(@editingView, 'close', @editingFinished)
+    @listenTo(@editingView, 'sizeUpdated', @resizeView)
+
+  editingFinished: =>
+    @$el.removeClass('editing')
+    @editingView = null
+    @saveContent()
+    @render()
 
   replaceContent: ->
-    unless @$el.hasClass('editing')
-      @$el.addClass('editing')
-      content = @model.get(@attributeName)
-      content = content.replace(/\n/g, "<br>")
-      @$el.html(content)
+    content = @model.get(@attributeName)
+    content = content.replace(/\n/g, "<br>")
+    @$el.html(content)
 
-  getContent: =>
-    content = $('<div>')
-      .html(@$el.html())
-    content.html(
-      content.html().replace(/(<br>)|(<br \/>)|(<p>)|(<\/p>)/g, "\r\n")
-    )
-    return content.text()
+  resizeView: (size) =>
+    @$el.css(size)
 
-  delaySave: =>
-    if @startDelayedSave?
-      clearTimeout @startDelayedSave
-
-    @startDelayedSave = setTimeout @saveContent, 2000
-
-  delayedRender: =>
-    if @startDelayedRender?
-      clearTimeout @startDelayedRender
-
-    @startDelayedRender = setTimeout @render, 1500
-
-  saveContent: (event) =>
+  saveContent: =>
     Backbone.trigger 'save', 'saving'
-    @model.set(@attributeName, @getContent())
     saveState = @model.save()
     saveState.done =>
       Backbone.trigger 'save', 'saved'
 
   onClose: ->
-
+    @stopListening()
