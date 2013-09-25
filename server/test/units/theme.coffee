@@ -132,3 +132,49 @@ test('.getIndicators returns all Indicators for given Theme', (done) ->
     throw new Error(err)
   )
 )
+
+test('.populatePageAttribute when no page is associated should create a new page', (done) ->
+  theTheme = null
+  helpers.createTheme()
+    .then( (theme) ->
+      theTheme = theme
+      theme.populatePageAttribute()
+    ).then( (page) ->
+      assert.property theTheme, 'page'
+      assert.strictEqual theTheme.page.parent_id, theTheme._id
+      assert.strictEqual theTheme.page.parent_type, "Theme"
+      done()
+    ).fail((err) ->
+      console.error err
+      throw err
+    )
+)
+
+test('.populatePageAttribute when a page is associated should get the page', (done) ->
+  theTheme = null
+  thePage = null
+
+  helpers.createTheme()
+    .then( (theme) ->
+      theTheme = theme
+
+      helpers.createPage(
+        parent_id: theme._id
+        parent_type: "Theme"
+      )
+    ).then( (page)->
+      thePage = page
+      theTheme.populatePageAttribute()
+    ).then( (populatedPage) ->
+      assert.property theTheme, 'page'
+      assert.strictEqual(
+        theTheme.page._id.toString(),
+        thePage._id.toString()
+      )
+      assert.strictEqual theTheme.page.parent_type, "Theme"
+      done()
+    ).fail( (err) ->
+      console.error err
+      throw new Error(err)
+    )
+)

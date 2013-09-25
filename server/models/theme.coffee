@@ -4,7 +4,9 @@ fs = require('fs')
 _ = require('underscore')
 async = require('async')
 Indicator = require('./indicator').model
+
 sectionNestingModel = require('../mixins/section_nesting_model.coffee')
+pageModel = require('../mixins/page_model.coffee')
 
 themeSchema = mongoose.Schema(
   title: String
@@ -17,6 +19,7 @@ themeSchema = mongoose.Schema(
 )
 
 _.extend(themeSchema.statics, sectionNestingModel)
+_.extend(themeSchema.methods, pageModel)
 
 themeSchema.statics.seedData = (callback) ->
   # Seed some themes
