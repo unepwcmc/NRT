@@ -264,29 +264,28 @@ test('.populatePageAttribute when no page is associated should create a new page
       console.error err
       throw err
     )
-    
 )
 
 test('.populatePageAttribute when a page is associated should get the page', (done) ->
   helpers.createIndicator {}, (err, indicator) ->
     thePage = null
+
     helpers.createPage(
       parent_id: indicator._id
       parent_type: "Indicator"
-    ).then((page)->
+    ).then( (page)->
       thePage = page
       indicator.populatePageAttribute()
-    ).then((populatedPage) ->
-      console.log "hit success"
+    ).then( (populatedPage) ->
       assert.property indicator, 'page'
-      assert.strictEqual indicator.page._id, thePage._id
+      assert.strictEqual(
+        indicator.page._id.toString(),
+        thePage._id.toString()
+      )
       assert.strictEqual indicator.page.parent_type, "Indicator"
-      console.log "about to call done in success"
       done()
-    ).fail((err) ->
-      console.log "in error"
+    ).fail( (err) ->
       console.error err
-      console.log "throwing error"
       throw new Error(err)
     )
 )
