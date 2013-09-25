@@ -170,4 +170,3 @@ module.exports = {
   schema: indicatorSchema,
   model: Indicator
 }
-

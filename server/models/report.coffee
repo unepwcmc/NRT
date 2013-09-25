@@ -2,7 +2,9 @@ mongoose = require('mongoose')
 Section = require('./section.coffee').schema
 async = require('async')
 _ = require('underscore')
+
 sectionNestingModel = require('../mixins/section_nesting_model.coffee')
+pageModel = require('../mixins/page_model.coffee')
 
 reportSchema = mongoose.Schema(
   title: String
@@ -12,6 +14,7 @@ reportSchema = mongoose.Schema(
 )
 
 _.extend(reportSchema.statics, sectionNestingModel)
+_.extend(reportSchema.methods, pageModel)
 
 Report = mongoose.model('Report', reportSchema)
 
