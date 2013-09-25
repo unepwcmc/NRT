@@ -7,7 +7,9 @@ Q = require('q')
 IndicatorData = require('./indicator_data').model
 Page = require('./page').model
 SectionSchema = require('./section').schema
+
 sectionNestingModel = require('../mixins/section_nesting_model.coffee')
+pageModel = require('../mixins/page_model.coffee')
 
 indicatorSchema = mongoose.Schema(
   title: String
@@ -21,6 +23,7 @@ indicatorSchema = mongoose.Schema(
 )
 
 _.extend(indicatorSchema.statics, sectionNestingModel)
+_.extend(indicatorSchema.methods, pageModel)
 
 indicatorSchema.statics.seedData = (callback) ->
   # Seed some indicators
@@ -160,25 +163,6 @@ indicatorSchema.statics.calculateCurrentValues = (indicators, callback) ->
     , (err, items) ->
       callback(null, indicators)
   )
-
-indicatorSchema.methods.populatePageAttribute = () ->
-  deferred = Q.defer()
-
-  Page.
-    findOne({parent_id: @_id}).
-    exec( (err, page) =>
-      if err?
-        return deferred.reject(err)
-
-      @page = page || new Page(
-        parent_id: @_id
-        parent_type: "Indicator"
-      )
-
-      deferred.resolve(@page)
-    )
-
-  return deferred.promise
 
 Indicator = mongoose.model('Indicator', indicatorSchema)
 
