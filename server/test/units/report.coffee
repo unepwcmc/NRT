@@ -25,29 +25,6 @@ test('.create', (done) ->
       done()
 )
 
-test('.create with nested section', (done) ->
-  Report = require('../../models/report').model
-
-  report_attributes =
-    title: 'Lovely Report'
-    brief: 'Gotta be brief'
-    sections: [{
-      title: 'dat title'
-    }]
-
-  report = new Report(report_attributes)
-  report.save((err, report) ->
-    if err?
-      console.error err
-      throw 'Report saving failed'
-      done()
-
-    assert.strictEqual report.title, report_attributes.title
-    assert.strictEqual report.sections[0].title, report_attributes.sections[0].title
-    done()
-  )
-)
-
 test('.populatePageAttribute when no page is associated should create a new page', (done) ->
   helpers.createReport {}, (report) ->
     report.populatePageAttribute().then((page) ->

@@ -113,9 +113,6 @@ test('PUT theme', (done) ->
       json: true
       body:
         title: new_title
-        sections: [
-          title: section_title
-        ]
     }, (err, res, body) ->
       id = body.id
 
@@ -125,10 +122,6 @@ test('PUT theme', (done) ->
         .findOne(id)
         .exec( (err, theme) ->
           assert.equal theme.title, new_title
-
-          assert.lengthOf theme.sections, 1
-          assert.strictEqual theme.sections[0].title, section_title
-          assert.property theme.sections[0], '_id'
 
           done()
         )

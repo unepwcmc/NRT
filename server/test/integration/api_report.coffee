@@ -92,68 +92,6 @@ test('GET report returns full nested sections', (done) ->
   helpers.createIndicator(createReportWithSection)
 )
 
-test('PUT nesting a section in a report with existing sections', (done) ->
-  createReportWithSection = (err, results) ->
-    section = results[0]
-
-    helpers.createReport(
-      {title: "A report", sections: [section]},
-      (report) ->
-        updateAttributes = report.toObject()
-        updateAttributes.sections.push {title: 'hi'}
-
-        request.put({
-          url: helpers.appurl("/api/reports/#{report.id}")
-          json: true
-          body: updateAttributes
-        }, (err, res, body) ->
-          assert.equal res.statusCode, 200
-          assert.lengthOf body.sections, 2
-
-          assert.property body.sections[1], '_id'
-
-          done()
-        )
-    )
-
-  async.series([helpers.createSection, helpers.createSection], createReportWithSection)
-)
-
-test('POST create - nesting a section in a report', (done) ->
-  helpers.createIndicator({title: 'dat indicator'}, (err, indicator) ->
-    data =
-      title: "new report"
-      sections: [{
-        title: 'new section'
-        indicator: indicator._id
-      }]
-
-    request.post({
-      url: helpers.appurl('api/reports/')
-      json: true
-      body: data
-    },(err, res, body) ->
-      id = body.id
-
-      assert.equal res.statusCode, 201
-
-      assert.property body, 'sections'
-      assert.lengthOf body.sections, 1
-      assert.isDefined body.sections[0]._id, "New Report Section not assigned an ID"
-      assert.equal body.sections[0].title, data.sections[0].title
-
-      assert.equal body.sections[0].indicator.title, indicator.title
-
-      Report
-        .findOne(id)
-        .exec( (err, report) ->
-          assert.equal report.title, data.title
-          done()
-        )
-    )
-  )
-)
-
 test('DELETE report', (done) ->
   helpers.createReport( (report) ->
     request.del({

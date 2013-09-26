@@ -140,24 +140,3 @@ test('saving a page with section attributes should assign that section an _id', 
     throw err
   )
 )
-
-test('.create with nested section', (done) ->
-  Page = require('../../models/page.coffee').model
-
-  page_attributes =
-    sections: [{
-      title: 'dat title'
-    }]
-
-  page = new Page(page_attributes)
-  page.save((err, page) ->
-    if err?
-      console.error err
-      throw 'page saving failed'
-      done()
-
-    assert.strictEqual page.title, page_attributes.title
-    assert.strictEqual page.sections[0].title, page_attributes.sections[0].title
-    done()
-  )
-)

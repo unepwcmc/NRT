@@ -8,21 +8,14 @@ IndicatorData = require('./indicator_data').model
 Page = require('./page').model
 SectionSchema = require('./section').schema
 
-sectionNestingModel = require('../mixins/section_nesting_model.coffee')
 pageModel = require('../mixins/page_model.coffee')
 
 indicatorSchema = mongoose.Schema(
   title: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
-  sections: [mongoose.Schema(
-    title: String
-    type: String
-    indicator: {type: mongoose.Schema.Types.ObjectId, ref: 'Indicator'}
-  )]
   theme: Number
 )
 
-_.extend(indicatorSchema.statics, sectionNestingModel)
 _.extend(indicatorSchema.methods, pageModel)
 
 indicatorSchema.statics.seedData = (callback) ->

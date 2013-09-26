@@ -8,7 +8,11 @@ pageSchema = mongoose.Schema(
   title: String
   parent_id: mongoose.Schema.Types.ObjectId
   parent_type: String
-  sections: [Section]
+  sections: [mongoose.Schema(
+    title: String
+    type: String
+    indicator: {type: mongoose.Schema.Types.ObjectId, ref: 'Indicator'}
+  )]
 )
 
 _.extend(pageSchema.statics, sectionNestingModel)
