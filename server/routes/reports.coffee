@@ -10,7 +10,7 @@ exports.index = (req, res) ->
 exports.show = (req, res) ->
   reportId = req.params.id
 
-  Report.findFatModel(reportId, (err, report) ->
+  Report.findOne(reportId, (err, report) ->
     if err?
       console.error err
       return res.render(500, "Could not retrieve report")
@@ -27,7 +27,7 @@ exports.new = (req, res) ->
 exports.present = (req, res) ->
   reportId = req.params.id
 
-  Report.findFatModel(reportId, (err, report)->
+  Report.findOne(reportId, (err, report)->
     if err? or !report?
       console.error err
       return res.render(500, "Could not retrieve report")
