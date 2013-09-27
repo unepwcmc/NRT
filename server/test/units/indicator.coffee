@@ -255,15 +255,13 @@ test('.populatePageAttribute when no page is associated should create a new page
       console.error err
       throw err
 
-    indicator.populatePageAttribute().then(() ->
+    indicator.populatePageAttribute().then(->
       assert.property indicator, 'page'
+      assert.property indicator.toObject(), 'page'
       assert.strictEqual indicator.page.parent_id, indicator._id
       assert.strictEqual indicator.page.parent_type, "Indicator"
       done()
-    ).fail((err) ->
-      console.error err
-      throw err
-    )
+    ).done()
 )
 
 test('.populatePageAttribute when a page is associated should get the page', (done) ->
@@ -284,8 +282,5 @@ test('.populatePageAttribute when a page is associated should get the page', (do
       )
       assert.strictEqual indicator.page.parent_type, "Indicator"
       done()
-    ).fail( (err) ->
-      console.error err
-      throw new Error(err)
-    )
+    ).done()
 )

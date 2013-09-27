@@ -18,10 +18,15 @@ exports.show = (req, res) ->
         console.error err
         return res.render(500, "Error fetching the theme")
 
-      Theme.getIndicatorsByTheme( theme.externalId, (err, indicators) ->
-        res.render "themes/show",
-          theme: theme,
-          themeJSON: JSON.stringify(theme),
-          indicators: indicators
+      theme.populatePageAttribute().then( ->
+        Theme.getIndicatorsByTheme( theme.externalId, (err, indicators) ->
+          res.render "themes/show",
+            theme: theme,
+            themeJSON: JSON.stringify(theme),
+            indicators: indicators
+        )
+      ).fail( (err) ->
+        console.error err
+        throw new Error(err)
       )
     )

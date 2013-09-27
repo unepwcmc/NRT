@@ -3,6 +3,7 @@ helpers = require '../helpers'
 request = require('request')
 url = require('url')
 async = require('async')
+Q = require('q')
 
 suite('API - Report')
 
@@ -58,13 +59,15 @@ test('GET report with page returns page with full nested sections', (done) ->
         helpers.createVisualisation( {section: section._id}, (err, visualisation) ->
           helpers.createReport( {title: 'page report'}, (report) ->
             helpers.createPage(
+              sections: [section]
               parent_id: report._id
               parent_type: "Report"
-            ).then( (page) ->
+            ).done( (page) ->
               request.get({
                 url: helpers.appurl("api/reports/#{report.id}")
                 json: true
               }, (err, res, body) ->
+
                 assert.equal res.statusCode, 200
 
                 returnedReport = body

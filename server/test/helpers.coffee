@@ -22,7 +22,11 @@ before( (done) ->
 )
 
 after( (done) ->
-  test_server.close () -> done()
+  test_server.close (err) ->
+    if err?
+      console.error err
+
+    done()
 )
 
 dropDatabase = (connection, done) ->
