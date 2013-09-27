@@ -49,40 +49,50 @@ test('GET index', (done) ->
   )
 )
 
-test('GET report returns full nested sections', (done) ->
+test('GET report with page returns page with full nested sections', (done) ->
   createReportWithSection = (err, indicator) ->
     helpers.createSection({
       indicator: indicator._id
     }, (err, section) ->
       helpers.createNarrative( {section: section._id}, (err, narrative) ->
         helpers.createVisualisation( {section: section._id}, (err, visualisation) ->
-          helpers.createReport({sections: [section]}, (report) ->
-            request.get({
-              url: helpers.appurl("api/reports/#{report.id}")
-              json: true
-            }, (err, res, body) ->
-              assert.equal res.statusCode, 200
+          helpers.createReport( {title: 'page report'}, (report) ->
+            helpers.createPage(
+              parent_id: report._id
+              parent_type: "Report"
+            ).then( (page) ->
+              request.get({
+                url: helpers.appurl("api/reports/#{report.id}")
+                json: true
+              }, (err, res, body) ->
+                assert.equal res.statusCode, 200
 
-              returnedReport = body
-              assert.equal returnedReport._id, report.id
-              assert.equal returnedReport.content, report.content
+                returnedReport = body
+                assert.equal returnedReport._id, report.id
+                assert.equal returnedReport.content, report.content
 
-              assert.property returnedReport, 'sections'
-              assert.lengthOf returnedReport.sections, 1
+                assert.property returnedReport, 'page'
+                returnedPage = returnedReport.page
 
-              returnedSection = returnedReport.sections[0]
-              assert.equal section._id, returnedSection._id
+                assert.equal page._id, returnedPage._id
 
-              assert.property returnedSection, 'narrative'
-              assert.equal narrative._id, returnedSection.narrative._id
+                assert.property returnedPage, 'sections'
+                assert.lengthOf returnedPage.sections, 1
 
-              assert.property returnedSection, 'indicator'
-              assert.equal indicator._id, returnedSection.indicator._id
+                returnedSection = returnedPage.sections[0]
+                assert.equal section._id, returnedSection._id
 
-              assert.property returnedSection, 'visualisation'
-              assert.equal visualisation._id, returnedSection.visualisation._id
+                assert.property returnedSection, 'narrative'
+                assert.equal narrative._id, returnedSection.narrative._id
 
-              done()
+                assert.property returnedSection, 'indicator'
+                assert.equal indicator._id, returnedSection.indicator._id
+
+                assert.property returnedSection, 'visualisation'
+                assert.equal visualisation._id, returnedSection.visualisation._id
+
+                done()
+              )
             )
           )
         )

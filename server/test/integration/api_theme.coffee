@@ -161,25 +161,43 @@ test('PUT theme does not fail when an _id is given', (done) ->
 
 test('GET theme/:id with nested sections returns sections', (done) ->
   helpers.createSection( {title: "A title"}, (err, section) ->
-    helpers.createTheme({sections: [section]}).then( (theme) ->
-      request.get({
-        url: helpers.appurl("api/themes/#{theme.id}")
-        json: true
-      }, (err, res, body) ->
-        assert.equal res.statusCode, 200
+    theTheme = null
+    helpers.createTheme().
+      then( (theme) ->
+        theTheme = theme
+        console.log 'the test'
+        console.log theTheme._id
+        helpers.createPage(
+          parent_id: theme._id
+          parent_type: "Theme"
+          sections: [section]
+        )).
+      then( (page) ->
+        request.get({
+          url: helpers.appurl("api/themes/#{theTheme.id}")
+          json: true
+        }, (err, res, body) ->
+          assert.equal res.statusCode, 200
 
-        returnedTheme = body
-        assert.equal returnedTheme._id, theme.id
-        assert.equal returnedTheme.content, theme.content
+          returnedTheme = body
+          assert.equal returnedTheme._id, theTheme.id
+          assert.equal returnedTheme.content, theTheme.content
 
-        assert.property returnedTheme, 'sections'
-        assert.lengthOf returnedTheme.sections, 1
+          assert.property returnedTheme, 'page'
+          returnedPage = returnedTheme.page
 
-        done()
+          assert.equal page._id, returnedPage._id
+
+          assert.property returnedPage, 'sections'
+
+          assert.property returnedTheme, 'sections'
+          assert.lengthOf returnedTheme.sections, 1
+
+          done()
+        )
+      ).fail( (err) ->
+        console.error err
+        throw new Error(err)
       )
-    ).fail( (err) ->
-      console.error err
-      throw new Error(err)
-    )
   )
 )

@@ -11,6 +11,7 @@ pageModel = require('../mixins/page_model.coffee')
 themeSchema = mongoose.Schema(
   title: String
   externalId: Number
+  page: Object
 )
 
 _.extend(themeSchema.statics, sectionNestingModel)
