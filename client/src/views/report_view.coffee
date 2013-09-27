@@ -10,9 +10,15 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
 
   initialize: (options) ->
     @report = options.report
+
+    unless @report.get('page')?
+      @report.set('page', new Backbone.Models.Page(parent: @report))
+
+    @page = @report.get('page')
+
     @listenTo(@report, 'change', @updateUrl)
-    @listenTo(@report.get('sections'), 'add', @render)
-    @listenTo(@report.get('sections'), 'reset', @render)
+    @listenTo(@page.get('sections'), 'add', @render)
+    @listenTo(@page.get('sections'), 'reset', @render)
     @render()
 
   render: =>
@@ -21,14 +27,14 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
       thisView: @,
       report: @report.toJSON()
       sectionsWithViewName: @getSectionsWithViewNames()
-      sections: @report.get('sections')
+      sections: @page.get('sections')
     ))
     @renderSubViews()
 
     return @
 
   getSectionsWithViewNames: ->
-    sectionsWithViewNames = _.map(@report.get('sections').models, (section) ->
+    sectionsWithViewNames = _.map(@page.get('sections').models, (section) ->
       viewName: "#{section.get('type')}View", section: section
     )
 
@@ -45,7 +51,7 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
   addSection: =>
     if @report.get('_id')?
       section = new Backbone.Models.Section()
-      @report.get('sections').add(section)
+      @page.get('sections').add(section)
     else
       @report.save(null,
         success: @addSection
@@ -57,7 +63,7 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
   addChapter: =>
     if @report.get('_id')?
       section = new Backbone.Models.Section(type: 'Chapter')
-      @report.get('sections').add(section)
+      @page.get('sections').add(section)
     else
       @report.save(null,
         success: @addChapter

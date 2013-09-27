@@ -8,10 +8,9 @@ class window.Backbone.Models.Report extends Backbone.RelationalModel
   idAttribute: '_id'
 
   relations: [
-    key: 'sections'
-    type: Backbone.HasMany
-    relatedModel: 'Backbone.Models.Section'
-    collectionType: 'Backbone.Collections.SectionCollection'
+    key: 'page'
+    type: Backbone.HasOne
+    relatedModel: 'Backbone.Models.Page'
     reverseRelation:
       key: 'parent'
       includeInJSON: false

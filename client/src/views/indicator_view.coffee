@@ -9,14 +9,15 @@ class Backbone.Views.IndicatorView extends Backbone.Diorama.NestingView
 
   initialize: (options) ->
     @indicator = options.indicator
-    @listenTo(@indicator.get('sections'), 'add', @render)
+    @page      = @indicator.get('page')
+    @listenTo(@page.get('sections'), 'add', @render)
     @render()
 
   render: ->
     @closeSubViews()
     @$el.html(@template(
       thisView: @
-      sections: @indicator.get('sections').models
+      sections: @page.get('sections').models
     ))
 
     @renderSubViews()
@@ -24,7 +25,7 @@ class Backbone.Views.IndicatorView extends Backbone.Diorama.NestingView
 
   addSection: =>
     if @indicator.get('_id')?
-      @indicator.get('sections').add({})
+      @page.get('sections').add({})
       @render()
     else
       @indicator.save(null,
