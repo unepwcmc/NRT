@@ -249,38 +249,12 @@ test('.calculateIndicatorDataBounds should return the upper and lower bounds of 
   )
 )
 
-test('.populatePageAttribute when no page is associated should create a new page', (done) ->
-  helpers.createIndicator {}, (err, indicator) ->
-    if err?
-      console.error err
-      throw err
-
-    indicator.populatePageAttribute().then(->
-      assert.property indicator, 'page'
-      assert.property indicator.toObject(), 'page'
-      assert.strictEqual indicator.page.parent_id, indicator._id
-      assert.strictEqual indicator.page.parent_type, "Indicator"
-      done()
-    ).done()
+test('.getPage should be mixed in', ->
+  indicator = new Indicator()
+  assert.typeOf indicator.getPage, 'Function'
 )
 
-test('.populatePageAttribute when a page is associated should get the page', (done) ->
-  helpers.createIndicator {}, (err, indicator) ->
-    thePage = null
-
-    helpers.createPage(
-      parent_id: indicator._id
-      parent_type: "Indicator"
-    ).then( (page)->
-      thePage = page
-      indicator.populatePageAttribute()
-    ).then( (populatedPage) ->
-      assert.property indicator, 'page'
-      assert.strictEqual(
-        indicator.page._id.toString(),
-        thePage._id.toString()
-      )
-      assert.strictEqual indicator.page.parent_type, "Indicator"
-      done()
-    ).done()
+test(".toObjectWithNestedPage is mixed in", ->
+  indicator = new Indicator()
+  assert.typeOf indicator.toObjectWithNestedPage, 'Function'
 )

@@ -24,12 +24,7 @@ exports.show = (req, res) ->
     if err?
       return res.send(500, "Could not retrieve theme")
 
-    theme.populatePageAttribute().then( (page) ->
-      res.send(JSON.stringify(theme))
-    ).fail( (err) ->
-      console.error err
-      throw new Error(err)
-    )
+    res.send(JSON.stringify(theme))
   )
 
 exports.update = (req, res) ->

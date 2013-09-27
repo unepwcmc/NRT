@@ -37,7 +37,12 @@ exports.show = (req, res) ->
       console.error err
       return res.send(500, "Could not retrieve report")
 
-    res.send(JSON.stringify(report))
+    report.toObjectWithNestedPage().then( (reportObject) ->
+      res.send(200, JSON.stringify(reportObject))
+    ).fail( (err) ->
+      console.error err
+      throw new Error(err)
+    )
   )
 
 exports.update = (req, res) ->
