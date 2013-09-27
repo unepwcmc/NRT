@@ -1,6 +1,8 @@
 window.Backbone.Models || = {}
 
 class window.Backbone.Models.Page extends Backbone.RelationalModel
+  urlRoot: "/api/pages"
+  idAttribute: '_id'
   relations: [
     key: 'sections'
     type: Backbone.HasMany

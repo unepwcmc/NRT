@@ -1,5 +1,10 @@
 suite('Page Model')
 
+test('.url() for a page with an ID returns /pages/id', ->
+  page = Factory.page()
+  assert.strictEqual page.url(), "/api/pages/#{page.id}"
+)
+
 test('when initialised with no section attribute, it creates and empty section collection', ->
   page = new Backbone.Models.Page(section: null)
 
