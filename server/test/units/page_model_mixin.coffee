@@ -18,7 +18,15 @@ test('.getPage when no page is associated should create a new page', (done) ->
     indicator.getPage().then((page)->
       assert.strictEqual page.parent_id, indicator._id
       assert.strictEqual page.parent_type, "Indicator"
-      done()
+
+      Page.findOne(page._id).exec((err, foundPage) ->
+        if err?
+          console.error err
+          throw err
+
+        assert.strictEqual foundPage.id, page.id
+        done()
+      )
     ).done()
 )
 

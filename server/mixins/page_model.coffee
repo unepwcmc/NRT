@@ -22,10 +22,15 @@ module.exports = {
             deferred.resolve(page)
           )
         else
-          deferred.resolve(
-            new Page(
-              parent_id: @_id
-              parent_type: @constructor.modelName
+          Page.create(
+            parent_id: @_id
+            parent_type: @constructor.modelName
+          , (err, page) ->
+            if err?
+              return deferred.reject(err)
+
+            deferred.resolve(
+              page
             )
           )
       )
