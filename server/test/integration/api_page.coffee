@@ -229,3 +229,16 @@ test('POST create - nesting a section in a page', (done) ->
     )
   )
 )
+
+test("PUT update when given a ID which doesn't exist throws an appropriate error", (done)->
+  pageId = (new Page())._id
+  request.put({
+    url: helpers.appurl("api/pages/#{pageId}")
+    json: true
+    body: {}
+  },(err, res, body) ->
+    assert.equal res.statusCode, 404
+    assert.equal res.body, "Couldn't find page #{pageId} to update"
+    done()
+  )
+)

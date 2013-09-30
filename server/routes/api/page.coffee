@@ -54,6 +54,11 @@ exports.update = (req, res) ->
         console.error err
         return res.send(500, "Could not update the page")
 
+      if rowsChanged is 0
+        error = "Couldn't find page #{pageId} to update"
+        console.error error
+        return res.send(404, error)
+
       Page
         .findOne(_id: pageId, (err, page) ->
           if err?
