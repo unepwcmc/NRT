@@ -1,4 +1,5 @@
 [
+  "src/models/user.coffee",
   "src/models/page.coffee",
   "src/models/report.coffee",
   "src/collections/report_collection.coffee",
@@ -14,6 +15,7 @@
   "src/models/section.coffee",
   "src/models/indicator_section.coffee",
   "src/collections/section_collection.coffee",
+  "src/views/permissions_view.coffee",
   "src/views/theme_view.coffee",
   "src/views/indicator_view.coffee",
   "src/views/indicator_selector_item_view.coffee",

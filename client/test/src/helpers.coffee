@@ -38,6 +38,12 @@ Factory.page = (attributes = {}) ->
     attributes
   )
 
+Factory.user = (attributes = {}) ->
+  attributes._id ||= Factory.findNextFreeId('User')
+  new Backbone.Models.User(
+    attributes
+  )
+
 Factory.report = (attributes = {}) ->
   attributes._id ||= Factory.findNextFreeId('Report')
   new Backbone.Models.Report(
