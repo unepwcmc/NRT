@@ -32,6 +32,12 @@ Factory.findNextFreeId = (modelName) ->
 
   return Factory.modelIds[modelName]
 
+Factory.page = (attributes = {}) ->
+  attributes._id ||= Factory.findNextFreeId('Page')
+  new Backbone.Models.Page(
+    attributes
+  )
+
 Factory.report = (attributes = {}) ->
   attributes._id ||= Factory.findNextFreeId('Report')
   new Backbone.Models.Report(

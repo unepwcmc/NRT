@@ -6,10 +6,9 @@ class window.Backbone.Models.Indicator extends Backbone.RelationalModel
   urlRoot: '/api/indicators'
 
   relations: [
-    key: 'sections'
-    type: Backbone.HasMany
-    relatedModel: 'Backbone.Models.Section'
-    collectionType: 'Backbone.Collections.SectionCollection'
+    key: 'page'
+    type: Backbone.HasOne
+    relatedModel: 'Backbone.Models.Page'
     reverseRelation:
       key: 'parent'
       includeInJSON: false

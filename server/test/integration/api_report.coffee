@@ -3,6 +3,7 @@ helpers = require '../helpers'
 request = require('request')
 url = require('url')
 async = require('async')
+Q = require('q')
 
 suite('API - Report')
 
@@ -49,40 +50,52 @@ test('GET index', (done) ->
   )
 )
 
-test('GET report returns full nested sections', (done) ->
+test('GET report with page returns page with full nested sections', (done) ->
   createReportWithSection = (err, indicator) ->
     helpers.createSection({
       indicator: indicator._id
     }, (err, section) ->
       helpers.createNarrative( {section: section._id}, (err, narrative) ->
         helpers.createVisualisation( {section: section._id}, (err, visualisation) ->
-          helpers.createReport({sections: [section]}, (report) ->
-            request.get({
-              url: helpers.appurl("api/reports/#{report.id}")
-              json: true
-            }, (err, res, body) ->
-              assert.equal res.statusCode, 200
+          helpers.createReport( {title: 'page report'}, (report) ->
+            helpers.createPage(
+              sections: [section]
+              parent_id: report._id
+              parent_type: "Report"
+            ).done( (page) ->
+              request.get({
+                url: helpers.appurl("api/reports/#{report.id}")
+                json: true
+              }, (err, res, body) ->
 
-              returnedReport = body
-              assert.equal returnedReport._id, report.id
-              assert.equal returnedReport.content, report.content
+                assert.equal res.statusCode, 200
 
-              assert.property returnedReport, 'sections'
-              assert.lengthOf returnedReport.sections, 1
+                returnedReport = body
+                assert.equal returnedReport._id, report.id
+                assert.equal returnedReport.content, report.content
 
-              returnedSection = returnedReport.sections[0]
-              assert.equal section._id, returnedSection._id
+                assert.property returnedReport, 'page'
+                returnedPage = returnedReport.page
 
-              assert.property returnedSection, 'narrative'
-              assert.equal narrative._id, returnedSection.narrative._id
+                assert.equal page._id, returnedPage._id
 
-              assert.property returnedSection, 'indicator'
-              assert.equal indicator._id, returnedSection.indicator._id
+                assert.property returnedPage, 'sections'
+                assert.lengthOf returnedPage.sections, 1
 
-              assert.property returnedSection, 'visualisation'
-              assert.equal visualisation._id, returnedSection.visualisation._id
+                returnedSection = returnedPage.sections[0]
+                assert.equal section._id, returnedSection._id
 
-              done()
+                assert.property returnedSection, 'narrative'
+                assert.equal narrative._id, returnedSection.narrative._id
+
+                assert.property returnedSection, 'indicator'
+                assert.equal indicator._id, returnedSection.indicator._id
+
+                assert.property returnedSection, 'visualisation'
+                assert.equal visualisation._id, returnedSection.visualisation._id
+
+                done()
+              )
             )
           )
         )
@@ -90,68 +103,6 @@ test('GET report returns full nested sections', (done) ->
     )
 
   helpers.createIndicator(createReportWithSection)
-)
-
-test('PUT nesting a section in a report with existing sections', (done) ->
-  createReportWithSection = (err, results) ->
-    section = results[0]
-
-    helpers.createReport(
-      {title: "A report", sections: [section]},
-      (report) ->
-        updateAttributes = report.toObject()
-        updateAttributes.sections.push {title: 'hi'}
-
-        request.put({
-          url: helpers.appurl("/api/reports/#{report.id}")
-          json: true
-          body: updateAttributes
-        }, (err, res, body) ->
-          assert.equal res.statusCode, 200
-          assert.lengthOf body.sections, 2
-
-          assert.property body.sections[1], '_id'
-
-          done()
-        )
-    )
-
-  async.series([helpers.createSection, helpers.createSection], createReportWithSection)
-)
-
-test('POST create - nesting a section in a report', (done) ->
-  helpers.createIndicator({title: 'dat indicator'}, (err, indicator) ->
-    data =
-      title: "new report"
-      sections: [{
-        title: 'new section'
-        indicator: indicator._id
-      }]
-
-    request.post({
-      url: helpers.appurl('api/reports/')
-      json: true
-      body: data
-    },(err, res, body) ->
-      id = body.id
-
-      assert.equal res.statusCode, 201
-
-      assert.property body, 'sections'
-      assert.lengthOf body.sections, 1
-      assert.isDefined body.sections[0]._id, "New Report Section not assigned an ID"
-      assert.equal body.sections[0].title, data.sections[0].title
-
-      assert.equal body.sections[0].indicator.title, indicator.title
-
-      Report
-        .findOne(id)
-        .exec( (err, report) ->
-          assert.equal report.title, data.title
-          done()
-        )
-    )
-  )
 )
 
 test('DELETE report', (done) ->
