@@ -58,6 +58,9 @@ seedData = ->
 
   IndicatorData = require("./models/indicator_data").model
   IndicatorData.seedData(->)
-  
+
   Theme = require("./models/theme").model
   Theme.seedData(->)
+
+  User = require("./models/user").model
+  User.seedData(->)
