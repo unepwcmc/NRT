@@ -16,7 +16,12 @@ exports.show = (req, res) ->
       return res.render(500, "Could not retrieve report")
 
     if report?
-      res.render "reports/show", reportData: JSON.stringify report
+      report.toObjectWithNestedPage().then( (reportObject) ->
+        res.render "reports/show", reportData: JSON.stringify reportObject
+      ).fail( (err) ->
+        console.error err
+        res.render(500)
+      )
     else
       res.render(404)
   )
