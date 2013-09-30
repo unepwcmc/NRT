@@ -16,7 +16,7 @@ class Backbone.Views.ReportView extends Backbone.Diorama.NestingView
 
     @page = @report.get('page')
 
-    @listenTo(@report, 'change', @updateUrl)
+    @listenTo(@report, "change:#{Backbone.Models.Report::idAttribute}", @updateUrl)
     @listenTo(@page.get('sections'), 'add', @render)
     @listenTo(@page.get('sections'), 'reset', @render)
     @render()
