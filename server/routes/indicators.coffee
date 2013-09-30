@@ -19,6 +19,11 @@ exports.show = (req, res) ->
         console.error err
         return res.render(500, "Error fetching the indicator")
 
+      unless indicator?
+        error = "Could not find indicator with ID #{req.params.id}"
+        console.error error
+        return res.send(404, error)
+
       indicator.toObjectWithNestedPage().then((indicatorObject) ->
         res.render("indicators/show",
           indicator: indicator, indicatorJSON: JSON.stringify(indicatorObject)
