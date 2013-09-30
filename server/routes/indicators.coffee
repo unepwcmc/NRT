@@ -14,12 +14,22 @@ exports.index = (req, res) ->
 
 exports.show = (req, res) ->
   Indicator
-    .findFatModel(_id: req.params.id, (err, indicator) ->
+    .findOne(_id: req.params.id, (err, indicator) ->
       if err?
         console.error err
         return res.render(500, "Error fetching the indicator")
 
-      res.render("indicators/show", 
-        indicator: indicator, indicatorJSON: JSON.stringify(indicator)
+      unless indicator?
+        error = "Could not find indicator with ID #{req.params.id}"
+        console.error error
+        return res.send(404, error)
+
+      indicator.toObjectWithNestedPage().then((indicatorObject) ->
+        res.render("indicators/show",
+          indicator: indicator, indicatorJSON: JSON.stringify(indicatorObject)
+        )
+      ).fail((err) ->
+        console.error err
+        return res.render(500, "Error fetching the indicator page")
       )
     )

@@ -132,3 +132,13 @@ test('.getIndicators returns all Indicators for given Theme', (done) ->
     throw new Error(err)
   )
 )
+
+test('.getPage should be mixed in', ->
+  theme = new Theme()
+  assert.typeOf theme.getPage, 'Function'
+)
+
+test(".toObjectWithNestedPage is mixed in", ->
+  theme = new Theme()
+  assert.typeOf theme.toObjectWithNestedPage, 'Function'
+)

@@ -4,7 +4,7 @@ express = require('express')
 LOG_DIRECTORY = './logs'
 
 module.exports = (app) ->
-  if app.get('env') is not 'development'
+  if app.get('env') !='development'
     fs.mkdirSync(LOG_DIRECTORY) unless fs.statSync(LOG_DIRECTORY)
     app.use express.logger(
       stream:

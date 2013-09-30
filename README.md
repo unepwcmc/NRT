@@ -58,6 +58,13 @@ Run them with
 
 `npm test`
 
+##### Using Q for deferreds in tests
+
+Q.js is used through-out the application to prevent callback pyramids. One
+thing to note when using it, particularly in tests, is that for errors to
+bubble up to mocha, you must call .done() on promises (note this is not the
+done() function from mocha, but part of Q's promises).
+
 #### Client
 
 ##### Running 'em

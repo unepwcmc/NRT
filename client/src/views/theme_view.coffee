@@ -9,14 +9,20 @@ class Backbone.Views.ThemeView extends Backbone.Diorama.NestingView
 
   initialize: (options) ->
     @theme = options.theme
-    @listenTo(@theme.get('sections'), 'add', @render)
+
+    unless @theme.get('page')?
+      @theme.set('page', new Backbone.Models.Page(parent: @theme))
+
+    @page = @theme.get('page')
+
+    @listenTo(@page.get('sections'), 'add', @render)
     @render()
 
   render: ->
     @closeSubViews()
     @$el.html(@template(
       thisView: @
-      sections: @theme.get('sections').models
+      sections: @page.get('sections').models
     ))
 
     @renderSubViews()
@@ -24,7 +30,7 @@ class Backbone.Views.ThemeView extends Backbone.Diorama.NestingView
 
   addSection: =>
     if @theme.get('_id')?
-      @theme.get('sections').add({})
+      @page.get('sections').add({})
       @render()
     else
       @theme.save(null,
