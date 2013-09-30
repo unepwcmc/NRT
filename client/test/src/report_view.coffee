@@ -66,9 +66,10 @@ test("If report cover image doesn't exist, can see no image", ->
   view.close()
 )
 
-test("Report sections views are rendered", ->
+test("Report's page's sections views are rendered", ->
   section = new Backbone.Models.Section()
-  report = new Backbone.Models.Report(sections: [section])
+  page = Factory.page(sections: [section])
+  report = new Backbone.Models.Report(page: page)
 
   view = createAndShowReportViewForReport(report)
 
@@ -81,32 +82,37 @@ test(".addSection adds a section to the report", ->
   report = Factory.report()
   reportView = new Backbone.Views.ReportView(report: report)
 
-  assert.equal report.get('sections').length, 0
+  page = report.get('page')
+  assert.equal page.get('sections').length, 0
 
   reportView.addSection()
 
-  assert.equal report.get('sections').length, 1
-  assert.strictEqual report.get('sections').at(0).get('parent').get('cid'), report.get('cid')
-  assert.equal report.get('sections').at(0).get('type'), "Section"
+  assert.equal page.get('sections').length, 1
+  assert.strictEqual page.get('sections').at(0).get('page').get('cid'), page.get('cid')
+  assert.equal page.get('sections').at(0).get('type'), "Section"
 )
 
 test(".addChapter adds a section with type 'chapter' to the report", ->
   report = Factory.report()
   reportView = new Backbone.Views.ReportView(report: report)
 
-  assert.equal report.get('sections').length, 0
+  page = report.get('page')
+  assert.equal page.get('sections').length, 0
 
   reportView.addChapter()
 
-  assert.equal report.get('sections').length, 1
-  assert.strictEqual report.get('sections').at(0).get('parent').get('cid'), report.get('cid')
-  assert.equal report.get('sections').at(0).get('type'), "Chapter"
+  assert.equal page.get('sections').length, 1
+  assert.strictEqual page.get('sections').at(0).get('page').get('cid'), page.get('cid')
+  assert.equal page.get('sections').at(0).get('type'), "Chapter"
 )
 
 test("Given a report with a section of type 'Chapter',
   it renders a ChapterView sub view", ->
-  report = Factory.report(
+  page = Factory.page(
     sections: Factory.section(type: 'Chapter')
+  )
+  report = Factory.report(
+    page: page
   )
 
   reportView = new Backbone.Views.ReportView(report: report)

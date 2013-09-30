@@ -11,17 +11,17 @@ module.exports = {
 
     @findOne(_id: id)
       .populate('sections.indicator')
-      .exec( (err, report) ->
+      .exec( (err, model) ->
         if err?
-          console.log "error populating report"
+          console.log "error populating model"
           return callback(err, null)
 
-        unless report?
+        unless model?
           return callback({message: "Unable to find model"}, {})
 
-        report = report.toObject()
+        model = model.toObject()
         fetchResultFunctions = []
-        for theSection, theIndex in report.sections
+        for theSection, theIndex in model.sections
           (->
             index = theIndex
             section = theSection
@@ -30,21 +30,21 @@ module.exports = {
                 return callback(err) if err?
 
                 if narrative?
-                  report.sections[index].narrative = narrative.toObject()
+                  model.sections[index].narrative = narrative.toObject()
 
                 Visualisation.findFatVisualisation({section: section._id}, (err, visualisation) ->
                   return callback(err) if err?
 
                   if visualisation?
-                    report.sections[index].visualisation = visualisation.toObject()
+                    model.sections[index].visualisation = visualisation.toObject()
 
-                  callback(null, report)
+                  callback(null, model)
                 )
               )
           )()
 
         async.parallel(fetchResultFunctions, (err, results) ->
-          callback(err, report)
+          callback(err, model)
         )
       )
 }

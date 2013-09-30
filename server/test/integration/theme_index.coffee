@@ -8,8 +8,6 @@ _ = require('underscore')
 suite('Theme index')
 
 test("With a series of themes and indicators, I should see their titles", (done) ->
-
-
   themeAttributes = [{
     title: 'Theme 1'
     externalId: 1
