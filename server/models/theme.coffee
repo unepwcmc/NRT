@@ -1,5 +1,4 @@
 mongoose = require('mongoose')
-request = require('request')
 fs = require('fs')
 _ = require('underscore')
 async = require('async')

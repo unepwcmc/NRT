@@ -14,6 +14,7 @@ Narrative = require('../models/narrative').model
 Section = require('../models/section').model
 Theme = require('../models/theme').model
 Page = require('../models/page').model
+User = require('../models/user').model
 
 before( (done) ->
   app.start 3001, (err, server) ->
@@ -73,6 +74,23 @@ exports.createReport = (attributes, callback) ->
       throw 'could not save report'
 
     callback(report)
+
+exports.createUser = (attributes) ->
+  deferred = Q.defer()
+
+  defaultAttributes =
+    email: "hats@boats.com"
+    password: "yomamalikeshats"
+
+  user = new User(attributes || defaultAttributes)
+
+  user.save (err, user) ->
+    if err?
+      deferred.reject(new Error(err))
+
+    deferred.resolve(user)
+
+  return deferred.promise
 
 exports.createPage = (attributes) ->
   deferred = Q.defer()
