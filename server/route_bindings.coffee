@@ -21,6 +21,8 @@ testRoutes      = require('./routes/tests.coffee')
 
 module.exports = exports = (app) ->
   ensureAuthenticated = (req, res, next) ->
+    return next() if app.settings.env is 'test'
+
     authMethod = passport.authenticate('basic')
     authMethod = tokenAuthentication if req.path.match(/^\/users/)?
 
