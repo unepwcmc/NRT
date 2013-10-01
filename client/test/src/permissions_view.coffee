@@ -23,20 +23,25 @@ test('when given a permissions object with an owner, I see the owners name', ->
   assert.notMatch $("#test-container").text(), /Choose owner/
 )
 
-test("when I click 'change' owner, it adds a choose owner sub view", ->
+test("when I click 'change' owner, it adds a choose user sub view", ->
   view = new Backbone.Views.PermissionsView(permissions: {})
 
   Helpers.renderViewToTestContainer(view)
 
-  assert.notOk(
-    Helpers.viewHasSubViewOfClass(view, 'ChooseOwnerView'),
-    "View was expected to not have a ChooseOwner sub view"
+  assert.isUndefined(
+    view.chooseUserView,
+    "View was expected to not have a ChooseUser sub view"
   )
 
   view.$el.find('.change-owner').trigger('click')
 
+  assert.isDefined(
+    view.chooseUserView,
+    "View was expected to have a ChooseUser sub view"
+  )
   assert.ok(
-    Helpers.viewHasSubViewOfClass(view, 'ChooseOwnerView'),
-    "View does not have a ChooseOwner sub view"
+    view.chooseUserView.constructor.name,
+    "ChooseUserView",
+    "Expected view.chooseUserView to be a ChooseUserView"
   )
 )

@@ -5,13 +5,16 @@ class Backbone.Views.PermissionsView extends Backbone.Diorama.NestingView
   template: Handlebars.templates['permissions.hbs']
 
   events:
-    '.change-owner': 'changeOwner'
+    'click .change-owner': 'changeOwner'
 
   initialize: (options) ->
     @permissions = options.permissions || {}
     @render()
 
-  changeOwner: ->
+  changeOwner: =>
+    @chooseUserView = new Backbone.Views.ChooseUserView()
+    @chooseUserView.setElement(@$el.find('#choose-owner-view')[0])
+    @chooseUserView.render()
 
   render: ->
     @closeSubViews()

@@ -9,3 +9,6 @@ class Backbone.Controllers.IndicatorController extends Backbone.Diorama.Controll
 
     indicatorView.render()
     $('.main-content').prepend(indicatorView.el)
+
+    permissionsView = new Backbone.Views.PermissionsView(permissions: {})
+    $('.content-sidebar').prepend(permissionsView.el)
