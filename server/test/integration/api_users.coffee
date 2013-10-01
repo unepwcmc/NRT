@@ -20,6 +20,9 @@ test('GET index', (done) ->
         assert.equal users[0]._id, user.id
         assert.equal users[0].email, user.email
 
+        # No passwords
+        assert.notProperty users[0], 'password'
+
         done()
       )
     ).fail( (err) ->
