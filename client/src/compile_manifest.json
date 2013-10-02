@@ -17,6 +17,7 @@
   "src/models/indicator_section.coffee",
   "src/collections/section_collection.coffee",
   "src/views/permissions_view.coffee",
+  "src/views/search_results_view.coffee",
   "src/views/choose_user_view.coffee",
   "src/views/theme_view.coffee",
   "src/views/indicator_view.coffee",
