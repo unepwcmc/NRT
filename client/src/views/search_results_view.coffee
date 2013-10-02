@@ -11,6 +11,7 @@ class Backbone.Views.SearchResultsView extends Backbone.View
 
   initialize: (options) ->
     @users = options.collection
+    @listenTo(@users, 'reset', @render)
     @render()
 
   selectUser: (event) =>
@@ -25,4 +26,4 @@ class Backbone.Views.SearchResultsView extends Backbone.View
     return @
 
   onClose: ->
-    
+    @stopListening()

@@ -45,3 +45,18 @@ test("when click on a username, it triggers a 'select' event with the selection"
 
   view.close()
 )
+
+test("when I modify the collection, it re-renders to show the new objects", ->
+  users = new Backbone.Collections.UserCollection()
+
+  view = new Backbone.Views.SearchResultsView(collection: users)
+
+  Helpers.renderViewToTestContainer(view)
+
+  newUserName = "L.A. Beast"
+  users.reset([Factory.user(name: newUserName)])
+
+  assert.match $('#test-container').text(), new RegExp(newUserName)
+
+  view.close()
+)
