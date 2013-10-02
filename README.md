@@ -16,6 +16,12 @@ In **development**, supervisor is used to handle exceptions:
 
 `cd server/ && npm run-script development`
 
+##### Default user
+In development, the users will be seeded on application boot. To login, pick a user from server/lib/users.json, e.g.
+
+    nrt@nrt.com
+    password
+
 In **production**:
 
 `cd server/ && npm start`

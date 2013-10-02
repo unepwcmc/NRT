@@ -1,5 +1,4 @@
 mongoose = require('mongoose')
-request = require('request')
 fs = require('fs')
 _ = require('underscore')
 async = require('async')
@@ -11,6 +10,7 @@ themeSchema = mongoose.Schema(
   title: String
   externalId: Number
   page: Object
+  owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 )
 
 _.extend(themeSchema.methods, pageModel)

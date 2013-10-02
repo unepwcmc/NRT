@@ -9,6 +9,7 @@ reportSchema = mongoose.Schema(
   title: String
   brief: String
   period: String
+  owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 )
 
 _.extend(reportSchema.methods, pageModel)

@@ -4,9 +4,9 @@ fs = require('fs')
 _ = require('underscore')
 async = require('async')
 Q = require('q')
+
 IndicatorData = require('./indicator_data').model
 Page = require('./page').model
-SectionSchema = require('./section').schema
 
 pageModel = require('../mixins/page_model.coffee')
 
@@ -14,6 +14,7 @@ indicatorSchema = mongoose.Schema(
   title: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
   theme: Number
+  owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 )
 
 _.extend(indicatorSchema.methods, pageModel)

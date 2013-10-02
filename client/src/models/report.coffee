@@ -7,14 +7,19 @@ class window.Backbone.Models.Report extends Backbone.RelationalModel
 
   idAttribute: '_id'
 
-  relations: [
+  relations: [{
     key: 'page'
     type: Backbone.HasOne
     relatedModel: 'Backbone.Models.Page'
     reverseRelation:
       key: 'parent'
       includeInJSON: false
-  ]
+  },{
+    key: 'owner'
+    type: Backbone.HasOne
+    relatedModel: 'Backbone.Models.User'
+    includeInJSON: Backbone.Models.User::idAttribute
+  }]
 
   urlRoot: "/api/reports"
 
