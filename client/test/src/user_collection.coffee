@@ -26,27 +26,8 @@ test(".search when collection is not empty it doesn't trigger a fetch", ->
   )
 )
 
-test(".search
-  when given a search term with a partial match with incorrect case for one user email,
-  it returns only that user", (done) ->
-  users = new Backbone.Collections.UserCollection([
-    {email: 'hats'},
-    {email: 'boats'}
-  ])
-
-  users.search('oAt').done((results) ->
-    assert.lengthOf results, 1
-    assert.strictEqual results[0].get('email'), 'boats'
-    done()
-  ).fail((err) ->
-    console.log err
-    throw err
-  )
-)
-test(".search
-  when the collection has some users populated
-  when given a search term with a partial match with incorrect case for one user email,
-  it returns only that user", (done) ->
+test(".search on a pre-populated collection returns matching users,
+  regardless of case", (done) ->
   users = new Backbone.Collections.UserCollection([
     {email: 'hats'},
     {email: 'boats'}
@@ -62,9 +43,7 @@ test(".search
   )
 )
 
-test(".search
-  when the collection has no users populated
-  when given a search term it queries the server and returns the correct results" , (done) ->
+test(".search on an un-populated collection returns matching results" , (done) ->
   users = new Backbone.Collections.UserCollection()
 
   fetchStub = sinon.stub(users, 'fetch', (options)->
