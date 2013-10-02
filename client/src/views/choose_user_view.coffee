@@ -6,6 +6,7 @@ class Backbone.Views.ChooseUserView extends Backbone.Diorama.NestingView
 
   events:
     'keyup input': 'updateSearch'
+    'click .choose-user': 'chooseUser'
 
   initialize: (options) ->
     @users = new Backbone.Collections.UserCollection()
@@ -39,7 +40,7 @@ class Backbone.Views.ChooseUserView extends Backbone.Diorama.NestingView
     if @subViews?
       @subViews[0].$el.show()
 
-  chooseUser: ->
+  chooseUser: =>
     @trigger('userSelected', @selectedUser)
     @close()
 

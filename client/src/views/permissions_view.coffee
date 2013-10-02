@@ -5,21 +5,32 @@ class Backbone.Views.PermissionsView extends Backbone.Diorama.NestingView
   template: Handlebars.templates['permissions.hbs']
 
   events:
-    'click .change-owner': 'changeOwner'
+    'click .change-owner': 'chooseNewOwner'
 
   initialize: (options) ->
-    @permissions = options.permissions || {}
+    @ownable = options.ownable
+    @listenTo(@ownable, 'change:owner', @render)
+
     @render()
 
-  changeOwner: =>
+  chooseNewOwner: =>
     @chooseUserView = new Backbone.Views.ChooseUserView()
     @chooseUserView.setElement(@$el.find('#choose-owner-view')[0])
+    @chooseUserView.on('userSelected', @setOwner)
     @chooseUserView.render()
 
-  render: ->
+  setOwner: (owner) =>
+    @ownable.set('owner', owner)
+    @ownable.save(
+      error: (xhr, errorState, errorMessage) ->
+        console.log errorMessage
+        alert('Unable to save new owner')
+    )
+
+  render: =>
     @closeSubViews()
 
-    owner = @permissions.owner
+    owner = @ownable.get('owner')
     ownerJSON = owner? && owner.toJSON()
 
     @$el.html(@template(
@@ -31,4 +42,5 @@ class Backbone.Views.PermissionsView extends Backbone.Diorama.NestingView
     return @
 
   onClose: ->
-    
+    @stopListening()
+    @chooseUserView.close() if @chooseUserView?
