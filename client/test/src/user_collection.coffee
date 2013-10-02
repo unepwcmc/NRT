@@ -43,7 +43,8 @@ test(".search on a pre-populated collection returns matching users,
   )
 )
 
-test(".search on an un-populated collection returns matching results" , (done) ->
+test(".search on an un-populated collection 
+  returns matching results" , (done) ->
   users = new Backbone.Collections.UserCollection()
 
   fetchStub = sinon.stub(users, 'fetch', (options)->
