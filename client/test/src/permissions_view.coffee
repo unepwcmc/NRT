@@ -21,6 +21,8 @@ test('when given a permissions object with an owner, I see the owners name', ->
 
   assert.match $("#test-container").text(), new RegExp(permissions.owner.get('name'))
   assert.notMatch $("#test-container").text(), /Choose owner/
+
+  view.close()
 )
 
 test("when I click 'change' owner, it adds a choose user sub view", ->
@@ -44,4 +46,6 @@ test("when I click 'change' owner, it adds a choose user sub view", ->
     "ChooseUserView",
     "Expected view.chooseUserView to be a ChooseUserView"
   )
+
+  view.close()
 )

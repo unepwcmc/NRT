@@ -98,4 +98,5 @@ test('when changing the min value it should update the visualisation
   server.restore()
 
   assert.strictEqual visualisation.get('filters').year.min, '2004'
+  integerFilterView.close()
 )
