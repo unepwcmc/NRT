@@ -2,6 +2,7 @@ assert = require('chai').assert
 helpers = require '../helpers'
 _ = require('underscore')
 async = require('async')
+Q = require('q')
 
 suite('Page')
 test('.create', (done) ->
@@ -134,6 +135,46 @@ test('saving a page with section attributes should assign that section an _id', 
       "Expected #{page.sections[0]}'s title to be 'New Section'"
     )
     assert.property page.sections[0], '_id'
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.getParent returns the page parent', (done) ->
+  theIndicator = null
+  Q.nfcall(helpers.createIndicator)
+  .then((indicator)->
+    theIndicator = indicator
+    helpers.createPage(
+      parent_id: indicator._id
+      parent_type: "Indicator"
+    )
+  ).then((page) ->
+    page.getParent()
+  ).then((parent) ->
+    assert.strictEqual parent.id, theIndicator.id
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.getOwnable returns the page parent', (done) ->
+  theIndicator = null
+  Q.nfcall(helpers.createIndicator)
+  .then((indicator)->
+    theIndicator = indicator
+    helpers.createPage(
+      parent_id: indicator._id
+      parent_type: "Indicator"
+    )
+  ).then((page) ->
+    page.getOwnable()
+  ).then((owner) ->
+    assert.strictEqual owner.id, theIndicator.id
     done()
   ).fail((err) ->
     console.error err
