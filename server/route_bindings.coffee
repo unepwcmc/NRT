@@ -9,6 +9,7 @@ reportApi        = require('./routes/api/report')
 indicatorApi     = require('./routes/api/indicator')
 themeApi         = require('./routes/api/theme')
 pageApi          = require('./routes/api/page')
+userApi          = require('./routes/api/user')
 
 dashboardRoutes = require('./routes/dashboard.coffee')
 themeRoutes     = require('./routes/themes.coffee')
@@ -37,6 +38,7 @@ module.exports = exports = (app) ->
   app.resource 'api/themes', themeApi, { format: 'json' }
   app.resource 'api/indicators', indicatorApi, { format: 'json' }
   app.resource 'api/pages', pageApi, { format: 'json' }
+  app.resource 'api/users', userApi, { format: 'json' }
   app.get "/api/indicators/:id/data", indicatorApi.data
   app.get "/api/indicators/:id/data.csv", indicatorApi.dataAsCSV
 

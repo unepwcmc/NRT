@@ -10,6 +10,7 @@ themeSchema = mongoose.Schema(
   title: String
   externalId: Number
   page: Object
+  owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 )
 
 _.extend(themeSchema.methods, pageModel)

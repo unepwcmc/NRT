@@ -9,6 +9,8 @@ test('given a theme with sections, it renders a section subview', ->
   Helpers.renderViewToTestContainer(themeView)
 
   Helpers.viewHasSubViewOfClass(themeView, 'SectionView')
+
+  themeView.close()
 )
 
 test(".addSection adds a section to the theme", ->

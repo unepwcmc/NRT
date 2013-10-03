@@ -15,6 +15,7 @@ Section = require('../models/section').model
 Theme = require('../models/theme').model
 Page = require('../models/page').model
 User = require('../models/user').model
+Permission = require('../models/permission').model
 
 before( (done) ->
   app.start 3001, (err, server) ->
@@ -39,7 +40,9 @@ dropDatabase = (connection, done) ->
     Section,
     Visualisation,
     Theme,
-    Page
+    Page,
+    User,
+    Permission
   ]
 
   for model in models
