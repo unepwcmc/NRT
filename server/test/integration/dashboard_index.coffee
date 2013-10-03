@@ -47,17 +47,15 @@ createReportModels = (attributes) ->
   return promises
 
 
-suite('Page load')
+suite('Dashboard')
 
-test('get dashboard url', (done) ->
+test('GET index', (done) ->
   request.get appurl('/dashboard'), (err, res, body) ->
     assert.equal 200, res.statusCode
     done()
 )
 
-suite('Reports section')
-
-test('has latest edited reports listed', (done) ->
+test('GET index has latest edited reports listed', (done) ->
   createReportModels([
     {
       title: 'Report 1'
