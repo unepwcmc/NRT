@@ -4,6 +4,8 @@ request = require('request')
 url = require('url')
 _ = require('underscore')
 async = require('async')
+passportStub = require 'passport-stub'
+Q = require 'q'
 
 suite('API - Page')
 
@@ -195,8 +197,24 @@ test('PUT nesting a section in a page with existing sections', (done) ->
   async.series([helpers.createSection, helpers.createSection], createPageWithSection)
 )
 
-test('POST create - nesting a section in a page', (done) ->
-  helpers.createIndicator({title: 'dat indicator'}, (err, indicator) ->
+test('POST create - nesting a section in a page when authenticated as the owner', (done) ->
+  data = null
+
+  helpers.createUser().then((user) ->
+
+    # Login user and create indicator
+    passportStub.login user
+
+    Q.nfcall(
+      helpers.createIndicator, {
+        title: 'dat indicator'
+        owner: user
+      }
+    )
+
+  ).then( (indicator) ->
+
+    # Post new page
     data =
       title: "new page"
       sections: [{
@@ -204,29 +222,38 @@ test('POST create - nesting a section in a page', (done) ->
         indicator: indicator._id
       }]
 
-    request.post({
-      url: helpers.appurl('api/pages/')
-      json: true
-      body: data
-    },(err, res, body) ->
-      id = body._id
-
-      assert.equal res.statusCode, 201
-
-      assert.property body, 'sections'
-      assert.lengthOf body.sections, 1
-      assert.isDefined body.sections[0]._id, "New page Section not assigned an ID"
-      assert.equal body.sections[0].title, data.sections[0].title
-
-      assert.equal body.sections[0].indicator.title, indicator.title
-
-      Page
-        .findOne(_id: id)
-        .exec( (err, page) ->
-          assert.equal page.title, data.title
-          done()
-        )
+    Q.nfcall(
+      request.post, {
+        url: helpers.appurl('api/pages/')
+        json: true
+        body: data
+      }
     )
+
+  ).then( (res, body) ->
+
+    # Assert expected outcomes
+    id = body._id
+
+    assert.equal res.statusCode, 201
+
+    assert.property body, 'sections'
+    assert.lengthOf body.sections, 1
+    assert.isDefined body.sections[0]._id, "New page Section not assigned an ID"
+    assert.equal body.sections[0].title, data.sections[0].title
+
+    assert.equal body.sections[0].indicator.title, indicator.title
+
+    Page
+      .findOne(_id: id)
+      .exec( (err, page) ->
+        assert.equal page.title, data.title
+        done()
+      )
+
+  ).fail((err) ->
+    console.error err
+    throw err
   )
 )
 
