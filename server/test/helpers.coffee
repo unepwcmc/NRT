@@ -1,3 +1,4 @@
+passportStub = require 'passport-stub'
 app = require('../app')
 test_server = null
 url = require('url')
@@ -18,9 +19,10 @@ User = require('../models/user').model
 Permission = require('../models/permission').model
 
 before( (done) ->
-  app.start 3001, (err, server) ->
+  expressApp = app.start 3001, (err, server) ->
     test_server = server
     done()
+  passportStub.install expressApp
 )
 
 after( (done) ->
