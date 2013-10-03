@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit",
-    "start": "coffee ./bin/server.coffee",
+    "start": "NODE_ENV=production supervisor ./bin/server.coffee",
     "debug": "coffee --nodejs --debug ./bin/server.coffee",
     "development": "NODE_ENV=development supervisor -e 'node|js|json|coffee|hbs' ./bin/server.coffee"
   },
