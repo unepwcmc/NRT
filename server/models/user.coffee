@@ -2,6 +2,7 @@ mongoose = require('mongoose')
 fs = require('fs')
 
 userSchema = mongoose.Schema(
+  name: String
   email: String
   password: String
 )

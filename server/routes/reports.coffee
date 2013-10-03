@@ -10,21 +10,29 @@ exports.index = (req, res) ->
 exports.show = (req, res) ->
   reportId = req.params.id
 
-  Report.findOne(reportId, (err, report) ->
-    if err?
-      console.error err
-      return res.render(500, "Could not retrieve report")
+  Report
+    .findOne(reportId)
+    .populate('owner')
+    .exec( (err, report) ->
+      if err?
+        console.error err
+        return res.render(500, "Could not retrieve report")
 
-    if report?
+      unless report?
+        error = "Could not find theme with ID #{req.params.id}"
+        console.error error
+        res.render(404, error)
+
       report.toObjectWithNestedPage().then( (reportObject) ->
-        res.render "reports/show", reportData: JSON.stringify reportObject
+        res.render(
+          "reports/show",
+          reportData: JSON.stringify reportObject
+        )
       ).fail( (err) ->
         console.error err
         res.render(500)
       )
-    else
-      res.render(404)
-  )
+    )
 
 exports.new = (req, res) ->
   res.render "reports/show"

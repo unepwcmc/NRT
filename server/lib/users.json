@@ -1,26 +1,32 @@
 [
   {
+    "name": "National Reporter",
     "email": "nrt@nrt.com",
     "password": "password"
   },
   {
-    "email": "Berta.Witting@abigale.biz",
-    "password": "doloribus"
+    "name": "Margie Watkins",
+    "email": "margiewatkins@reversus.com",
+    "password": "LesaHorn"
   },
   {
-    "email": "Daphne_Collins@susan.com",
-    "password": "corporis"
+    "name": "Holden Maynard",
+    "email": "holdenmaynard@reversus.com",
+    "password": "JeannetteLewis"
   },
   {
-    "email": "Carolanne@joanne.net",
-    "password": "delectus"
+    "name": "Jacklyn Heath",
+    "email": "jacklynheath@reversus.com",
+    "password": "MirandaGarza"
   },
   {
-    "email": "Kim.Kautzer@kadin.me",
-    "password": "accusamus"
+    "name": "Lawson Finch",
+    "email": "lawsonfinch@reversus.com",
+    "password": "MannRoberson"
   },
   {
-    "email": "Destany@maida.io",
-    "password": "dolorem"
+    "name": "Wheeler Schneider",
+    "email": "wheelerschneider@reversus.com",
+    "password": "WilkersonCraft"
   }
 ]

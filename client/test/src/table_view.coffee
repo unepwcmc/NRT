@@ -75,4 +75,6 @@ test('Should render visualisation data into a table', ->
 
   assert.match bodyText, /.*2015.*/
   assert.match bodyText, /.*10.*/
+
+  view.close()
 )
