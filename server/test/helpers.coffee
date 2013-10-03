@@ -33,6 +33,10 @@ after( (done) ->
     done()
 )
 
+afterEach( ->
+  passportStub.logout()
+)
+
 dropDatabase = (connection, done) ->
   models = [
     Report,

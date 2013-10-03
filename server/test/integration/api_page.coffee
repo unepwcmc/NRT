@@ -198,7 +198,7 @@ test('PUT nesting a section in a page with existing sections', (done) ->
 )
 
 test('POST create - nesting a section in a page when authenticated as the owner', (done) ->
-  data = null
+  data = theIndicator = null
 
   helpers.createUser().then((user) ->
 
@@ -214,8 +214,12 @@ test('POST create - nesting a section in a page when authenticated as the owner'
 
   ).then( (indicator) ->
 
+    theIndicator = indicator
+
     # Post new page
     data =
+      parent_id: indicator._id
+      parent_type: "Indicator"
       title: "new page"
       sections: [{
         title: 'new section'
@@ -230,7 +234,7 @@ test('POST create - nesting a section in a page when authenticated as the owner'
       }
     )
 
-  ).then( (res, body) ->
+  ).spread( (res, body) ->
 
     # Assert expected outcomes
     id = body._id
@@ -242,7 +246,7 @@ test('POST create - nesting a section in a page when authenticated as the owner'
     assert.isDefined body.sections[0]._id, "New page Section not assigned an ID"
     assert.equal body.sections[0].title, data.sections[0].title
 
-    assert.equal body.sections[0].indicator.title, indicator.title
+    assert.equal body.sections[0].indicator.title, theIndicator.title
 
     Page
       .findOne(_id: id)
@@ -251,6 +255,52 @@ test('POST create - nesting a section in a page when authenticated as the owner'
         done()
       )
 
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('POST create - nesting a section in a page fails when not authenticated as the owner', (done) ->
+  data = theIndicator = null
+
+  helpers.createUser().then((user) ->
+    Q.nfcall(
+      helpers.createIndicator, {
+        title: 'dat indicator'
+        owner: user
+      }
+    )
+  ).then( (indicator) ->
+
+    theIndicator = indicator
+
+    # Post new page
+    data =
+      title: "new page"
+      parent_id: indicator._id
+      parent_type: "Indicator"
+      sections: [{
+        title: 'new section'
+        indicator: indicator._id
+      }]
+
+    Q.nfcall(
+      request.post, {
+        url: helpers.appurl('api/pages/')
+        json: true
+        body: data
+      }
+    )
+
+  ).spread( (res, body) ->
+
+    # Assert expected outcomes
+    id = body._id
+
+    assert.equal res.statusCode, 401
+
+    done()
   ).fail((err) ->
     console.error err
     throw err
