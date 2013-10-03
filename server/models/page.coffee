@@ -28,14 +28,10 @@ pageSchema.methods.getOwnable = ->
 pageSchema.methods.canBeEditedBy = (user) ->
   deferred = Q.defer()
 
-  @getOwnable().then( (ownable) ->
-    if ownable.owner.toString() is user.id
-      deferred.resolve()
-    else
-      deferred.reject(new Error('User is not the owner of this page'))
-  ).fail( (err) ->
+  if user?
     deferred.resolve()
-  )
+  else
+    deferred.reject(new Error('User is not the owner of this page'))
 
   return deferred.promise
 

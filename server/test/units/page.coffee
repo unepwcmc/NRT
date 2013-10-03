@@ -184,14 +184,13 @@ test('.getOwnable returns the page parent', (done) ->
   )
 )
 
-test('.canBeEditedBy given a user which is the page parent owner it resolves', (done) ->
-  theOwner = theIndicator = thePage = null
+test('.canBeEditedBy given a user that is logged in it resolves', (done) ->
+  theUser = theIndicator = thePage = null
   helpers.createUser().then((user) ->
 
-    theOwner = user
+    theUser = user
     Q.nfcall(
       helpers.createIndicator,
-      owner: theOwner
     )
 
   ).then((indicator) ->
@@ -205,7 +204,7 @@ test('.canBeEditedBy given a user which is the page parent owner it resolves', (
   ).then((page) ->
 
     thePage = page
-    page.canBeEditedBy(theOwner).then(->
+    page.canBeEditedBy(theUser).then(->
       done()
     ).fail((err) ->
       console.error err
@@ -218,8 +217,7 @@ test('.canBeEditedBy given a user which is the page parent owner it resolves', (
   )
 )
 
-test('.canBeEditedBy given a user which is not the page parent owner it fails
-  with the appropriate error', (done) ->
+test('.canBeEditedBy when a user is not logged in fails with an appropriate error', (done) ->
   theOwner = theIndicator = thePage = null
   helpers.createUser().then((user) ->
 
@@ -240,40 +238,11 @@ test('.canBeEditedBy given a user which is not the page parent owner it fails
   ).then((page) ->
 
     thePage = page
-    page.canBeEditedBy(new User()).then(->
-      console.error err
+    page.canBeEditedBy().then(->
       throw new Error("Expected canBeEditedBy to fail")
     ).fail( (err) ->
       assert.strictEqual err.message, "User is not the owner of this page"
       done()
-    )
-
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
-)
-
-test('.canBeEditedBy when the page parent has no owner it resolves', (done) ->
-  theIndicator = thePage = null
-  Q.nfcall(
-    helpers.createIndicator
-  ).then( (indicator) ->
-
-    theIndicator = indicator
-    helpers.createPage(
-      parent_id: indicator._id
-      parent_type: "Indicator"
-    )
-
-  ).then((page) ->
-
-    thePage = page
-    page.canBeEditedBy(new User()).then(->
-      done()
-    ).fail( (err) ->
-      console.error err
-      throw new Error("Expected user to be able to edit page")
     )
 
   ).fail((err) ->
