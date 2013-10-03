@@ -4,6 +4,8 @@ _ = require('underscore')
 async = require('async')
 Q = require('q')
 
+User = require('../../models/user.coffee').model
+
 suite('Page')
 test('.create', (done) ->
   Page = require('../../models/page').model
@@ -176,6 +178,104 @@ test('.getOwnable returns the page parent', (done) ->
   ).then((owner) ->
     assert.strictEqual owner.id, theIndicator.id
     done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.canBeEditedBy given a user which is the page parent owner it resolves', (done) ->
+  theOwner = theIndicator = thePage = null
+  helpers.createUser().then((user) ->
+
+    theOwner = user
+    Q.nfcall(
+      helpers.createIndicator,
+      owner: theOwner
+    )
+
+  ).then((indicator) ->
+
+    theIndicator = indicator
+    helpers.createPage(
+      parent_id: indicator._id
+      parent_type: "Indicator"
+    )
+
+  ).then((page) ->
+
+    thePage = page
+    page.canBeEditedBy(theOwner).then(->
+      done()
+    ).fail((err) ->
+      console.error err
+      throw new Error("Expected canBeEditedBy to resolve")
+    )
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.canBeEditedBy given a user which is not the page parent owner it fails
+  with the appropriate error', (done) ->
+  theOwner = theIndicator = thePage = null
+  helpers.createUser().then((user) ->
+
+    theOwner = user
+    Q.nfcall(
+      helpers.createIndicator,
+      owner: theOwner
+    )
+
+  ).then((indicator) ->
+
+    theIndicator = indicator
+    helpers.createPage(
+      parent_id: indicator._id
+      parent_type: "Indicator"
+    )
+
+  ).then((page) ->
+
+    thePage = page
+    page.canBeEditedBy(new User()).then(->
+      console.error err
+      throw new Error("Expected canBeEditedBy to fail")
+    ).fail( (err) ->
+      assert.strictEqual err.message, "User is not the owner of this page"
+      done()
+    )
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.canBeEditedBy when the page parent has no owner it resolves', (done) ->
+  theIndicator = thePage = null
+  Q.nfcall(
+    helpers.createIndicator
+  ).then( (indicator) ->
+
+    theIndicator = indicator
+    helpers.createPage(
+      parent_id: indicator._id
+      parent_type: "Indicator"
+    )
+
+  ).then((page) ->
+
+    thePage = page
+    page.canBeEditedBy(new User()).then(->
+      done()
+    ).fail( (err) ->
+      console.error err
+      throw new Error("Expected user to be able to edit page")
+    )
+
   ).fail((err) ->
     console.error err
     throw err

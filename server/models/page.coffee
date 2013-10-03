@@ -25,6 +25,20 @@ pageSchema.methods.getParent = ->
 pageSchema.methods.getOwnable = ->
   @getParent()
 
+pageSchema.methods.canBeEditedBy = (user) ->
+  deferred = Q.defer()
+
+  @getOwnable().then( (ownable) ->
+    if ownable.owner.toString() is user.id
+      deferred.resolve()
+    else
+      deferred.reject(new Error('User is not the owner of this page'))
+  ).fail( (err) ->
+    deferred.resolve()
+  )
+
+  return deferred.promise
+
 Page = mongoose.model('Page', pageSchema)
 
 module.exports = {
