@@ -196,6 +196,31 @@ exports.createIndicatorModels = (attributes) ->
 
   return deferred.promise
 
+exports.createReportModels = (attributes) ->
+  deferred = Q.defer()
+
+  createFunctions = _.map(attributes, (attributeSet) ->
+    return (callback) ->
+      report = new Report(attributeSet)
+      return report.save( (err, indicators)->
+        if err?
+          callback()
+
+        callback(null, indicators)
+      )
+  )
+
+  async.parallel(
+    createFunctions,
+    (error, results) ->
+      if error?
+        deferred.reject(new Error(err))
+      else
+        deferred.resolve(results)
+  )
+
+  return deferred.promise
+
 exports.createTheme = (attributes) ->
   deferred = Q.defer()
 
