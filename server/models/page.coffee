@@ -31,7 +31,7 @@ pageSchema.methods.canBeEditedBy = (user) ->
   if user?
     deferred.resolve()
   else
-    deferred.reject(new Error('User is not the owner of this page'))
+    deferred.reject(new Error('Must be authenticated as a user to edit pages'))
 
   return deferred.promise
 

@@ -241,7 +241,7 @@ test('.canBeEditedBy when a user is not logged in fails with an appropriate erro
     page.canBeEditedBy().then(->
       throw new Error("Expected canBeEditedBy to fail")
     ).fail( (err) ->
-      assert.strictEqual err.message, "User is not the owner of this page"
+      assert.strictEqual err.message, "Must be authenticated as a user to edit pages"
       done()
     )
 
