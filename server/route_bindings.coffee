@@ -19,10 +19,12 @@ reportRoutes    = require('./routes/reports.coffee')
 userRoutes      = require('./routes/users.coffee')
 staticRoutes    = require('./routes/static.coffee')
 testRoutes      = require('./routes/tests.coffee')
+deployRoutes    = require('./routes/deploy.coffee')
 
 module.exports = exports = (app) ->
   ensureAuthenticated = (req, res, next) ->
-    return next() if app.settings.env is 'test'
+    if app.settings.env is 'test' || req.path.match(/^\/deploy/)?
+      return next()
 
     authMethod = passport.authenticate('basic')
     authMethod = tokenAuthentication if req.path.match(/^\/users/)?
@@ -57,6 +59,8 @@ module.exports = exports = (app) ->
   app.get "/reports/:id/present", reportRoutes.present
 
   app.get "/locale/:locale", localeRoutes.index
+
+  app.post "/deploy", deployRoutes.index
 
   ## Tests
   unless app.settings.env == 'production'
