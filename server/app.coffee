@@ -15,6 +15,9 @@ exports.createApp = ->
 
   bindRoutesForApp = require('./route_bindings.coffee')
 
+  require('./initializers/logging')(app)
+  app.use express.static(path.join(__dirname, "public"))
+
   # assign the handlebars engine to .html files
   app.engine "hbs", hbs.express3(
     partialsDir: __dirname + '/views/partials'
@@ -29,19 +32,13 @@ exports.createApp = ->
   app.use express.cookieParser("your secret here")
   app.use express.session()
 
-  require('./initializers/logging')(app)
-
   require('./initializers/i18n')(app)
 
   app.use passport.initialize()
   app.use passport.session()
 
-  app.use app.router
-
-  app.use express.static(path.join(__dirname, "public"))
-  app.use express.errorHandler()  if "development" is app.get("env")
-
   bindRoutesForApp(app)
+
   app
 
 exports.start = (port, callback) ->
