@@ -7,7 +7,7 @@ PARENT_DIR = "#{process.cwd()}/../"
 process.chdir(PARENT_DIR)
 git_pull = spawn('git', ['pull', 'origin', 'deploy'])
 
-git.on('close', (code) ->
+git_pull.on('close', (code) ->
   if code == 0
     process.chdir('client/')
     npm_install = spawn('npm', ['install'])
