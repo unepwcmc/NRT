@@ -5,7 +5,7 @@ process.exit() if process.env.NODE_ENV is "test"
 PARENT_DIR = "#{process.cwd()}/../"
 
 process.chdir(PARENT_DIR)
-git_pull = spawn('git', ['pull', 'origin', 'auto-deploy'])
+git_pull = spawn('git', ['pull', 'origin', 'deploy'])
 
 git.on('close', (code) ->
   if code == 0
