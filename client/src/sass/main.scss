@@ -232,6 +232,8 @@ h1, h2, h3, h4, h5 {
   z-index: 10;
   width: 100%;
   background: rgba(255, 255, 255, 0.58);
+  overflow: hidden;
+  box-shadow: 10px 0 5px #888888;
 
   .main-menu-container, .save-status {
     float: left;
@@ -369,15 +371,22 @@ h1, h2, h3, h4, h5 {
   }
 }
 
+.user-session, .language-selector {
+  border-left: 1px solid #EEEEEE;
+}
+
+.user-session {
+  float:right;
+  z-index: 11;
+  line-height: 60px;
+  padding: 0 15px;
+}
+
 .language-selector {
   padding: 0 10px;
   box-shadow: 0 1px 1px rgba(0,0,0,0.05);
   overflow: hidden;
-  background-color: #ddd;
-  border: 1px solid #d2d2d2;
-  position: fixed;
-  top: 0;
-  right: 0;
+  float:right;
   z-index: 11;
 }
 

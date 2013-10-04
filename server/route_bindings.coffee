@@ -31,6 +31,7 @@ module.exports = exports = (app) ->
 
     authMethod.call(@, req, res, next)
 
+  app.use passport.addCurrentUserToLocals
   app.all('*', ensureAuthenticated)
 
   # REST API

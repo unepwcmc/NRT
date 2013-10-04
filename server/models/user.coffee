@@ -34,6 +34,9 @@ userSchema.statics.seedData = (callback) ->
 userSchema.methods.validPassword = (password) ->
   @password == password
 
+userSchema.methods.canEdit = (model) ->
+  model.canBeEditedBy(@)
+
 User = mongoose.model('User', userSchema)
 
 module.exports = {
