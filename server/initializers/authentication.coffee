@@ -6,8 +6,13 @@ passport.serializeUser (user, done) ->
 
 passport.deserializeUser (id, done) ->
   User = require('../models/user').model
+
+  unless id?
+    console.error 'No user ID supplied'
+    return done(err, false)
+
   User
-    .find(id)
+    .findOne(_id: id)
     .exec( (err, user) ->
       if err?
         console.error err
@@ -35,5 +40,9 @@ passport.use(
       )
   )
 )
+
+passport.addCurrentUserToLocals = (req, res, next) ->
+  res.locals.currentUser = req.user
+  next()
 
 module.exports = passport
