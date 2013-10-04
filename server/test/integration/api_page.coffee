@@ -197,7 +197,7 @@ test('PUT nesting a section in a page with existing sections', (done) ->
   async.series([helpers.createSection, helpers.createSection], createPageWithSection)
 )
 
-test('POST create - nesting a section in a page when authenticated as the owner', (done) ->
+test('POST create - nesting a section in a page when authenticated', (done) ->
   data = theIndicator = null
 
   helpers.createUser().then((user) ->
@@ -261,7 +261,7 @@ test('POST create - nesting a section in a page when authenticated as the owner'
   )
 )
 
-test('POST create - nesting a section in a page fails when not authenticated as the owner', (done) ->
+test('POST create - nesting a section in a page fails when not authenticated', (done) ->
   data = theIndicator = null
 
   helpers.createUser().then((user) ->
