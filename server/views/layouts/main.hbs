@@ -24,14 +24,6 @@
   </head>
   <body>
 
-    <div class='language-selector'>
-      {{#if settings.localeIsArabic}}
-        <a href="/locale/en">English</a>
-      {{else}}
-        <a href="/locale/ar">العربية</a>
-      {{/if}}
-    </div>
-
     <div class="menu">
       <div class="main-menu-container">
           <div class="main-menu">
@@ -49,7 +41,20 @@
       <div class='save-status-container'>
 
       </div>
-      <div class="clear"></div>
+
+      <div class='language-selector'>
+        {{#if settings.localeIsArabic}}
+          <a href="/locale/en">English</a>
+        {{else}}
+          <a href="/locale/ar">العربية</a>
+        {{/if}}
+      </div>
+
+      {{#if currentUser }}
+        <div class='user-session'>
+          Hello {{ currentUser.name }}
+        </div>
+      {{/if}}
     </div>
 
     {{{body}}}

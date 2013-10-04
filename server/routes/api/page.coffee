@@ -14,22 +14,29 @@ exports.index = (req, res) ->
     )
 
 exports.create = (req, res) ->
+  user = req.user
   params = req.body
 
   page = new Page(params)
-  page.save (err, page) ->
-    if err?
-      console.error err
-      return res.send(500, "Could not save page")
 
-    Page
-      .findFatModel(page._id, (err, page) ->
-        if err?
-          console.error err
-          res.send(500, "Update to retrieve created page")
+  page.canBeEditedBy(req.user).then( ->
+    page.save (err, page) ->
+      if err?
+        console.error err
+        return res.send(500, "Could not save page")
 
-        res.send(201, JSON.stringify(page))
-      )
+      Page
+        .findFatModel(page._id, (err, page) ->
+          if err?
+            console.error err
+            res.send(500, "Update to retrieve created page")
+
+          res.send(201, JSON.stringify(page))
+        )
+  ).fail( (err) ->
+    console.error err
+    res.send(401, err)
+  )
 
 exports.show = (req, res) ->
   Page.findOne(req.params.page, (err, page) ->

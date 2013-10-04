@@ -29,7 +29,8 @@
     "i18n": "0.4.1",
     "markdown": "0.5.0",
     "express-csv": "0.6.0",
-    "q": ">0"
+    "q": "0.9.7",
+    "passport-stub": "0.1.5"
   },
   "devDependencies": {
     "Faker": "0.5.11",
