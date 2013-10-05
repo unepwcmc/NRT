@@ -6,6 +6,7 @@ mongoose = require('mongoose')
 _ = require('underscore')
 async = require('async')
 Q = require('q')
+factory = require('./factory')
 
 Report = require('../models/report').model
 Indicator = require('../models/indicator').model
@@ -83,36 +84,6 @@ exports.createReport = (attributes, callback) ->
       throw 'could not save report'
 
     callback(report)
-
-exports.createUser = (attributes) ->
-  deferred = Q.defer()
-
-  defaultAttributes =
-    email: "hats@boats.com"
-    password: "yomamalikeshats"
-
-  user = new User(attributes || defaultAttributes)
-
-  user.save (err, user) ->
-    if err?
-      deferred.reject(new Error(err))
-
-    deferred.resolve(user)
-
-  return deferred.promise
-
-exports.createPage = (attributes) ->
-  deferred = Q.defer()
-
-  page = new Page(attributes || title: "new page")
-
-  page.save (err, page) ->
-    if err?
-      deferred.reject(new Error(err))
-
-    deferred.resolve(page)
-
-  return deferred.promise
 
 exports.createIndicator = (attributes, callback) ->
   if arguments.length == 1
@@ -227,20 +198,6 @@ exports.createReportModels = (attributes) ->
 
   return deferred.promise
 
-exports.createTheme = (attributes) ->
-  deferred = Q.defer()
-
-  theme = new Theme(attributes || title: "new theme")
-
-  theme.save (err, theme) ->
-    if err?
-      deferred.reject(new Error(err))
-
-    deferred.resolve(theme)
-
-  return deferred.promise
-
-
 exports.createThemesFromAttributes = (attributes, callback) ->
   deferred = Q.defer()
 
@@ -262,3 +219,11 @@ exports.createThemesFromAttributes = (attributes, callback) ->
   )
 
   return deferred.promise
+
+exports.createUser = factory.define("user",
+  email: "hats@boats.com"
+  password: "yomamalikeshats"
+)
+
+exports.createTheme = factory.define("theme", title: "new theme")
+exports.createPage = factory.define("page", title: "new page")
