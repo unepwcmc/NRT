@@ -8,6 +8,8 @@ class Backbone.Views.ChooseUserView extends Backbone.Diorama.NestingView
     'keyup input': 'updateSearch'
     'click .choose-user': 'chooseUser'
 
+  className: 'dialog'
+ 
   initialize: (options) ->
     @users = new Backbone.Collections.UserCollection()
     @results = new Backbone.Collections.UserCollection()

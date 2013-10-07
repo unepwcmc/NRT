@@ -1,10 +1,11 @@
 <h3>
   Indicator owned by
-  <button class="change-owner">Change</button>
+  {{#if owner}}
+    <button class="change-owner">Change</button>
+  {{/if}}
 </h3>
 {{#if owner}}
   {{owner.name}}
 {{else}}
-  Choose owner
+  <button class="change-owner">Choose owner</button>
 {{/if}}
-<div id="choose-owner-view"></div>

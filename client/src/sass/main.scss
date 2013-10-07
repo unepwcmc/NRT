@@ -506,17 +506,32 @@ aside {
     }
     button {
       float: right;
-      font-size: 12px;
-      line-height: 25px;
-      color: $linkBlue;
-      border: none;
-      padding: 0;
-      text-decoration: underline;
     }
   }
   
   p {
     font-size: 12px;
+  }
+  button, h3 button {
+    font-size: 12px;
+    line-height: 25px;
+    color: $linkBlue;
+    border: none;
+    padding: 0;
+    text-decoration: underline;
+  }
+  
+  .dialog {
+    background: $lightGrey;
+    padding: 5px 15px;
+    i.close {
+      float: right;
+      color: $mediumGrey;
+      font-size: 12px;
+      line-height: 30px;
+    }
+    
+    
   }
 }
 
