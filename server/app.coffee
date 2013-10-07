@@ -15,6 +15,9 @@ exports.createApp = ->
 
   bindRoutesForApp = require('./route_bindings.coffee')
 
+  require('./initializers/logging')(app)
+  app.use express.static(path.join(__dirname, "public"))
+
   # assign the handlebars engine to .html files
   app.engine "hbs", hbs.express3(
     partialsDir: __dirname + '/views/partials'
@@ -24,24 +27,18 @@ exports.createApp = ->
   app.set "views", __dirname + "/views"
 
   app.use express.favicon()
-  app.use express.logger("dev")
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use express.cookieParser("your secret here")
   app.use express.session()
 
-  app.use i18n.init
   require('./initializers/i18n')(app)
 
   app.use passport.initialize()
   app.use passport.session()
 
-  app.use app.router
-
-  app.use express.static(path.join(__dirname, "public"))
-  app.use express.errorHandler()  if "development" is app.get("env")
-
   bindRoutesForApp(app)
+
   app
 
 exports.start = (port, callback) ->
@@ -52,12 +49,17 @@ exports.start = (port, callback) ->
   server = http.createServer(app).listen port, (err) ->
       callback err, server
 
+  return app
+
 seedData = ->
   Indicator = require("./models/indicator").model
   Indicator.seedData(->)
 
   IndicatorData = require("./models/indicator_data").model
   IndicatorData.seedData(->)
-  
+
   Theme = require("./models/theme").model
   Theme.seedData(->)
+
+  User = require("./models/user").model
+  User.seedData(->)

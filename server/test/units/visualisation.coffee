@@ -47,7 +47,7 @@ test('.create with nested indicator', (done) ->
   )
 )
 
-test('get "fat" report with all related children by report ID', (done) ->
+test('get "fat" visualisation with all related children by report ID', (done) ->
   helpers.createIndicator( (err, indicator) ->
     visualisation = new Visualisation(
       data: {some: 'data'}

@@ -1,9 +1,15 @@
-passport = require('./initializers/authentication')
+_ = require('underscore')
 
-narrativeApi = require('./routes/api/narrative')
+passport = require('./initializers/authentication')
+tokenAuthentication = require('./lib/token_authentication.coffee')
+
+narrativeApi     = require('./routes/api/narrative')
 visualisationApi = require('./routes/api/visualisation')
-reportApi = require('./routes/api/report')
-indicatorApi = require('./routes/api/indicator')
+reportApi        = require('./routes/api/report')
+indicatorApi     = require('./routes/api/indicator')
+themeApi         = require('./routes/api/theme')
+pageApi          = require('./routes/api/page')
+userApi          = require('./routes/api/user')
 
 dashboardRoutes = require('./routes/dashboard.coffee')
 themeRoutes     = require('./routes/themes.coffee')
@@ -16,35 +22,42 @@ testRoutes      = require('./routes/tests.coffee')
 
 module.exports = exports = (app) ->
   ensureAuthenticated = (req, res, next) ->
-    return next() unless app.settings.env == 'production'
+    return next() if app.settings.env is 'test'
 
-    passport.
-      authenticate('basic').
-      call(@, req, res, next)
+    authMethod = passport.authenticate('basic')
+    authMethod = tokenAuthentication if req.path.match(/^\/users/)?
+
+    authMethod.call(@, req, res, next)
+
+  app.use passport.addCurrentUserToLocals
+  app.all('*', ensureAuthenticated)
 
   # REST API
   app.resource 'api/narratives', narrativeApi, { format: 'json' }
   app.resource 'api/visualisations', visualisationApi, { format: 'json' }
   app.resource 'api/reports', reportApi, { format: 'json' }
+  app.resource 'api/themes', themeApi, { format: 'json' }
   app.resource 'api/indicators', indicatorApi, { format: 'json' }
+  app.resource 'api/pages', pageApi, { format: 'json' }
+  app.resource 'api/users', userApi, { format: 'json' }
   app.get "/api/indicators/:id/data", indicatorApi.data
   app.get "/api/indicators/:id/data.csv", indicatorApi.dataAsCSV
 
-  app.get "/", ensureAuthenticated, themeRoutes.index
-  app.get "/about", ensureAuthenticated, staticRoutes.about
-  app.get "/dashboard", ensureAuthenticated, dashboardRoutes.index
-  app.get "/themes", ensureAuthenticated, themeRoutes.index
-  app.get "/indicators", ensureAuthenticated, indicatorRoutes.index
-  app.get "/reports", ensureAuthenticated, reportRoutes.index
+  app.get "/", themeRoutes.index
+  app.get "/about", staticRoutes.about
+  app.get "/dashboard", dashboardRoutes.index
+  app.get "/themes", themeRoutes.index
+  app.get "/indicators", indicatorRoutes.index
+  app.get "/reports", reportRoutes.index
 
-  app.get "/indicators/:id", ensureAuthenticated, indicatorRoutes.show
-  app.get "/themes/:id", ensureAuthenticated, themeRoutes.show
+  app.get "/indicators/:id", indicatorRoutes.show
+  app.get "/themes/:id", themeRoutes.show
 
-  app.get "/reports/new", ensureAuthenticated, reportRoutes.new
-  app.get "/reports/:id", ensureAuthenticated, reportRoutes.show
-  app.get "/reports/:id/present", ensureAuthenticated, reportRoutes.present
+  app.get "/reports/new", reportRoutes.new
+  app.get "/reports/:id", reportRoutes.show
+  app.get "/reports/:id/present", reportRoutes.present
 
-  app.get "/locale/:locale", ensureAuthenticated, localeRoutes.index
+  app.get "/locale/:locale", localeRoutes.index
 
   ## Tests
   unless app.settings.env == 'production'
@@ -52,10 +65,8 @@ module.exports = exports = (app) ->
 
   ## User CRUD
   ## express-resource doesn't support using middlewares
-  useTokenAuthentication = require('./lib/token_authentication.coffee')
+  app.get "/users", userRoutes.index
+  app.get "/users/:id", userRoutes.show
 
-  app.get "/users", useTokenAuthentication, userRoutes.index
-  app.get "/users/:id", useTokenAuthentication, userRoutes.show
-
-  app.post "/users", useTokenAuthentication, userRoutes.create
-  app.delete "/users/:id", useTokenAuthentication, userRoutes.destroy
+  app.post "/users", userRoutes.create
+  app.delete "/users/:id", userRoutes.destroy

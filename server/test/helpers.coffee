@@ -1,9 +1,11 @@
+passportStub = require 'passport-stub'
 app = require('../app')
 test_server = null
 url = require('url')
 mongoose = require('mongoose')
 _ = require('underscore')
 async = require('async')
+Q = require('q')
 
 Report = require('../models/report').model
 Indicator = require('../models/indicator').model
@@ -12,15 +14,27 @@ Visualisation = require('../models/visualisation').model
 Narrative = require('../models/narrative').model
 Section = require('../models/section').model
 Theme = require('../models/theme').model
+Page = require('../models/page').model
+User = require('../models/user').model
+Permission = require('../models/permission').model
 
 before( (done) ->
-  app.start 3001, (err, server) ->
+  expressApp = app.start 3001, (err, server) ->
     test_server = server
     done()
+  passportStub.install expressApp
 )
 
 after( (done) ->
-  test_server.close () -> done()
+  test_server.close (err) ->
+    if err?
+      console.error err
+
+    done()
+)
+
+afterEach( ->
+  passportStub.logout()
 )
 
 dropDatabase = (connection, done) ->
@@ -31,7 +45,10 @@ dropDatabase = (connection, done) ->
     Narrative,
     Section,
     Visualisation,
-    Theme
+    Theme,
+    Page,
+    User,
+    Permission
   ]
 
   for model in models
@@ -66,6 +83,36 @@ exports.createReport = (attributes, callback) ->
       throw 'could not save report'
 
     callback(report)
+
+exports.createUser = (attributes) ->
+  deferred = Q.defer()
+
+  defaultAttributes =
+    email: "hats@boats.com"
+    password: "yomamalikeshats"
+
+  user = new User(attributes || defaultAttributes)
+
+  user.save (err, user) ->
+    if err?
+      deferred.reject(new Error(err))
+
+    deferred.resolve(user)
+
+  return deferred.promise
+
+exports.createPage = (attributes) ->
+  deferred = Q.defer()
+
+  page = new Page(attributes || title: "new page")
+
+  page.save (err, page) ->
+    if err?
+      deferred.reject(new Error(err))
+
+    deferred.resolve(page)
+
+  return deferred.promise
 
 exports.createIndicator = (attributes, callback) ->
   if arguments.length == 1
@@ -131,7 +178,7 @@ exports.createSection = (attributes, callback) ->
     callback(null, section)
 
 exports.createIndicatorModels = (attributes) ->
-  successCallback = errorCallback = promises = null
+  deferred = Q.defer()
 
   createFunctions = _.map(attributes, (attributeSet) ->
     return (callback) ->
@@ -148,22 +195,55 @@ exports.createIndicatorModels = (attributes) ->
     createFunctions,
     (error, results) ->
       if error?
-        errorCallback(error, results) if errorCallback?
+        deferred.reject(new Error(err))
       else
-        successCallback(results) if successCallback?
+        deferred.resolve(results)
   )
 
-  promises = {
-    success: (callback)->
-      successCallback = callback
-      return promises
-    error: (callback)->
-      errorCallback = callback
-      return promises
-  }
-  return promises
+  return deferred.promise
+
+exports.createReportModels = (attributes) ->
+  deferred = Q.defer()
+
+  createFunctions = _.map(attributes, (attributeSet) ->
+    return (callback) ->
+      report = new Report(attributeSet)
+      return report.save( (err, indicators)->
+        if err?
+          callback()
+
+        callback(null, indicators)
+      )
+  )
+
+  async.parallel(
+    createFunctions,
+    (error, results) ->
+      if error?
+        deferred.reject(new Error(err))
+      else
+        deferred.resolve(results)
+  )
+
+  return deferred.promise
+
+exports.createTheme = (attributes) ->
+  deferred = Q.defer()
+
+  theme = new Theme(attributes || title: "new theme")
+
+  theme.save (err, theme) ->
+    if err?
+      deferred.reject(new Error(err))
+
+    deferred.resolve(theme)
+
+  return deferred.promise
+
 
 exports.createThemesFromAttributes = (attributes, callback) ->
+  deferred = Q.defer()
+
   themeCreateFunctions = []
   for attribute in attributes
     themeCreateFunctions.push (->
@@ -172,4 +252,13 @@ exports.createThemesFromAttributes = (attributes, callback) ->
         Theme.create(theAttributes, cb)
     )()
 
-  async.parallel(themeCreateFunctions, callback)
+  async.parallel(
+    themeCreateFunctions,
+    (err, themes) ->
+      if err?
+        deffered.reject(new Error(err))
+
+      deferred.resolve(themes)
+  )
+
+  return deferred.promise

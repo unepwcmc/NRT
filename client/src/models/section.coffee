@@ -24,7 +24,7 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
       includeInJSON: false
       reverseRelation:
         key: 'section'
-        includeInJSON: '_id'
+        includeInJSON: @::idAttribute
         type: Backbone.HasOne
     ,
       key: 'indicator'
@@ -43,12 +43,12 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
   save: (attributes, options) ->
     if arguments.length == 1
       options = attributes
-      attribtues = {}
+      attributes = {}
 
-    if @get('parent')?
-      @get('parent').save(section: attributes, options)
+    if @get('page')?
+      @get('page').save(section: attributes, options)
     else
-      throw "You're trying to save a section without a parent parent, this shouldn't happen"
+      throw "You're trying to save a section without a parent page, this shouldn't happen"
 
 #For backbone relational
 Backbone.Models.Section.setup()

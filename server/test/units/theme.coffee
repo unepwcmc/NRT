@@ -8,8 +8,6 @@ _ = require('underscore')
 
 suite('Theme')
 
-
-
 test('.getFatThemes returns all the themes with their indicators populated', (done) ->
   themeAttributes = [{
     title: 'Theme 1'
@@ -19,11 +17,9 @@ test('.getFatThemes returns all the themes with their indicators populated', (do
     externalId: 2
   }]
 
-  helpers.createThemesFromAttributes(themeAttributes, (err, themes) ->
-    if err
-      console.error err
-      throw new Error(err)
-    
+  helpers.createThemesFromAttributes(
+    themeAttributes
+  ).then((themes) ->
     indicatorAttributes = [{
       title: "I'm an indicator of theme 1"
       theme: themes[0].externalId
@@ -32,8 +28,9 @@ test('.getFatThemes returns all the themes with their indicators populated', (do
       theme: themes[1].externalId
     }]
 
-    helpers.createIndicatorModels(indicatorAttributes).success((subIndicators)->
-
+    helpers.createIndicatorModels(
+      indicatorAttributes
+    ).then( (subIndicators)->
       Theme.getFatThemes((err, returnedThemes) ->
         if err
           console.error err
@@ -52,9 +49,51 @@ test('.getFatThemes returns all the themes with their indicators populated', (do
 
         done()
       )
+    ).fail( (err) ->
+      console.error err
+      throw new Error(err)
     )
+  ).fail((err)->
+    console.error err
+    throw new Error(err)
   )
+)
 
+test('.getIndicatorsByTheme returns all Indicators for given Theme', (done) ->
+  themeAttributes = [{
+    title: 'Theme 1'
+    externalId: 1
+  }]
+
+  helpers.createThemesFromAttributes(
+    themeAttributes
+  ).then( (themes) =>
+    indicatorAttributes = [{
+      title: "I'm an indicator of theme 1"
+      theme: themes[0].externalId
+    }]
+
+    helpers.createIndicatorModels(
+      indicatorAttributes
+    ).then( (subIndicators)->
+      Theme.getIndicatorsByTheme(themes[0].externalId, (err, returnedIndicators) ->
+        if err?
+          console.error(err)
+          throw new Error(err)
+
+        assert.lengthOf returnedIndicators, 1
+
+        assert.strictEqual returnedIndicators[0].title, indicatorAttributes[0].title
+        done()
+      )
+    ).fail( (err) ->
+      console.error err
+      throw new Error(err)
+    )
+  ).fail( (err) ->
+    console.error err
+    throw new Error(err)
+  )
 )
 
 test('.getIndicators returns all Indicators for given Theme', (done) ->
@@ -63,27 +102,43 @@ test('.getIndicators returns all Indicators for given Theme', (done) ->
     externalId: 1
   }]
 
-  helpers.createThemesFromAttributes(themeAttributes, (err, themes) ->
-    if err
-      console.error err
-      throw new Error(err)
-
+  helpers.createThemesFromAttributes(
+    themeAttributes
+  ).then( (themes) ->
     indicatorAttributes = [{
       title: "I'm an indicator of theme 1"
       theme: themes[0].externalId
     }]
 
-    helpers.createIndicatorModels(indicatorAttributes).success((subIndicators)->
-
+    helpers.createIndicatorModels(
+      indicatorAttributes
+    ).then( (subIndicators)->
       themes[0].getIndicators((err, returnedIndicators) ->
         if err
           console.error(err)
           throw new Error(err)
-        assert.lengthOf returnedIndicators, 1
 
+        assert.lengthOf returnedIndicators, 1
         assert.strictEqual returnedIndicators[0].title, indicatorAttributes[0].title
+
         done()
       )
+    ).fail( (err) ->
+      console.error err
+      throw new Error(err)
     )
+  ).fail( (err) ->
+    console.error err
+    throw new Error(err)
   )
+)
+
+test('.getPage should be mixed in', ->
+  theme = new Theme()
+  assert.typeOf theme.getPage, 'Function'
+)
+
+test(".toObjectWithNestedPage is mixed in", ->
+  theme = new Theme()
+  assert.typeOf theme.toObjectWithNestedPage, 'Function'
 )

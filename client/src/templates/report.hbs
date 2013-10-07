@@ -33,13 +33,11 @@
   </div>
 
   <aside>
-    <button>
-      <i class="icon-bookmark-empty append"></i><i class="icon-bookmark append"></i><span class="show">{{{t "report/bookmark_this_report"}}}</span><span>Bookmarked report</span>
-    </button>
-
     <a href="/reports/{{report._id}}/present" class='present-report'>
       <i class="icon-fighter-jet append"></i>{{{t "report/present"}}}
     </a>
+
+    {{addSubViewTo thisView "PermissionsView" ownable=thisView.report}}
 
     <h5>{{{t "report/brief"}}}</h5>
     {{addSubViewTo thisView "TextEditView" type='textarea'

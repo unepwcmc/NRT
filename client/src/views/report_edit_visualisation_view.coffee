@@ -6,6 +6,7 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
   template: Handlebars.templates['report_edit_visualisation.hbs']
 
   events:
+    "click": "closeIfModalTarget"
     "click .close": "closeModal"
     "click .save": "save"
     "change select[name='visualisation']": 'updateVisualisationType'
@@ -36,6 +37,10 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
   closeModal: ->
     @trigger('close')
     @close()
+
+  closeIfModalTarget: (event) =>
+    if event.target == @el
+      @closeModal()
 
   onClose: ->
     $('body').removeClass('stop-scrolling')

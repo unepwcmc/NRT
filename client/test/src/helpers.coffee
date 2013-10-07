@@ -32,6 +32,18 @@ Factory.findNextFreeId = (modelName) ->
 
   return Factory.modelIds[modelName]
 
+Factory.page = (attributes = {}) ->
+  attributes._id ||= Factory.findNextFreeId('Page')
+  new Backbone.Models.Page(
+    attributes
+  )
+
+Factory.user = (attributes = {}) ->
+  attributes._id ||= Factory.findNextFreeId('User')
+  new Backbone.Models.User(
+    attributes
+  )
+
 Factory.report = (attributes = {}) ->
   attributes._id ||= Factory.findNextFreeId('Report')
   new Backbone.Models.Report(
@@ -43,6 +55,12 @@ Factory.indicator = (attributes = {}) ->
   attributes.indicatorDefinition ||=
     fields: []
   new Backbone.Models.Indicator(
+    attributes
+  )
+
+Factory.theme = (attributes = {}) ->
+  attributes._id ||= Factory.findNextFreeId('Theme')
+  new Backbone.Models.Theme(
     attributes
   )
 

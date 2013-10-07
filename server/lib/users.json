@@ -1,0 +1,32 @@
+[
+  {
+    "name": "National Reporter",
+    "email": "nrt@nrt.com",
+    "password": "password"
+  },
+  {
+    "name": "Margie Watkins",
+    "email": "margiewatkins@reversus.com",
+    "password": "LesaHorn"
+  },
+  {
+    "name": "Holden Maynard",
+    "email": "holdenmaynard@reversus.com",
+    "password": "JeannetteLewis"
+  },
+  {
+    "name": "Jacklyn Heath",
+    "email": "jacklynheath@reversus.com",
+    "password": "MirandaGarza"
+  },
+  {
+    "name": "Lawson Finch",
+    "email": "lawsonfinch@reversus.com",
+    "password": "MannRoberson"
+  },
+  {
+    "name": "Wheeler Schneider",
+    "email": "wheelerschneider@reversus.com",
+    "password": "WilkersonCraft"
+  }
+]

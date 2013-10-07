@@ -23,3 +23,17 @@ test("When given a valid indicator, I should get a 200 and see the title", (done
       done()
   )
 )
+
+test("When given an indicator that doesn't exist, I should get a 404 response", (done)->
+  indicatorId = new Indicator().id
+
+  request.get {
+    url: helpers.appurl("/indicators/#{indicatorId}")
+  }, (err, res, body) ->
+    if err?
+      console.error err
+      throw new Error(err)
+    assert.equal res.statusCode, 404
+
+    done()
+)

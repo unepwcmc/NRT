@@ -77,4 +77,6 @@ test('.getOrderedCids returns the section CIDs in the order they are in the DOM'
   assert.lengthOf orderedCids, 2
   assert.strictEqual sections.get(orderedCids[0]).get('title'), 'Section 1'
   assert.strictEqual sections.get(orderedCids[1]).get('title'), 'Section 2'
+
+  view.close()
 )

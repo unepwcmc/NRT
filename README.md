@@ -8,8 +8,6 @@
 * Install mongodb locally (on Mac with [Homebrew](http://brew.sh/) installed, `brew install mongodb`) and start it with
   `mongod`.
 
-Most secrets you need are [here](https://docs.google.com/a/peoplesized.com/document/d/1dYMO3PJhRlTDQ2BEUUOcLwqX0IfJ5UP_UYyfQllnXeQ/).
-
 ## Running the application
 
 #### Start the server
@@ -17,6 +15,12 @@ Most secrets you need are [here](https://docs.google.com/a/peoplesized.com/docum
 In **development**, supervisor is used to handle exceptions:
 
 `cd server/ && npm run-script development`
+
+##### Default user
+In development, the users will be seeded on application boot. To login, pick a user from server/lib/users.json, e.g.
+
+    nrt@nrt.com
+    password
 
 In **production**:
 
@@ -59,6 +63,13 @@ interface and using the chai assertion syntax.
 Run them with
 
 `npm test`
+
+##### Using Q for deferreds in tests
+
+Q.js is used through-out the application to prevent callback pyramids. One
+thing to note when using it, particularly in tests, is that for errors to
+bubble up to mocha, you must call .done() on promises (note this is not the
+done() function from mocha, but part of Q's promises).
 
 #### Client
 
@@ -137,3 +148,8 @@ For example, run your app as so:
 #### Deleting a user
 
     curl -i -X DELETE http://<domain>/users/<id>\?token\=my-very-secret-token
+
+
+## Production
+
+WCMC team should already have access to [this document](https://docs.google.com/a/peoplesized.com/document/d/1dYMO3PJhRlTDQ2BEUUOcLwqX0IfJ5UP_UYyfQllnXeQ/)

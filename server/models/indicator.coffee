@@ -3,22 +3,21 @@ request = require('request')
 fs = require('fs')
 _ = require('underscore')
 async = require('async')
+Q = require('q')
+
 IndicatorData = require('./indicator_data').model
-SectionSchema = require('./section').schema
-sectionNestingModel = require('../mixins/section_nesting_model.coffee')
+Page = require('./page').model
+
+pageModel = require('../mixins/page_model.coffee')
 
 indicatorSchema = mongoose.Schema(
   title: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
-  sections: [mongoose.Schema(
-    title: String
-    type: String
-    indicator: {type: mongoose.Schema.Types.ObjectId, ref: 'Indicator'}
-  )]
   theme: Number
+  owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 )
 
-_.extend(indicatorSchema.statics, sectionNestingModel)
+_.extend(indicatorSchema.methods, pageModel)
 
 indicatorSchema.statics.seedData = (callback) ->
   # Seed some indicators
@@ -165,4 +164,3 @@ module.exports = {
   schema: indicatorSchema,
   model: Indicator
 }
-

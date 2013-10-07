@@ -2,21 +2,15 @@ assert = chai.assert
 
 suite('Section Model')
 
-test("When intialising a section with nested visualisations,
+test("When intialising a section with a nested visualisation,
   visualisation.toJSON should return section: as section._id", ->
-  sectionAttributes = {
-    _id: Factory.findNextFreeId('Section')
-    indicator: {
-      _id: 15
-    }
-    visualisation: {
-      _id: 25
-      indicator: {
-        _id: 15
-      }
-    }
-  }
-  section = new Backbone.Models.Section(sectionAttributes)
+  indicator = Factory.indicator()
+  visualisation = new Backbone.Models.Visualisation(indicator: indicator)
+  sectionAttributes =
+    indicator: indicator
+    visualisation: visualisation
+
+  section = Factory.section(sectionAttributes)
 
   assert.strictEqual section.get('visualisation').toJSON().section, sectionAttributes._id
 )
@@ -95,21 +89,21 @@ test("When setting 'indicator' with indicator attributes,
   assert.equal section.get('indicator').get('title'), indicatorAttributes.title
 )
 
-test(".save should actually call save on the parent report model", (done)->
-  report = new Backbone.Models.Report(
+test(".save should actually call save on the parent page model", (done)->
+  page = new Backbone.Models.Page(
     sections: [{
       title: 'dat title'
     }]
   )
-  section = report.get('sections').models[0]
+  section = page.get('sections').at(0)
 
-  reportSaveSpy = sinon.stub(report, 'save', (attributes, options)->
-    options.success(report, 200, options)
+  pageSaveSpy = sinon.stub(page, 'save', (attributes, options)->
+    options.success(page, 200, options)
   )
 
   section.save(null,
     success: (model, response, options) ->
-      assert.ok reportSaveSpy.calledOnce, "Report save not called"
+      assert.ok pageSaveSpy.calledOnce, "page save not called"
       done()
     error: ->
       throw 'Section saved failed'
