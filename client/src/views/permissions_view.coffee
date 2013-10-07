@@ -6,6 +6,8 @@ class Backbone.Views.PermissionsView extends Backbone.Diorama.NestingView
 
   events:
     'click .change-owner': 'chooseNewOwner'
+    
+  className: 'permissions-view'
 
   initialize: (options) ->
     @ownable = options.ownable
