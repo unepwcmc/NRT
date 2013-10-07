@@ -198,27 +198,7 @@ exports.createReportModels = (attributes) ->
 
   return deferred.promise
 
-exports.createThemesFromAttributes = (attributes, callback) ->
-  deferred = Q.defer()
-
-  themeCreateFunctions = []
-  for attribute in attributes
-    themeCreateFunctions.push (->
-      theAttributes = attribute
-      return (cb) ->
-        Theme.create(theAttributes, cb)
-    )()
-
-  async.parallel(
-    themeCreateFunctions,
-    (err, themes) ->
-      if err?
-        deffered.reject(new Error(err))
-
-      deferred.resolve(themes)
-  )
-
-  return deferred.promise
+exports.createThemesFromAttributes = factory.define("theme", title: "new theme")
 
 exports.createUser = factory.define("user",
   email: "hats@boats.com"
