@@ -14,6 +14,7 @@ pageSchema = mongoose.Schema(
     type: String
     indicator: {type: mongoose.Schema.Types.ObjectId, ref: 'Indicator'}
   )]
+  is_draft: type: Boolean, default: false
 )
 
 _.extend(pageSchema.statics, sectionNestingModel)
@@ -21,6 +22,23 @@ _.extend(pageSchema.statics, sectionNestingModel)
 pageSchema.methods.getParent = ->
   Ownable = require("./#{@parent_type.toLowerCase()}.coffee").model
   return Q.nsend(Ownable, 'findOne', @parent_id)
+
+pageSchema.methods.createDraftClone = ->
+  deferred = Q.defer()
+
+  attributes = @
+  delete attributes._id
+  attributes.is_draft = true
+
+  Q.nsend(
+    Page, 'create', attributes
+  ).then( (page) ->
+    deferred.resolve(page)
+  ).fail( (err) ->
+    deferred.reject(err)
+  )
+
+  return deferred.promise
 
 pageSchema.methods.getOwnable = ->
   @getParent()

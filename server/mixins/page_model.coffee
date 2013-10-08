@@ -3,6 +3,26 @@ Q = require('q')
 Page = require('../models/page').model
 
 module.exports = {
+  getDraftPage: ->
+    deferred = Q.defer()
+
+    Q.nsend(
+      Page.findOne({parent_id: @_id, is_draft: true}), 'exec'
+    ).then( (page) =>
+      if page?
+        deferred.resolve(page)
+      else
+        @getPage().then( (nonDraftPage) ->
+          nonDraftPage.createDraftClone()
+        ).then( (clonedPage) ->
+          deferred.resolve(clonedPage)
+        )
+    ).fail( (err) ->
+      deferred.reject(err)
+    )
+
+    return deferred.promise
+
   getPage: ->
     deferred = Q.defer()
 

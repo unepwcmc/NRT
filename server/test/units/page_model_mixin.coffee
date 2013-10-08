@@ -6,10 +6,11 @@ Page = require('../../models/page').model
 IndicatorData = require('../../models/indicator_data').model
 async = require('async')
 _ = require('underscore')
+Q = require('q')
 
 suite('Page Model Mixin')
 
-test('.getPage when no page is associated should create a new page', (done) ->
+test(".getPage when no public page is associated creates a new page with is_draft false", (done) ->
   helpers.createIndicator {}, (err, indicator) ->
     if err?
       console.error err
@@ -18,6 +19,8 @@ test('.getPage when no page is associated should create a new page', (done) ->
     indicator.getPage().then((page)->
       assert.strictEqual page.parent_id, indicator._id
       assert.strictEqual page.parent_type, "Indicator"
+
+      assert.isFalse page.is_draft
 
       Page.findOne(page._id).exec((err, foundPage) ->
         if err?
@@ -30,13 +33,14 @@ test('.getPage when no page is associated should create a new page', (done) ->
     ).done()
 )
 
-test('.getPage when a page is associated should get the page', (done) ->
+test('.getPage when a non-draft page is associated should get the page', (done) ->
   helpers.createIndicator {}, (err, indicator) ->
     thePage = null
 
     helpers.createPage(
       parent_id: indicator._id
       parent_type: "Indicator"
+      is_draft: false
     ).then( (page)->
       thePage = page
       indicator.getPage()
@@ -92,6 +96,7 @@ test(".toObjectWithNestedPage returns an object representation of the indicator 
     helpers.createPage(
       parent_id: indicator._id
       parent_type: "Indicator"
+      is_draft: false
     ).then( (page)->
       thePage = page
       indicator.toObjectWithNestedPage()
@@ -109,4 +114,54 @@ test(".toObjectWithNestedPage returns an object representation of the indicator 
 
       done()
     )
+)
+
+test(".getDraftPage
+  when no draft page is associated 
+  and a non-draft page is associated 
+  it creates a clones of the non-draft and returns it", (done) ->
+
+  theIndicator = nonDraftPage = draftPage = null
+
+  Q.nfcall(
+    helpers.createIndicator, {}
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    helpers.createPage(
+      parent_id: indicator.id
+      parent_type: "Indicator"
+      is_draft: false
+      title: "Sup Bro"
+    )
+
+  ).then( (page) ->
+    nonDraftPage = page
+
+    theIndicator.getDraftPage()
+
+  ).then((page)->
+    draftPage = page
+
+    assert.strictEqual draftPage.parent_id, indicator._id
+    assert.strictEqual draftPage.parent_type, "Indicator"
+
+    assert.isTrue draftPage.is_draft
+
+    # Confirm it's clone the public
+    assert.strictEqual draftPage.title, nonDraftPage.title
+
+    Q.nsend(
+      Page.findOne(page._id), 'exec'
+    )
+
+  ).then( (foundPage) ->
+
+    assert.strictEqual foundPage.id, draftPage.id
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
 )

@@ -250,3 +250,26 @@ test('.canBeEditedBy when a user is not logged in fails with an appropriate erro
     throw err
   )
 )
+
+test('.createDraftClone clones a public page,
+  duplicates the page attributes
+  and sets is_draft to true', (done) ->
+
+  publicPage = null
+  helpers.createPage(
+    title: "Lovely Page"
+  ).then( (page) ->
+    publicPage = page
+
+    publicPage.createDraftClone()
+  ).then( (clonedPage) ->
+
+    assert.strictEqual clonedPage.title, publicPage.title
+    assert.isTrue clonedPage.is_draft
+
+    done()
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
