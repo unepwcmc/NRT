@@ -86,10 +86,6 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     @listenToOnce(editVisualisationView, 'close', @render)
 
     $('body').append(editVisualisationView.render().el)
-    ###
-    @section.set('visualisation', visualisation)
-    visualisation.save()
-    ###
 
   onClose: ->
     @closeSubViews()
