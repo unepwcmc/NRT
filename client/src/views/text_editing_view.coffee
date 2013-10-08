@@ -23,18 +23,18 @@ class Backbone.Views.TextEditingView extends Backbone.View
     @$el.html(@template(
       content: @model.get(@attributeName)
     ))
+
+    new MediumEditor(@$el,
+      excludedActions: ['u', 'blockquote', 'h4', 'h3', 'b']
+    )
+
     return @
 
   setPosition: (position) ->
     @$el.css(position)
 
   getContent: =>
-    content = $('<div>')
-      .html(@$el.html())
-    content.html(
-      content.html().replace(/(<br>)|(<br \/>)|(<p>)|(<\/p>)/g, "\r\n")
-    )
-    return content.text()
+    @$el.html()
 
   updateSize: =>
     @trigger('sizeUpdated', @getContentSize())

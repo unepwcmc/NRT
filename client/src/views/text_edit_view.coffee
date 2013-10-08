@@ -17,7 +17,7 @@ class Backbone.Views.TextEditView extends Backbone.View
     @render()
 
   render: (options = {}) =>
-    content = @model.get(@attributeName) || i18n.t("report/type_here")
+    content = @model.get(@attributeName)
 
     @$el.html(@template(
       content: content
@@ -46,11 +46,6 @@ class Backbone.Views.TextEditView extends Backbone.View
     @editingView = null
     @saveContent()
     @render()
-
-  replaceContent: ->
-    content = @model.get(@attributeName)
-    content = content.replace(/\n/g, "<br>")
-    @$el.html(content)
 
   resizeView: (size) =>
     @$el.css(size)
