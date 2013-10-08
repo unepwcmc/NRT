@@ -4,6 +4,10 @@
   <link rel="stylesheet" href="/css/dashboard.css">
 {{/contentFor}}
 
+{{#contentFor 'breadcrumbs'}}
+  <li>Indicators</li>
+{{/contentFor}}
+
 
 <div class="content">
   <header>
@@ -23,8 +27,9 @@
           No indicators
         </h3>
         {{/unless}}
+
         {{#indicators}}
-        <a href="/indicators/{{id}}"><h3>{{title}}</h3></a>
+          <a href="/indicators/{{id}}"><h3>{{title}}</h3></a>
         {{/indicators}}
       {{/themes}}
     </div>

@@ -180,7 +180,7 @@ h1, h2, h3, h4, h5 {
 
 .content {
   width: 980px;
-  padding: 100px 20px 30px 20px;
+  padding: 35px 0 30px 0;
   margin: 0 auto;
   outline: 0;
   word-wrap: break-word;
@@ -351,6 +351,31 @@ h1, h2, h3, h4, h5 {
       display: none;
       background-color: $black;
       border-bottom: 1px solid $black;
+    }
+  }
+}
+
+.breadcrumbs {
+  width: 980px;
+  margin: 61px auto 0 auto;
+  padding: 15px 0;
+
+  ul li {
+    display: inline;
+
+    &:before {
+      content: "> ";
+      font-weight: normal;
+    }
+
+    &:last-child {
+      font-weight: bold;
+    }
+
+    &:first-child {
+      &:before {
+        content: "";
+      }
     }
   }
 }
