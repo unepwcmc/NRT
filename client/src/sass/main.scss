@@ -231,81 +231,67 @@ h1, h2, h3, h4, h5 {
   top: 0;
   z-index: 10;
   width: 100%;
-  background: rgba(255, 255, 255, 0.58);
   overflow: hidden;
-  box-shadow: 10px 0 5px #888888;
+  box-shadow: 0 0 3px #888888;
 
-  .main-menu-container, .save-status {
-    float: left;
+  /* Split background in to two halves */
+  background: #008bdc; /* Old browsers */
+  background: -moz-linear-gradient(left, #008bdc 0%, #008bdc 51%, #ffffff 51%, #ffffff 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#008bdc), color-stop(51%,#008bdc), color-stop(51%,#ffffff), color-stop(100%,#ffffff));
+  background: -webkit-linear-gradient(left, #008bdc 0%,#008bdc 51%,#ffffff 51%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, #008bdc 0%,#008bdc 51%,#ffffff 51%,#ffffff 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, #008bdc 0%,#008bdc 51%,#ffffff 51%,#ffffff 100%); /* IE10+ */
+  background: linear-gradient(to right, #008bdc 0%,#008bdc 51%,#ffffff 51%,#ffffff 100%); /* W3C */
+
+  .inner {
+    margin: 0 auto;
+    width: 980px;
   }
 
-  .submenu {
-    display: none;
-  }
-
-  .main-menu-container {
-    position: relative;
-
-    &:hover {
-      .submenu {
-        display: block;
-      }
-    }
-
-    ul {
-      text-align: left;
-      width: 100%;
-      min-width: 180px;
-      list-style: none;
-      position: absolute;
-      left: 0;
-      top: 60px;
-
-      li {
-        background-color: #333;
-        border-bottom: 1px solid #222222;
-
-        a {
-          color: $white;
-          display: inline-block;
-          padding: 0 20px;
-          line-height: 60px;
-          width: 100%;
-          @include box-sizing(border-box);
-        }
-
-        &:hover{
-          background-color: #111;
-        }
-
-        &:last-child{
-          border-bottom: none;
-        }
-      }
-    }
-  }
-
-  ul li .icon{
-    display: inline-block;
-    width: 24px;
-    text-align: center;
-    padding-right: 15px;
-  }
-
-  .main-menu {
+  h1 {
     font-family: "PT Sans";
-    text-align: center;
-    background-color: #008BDC;
-    color: $white;
-    border-bottom: 1px solid #0073BB;
-    position: relative;
-    cursor: pointer;
-    width: 180px;
+    font-size: 1em;
+    color: white;
+    float: left;
+    margin-top: 13px;
+  }
 
-    i {
-      font-size: 0.85em;
-      line-height: 60px;
-      vertical-align: middle;
+  ul.right {
+    float: right;
+    background: white;
+    width: 725px;
+    height: 61px;
+    /* Skew to achieve slanted blue section */
+    @include skew(-25deg, 0);
+
+    /* Unskew children */
+    * {
+      @include skew(25deg, 0);
+    }
+
+    li, a {
+      color: #8c8c8c;
+    }
+
+    li {
+      font-size: 0.8em;
+      float: right;
+      padding: 0 10px;
+      border-left: 1px solid #EEEEEE;
+      line-height: 61px;
+
+      &:hover {
+        background-color: #008bdc;
+        cursor: pointer;
+
+        &, a {
+          color: white;
+        }
+      }
+
+      &:first-child {
+        border-right: 1px solid #EEEEEE;
+      }
     }
   }
 
@@ -369,25 +355,6 @@ h1, h2, h3, h4, h5 {
       border-bottom: 1px solid $black;
     }
   }
-}
-
-.user-session, .language-selector {
-  border-left: 1px solid #EEEEEE;
-}
-
-.user-session {
-  float:right;
-  z-index: 11;
-  line-height: 60px;
-  padding: 0 15px;
-}
-
-.language-selector {
-  padding: 0 10px;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.05);
-  overflow: hidden;
-  float:right;
-  z-index: 11;
 }
 
 section{
