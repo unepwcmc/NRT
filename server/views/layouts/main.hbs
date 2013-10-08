@@ -25,36 +25,37 @@
   <body>
 
     <div class="menu">
-      <div class="main-menu-container">
-          <div class="main-menu">
-            NRT Abu Dhabi
-          </div>
+      <div class="inner">
+        <h1>
+          National Reporting Toolkit
+          <small>Abu Dhabi</small>
+        </h1>
 
-          <ul class="submenu">
-              <li><a href="/about"><span class="icon"><i class="icon-home append"></i></span>{{{t "menu/about"}}}</a></li>
-              <li><a href="/themes"><span class="icon"><i class="icon-bar-chart append"></i></span>{{{t "menu/indicators"}}}</a></li>
-              <li><a href="/reports"><span class="icon"><i class="icon-file-text-alt append"></i></span>{{{t "menu/reports"}}}</a></li>
-              <li><a href="/dashboard"><span class="icon"><i class="icon-dashboard append"></i></span>{{{t "menu/dashboard"}}}</a></li>
-          </ul>
+        <div class='save-status-container'></div>
+
+        <ul class="right">
+          <li>
+            {{#if settings.localeIsArabic}}
+              <a href="/locale/en">English</a>
+            {{else}}
+              <a href="/locale/ar">العربية</a>
+            {{/if}}
+          </li>
+
+          {{#if currentUser}}
+            <li>
+              {{ currentUser.name }}
+            </li>
+          {{/if}}
+        </ul>
       </div>
+    </div>
 
-      <div class='save-status-container'>
-
-      </div>
-
-      <div class='language-selector'>
-        {{#if settings.localeIsArabic}}
-          <a href="/locale/en">English</a>
-        {{else}}
-          <a href="/locale/ar">العربية</a>
-        {{/if}}
-      </div>
-
-      {{#if currentUser }}
-        <div class='user-session'>
-          Hello {{ currentUser.name }}
-        </div>
-      {{/if}}
+    <div class="breadcrumbs">
+      <ul>
+        <li><a href="/">Home</a></li>
+        {{{block "breadcrumbs"}}}
+      </ul>
     </div>
 
     {{{body}}}
