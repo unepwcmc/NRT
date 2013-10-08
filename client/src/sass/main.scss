@@ -519,10 +519,18 @@ aside {
     border: none;
     padding: 0;
     text-decoration: underline;
+    &:hover {
+      color: $linkBlueHover;
+      @include transition(0.5s);
+    }
+    &:active {
+      background: none;
+      color: $linkBlueHover;
+    }
   }
   
   .dialog {
-    background: $lightGrey;
+    background: $bkgGrey;
     padding: 15px;
     h4 {
       font-weight: normal;
@@ -536,13 +544,17 @@ aside {
       color: $mediumGrey;
       font-size: 14px;
       line-height: 12px;
+      &:hover {
+        color: $buttonBlue;
+        @include transition(0.5s);
+      }
     }
     input {
-      border: 1px solid $lightishGrey;
+      border: 1px solid $lightGrey;
       -webkit-border-radius: 3px;
       -moz-border-radius: 3px;
       border-radius: 3px;
-      padding: 4px 0 4px 5px;
+      padding: 4px 0 4px 7px;
       width: 96%;
     }
     
@@ -559,12 +571,28 @@ aside {
         background: $greenHover;
       }
     }
-    
+    ul {
+      background: $white;
+      overflow: scroll;
+      max-height: 100px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      margin-top: -1px;
+      li {
+        padding-left: 7px;
+        line-height: 24px;
+        &:hover {
+          color: #008ED6;
+          cursor: pointer;
+        }
+      }
+    }
     
   }
 }
 
-.content-sidebar.metadata {
+.content-sidebar {
 
 
   section {
