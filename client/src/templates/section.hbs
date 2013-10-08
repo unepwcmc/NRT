@@ -17,7 +17,7 @@
     {{#if isIndicatorPage}}
       <h2>
         {{addSubViewTo thisView "TextEditView" type='input'
-          attributeName='title' model=sectionModel}}
+          attributeName='title' model=sectionModel disableNewlines=true}}
       </h2>
     {{else}}
       {{#if indicator}}
@@ -25,7 +25,7 @@
       {{else}}
         <h2>
           {{addSubViewTo thisView "TextEditView" type='input'
-            attributeName='title' model=sectionModel}}
+            attributeName='title' model=sectionModel disableNewlines=true}}
         </h2>
       {{/if}}
     {{/if}}
