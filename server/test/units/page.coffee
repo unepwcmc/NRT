@@ -5,6 +5,7 @@ async = require('async')
 Q = require('q')
 
 User = require('../../models/user.coffee').model
+Narrative = require('../../models/narrative.coffee').model
 
 suite('Page')
 test('.create', (done) ->
@@ -266,6 +267,89 @@ test('.createDraftClone clones a public page,
 
     assert.strictEqual clonedPage.title, publicPage.title
     assert.isTrue clonedPage.is_draft
+
+    done()
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.createDraftClone clones a public page,
+  and duplicates child sections with new IDs', (done) ->
+  originalSection = null
+
+  helpers.createPage(
+    sections: [
+      title: "Lovely Section"
+    ]
+  ).then( (page) ->
+    originalSection = page.sections[0]
+
+    page.createDraftClone()
+  ).then( (clonedPage) ->
+
+    assert.lengthOf clonedPage.sections, 1,
+      "cloned page was expected to 1 cloned section, but has #{clonedPage.sections.length}"
+
+    clonedSection = clonedPage.sections[0]
+
+    assert.strictEqual clonedSection.title, originalSection.title,
+      "Expected clonedSection.title (#{clonedSection.title}) to equal
+        originalSection.title (#{originalSection.title})"
+
+    assert.notStrictEqual clonedSection.id, originalSection.id,
+      "Expected clonedSection (id: #{clonedSection.id}) to be a new record, but had same id
+        as originalSection (#{originalSection.id})"
+
+    done()
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.createDraftClone clones a public page,
+  and duplicates child narratives', (done) ->
+  publicPage = originalNarrative = null
+
+  helpers.createPage(
+    sections: [
+      title: "Lovely Section"
+    ]
+  ).then( (page) ->
+    publicPage = page
+
+    section = publicPage.sections[0]
+    Q.nfcall(
+      helpers.createNarrative, {
+        content: "Nested Narrative"
+        section: section
+      }
+    )
+
+  ).then( (narrative) ->
+    originalNarrative = narrative
+
+    publicPage.createDraftClone()
+  ).then( (clonedPage) ->
+
+    clonedSection = clonedPage.sections[0]
+
+    Q.nsend(
+      Narrative.findOne(section: clonedSection), 'exec'
+    )
+
+  ).then((clonedNarrative) ->
+    assert.isDefined clonedNarrative, "Couldn't find a cloned narrative"
+
+    assert.strictEqual clonedNarrative.title, originalNarrative.title,
+      "Expected clonedNarrative.title (#{clonedNarrative.title}) to equal
+        originalNarrative.title (#{originalNarrative.title})"
+    
+    assert.notStrictEqual clonedNarrative.id, originalNarrative.id,
+      "Expected clonedNarrative.id (#{clonedNarrative.id}) to be different to
+        originalNarrative.id (#{originalNarrative.id})"
 
     done()
   ).fail( (err) ->
