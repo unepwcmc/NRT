@@ -22,16 +22,3 @@ test("GET show", (done) ->
       done()
   )
 )
-
-test("Can navigate to Dashboard, Reports, and Indicators", (done) ->
-  request.get {
-    url: appurl('/reports')
-  }, (err, res, body) ->
-    assert.match body, new RegExp(".*href=\"/reports\".*")
-    assert.match body, new RegExp(".*href=\"/themes\".*")
-    assert.match body, new RegExp(".*href=\"/dashboard\".*")
-
-    assert.equal res.statusCode, 200
-    done()
-)
-
