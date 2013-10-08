@@ -65,6 +65,16 @@
   "indicator/similar": "Similar Indicators",
   "indicator/add_section": "Add Section",
 
+  "theme/view": "View the dataset",
+  "theme/download": "Download the dataset",
+  "theme/owned_by": "Theme owned by",
+  "theme/metadata": "Metadata",
+  "theme/metadata/category": "Category",
+  "theme/metadata/most_recent": "Most recent data collected",
+  "theme/metadata/oldest_data": "Oldest data collected",
+  "theme/similar": "Similar themes",
+  "theme/add_section": "Add Section",
+
   "indicator/bookmark_this_indicator": "Bookmark this indicator",
 
   "header/new_report": "New report",
