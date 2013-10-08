@@ -178,14 +178,14 @@ h1, h2, h3, h4, h5 {
   }
 }
 
-.content{
+.content {
   width: 980px;
-  padding: 75px 20px 30px 20px;
+  padding: 100px 20px 30px 20px;
   margin: 0 auto;
   outline: 0;
   word-wrap: break-word;
 
-  a{
+  a {
     color: $linkBlue;
     text-decoration: none;
     &:hover{
@@ -193,11 +193,12 @@ h1, h2, h3, h4, h5 {
       text-decoration: none;
     }
   }
-  ul{
+
+  ul {
     list-style: disc;
     padding: 0 0 30px 40px;
 
-    li{
+    li {
       padding: 15px;
     }
   }
@@ -219,12 +220,6 @@ h1, h2, h3, h4, h5 {
   }
 }
 
-.main-menu, .save-status, .language-selector {
-  height: 60px;
-  line-height: 60px;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.05);
-}
-
 .menu {
   position: fixed;
   left: 0;
@@ -235,13 +230,9 @@ h1, h2, h3, h4, h5 {
   box-shadow: 0 0 3px #888888;
 
   /* Split background in to two halves */
-  background: #008bdc; /* Old browsers */
-  background: -moz-linear-gradient(left, #008bdc 0%, #008bdc 51%, #ffffff 51%, #ffffff 100%);
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#008bdc), color-stop(51%,#008bdc), color-stop(51%,#ffffff), color-stop(100%,#ffffff));
-  background: -webkit-linear-gradient(left, #008bdc 0%,#008bdc 51%,#ffffff 51%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(left, #008bdc 0%,#008bdc 51%,#ffffff 51%,#ffffff 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(left, #008bdc 0%,#008bdc 51%,#ffffff 51%,#ffffff 100%); /* IE10+ */
-  background: linear-gradient(to right, #008bdc 0%,#008bdc 51%,#ffffff 51%,#ffffff 100%); /* W3C */
+  background-image: url('/images/header-bg.png');
+  background-size: 50%;
+  background-repeat: repeat-y;
 
   .inner {
     margin: 0 auto;
@@ -253,7 +244,14 @@ h1, h2, h3, h4, h5 {
     font-size: 1em;
     color: white;
     float: left;
-    margin-top: 13px;
+    margin-top: 11px;
+    padding-bottom: 0;
+
+    small {
+      font-weight: bold;
+      display: block;
+      color: white;
+    }
   }
 
   ul.right {
