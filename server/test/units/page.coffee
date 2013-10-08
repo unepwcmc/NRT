@@ -341,7 +341,7 @@ test('.createDraftClone clones a public page,
     )
 
   ).then((clonedNarrative) ->
-    assert.isDefined clonedNarrative, "Couldn't find a cloned narrative"
+    assert.isNotNull clonedNarrative, "Couldn't find a cloned narrative"
 
     assert.strictEqual clonedNarrative.title, originalNarrative.title,
       "Expected clonedNarrative.title (#{clonedNarrative.title}) to equal
@@ -357,3 +357,9 @@ test('.createDraftClone clones a public page,
     throw err
   )
 )
+
+test('.createDraftClone clones a public page,
+  and duplicates child visualisations')
+
+test('.createDraftClone clones a public page,
+  and duplicates section indicator associations')

@@ -23,11 +23,17 @@ pageSchema.methods.getParent = ->
   Ownable = require("./#{@parent_type.toLowerCase()}.coffee").model
   return Q.nsend(Ownable, 'findOne', @parent_id)
 
+stripIds = (pageObject) ->
+  delete pageObject._id
+  for section, index in pageObject.sections
+    delete section._id
+    pageObject.sections[index] = section
+
 pageSchema.methods.createDraftClone = ->
   deferred = Q.defer()
 
   attributes = @toObject()
-  delete attributes._id
+  stripIds(attributes)
   attributes.is_draft = true
 
   Q.nsend(
