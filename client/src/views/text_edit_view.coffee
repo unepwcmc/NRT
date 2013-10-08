@@ -30,12 +30,16 @@ class Backbone.Views.TextEditView extends Backbone.View
       @$el.addClass('editing')
       @editingView = new Backbone.Views.TextEditingView(
         tagName: @tagName
-        position: @$el.offset()
+        position: @getPositionRelativeToViewport()
         model: @model
         attributeName: @attributeName
       )
       @setupEditingViewBindings()
       @$el.append(@editingView.el)
+
+  getPositionRelativeToViewport: =>
+    top: @$el.offset().top - $(window).scrollTop()
+    left: @$el.offset().left - $(window).scrollLeft()
 
   setupEditingViewBindings: =>
     @listenTo(@editingView, 'close', @editingFinished)

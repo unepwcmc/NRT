@@ -17,6 +17,9 @@ class Backbone.Views.TextEditingView extends Backbone.View
     @disablerDiv = $('<div class="modal"/>')
     $('body').prepend(@disablerDiv)
     $(@disablerDiv).click(@closeViewAndModal)
+
+    $(document).on('scroll', @setPositionToParent)
+
     @render()
 
   render: ->
@@ -29,6 +32,13 @@ class Backbone.Views.TextEditingView extends Backbone.View
     )
 
     return @
+
+  setPositionToParent: =>
+    parentEl = @$el.parents('.editing')
+    @setPosition(
+      top: parentEl.offset().top - $(window).scrollTop()
+      left: parentEl.offset().left - $(window).scrollLeft()
+    )
 
   setPosition: (position) ->
     @$el.css(position)
@@ -49,6 +59,7 @@ class Backbone.Views.TextEditingView extends Backbone.View
     @model.set(@attributeName, @getContent())
     @disablerDiv.remove()
     @trigger('close')
+    $(document).off('scroll', @setPositionToParent)
     @close()
 
   onClose: ->
