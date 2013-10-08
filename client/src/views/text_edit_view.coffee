@@ -31,8 +31,7 @@ class Backbone.Views.TextEditView extends Backbone.View
       @editingView = new Backbone.Views.TextEditingView(
         tagName: @tagName
         position: @getPositionRelativeToViewport()
-        model: @model
-        attributeName: @attributeName
+        content: @model.get(@attributeName)
       )
       @setupEditingViewBindings()
       @$el.append(@editingView.el)
@@ -45,7 +44,8 @@ class Backbone.Views.TextEditView extends Backbone.View
     @listenTo(@editingView, 'close', @editingFinished)
     @listenTo(@editingView, 'sizeUpdated', @resizeView)
 
-  editingFinished: =>
+  editingFinished: (newContent) =>
+    @model.set(@attributeName, newContent)
     @$el.removeClass('editing')
     @editingView = null
     @saveContent()

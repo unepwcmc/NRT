@@ -11,8 +11,7 @@ class Backbone.Views.TextEditingView extends Backbone.View
   initialize: (options) ->
     @tagName = options.tagName
     @setPosition(options.position)
-    @model = options.model
-    @attributeName = options.attributeName
+    @content = options.content
 
     @disablerDiv = $('<div class="modal"/>')
     $('body').prepend(@disablerDiv)
@@ -24,7 +23,7 @@ class Backbone.Views.TextEditingView extends Backbone.View
 
   render: ->
     @$el.html(@template(
-      content: @model.get(@attributeName)
+      content: @content
     ))
 
     new MediumEditor(@$el,
@@ -56,10 +55,10 @@ class Backbone.Views.TextEditingView extends Backbone.View
     }
 
   closeViewAndModal: =>
-    @model.set(@attributeName, @getContent())
     @disablerDiv.remove()
-    @trigger('close')
+    @trigger('close', @getContent())
     $(document).off('scroll', @setPositionToParent)
     @close()
 
   onClose: ->
+    $('.medium-editor-toolbar').remove()
