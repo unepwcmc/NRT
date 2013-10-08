@@ -4,8 +4,6 @@ window.Backbone.Views ||= {}
 class Backbone.Views.TextEditingView extends Backbone.View
   template: Handlebars.templates['text_editing.hbs']
   className: "text-editing-view"
-  attributes:
-    'contenteditable': 'true'
 
   events:
     "keyup": "updateSize"

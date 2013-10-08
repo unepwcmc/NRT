@@ -29,12 +29,16 @@ a {
   color: rgba(0,0,0,0.8);
 }
 
-i.append {
-  padding-right: 10px;
-}
+i {
+  font-style: italic;
 
-i.post-append {
-  padding-left: 10px;
+  &.append {
+    padding-right: 10px;
+  }
+
+  &.post-append {
+    padding-left: 10px;
+  }
 }
 
 .clear {
@@ -183,7 +187,8 @@ h4 {
 }
 
 h1, h2, h3, h4, h5 {
-  i {
+  i[class*='icon-'] {
+    font-style: normal;
     font-size: 1.3em;
     color: $iconColor;
   }
