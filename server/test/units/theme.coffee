@@ -138,6 +138,11 @@ test('.getPage should be mixed in', ->
   assert.typeOf theme.getPage, 'Function'
 )
 
+test('.getFatPage should be mixed in', ->
+  theme = new Theme()
+  assert.typeOf theme.getFatPage, 'Function'
+)
+
 test(".toObjectWithNestedPage is mixed in", ->
   theme = new Theme()
   assert.typeOf theme.toObjectWithNestedPage, 'Function'

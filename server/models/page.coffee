@@ -26,7 +26,7 @@ pageSchema.methods.getParent = ->
 pageSchema.methods.createDraftClone = ->
   deferred = Q.defer()
 
-  attributes = @
+  attributes = @toObject()
   delete attributes._id
   attributes.is_draft = true
 
