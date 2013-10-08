@@ -60,10 +60,20 @@ small {
   resize: none;
   cursor: pointer;
 }
+
 .content-text-field.editing {
   white-space: nowrap;
+  cursor: auto;
 }
 
+.section-actions {
+  color: $lightishGrey;
+
+  &:hover {
+    color: darken($lightishGrey, 10);
+    cursor: pointer;
+  }
+}
 
 .text-editing-view {
   position: fixed;
