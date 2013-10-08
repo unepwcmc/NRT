@@ -61,3 +61,19 @@ test('.chooseUser when there is a selected user it triggers userSelected event
       #{viewCloseSpy.callCount} times"
   )
 )
+
+test('when clicking the close button, the view gets closed', ->
+  viewCloseSpy = sinon.spy(Backbone.Views.ChooseUserView::, 'close')
+
+  view = new Backbone.Views.ChooseUserView()
+  Helpers.renderViewToTestContainer(view)
+
+  view.$el.find('.close').trigger('click')
+  viewCloseSpy.restore()
+
+  assert.ok(
+    viewCloseSpy.calledOnce,
+    "Expected viewCloseSpy to be called once but was called
+      #{viewCloseSpy.callCount} times"
+  )
+)

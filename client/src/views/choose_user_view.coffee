@@ -7,6 +7,7 @@ class Backbone.Views.ChooseUserView extends Backbone.Diorama.NestingView
   events:
     'keyup input': 'updateSearch'
     'click .choose-user': 'chooseUser'
+    'click .close': 'close'
 
   className: 'dialog'
  
