@@ -57,8 +57,8 @@ class Backbone.Views.TextEditingView extends Backbone.View
   closeViewAndModal: =>
     @disablerDiv.remove()
     @trigger('close', @getContent())
-    $(document).off('scroll', @setPositionToParent)
     @close()
 
   onClose: ->
+    $(document).off('scroll', @setPositionToParent)
     $('.medium-editor-toolbar').remove()
