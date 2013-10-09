@@ -39,7 +39,7 @@ pageSchema.methods.createDraftClone = ->
     async.each(clonedSectionsAndOriginalSectionIds, Section.cloneChildren, (err) ->
       if err?
         deferred.reject(err)
-      
+
       deferred.resolve(clonedPage)
     )
 

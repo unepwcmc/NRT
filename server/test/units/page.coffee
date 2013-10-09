@@ -6,6 +6,8 @@ Q = require('q')
 
 User = require('../../models/user.coffee').model
 Narrative = require('../../models/narrative.coffee').model
+Visualisation = require('../../models/visualisation.coffee').model
+Indicator = require('../../models/indicator.coffee').model
 
 suite('Page')
 test('.create', (done) ->
@@ -324,7 +326,7 @@ test('.createDraftClone clones a public page,
     Q.nfcall(
       helpers.createNarrative, {
         content: "Nested Narrative"
-        section: section
+        section: section.id
       }
     )
 
@@ -337,16 +339,16 @@ test('.createDraftClone clones a public page,
     clonedSection = clonedPage.sections[0]
 
     Q.nsend(
-      Narrative.findOne(section: clonedSection), 'exec'
+      Narrative.findOne(section: clonedSection.id), 'exec'
     )
 
-  ).then((clonedNarrative) ->
+  ).then( (clonedNarrative) ->
     assert.isNotNull clonedNarrative, "Couldn't find a cloned narrative"
 
     assert.strictEqual clonedNarrative.title, originalNarrative.title,
       "Expected clonedNarrative.title (#{clonedNarrative.title}) to equal
         originalNarrative.title (#{originalNarrative.title})"
-    
+
     assert.notStrictEqual clonedNarrative.id, originalNarrative.id,
       "Expected clonedNarrative.id (#{clonedNarrative.id}) to be different to
         originalNarrative.id (#{originalNarrative.id})"
@@ -359,10 +361,103 @@ test('.createDraftClone clones a public page,
 )
 
 test('.createDraftClone clones a public page,
-  and duplicates child visualisations')
+  and duplicates child visualisations', (done) ->
+  publicPage = originalVisualisation = null
+
+  helpers.createPage(
+    sections: [
+      title: "Lovely Section"
+    ]
+  ).then( (page) ->
+    publicPage = page
+
+    section = publicPage.sections[0]
+    Q.nfcall(
+      helpers.createVisualisation, {
+        type: "Map"
+        section: section.id
+      }
+    )
+
+  ).then( (visualisation) ->
+    originalVisualisation = visualisation
+
+    publicPage.createDraftClone()
+  ).then( (clonedPage) ->
+
+    clonedSection = clonedPage.sections[0]
+
+    Q.nsend(
+      Visualisation.findOne(section: clonedSection.id), 'exec'
+    )
+
+  ).then( (clonedVisualisation) ->
+    assert.isNotNull clonedVisualisation, "Couldn't find a cloned visualisation"
+
+    assert.strictEqual clonedVisualisation.map, originalVisualisation.map,
+      "Expected clonedVisualisation.map (#{clonedVisualisation.map}) to equal
+        originalVisualisation.map (#{originalVisualisation.map})"
+
+    assert.notStrictEqual clonedVisualisation.id, originalVisualisation.id,
+      "Expected clonedVisualisation.id (#{clonedVisualisation.id}) to be different to
+        originalVisualisation.id (#{originalVisualisation.id})"
+
+    done()
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
 
 test('.createDraftClone clones a public page,
-  and duplicates section indicator associations')
+  and duplicates section indicator associations', (done) ->
+  publicPage = originalIndicator = originalSection = null
+
+  Q.nfcall(
+    helpers.createIndicator
+  ).then( (indicator) ->
+    originalIndicator = indicator
+
+    Q.nfcall(
+      helpers.createSection, {
+        indicators: [indicator]
+      }
+    )
+  ).then( (section) ->
+    originalSection = section
+
+    helpers.createPage(
+      sections: [section]
+    )
+  ).then( (page) ->
+    publicPage = page
+
+    publicPage.createDraftClone()
+  ).then( (clonedPage) ->
+
+    clonedSection = clonedPage.sections[0]
+
+    Q.nsend(
+      Indicator.findOne(section: clonedSection.id), 'exec'
+    )
+
+  ).then( (clonedIndicator) ->
+    assert.isNotNull clonedIndicator, "Couldn't find a cloned indicator"
+
+    assert.strictEqual clonedIndicator.title, originalIndicator.title,
+      "Expected clonedIndicator.title (#{clonedIndicator.title}) to equal
+        originalIndicator.title (#{originalIndicator.title})"
+
+    assert.notStrictEqual clonedIndicator.id, originalIndicator.id,
+      "Expected clonedIndicator.id (#{clonedIndicator.id}) to be different to
+        originalIndicator.id (#{originalIndicator.id})"
+
+    done()
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
 
 test(".giveSectionsNewIds on a page with one section
   gives that section a new ID

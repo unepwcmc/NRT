@@ -83,7 +83,7 @@ filterIndicatorData = (data, filters) ->
         console.error "No function to perform filter operation '#{operation}'"
 
   return data
- 
+
 # Functions which filter indicator data using different operations
 filterOperations =
   min: (data, field, value) ->
