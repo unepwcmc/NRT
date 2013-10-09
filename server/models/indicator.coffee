@@ -23,28 +23,38 @@ _.extend(indicatorSchema.methods, pageModel)
 _.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
 _.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
 
-indicatorSchema.statics.seedData = (callback) ->
-  # Seed some indicators
-  dummyIndicators = JSON.parse(
-    fs.readFileSync("#{process.cwd()}/lib/sample_indicators.json", 'UTF8')
-  )
+indicatorSchema.statics.seedData = ->
+  deferred = Q.defer()
+
+  getAllIndicators = ->
+    Indicator.find((err, indicators) ->
+      if err?
+        deferred.reject(err)
+      else
+        deferred.resolve(indicators)
+    )
 
   Indicator.count(null, (error, count) ->
     if error?
-      console.error error
-      return callback(error)
+      return deferred.reject(error)
 
-    if count == 0
+    if count is 0
+      dummyIndicators = JSON.parse(
+        fs.readFileSync("#{process.cwd()}/lib/sample_indicators.json", 'UTF8')
+      )
+
       Indicator.create(dummyIndicators, (error, results) ->
         if error?
-          console.error error
-          return callback(error)
+          return deferred.reject(error)
         else
-          return callback(null, results)
+          getAllIndicators()
       )
     else
-      callback()
+      getAllIndicators()
+      
   )
+
+  return deferred.promise
 
 indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
   if arguments.length == 1
