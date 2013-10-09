@@ -8,7 +8,9 @@ Q = require('q')
 IndicatorData = require('./indicator_data').model
 Page = require('./page').model
 
+# Mixins
 pageModel = require('../mixins/page_model.coffee')
+updateIndicatorMixin = require('../mixins/update_indicator_data.coffee')
 
 indicatorSchema = mongoose.Schema(
   title: String
@@ -18,6 +20,8 @@ indicatorSchema = mongoose.Schema(
 )
 
 _.extend(indicatorSchema.methods, pageModel)
+_.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
+_.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
 
 indicatorSchema.statics.seedData = (callback) ->
   # Seed some indicators
