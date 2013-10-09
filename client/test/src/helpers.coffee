@@ -6,6 +6,13 @@ Helpers.renderViewToTestContainer = (view) ->
 
 window.Helpers.SinonServer ||= {}
 
+Helpers.assertCalledOnce = (sinonObj) ->
+  assert.ok(
+    sinonObj.calledOnce,
+    "Expected spy/stub to be called once but was called
+      #{sinonObj.callCount} times"
+  )
+
 Helpers.viewHasSubViewOfClass = (view, subViewClassName) ->
   subViewExists = false
   for subView in view.subViews

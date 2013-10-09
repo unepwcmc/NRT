@@ -9,15 +9,10 @@
       </span>
     </div>
   {{else}}
-    <small class='updated-at'>
-      <i class="icon-time append"></i>
-      Last updated on 1st of April, 18:23 by Dr. Anybody
-    </small>
-
     {{#if isIndicatorPage}}
       <h2>
         {{addSubViewTo thisView "TextEditView" type='input'
-          attributeName='title' model=sectionModel}}
+          attributeName='title' model=sectionModel disableNewlines=true}}
       </h2>
     {{else}}
       {{#if indicator}}
@@ -25,7 +20,7 @@
       {{else}}
         <h2>
           {{addSubViewTo thisView "TextEditView" type='input'
-            attributeName='title' model=sectionModel}}
+            attributeName='title' model=sectionModel disableNewlines=true}}
         </h2>
       {{/if}}
     {{/if}}

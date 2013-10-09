@@ -128,15 +128,6 @@ button.add-report-section {
   margin-top:35px;
 }
 
-.section-actions {
-  color: $lightishGrey;
-
-  &:hover {
-    color: darken($lightishGrey, 10);
-    cursor: pointer;
-  }
-}
-
 .download-actions {
   height: 34px;
   margin: 10px 0;
