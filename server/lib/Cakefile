@@ -31,6 +31,12 @@ constructUrl = (serviceName, featureServer) ->
     return console.error 'Need to give serviceName and featureServer'
   "http://196.218.36.14/ka/rest/services/#{serviceName}/FeatureServer/#{featureServer}/query?"
 
+makeRequest = (serviceName, featureServer) ->
+  request
+    url: constructUrl(serviceName, featureServer)
+    qs: standardQuerySuffix
+  , handleResponse
+
 handleResponse = (error, res) ->
   return console.error error if error?
   object = JSON.parse(res.body)
@@ -40,9 +46,10 @@ handleResponse = (error, res) ->
 task 'check:pas', 'check for updated PAs indicator data', (options) ->
   serviceName = 'NRT_AD_ProtectedArea'
   featureServer = 2
+  makeRequest(serviceName, featureServer)
 
-  request
-    url: constructUrl(serviceName, featureServer)
-    qs: standardQuerySuffix
-  , handleResponse
+task 'check:airquality', 'check for updated Air Quality indicator data', (options) ->
+  serviceName = null
+  featureServer = null
+  makeRequest(serviceName, featureServer)
 
