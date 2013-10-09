@@ -4,6 +4,7 @@ Indicator = require('../../models/indicator').model
 IndicatorData = require('../../models/indicator_data').model
 async = require('async')
 _ = require('underscore')
+Q = require 'q'
 
 suite('Indicator')
 
@@ -37,25 +38,27 @@ test('.getIndicatorDataForCSV with no filters returns all indicator data in a 2D
     data: data
   )
 
-  async.waterfall([
-        (cb) -> indicator.save(cb(null, indicator))
-      ,
-        (indicator, cb) ->
-          console.log "Setting indicatorData.indicator to #{indicator.id}"
-          indicatorData.indicator = indicator.id
-          indicatorData.save(cb(null, indicatorData))
-    ], (err, indicatorData) ->
-      if err?
-        console.error err
-        throw err
+  Q.nsend(
+    indicator, 'save'
+  ).then(->
+    indicatorData.indicator = indicator
 
-      indicator.getIndicatorDataForCSV( (err, indicatorData) ->
-        assert.ok(
-          _.isEqual(indicatorData, expectedData),
-          "Expected \n#{JSON.stringify(indicatorData)} \nto equal \n#{JSON.stringify(expectedData)}"
-        )
-        done()
+    Q.nsend(
+      indicatorData, 'save'
+    )
+  ).then( ->
+
+    indicator.getIndicatorDataForCSV( (err, indicatorData) ->
+      assert.ok(
+        _.isEqual(indicatorData, expectedData),
+        "Expected \n#{JSON.stringify(indicatorData)} \nto equal \n#{JSON.stringify(expectedData)}"
       )
+      done()
+    )
+
+  ).fail((err) ->
+    console.error err
+    throw err
   )
 )
 
@@ -83,31 +86,36 @@ test('.getIndicatorDataForCSV with filters returns data matching filters in a 2D
     indicatorDefinition:
       xAxis: 'year'
       yAxis: 'value'
-      externalId: 14
   )
   indicatorData = new IndicatorData(
-    externalId: 14, data: data
+    data: data
   )
 
   filters =
     value:
       min: '4'
 
-  async.parallel([
-        (cb) -> indicator.save(cb)
-      ,
-        (cb) -> indicatorData.save(cb)
-    ], (err, results) ->
-      if err?
-        console.error err
-      else
-        indicator.getIndicatorDataForCSV( filters, (err, indicatorData) ->
-          assert.ok(
-            _.isEqual(indicatorData, expectedData),
-            "Expected \n#{JSON.stringify(indicatorData)} \nto equal \n#{JSON.stringify(expectedData)}"
-          )
-          done()
-        )
+  Q.nsend(
+    indicator, 'save'
+  ).then(->
+    indicatorData.indicator = indicator
+
+    Q.nsend(
+      indicatorData, 'save'
+    )
+  ).then( ->
+
+    indicator.getIndicatorDataForCSV( filters, (err, indicatorData) ->
+      assert.ok(
+        _.isEqual(indicatorData, expectedData),
+        "Expected \n#{JSON.stringify(indicatorData)} \nto equal \n#{JSON.stringify(expectedData)}"
+      )
+      done()
+    )
+
+  ).fail((err) ->
+    console.error err
+    throw err
   )
 )
 
@@ -125,29 +133,32 @@ test('.getIndicatorData with no filters returns all indicator data for this indi
     }
   ]
 
-  indicator = new Indicator(
-    indicatorDefinition:
-      externalId: 14
-  )
+  indicator = new Indicator()
   indicatorData = new IndicatorData(
-    externalId: 14, data: expectedData
+    data: expectedData
   )
 
-  async.parallel([
-        (cb) -> indicator.save(cb)
-      ,
-        (cb) -> indicatorData.save(cb)
-    ], (err, results) ->
-      if err?
-        console.error err
-      else
-        indicator.getIndicatorData((err, data) ->
-          assert.ok(
-            _.isEqual(data, expectedData),
-            "Expected \n#{JSON.stringify(data)} \nto equal \n#{JSON.stringify(expectedData)}"
-          )
-          done()
-        )
+  Q.nsend(
+    indicator, 'save'
+  ).then(->
+    indicatorData.indicator = indicator
+
+    Q.nsend(
+      indicatorData, 'save'
+    )
+  ).then( ->
+    
+    indicator.getIndicatorData((err, data) ->
+      assert.ok(
+        _.isEqual(data, expectedData),
+        "Expected \n#{JSON.stringify(data)} \nto equal \n#{JSON.stringify(expectedData)}"
+      )
+      done()
+    )
+
+  ).fail((err) ->
+    console.error err
+    throw err
   )
 )
 
@@ -167,33 +178,36 @@ test('.getIndicatorData with an integer filter \'min\' value
   ]
   expectedFilteredData = [fullData[1], fullData[2]]
 
-  indicator = new Indicator(
-    indicatorDefinition:
-      externalId: 14
-  )
+  indicator = new Indicator()
   indicatorData = new IndicatorData(
-    externalId: 14, data: fullData
+    data: fullData
   )
 
   filters =
     value:
       min: '4'
 
-  async.parallel([
-        (cb) -> indicator.save(cb)
-      ,
-        (cb) -> indicatorData.save(cb)
-    ], (err, results) ->
-      if err?
-        console.error err
-      else
-        indicator.getIndicatorData(filters, (err, data) ->
-          assert.ok(
-            _.isEqual(data, expectedFilteredData),
-            "Expected \n#{JSON.stringify(data)} \nto equal \n#{JSON.stringify(expectedFilteredData)}"
-          )
-          done()
-        )
+  Q.nsend(
+    indicator, 'save'
+  ).then(->
+    indicatorData.indicator = indicator
+
+    Q.nsend(
+      indicatorData, 'save'
+    )
+  ).then( ->
+
+    indicator.getIndicatorData(filters, (err, data) ->
+      assert.ok(
+        _.isEqual(data, expectedFilteredData),
+        "Expected \n#{JSON.stringify(data)} \nto equal \n#{JSON.stringify(expectedFilteredData)}"
+      )
+      done()
+    )
+
+  ).fail((err) ->
+    console.error err
+    throw err
   )
 )
 
@@ -213,7 +227,6 @@ test('.calculateIndicatorDataBounds should return the upper and lower bounds of 
 
   indicator = new Indicator(
     indicatorDefinition:
-      externalId: 14
       fields: [{
         name: 'year'
         type: 'integer'
@@ -223,32 +236,39 @@ test('.calculateIndicatorDataBounds should return the upper and lower bounds of 
       }]
   )
   indicatorData = new IndicatorData(
-    externalId: 14, data: indicatorData
+    data: indicatorData
   )
 
-  async.parallel([
-        (cb) -> indicator.save(cb)
-      ,
-        (cb) -> indicatorData.save(cb)
-    ], (err, results) ->
-      if err?
-        console.error err
-      else
-        indicator.calculateIndicatorDataBounds((err, data) ->
-          assert.property(
-            data, 'year'
-          )
-          assert.property(
-            data, 'value'
-          )
 
-          assert.strictEqual(data.year.min, 2000)
-          assert.strictEqual(data.year.max, 2002)
+  Q.nsend(
+    indicator, 'save'
+  ).then(->
+    indicatorData.indicator = indicator
 
-          assert.strictEqual(data.value.min, 2)
-          assert.strictEqual(data.value.max, 9)
-          done()
-        )
+    Q.nsend(
+      indicatorData, 'save'
+    )
+  ).then( ->
+
+    indicator.calculateIndicatorDataBounds((err, data) ->
+      assert.property(
+        data, 'year'
+      )
+      assert.property(
+        data, 'value'
+      )
+
+      assert.strictEqual(data.year.min, 2000)
+      assert.strictEqual(data.year.max, 2002)
+
+      assert.strictEqual(data.value.min, 2)
+      assert.strictEqual(data.value.max, 9)
+      done()
+    )
+
+  ).fail((err) ->
+    console.error err
+    throw err
   )
 )
 
