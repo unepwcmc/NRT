@@ -30,7 +30,7 @@ sectionSchema.statics.cloneChildren = (clonedSectionAndOriginalSectionId, callba
 sectionSchema.methods.cloneChildrenBySectionId = ->
   deferred = Q.defer()
 
-  @cloneNarratives()
+  @cloneNarrativesFrom()
     .then( ->
       deferred.resolve()
     ).fail( (err)
