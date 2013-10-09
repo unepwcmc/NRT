@@ -54,3 +54,34 @@ test('.queryIndicatorData queries the remote server for indicator data', ->
   )
 
 )
+
+test('.convertResponseToIndicatorData takes data from remote server and
+  prepares for writing to database', ->
+  responseData = [
+    attributes:
+      OBJECTID: 1
+      periodStart: 1325376000000
+      value: "0.29390622"
+      text: "Test"
+  ,
+    attributes:
+      OBJECTID: 2
+      periodStart: 1356998400000
+      value: "0.2278165"
+      text: "Test"
+  ]
+
+  expectedIndicatorData = [
+    attributes:
+      OBJECTID: 1
+      periodStart: 1325376000000
+      value: "0.29390622"
+      text: "Test"
+  ,
+    attributes:
+      OBJECTID: 2
+      periodStart: 1356998400000
+      value: "0.2278165"
+      text: "Test"
+  ]
+)

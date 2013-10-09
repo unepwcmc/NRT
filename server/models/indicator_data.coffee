@@ -2,7 +2,7 @@ mongoose = require('mongoose')
 fs = require('fs')
 
 indicatorDataSchema = mongoose.Schema(
-  externalId: Number
+  indicator: {type: mongoose.Schema.Types.ObjectId, ref: 'Indicator'}
   data: mongoose.Schema.Types.Mixed
 )
 

@@ -32,27 +32,30 @@ test('.getIndicatorDataForCSV with no filters returns all indicator data in a 2D
     indicatorDefinition:
       xAxis: 'year'
       yAxis: 'value'
-      externalId: 14
   )
   indicatorData = new IndicatorData(
-    externalId: 14, data: data
+    data: data
   )
 
-  async.parallel([
-        (cb) -> indicator.save(cb)
+  async.waterfall([
+        (cb) -> indicator.save(cb(null, indicator))
       ,
-        (cb) -> indicatorData.save(cb)
-    ], (err, results) ->
+        (indicator, cb) ->
+          console.log "Setting indicatorData.indicator to #{indicator.id}"
+          indicatorData.indicator = indicator.id
+          indicatorData.save(cb(null, indicatorData))
+    ], (err, indicatorData) ->
       if err?
         console.error err
-      else
-        indicator.getIndicatorDataForCSV( (err, indicatorData) ->
-          assert.ok(
-            _.isEqual(indicatorData, expectedData),
-            "Expected \n#{JSON.stringify(indicatorData)} \nto equal \n#{JSON.stringify(expectedData)}"
-          )
-          done()
+        throw err
+
+      indicator.getIndicatorDataForCSV( (err, indicatorData) ->
+        assert.ok(
+          _.isEqual(indicatorData, expectedData),
+          "Expected \n#{JSON.stringify(indicatorData)} \nto equal \n#{JSON.stringify(expectedData)}"
         )
+        done()
+      )
   )
 )
 

@@ -68,7 +68,9 @@ indicatorSchema.methods.getIndicatorData = (filters, callback) ->
     callback = filters
     filters = {}
 
-  IndicatorData.findOne externalId: @indicatorDefinition.externalId, (err, res) ->
+  console.log "Looking for indicatorData where indicator: #{@id}"
+
+  IndicatorData.findOne indicator: @id, (err, res) ->
     if err?
       console.error err
       callback err
