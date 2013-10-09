@@ -26,7 +26,7 @@ test("When logged in and visiting the theme index page, I see my name", (done)->
 
     assert.equal res.statusCode, 200
 
-    assert.match body, new RegExp(".*Hello #{theUser.name}.*")
+    assert.match body, new RegExp(".*#{theUser.name}.*")
     done()
 
   ).fail((err) ->
