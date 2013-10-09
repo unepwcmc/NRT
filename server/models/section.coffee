@@ -1,6 +1,5 @@
 Narrative = require("./narrative.coffee").schema
 Visualisation = require("./visualisation.coffee").schema
-Indicator = require("./indicator.coffee").schema
 mongoose = require('mongoose')
 Q = require 'q'
 
@@ -20,10 +19,10 @@ sectionSchema.statics.getValidationErrors = (attributes) ->
 # Given an object with a cloned section and a target section id,
 # clones the children of the target section to the clone section
 sectionSchema.statics.cloneChildren = (clonedSectionAndOriginalSectionId, callback) ->
-  clonedSection = clonedSectionAndOriginalSectionId.clonedSection
+  section = clonedSectionAndOriginalSectionId.section
   originalSectionId = clonedSectionAndOriginalSectionId.originalSectionId
 
-  clonedSection.cloneChildrenBySectionId(originalSectionId)
+  section.cloneChildrenBySectionId(originalSectionId)
     .then(-> callback(nil))
     .fail(callback)
 

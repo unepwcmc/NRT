@@ -386,7 +386,10 @@ test(".giveSectionsNewIds on a page with one section
     sectionWithNewId = sectionsAndOriginalIds[0].section
     originalId = sectionsAndOriginalIds[0].originalId
 
-    assert.notStrictEqual sectionWithNewId, originalSectionId,
+    assert.strictEqual sectionWithNewId.constructor.name, "EmbeddedDocument",
+      "Expected returned section to be mongo instance"
+
+    assert.notStrictEqual sectionWithNewId.id, originalSectionId,
       "Expected section to have a new ID, but it's the same as the originalSectionId"
     assert.strictEqual originalId, originalSectionId,
       "Expected the returned originalId to be the same as the original section id"

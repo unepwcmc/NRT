@@ -1,19 +1,15 @@
 mongoose = require('mongoose')
-Section = require('./section.coffee').schema
 async = require('async')
 _ = require('underscore')
 sectionNestingModel = require('../mixins/section_nesting_model.coffee')
+SectionSchema = require('./section.coffee').schema
 Q = require('q')
 
 pageSchema = mongoose.Schema(
   title: String
   parent_id: mongoose.Schema.Types.ObjectId
   parent_type: String
-  sections: [mongoose.Schema(
-    title: String
-    type: String
-    indicator: {type: mongoose.Schema.Types.ObjectId, ref: 'Indicator'}
-  )]
+  sections: [SectionSchema]
   is_draft: type: Boolean, default: false
 )
 
@@ -23,16 +19,13 @@ pageSchema.methods.getParent = ->
   Ownable = require("./#{@parent_type.toLowerCase()}.coffee").model
   return Q.nsend(Ownable, 'findOne', @parent_id)
 
-stripIds = (pageObject) ->
-  for section, index in pageObject.sections
-    delete section._id
-    pageObject.sections[index] = section
-
 pageSchema.methods.createDraftClone = ->
+  Section = require('./section.coffee').model
   deferred = Q.defer()
+  clonedPage = null
 
   attributes = @toObject()
-  delete pageObject._id
+  delete attributes._id
   attributes.is_draft = true
 
   Q.nsend(
@@ -43,14 +36,13 @@ pageSchema.methods.createDraftClone = ->
     clonedPage.giveSectionsNewIds()
   ).then( (clonedSectionsAndOriginalSectionIds) ->
 
-    async.each(clonedSectionsAndOriginalSectionIds, Section.cloneChildren, (err, results) ->
+    async.each(clonedSectionsAndOriginalSectionIds, Section.cloneChildren, (err) ->
       if err?
         deferred.reject(err)
       
       deferred.resolve(clonedPage)
     )
 
-    deferred.resolve(page)
   ).fail( (err) ->
     deferred.reject(err)
   )
@@ -59,9 +51,9 @@ pageSchema.methods.createDraftClone = ->
 
 giveSectionNewId = (section, callback) ->
   originalSectionId = section.id
-  delete section._id
+  section._id = mongoose.Types.ObjectId()
 
-  section.save( (err, section) ->
+  section.save( (err) ->
     if err?
       callback(err)
 
