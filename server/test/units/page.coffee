@@ -363,3 +363,38 @@ test('.createDraftClone clones a public page,
 
 test('.createDraftClone clones a public page,
   and duplicates section indicator associations')
+
+test(".giveSectionsNewIds on a page with one section
+  gives that section a new ID
+  and returns an array containing the section and it's original ID", (done) ->
+  originalSectionId = null
+  helpers.createPage(
+    sections: [
+      title: "Lovely Section"
+    ]
+  ).then( (page) ->
+    originalSectionId = page.sections[0].id
+
+    assert.ok originalSectionId, "Created Section was expected to have an id"
+
+    page.giveSectionsNewIds()
+
+  ).then( (sectionsAndOriginalIds) ->
+
+    assert.lengthOf sectionsAndOriginalIds, 1, "Expected list of sections to have one section"
+
+    sectionWithNewId = sectionsAndOriginalIds[0].section
+    originalId = sectionsAndOriginalIds[0].originalId
+
+    assert.notStrictEqual sectionWithNewId, originalSectionId,
+      "Expected section to have a new ID, but it's the same as the originalSectionId"
+    assert.strictEqual originalId, originalSectionId,
+      "Expected the returned originalId to be the same as the original section id"
+
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)

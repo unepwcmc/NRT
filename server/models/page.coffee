@@ -24,7 +24,6 @@ pageSchema.methods.getParent = ->
   return Q.nsend(Ownable, 'findOne', @parent_id)
 
 stripIds = (pageObject) ->
-  delete pageObject._id
   for section, index in pageObject.sections
     delete section._id
     pageObject.sections[index] = section
@@ -33,17 +32,55 @@ pageSchema.methods.createDraftClone = ->
   deferred = Q.defer()
 
   attributes = @toObject()
-  stripIds(attributes)
+  delete pageObject._id
   attributes.is_draft = true
 
   Q.nsend(
     Page, 'create', attributes
   ).then( (page) ->
+    clonedPage = page
+
+    clonedPage.giveSectionsNewIds()
+  ).then( (clonedSectionsAndOriginalSectionIds) ->
+
+    async.each(clonedSectionsAndOriginalSectionIds, Section.cloneChildren, (err, results) ->
+      if err?
+        deferred.reject(err)
+      
+      deferred.resolve(clonedPage)
+    )
+
     deferred.resolve(page)
   ).fail( (err) ->
     deferred.reject(err)
   )
 
+  return deferred.promise
+
+giveSectionNewId = (section, callback) ->
+  originalSectionId = section.id
+  delete section._id
+
+  section.save( (err, section) ->
+    if err?
+      callback(err)
+
+    callback(null,
+      originalId: originalSectionId
+      section: section
+    )
+  )
+
+pageSchema.methods.giveSectionsNewIds = ->
+  deferred = Q.defer()
+
+  async.map(@sections, giveSectionNewId, (err, sectionsWithOriginalIds) ->
+    if err?
+      deferred.reject(err)
+
+    deferred.resolve(sectionsWithOriginalIds)
+  )
+    
   return deferred.promise
 
 pageSchema.methods.getOwnable = ->
