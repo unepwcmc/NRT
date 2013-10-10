@@ -392,32 +392,7 @@ div.row.row-2 {
   }
   .title {
     padding-left: 12px;
-    //width: 195px;
-    //float: left;
   }
-  /*.context {
-    width: 16px;
-    height: 16px;
-    border-radius: 16px;
-    background-color: #ffffe4;
-    float: left;
-    margin: 17px 12px;
-    &.excellent {
-      background-color: #b56919;
-    }
-    &.good {
-      background-color: #e08321;
-    }
-    &.concerning {
-      background-color: #eaab68;
-    }
-    &.bad {
-      background-color: #f3d0ab;
-    }
-    &.catastrofic {
-      background-color: #fcf3ea;
-    }
-  }*/
   .unit {
     color: $mainFont;
     text-align: center;
@@ -430,7 +405,6 @@ div.row.row-2 {
   .context-text{
     text-align: center;
     font-size: 0.8em;
-    //margin-top: 5px;
     color: #fff;
     &.excellent {
       color: #fff;
