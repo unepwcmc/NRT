@@ -37,3 +37,29 @@ exports.show = (req, res) ->
     console.error err
     return res.render(500, "Error fetching the indicator")
   )
+
+exports.showDraft = (req, res) ->
+  Q.nsend(
+    Indicator.findOne(_id: req.params.id).populate('owner'),
+    'exec'
+  ).then( (indicator) ->
+    unless indicator?
+      error = "Could not find indicator with ID #{req.params.id}"
+      console.error error
+      return res.send(404, error)
+
+    indicator = indicator.toObjectWithNestedPage(draft: true)
+    .then((indicatorObject) ->
+      res.render("indicators/show",
+        indicator: indicator, indicatorJSON: JSON.stringify(indicatorObject)
+      )
+    ).fail((err) ->
+      console.error err
+      return res.render(500, "Error fetching the indicator page")
+    )
+
+  ).fail((err) ->
+    console.error err
+    return res.render(500, "Error fetching the indicator")
+  )
+

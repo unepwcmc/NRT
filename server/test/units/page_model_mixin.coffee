@@ -136,8 +136,8 @@ test(".toObjectWithNestedPage returns an object representation of the
 )
 
 test(".getDraftPage
-  when no draft page is associated 
-  and a non-draft page is associated 
+  when no draft page is associated
+  and a non-draft page is associated
   it creates a clones of the non-draft and returns it", (done) ->
 
   theIndicator = nonDraftPage = draftPage = null
@@ -181,8 +181,8 @@ test(".getDraftPage
   ).then( (foundPage) ->
 
     assert.strictEqual(
-      foundPage.id, draftPage.id,
-      "Expected to find the same page when looking for _id #{draftPage.id} 
+      foundPage.id, draftPage._id.toString(),
+      "Expected to find the same page when looking for _id #{draftPage._id}
         but found page with id #{foundPage.id}"
     )
     done()

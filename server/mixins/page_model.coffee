@@ -15,7 +15,11 @@ module.exports = {
         @getPage().then( (nonDraftPage) ->
           nonDraftPage.createDraftClone()
         ).then( (clonedPage) ->
-          deferred.resolve(clonedPage)
+          Q.nsend(
+            Page, 'findFatModel', clonedPage._id
+          )
+        ).then( (fatPage) ->
+          deferred.resolve(fatPage)
         )
     ).fail( (err) ->
       deferred.reject(err)
@@ -64,10 +68,13 @@ module.exports = {
 
     return deferred.promise
 
-  toObjectWithNestedPage: ->
+  toObjectWithNestedPage: (options = {draft: false}) ->
     deferred = Q.defer()
 
-    @getFatPage().then( (page) =>
+    getMethod = @getFatPage
+    getMethod = @getDraftPage if options.draft
+
+    getMethod.call(@).then( (page) =>
       object = @toObject()
       object.page = page
 
