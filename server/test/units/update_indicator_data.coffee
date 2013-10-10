@@ -52,12 +52,12 @@ test('.queryIndicatorData queries the remote server for indicator data', (done) 
     assert.isDefined options.qs, "Expected query string parameters to be defined"
 
     callback(null, {
-      body: JSON.stringify(serverResponseData)
+      body: serverResponseData
     }))
 
   indicator.queryIndicatorData().then( (response) ->
     assert.ok(
-      _.isEqual(JSON.parse(response.body), serverResponseData),
+      _.isEqual(response.body, serverResponseData),
       "Expected responseBody:\n
       #{response.body}\n
         to look like expected server response data:\n

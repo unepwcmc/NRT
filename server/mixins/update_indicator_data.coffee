@@ -55,6 +55,7 @@ module.exports =
       request.get
         url: @getUpdateUrl()
         qs: config.defaultQueryParameters
+        json: true
       , (err, response) ->
         if err?
           deferred.reject(err)
