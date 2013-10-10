@@ -4,6 +4,7 @@ Indicator = require('../../models/indicator').model
 Q = require('q')
 request = require 'request'
 sinon = require 'sinon'
+_ = require('underscore')
 
 suite('Update Indicator Mixin')
 
@@ -56,32 +57,54 @@ test('.queryIndicatorData queries the remote server for indicator data', ->
 )
 
 test('.convertResponseToIndicatorData takes data from remote server and
-  prepares for writing to database', ->
-  responseData = [
-    attributes:
-      OBJECTID: 1
-      periodStart: 1325376000000
-      value: "0.29390622"
-      text: "Test"
-  ,
-    attributes:
-      OBJECTID: 2
-      periodStart: 1356998400000
-      value: "0.2278165"
-      text: "Test"
-  ]
+  prepares for writing to database', (done)->
+  responseData = {
+    features: [
+      attributes:
+        OBJECTID: 1
+        periodStart: 1325376000000
+        value: "0.29390622"
+        text: "Test"
+    ,
+      attributes:
+        OBJECTID: 2
+        periodStart: 1356998400000
+        value: "0.2278165"
+        text: "Test"
+    ]
+  }
 
-  expectedIndicatorData = [
-    attributes:
-      OBJECTID: 1
-      periodStart: 1325376000000
-      value: "0.29390622"
-      text: "Test"
-  ,
-    attributes:
-      OBJECTID: 2
-      periodStart: 1356998400000
-      value: "0.2278165"
-      text: "Test"
-  ]
+  helpers.createIndicatorModels([{}])
+  .then( (indicators) ->
+    indicator = indicators[0]
+
+    expectedIndicatorData = {
+      indicator: indicator._id
+      data: [
+        periodStart: 1325376000000
+        value: "0.29390622"
+        text: "Test"
+        ,
+          periodStart: 1356998400000
+          value: "0.2278165"
+          text: "Test"
+      ]
+    }
+
+    convertedData = indicator.convertResponseToIndicatorData(responseData)
+
+    assert.ok(
+      _.isEqual(convertedData, expectedIndicatorData),
+      "Expected converted data:\n
+      #{JSON.stringify(convertedData)}\n
+        to look like expected indicator data:\n
+      #{JSON.stringify(expectedIndicatorData)}"
+    )
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
 )

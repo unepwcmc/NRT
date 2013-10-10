@@ -1,6 +1,7 @@
 async = require('async')
 Q = require('q')
 request = require('request')
+_ = require('underscore')
 
 config = 
   indicatorServer: '196.218.36.14/ka'
@@ -50,3 +51,16 @@ module.exports =
         deferred.resolve(response)
 
       return deferred.promise
+
+    convertResponseToIndicatorData: (responseBody) ->
+      convertedData = {
+        indicator: @_id
+        data: []
+      }
+
+      for feature in responseBody.features
+        convertedData.data.push _.omit(feature.attributes, 'OBJECTID')
+
+      return convertedData
+
+
