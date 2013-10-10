@@ -53,10 +53,14 @@ exports.start = (port, callback) ->
 
 seedData = ->
   Indicator = require("./models/indicator").model
-  Indicator.seedData(->)
-
   IndicatorData = require("./models/indicator_data").model
-  IndicatorData.seedData(->)
+
+  Indicator.seedData()
+  .then(IndicatorData.seedData)
+  .fail((err) ->
+    console.error err
+    throw err
+  )
 
   Theme = require("./models/theme").model
   Theme.seedData(->)

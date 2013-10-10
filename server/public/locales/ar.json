@@ -65,6 +65,16 @@
   "indicator/similar": "مؤشرات مماثلة",
   "indicator/add_section": "إضافة القسم",
 
+  "theme/download": "تحميل ورقة العمل",
+  "theme/narratives": "السرد لهذا المؤشر",
+  "theme/owned_by": "مؤشر يملكها",
+  "theme/metadata": "البيانات الوصفية",
+  "theme/metadata/category": "فئة",
+  "theme/metadata/most_recent": "أحدث البيانات التي تم جمعها",
+  "theme/metadata/oldest_data": "أقدم البيانات التي تم جمعها",
+  "theme/similar": "مؤشرات مماثلة",
+  "theme/add_section": "إضافة القسم",
+
   "indicator/bookmark_this_indicator": "المرجعية في هذا المؤشر",
 
   "header/new_report": "تقرير جديد",

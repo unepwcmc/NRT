@@ -12,6 +12,7 @@ class Backbone.Views.TextEditingView extends Backbone.View
     @tagName = options.tagName
     @setPosition(options.position)
     @content = options.content
+    @disableNewlines = options.disableNewlines
 
     @disablerDiv = $('<div class="modal"/>')
     $('body').prepend(@disablerDiv)
@@ -28,6 +29,7 @@ class Backbone.Views.TextEditingView extends Backbone.View
 
     new MediumEditor(@$el,
       excludedActions: ['u', 'blockquote', 'h4', 'h3', 'b']
+      disableReturn: @disableNewlines
     )
 
     return @
@@ -57,8 +59,8 @@ class Backbone.Views.TextEditingView extends Backbone.View
   closeViewAndModal: =>
     @disablerDiv.remove()
     @trigger('close', @getContent())
-    $(document).off('scroll', @setPositionToParent)
     @close()
 
   onClose: ->
+    $(document).off('scroll', @setPositionToParent)
     $('.medium-editor-toolbar').remove()

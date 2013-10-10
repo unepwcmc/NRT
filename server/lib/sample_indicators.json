@@ -3,7 +3,6 @@
     "theme": 2,
     "category": "Biodiversity",
     "indicatorDefinition": {
-      "externalId": 14,
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
       "unit": "% Protection by Key Representative Inland Habitats",
@@ -29,7 +28,6 @@
     "category": "Biodiversity",
     "title": "To ensure annual PM10 concentrations do not exceed ambient air quality standards",
     "indicatorDefinition": {
-      "externalId": 13,
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/13",
       "operation": "sum",
       "unit": "μg/m3 (annual avg.)",
@@ -55,7 +53,6 @@
     "category": "Biodiversity",
     "title": "To restrict loss of bird species in Abu Dhabi",
     "indicatorDefinition": {
-      "externalId": 0,
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/0",
       "operation": "count",
       "unit": "Wild bird index relative to 1.00 in base year",

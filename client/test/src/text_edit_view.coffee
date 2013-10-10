@@ -19,7 +19,6 @@ test('When finishing editing it should trigger save on the model', ->
       done: ->
     }
   )
-  console.log "Stubbed model #{model.cid}"
 
   textEditView = new Backbone.Views.TextEditView(
     model: model

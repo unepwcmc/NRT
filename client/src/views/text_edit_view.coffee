@@ -13,6 +13,7 @@ class Backbone.Views.TextEditView extends Backbone.View
     @model = options.model
     @attributeName = options.attributeName
     @tagName = options.tagName || 'div'
+    @disableNewlines = options.disableNewlines || false
 
     @render()
 
@@ -32,6 +33,7 @@ class Backbone.Views.TextEditView extends Backbone.View
         tagName: @tagName
         position: @getPositionRelativeToViewport()
         content: @model.get(@attributeName)
+        disableNewlines: @disableNewlines
       )
       @setupEditingViewBindings()
       @$el.append(@editingView.el)
