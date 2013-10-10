@@ -166,7 +166,7 @@ module.exports =
         newIndicatorData = @convertResponseToIndicatorData(response.body)
         if @validateIndicatorDataFields(newIndicatorData)
           newIndicatorData = @convertIndicatorDataFields(newIndicatorData)
-          @replaceIndicatorData(newIndicatorData)
+          return @replaceIndicatorData(newIndicatorData)
         else
           throw new Error("Validation of indicator data fields failed")
       ).then( (indicatorData) ->
