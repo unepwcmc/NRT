@@ -7,7 +7,10 @@ class Backbone.Views.ChooseUserView extends Backbone.Diorama.NestingView
   events:
     'keyup input': 'updateSearch'
     'click .choose-user': 'chooseUser'
+    'click .close': 'hideView'
 
+  className: 'dialog'
+ 
   initialize: (options) ->
     @users = new Backbone.Collections.UserCollection()
     @results = new Backbone.Collections.UserCollection()
@@ -46,6 +49,9 @@ class Backbone.Views.ChooseUserView extends Backbone.Diorama.NestingView
 
   updateSearch: =>
     searchTerm = $('input').val()
+
+    return @hideSubView() if searchTerm.length is 0
+
     @users.search(searchTerm)
     .done(@showSearchResults)
     .fail((err) =>
@@ -59,3 +65,9 @@ class Backbone.Views.ChooseUserView extends Backbone.Diorama.NestingView
 
   onClose: ->
     @closeSubViews()
+
+  hideView: =>
+    @$el.slideUp(=>
+      @trigger('close')
+      @close()
+    )
