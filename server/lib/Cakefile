@@ -1,0 +1,55 @@
+request = require('request')
+Q = require('q')
+_ = require('underscore')
+
+standardQuerySuffix = 
+  'where': 'objectid > 0'
+  'objectIds': ''
+  'time': ''
+  'geometry': ''
+  'geometryType':'esriGeometryEnvelope'
+  'inSR': ''
+  'spatialRel':'esriSpatialRelIntersects'
+  'relationParam': ''
+  'outFields': ''
+  'returnGeometry':'true'
+  'maxAllowableOffset': ''
+  'geometryPrecision': ''
+  'outSR': ''
+  'gdbVersion': ''
+  'returnIdsOnly':'false'
+  'returnCountOnly':'false'
+  'orderByFields': ''
+  'groupByFieldsForStatistics': ''
+  'outStatistics': ''
+  'returnZ':'false'
+  'returnM':'false'
+  'f':'pjson'
+
+constructUrl = (serviceName, featureServer) ->
+  unless serviceName && featureServer
+    return console.error 'Need to give serviceName and featureServer'
+  "http://196.218.36.14/ka/rest/services/#{serviceName}/FeatureServer/#{featureServer}/query?"
+
+makeRequest = (serviceName, featureServer) ->
+  request
+    url: constructUrl(serviceName, featureServer)
+    qs: standardQuerySuffix
+  , handleResponse
+
+handleResponse = (error, res) ->
+  return console.error error if error?
+  object = JSON.parse(res.body)
+  console.log object.features
+  console.log "===\nIn real life, I'd update the database with these values\n==="
+
+task 'check:pas', 'check for updated PAs indicator data', (options) ->
+  serviceName = 'NRT_AD_ProtectedArea'
+  featureServer = 2
+  makeRequest(serviceName, featureServer)
+
+task 'check:airquality', 'check for updated Air Quality indicator data', (options) ->
+  serviceName = null
+  featureServer = null
+  makeRequest(serviceName, featureServer)
+

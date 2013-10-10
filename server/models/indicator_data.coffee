@@ -1,33 +1,40 @@
 mongoose = require('mongoose')
 fs = require('fs')
+Q = require 'q'
 
 indicatorDataSchema = mongoose.Schema(
-  externalId: Number
+  indicator: {type: mongoose.Schema.Types.ObjectId, ref: 'Indicator'}
   data: mongoose.Schema.Types.Mixed
 )
 
-indicatorDataSchema.statics.seedData = (callback) ->
-  # Seed some indicators
-  dummyIndicatorData = JSON.parse(
-    fs.readFileSync("#{process.cwd()}/lib/indicator_data.json", 'UTF8')
-  )
+indicatorDataSchema.statics.seedData = (indicators) ->
+  deferred = Q.defer()
 
   IndicatorData.count(null, (error, count) ->
     if error?
-      console.error error
-      return callback(error) 
+      deferred.reject(error)
 
-    if count == 0
+    if count is 0
+      # Grab indcator data from disk
+      dummyIndicatorData = JSON.parse(
+        fs.readFileSync("#{process.cwd()}/lib/indicator_data.json", 'UTF8')
+      )
+
+      # Add indicator IDs to dummy data
+      for indicatorData, index in dummyIndicatorData
+        dummyIndicatorData[index].indicator = indicators[indicators.length%index]
+
       IndicatorData.create(dummyIndicatorData, (error, results) ->
         if error?
-          console.error error
-          return callback(error) 
+          deferred.reject(error)
         else
-          return callback(null, results)
+          deferred.resolve(results)
       )
     else
-      callback()
+      deferred.resolve()
   )
+
+  return deferred.promise
 
 IndicatorData = mongoose.model('IndicatorData', indicatorDataSchema)
 
