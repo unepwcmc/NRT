@@ -264,20 +264,21 @@ h1, h2, h3, h4, h5 {
   .inner {
     margin: 0 auto;
     width: 980px;
-  }
-
-  h1 {
-    font-family: "PT Sans";
-    font-size: 1em;
-    color: white;
-    float: left;
-    margin-top: 11px;
-    padding-bottom: 0;
-
-    small {
-      font-weight: bold;
-      display: block;
+    h1 {
+      font-family: "PT Sans";
+      font-size: 1em;
+      font-weight: normal;
       color: white;
+      float: left;
+      margin-top: 11px;
+      padding-bottom: 0;
+
+      small {
+        font-weight: bold;
+        font-size: 0.85em;
+        display: block;
+        color: white;
+      }
     }
   }
 
