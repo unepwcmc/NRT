@@ -233,3 +233,57 @@ test(".convertSourceValueToInternalValue when given a type conversion which
   ), "Don't know how to convert 'apples' to 'oranges' for field 'periodStart'"
     
 )
+
+test(".replaceIndicatorData when called on an  indicator where indicator data
+  already exists,
+  it replaces the existing data with the new given data", (done) ->
+
+  indicator = oldIndicatorData = null
+  newIndicatorData = [{
+    year: 2013
+  }]
+
+  helpers.createIndicatorModels(
+    [{}]
+  ).then( (indicators) ->
+    indicator = indicators[0]
+
+    # populate existing indicator data
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        indicator: indicator
+        data: [old: 'data']
+      }
+    )
+  ).then( (indicatorData) ->
+    oldIndicatorData = indicatorData
+
+    # Replace existing data with new data
+    indicator.replaceIndicatorData({
+      indicator: indicator
+      data: newIndicatorData
+    })
+  ).then( (replacedIndicatorData) ->
+    assert.strictEqual replacedIndicatorData.id, oldIndicatorData.id,
+      "Expected updated indicator.id to be the same as the original record"
+
+    Q.nsend(
+      indicator, 'getIndicatorData'
+    )
+  ).then( (retrievedIndicatorData) ->
+
+    assert.ok(
+      _.isEqual(retrievedIndicatorData, newIndicatorData),
+      "Expected indicator data:\n
+      #{JSON.stringify(retrievedIndicatorData)}\n
+        to have been updated to be new indicator data:\n
+      #{JSON.stringify(newIndicatorData)}"
+    )
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+  
+)

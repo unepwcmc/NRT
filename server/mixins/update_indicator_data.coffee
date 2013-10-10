@@ -123,3 +123,19 @@ module.exports =
       indicatorData.data = translatedRows
       return indicatorData
 
+    replaceIndicatorData: (newIndicatorData) ->
+      IndicatorData = require('../models/indicator_data').model
+      deferred = Q.defer()
+
+      IndicatorData.findOneAndUpdate(
+        {indicator: @},
+        newIndicatorData,
+        {upsert: true}
+        (err, indicatorData) ->
+          if err?
+            deferred.reject(err)
+          else
+            deferred.resolve(indicatorData)
+      )
+
+      return deferred.promise
