@@ -659,7 +659,6 @@ aside {
       border-top: 1px solid $lightGrey;
 
       .outdated {
-        font-weight: bold;
         color: $orange;
 
         .outdated-notice {
@@ -798,5 +797,33 @@ table {
 }
 
 .medium-editor-placeholder { position: fixed !important; }
+
+.edit-bar-container {
+  width: 100%;
+  position: fixed;
+  z-index: 3;
+  background-color: rgba(255,255,255, 0.95);
+  border-top: 1px solid $bkgGrey;
+  border-bottom: 1px solid $bkgGrey;
+  height: 50px;
+  .edit-bar {
+    width: 980px;
+    margin: auto;
+    padding-top: 8px;
+    p {
+      float: left;
+      color: $lightishGrey;
+      font-size: 0.8em;
+    }
+    button {
+      float: right;
+      margin-left: 10px;
+      &#publish {
+        border: 1px solid $green;
+        color: $green;
+      }
+    }
+  }
+}
 
 @import "charts";
