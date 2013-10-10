@@ -15,7 +15,7 @@ config =
     'spatialRel':'esriSpatialRelIntersects'
     'relationParam': ''
     'outFields': ''
-    'returnGeometry':'true'
+    'returnGeometry':'false'
     'maxAllowableOffset': ''
     'geometryPrecision': ''
     'outSR': ''
