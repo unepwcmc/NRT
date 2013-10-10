@@ -111,15 +111,16 @@ class="theme-list"
         </h3>
         {{/unless}}
         {{#indicators}}
-        <a class="indicator-box" href="/indicators/{{id}}">
+        <a class="indicator-box" href="/indicators/{{id}}" data-title="Annual Fish Catch" data-description="Annual catch of major species in relation to spawning biomass if available or in relation"><!--{{long-title}} and {{brief-description}}-->
           <div class="box-header">
-            <div class="context" class="<!--{{context}}-->good"></div>
-            <div class="title"><h3><span>NO<sub>2</sub> concentrations<!--{{title}}--></span></h3></div>
+            <div class="context concerning"><!-- insert this into class and change css names {{context}} --></div>
+            <div class="title"><h3><span>O3 Human Health Ozone<!--{{title}}--></span></h3></div>
             <div class="clear"></div>
           </div>
+          <div class="context-text concerning">Concerning <!-- {{context}} --></div>
           <div class="parameter">
-            <h4><!--{{parameter}}-->38</h4>
-            <div class="unit">μg/L</div>
+            <h4><!--{{parameter}}-->53</h4>
+            <div class="unit">mg/L</div>
           </div>
           <div class="last-update">Updated: 2 days ago <!-- {{last-update}} --></div>
         </a>

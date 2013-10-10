@@ -686,6 +686,28 @@ table {
   }
 }
 
+footer{
+  margin-top: 40px;
+  background-color: $bkgGrey;
+  width: 100%;
+  min-width: 980px;
+  padding: 50px 0;
+  border-top: 1px solid #ddd;
+  .inner{
+    width: 980px;
+    margin: 0 auto;
+    text-align: center;
+    h3{
+      color: $mainFont;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+  }
+  img{
+    margin: 0 25px;
+  }
+}
+
 .medium-editor-placeholder { position: fixed !important; }
 
 @import "charts";
