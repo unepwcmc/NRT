@@ -5,37 +5,122 @@
 {{/contentFor}}
 
 {{#contentFor 'breadcrumbs'}}
-  <li><a href="/themes">New theme list</a></li>
+  <li><a href="/themes">Themes</a></li>
+{{/contentFor}}
+
+{{#contentFor 'extra-body'}}
+class="theme-list"
 {{/contentFor}}
 
 <div class="content">
-  <header>
+  <!--<header>
     <h1>{{{t "indicators/title"}}}</h1>
   </header>
 
   <div class='intro-text'>
     This is an annual snapshot of the state of the environment in Abu Dhabi for 2013. The state is generally positive. Some key areas for investigation are XX and YY. There has been excellent progress in the areas of AA and BB.
 
-  </div>
+  </div>-->
   <div class="indicators-container">
     <div class="report-content">
       {{#themes}}
       <a href="/themes/{{_id}}">
-        <h2>{{title}}</h2>
+        <h2>{{title}} <span>›</span></h2>
       </a>
         {{#unless indicators}}
+        <a class="indicator-box" href="/indicators/{{id}}">
+          <div class="box-header">
+            <div class="context" class="<!--{{context}}-->good"></div>
+            <div class="title"><h3><span>NO<sub>2</sub> concentrations<!--{{title}}--></span></h3></div>
+            <div class="clear"></div>
+          </div>
+          <div class="parameter">
+            <h4><!--{{parameter}}-->38</h4>
+            <div class="unit">μg/L</div>
+          </div>
+          <div class="last-update">Updated: 2 days ago <!-- {{last-update}} --></div>
+        </a>
+        <a class="indicator-box" href="/indicators/{{id}}">
+          <div class="box-header">
+            <div class="context" class="<!--{{context}}-->good"></div>
+            <div class="title"><h3><span>SO<sub>2</sub> concentrations<!--{{title}}--></span></h3></div>
+            <div class="clear"></div>
+          </div>
+          <div class="parameter">
+            <h4><!--{{parameter}}-->42</h4>
+            <div class="unit">mg/L</div>
+          </div>
+          <div class="last-update">Updated: 2 days ago <!-- {{last-update}} --></div>
+        </a>
+        <a class="indicator-box" href="/indicators/{{id}}">
+          <div class="box-header">
+            <div class="context" class="<!--{{context}}-->good"></div>
+            <div class="title"><h3><span>PM10 concentrations<!--{{title}}--></span></h3></div>
+            <div class="clear"></div>
+          </div>
+          <div class="parameter">
+            <h4><!--{{parameter}}-->26</h4>
+            <div class="unit">MPN/100ml</div>
+          </div>
+          <div class="last-update">Updated: 2 days ago <!-- {{last-update}} --></div>
+        </a>
+        <a class="indicator-box" href="/indicators/{{id}}">
+          <div class="box-header">
+            <div class="context" class="<!--{{context}}-->good"></div>
+            <div class="title"><h3><span>PM2.5 concentrations<!--{{title}}--></span></h3></div>
+            <div class="clear"></div>
+          </div>
+          <div class="parameter">
+            <h4><!--{{parameter}}-->26</h4>
+            <div class="unit">ktonnes</div>
+          </div>
+          <div class="last-update">Updated: 2 days ago <!-- {{last-update}} --></div>
+        </a>
+        <a class="indicator-box" href="/indicators/{{id}}">
+          <div class="box-header">
+            <div class="context" class="<!--{{context}}-->good"></div>
+            <div class="title"><h3><span>SO concentrations<!--{{title}}--></span></h3></div>
+            <div class="clear"></div>
+          </div>
+          <div class="parameter">
+            <h4><!--{{parameter}}-->41</h4>
+            <div class="unit">μg/L</div>
+          </div>
+          <div class="last-update">Updated: 2 days ago <!-- {{last-update}} --></div>
+        </a>
+        <a class="indicator-box" href="/indicators/{{id}}">
+          <div class="box-header">
+            <div class="context" class="<!--{{context}}-->good"></div>
+            <div class="title"><h3><span>O3 Human Health Ozone<!--{{title}}--></span></h3></div>
+            <div class="clear"></div>
+          </div>
+          <div class="parameter">
+            <h4><!--{{parameter}}-->53</h4>
+            <div class="unit">mg/L</div>
+          </div>
+          <div class="last-update">Updated: 2 days ago <!-- {{last-update}} --></div>
+        </a>
         <h3>
           No indicators
         </h3>
         {{/unless}}
         {{#indicators}}
-        <a href="/indicators/{{id}}"><h3>{{title}}</h3></a>
+        <a class="indicator-box" href="/indicators/{{id}}">
+          <div class="box-header">
+            <div class="context" class="<!--{{context}}-->good"></div>
+            <div class="title"><h3><span>NO<sub>2</sub> concentrations<!--{{title}}--></span></h3></div>
+            <div class="clear"></div>
+          </div>
+          <div class="parameter">
+            <h4><!--{{parameter}}-->38</h4>
+            <div class="unit">μg/L</div>
+          </div>
+          <div class="last-update">Updated: 2 days ago <!-- {{last-update}} --></div>
+        </a>
         {{/indicators}}
       {{/themes}}
     </div>
-
-
-    <div class="report-sidebar">
-    </div>
+    <!--<div class="report-sidebar"></div>-->
+    <div class="clear"></div>
   </div>
 </div>

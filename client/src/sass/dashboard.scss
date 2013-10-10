@@ -209,6 +209,7 @@ div.row.row-2 {
     float: left;
     padding-left: 0;
     margin-top: 30px;
+    width: 729px;
 
     .section-title h3 {
       a {
@@ -274,6 +275,97 @@ div.row.row-2 {
         margin: 10px;
       }
     }
+  }
+}
+
+.theme-list {
+  background-color: $lightGrey;
+  .menu {
+    background-color: #fff;
+  }
+  .breadcrumbs {
+    display: none;
+  }
+  .content {
+    padding-top: 49px;
+  }
+}
+
+.indicators-container .report-content {
+  width: 735px;
+  h2 {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    margin: 30px 0;
+  }
+}
+
+.indicator-box {
+  width: 235px;
+  height: 190px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 2px rgba(0,0,0,.1);
+  display: inline-block;
+  margin-right: 6px;
+  margin-bottom: 12px;
+  .box-header {
+    height: 50px;
+    background-color: #2D3E4F;
+    border-top-left-radius:2px;
+    border-top-right-radius:2px;
+    h3 {
+      color: #fff;
+      font-size: 0.8em;
+      line-height: 1.2em;
+      height: 50px;
+      display: table;
+      span {
+        display:inline-block;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: left;
+      }
+    }
+  }
+  h4 {
+    font-size: 3.25em;
+    text-align: center;
+    font-weight: 600;
+    color: $mainFont;
+    line-height: 1.2em;
+    position: relative;
+    top: 2px;
+  }
+  .title {
+    width: 195px;
+    float: left;
+  }
+  .context {
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    background-color: pink;
+    float: left;
+    margin: 17px 12px;
+  }
+  .unit {
+    color: $mainFont;
+    text-align: center;
+    font-size: 1.4em;
+    line-height: 1.2em;
+    position: relative;
+    top: -6px;
+    color: $grey;
+  }
+  .last-update {
+    width: 100%;
+    font-size: 0.65em;
+    padding: 2px 15px 0 15px;
+    border-top: 1px solid $lightGrey;
+    margin-top: 5px;
+    font-weight: 600;
+    color: $grey;
   }
 }
 
