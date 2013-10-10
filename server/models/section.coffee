@@ -66,43 +66,37 @@ cloneVisualisation = (visualisation, callback) ->
     callback(null, clonedVisualisation)
   )
 
-sectionSchema.methods.cloneNarrativesFrom = (sectionId) ->
-  deferred = Q.defer()
-
-  @cloneNestedObjectsFromSection(Narrative, sectionId).then( (narratives) ->
-    deferred.resolve(narratives)
-  ).fail( (err) ->
-    deferred.reject(err)
-  )
-
-  return deferred.promise
-
 sectionSchema.methods.cloneVisualisationsFrom = (sectionId) ->
   deferred = Q.defer()
 
-  @cloneNestedObjectsFromSection(Visualisation, sectionId).then( (visualisations) ->
-    deferred.resolve(visualisations)
-  ).fail( (err) ->
-    deferred.reject(err)
-  )
-
-  return deferred.promise
-
-sectionSchema.methods.cloneNestedObjectsFromSection = (object, sectionId) ->
-  deferred = Q.defer()
-
   Q.nsend(
-    object.find(section: sectionId), 'exec'
-  ).then( (objects) =>
+    Visualisation.find(section: sectionId), 'exec'
+  ).then( (visualisations) =>
 
-    method = cloneVisualisation.bind(@)
-    method = cloneNarrative.bind(@) if object == Narrative
-
-    async.map(objects, method, (err, clonedObjects) ->
+    async.map(visualisations, cloneVisualisation.bind(@), (err, clonedvisualisations) ->
       if err?
         deferred.reject(err)
 
-      deferred.resolve(clonedObjects)
+      deferred.resolve(clonedvisualisations)
+    )
+
+  ).fail( (err) ->
+    deferred.reject(err)
+  )
+  return deferred.promise
+
+sectionSchema.methods.cloneNarrativesFrom = (sectionId) ->
+  deferred = Q.defer()
+
+  Q.nsend(
+    Narrative.find(section: sectionId), 'exec'
+  ).then( (narratives) =>
+
+    async.map(narratives, cloneNarrative.bind(@), (err, clonedNarratives) ->
+      if err?
+        deferred.reject(err)
+
+      deferred.resolve(clonedNarratives)
     )
 
   ).fail( (err) ->
