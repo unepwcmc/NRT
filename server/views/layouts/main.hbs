@@ -22,7 +22,7 @@
     {{/if}}
 
   </head>
-  <body>
+  <body {{{block "extra-body"}}}>
 
     <div class="menu">
       <div class="inner">
@@ -60,6 +60,12 @@
     </div>
 
     {{{body}}}
+    <footer>
+      <div class="inner">
+        <h3>NRT is developed by:</h3>
+        <img src="/images/unep-logo.png" alt=""><img src="/images/ead-logo.png" alt=""><img src="/images/agedi-logo.png" alt="">
+      </div>
+    </footer>
 
   </body>
 </html>
