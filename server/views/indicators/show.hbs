@@ -18,7 +18,14 @@
   <li><a href="/indicators">Indicators</a></li>
   <li>{{indicator.title}}</li>
 {{/contentFor}}
-
+<div class="edit-bar-container">
+  <div class="edit-bar">
+    <p>Last edited on 7 July 2013</p>
+    <button id="publish">Publish</button>
+    <button>Discard Draft</button>
+    <button>Back to published view</button>
+  </div><!--edit bar-->
+</div><!--edit bar container-->
 <div class="content indicator">
   <article>
     <header>
@@ -69,17 +76,21 @@
             <h4>{{{t "indicator/metadata/oldest_data"}}}</h4>
             <span>3 June 2013</span>
           </li>
-        </ul>
-      </section>
-
-      <section>
-        <h3>{{{t "indicator/similar"}}}</h3>
-        <ul>
           <li>
-            Average evaporation rate
+            <h4>{{{t "indicator/metadata/frequency"}}}</h4>
+            <span>Yearly</span>
           </li>
           <li>
-            Average minimum and maximum temperature
+            <h4>{{{t "indicator/metadata/collected_by"}}}</h4>
+            <span>Dr. Laila Ibrahim Al Dhaheri</span>
+          </li>
+          <li>
+            <h4>{{{t "indicator/metadata/data_feed_url"}}}</h4>
+            <span>Al Wathba Wetland Reserve</span>
+          </li>
+          <li>
+            <h4>{{{t "indicator/metadata/contact"}}}</h4>
+            <span>Dr. Laila Ibrahim Al Dhaheri, Executive Director, Terrestrial & Marine Biodiversity</span>
           </li>
         </ul>
       </section>

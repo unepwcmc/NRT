@@ -62,6 +62,10 @@
   "indicator/metadata/category": "Category",
   "indicator/metadata/most_recent": "Most recent data collected",
   "indicator/metadata/oldest_data": "Oldest data collected",
+  "indicator/metadata/frequency": "Frequency",
+  "indicator/metadata/collected_by": "Collected by",
+  "indicator/metadata/data_feed_url": "Data feed URL",
+  "indicator/metadata/contact": "Contact",
   "indicator/similar": "Similar Indicators",
   "indicator/add_section": "Add Section",
 
