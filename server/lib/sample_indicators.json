@@ -39,12 +39,28 @@
       "geometryField": "geometry",
       "fields": [
         {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
           "name": "year",
           "type": "integer"
         },
         {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
           "name": "value",
           "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
         }
       ]
     }
