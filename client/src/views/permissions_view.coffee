@@ -18,6 +18,7 @@ class Backbone.Views.PermissionsView extends Backbone.Diorama.NestingView
   chooseNewOwner: =>
     @chooseUserView = new Backbone.Views.ChooseUserView()
     @$el.append(@chooseUserView.el)
+    $(@chooseUserView.el).slideDown()
     @chooseUserView.on('userSelected', @setOwner)
     @chooseUserView.render()
 

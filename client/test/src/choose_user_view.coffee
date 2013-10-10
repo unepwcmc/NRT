@@ -63,7 +63,7 @@ test('.chooseUser when there is a selected user it triggers userSelected event
 )
 
 test('when clicking the close button, the view gets closed', ->
-  viewCloseSpy = sinon.spy(Backbone.Views.ChooseUserView::, 'close')
+  viewCloseSpy = sinon.spy(Backbone.Views.ChooseUserView::, 'hideView')
 
   view = new Backbone.Views.ChooseUserView()
   Helpers.renderViewToTestContainer(view)
