@@ -159,3 +159,42 @@ test(".validateIndicatorDataFields when missing fields returns an error", ->
     ), "Couldn't find 'value' attribute in data"
   )
 )
+
+test('.convertIndicatorDataFields when given valid epoch to integer field translation
+  it converts the field to the correct name and type', ->
+
+  indicator = new Indicator(
+    indicatorDefinition:
+      fields: [{
+        source:
+          name: 'periodStart'
+          type: 'epoch'
+        name: 'year'
+        type: 'integer'
+      }]
+  )
+
+  untranslatedData = {
+    indicator: indicator._id
+    data: [
+      periodStart: 1325376000000
+    ]
+  }
+
+  expectedData = {
+    indicator: indicator._id
+    data: [
+      year: 2012
+    ]
+  }
+
+  convertedData = indicator.convertIndicatorDataFields(untranslatedData)
+  assert.ok(
+    _.isEqual(convertedData, expectedData),
+    "Expected converted data:\n
+    #{JSON.stringify(convertedData)}\n
+      to look like expected indicator data:\n
+    #{JSON.stringify(expectedData)}"
+  )
+  
+)

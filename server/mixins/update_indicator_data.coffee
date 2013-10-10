@@ -29,6 +29,12 @@ config =
     'returnM':'false'
     'f':'pjson'
 
+CONVERSIONS =
+  epoch:
+    integer: (value) ->
+      new Date(value).getFullYear()
+
+
 module.exports =
   statics: {}
   methods:
@@ -77,4 +83,36 @@ module.exports =
         throw new Error(
           errors.join('\n')
         )
+
+    findFieldDefinitionBySourceName: (sourceName) ->
+      for field in @indicatorDefinition.fields
+        if field.source.name is sourceName
+          return field
+
+    convertSourceValueToInternalValue: (sourceName, value) ->
+      fieldDefinition = @findFieldDefinitionBySourceName(sourceName)
+      sourceType = fieldDefinition.source.type
+      internalType = fieldDefinition.type
+
+      return CONVERSIONS[sourceType][internalType](value)
+
+    translateRow: (row) ->
+      translatedRow = {}
+
+      for sourceName, value of row
+        fieldDefinition = @findFieldDefinitionBySourceName(sourceName)
+        internalName = fieldDefinition.name
+        convertedValue = @convertSourceValueToInternalValue(sourceName, value)
+        translatedRow[internalName] = convertedValue
+
+      return translatedRow
+
+    convertIndicatorDataFields: (indicatorData) ->
+      translatedRows = []
+
+      for row in indicatorData.data
+        translatedRows.push @translateRow(row)
+
+      indicatorData.data = translatedRows
+      return indicatorData
 
