@@ -20,6 +20,13 @@ test('.getUpdateUrl on an indicator with a valid serviceName and featureServer
   assert.strictEqual url, expectedUrl
 )
 
+test('.getUpdateUrl on an indicator with no serviceName and featureServer
+ it throws an error', ->
+  indicator = new Indicator()
+
+  assert.throws indicator.getUpdateUrl, "Cannot generate update URL, indicator has no serviceName or featureServer in its indicator definition"
+)
+
 test('.queryIndicatorData queries the remote server for indicator data', ->
   indicator = new Indicator
     indicatorDefinition:

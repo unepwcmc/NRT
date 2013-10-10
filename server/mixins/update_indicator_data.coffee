@@ -39,8 +39,12 @@ module.exports =
   statics: {}
   methods:
     getUpdateUrl: ->
-      serviceName = @indicatorDefinition.serviceName
-      featureServer = @indicatorDefinition.featureServer
+      if @indicatorDefinition?
+        serviceName = @indicatorDefinition.serviceName
+        featureServer = @indicatorDefinition.featureServer
+
+      unless serviceName? and featureServer?
+        throw "Cannot generate update URL, indicator has no serviceName or featureServer in its indicator definition"
 
       url = "http://#{config.indicatorServer}/rest/services/#{serviceName}/FeatureServer/#{featureServer}/query"
       return url
