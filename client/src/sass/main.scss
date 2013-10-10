@@ -383,23 +383,34 @@ h1, h2, h3, h4, h5 {
 }
 
 .breadcrumbs {
-  width: 980px;
-  margin: 61px auto 0 auto;
-  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+
+  .inner {
+    margin: 61px auto 0 auto;
+    padding: 0 0 15px 0;
+    width: 980px;
+  }
+
+  li, a {
+    color: #0088ff;
+  }
 
   ul li {
     display: inline;
+    font-size: 20px;
+    font-weight: lighter;
 
     &:before {
-      content: "> ";
-      font-weight: normal;
-    }
-
-    &:last-child {
-      font-weight: bold;
+      position: relative;
+      top: 8px;
+      padding: 0 10px;
+      content: "\203a";
+      font-size: 60px;
     }
 
     &:first-child {
+      margin-left: -22px;
+
       &:before {
         content: "";
       }
