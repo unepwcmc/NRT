@@ -83,15 +83,21 @@ module.exports =
     validateIndicatorDataFields: (indicatorData) ->
       firstRow = indicatorData.data[0]
 
+      errorMsg = "Error validating indicator data for indicator '#{@title}'\n* "
       errors = []
-      for fields in @indicatorDefinition.fields
-        unless firstRow[fields.source.name]?
-          errors.push "Couldn't find source attribute '#{fields.source.name}' in data"
+
+      for field in @indicatorDefinition.fields
+        unless field.source?
+          errors.push "Indicator field definition doesn't include a source attribute: #{
+            JSON.stringify(field)
+          }"
+          continue
+        unless firstRow[field.source.name]?
+          errors.push "Couldn't find source attribute '#{field.source.name}' in data"
 
       if errors.length is 0
         return true
       else
-        errorMsg = "Error validating indicator data for indicator '#{@title}'\n* "
         errorMsg += errors.join('\n* ')
         throw new Error(errorMsg)
 

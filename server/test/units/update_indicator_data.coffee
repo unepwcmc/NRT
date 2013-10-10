@@ -204,6 +204,22 @@ test(".validateIndicatorDataFields when missing fields returns an error", ->
   )
 )
 
+test(".validateIndicatorDataFields on an indicator with fields with no source
+ throws an appropriate error ", ->
+  indicator = new Indicator(
+    indicatorDefinition:
+      fields: [
+        name: 'hats'
+        type: 'float'
+      ]
+  )
+
+  assert.throws((->
+      indicator.validateIndicatorDataFields({data: []})
+    ), new RegExp(".*Indicator field definition doesn't include a source attribute.*")
+  )
+)
+
 test('.convertIndicatorDataFields when given valid epoch to integer field translation
   it converts the field to the correct name and type', ->
 
