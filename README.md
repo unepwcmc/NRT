@@ -1,5 +1,7 @@
 # National Reporting Toolkit
 
+NRT is an online system to help Governments collect, analyse and publish environmental information quickly and easily. It’s being built by the UNEP World Conservation Monitoring Centre, in partnership with the United Nations Environment Programme (UNEP) and the Abu Dhabi Global Environmental Data Initiative (AGEDI). You can find out more at [nrt.io](http://nrt.io)
+
 ## Setup
 
 * Install and setup NodeJS (0.10.13)
