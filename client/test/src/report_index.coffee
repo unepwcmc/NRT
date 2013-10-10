@@ -28,23 +28,6 @@ test("List titles of all reports", ->
 test("Shows message when no reports are available")
 test("Can see the formatted completed_at datetime")
 
-test("Can see creator for each report", ->
-  author = "Kanye Quest"
-
-  reports = [{
-    author: author
-  }]
-
-  view = createAndShowReportListView(reports)
-
-  assert.match(
-    $('#test-container').text(),
-    new RegExp(".*#{author}.*")
-  )
-
-  view.close()
-)
-
 test("Can see if report is bookmarked/favourited", ->
   reports = [{
     bookmarked: true
