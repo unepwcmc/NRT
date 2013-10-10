@@ -408,17 +408,25 @@ h1, h2, h3, h4, h5 {
     display: inline;
     font-size: 20px;
     font-weight: lighter;
+    position: relative;
+    top: 4px;
 
     &:before {
       position: relative;
-      top: 8px;
-      padding: 0 10px;
-      content: "\203a";
-      font-size: 60px;
+      top: 6px;
+      padding: 0 10px 0 0;
+      content: "\2039";
+      font-size: 50px;
     }
 
-    &:first-child {
-      margin-left: -22px;
+    &.home {
+      margin-left: -12px;
+      border-right: 1px solid #ddd;
+      padding-right: 15px;
+      margin-right: 10px;
+      i {
+        padding-right: 10px;
+      }
 
       &:before {
         content: "";
