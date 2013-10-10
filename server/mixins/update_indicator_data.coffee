@@ -59,6 +59,11 @@ module.exports =
       return deferred.promise
 
     convertResponseToIndicatorData: (responseBody) ->
+      unless _.isArray(responseBody.features)
+        throw "Can't convert poorly formed indicator data reponse:\n#{
+          JSON.stringify(responseBody)
+        }\n expected response to contains 'features' attribute which is an array"
+
       convertedData = {
         indicator: @_id
         data: []
@@ -136,6 +141,22 @@ module.exports =
             deferred.reject(err)
           else
             deferred.resolve(indicatorData)
+      )
+
+      return deferred.promise
+
+    updateIndicatorData: ->
+      deferred = Q.defer()
+      @queryIndicatorData(
+      ).then( (response) =>
+        newIndicatorData = @convertResponseToIndicatorData(response.body)
+        newIndicatorData = @validateIndicatorDataFields(newIndicatorData)
+        newIndicatorData = @convertIndicatorDataFields(newIndicatorData)
+        @replaceIndicatorData(newIndicatorData)
+      ).then( (indicatorData) ->
+        deferred.resolve(indicatorData)
+      ).fail( (err) ->
+        deferred.reject(err)
       )
 
       return deferred.promise

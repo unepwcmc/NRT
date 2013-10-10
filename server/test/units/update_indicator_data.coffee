@@ -109,6 +109,20 @@ test('.convertResponseToIndicatorData takes data from remote server and
   )
 )
 
+test('.convertResponseToIndicatorData when given a garbage response
+  throws an error', ->
+  indicator = new Indicator()
+
+  garbageData = {hats: 'boats'}
+  assert.throws(
+    (->
+      indicator.convertResponseToIndicatorData(garbageData)
+    ), "Can't convert poorly formed indicator data reponse:\n#{
+          JSON.stringify(garbageData)
+        }\n expected response to contains 'features' attribute which is an array"
+  )
+)
+
 test(".validateIndicatorDataFields given the correct fields returns no errors", ->
   indicator = new Indicator(
     indicatorDefinition:
