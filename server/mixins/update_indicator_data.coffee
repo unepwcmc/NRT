@@ -85,15 +85,15 @@ module.exports =
 
       errors = []
       for fields in @indicatorDefinition.fields
-        unless firstRow[fields.name]?
-          errors.push "Couldn't find '#{fields.name}' attribute in data"
+        unless firstRow[fields.source.name]?
+          errors.push "Couldn't find source attribute '#{fields.source.name}' in data"
 
       if errors.length is 0
         return true
       else
-        throw new Error(
-          errors.join('\n')
-        )
+        errorMsg = "Error validating indicator data for indicator '#{@title}'\n* "
+        errorMsg += errors.join('\n* ')
+        throw new Error(errorMsg)
 
     findFieldDefinitionBySourceName: (sourceName) ->
       for field in @indicatorDefinition.fields

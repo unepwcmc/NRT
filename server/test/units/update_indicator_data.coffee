@@ -143,9 +143,15 @@ test(".validateIndicatorDataFields given the correct fields returns no errors", 
   indicator = new Indicator(
     indicatorDefinition:
       fields: [{
+        source:
+          name: 'periodStart'
+          type: 'epoch'
         name: 'year'
         type: 'integer'
       }, {
+        source:
+          name: 'value'
+          type: 'integer'
         name: 'value'
         type: 'integer'
       }]
@@ -154,7 +160,7 @@ test(".validateIndicatorDataFields given the correct fields returns no errors", 
   indicatorData = {
     indicator: indicator._id
     data: [{
-      year: 1992
+      periodStart: 19922332000000
       value: "0.29390622"
       text: "Test"
     }]
@@ -166,11 +172,18 @@ test(".validateIndicatorDataFields given the correct fields returns no errors", 
 
 test(".validateIndicatorDataFields when missing fields returns an error", ->
   indicator = new Indicator(
+    title: "Protected Areas"
     indicatorDefinition:
       fields: [{
+        source:
+          name: 'periodStart'
+          type: 'epoch'
         name: 'year'
         type: 'integer'
       }, {
+        source:
+          name: 'value'
+          type: 'integer'
         name: 'value'
         type: 'integer'
       }]
@@ -179,14 +192,15 @@ test(".validateIndicatorDataFields when missing fields returns an error", ->
   indicatorData = {
     indicator: indicator._id
     data: [{
-      year: 1992
+      periodStart: 192340000
       text: "Test"
     }]
   }
 
   assert.throws( (->
       indicator.validateIndicatorDataFields(indicatorData)
-    ), "Couldn't find 'value' attribute in data"
+    ), "Error validating indicator data for indicator 'Protected Areas'\n
+* Couldn't find source attribute 'value' in data"
   )
 )
 
