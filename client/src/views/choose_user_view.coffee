@@ -51,7 +51,7 @@ class Backbone.Views.ChooseUserView extends Backbone.Diorama.NestingView
     searchTerm = $('input').val()
 
     return @hideSubView() if searchTerm.length is 0
-    
+
     @users.search(searchTerm)
     .done(@showSearchResults)
     .fail((err) =>
@@ -65,8 +65,9 @@ class Backbone.Views.ChooseUserView extends Backbone.Diorama.NestingView
 
   onClose: ->
     @closeSubViews()
-    
+
   hideView: =>
     @$el.slideUp(=>
+      @trigger('close')
       @close()
     )
