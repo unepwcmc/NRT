@@ -72,7 +72,7 @@ pageSchema.methods.giveSectionsNewIds = ->
 
     deferred.resolve(sectionsWithOriginalIds)
   )
-    
+
   return deferred.promise
 
 pageSchema.methods.getOwnable = ->

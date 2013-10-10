@@ -3,6 +3,8 @@ helpers = require '../helpers'
 Q = require('q')
 Narrative = require('../../models/narrative.coffee').model
 Visualisation = require('../../models/visualisation.coffee').model
+Indicator = require('../../models/indicator.coffee').model
+Section = require('../../models/section.coffee').model
 
 suite('Section')
 test('.create', (done) ->
@@ -122,6 +124,61 @@ test('.cloneVisualisationsFrom when given a section id of a section with a visua
       "Expected cloned visualisation to have a different ID to the original visualisation"
 
     done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.cloneIndicatorFrom when given a section id of a section with an indicator
+  should duplicate that indicator,
+  relate it to the new section,
+  and assign it a new id', (done) ->
+  originalSection = originalIndicator = newSection = null
+
+  Q.nfcall(
+    helpers.createIndicator, {
+      title: 'A indicator'
+    }
+  ).then( (indicator) ->
+    originalIndicator = indicator
+
+    Q.nfcall(
+      helpers.createSection, {
+        title: 'An section'
+        indicator: originalIndicator
+      }
+    )
+  ).then( (section) ->
+    originalSection = section
+
+    Q.nfcall(
+      helpers.createSection
+    )
+  ).then( (section) ->
+    newSection = section
+
+    newSection.cloneIndicatorFrom(originalSection.id)
+  ).then( ->
+    Q.nsend(
+      Section
+        .findOne(_id: newSection.id)
+        .populate('indicator')
+      , 'exec'
+    )
+  ).then( (section) ->
+    clonedIndicator = section.indicator
+
+    assert.isNotNull clonedIndicator, "Expected to have one indicator cloned to new section"
+
+    assert.strictEqual clonedIndicator.title, originalIndicator.title,
+      "Expected cloned indicator to have the same content as original indicator"
+
+    assert.notStrictEqual clonedIndicator.id, originalIndicator.id,
+      "Expected cloned indicator to have a different ID to the original indicator"
+
+    done()
+
   ).fail((err) ->
     console.error err
     throw err

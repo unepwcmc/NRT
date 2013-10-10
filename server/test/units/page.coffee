@@ -8,6 +8,7 @@ User = require('../../models/user.coffee').model
 Narrative = require('../../models/narrative.coffee').model
 Visualisation = require('../../models/visualisation.coffee').model
 Indicator = require('../../models/indicator.coffee').model
+Section = require('../../models/section.coffee').model
 
 suite('Page')
 test('.create', (done) ->
@@ -420,7 +421,7 @@ test('.createDraftClone clones a public page,
 
     Q.nfcall(
       helpers.createSection, {
-        indicators: [indicator]
+        indicator: indicator
       }
     )
   ).then( (section) ->
@@ -438,9 +439,10 @@ test('.createDraftClone clones a public page,
     clonedSection = clonedPage.sections[0]
 
     Q.nsend(
-      Indicator.findOne(section: clonedSection.id), 'exec'
+      Indicator
+        .findOne(_id: clonedSection.indicator)
+      , 'exec'
     )
-
   ).then( (clonedIndicator) ->
     assert.isNotNull clonedIndicator, "Couldn't find a cloned indicator"
 
