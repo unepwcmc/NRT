@@ -105,6 +105,8 @@ module.exports =
       for field in @indicatorDefinition.fields
         if field.source.name is sourceName
           return field
+      
+      throw new Error("Couldn't find '#{sourceName}' in field definition")
 
     convertSourceValueToInternalValue: (sourceName, value) ->
       fieldDefinition = @findFieldDefinitionBySourceName(sourceName)
