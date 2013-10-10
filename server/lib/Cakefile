@@ -2,7 +2,7 @@ request = require('request')
 Q = require('q')
 _ = require('underscore')
 
-standardQuerySuffix = 
+standardQuerySuffix =
   'where': 'objectid > 0'
   'objectIds': ''
   'time': ''

@@ -63,4 +63,18 @@ module.exports =
 
       return convertedData
 
+    validateIndicatorDataFields: (indicatorData) ->
+      firstRow = indicatorData.data[0]
+
+      errors = []
+      for fields in @indicatorDefinition.fields
+        unless firstRow[fields.name]?
+          errors.push "Couldn't find '#{fields.name}' attribute in data"
+
+      if errors.length is 0
+        return true
+      else
+        throw new Error(
+          errors.join('\n')
+        )
 

@@ -81,9 +81,9 @@ test('.convertResponseToIndicatorData takes data from remote server and
     expectedIndicatorData = {
       indicator: indicator._id
       data: [
-        periodStart: 1325376000000
-        value: "0.29390622"
-        text: "Test"
+          periodStart: 1325376000000
+          value: "0.29390622"
+          text: "Test"
         ,
           periodStart: 1356998400000
           value: "0.2278165"
@@ -106,5 +106,56 @@ test('.convertResponseToIndicatorData takes data from remote server and
   ).fail((err) ->
     console.error err
     throw err
+  )
+)
+
+test(".validateIndicatorDataFields given the correct fields returns no errors", ->
+  indicator = new Indicator(
+    indicatorDefinition:
+      fields: [{
+        name: 'year'
+        type: 'integer'
+      }, {
+        name: 'value'
+        type: 'integer'
+      }]
+  )
+
+  indicatorData = {
+    indicator: indicator._id
+    data: [{
+      year: 1992
+      value: "0.29390622"
+      text: "Test"
+    }]
+  }
+
+  assert.ok indicator.validateIndicatorDataFields(indicatorData),
+    "Expected validateIndicatorData to return true without error"
+)
+
+test(".validateIndicatorDataFields when missing fields returns an error", ->
+  indicator = new Indicator(
+    indicatorDefinition:
+      fields: [{
+        name: 'year'
+        type: 'integer'
+      }, {
+        name: 'value'
+        type: 'integer'
+      }]
+  )
+
+  indicatorData = {
+    indicator: indicator._id
+    data: [{
+      year: 1992
+      text: "Test"
+    }]
+  }
+
+  assert.throws( (->
+      indicator.validateIndicatorDataFields(indicatorData)
+    ), "Couldn't find 'value' attribute in data"
   )
 )
