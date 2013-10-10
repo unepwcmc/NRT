@@ -135,6 +135,7 @@ boundAggregators =
       row[fieldName]
     )[fieldName]
     return bounds
+  text: () -> "It's text, dummy"
 
 # Probably going to need a refactor at some point
 indicatorSchema.methods.getCurrentYAxis = (callback) ->
