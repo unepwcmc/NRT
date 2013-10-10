@@ -5,6 +5,8 @@ class Backbone.Views.SearchResultsView extends Backbone.View
   template: Handlebars.templates['search_results.hbs']
 
   tagName: 'ul'
+  
+  className: 'search-results'
 
   events:
     'click li': 'selectUser'
