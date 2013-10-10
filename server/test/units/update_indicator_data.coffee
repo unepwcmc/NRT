@@ -27,7 +27,7 @@ test('.getUpdateUrl on an indicator with no serviceName and featureServer
   assert.throws indicator.getUpdateUrl, "Cannot generate update URL, indicator has no serviceName or featureServer in its indicator definition"
 )
 
-test('.queryIndicatorData queries the remote server for indicator data', ->
+test('.queryIndicatorData queries the remote server for indicator data', (done) ->
   indicator = new Indicator
     indicatorDefinition:
       serviceName:  'NRT_AD_ProtectedArea'
@@ -49,12 +49,21 @@ test('.queryIndicatorData queries the remote server for indicator data', ->
 
   requestStub = sinon.stub(request, 'get', (options, callback)->
     assert.strictEqual options.url, indicator.getUpdateUrl()
+    assert.isDefined options.qs, "Expected query string parameters to be defined"
+
     callback(null, {
       body: JSON.stringify(serverResponseData)
     }))
 
   indicator.queryIndicatorData().then( (response) ->
-    assert.strictEqual JSON.parse(response.body), serverResponseData
+    assert.ok(
+      _.isEqual(JSON.parse(response.body), serverResponseData),
+      "Expected responseBody:\n
+      #{response.body}\n
+        to look like expected server response data:\n
+      #{serverResponseData}"
+    )
+
     done()
   ).fail( (err) ->
     console.error err

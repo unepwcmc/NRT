@@ -3,7 +3,7 @@ Q = require('q')
 request = require('request')
 _ = require('underscore')
 
-config = 
+config =
   indicatorServer: '196.218.36.14/ka'
   defaultQueryParameters:
     'where': 'objectid > 0'
@@ -51,9 +51,10 @@ module.exports =
 
     queryIndicatorData: ->
       deferred = Q.defer()
-      request
+
+      request.get
         url: @getUpdateUrl()
-        qs: config.standardQuerySuffix
+        qs: config.defaultQueryParameters
       , (err, response) ->
         if err?
           deferred.reject(err)
