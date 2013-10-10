@@ -505,19 +505,123 @@ section.report-indicator-list {
   padding: 30px 20px 0 20px;
 }
 
-.content-sidebar.metadata {
+
+aside {
   color: $lightishGrey;
   font-size: 13px;
-
-  h3 {
+  
+  h3 {    
+    padding-bottom: 5px;
+    margin: 15px 0 5px 0;
+    border-bottom: 1px solid $differentGrey;
     font-weight: bold;
     font-size: 16px;
     color: $mediumGrey;
+    &:first-child {
+      margin-top: 0;
+    }
+    button {
+      float: right;
+    }
   }
+  
+  p {
+    font-size: 12px;
+  }
+  button, h3 button {
+    font-size: 12px;
+    line-height: 25px;
+    color: $linkBlue;
+    border: none;
+    padding: 0;
+    text-decoration: underline;
+    &:hover {
+      color: $linkBlueHover;
+      @include transition(0.5s);
+    }
+    &:active {
+      background: none;
+      color: $linkBlueHover;
+    }
+  }
+  
+  .dialog {
+    background: $bkgGrey;
+    padding: 15px;
+    display: none;
+    height: 95px;
+    
+    h4 {
+      font-weight: normal;
+      font-size: 14px;
+      margin-bottom: 10px;
+      padding: 0;
+      line-height: 12px;
+    }
+    i.close {
+      float: right;
+      color: $mediumGrey;
+      font-size: 14px;
+      line-height: 12px;
+      &:hover {
+        color: $buttonBlue;
+        @include transition(0.5s);
+      }
+    }
+    input {
+      border: 1px solid $lightGrey;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      padding: 4px 0 4px 7px;
+      width: 96%;
+      color: $mediumGrey;
+    }
+    
+    button {
+      background: $green;
+      text-align: center;
+      width: 99%;
+      color: $white;
+      text-decoration: none;
+      font-size: 14px;
+      margin-top: 10px;
+      padding: 4px;
+      &:hover {
+        background: $greenHover;
+      }
+    }
+    ul.search-results {
+      display: none;
+      width: 219px;
+      border: 1px solid #eee;
+      box-shadow: 4px 1px 5px rgba(0, 0, 0, 0.025);
+      position: absolute;
+      background: $white;
+      overflow: scroll;
+      max-height: 100px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      margin-top: -1px;
+      li {
+        padding-left: 7px;
+        line-height: 24px;
+        color: $mediumGrey;
+        &:hover {
+          color: #008ED6;
+          cursor: pointer;
+        }
+      }
+    }
+    
+  }
+}
+
+.content-sidebar {
+
 
   section {
-    border-bottom: 1px solid $differentGrey;
-    margin-bottom: 30px;
 
     h3 {
       border-bottom: 1px solid $differentGrey;
