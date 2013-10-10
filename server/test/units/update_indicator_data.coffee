@@ -198,3 +198,38 @@ test('.convertIndicatorDataFields when given valid epoch to integer field transl
   )
   
 )
+
+test('.convertSourceValueToInternalValue when given two values of the same 
+  type it returns same value', ->
+  indicator = new Indicator(
+    indicatorDefinition:
+      fields: [{
+        source:
+          name: 'periodStart'
+          type: 'integer'
+        name: 'year'
+        type: 'integer'
+      }]
+  )
+  result = indicator.convertSourceValueToInternalValue('periodStart', 5)
+  assert.strictEqual result, 5, 
+    "Expected conversion not to modify source value"
+)
+test(".convertSourceValueToInternalValue when given a type conversion which
+  doesn't exist, it throws appropriate error", ->
+  indicator = new Indicator(
+    indicatorDefinition:
+      fields: [{
+        source:
+          name: 'periodStart'
+          type: 'apples'
+        name: 'year'
+        type: 'oranges'
+      }]
+  )
+
+  assert.throws (->
+    indicator.convertSourceValueToInternalValue('periodStart', 5)
+  ), "Don't know how to convert 'apples' to 'oranges' for field 'periodStart'"
+    
+)

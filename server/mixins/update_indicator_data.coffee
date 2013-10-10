@@ -94,7 +94,14 @@ module.exports =
       sourceType = fieldDefinition.source.type
       internalType = fieldDefinition.type
 
-      return CONVERSIONS[sourceType][internalType](value)
+      if sourceType is internalType
+        return value
+      else if CONVERSIONS[sourceType]? and CONVERSIONS[sourceType][internalType]?
+        return CONVERSIONS[sourceType][internalType](value)
+      else
+        throw new Error(
+          "Don't know how to convert '#{sourceType}' to '#{internalType}' for field '#{sourceName}'"
+        )
 
     translateRow: (row) ->
       translatedRow = {}
