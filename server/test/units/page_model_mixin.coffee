@@ -6,18 +6,39 @@ Page = require('../../models/page').model
 IndicatorData = require('../../models/indicator_data').model
 async = require('async')
 _ = require('underscore')
+Q = require('q')
 
 suite('Page Model Mixin')
 
-test('.getPage when no page is associated should create a new page', (done) ->
+test(".getPage returns a mongoose instance", (done) ->
+  Q.nfcall(
+    helpers.createIndicator, {}
+  ).then( (indicator) ->
+    indicator.getPage()
+  ).then( (page) ->
+    assert.strictEqual page.constructor.modelName, "Page", "Expected page to be a mongoose object"
+    done()
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test(".getPage when no public page is associated creates a new page with is_draft false", (done) ->
   helpers.createIndicator {}, (err, indicator) ->
     if err?
       console.error err
       throw err
 
     indicator.getPage().then((page)->
-      assert.strictEqual page.parent_id, indicator._id
+      assert.strictEqual(
+        page.parent_id, indicator._id,
+        "Expected page.parent_id #{page.parent_id} to be the _id of the
+        parent indicator (#{indicator._id})"
+      )
       assert.strictEqual page.parent_type, "Indicator"
+
+      assert.isFalse page.is_draft
 
       Page.findOne(page._id).exec((err, foundPage) ->
         if err?
@@ -30,13 +51,14 @@ test('.getPage when no page is associated should create a new page', (done) ->
     ).done()
 )
 
-test('.getPage when a page is associated should get the page', (done) ->
+test('.getPage when a non-draft page is associated should get the page', (done) ->
   helpers.createIndicator {}, (err, indicator) ->
     thePage = null
 
     helpers.createPage(
       parent_id: indicator._id
       parent_type: "Indicator"
+      is_draft: false
     ).then( (page)->
       thePage = page
       indicator.getPage()
@@ -50,7 +72,7 @@ test('.getPage when a page is associated should get the page', (done) ->
     ).done()
 )
 
-test('.getPage returns fat pages', (done) ->
+test('.getFatPage returns fat pages', (done) ->
   helpers.createIndicator {}, (err, indicator) ->
     theFatPage = null
 
@@ -67,7 +89,7 @@ test('.getPage returns fat pages', (done) ->
           console.error err
           throw err
 
-        indicator.getPage().done((foundPage) ->
+        indicator.getFatPage().done((foundPage) ->
           assert.ok(
             _.isEqual(theFatPage, foundPage),
             """
@@ -85,13 +107,15 @@ test('.getPage returns fat pages', (done) ->
     )
 )
 
-test(".toObjectWithNestedPage returns an object representation of the indicator with it's page attribute", (done) ->
+test(".toObjectWithNestedPage returns an object representation of the
+  indicator with its fat page attribute", (done) ->
   helpers.createIndicator {}, (err, indicator) ->
     thePage = null
 
     helpers.createPage(
       parent_id: indicator._id
       parent_type: "Indicator"
+      is_draft: false
     ).then( (page)->
       thePage = page
       indicator.toObjectWithNestedPage()
@@ -109,4 +133,62 @@ test(".toObjectWithNestedPage returns an object representation of the indicator 
 
       done()
     )
+)
+
+test(".getDraftPage
+  when no draft page is associated 
+  and a non-draft page is associated 
+  it creates a clones of the non-draft and returns it", (done) ->
+
+  theIndicator = nonDraftPage = draftPage = null
+
+  Q.nfcall(
+    helpers.createIndicator, {}
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    helpers.createPage(
+      parent_id: indicator.id
+      parent_type: "Indicator"
+      is_draft: false
+      title: "Sup Bro"
+    )
+
+  ).then( (page) ->
+    nonDraftPage = page
+
+    theIndicator.getDraftPage()
+
+  ).then((page)->
+    draftPage = page
+
+    assert.strictEqual(
+      draftPage.parent_id.toString(), theIndicator.id,
+      "Expected draftPage.parent_id #{draftPage.parent_id} to be the _id of the
+      parent indicator (#{theIndicator.id})"
+    )
+    assert.strictEqual draftPage.parent_type, "Indicator"
+
+    assert.isTrue draftPage.is_draft
+
+    # Confirm it's clone the public
+    assert.strictEqual draftPage.title, nonDraftPage.title
+
+    Q.nsend(
+      Page.findOne(_id: draftPage._id), 'exec'
+    )
+
+  ).then( (foundPage) ->
+
+    assert.strictEqual(
+      foundPage.id, draftPage.id,
+      "Expected to find the same page when looking for _id #{draftPage.id} 
+        but found page with id #{foundPage.id}"
+    )
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
 )
