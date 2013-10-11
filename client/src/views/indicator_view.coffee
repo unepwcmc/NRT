@@ -19,6 +19,7 @@ class Backbone.Views.IndicatorView extends Backbone.Diorama.NestingView
     @$el.html(@template(
       thisView: @
       sections: @page.get('sections').models
+      isEditable: @page.get('is_draft')
     ))
 
     @renderSubViews()
