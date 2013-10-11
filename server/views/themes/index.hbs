@@ -20,9 +20,11 @@ class="theme-list"
   <div class="indicators-container">
     <div class="report-content">
       {{#themes}}
-      <a href="/themes/{{_id}}">
-        <h2>{{title}} <span>›</span></h2>
-      </a>
+      <div class="theme-block">
+        <a href="/themes/{{_id}}">
+          <h2>{{title}}<span>›</span></h2>
+        </a>
+        <p>This is the summary of the state for the Atmosphere theme. In general, the state is XX. Some concerns are in area YY. There is good progress in ZZ and BB areas. See below for the Indicators which comprise this Theme. <span><a href="/themes/{{_id}}">(Read more)</a></span></p>
         {{#unless indicators}}
         <a class="indicator-box" href="/indicators/{{id}}">
           <div class="full-name">Emissions of Greenhouse Gases<span>›</span></div><!--{{full-name}}-->
@@ -119,6 +121,7 @@ class="theme-list"
           <div class="last-update">Up to date <!-- {{last-update}} --></div>
         </a>
         {{/indicators}}
+        </div>
       {{/themes}}
     </div>
     <!--<div class="report-sidebar"></div>-->
