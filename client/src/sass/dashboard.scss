@@ -326,17 +326,20 @@ div.row.row-2 {
   span{
     display: inline-block;
     margin-left: 6px;
-    width: 14px;
-    height: 14px;
-    border-radius: 14px;
-    background-color: $white;
+    //width: 14px;
+    //height: 14px;
+    //border-radius: 14px;
+    line-height: 0;
+    font-size: 1.9em;
+    //background-color: $white;
     vertical-align: top;
     position: relative;
-    top: 6px;
-    line-height: 10px;
-    text-indent: 5px;
-    color: #2c3e50;
-    font-weight: 400;
+    top: 8px;
+    //top: 6px;
+    //line-height: 10px;
+    //text-indent: 5px;
+    //color: #2c3e50;
+    //font-weight: 400;
   }
 }
 
