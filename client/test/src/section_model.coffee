@@ -109,3 +109,14 @@ test(".save should actually call save on the parent page model", (done)->
       throw 'Section saved failed'
   )
 )
+
+test('.getPage should get the parent page', ->
+  page = Factory.page(sections: [{title: 'A section'}])
+  section = page.get('sections').at(0)
+
+  assert.strictEqual(
+    section.getPage().cid,
+    page.cid,
+    "Expected the Section page to be the same as page"
+  )
+)

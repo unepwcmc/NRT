@@ -9,5 +9,8 @@ class window.Backbone.Models.Narrative extends Backbone.RelationalModel
 
   urlRoot: "/api/narratives"
 
+  getPage: ->
+    @get('section').getPage()
+
 #For backbone relational
 Backbone.Models.Narrative.setup()
