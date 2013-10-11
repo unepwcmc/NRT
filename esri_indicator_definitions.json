@@ -1,0 +1,9 @@
+{
+  "NRT_AD_ProtectedArea:2": {
+    "valueField": "value",
+    "ranges":[
+      {"minValue": 0.25, "message": "Excellent"},
+      {"minValue": 0, "message": "Rubbish"}
+    ]
+  }
+}

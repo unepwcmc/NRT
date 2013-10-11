@@ -1,6 +1,7 @@
 express = require('express')
 http = require('http')
 worldBankQuery = require('./worldbank')
+esriQuery = require('./esriQuery')
 
 PORT = 3001
 
@@ -8,6 +9,7 @@ startApp = ->
   app = express()
 
   app.get "/wb/:countryCode/:indicatorCode", worldBankQuery
+  app.get "/esri/:serviceName/:featureServer", esriQuery
 
   server = http.createServer(app).listen PORT, (err) ->
     if err
