@@ -859,18 +859,22 @@ footer{
   height: 50px;
   padding: 5px 0;
   box-shadow: 0 0 3px rgba(0,0,0,0.15);
+
   .edit-bar {
     width: 980px;
     margin: auto;
     padding-top: 8px;
+
     p {
       float: left;
       color: $lightishGrey;
       font-size: 0.8em;
     }
-    button {
+
+    a.button {
       float: right;
       margin-left: 10px;
+
       &#publish {
         border: 1px solid $green;
         color: $green;

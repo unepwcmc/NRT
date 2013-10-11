@@ -19,21 +19,25 @@
   <!-- THIS NAVIGATION MUST BE FIXED {{ indicator.theme.title }} -->
   <li><a href="#">Go back to theme {{ indicator.theme }}</a></li>
 {{/contentFor}}
-<div class="edit-bar-container">
-  <div class="edit-bar">
-    <p>Last edited on 7 July 2013</p>
-    <button id="publish">Publish</button>
-    <button id="delete">Discard Draft</button>
-    <button>Back to published view</button>
-  </div><!--edit bar-->
-</div><!--edit bar container-->
+
+{{#if indicator.page.is_draft}}
+  <div class="edit-bar-container">
+    <div class="edit-bar">
+      <p>Last edited on 7 July 2013</p>
+      <a class="button" id="publish" href="publish">Publish</a>
+      <a class="button" id="delete" href="discard_draft">Discard Draft</a>
+      <a class="button" href="./">Back to published view</a>
+    </div>
+  </div>
+{{/if}}
+
 <div class="content indicator">
   <article>
     <header>
       <h1>{{indicator.title}}</h1>
-      <button>
+      <a class="button" href="draft">
         <i class="icon-edit"></i> {{{t "indicator/update"}}}
-      </button>
+      </a>
       <div class="clear"></div>
       <div class="parameter">
         <div class="score">

@@ -26,7 +26,7 @@ exports.show = (req, res) ->
     indicator.toObjectWithNestedPage()
     .then((indicatorObject) ->
       res.render("indicators/show",
-        indicator: indicator, indicatorJSON: JSON.stringify(indicatorObject)
+        indicator: indicatorObject, indicatorJSON: JSON.stringify(indicatorObject)
       )
     ).fail((err) ->
       console.error err
@@ -51,7 +51,7 @@ exports.showDraft = (req, res) ->
     indicator = indicator.toObjectWithNestedPage(draft: true)
     .then((indicatorObject) ->
       res.render("indicators/show",
-        indicator: indicator,
+        indicator: indicatorObject,
         indicatorJSON: JSON.stringify(indicatorObject)
       )
     ).fail((err) ->
@@ -80,7 +80,7 @@ exports.publishDraft = (req, res) ->
       indicator.toObjectWithNestedPage()
     ).then( (indicatorObject) ->
       res.render("indicators/show",
-        indicator: indicator,
+        indicator: indicatorObject,
         indicatorJSON: JSON.stringify(indicatorObject)
       )
     ).fail((err) ->
@@ -109,7 +109,7 @@ exports.discardDraft = (req, res) ->
       indicator.toObjectWithNestedPage()
     ).then( (indicatorObject) ->
       res.render("indicators/show",
-        indicator: indicator,
+        indicator: indicatorObject,
         indicatorJSON: JSON.stringify(indicatorObject)
       )
     ).fail((err) ->
