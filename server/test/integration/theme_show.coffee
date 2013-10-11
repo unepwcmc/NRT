@@ -141,3 +141,60 @@ test('GET /:id/publish publishes the current draft and makes it publicly viewabl
     throw err
   )
 )
+
+test("GET /:id/discard_draft discards all drafts and renders the published version", (done) ->
+  theTheme = originalPage = draftPage =null
+
+  helpers.createTheme([
+    title: 'An theme'
+  ]).then( (theme) ->
+
+    theTheme = theme
+
+    helpers.createPage(
+      title: 'A page'
+      parent_type: 'Theme'
+      parent_id: theTheme.id
+    )
+
+  ).then( (page) ->
+    originalPage = page
+
+    page.createDraftClone()
+  ).then( (clonedPage) ->
+    draftPage = clonedPage
+
+    Q.nfcall(
+      request.get, {
+        url: helpers.appurl("themes/#{theTheme.id}/discard_draft")
+      }
+    )
+
+  ).spread( (res, body) ->
+
+    assert.equal res.statusCode, 200
+
+    assert.match body, new RegExp(".*An theme.*")
+
+    Q.nsend(
+      Page.find(parent_id: theTheme.id),
+      'exec'
+    )
+
+  ).then( (pages) ->
+
+    assert.lengthOf pages, 1
+
+    assert.notStrictEqual(
+      draftPage.id,
+      originalPage.id,
+      "Expected draftPage to have a different ID to the original Page"
+    )
+
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)

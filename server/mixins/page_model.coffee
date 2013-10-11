@@ -33,6 +33,22 @@ module.exports = {
 
     return deferred.promise
 
+  discardDraft: ->
+    deferred = Q.defer()
+
+    thePage = null
+
+    @getPage().then( (page) =>
+      thePage = page
+      @deleteAllPagesExcept(page.id)
+    ).then( (deletedPage) ->
+      deferred.resolve(thePage)
+    ).fail( (err) ->
+      deferred.reject(err)
+    )
+
+    return deferred.promise
+
   deleteAllPagesExcept: (pageId) ->
     deferred = Q.defer()
 
@@ -74,7 +90,7 @@ module.exports = {
     deferred = Q.defer()
 
     Q.nsend(
-      Page.findOne(parent_id: @_id), 'exec'
+      Page.findOne(parent_id: @_id, is_draft: false), 'exec'
     ).then( (page) =>
       if page?
         deferred.resolve(page)

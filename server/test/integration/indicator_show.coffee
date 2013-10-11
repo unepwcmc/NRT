@@ -93,6 +93,63 @@ test("GET /:id/draft clones the Indicator's Page and renders the indicator", (do
   )
 )
 
+test("GET /:id/discard_draft discards all drafts and renders the published version", (done) ->
+  theIndicator = originalPage = draftPage =null
+
+  helpers.createIndicatorModels([
+    title: 'An indicator'
+  ]).then( (indicators) ->
+
+    theIndicator = indicators[0]
+
+    helpers.createPage(
+      title: 'A page'
+      parent_type: 'Indicator'
+      parent_id: theIndicator.id
+    )
+
+  ).then( (page) ->
+    originalPage = page
+
+    page.createDraftClone()
+  ).then( (clonedPage) ->
+    draftPage = clonedPage
+
+    Q.nfcall(
+      request.get, {
+        url: helpers.appurl("indicators/#{theIndicator.id}/discard_draft")
+      }
+    )
+
+  ).spread( (res, body) ->
+
+    assert.equal res.statusCode, 200
+
+    assert.match body, new RegExp(".*An indicator.*")
+
+    Q.nsend(
+      Page.find(parent_id: theIndicator.id),
+      'exec'
+    )
+
+  ).then( (pages) ->
+
+    assert.lengthOf pages, 1
+
+    assert.notStrictEqual(
+      draftPage.id,
+      originalPage.id,
+      "Expected draftPage to have a different ID to the original Page"
+    )
+
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
 test('GET /:id/publish publishes the current draft and makes it publicly
   viewable', (done) ->
   theIndicator = originalPage = draftPage = null

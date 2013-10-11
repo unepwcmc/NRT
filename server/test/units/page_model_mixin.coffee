@@ -297,3 +297,55 @@ test(".deleteAllPagesExcept deletes all pages except the one passed in", (done) 
     throw err
   )
 )
+
+test(".discardDraft discards the draft version of a page", (done) ->
+  theIndicator = null
+  thePages = []
+
+  Q.nfcall(
+    helpers.createIndicator, {}
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    helpers.createPage(
+      parent_id: theIndicator.id
+      parent_type: "Indicator"
+      is_draft: false
+      title: "Sup Bro"
+    )
+
+  ).then( (page) ->
+    thePages.push(page)
+
+    helpers.createPage(
+      parent_id: theIndicator.id
+      parent_type: "Indicator"
+      is_draft: true
+      title: "Sup Bro"
+    )
+
+  ).then( (page) ->
+    thePages.push(page)
+
+    theIndicator.discardDraft()
+  ).then( ->
+
+    Q.nsend(
+      Page.find(parent_id: theIndicator.id), 'exec'
+    )
+
+  ).then( (foundPages) ->
+
+    assert.lengthOf foundPages, 1, "Expected one page to remain after discarding drafts"
+    assert.strictEqual(
+      foundPages[0].id,
+      thePages[0].id
+    )
+
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
