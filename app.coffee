@@ -1,16 +1,13 @@
 express = require('express')
 http = require('http')
+worldBankQuery = require('./worldBank')
 
 PORT = 3001
 
 startApp = ->
   app = express()
 
-  app.get "/wb/:countryCode/:indicatorCode", (req, res) ->
-    countryCode = req.params.countryCode
-    indicatorCode = req.params.indicatorCode
-    
-    return res.send(200, "Working, yeah?")
+  app.get "/wb/:countryCode/:indicatorCode", worldBankQuery
 
   server = http.createServer(app).listen PORT, (err) ->
     if err
