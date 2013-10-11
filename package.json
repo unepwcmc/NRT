@@ -1,0 +1,23 @@
+{
+  "name": "NRT-indicatorator",
+  "version": "0.0.1",
+  "description": "Turns environmental parameter data into indicators, kind of like K&A were going to do...",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "coffee app.coffee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unepwcmc/NRT-indicatorator.git"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/unepwcmc/NRT-indicatorator/issues"
+  },
+  "homepage": "https://github.com/unepwcmc/NRT-indicatorator",
+  "dependencies": {
+    "express": "~3.4.0"
+  }
+}
