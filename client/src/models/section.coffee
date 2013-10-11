@@ -55,3 +55,5 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
 
 #For backbone relational
 Backbone.Models.Section.setup()
+
+_.extend(Backbone.Models.Section::, Backbone.Mixins.EditModeMixin)

@@ -12,8 +12,6 @@ class Backbone.Views.TextEditView extends Backbone.View
   initialize: (options) ->
     @model = options.model
 
-    @determineEditModeFromModel()
-
     @attributeName = options.attributeName
     @tagName = options.tagName || 'div'
     @disableNewlines = options.disableNewlines || false
@@ -29,14 +27,8 @@ class Backbone.Views.TextEditView extends Backbone.View
 
     return @
 
-  determineEditModeFromModel: ->
-    @editMode = true
-    if typeof @model.getPage is 'function'
-      page = @model.getPage()
-      @editMode = if page? then page.get('is_draft') else true
-
   showEditingView: ->
-    if @editMode
+    if @model.isEditable()
       unless @editingView?
         @$el.addClass('editing')
         @editingView = new Backbone.Views.TextEditingView(

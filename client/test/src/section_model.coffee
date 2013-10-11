@@ -120,3 +120,9 @@ test('.getPage should get the parent page', ->
     "Expected the Section page to be the same as page"
   )
 )
+
+test('EditModeMixin is mixed in', ->
+  section = new Backbone.Models.Section()
+
+  assert.isDefined section.isEditable, 'Expected Section to have method .isEditable'
+)

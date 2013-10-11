@@ -24,3 +24,9 @@ test('.getPage should get the parent page', ->
     "Expected the Narrative page to be the same as page"
   )
 )
+
+test('EditModeMixin is mixed in', ->
+  narrative = new Backbone.Models.Narrative()
+
+  assert.isDefined narrative.isEditable, 'Expected narrative to have method .isEditable'
+)
