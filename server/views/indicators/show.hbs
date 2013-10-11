@@ -15,8 +15,9 @@
 {{/contentFor}}
 
 {{#contentFor 'breadcrumbs'}}
-  <li><a href="/indicators">Indicators</a></li>
-  <li>{{indicator.title}}</li>
+  <li class="home"><i class="icon-home"></i><a href="/">Home</a></li>
+  <!-- THIS NAVIGATION MUST BE FIXED {{ indicator.theme.title }} -->
+  <li><a href="#">Go back to theme {{ indicator.theme }}</a></li>
 {{/contentFor}}
 <div class="edit-bar-container">
   <div class="edit-bar">
