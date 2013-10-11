@@ -101,6 +101,10 @@ div.select {
   border: 1px solid $lightishGrey;
   color: $lightishGrey;
   font-weight: 400;
+  
+  &.add-indicator-section {
+    margin-bottom: 50px;
+  }
 
   span{
     display: none;

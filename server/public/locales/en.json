@@ -56,6 +56,7 @@
 
   "indicator/view": "View the dataset",
   "indicator/download": "Download the dataset",
+  "indicator/update": "Update this indicator",
   "indicator/narratives": "Narratives for this indicator",
   "indicator/owned_by": "Indicator owned by",
   "indicator/metadata": "Metadata",

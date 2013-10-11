@@ -9,12 +9,12 @@ section.introduction {
     margin-top: 50px;
     header {
       overflow:hidden;
-
       h1 {
-        width: 650px;
+        display: inline-block;
+        color: #2d3e4f;
+        font-weight: bold;
         float:left;
       }
-
       .indicator-buttons{
         float:right;
         width: 300px;
@@ -22,6 +22,40 @@ section.introduction {
           position: relative;
           float: right;
           margin-bottom: 5px;
+        }
+      }
+      .parameter {
+        width: 650px;
+        p {
+          color: $lightishGrey;
+          font-size: 0.8em;
+          span.separator {
+            padding: 0 5px;
+          }
+        }
+        .score {
+          border: 1px solid #0a519c;
+          display: inline-block;
+          float: left;
+          height: 35px;
+          vertical-align: middle;
+          span {
+            display: inline-block;
+            height: 35px;
+            line-height: 1em;
+            &.number {
+              font-size: 1.2em;
+              font-weight: bold;
+              color: #0a519c;
+              line-height: 1em;
+            }
+            &.keyword {
+              background-color: #0a519c;
+              color: rgba(255,255,255, 0.85);
+              font-size: 0.85em;
+              font-weight: normal;
+            }
+          }
         }
       }
     }
