@@ -10,11 +10,6 @@ $padding-right: 1.333em;
 $green: #55b265;
 $orange: #ffbd4c;
 
-*, *:after, *:before {
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
 h4 {
   font-size: .9em;
   line-height: 1.3em;
@@ -320,7 +315,7 @@ div.row.row-2 {
   -webkit-transition: -webkit-transform 0.3s ease-in-out;
   -moz-transition: -moz-transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out;
-  @include box-sizing("border-box");
+  @include box-sizing(border-box);
 }
 
 .full-name {

@@ -213,7 +213,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .content {
-  width: 1020px;
+  width: 980px;
   padding: 30px 20px;
   margin: 0 auto;
   outline: 0;
@@ -271,7 +271,7 @@ h1, h2, h3, h4, h5 {
 
   .inner {
     margin: 0 auto;
-    width: 1020px;
+    width: 980px;
     padding: 0 20px;
   }
 
@@ -397,12 +397,15 @@ h1, h2, h3, h4, h5 {
 
   .inner {
     margin: 79px auto 0 auto;
-    padding: 0 0 15px 0;
+    padding: 0 20px 15px 20px;
     width: 980px;
   }
 
   li, a {
-    color: #0088ff;
+    color: $linkBlue;
+    &:hover{
+      color: lighten($linkBlue, 10);
+    }
   }
 
   ul li {
