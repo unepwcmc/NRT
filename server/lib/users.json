@@ -1,5 +1,10 @@
 [
   {
+    "name": "Anne User",
+    "email": "a",
+    "password": "a"
+  },
+  {
     "name": "National Reporter",
     "email": "nrt@nrt.com",
     "password": "password"
