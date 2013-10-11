@@ -300,8 +300,8 @@ div.row.row-2 {
   }
 }
 
-.indicator-box::after,
-.indicator-box::before {
+.full-name,
+.brief {
   position: absolute;
   width: 100%;
   height: 50%;
@@ -313,8 +313,7 @@ div.row.row-2 {
   @include box-sizing("border-box");
 }
 
-.indicator-box::before {
-  content: attr(data-title);
+.full-name {
   top: 0;
   left: 0;
   background: #2c3e50;
@@ -324,10 +323,24 @@ div.row.row-2 {
   padding: 20px;
   -webkit-transform: translateY(-100%);
   transform: translateY(-100%);
+  span{
+    display: inline-block;
+    margin-left: 6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 14px;
+    background-color: $white;
+    vertical-align: top;
+    position: relative;
+    top: 6px;
+    line-height: 10px;
+    text-indent: 5px;
+    color: #2c3e50;
+    font-weight: 400;
+  }
 }
 
-.indicator-box::after {
-  content: attr(data-description) '...';
+.brief {
   top: 50%;
   left: 0;
   background: #fff;
@@ -340,8 +353,8 @@ div.row.row-2 {
   transform: translateY(100%);
 }
 
-.indicator-box:hover::after,
-.indicator-box:hover::before {
+.indicator-box:hover .full-name,
+.indicator-box:hover .brief {
   -webkit-transform: translateY(0%);
   transform: translateY(0%);
 }
@@ -351,12 +364,12 @@ div.row.row-2 {
   position: relative;
   overflow: hidden;
   width: 235px;
-  height: 215px;
+  height: 219px;
   background-color: #fff;
   border-radius: 2px;
   box-shadow: 0 2px 2px rgba(0,0,0,.1);
-  display: inline-block;
-  margin: 0 6px 5px 0;
+  float: left;
+  margin: 0 10px 12px 0;
   .box-header {
     height: 50px;
     background-color: #2D3E4F;
@@ -399,6 +412,7 @@ div.row.row-2 {
     color: $grey;
   }
   .context-text{
+    padding: 2px 0;
     text-transform: uppercase;
     text-align: center;
     font-size: 0.8em;
@@ -434,6 +448,22 @@ div.row.row-2 {
     position: relative;
     border-top: 1px solid $lightGrey;
     top: -2px;
+    .status{
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin-right: 8px;
+      border-radius: 2px;
+      &.updated{
+        background-color: #66bd63;
+      }
+      &.close-overdue{
+        background-color: #fdb24c;
+      }
+      &.overdue{
+        background-color: #fc4e2a;
+      }
+    }
   }
 }
 
