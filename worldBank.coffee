@@ -1,4 +1,5 @@
 request = require('request')
+_ = require('underscore')
 
 WORLD_BANK_URL = "http://api.worldbank.org/countries/"
 WORLD_BANK_QUERY_SUFFIX =
@@ -8,6 +9,24 @@ WORLD_BANK_QUERY_SUFFIX =
 
 makeGetUrl = (country, indicator) ->
   "#{WORLD_BANK_URL}/#{country}/indicators/#{indicator}"
+
+indicatorate = (indicatorCode, data) ->
+  data = JSON.parse(data)
+
+  unless _.isArray(data)
+    throw new Error("World bacnk data shuold be an array")
+  unless data.length is 2
+    throw new Error("World bank data should have 2 elements")
+
+  rows = data[1]
+  outputRows = []
+
+  for row in rows
+    outputRows.push(_.extend(row, text: "thing"))
+
+  data[1] = outputRows
+
+  return data
 
 module.exports = (req, res) ->
   countryCode = req.params.countryCode
@@ -22,5 +41,10 @@ module.exports = (req, res) ->
       throw err
       res.send(500, "Couldn't query World Bank Data for #{makeGetUrl(countryCode, indicatorCode)}")
 
-    res.send(200, response.body)
+    try
+      indicatorData = indicatorate(indicatorCode, response.body)
+      res.send(200, JSON.stringify(indicatorData))
+    catch e
+      console.error e.stack
+      res.send(500, e.toString())
   )
