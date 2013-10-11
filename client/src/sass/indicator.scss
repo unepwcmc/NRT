@@ -29,6 +29,7 @@ section.introduction {
         p {
           color: $lightishGrey;
           font-size: 0.8em;
+          line-height: 35px;
           span.separator {
             padding: 0 5px;
           }
@@ -39,15 +40,19 @@ section.introduction {
           float: left;
           height: 35px;
           vertical-align: middle;
+          -webkit-border-radius: 4px; 
+          -moz-border-radius: 4px; 
+          border-radius: 4px;
           span {
             display: inline-block;
             height: 35px;
-            line-height: 1em;
+            line-height: 35px;
+            vertical-align: middle;
+            padding: 0 10px;
             &.number {
               font-size: 1.2em;
               font-weight: bold;
               color: #0a519c;
-              line-height: 1em;
             }
             &.keyword {
               background-color: #0a519c;
@@ -80,7 +85,7 @@ section.introduction {
     }
 
     h2 {
-      font-size: 22px;
+      font-size: 1.5em;
       font-weight: bold;
       padding: 0;
     }
