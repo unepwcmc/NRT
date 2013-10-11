@@ -46,7 +46,7 @@ i {
 }
 
 small {
-  font-size: 0.75em;
+  font-size: 0.8em;
   color: $grey;
 }
 
@@ -180,9 +180,17 @@ h1 {
 
 h2 {
   font-size: 1.75em;
-  font-family: 'PT sans', sans-serif;
+  font-family: 'Open sans', sans-serif;
+  font-weight: 200;
   line-height: 1.2em;
   padding-bottom: 5px;
+  span{
+    font-size: 1.9em;
+    font-family: 'Open sans', sans-serif;
+    position: relative;
+    top: 6px;
+    padding-left: 5px;
+  }
 }
 
 h3 {
@@ -206,11 +214,11 @@ h1, h2, h3, h4, h5 {
 
 .content {
   width: 980px;
-  padding: 35px 0 30px 0;
+  padding: 30px 0;
   margin: 0 auto;
   outline: 0;
   word-wrap: break-word;
-
+  overflow: hidden;
   a {
     color: $linkBlue;
     text-decoration: none;
@@ -259,6 +267,7 @@ h1, h2, h3, h4, h5 {
   background-image: url('/images/header-bg.png');
   background-size: 50%;
   background-repeat: repeat-y;
+  height: 79px;
 
   .inner {
     margin: 0 auto;
@@ -267,10 +276,10 @@ h1, h2, h3, h4, h5 {
 
   h1 {
     font-family: "PT Sans";
-    font-size: 1em;
+    font-size: 1.2em;
     color: white;
     float: left;
-    margin-top: 11px;
+    margin-top: 15px;
     padding-bottom: 0;
 
     small {
@@ -283,8 +292,8 @@ h1, h2, h3, h4, h5 {
   ul.right {
     float: right;
     background: white;
-    width: 725px;
-    height: 61px;
+    width: 700px;
+    height: 79px;
     /* Skew to achieve slanted blue section */
     @include skew(-25deg, 0);
 
@@ -294,15 +303,16 @@ h1, h2, h3, h4, h5 {
     }
 
     li, a {
-      color: #8c8c8c;
+      color: rgba(0,0,0,0.6);
     }
 
     li {
-      font-size: 0.8em;
+      font-size: 0.85em;
       float: right;
-      padding: 0 10px;
+      padding: 0 20px;
       border-left: 1px solid #EEEEEE;
-      line-height: 61px;
+      line-height: 79px;
+      font-weight: 600;
 
       &:hover {
         background-color: #008bdc;
@@ -385,7 +395,7 @@ h1, h2, h3, h4, h5 {
   border-bottom: 1px solid #eee;
 
   .inner {
-    margin: 61px auto 0 auto;
+    margin: 79px auto 0 auto;
     padding: 0 0 15px 0;
     width: 980px;
   }
@@ -398,17 +408,25 @@ h1, h2, h3, h4, h5 {
     display: inline;
     font-size: 20px;
     font-weight: lighter;
+    position: relative;
+    top: 4px;
 
     &:before {
       position: relative;
-      top: 8px;
-      padding: 0 10px;
-      content: "\203a";
-      font-size: 60px;
+      top: 6px;
+      padding: 0 10px 0 0;
+      content: "\2039";
+      font-size: 50px;
     }
 
-    &:first-child {
-      margin-left: -22px;
+    &.home {
+      margin-left: -12px;
+      border-right: 1px solid #ddd;
+      padding-right: 15px;
+      margin-right: 10px;
+      i {
+        padding-right: 10px;
+      }
 
       &:before {
         content: "";
@@ -520,8 +538,8 @@ section.report-indicator-list {
 aside {
   color: $lightishGrey;
   font-size: 13px;
-  
-  h3 {    
+
+  h3 {
     padding-bottom: 5px;
     margin: 15px 0 5px 0;
     border-bottom: 1px solid $differentGrey;
@@ -535,7 +553,7 @@ aside {
       float: right;
     }
   }
-  
+
   p {
     font-size: 12px;
   }
@@ -555,13 +573,13 @@ aside {
       color: $linkBlueHover;
     }
   }
-  
+
   .dialog {
     background: $bkgGrey;
     padding: 15px;
     display: none;
     height: 95px;
-    
+
     h4 {
       font-weight: normal;
       font-size: 14px;
@@ -588,7 +606,7 @@ aside {
       width: 96%;
       color: $mediumGrey;
     }
-    
+
     button {
       background: $green;
       text-align: center;
@@ -625,7 +643,7 @@ aside {
         }
       }
     }
-    
+
   }
 }
 
@@ -788,6 +806,28 @@ table {
       border: 0;
       margin-bottom: 0;
     }
+  }
+}
+
+footer{
+  margin-top: 40px;
+  background-color: $bkgGrey;
+  width: 100%;
+  min-width: 980px;
+  padding: 50px 0;
+  border-top: 1px solid #ddd;
+  .inner{
+    width: 980px;
+    margin: 0 auto;
+    text-align: center;
+    h3{
+      color: $mainFont;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+  }
+  img{
+    margin: 0 25px;
   }
 }
 
