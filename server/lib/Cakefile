@@ -2,7 +2,7 @@ request = require('request')
 Q = require('q')
 _ = require('underscore')
 
-standardQuerySuffix = 
+standardQuerySuffix =
   'where': 'objectid > 0'
   'objectIds': ''
   'time': ''
@@ -26,6 +26,11 @@ standardQuerySuffix =
   'returnM':'false'
   'f':'pjson'
 
+worldbankQuerySuffix = 
+  "per_page": 100
+  "date": "1960:2013"
+  "format": "json"
+
 constructUrl = (serviceName, featureServer) ->
   unless serviceName && featureServer
     return console.error 'Need to give serviceName and featureServer'
@@ -35,12 +40,18 @@ makeRequest = (serviceName, featureServer) ->
   request
     url: constructUrl(serviceName, featureServer)
     qs: standardQuerySuffix
-  , handleResponse
+  , handleArcResponse
 
-handleResponse = (error, res) ->
+handleArcResponse = (error, res) ->
   return console.error error if error?
   object = JSON.parse(res.body)
   console.log object.features
+  console.log "===\nIn real life, I'd update the database with these values\n==="
+
+handleWBResponse = (error, res) ->
+  return console.error error if error?
+  object = JSON.parse(res.body)
+  console.log object[1]
   console.log "===\nIn real life, I'd update the database with these values\n==="
 
 task 'check:pas', 'check for updated PAs indicator data', (options) ->
@@ -52,4 +63,58 @@ task 'check:airquality', 'check for updated Air Quality indicator data', (option
   serviceName = null
   featureServer = null
   makeRequest(serviceName, featureServer)
+
+task 'getwb:allpas', 'query live data.worldbank.org PAs data feed', (options) ->
+  request
+    url: "http://api.worldbank.org/countries/ARE/indicators/ER.LND.PTLD.ZS"
+    qs: worldbankQuerySuffix
+    , (err, res) ->
+      return console.error(err) if err
+      output = []
+      data = JSON.parse(res.body)[1]
+      for row in data
+        unless row.value is null
+          output.push _.pick(row, ['date', 'value'])
+      console.log output
+
+
+task 'getwb:mpas', 'query live data.worldbank.org PAs data feed', (options) ->
+  request
+    url: "http://api.worldbank.org/countries/ARE/indicators/ER.MRN.PTMR.ZS"
+    qs: worldbankQuerySuffix
+    , (err, res) ->
+      return console.error(err) if err
+      output = []
+      data = JSON.parse(res.body)[1]
+      for row in data
+        unless row.value is null
+          output.push _.pick(row, ['date', 'value'])
+      console.log output
+
+task 'getwb:tpas', 'query live data.worldbank.org PAs data feed', (options) ->
+  request
+    url: "http://api.worldbank.org/countries/ARE/indicators/ER.LND.PTLD.ZS"
+    qs: worldbankQuerySuffix
+    , (err, res) ->
+      return console.error(err) if err
+      output = []
+      data = JSON.parse(res.body)[1]
+      for row in data
+        unless row.value is null
+          output.push _.pick(row, ['date', 'value'])
+      console.log output
+
+task 'getwb:co', 'query live data.worldbank.org PAs data feed', (options) ->
+  request
+    url: "http://api.worldbank.org/countries/ARE/indicators/NY.ADJ.DCO2.GN.ZS"
+    qs: worldbankQuerySuffix
+    , (err, res) ->
+      return console.error(err) if err
+      output = []
+      data = JSON.parse(res.body)[1]
+      for row in data
+        unless row.value is null
+          output.push _.pick(row, ['date', 'value'])
+      console.log output
+
 
