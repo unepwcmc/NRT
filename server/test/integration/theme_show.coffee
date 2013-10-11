@@ -145,9 +145,9 @@ test('GET /:id/publish publishes the current draft and makes it publicly viewabl
 test("GET /:id/discard_draft discards all drafts and renders the published version", (done) ->
   theTheme = originalPage = draftPage =null
 
-  helpers.createTheme([
+  helpers.createTheme(
     title: 'An theme'
-  ]).then( (theme) ->
+  ).then( (theme) ->
 
     theTheme = theme
 
