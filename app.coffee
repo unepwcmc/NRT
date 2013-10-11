@@ -1,6 +1,6 @@
 express = require('express')
 http = require('http')
-worldBankQuery = require('./worldBank')
+worldBankQuery = require('./worldbank')
 
 PORT = 3001
 

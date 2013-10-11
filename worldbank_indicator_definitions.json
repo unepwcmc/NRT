@@ -1,0 +1,9 @@
+{  
+  "NY.ADJ.DCO2.GN.ZS": {
+    "valueField": "value",
+    "ranges":[
+      {"minValue": 0.35, "message": "Excellent"},
+      {"minValue": 0, "message": "Rubbish"}
+    ]
+  }
+}

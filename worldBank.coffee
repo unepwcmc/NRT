@@ -1,5 +1,8 @@
 request = require('request')
 _ = require('underscore')
+fs = require('fs')
+
+indicatorDefinitions = JSON.parse(fs.readFileSync('./worldbank_indicator_definitions.json', 'UTF8'))
 
 WORLD_BANK_URL = "http://api.worldbank.org/countries/"
 WORLD_BANK_QUERY_SUFFIX =
@@ -10,19 +13,36 @@ WORLD_BANK_QUERY_SUFFIX =
 makeGetUrl = (country, indicator) ->
   "#{WORLD_BANK_URL}/#{country}/indicators/#{indicator}"
 
-indicatorate = (indicatorCode, data) ->
-  data = JSON.parse(data)
-
+validateIndicatorData = (data) ->
   unless _.isArray(data)
     throw new Error("World bacnk data shuold be an array")
   unless data.length is 2
     throw new Error("World bank data should have 2 elements")
 
+calculateIndicatorText = (indicatorCode, value) ->
+  value = parseFloat(value)
+  ranges = indicatorDefinitions[indicatorCode].ranges
+
+  for range in ranges
+    return range.message if value > range.minValue
+
+  return "Error: Value #{value} outside expected range"
+
+indicatorate = (indicatorCode, data) ->
+  data = JSON.parse(data)
+
+  validateIndicatorData(data)
+
   rows = data[1]
   outputRows = []
 
+  valueField = indicatorDefinitions[indicatorCode].valueField
+
   for row in rows
-    outputRows.push(_.extend(row, text: "thing"))
+    value = row[valueField]
+    continue unless value?
+    text = calculateIndicatorText(indicatorCode, value)
+    outputRows.push(_.extend(row, text: text))
 
   data[1] = outputRows
 
