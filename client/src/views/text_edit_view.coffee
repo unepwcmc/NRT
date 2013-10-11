@@ -31,21 +31,22 @@ class Backbone.Views.TextEditView extends Backbone.View
 
   determineEditModeFromModel: ->
     @editMode = true
-    if typeof @model.getPage is 'Function'
+    if typeof @model.getPage is 'function'
       page = @model.getPage()
-      @editMode = if page? then page.get('is_draft') else false
+      @editMode = if page? then page.get('is_draft') else true
 
   showEditingView: ->
-    unless @editingView?
-      @$el.addClass('editing')
-      @editingView = new Backbone.Views.TextEditingView(
-        tagName: @tagName
-        position: @getPositionRelativeToViewport()
-        content: @model.get(@attributeName)
-        disableNewlines: @disableNewlines
-      )
-      @setupEditingViewBindings()
-      @$el.append(@editingView.el)
+    if @editMode
+      unless @editingView?
+        @$el.addClass('editing')
+        @editingView = new Backbone.Views.TextEditingView(
+          tagName: @tagName
+          position: @getPositionRelativeToViewport()
+          content: @model.get(@attributeName)
+          disableNewlines: @disableNewlines
+        )
+        @setupEditingViewBindings()
+        @$el.append(@editingView.el)
 
   getPositionRelativeToViewport: =>
     top: @$el.offset().top - $(window).scrollTop()

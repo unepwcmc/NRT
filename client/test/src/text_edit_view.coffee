@@ -28,7 +28,28 @@ test('Given a model where getPage returns a page in draft mode,
 
   Helpers.renderViewToTestContainer(textEditView)
 
-  assert textEditView.editMode, "Expected TextEditView to have edit mode set as true"
+  assert.isTrue textEditView.editMode, "Expected TextEditView to have edit mode set as true"
+
+  textEditView.close()
+)
+
+test('Given a model where getPage returns a page not in draft mode,
+  it renders the TextEditView not in edit mode', ->
+  page = Factory.page()
+  section = Factory.section(title: 'A section')
+  section.set('indicator', null)
+
+  page.set('sections', [section])
+  page.set('is_draft', false)
+
+  textEditView = new Backbone.Views.TextEditView(
+    model: page.get('sections').at(0)
+    attributeName: 'text'
+  )
+
+  Helpers.renderViewToTestContainer(textEditView)
+
+  assert.isFalse textEditView.editMode, "Expected TextEditView to have edit mode set as true"
 
   textEditView.close()
 )
