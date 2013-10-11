@@ -40,7 +40,7 @@ indicatorSchema.statics.seedData = ->
 
     if count is 0
       dummyIndicators = JSON.parse(
-        fs.readFileSync("#{process.cwd()}/lib/sample_indicators.json", 'UTF8')
+        fs.readFileSync("#{process.cwd()}/lib/seed_indicators.json", 'UTF8')
       )
 
       Indicator.create(dummyIndicators, (error, results) ->
