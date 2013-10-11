@@ -51,9 +51,11 @@ exports.showDraft = (req, res) ->
 
     theme = theme.toObjectWithNestedPage(draft: true)
     .then((themeObject) ->
-      res.render("themes/show",
-        theme: theme,
-        themeJSON: JSON.stringify(themeObject)
+      Theme.getIndicatorsByTheme( themeObject.externalId, (err, indicators) ->
+        res.render "themes/show",
+          theme: themeObject,
+          themeJSON: JSON.stringify(themeObject),
+          indicators: indicators
       )
     ).fail((err) ->
       console.error err
@@ -80,9 +82,11 @@ exports.publishDraft = (req, res) ->
     .then( (publishedPage) ->
       theme.toObjectWithNestedPage()
     ).then( (themeObject) ->
-      res.render("themes/show",
-        theme: theme,
-        themeJSON: JSON.stringify(themeObject)
+      Theme.getIndicatorsByTheme( themeObject.externalId, (err, indicators) ->
+        res.render "themes/show",
+          theme: themeObject,
+          themeJSON: JSON.stringify(themeObject),
+          indicators: indicators
       )
     ).fail((err) ->
       console.error err
@@ -109,9 +113,11 @@ exports.discardDraft = (req, res) ->
     .then( (publishedPage) ->
       theme.toObjectWithNestedPage()
     ).then( (themeObject) ->
-      res.render("themes/show",
-        theme: theme,
-        themeJSON: JSON.stringify(themeObject)
+      Theme.getIndicatorsByTheme( themeObject.externalId, (err, indicators) ->
+        res.render "themes/show",
+          theme: themeObject,
+          themeJSON: JSON.stringify(themeObject),
+          indicators: indicators
       )
     ).fail((err) ->
       console.error err
