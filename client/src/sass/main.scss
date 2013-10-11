@@ -533,19 +533,24 @@ section.report-indicator-list {
 }
 
 .main-content {
-  padding: 30px 20px 0 0;
+  padding: 0 20px 0 0;
   width: 650px;
 }
 
 .content-sidebar {
   width: 250px;
-  padding: 30px 0 0 20px;
+  padding: 0 0 0 20px;
 }
 
 
 aside {
   color: $lightishGrey;
   font-size: 13px;
+  border-left: 1px solid $lightGrey;
+  
+  section {
+    padding: 0;
+  }
 
   h3 {
     padding-bottom: 5px;
@@ -553,7 +558,7 @@ aside {
     border-bottom: 1px solid $differentGrey;
     font-weight: bold;
     font-size: 16px;
-    color: $mediumGrey;
+    color: $black;
     &:first-child {
       margin-top: 0;
     }
@@ -667,8 +672,11 @@ aside {
   }
 
   h4 {
+    color: $black;
+  }
+  
+  span {
     color: $mediumGrey;
-    font-weight:bold;
   }
 
   ul {
@@ -683,6 +691,7 @@ aside {
         color: $orange;
 
         .outdated-notice {
+          color: $orange;
           font-weight: normal;
           border: 1px solid;
           border-radius: 3px;
@@ -849,6 +858,8 @@ footer{
   border-top: 1px solid $bkgGrey;
   border-bottom: 1px solid $bkgGrey;
   height: 50px;
+  padding: 5px 0;
+  box-shadow: 0 0 3px rgba(0,0,0,0.15);
   .edit-bar {
     width: 980px;
     margin: auto;
