@@ -154,7 +154,7 @@ module.exports =
         if field.source.name is sourceName
           return field
       
-      throw new Error("Couldn't find '#{sourceName}' in field definition")
+      return false
 
     convertSourceValueToInternalValue: (sourceName, value) ->
       fieldDefinition = @findFieldDefinitionBySourceName(sourceName)
@@ -175,9 +175,10 @@ module.exports =
 
       for sourceName, value of row
         fieldDefinition = @findFieldDefinitionBySourceName(sourceName)
-        internalName = fieldDefinition.name
-        convertedValue = @convertSourceValueToInternalValue(sourceName, value)
-        translatedRow[internalName] = convertedValue
+        if fieldDefinition
+          internalName = fieldDefinition.name
+          convertedValue = @convertSourceValueToInternalValue(sourceName, value)
+          translatedRow[internalName] = convertedValue
 
       return translatedRow
 

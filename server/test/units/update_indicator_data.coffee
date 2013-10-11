@@ -398,6 +398,31 @@ test('.convertIndicatorDataFields when given valid epoch to integer field transl
   
 )
 
+test('.translateRow includes fields with definitions and skips those without', ->
+  indicator = new Indicator(
+    indicatorDefinition:
+      fields: [{
+        source:
+          name: 'periodStart'
+          type: 'integer'
+        name: 'year'
+        type: 'integer'
+      }]
+  )
+
+  row = {
+    periodStart: 12343242300000
+    fresh: true
+  }
+
+  translatedRow = indicator.translateRow(row)
+
+  assert.property translatedRow, 'year',
+    "Expected periodStart property to be included in translatedRow"
+  assert.notProperty translatedRow, 'fresh',
+    "Expected periodStart property to not be included in translatedRow"
+)
+
 test('.convertSourceValueToInternalValue when given two values of the same 
   type it returns same value', ->
   indicator = new Indicator(
@@ -411,9 +436,10 @@ test('.convertSourceValueToInternalValue when given two values of the same
       }]
   )
   result = indicator.convertSourceValueToInternalValue('periodStart', 5)
-  assert.strictEqual result, 5, 
+  assert.strictEqual result, 5,
     "Expected conversion not to modify source value"
 )
+
 test(".convertSourceValueToInternalValue when given a type conversion which
   doesn't exist, it throws appropriate error", ->
   indicator = new Indicator(
