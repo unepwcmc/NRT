@@ -18,6 +18,10 @@
   <li class="home"><i class="icon-home"></i><a href="/">Home</a></li>
   <!-- THIS NAVIGATION MUST BE FIXED {{ indicator.theme.title }} -->
   <li><a href="#">Go back to theme {{ indicator.theme }}</a></li>
+
+  <a class="button" href="/indicators/{{indicator._id}}/draft">
+    <i class="icon-edit"></i> {{{t "indicator/update"}}}
+  </a>
 {{/contentFor}}
 
 {{#if indicator.page.is_draft}}
@@ -29,7 +33,7 @@
 
       <div class="publish-delete">
         <a class="button" id="publish" href="publish">Publish</a>
-        <a class="button" href="./">Save & go to public view</a>
+        <a class="button" id="save" href="./">Save and exit</a>
         <a class="button" id="delete" href="discard_draft">Discard Draft</a>
       </div>
     </div>
@@ -40,9 +44,6 @@
   <article>
     <header>
       <h1>{{indicator.title}}</h1>
-      <a class="button" href="draft">
-        <i class="icon-edit"></i> {{{t "indicator/update"}}}
-      </a>
       <div class="clear"></div>
       <div class="parameter">
         <div class="score">
@@ -52,10 +53,13 @@
         <div class="clear"></div>
       <div><!--card-->
     </header>
+
     <div class='main-content'>
     </div>
 
     <aside class="content-sidebar metadata">
+    <div class="metadata-placeholder">
+    </div>
       <section>
         <h3>{{{t "indicator/metadata"}}}</h3>
         <ul>

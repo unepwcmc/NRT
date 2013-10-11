@@ -6,11 +6,11 @@ section.introduction {
 
 .content {
   &.indicator {
-    margin-top: 50px;
+    padding-top: 60px;
     header {
       overflow:hidden;
       padding-bottom: 60px;
-      margin: 60px 0;
+      margin-bottom: 60px;
       h1 {
         display: inline-block;
         color: #2d3e4f;
@@ -42,8 +42,8 @@ section.introduction {
           float: left;
           height: 35px;
           vertical-align: middle;
-          -webkit-border-radius: 4px; 
-          -moz-border-radius: 4px; 
+          -webkit-border-radius: 4px;
+          -moz-border-radius: 4px;
           border-radius: 4px;
           span {
             display: inline-block;
