@@ -34,50 +34,11 @@ sectionSchema.methods.cloneChildrenBySectionId = (originalSectionId) ->
   @cloneNarrativesFrom(originalSectionId)
     .then( =>
       @cloneVisualisationsFrom(originalSectionId)
-    ).then( =>
-      @cloneIndicatorFrom(originalSectionId)
     ).then( ->
       deferred.resolve()
     ).fail( (err) ->
       deferred.reject(err)
     )
-
-  return deferred.promise
-
-sectionSchema.methods.cloneIndicatorFrom = (sectionId) ->
-  Indicator = require("./indicator.coffee").model
-
-  deferred = Q.defer()
-
-  Q.nsend(
-    Section
-      .findOne(_id: sectionId)
-      .populate('indicator')
-    , 'exec'
-  ).then( (oldSection) ->
-
-    unless oldSection? && oldSection.indicator?
-      deferred.resolve()
-
-    indicator = oldSection.indicator.toObject()
-    delete indicator._id
-
-    Q.nsend(
-      Indicator, 'create', indicator
-    )
-
-  ).then( (newIndicator) =>
-
-    @indicator = newIndicator
-    Q.nsend(@, 'save')
-
-  ).then( =>
-
-    deferred.resolve(@indicator)
-
-  ).fail( (err) ->
-    deferred.reject(err)
-  )
 
   return deferred.promise
 

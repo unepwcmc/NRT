@@ -410,57 +410,6 @@ test('.createDraftClone clones a public page,
   )
 )
 
-test('.createDraftClone clones a public page,
-  and duplicates section indicator associations', (done) ->
-  publicPage = originalIndicator = originalSection = null
-
-  Q.nfcall(
-    helpers.createIndicator
-  ).then( (indicator) ->
-    originalIndicator = indicator
-
-    Q.nfcall(
-      helpers.createSection, {
-        indicator: indicator
-      }
-    )
-  ).then( (section) ->
-    originalSection = section
-
-    helpers.createPage(
-      sections: [section]
-    )
-  ).then( (page) ->
-    publicPage = page
-
-    publicPage.createDraftClone()
-  ).then( (clonedPage) ->
-
-    clonedSection = clonedPage.sections[0]
-
-    Q.nsend(
-      Indicator
-        .findOne(_id: clonedSection.indicator)
-      , 'exec'
-    )
-  ).then( (clonedIndicator) ->
-    assert.isNotNull clonedIndicator, "Couldn't find a cloned indicator"
-
-    assert.strictEqual clonedIndicator.title, originalIndicator.title,
-      "Expected clonedIndicator.title (#{clonedIndicator.title}) to equal
-        originalIndicator.title (#{originalIndicator.title})"
-
-    assert.notStrictEqual clonedIndicator.id, originalIndicator.id,
-      "Expected clonedIndicator.id (#{clonedIndicator.id}) to be different to
-        originalIndicator.id (#{originalIndicator.id})"
-
-    done()
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
-)
-
 test(".giveSectionsNewIds on a page with one section
   gives that section a new ID
   and returns an array containing the section and it's original ID", (done) ->
