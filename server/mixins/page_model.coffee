@@ -3,6 +3,49 @@ Q = require('q')
 Page = require('../models/page').model
 
 module.exports = {
+  publishDraftPage: ->
+    deferred = Q.defer()
+
+    publishedPage = null
+
+    Q.nsend(
+      Page.findOne({parent_id: @_id, is_draft: true}), 'exec'
+    ).then( (page) =>
+
+      if page?
+        page.is_draft = false
+
+        Q.nsend(
+          page, 'save'
+        )
+      else
+        @getPage()
+
+    ).spread( (page) =>
+      publishedPage = page
+
+      @deleteAllPagesExcept(publishedPage.id)
+    ).then( ->
+      deferred.resolve(publishedPage)
+    ).fail( (err) ->
+      deferred.reject(err)
+    )
+
+    return deferred.promise
+
+  deleteAllPagesExcept: (pageId) ->
+    deferred = Q.defer()
+
+    Q.nsend(
+      Page.remove(parent_id: @_id, _id: {'$ne': pageId }), 'exec'
+    ).then( (deletedPage) ->
+      deferred.resolve(deletedPage)
+    ).fail( (err) ->
+      deferred.reject(err)
+    )
+
+    return deferred.promise
+
   getDraftPage: ->
     deferred = Q.defer()
 

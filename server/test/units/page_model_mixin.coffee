@@ -214,11 +214,10 @@ test(".publishDraftPage sets the page's draft status to false and
     nonDraftPage = page
 
     theIndicator.getDraftPage()
-
   ).then( (page)->
     draftPage = page
 
-    draftPage.publishDraftPage()
+    theIndicator.publishDraftPage()
   ).then( (page) ->
     publishedPage = page
 
@@ -227,24 +226,24 @@ test(".publishDraftPage sets the page's draft status to false and
       "Expected publishedPage.parent_id #{draftPage.parent_id} to be the _id of the
       parent indicator (#{theIndicator.id})"
     )
-    assert.strictEqual pubsliehdPage.parent_type, "Indicator"
+    assert.strictEqual publishedPage.parent_type, "Indicator"
 
     assert.isFalse publishedPage.is_draft, "Expected is_draft to be false for publishedPage"
 
-    # Confirm it's clone the public
-    assert.strictEqual publishedPage.title, nonDraftPage.title
+    assert.strictEqual(
+      publishedPage.title,
+      nonDraftPage.title,
+      "Expected published page title to be the same as the original"
+    )
 
     Q.nsend(
-      Page.findOne(_id: draftPage._id), 'exec'
+      Page.find(parent_id: theIndicator.id), 'exec'
     )
 
-  ).then( (foundPage) ->
+  ).then( (foundPages) ->
 
-    assert.strictEqual(
-      foundPage.id, draftPage._id.toString(),
-      "Expected to find the same page when looking for _id #{draftPage._id}
-        but found page with id #{foundPage.id}"
-    )
+    assert.lengthOf foundPages, 1, "Expected only one Page to exist after publishing"
+
     done()
 
   ).fail( (err) ->
@@ -253,3 +252,48 @@ test(".publishDraftPage sets the page's draft status to false and
   )
 )
 
+test(".deleteAllPagesExcept deletes all pages except the one passed in", (done) ->
+  theIndicator = null
+  thePages = []
+
+  Q.nfcall(
+    helpers.createIndicator, {}
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    helpers.createPage(
+      parent_id: theIndicator.id
+      parent_type: "Indicator"
+      title: "Sup Bro"
+    )
+
+  ).then( (page) ->
+    thePages.push(page)
+
+    helpers.createPage(
+      parent_id: theIndicator.id
+      parent_type: "Indicator"
+      title: "Sup Bro"
+    )
+
+  ).then( (page) ->
+    thePages.push(page)
+
+    theIndicator.deleteAllPagesExcept(thePages[0].id)
+  ).then( ->
+
+    Q.nsend(
+      Page.find(parent_id: theIndicator.id), 'exec'
+    )
+
+  ).then( (foundPages) ->
+
+    assert.lengthOf foundPages, 1, "Expected one page to remain after deletion"
+
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
