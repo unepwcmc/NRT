@@ -51,7 +51,8 @@ exports.showDraft = (req, res) ->
     indicator = indicator.toObjectWithNestedPage(draft: true)
     .then((indicatorObject) ->
       res.render("indicators/show",
-        indicator: indicator, indicatorJSON: JSON.stringify(indicatorObject)
+        indicator: indicator,
+        indicatorJSON: JSON.stringify(indicatorObject)
       )
     ).fail((err) ->
       console.error err

@@ -192,3 +192,64 @@ test(".getDraftPage
     throw err
   )
 )
+
+test(".publishDraftPage sets the page's draft status to false and
+  deletes the current published version", (done) ->
+
+  theIndicator = nonDraftPage = draftPage = publishedPage = null
+
+  Q.nfcall(
+    helpers.createIndicator, {}
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    helpers.createPage(
+      parent_id: indicator.id
+      parent_type: "Indicator"
+      is_draft: false
+      title: "Sup Bro"
+    )
+
+  ).then( (page) ->
+    nonDraftPage = page
+
+    theIndicator.getDraftPage()
+
+  ).then( (page)->
+    draftPage = page
+
+    draftPage.publishDraftPage()
+  ).then( (page) ->
+    publishedPage = page
+
+    assert.strictEqual(
+      publishedPage.parent_id.toString(), theIndicator.id,
+      "Expected publishedPage.parent_id #{draftPage.parent_id} to be the _id of the
+      parent indicator (#{theIndicator.id})"
+    )
+    assert.strictEqual pubsliehdPage.parent_type, "Indicator"
+
+    assert.isFalse publishedPage.is_draft, "Expected is_draft to be false for publishedPage"
+
+    # Confirm it's clone the public
+    assert.strictEqual publishedPage.title, nonDraftPage.title
+
+    Q.nsend(
+      Page.findOne(_id: draftPage._id), 'exec'
+    )
+
+  ).then( (foundPage) ->
+
+    assert.strictEqual(
+      foundPage.id, draftPage._id.toString(),
+      "Expected to find the same page when looking for _id #{draftPage._id}
+        but found page with id #{foundPage.id}"
+    )
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
