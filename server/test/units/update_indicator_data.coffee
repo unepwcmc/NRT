@@ -104,8 +104,16 @@ test('.queryIndicatorData queries the remote server for indicator data', (done) 
 
 )
 
-test('.convertResponseToIndicatorData takes data from remote server and
-  prepares for writing to database', (done)->
+test('.convertResponseToIndicatorData on indicator with no type throws an appropriate error', ->
+  indicator = new Indicator()
+
+  assert.throws((->
+    indicator.convertResponseToIndicatorData()
+  ), "Couldn't find a data parser for indicator.type: 'undefined'")
+)
+
+test('.convertResponseToIndicatorData for an environmental indicator
+  takes data from remote server and prepares for writing to database', (done)->
   responseData = {
     features: [
       attributes:
@@ -122,8 +130,9 @@ test('.convertResponseToIndicatorData takes data from remote server and
     ]
   }
 
-  helpers.createIndicatorModels([{}])
-  .then( (indicators) ->
+  helpers.createIndicatorModels([{
+    type: 'environmental'
+  }]).then( (indicators) ->
     indicator = indicators[0]
 
     expectedIndicatorData = {
@@ -157,9 +166,11 @@ test('.convertResponseToIndicatorData takes data from remote server and
   )
 )
 
-test('.convertResponseToIndicatorData when given a garbage response
-  throws an error', ->
-  indicator = new Indicator()
+test('.convertResponseToIndicatorData on an environmental indicator
+  when given a garbage response it throws an error', ->
+  indicator = new Indicator(
+    type: 'environmental'
+  )
 
   garbageData = {hats: 'boats'}
   assert.throws(
@@ -168,6 +179,80 @@ test('.convertResponseToIndicatorData when given a garbage response
     ), "Can't convert poorly formed indicator data reponse:\n#{
           JSON.stringify(garbageData)
         }\n expected response to contains 'features' attribute which is an array"
+  )
+)
+
+test('.convertResponseToIndicatorData for a worldBank indicator
+  takes data from remote server and prepares for writing to database', (done)->
+  responseData = [
+    {
+      "page": 1
+    },
+    [
+      {
+        "indicator": {
+          "id": "NY.ADJ.DCO2.GN.ZS",
+          "value": "Adjusted savings: carbon dioxide damage (% of GNI)"
+        },
+        "value": null,
+        "decimal": "1",
+        "date": "1961"
+      }
+    ]
+  ]
+
+  helpers.createIndicatorModels([{
+    type: 'worldBank'
+  }]).then( (indicators) ->
+    indicator = indicators[0]
+
+    expectedIndicatorData = {
+      indicator: indicator._id
+      data: [
+        {
+          "indicator": {
+            "id": "NY.ADJ.DCO2.GN.ZS",
+            "value": "Adjusted savings: carbon dioxide damage (% of GNI)"
+          },
+          "value": null,
+          "decimal": "1",
+          "date": "1961"
+        }
+      ]
+    }
+
+    convertedData = indicator.convertResponseToIndicatorData(responseData)
+
+    assert.ok(
+      _.isEqual(convertedData, expectedIndicatorData),
+      "Expected converted data:\n
+      #{JSON.stringify(convertedData)}\n
+        to look like expected indicator data:\n
+      #{JSON.stringify(expectedIndicatorData)}"
+    )
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.convertResponseToIndicatorData on a worldBank indicator
+  when given a garbage response it throws an error', ->
+  indicator = new Indicator(
+    type: 'worldBank'
+  )
+
+  garbageData = {hats: 'boats'}
+  assert.throws(
+    (->
+      indicator.convertResponseToIndicatorData(garbageData)
+    ), "Can't convert poorly formed indicator data reponse:\n#{
+          JSON.stringify(garbageData)
+        }\n expected response to be a world bank api response;#{
+      } an array with a data array as the second element"
   )
 )
 

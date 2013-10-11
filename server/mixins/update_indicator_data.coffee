@@ -3,31 +3,38 @@ Q = require('q')
 request = require('request')
 _ = require('underscore')
 
-config =
-  indicatorServer: '196.218.36.14/ka'
-  defaultQueryParameters:
-    'where': 'objectid > 0'
-    'objectIds': ''
-    'time': ''
-    'geometry': ''
-    'geometryType':'esriGeometryEnvelope'
-    'inSR': ''
-    'spatialRel':'esriSpatialRelIntersects'
-    'relationParam': ''
-    'outFields': ''
-    'returnGeometry':'false'
-    'maxAllowableOffset': ''
-    'geometryPrecision': ''
-    'outSR': ''
-    'gdbVersion': ''
-    'returnIdsOnly':'false'
-    'returnCountOnly':'false'
-    'orderByFields': ''
-    'groupByFieldsForStatistics': ''
-    'outStatistics': ''
-    'returnZ':'false'
-    'returnM':'false'
-    'f':'pjson'
+CONFIG =
+  environmental:
+    indicatorServer: '196.218.36.14/ka'
+    defaultQueryParameters:
+      'where': 'objectid > 0'
+      'objectIds': ''
+      'time': ''
+      'geometry': ''
+      'geometryType':'esriGeometryEnvelope'
+      'inSR': ''
+      'spatialRel':'esriSpatialRelIntersects'
+      'relationParam': ''
+      'outFields': ''
+      'returnGeometry':'false'
+      'maxAllowableOffset': ''
+      'geometryPrecision': ''
+      'outSR': ''
+      'gdbVersion': ''
+      'returnIdsOnly':'false'
+      'returnCountOnly':'false'
+      'orderByFields': ''
+      'groupByFieldsForStatistics': ''
+      'outStatistics': ''
+      'returnZ':'false'
+      'returnM':'false'
+      'f':'pjson'
+
+  worldBank:
+    defaultQueryParameters:
+      "per_page": 100
+      "date": "1960:2013"
+      "format": "json"
 
 CONVERSIONS =
   epoch:
@@ -43,7 +50,7 @@ URL_BUILDERS =
     unless serviceName? and featureServer?
       throw "Cannot generate update URL, environmental indicator has no serviceName or featureServer in its indicator definition"
 
-    url = "http://#{config.indicatorServer}/rest/services/#{serviceName}/FeatureServer/#{featureServer}/query"
+    url = "http://#{CONFIG[@type].indicatorServer}/rest/services/#{serviceName}/FeatureServer/#{featureServer}/query"
     return url
 
   worldBank: ->
@@ -58,6 +65,35 @@ URL_BUILDERS =
     url = "#{apiUrl}/indicators/#{apiIndicatorName}"
     return url
 
+SOURCE_DATA_PARSERS =
+  environmental: (responseBody) ->
+    unless _.isArray(responseBody.features)
+      throw "Can't convert poorly formed indicator data reponse:\n#{
+        JSON.stringify(responseBody)
+      }\n expected response to contains 'features' attribute which is an array"
+
+    convertedData = {
+      indicator: @_id
+      data: []
+    }
+
+    for feature in responseBody.features
+      convertedData.data.push _.omit(feature.attributes, 'OBJECTID')
+
+    return convertedData
+
+  worldBank: (responseBody) ->
+    unless _.isArray(responseBody) and responseBody.length is 2
+      throw "Can't convert poorly formed indicator data reponse:\n#{
+        JSON.stringify(responseBody)
+      }\n expected response to be a world bank api response;#{
+      } an array with a data array as the second element"
+
+    return convertedData = {
+      indicator: @_id
+      data: responseBody[1]
+    }
+    
 
 module.exports =
   statics: {}
@@ -74,7 +110,7 @@ module.exports =
 
       request.get
         url: @getUpdateUrl()
-        qs: config.defaultQueryParameters
+        qs: CONFIG[@type].defaultQueryParameters
         json: true
       , (err, response) ->
         if err?
@@ -85,20 +121,11 @@ module.exports =
       return deferred.promise
 
     convertResponseToIndicatorData: (responseBody) ->
-      unless _.isArray(responseBody.features)
-        throw "Can't convert poorly formed indicator data reponse:\n#{
-          JSON.stringify(responseBody)
-        }\n expected response to contains 'features' attribute which is an array"
-
-      convertedData = {
-        indicator: @_id
-        data: []
-      }
-
-      for feature in responseBody.features
-        convertedData.data.push _.omit(feature.attributes, 'OBJECTID')
-
-      return convertedData
+      sourceDataParser = SOURCE_DATA_PARSERS[@type]
+      if sourceDataParser?
+        return sourceDataParser.call(@, responseBody)
+      else
+        throw new Error("Couldn't find a data parser for indicator.type: '#{@type}'")
 
     validateIndicatorDataFields: (indicatorData) ->
       firstRow = indicatorData.data[0]
