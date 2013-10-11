@@ -18,6 +18,9 @@
   <li class="home"><i class="icon-home"></i><a href="/">Home</a></li>
   <!-- THIS NAVIGATION MUST BE FIXED {{ indicator.theme.title }} -->
   <li><a href="#">Go back to theme {{ indicator.theme }}</a></li>
+  <button onclick="$('.edit-bar-container').addClass('opened');">
+    <i class="icon-edit"></i> {{{t "indicator/update"}}}
+  </button>
 {{/contentFor}}
 <div class="edit-bar-container">
   <div class="edit-bar">
@@ -25,9 +28,9 @@
       <p>Last edited on 7 July 2013</p>
     </div>
     <div class="publish-delete">
-      <button id="publish">Publish</button>
-      <button>Save & go to public view</button>
-      <button id="delete">Discard Draft</button>
+      <button onclick="$('.edit-bar-container').removeClass('opened');" id="publish">Publish</button>
+      <button onclick="$('.edit-bar-container').removeClass('opened');" id="save">Save and exit</button>
+      <button onclick="$('.edit-bar-container').removeClass('opened');" id="delete">Discard Draft</button>
     </div>
   </div><!--edit bar-->
 </div><!--edit bar container-->
@@ -36,9 +39,6 @@
   <article>
     <header>
       <h1>{{indicator.title}}</h1>
-      <button>
-        <i class="icon-edit"></i> {{{t "indicator/update"}}}
-      </button>
       <div class="clear"></div>
       <div class="parameter">
         <div class="score">
