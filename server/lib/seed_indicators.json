@@ -194,4 +194,35 @@
         }
       ]
     }
+}, {
+  "short_name": "World Bank PA cover",
+  "title": "Protected Area coverage (World Bank)",
+  "description": "Protected Area coverage (World Bank)",
+  "theme": 2,
+  "type": "worldBank",
+  "indicatorDefinition": {
+      "apiUrl": "http://api.worldbank.org/countries/ARE/",
+      "apiIndicatorName": "ER.MRN.PTMR.ZS",
+      "period": "annual",
+      "xAxis": "year",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "source": {
+            "name": "date",
+            "type": "integer"
+          },
+          "name": "year",
+          "type": "integer"
+        }, {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        }
+      ]
+    }
 }]
