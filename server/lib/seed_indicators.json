@@ -30,23 +30,37 @@
   "description": "This indicator measures the area of protected land ecosystems, inland water ecosystems, and marine ecosystems expressed as a percentage of the total area of land ecosystems, inland water ecosystems and marine ecosystems respectively.  Protected Area refers to all or partially protected areas of at least 1000 hectares that are designated as national parks, natural monuments, natural reserves or wildlife sanctuaries, protected landscapes and seascapes or scientific reserves with limited public access. The data do not include sites protected under local or provincial law.",
   "theme": 2,
   "indicatorDefinition": {
-      "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
-      "operation": "sum",
+      "serviceName": "NRT_AD_ProtectedArea",
+      "featureServer": 2,
       "unit": "%",
-      "outFields": "shape.area",
-      "dateField": "datedes",
       "period": "annual",
       "xAxis": "year",
       "yAxis": "value",
       "geometryField": "geometry",
       "fields": [
         {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
           "name": "year",
           "type": "integer"
         },
         {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
           "name": "value",
           "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
         }
       ]
     }

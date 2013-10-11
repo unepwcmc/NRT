@@ -1,8 +1,9 @@
 async = require('async')
 Q = require('q')
 request = require('request')
+_ = require('underscore')
 
-config = 
+config =
   indicatorServer: '196.218.36.14/ka'
   defaultQueryParameters:
     'where': 'objectid > 0'
@@ -14,7 +15,7 @@ config =
     'spatialRel':'esriSpatialRelIntersects'
     'relationParam': ''
     'outFields': ''
-    'returnGeometry':'true'
+    'returnGeometry':'false'
     'maxAllowableOffset': ''
     'geometryPrecision': ''
     'outSR': ''
@@ -28,25 +29,150 @@ config =
     'returnM':'false'
     'f':'pjson'
 
+CONVERSIONS =
+  epoch:
+    integer: (value) ->
+      new Date(value).getFullYear()
+
+
 module.exports =
   statics: {}
   methods:
     getUpdateUrl: ->
-      serviceName = @indicatorDefinition.serviceName
-      featureServer = @indicatorDefinition.featureServer
+      if @indicatorDefinition?
+        serviceName = @indicatorDefinition.serviceName
+        featureServer = @indicatorDefinition.featureServer
+
+      unless serviceName? and featureServer?
+        throw "Cannot generate update URL, indicator has no serviceName or featureServer in its indicator definition"
 
       url = "http://#{config.indicatorServer}/rest/services/#{serviceName}/FeatureServer/#{featureServer}/query"
       return url
 
     queryIndicatorData: ->
       deferred = Q.defer()
-      request
+
+      request.get
         url: @getUpdateUrl()
-        qs: config.standardQuerySuffix
+        qs: config.defaultQueryParameters
+        json: true
       , (err, response) ->
         if err?
           deferred.reject(err)
 
         deferred.resolve(response)
+
+      return deferred.promise
+
+    convertResponseToIndicatorData: (responseBody) ->
+      unless _.isArray(responseBody.features)
+        throw "Can't convert poorly formed indicator data reponse:\n#{
+          JSON.stringify(responseBody)
+        }\n expected response to contains 'features' attribute which is an array"
+
+      convertedData = {
+        indicator: @_id
+        data: []
+      }
+
+      for feature in responseBody.features
+        convertedData.data.push _.omit(feature.attributes, 'OBJECTID')
+
+      return convertedData
+
+    validateIndicatorDataFields: (indicatorData) ->
+      firstRow = indicatorData.data[0]
+
+      errorMsg = "Error validating indicator data for indicator '#{@title}'\n* "
+      errors = []
+
+      for field in @indicatorDefinition.fields
+        unless field.source?
+          errors.push "Indicator field definition doesn't include a source attribute: #{
+            JSON.stringify(field)
+          }"
+          continue
+        unless firstRow[field.source.name]?
+          errors.push "Couldn't find source attribute '#{field.source.name}' in data"
+
+      if errors.length is 0
+        return true
+      else
+        errorMsg += errors.join('\n* ')
+        throw new Error(errorMsg)
+
+    findFieldDefinitionBySourceName: (sourceName) ->
+      for field in @indicatorDefinition.fields
+        if field.source.name is sourceName
+          return field
+      
+      throw new Error("Couldn't find '#{sourceName}' in field definition")
+
+    convertSourceValueToInternalValue: (sourceName, value) ->
+      fieldDefinition = @findFieldDefinitionBySourceName(sourceName)
+      sourceType = fieldDefinition.source.type
+      internalType = fieldDefinition.type
+
+      if sourceType is internalType
+        return value
+      else if CONVERSIONS[sourceType]? and CONVERSIONS[sourceType][internalType]?
+        return CONVERSIONS[sourceType][internalType](value)
+      else
+        throw new Error(
+          "Don't know how to convert '#{sourceType}' to '#{internalType}' for field '#{sourceName}'"
+        )
+
+    translateRow: (row) ->
+      translatedRow = {}
+
+      for sourceName, value of row
+        fieldDefinition = @findFieldDefinitionBySourceName(sourceName)
+        internalName = fieldDefinition.name
+        convertedValue = @convertSourceValueToInternalValue(sourceName, value)
+        translatedRow[internalName] = convertedValue
+
+      return translatedRow
+
+    convertIndicatorDataFields: (indicatorData) ->
+      translatedRows = []
+
+      for row in indicatorData.data
+        translatedRows.push @translateRow(row)
+
+      indicatorData.data = translatedRows
+      return indicatorData
+
+    replaceIndicatorData: (newIndicatorData) ->
+      IndicatorData = require('../models/indicator_data').model
+      deferred = Q.defer()
+
+      IndicatorData.findOneAndUpdate(
+        {indicator: @},
+        newIndicatorData,
+        {upsert: true}
+        (err, indicatorData) ->
+          if err?
+            deferred.reject(err)
+          else
+            deferred.resolve(indicatorData)
+      )
+
+      return deferred.promise
+
+    updateIndicatorData: ->
+      deferred = Q.defer()
+      @queryIndicatorData(
+      ).then( (response) =>
+        newIndicatorData = @convertResponseToIndicatorData(response.body)
+        if @validateIndicatorDataFields(newIndicatorData)
+          newIndicatorData = @convertIndicatorDataFields(newIndicatorData)
+          return @replaceIndicatorData(newIndicatorData)
+        else
+          throw new Error("Validation of indicator data fields failed")
+      ).then( (indicatorData) ->
+        deferred.resolve(indicatorData)
+      ).fail( (err) ->
+        deferred.reject(err)
+      )
 
       return deferred.promise
