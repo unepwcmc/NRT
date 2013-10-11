@@ -139,13 +139,14 @@ module.exports =
             JSON.stringify(field)
           }"
           continue
-        unless firstRow[field.source.name]?
+        unless firstRow.hasOwnProperty(field.source.name)
           errors.push "Couldn't find source attribute '#{field.source.name}' in data"
 
       if errors.length is 0
         return true
       else
         errorMsg += errors.join('\n* ')
+        errorMsg += "\n Data: #{JSON.stringify(indicatorData.data)}"
         throw new Error(errorMsg)
 
     findFieldDefinitionBySourceName: (sourceName) ->
