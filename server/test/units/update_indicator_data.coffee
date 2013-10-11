@@ -8,9 +8,18 @@ _ = require('underscore')
 
 suite('Update Indicator Mixin')
 
-test('.getUpdateUrl on an indicator with a valid serviceName and featureServer
+test('.getUpdateUrl on indicator with no type throws an appropriate error', ->
+  indicator = new Indicator()
+
+  assert.throws((->
+    indicator.getUpdateUrl()
+  ), "Couldn't find a url builder for indicator.type: 'undefined'")
+)
+
+test('.getUpdateUrl on an environmental indicator with a valid serviceName and featureServer
  it returns a valid url', ->
   indicator = new Indicator
+    type: 'environmental'
     indicatorDefinition:
       serviceName:  'NRT_AD_ProtectedArea'
       featureServer: 2
@@ -20,15 +29,38 @@ test('.getUpdateUrl on an indicator with a valid serviceName and featureServer
   assert.strictEqual url, expectedUrl
 )
 
-test('.getUpdateUrl on an indicator with no serviceName and featureServer
+test('.getUpdateUrl on an environmental indicator with no serviceName and featureServer
  it throws an error', ->
-  indicator = new Indicator()
+  indicator = new Indicator(
+    type: 'environmental'
+  )
 
-  assert.throws indicator.getUpdateUrl, "Cannot generate update URL, indicator has no serviceName or featureServer in its indicator definition"
+  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, environmental indicator has no serviceName or featureServer in its indicator definition"
+)
+
+test('.getUpdateUrl on a worldBank indicator with a valid apiUrl and apiIndicatorName', ->
+  indicator = new Indicator
+    type: 'worldBank'
+    indicatorDefinition:
+      apiUrl: "http://api.worldbank.org/countries/ARE"
+      apiIndicatorName: "NY.ADJ.DCO2.GN.ZS"
+
+  expectedUrl = "http://api.worldbank.org/countries/ARE/indicators/NY.ADJ.DCO2.GN.ZS"
+  url = indicator.getUpdateUrl()
+
+  assert.strictEqual url, expectedUrl
+)
+
+test('.getUpdateUrl on a worldBank indicator with missing apiUrl and apiIndicatorName
+ it throws an error', ->
+  indicator = new Indicator(type: 'worldBank')
+
+  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, indicator has no apiUrl or apiIndicatorName in its indicator definition"
 )
 
 test('.queryIndicatorData queries the remote server for indicator data', (done) ->
   indicator = new Indicator
+    type: 'environmental'
     indicatorDefinition:
       serviceName:  'NRT_AD_ProtectedArea'
       featureServer: 2

@@ -34,20 +34,40 @@ CONVERSIONS =
     integer: (value) ->
       new Date(value).getFullYear()
 
+URL_BUILDERS =
+  environmental: ->
+    if @indicatorDefinition?
+      serviceName = @indicatorDefinition.serviceName
+      featureServer = @indicatorDefinition.featureServer
+
+    unless serviceName? and featureServer?
+      throw "Cannot generate update URL, environmental indicator has no serviceName or featureServer in its indicator definition"
+
+    url = "http://#{config.indicatorServer}/rest/services/#{serviceName}/FeatureServer/#{featureServer}/query"
+    return url
+
+  worldBank: ->
+
+    if @indicatorDefinition?
+      apiUrl = @indicatorDefinition.apiUrl
+      apiIndicatorName = @indicatorDefinition.apiIndicatorName
+
+    unless apiUrl? and apiIndicatorName?
+      throw "Cannot generate update URL, indicator has no apiUrl or apiIndicatorName in its indicator definition"
+
+    url = "#{apiUrl}/indicators/#{apiIndicatorName}"
+    return url
+
 
 module.exports =
   statics: {}
   methods:
     getUpdateUrl: ->
-      if @indicatorDefinition?
-        serviceName = @indicatorDefinition.serviceName
-        featureServer = @indicatorDefinition.featureServer
-
-      unless serviceName? and featureServer?
-        throw "Cannot generate update URL, indicator has no serviceName or featureServer in its indicator definition"
-
-      url = "http://#{config.indicatorServer}/rest/services/#{serviceName}/FeatureServer/#{featureServer}/query"
-      return url
+      urlBuilder = URL_BUILDERS[@type]
+      if urlBuilder?
+        return urlBuilder.call(@)
+      else
+        throw new Error("Couldn't find a url builder for indicator.type: '#{@type}'")
 
     queryIndicatorData: ->
       deferred = Q.defer()
