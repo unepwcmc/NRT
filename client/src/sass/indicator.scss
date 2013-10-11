@@ -6,9 +6,11 @@ section.introduction {
 
 .content {
   &.indicator {
+    padding-top: 60px;
     header {
       overflow:hidden;
       padding-bottom: 60px;
+      margin-bottom: 60px;
       h1 {
         display: inline-block;
         color: #2d3e4f;
