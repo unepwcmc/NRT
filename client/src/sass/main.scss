@@ -268,6 +268,7 @@ h1, h2, h3, h4, h5 {
   box-shadow: 0 0 3px #888888;
 
   /* Split background in to two halves */
+  background-color: white;
   background-image: url('/images/header-bg.png');
   background-size: 50%;
   background-repeat: repeat-y;
@@ -851,9 +852,8 @@ footer{
 
 .edit-bar-container {
   width: 100%;
-  position: fixed;
   z-index: 3;
-  background-color: rgba(255,255,255, 0.95);
+  background-color: $bkgGrey;
   border-top: 1px solid $bkgGrey;
   border-bottom: 1px solid $bkgGrey;
   height: 50px;
@@ -864,20 +864,30 @@ footer{
     width: 980px;
     margin: auto;
     padding-top: 8px;
+    overflow: hidden;
 
-    p {
+    .back {
       float: left;
-      color: $lightishGrey;
-      font-size: 0.8em;
+      overflow: hidden;
+
+      p {
+        display: block;
+        color: $lightishGrey;
+        font-size: 0.8em;
+      }
     }
 
-    a.button {
+    .publish-delete {
       float: right;
-      margin-left: 10px;
 
-      &#publish {
-        border: 1px solid $green;
-        color: $green;
+      a.button {
+        float: right;
+        margin-left: 10px;
+
+        &#publish {
+          border: 1px solid $green;
+          color: $green;
+        }
       }
     }
   }

@@ -23,10 +23,15 @@
 {{#if indicator.page.is_draft}}
   <div class="edit-bar-container">
     <div class="edit-bar">
-      <p>Last edited on 7 July 2013</p>
-      <a class="button" id="publish" href="publish">Publish</a>
-      <a class="button" id="delete" href="discard_draft">Discard Draft</a>
-      <a class="button" href="./">Back to published view</a>
+      <div class="back">
+        <p>Last edited on 7 July 2013</p>
+      </div>
+
+      <div class="publish-delete">
+        <a class="button" id="publish" href="publish">Publish</a>
+        <a class="button" href="./">Save & go to public view</a>
+        <a class="button" id="delete" href="discard_draft">Discard Draft</a>
+      </div>
     </div>
   </div>
 {{/if}}
