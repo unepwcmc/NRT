@@ -41,12 +41,17 @@
               <a href="/locale/ar">العربية</a>
             {{/if}}
           </li>
-
+          <li>
+            <!-- MUST REPLACE THE JS FUNCTION -->
+            <span class="md-trigger" data-modal="modal-1" onclick="$('#modal-1').addClass('md-show');">Help</span>
+          </li>
+          <li>
           {{#if currentUser}}
-            <li>
-              {{ currentUser.name }}
-            </li>
+            {{ currentUser.name }}
+            {{else}}
+            Log in
           {{/if}}
+          </li>
         </ul>
       </div>
     </div>
@@ -58,6 +63,22 @@
         </ul>
       </div>
     </div>
+
+    <!-- MODAL BOX INFOWINDOW -->
+    <div class="md-modal md-effect-1" id="modal-1">
+    <div class="md-content">
+      <h3>Welcome to NRT</h3>
+      <div>
+        <p>A flower in my garden, a mystery in my panties. Monday morning. COME ON! You can control your bladder when you're dead! What's next, Michael? Are you going to make dancing illegal? Is this the tiny town from Footloose? Smack of ham. What is she doing at a beauty pageant? Is she running the lights or something? I'm a complete failure. I can't even fake the death of a stripper. It's one banana Michael, what could it cost, ten dollars?</p>
+        <div class="md-buttons">
+          <!-- MUST REPLACE THE JS FUNCTION -->
+          <button class="md-close" onclick="$('#modal-1').removeClass('md-show');">Start exploring data</button>
+          <a href="/about"><button class="know-more">I want to know more about NRT</button></a>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="md-overlay"></div>
 
     {{{body}}}
     <footer>
