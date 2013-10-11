@@ -4,8 +4,10 @@ request = require('request')
 url = require('url')
 _ = require('underscore')
 async = require('async')
+Q = require('q')
 
 Theme = require('../../models/theme').model
+Page = require('../../models/page').model
 
 suite('Theme show')
 
@@ -29,9 +31,9 @@ test("GET /:id/draft clones the Theme's Page and renders the theme", (done) ->
 
   helpers.createTheme(
     title: 'An theme'
-  ).then( (themes) ->
+  ).then( (theme) ->
 
-    theTheme = themes[0]
+    theTheme = theme
 
     helpers.createPage(
       title: 'A page'
@@ -82,9 +84,9 @@ test('GET /:id/publish publishes the current draft and makes it publicly viewabl
 
   helpers.createTheme(
     title: 'An theme'
-  ).then( (themes) ->
+  ).then( (theme) ->
 
-    theTheme = themes[0]
+    theTheme = theme
 
     helpers.createPage(
       title: 'A page'

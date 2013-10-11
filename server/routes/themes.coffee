@@ -2,6 +2,7 @@ Indicator = require('../models/indicator').model
 Theme = require('../models/theme').model
 _ = require('underscore')
 async = require('async')
+Q = require('q')
 
 exports.index = (req, res) ->
   Theme.getFatThemes( (err, themes) ->
@@ -37,3 +38,59 @@ exports.show = (req, res) ->
         return res.render(500, "Error fetching theme page")
       )
     )
+
+exports.showDraft = (req, res) ->
+  Q.nsend(
+    Theme.findOne(_id: req.params.id).populate('owner'),
+    'exec'
+  ).then( (theme) ->
+    unless theme?
+      error = "Could not find theme with ID #{req.params.id}"
+      console.error error
+      return res.send(404, error)
+
+    theme = theme.toObjectWithNestedPage(draft: true)
+    .then((themeObject) ->
+      res.render("themes/show",
+        theme: theme,
+        themeJSON: JSON.stringify(themeObject)
+      )
+    ).fail((err) ->
+      console.error err
+      return res.render(500, "Error fetching the theme page")
+    )
+
+  ).fail((err) ->
+    console.error err
+    return res.render(500, "Error fetching the theme")
+  )
+
+exports.publishDraft = (req, res) ->
+  Q.nsend(
+    Theme.findOne(_id: req.params.id).populate('owner'),
+    'exec'
+  ).then( (theme) ->
+    unless theme?
+      error = "Could not find theme with ID #{req.params.id}"
+      console.error error
+      return res.send(404, error)
+
+    page = null
+    theme.publishDraftPage()
+    .then( (publishedPage) ->
+      theme.toObjectWithNestedPage()
+    ).then( (themeObject) ->
+      res.render("themes/show",
+        theme: theme,
+        themeJSON: JSON.stringify(themeObject)
+      )
+    ).fail((err) ->
+      console.error err
+      return res.render(500, "Error fetching the theme page")
+    )
+
+  ).fail((err) ->
+    console.error err
+    return res.render(500, "Error fetching the theme")
+  )
+
