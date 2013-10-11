@@ -277,6 +277,11 @@ test('.getPage should be mixed in', ->
   assert.typeOf indicator.getPage, 'Function'
 )
 
+test('.getFatPage should be mixed in', ->
+  indicator = new Indicator()
+  assert.typeOf indicator.getFatPage, 'Function'
+)
+
 test(".toObjectWithNestedPage is mixed in", ->
   indicator = new Indicator()
   assert.typeOf indicator.toObjectWithNestedPage, 'Function'
