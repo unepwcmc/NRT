@@ -303,7 +303,6 @@ div.row.row-2 {
 .indicator-box::after,
 .indicator-box::before {
   position: absolute;
-  overflow: hidden;
   width: 100%;
   height: 50%;
   color: #fff;
@@ -311,47 +310,44 @@ div.row.row-2 {
   -webkit-transition: -webkit-transform 0.3s ease-in-out;
   -moz-transition: -moz-transform 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out;
+  @include box-sizing("border-box");
 }
 
-.indicator-box::after {
+.indicator-box::before {
   content: attr(data-title);
   top: 0;
+  left: 0;
   background: #2c3e50;
   font-size: 1em;
   line-height: 1.2em;
   font-weight: 300;
   padding: 20px;
-  -webkit-box-orient: vertical;
   -webkit-transform: translateY(-100%);
-  -moz-transform: translateY(-100%);
   transform: translateY(-100%);
 }
 
-.indicator-box::before {
+.indicator-box::after {
   content: attr(data-description) '...';
   top: 50%;
+  left: 0;
   background: #fff;
   color: $mainFont;
   font-size: 0.8em;
   line-height: 1.4em;
   padding: 13px 20px;
   font-weight: 200;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
   -webkit-transform: translateY(100%);
-  -moz-transform: translateY(100%);
   transform: translateY(100%);
 }
 
 .indicator-box:hover::after,
 .indicator-box:hover::before {
   -webkit-transform: translateY(0%);
-  -moz-transform: translateY(0%);
   transform: translateY(0%);
 }
 
 .indicator-box {
+  -webkit-backface-visibility: hidden;
   position: relative;
   overflow: hidden;
   width: 235px;
@@ -403,6 +399,7 @@ div.row.row-2 {
     color: $grey;
   }
   .context-text{
+    text-transform: uppercase;
     text-align: center;
     font-size: 0.8em;
     color: #fff;
@@ -422,14 +419,14 @@ div.row.row-2 {
       color: #fff;
       background-color: #6baed6;
     }
-    &.catastrofic {
+    &.catastrophic {
       color: #fff;
       background-color: #8bbfdb;
     }
   }
   .last-update {
     width: 100%;
-    margin-top: 5px;
+    margin-top: 6px;
     font-size: 0.65em;
     padding: 0 15px;
     font-weight: 600;
