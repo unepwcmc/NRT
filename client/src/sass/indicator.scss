@@ -6,16 +6,12 @@ section.introduction {
 
 .content {
   &.indicator {
-    padding-top: 60px;
+    padding-top: 40px;
     header {
       overflow:hidden;
-      padding-bottom: 60px;
-      margin-bottom: 60px;
-      h1 {
-        display: inline-block;
-        color: #2d3e4f;
-        font-weight: bold;
-        float:left;
+      h1{
+        padding-top: 15px;
+        padding-bottom: 25px;
       }
       .indicator-buttons{
         float:right;
@@ -37,6 +33,7 @@ section.introduction {
           }
         }
         .score {
+          margin-right: 15px;
           border: 1px solid #0a519c;
           display: inline-block;
           float: left;
