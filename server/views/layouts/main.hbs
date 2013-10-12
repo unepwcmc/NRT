@@ -54,20 +54,18 @@
             Help
           </li>
 
-          <li>
-            {{#if currentUser}}
-              <a href="#signout">
-                <li class="current-user">
-                  <span class="name">
-                  {{ currentUser.name }}
-                  </span>
-                  <span class="logout"><span>›</span>Sign Out</span>
-                </li>
-              </a>
-            {{else}}
-              Log in
-            {{/if}}
-          </li>
+          {{#if currentUser}}
+            <a href="#signout">
+              <li class="current-user">
+                <span class="name">
+                {{ currentUser.name }}
+                </span>
+                <span class="logout"><span>›</span>Sign Out</span>
+              </li>
+            </a>
+          {{else}}
+            <li>Log in</li>
+          {{/if}}
         </ul>
       </div>
     </div>

@@ -344,14 +344,17 @@ h1, h2, h3, h4, h5 {
       border-left: 1px solid #EEEEEE;
       line-height: 79px;
       font-weight: 600;
+      float: right;
 
       &.current-user{
         min-width: 100px;
         position: relative;
         text-align: center;
+
         .name{
           visibility: visible;
         }
+
         .logout{
           width: 100%;
           color: $white;
@@ -365,6 +368,7 @@ h1, h2, h3, h4, h5 {
           visibility: hidden;
           text-transform: uppercase;
           font-weight: 400;
+
           span{
             font-size: 2em;
             vertical-align: top;
@@ -373,6 +377,7 @@ h1, h2, h3, h4, h5 {
             padding-right: 10px;
           }
         }
+
         &:hover{
           .name{
             visibility: hidden;
