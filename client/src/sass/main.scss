@@ -610,7 +610,7 @@ aside {
 
   .owner-block {
     position: relative;
-    padding: 8px 0 10px 0;
+    padding-top: 8px;
     line-height: 1.4em;
     button {
       position: absolute;
@@ -631,6 +631,7 @@ aside {
 
   .dialog {
     background: $bkgGrey;
+    margin-top: 10px;
     padding: 15px;
     display: none;
     height: 95px;
@@ -655,7 +656,7 @@ aside {
       }
     }
     input {
-      border: 1px solid #DDDDDD;
+      border: 1px solid #DDD;
       -webkit-border-radius: 3px;
       -moz-border-radius: 3px;
       border-radius: 3px;
@@ -681,9 +682,10 @@ aside {
       }
     }
     ul.search-results {
+      @include box-sizing(border-box);
       display: none;
-      width: 219px;
-      border: 1px solid #eee;
+      width: 220px;
+      border: 1px solid #DDD;
       box-shadow: 4px 1px 5px rgba(0, 0, 0, 0.025);
       position: absolute;
       z-index: 1;
