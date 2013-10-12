@@ -275,7 +275,7 @@ h1, h2, h3, h4, h5 {
   background: -o-linear-gradient(left, #168bdc 0%,#168bdc 50%,#ffffff 51%,#ffffff 100%); /* Opera 11.10+ */
   background: -ms-linear-gradient(left, #168bdc 0%,#168bdc 50%,#ffffff 51%,#ffffff 100%); /* IE10+ */
   background: linear-gradient(to right, #168bdc 0%,#168bdc 50%,#ffffff 51%,#ffffff 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#168bdc', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
+filter: unquote("progid:DXImageTransform.Microsoft.gradient( startColorstr='#168bdc', endColorstr='#ffffff',GradientType=1 )") /* IE6-9 */;
   height: 79px;
 
   .inner {
