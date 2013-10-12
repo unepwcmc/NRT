@@ -67,7 +67,7 @@ test('.getUpdateUrl on a cartodb indicator with a valid user and query', ->
       "cartodb_tablename": "nrt_bc_seagrass_copy",
       "query": "SELECT SUM(area_ha) FROM nrt_bc_seagrass_copy"
 
-  expectedUrl = "http://localhost:3002/carbon-tool/nrt_bc_seagrass_copy/SELECT%20SUM(area_ha)%20FROM%20nrt_bc_seagrass_copy"
+  expectedUrl = "http://localhost:3002/cdb/carbon-tool/nrt_bc_seagrass_copy/SELECT%20SUM(area_ha)%20FROM%20nrt_bc_seagrass_copy"
   url = indicator.getUpdateUrl()
 
   assert.strictEqual url, expectedUrl
@@ -280,7 +280,7 @@ test('.convertResponseToIndicatorData on a worldBank indicator
 
 test('.convertResponseToIndicatorData for a cartodb indicator
   takes data from remote server and prepares for writing to database', (done)->
-  responseData = {"time":0.005,"fields":{"sum":{"type":"numeric"}},"total_rows":1,"rows":[{"sum":10.5}]}
+  responseData = {"data":[{"value":10.5,"year":2013,"text":"Excellent"}]} 
 
   helpers.createIndicatorModels([{
     type: 'cartodb'
@@ -292,7 +292,8 @@ test('.convertResponseToIndicatorData for a cartodb indicator
       data: [
         {
           "value": 10.5,
-          "year": "2013"
+          "year": 2013,
+          "text": "Excellent"
         }
       ]
     }
@@ -327,8 +328,7 @@ test('.convertResponseToIndicatorData on a cartodb indicator
       indicator.convertResponseToIndicatorData(garbageData)
     ), "Can't convert poorly formed indicator data reponse:\n#{
           JSON.stringify(garbageData)
-        }\n expected response to be a cartodb api response;#{
-      } an array with a rows array"
+        }\n expected response to be a cartodb api response"
   )
 )
 

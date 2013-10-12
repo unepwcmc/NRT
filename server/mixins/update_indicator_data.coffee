@@ -35,10 +35,8 @@ CONFIG =
       "per_page": 100
       "date": "1960:2013"
       "format": "json"
-
-  cartodb:
-    cartodb_api_url: "cartodb.com/api/v2"
-
+  cartodb: 
+    defaultQueryParameters: {}
 
 CONVERSIONS =
   epoch:
@@ -79,7 +77,7 @@ URL_BUILDERS =
     unless cartodb_user? and query?
       throw "Cannot generate update URL, indicator of type 'cartodb' has no cartodb_user or query in its indicator definition"
 
-    url = "#{apiUrl}/#{cartodb_user}/#{cartodb_tablename}/#{query}"
+    url = "#{apiUrl}/cdb/#{cartodb_user}/#{cartodb_tablename}/#{query}"
     return url
 
 
@@ -113,19 +111,14 @@ SOURCE_DATA_PARSERS =
     }
 
   cartodb: (responseBody) ->
-    unless responseBody.rows? and _.isArray(responseBody.rows)
+    unless responseBody.data?
       throw "Can't convert poorly formed indicator data reponse:\n#{
         JSON.stringify(responseBody)
-      }\n expected response to be a cartodb api response;#{
-      } an array with a rows array"
+      }\n expected response to be a cartodb api response"
 
     return convertedData = {
       indicator: @_id
-      data: [
-        value: responseBody.rows[0].sum
-        year: "2013"
-        text: "fine"
-      ]
+      data: responseBody.data
     }
 
 module.exports =
