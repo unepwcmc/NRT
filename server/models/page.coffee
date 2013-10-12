@@ -18,7 +18,7 @@ _.extend(pageSchema.statics, sectionNestingModel)
 
 pageSchema.methods.getParent = ->
   Ownable = require("./#{@parent_type.toLowerCase()}.coffee").model
-  return Q.nsend(Ownable, 'findOne', @parent_id)
+  return Q.nsend(Ownable, 'findOne', _id: @parent_id)
 
 pageSchema.methods.createDraftClone = ->
   Section = require('./section.coffee').model
