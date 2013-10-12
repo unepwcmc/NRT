@@ -62,7 +62,7 @@ URL_BUILDERS =
     unless apiUrl? and apiIndicatorName?
       throw "Cannot generate update URL, indicator has no apiUrl or apiIndicatorName in its indicator definition"
 
-    url = "#{apiUrl}/indicators/#{apiIndicatorName}"
+    url = "#{apiUrl}/#{apiIndicatorName}"
     return url
 
 SOURCE_DATA_PARSERS =
