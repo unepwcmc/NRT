@@ -1,5 +1,9 @@
 {{!< main}}
 
+{{#contentFor 'breadcrumbs'}}
+  <li><a href="/themes">Themes</a></li>
+{{/contentFor}}
+
 <div class="content">
   <header>
     <h1>
@@ -12,7 +16,6 @@
       <tr>
         <td>Short name</td>
         <td>Actions</td>
-        <td>Last update</td>
       </tr>
     </thead>
     <tbody>
@@ -24,12 +27,29 @@
             </p>
             <small>{{id}}</small>
           </td>
-          <td>
-            <a href="/admin/updateIndicatorData/{{id}}" class='button'>Update </a>
+          <td class='action-or-response' id="{{id}}">
+            <a id="{{id}}" href="#" class='update button'>Update </a>
           </td>
-          <td>No data</td>
         </tr>
       {{/indicators}}
     </tbody>
   </table>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+  $('a.update').click(function(e){
+    id = e.currentTarget.id;
+    console.log('caught click for '+id);
+    $.ajax({
+      url: "/admin/updateIndicatorData/"+id,
+      success: function(data) {
+        console.log("success");
+        $("#"+id+".action-or-response").text('Success');
+      },
+      error: function(err){
+        $("#"+id+".action-or-response").text('Failed');
+        return console.log(err)
+      },
+    });
+  })
+</script>
