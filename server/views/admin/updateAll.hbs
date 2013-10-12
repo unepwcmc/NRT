@@ -23,7 +23,7 @@
         <tr>
           <td>
             <p>
-            {{title}}
+            <a href="/indicators/{{id}}">{{title}}</a>
             </p>
             <small>{{id}}</small>
           </td>
@@ -39,16 +39,14 @@
 <script type="text/javascript" charset="utf-8">
   $('a.update').click(function(e){
     id = e.currentTarget.id;
-    console.log('caught click for '+id);
     $.ajax({
       url: "/admin/updateIndicatorData/"+id,
       success: function(data) {
-        console.log("success");
         $("#"+id+".action-or-response").text('Success');
       },
       error: function(err){
         $("#"+id+".action-or-response").text('Failed');
-        return console.log(err)
+        console.log("Message from remote server for "+id+": "+ err.responseText);
       },
     });
   })
