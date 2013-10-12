@@ -88,6 +88,18 @@ pageSchema.methods.canBeEditedBy = (user) ->
 
   return deferred.promise
 
+pageSchema.pre('save', (next) ->
+  if @headline?
+    next()
+  else
+    @setHeadlineToMostRecentFromParent().then(->
+      next()
+    ).fail((err) ->
+      console.error err
+      next(err)
+    )
+)
+
 pageSchema.methods.setHeadlineToMostRecentFromParent = ->
   deferred = Q.defer()
 

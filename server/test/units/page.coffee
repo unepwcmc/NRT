@@ -487,3 +487,25 @@ test(".setHeadlineToMostRecentFromParent when the parent is not an indicator
     throw err
   )
 )
+
+test("When no headline is set,
+  setHeadlineToMostRecentFromParent should be called on save", (done)->
+  page = new Page()
+  newHeadline = text: 'hat'
+  sinon.stub(page, 'setHeadlineToMostRecentFromParent', ->
+    deferred = Q.defer()
+    @headline =  newHeadline
+    deferred.resolve newHeadline
+    return deferred.promise
+  )
+
+  Q.nsend(
+    page, 'save'
+  ).then(->
+    assert.strictEqual page.headline, newHeadline
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
