@@ -25,9 +25,6 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     if @isIndicatorPage
       @section.set('indicator', @section.get('parent'))
 
-    if @section.get('page')?
-      @draftMode = @section.get('page').get('is_draft') || false
-
     @section.bind('change', @render)
     @render()
 

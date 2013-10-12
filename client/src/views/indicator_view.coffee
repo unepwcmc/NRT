@@ -10,7 +10,6 @@ class Backbone.Views.IndicatorView extends Backbone.Diorama.NestingView
   initialize: (options) ->
     @indicator = options.indicator
     @page      = @indicator.get('page')
-    @draftMode = @page.get('is_draft') || false
     @listenTo(@page.get('sections'), 'add', @render)
     @render()
 
