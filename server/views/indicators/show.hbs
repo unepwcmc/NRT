@@ -18,34 +18,42 @@
   <li class="home"><i class="icon-home"></i><a href="/">Home</a></li>
   <!-- THIS NAVIGATION MUST BE FIXED {{ indicator.theme.title }} -->
   <li><a href="#">Go back to theme {{ indicator.theme }}</a></li>
+  <button onclick="$('.edit-bar-container').addClass('opened');">
+    <i class="icon-edit"></i> {{{t "indicator/update"}}}
+  </button>
 {{/contentFor}}
+<div class="edit-bar-container">
+  <div class="edit-bar">
+    <div class="back">
+      <p>Last edited on 7 July 2013</p>
+    </div>
+    <div class="publish-delete">
+      <button onclick="$('.edit-bar-container').removeClass('opened');" id="publish">Publish</button>
+      <button onclick="$('.edit-bar-container').removeClass('opened');" id="save">Save and exit</button>
+      <button onclick="$('.edit-bar-container').removeClass('opened');" id="delete">Discard Draft</button>
+    </div>
+  </div><!--edit bar-->
+</div><!--edit bar container-->
 
 <div class="content indicator">
   <article>
     <header>
       <h1>{{indicator.title}}</h1>
-
-      <div class='indicator-buttons'>
-        <a href="/api/indicators/{{indicator._id}}/data" class="button grey">
-          <i class="icon-file-text-alt"></i> {{{t "indicator/view"}}}
-        </a>
-
-        <a href="/api/indicators/{{indicator._id}}/data.csv" class="button grey">
-          <i class="icon-file-text-alt"></i> {{{t "indicator/download"}}}
-        </a>
-      </div>
+      <div class="clear"></div>
+      <div class="parameter">
+        <div class="score">
+        <span class="number">38%</span><span class="keyword">Excellent</span>
+        </div>
+        <p><span class="separator">|</span>Refers to data collected until 7 July 2013</p>
+        <div class="clear"></div>
+      <div><!--card-->
     </header>
-
     <div class='main-content'>
     </div>
 
     <aside class="content-sidebar metadata">
-      <h3>{{{t "indicator/owned_by"}}}</h3>
-      <p>
-        <i class="icon-user append"></i>
-        Dr. Anybody
-      </p>
-
+    <div class="metadata-placeholder">
+    </div>
       <section>
         <h3>{{{t "indicator/metadata"}}}</h3>
         <ul>
@@ -70,24 +78,27 @@
             <h4>{{{t "indicator/metadata/oldest_data"}}}</h4>
             <span>3 June 2013</span>
           </li>
-        </ul>
-      </section>
-
-      <section>
-        <h3>{{{t "indicator/similar"}}}</h3>
-        <ul>
           <li>
-            Average evaporation rate
+            <h4>{{{t "indicator/metadata/frequency"}}}</h4>
+            <span>Yearly</span>
           </li>
           <li>
-            Average minimum and maximum temperature
+            <h4>{{{t "indicator/metadata/collected_by"}}}</h4>
+            <span>Dr. Laila Ibrahim Al Dhaheri</span>
+          </li>
+          <li>
+            <h4>{{{t "indicator/metadata/data_feed_url"}}}</h4>
+            <span>Al Wathba Wetland Reserve</span>
+          </li>
+          <li>
+            <h4>{{{t "indicator/metadata/contact"}}}</h4>
+            <span>Dr. Laila Ibrahim Al Dhaheri, Executive Director, Terrestrial & Marine Biodiversity</span>
           </li>
         </ul>
       </section>
     </aside>
   </article>
 </div>
-
 <script type="text/javascript">
   i18n.onReady(function() {
     new Backbone.Controllers.IndicatorController({{{ indicatorJSON }}});
