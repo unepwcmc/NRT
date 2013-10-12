@@ -6,14 +6,17 @@ section.introduction {
 
 .content {
   &.indicator {
+    padding-top: 60px;
     header {
       overflow:hidden;
-
+      padding-bottom: 60px;
+      margin-bottom: 60px;
       h1 {
-        width: 650px;
+        display: inline-block;
+        color: #2d3e4f;
+        font-weight: bold;
         float:left;
       }
-
       .indicator-buttons{
         float:right;
         width: 300px;
@@ -21,6 +24,45 @@ section.introduction {
           position: relative;
           float: right;
           margin-bottom: 5px;
+        }
+      }
+      .parameter {
+        width: 650px;
+        p {
+          color: $lightishGrey;
+          font-size: 0.8em;
+          line-height: 35px;
+          span.separator {
+            padding: 0 5px;
+          }
+        }
+        .score {
+          border: 1px solid #0a519c;
+          display: inline-block;
+          float: left;
+          height: 35px;
+          vertical-align: middle;
+          -webkit-border-radius: 4px;
+          -moz-border-radius: 4px;
+          border-radius: 4px;
+          span {
+            display: inline-block;
+            height: 35px;
+            line-height: 35px;
+            vertical-align: middle;
+            padding: 0 10px;
+            &.number {
+              font-size: 1.2em;
+              font-weight: bold;
+              color: #0a519c;
+            }
+            &.keyword {
+              background-color: #0a519c;
+              color: rgba(255,255,255, 0.85);
+              font-size: 0.85em;
+              font-weight: normal;
+            }
+          }
         }
       }
     }
@@ -45,7 +87,7 @@ section.introduction {
     }
 
     h2 {
-      font-size: 22px;
+      font-size: 1.5em;
       font-weight: bold;
       padding: 0;
     }

@@ -102,6 +102,10 @@ div.select {
   color: $lightishGrey;
   font-weight: 400;
 
+  &.add-indicator-section {
+    margin-bottom: 50px;
+  }
+
   span{
     display: none;
 
@@ -172,7 +176,7 @@ header {
 }
 
 h1 {
-  font-size: 2.7em;
+  font-size: 2em;
   font-family: 'PT sans', sans-serif;
   line-height: 1.2em;
   padding-bottom: 15px;
@@ -268,6 +272,7 @@ h1, h2, h3, h4, h5 {
   background-size: 50%;
   background-repeat: repeat-y;
   height: 79px;
+  background-color: $white;
 
   .inner {
     margin: 0 auto;
@@ -282,7 +287,6 @@ h1, h2, h3, h4, h5 {
     float: left;
     margin-top: 15px;
     padding-bottom: 0;
-
     small {
       font-weight: bold;
       display: block;
@@ -395,10 +399,17 @@ h1, h2, h3, h4, h5 {
 .breadcrumbs {
   border-bottom: 1px solid #eee;
 
+  button{
+    position: absolute;
+    right: 0;
+    top: 12px;
+  }
+
   .inner {
     margin: 79px auto 0 auto;
     padding: 0 20px 15px 20px;
     width: 980px;
+    position: relative;
   }
 
   li, a {
@@ -443,6 +454,10 @@ section{
   padding: 15px 0;
   position: relative;
   margin-top: 20px;
+  &:first-child {
+    margin-top: 0;
+    padding-top: 0;
+  }
 
   small.updated-at{
     display: none;
@@ -529,19 +544,23 @@ section.report-indicator-list {
 }
 
 .main-content {
-  padding: 30px 20px 0 0;
+  padding: 0 20px 0 0;
   width: 650px;
 }
 
 .content-sidebar {
   width: 250px;
-  padding: 30px 20px 0 20px;
+  padding: 0 0 0 20px;
 }
 
 
 aside {
   color: $lightishGrey;
   font-size: 13px;
+  border-left: 1px solid $lightGrey;
+  section {
+    padding: 0;
+  }
 
   h3 {
     padding-bottom: 5px;
@@ -549,7 +568,7 @@ aside {
     border-bottom: 1px solid $differentGrey;
     font-weight: bold;
     font-size: 16px;
-    color: $mediumGrey;
+    color: $black;
     &:first-child {
       margin-top: 0;
     }
@@ -652,6 +671,7 @@ aside {
 }
 
 .content-sidebar {
+  float: right;
 
 
   section {
@@ -662,8 +682,11 @@ aside {
   }
 
   h4 {
+    color: $black;
+  }
+
+  span {
     color: $mediumGrey;
-    font-weight:bold;
   }
 
   ul {
@@ -675,10 +698,10 @@ aside {
       border-top: 1px solid $lightGrey;
 
       .outdated {
-        font-weight: bold;
         color: $orange;
 
         .outdated-notice {
+          color: $orange;
           font-weight: normal;
           border: 1px solid;
           border-radius: 3px;
@@ -836,5 +859,60 @@ footer{
 }
 
 .medium-editor-placeholder { position: fixed !important; }
+
+.edit-bar-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 3;
+  background-color: #444;
+  border-bottom: 1px solid $lightGrey;
+  height: 50px;
+  padding: 5px 0;
+  box-shadow: 0 0 3px rgba(0,0,0,0.15);
+  @include transition(top 0.6s ease-in-out);
+  &.opened{
+    top: 79px;
+    @include transition(top 0.6s ease-in-out);
+  }
+  .edit-bar {
+    width: 980px;
+    margin: auto;
+    overflow: hidden;
+    .back {
+      float: left;
+      overflow: hidden;
+      p {
+        display: block;
+        color: $lightishGrey;
+        font-size: 0.8em;
+        line-height: 50px;
+      }
+    }
+    .publish-delete {
+      float: right;
+      padding-top: 8px;
+      button {
+        float: right;
+        margin-left: 10px;
+        &#publish {
+          color: $white;
+          background-color: $green;
+          border-color: $green;
+        }
+        &#save:hover{
+          color: #444;
+          background-color: $white;
+          border-color: $white;
+        }
+        &#delete:hover{
+          color: $white;
+          background-color: $red;
+          border-color: $red;
+        }
+      }
+    }
+  }
+}
 
 @import "charts";
