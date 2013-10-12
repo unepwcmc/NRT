@@ -160,9 +160,12 @@ header, section, footer{
 
 header {
   position: relative;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
   border-bottom: 1px solid #eee;
-  padding-bottom: 20px;
+
+  h1 {
+    font-size: 2.4em;
+  }
 
   button, .button {
     position: absolute;
@@ -268,17 +271,20 @@ h1, h2, h3, h4, h5 {
   box-shadow: 0 0 3px #888888;
 
   /* Split background in to two halves */
-  background-color: white;
-  background-image: url('/images/header-bg.png');
-  background-size: 50%;
-  background-repeat: repeat-y;
+  background: #168bdc; /* Old browsers */
+  background: -moz-linear-gradient(left, #168bdc 0%, #168bdc 50%, #ffffff 51%, #ffffff 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#168bdc), color-stop(50%,#168bdc), color-stop(51%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, #168bdc 0%,#168bdc 50%,#ffffff 51%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, #168bdc 0%,#168bdc 50%,#ffffff 51%,#ffffff 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, #168bdc 0%,#168bdc 50%,#ffffff 51%,#ffffff 100%); /* IE10+ */
+  background: linear-gradient(to right, #168bdc 0%,#168bdc 50%,#ffffff 51%,#ffffff 100%); /* W3C */
   height: 79px;
-  background-color: $white;
 
   .inner {
     margin: 0 auto;
-    width: 980px;
-    padding: 0 20px;
+    width: 1020px;
+    height: 80px;
+    background: white;
   }
 
   h1 {
@@ -286,7 +292,8 @@ h1, h2, h3, h4, h5 {
     font-size: 1.2em;
     color: white;
     float: left;
-    margin-top: 15px;
+    padding-top: 15px;
+    padding-right: 15px;
     padding-bottom: 0;
     small {
       font-weight: bold;
@@ -295,30 +302,86 @@ h1, h2, h3, h4, h5 {
     }
   }
 
+  .left {
+    height: 79px;
+    padding-left: 20px;
+    position: relative;
+    display: inline-block;
+    background-color: $mainBlue;
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      border-right: 37px solid transparent;
+      top: 0;
+      right: -37px;
+      border-top: 79px solid $mainBlue;
+    }
+  }
+
   ul.right {
     float: right;
-    background: white;
+    padding-right: 20px;
     width: 700px;
-    height: 79px;
-    /* Skew to achieve slanted blue section */
-    @include skew(-25deg, 0);
-
-    /* Unskew children */
-    * {
-      @include skew(25deg, 0);
-    }
+    height: 80px;
 
     li, a {
       color: rgba(0,0,0,0.6);
     }
 
+    a {
+      float: right;
+      &:first-child {
+        display: inline-block;
+        border-right: 1px solid #EEEEEE;
+      }
+    }
+
     li {
       font-size: 0.85em;
-      float: right;
       padding: 0 20px;
       border-left: 1px solid #EEEEEE;
       line-height: 79px;
       font-weight: 600;
+
+      &.current-user{
+        min-width: 100px;
+        position: relative;
+        text-align: center;
+        .name{
+          visibility: visible;
+        }
+        .logout{
+          width: 100%;
+          color: $white;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -webkit-transform: translateX(-50%) translateY(-50%);
+          -moz-transform: translateX(-50%) translateY(-50%);
+          -ms-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+          visibility: hidden;
+          text-transform: uppercase;
+          font-weight: 400;
+          span{
+            font-size: 2em;
+            vertical-align: top;
+            position: relative;
+            top: -4px;
+            padding-right: 10px;
+          }
+        }
+        &:hover{
+          .name{
+            visibility: hidden;
+          }
+          .logout{
+            visibility: visible;
+          }
+        }
+      }
 
       &:hover {
         background-color: #008bdc;
@@ -327,10 +390,6 @@ h1, h2, h3, h4, h5 {
         &, a {
           color: white;
         }
-      }
-
-      &:first-child {
-        border-right: 1px solid #EEEEEE;
       }
     }
   }
@@ -399,6 +458,7 @@ h1, h2, h3, h4, h5 {
 
 .breadcrumbs {
   border-bottom: 1px solid #eee;
+  padding-top: 79px;
 
   a.button {
     color: $lightishGrey;
@@ -417,7 +477,7 @@ h1, h2, h3, h4, h5 {
   }
 
   .inner {
-    margin: 79px auto 0 auto;
+    margin: 0 auto;
     padding: 0 20px 15px 20px;
     width: 980px;
     position: relative;
@@ -591,8 +651,8 @@ aside {
   p {
     font-size: 12px;
   }
-  button, h3 button {
-    font-size: 12px;
+  button {
+    font-size: 1em;
     line-height: 25px;
     color: $linkBlue;
     border: none;
@@ -608,11 +668,34 @@ aside {
     }
   }
 
+  .owner-block {
+    position: relative;
+    padding-top: 8px;
+    line-height: 1.4em;
+    button {
+      position: absolute;
+      line-height: 1.4em;
+      right: 0;
+    }
+  }
+
+  .owner-name{
+    display: inline-block;
+    width: 190px;
+  }
+
+  .permissions-view {
+    font-size: 1.1em;
+    color: $mediumGrey;
+  }
+
   .dialog {
     background: $bkgGrey;
+    margin-top: 10px;
     padding: 15px;
     display: none;
     height: 95px;
+    position: relative;
 
     h4 {
       font-weight: normal;
@@ -622,32 +705,36 @@ aside {
       line-height: 12px;
     }
     i.close {
-      float: right;
-      color: $mediumGrey;
-      font-size: 14px;
-      line-height: 12px;
+      position: absolute;
+      right: 10px;
+      top: 13px;
+      color: $lightishGrey;
+      font-size: 1em;
       &:hover {
-        color: $buttonBlue;
-        @include transition(0.5s);
+        cursor: pointer;
+        color: $mainFont;
       }
     }
     input {
-      border: 1px solid $lightGrey;
+      border: 1px solid #DDD;
       -webkit-border-radius: 3px;
       -moz-border-radius: 3px;
       border-radius: 3px;
-      padding: 4px 0 4px 7px;
-      width: 96%;
+      padding: 5px 10px 5px 10px;
+      width: 100%;
       color: $mediumGrey;
+      font-size: 1em;
+      @include box-sizing(border-box);
     }
 
     button {
       background: $green;
       text-align: center;
-      width: 99%;
+      @include box-sizing(border-box);
+      width: 100%;
       color: $white;
       text-decoration: none;
-      font-size: 14px;
+      font-size: 1.1em;
       margin-top: 10px;
       padding: 4px;
       &:hover {
@@ -655,11 +742,13 @@ aside {
       }
     }
     ul.search-results {
+      @include box-sizing(border-box);
       display: none;
-      width: 219px;
-      border: 1px solid #eee;
+      width: 220px;
+      border: 1px solid #DDD;
       box-shadow: 4px 1px 5px rgba(0, 0, 0, 0.025);
       position: absolute;
+      z-index: 1;
       background: $white;
       overflow: scroll;
       max-height: 100px;
@@ -672,7 +761,8 @@ aside {
         line-height: 24px;
         color: $mediumGrey;
         &:hover {
-          color: #008ED6;
+          background-color: #168bdc;
+          color: $white;
           cursor: pointer;
         }
       }

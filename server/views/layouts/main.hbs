@@ -26,30 +26,47 @@
 
     <div class="menu">
       <div class="inner">
-        <h1>
-          National Reporting Toolkit
-          <small>Abu Dhabi</small>
-        </h1>
+        <div class="left">
+          <h1>
+            National Reporting Toolkit
+            <small>Abu Dhabi</small>
+          </h1>
+        </div>
 
         <div class='save-status-container'></div>
 
         <ul class="right">
-          <li>
-            {{#if settings.localeIsArabic}}
-              <a href="/locale/en">English</a>
-            {{else}}
-              <a href="/locale/ar">العربية</a>
-            {{/if}}
-          </li>
+          {{#if settings.localeIsArabic}}
+          <a href="/locale/en">
+            <li>
+              English
+            </li>
+          </a>
+          {{else}}
+          <a href="/locale/ar">
+            <li>
+              العربية
+            </li>
+          </a>
+          {{/if}}
+
           <li class="md-trigger" data-modal="modal-1" onclick="$('#modal-1').addClass('md-show');">
             Help
           </li>
+
           <li>
-          {{#if currentUser}}
-            {{ currentUser.name }}
+            {{#if currentUser}}
+              <a href="#signout">
+                <li class="current-user">
+                  <span class="name">
+                  {{ currentUser.name }}
+                  </span>
+                  <span class="logout"><span>›</span>Sign Out</span>
+                </li>
+              </a>
             {{else}}
-            Log in
-          {{/if}}
+              Log in
+            {{/if}}
           </li>
         </ul>
       </div>
