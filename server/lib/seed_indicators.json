@@ -6,6 +6,7 @@
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
+      "short_unit": "Gg",
       "unit": "Annual GHG emissions in gigagrams (Gg). Emissions of CH4, N2O, HFCs, PFCs and SF6 can be converted to CO2 equivalents using the so-called global warming potentials (GWPs) provided in assessments of the Intergovernmental Panel on Climate Change.",
       "outFields": "shape.area",
       "dateField": "datedes",
@@ -98,6 +99,7 @@
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
+      "short_unit": "µg/m3",
       "unit": "µg/m3, ppm or ppb, as appropriate",
       "outFields": "shape.area",
       "dateField": "datedes",
@@ -150,6 +152,7 @@
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
+      "short_unit": "",
       "unit": "",
       "outFields": "shape.area",
       "dateField": "datedes",
@@ -176,6 +179,7 @@
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
+      "short_unit": "t",
       "unit": "metric tons",
       "outFields": "shape.area",
       "dateField": "datedes",
