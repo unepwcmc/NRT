@@ -835,14 +835,12 @@ footer{
 
 @import "charts";
 
-/* MODAL BOX */
-
 .md-modal {
   position: fixed;
   top: 50%;
   left: 50%;
   width: 50%;
-  max-width: 730px;
+  max-width: 630px;
   min-width: 320px;
   height: auto;
   z-index: 2000;
@@ -869,7 +867,7 @@ footer{
   left: 0;
   z-index: 1000;
   opacity: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.8);
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   transition: all 0.3s;
@@ -880,13 +878,12 @@ footer{
   visibility: visible;
 }
 
-/* MODAL BOX CONTENT STYLE */
-
+/* Content styles */
 .md-content {
-  color: $mainFont;
+  color: $mediumGrey;
   background: $white;
   position: relative;
-  border-radius: 2px;
+  border-radius: 3px;
   margin: 0 auto;
 }
 
@@ -894,7 +891,7 @@ footer{
   margin: 0;
   padding: 0.4em;
   text-align: center;
-  font-size: 1.4em;
+  font-size: 2.4em;
   font-weight: 300;
   opacity: 0.8;
   background: rgba(0,0,0,0.1);
@@ -913,23 +910,24 @@ footer{
   padding: 10px 0;
 }
 
-.md-buttons {
-  position: relative;
-  height: 40px;
-  margin-top: 20px;
-  font-size: 0.8em;
-  .know-more {
-    position: absolute;
-    right: 0;
-  }
-  .md-close {
-    position: absolute;
-    left: 0;
-  }
+.md-content > div ul {
+  margin: 0;
+  padding: 0 0 30px 20px;
 }
 
-/* MODAL BOX EFFECT */
+.md-content > div ul li {
+  padding: 5px 0;
+}
 
+.md-content button {
+  display: block;
+  margin: 0 auto;
+  font-size: 0.8em;
+}
+
+/* Individual modal styles with animations/transitions */
+
+/* Effect 1: Fade in and scale up */
 .md-effect-1 .md-content {
   -webkit-transform: scale(0.7);
   -moz-transform: scale(0.7);
