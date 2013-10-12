@@ -30,7 +30,7 @@
   "title": "Protected Area as a Percent of Total area",
   "description": "This indicator measures the area of protected land ecosystems, inland water ecosystems, and marine ecosystems expressed as a percentage of the total area of land ecosystems, inland water ecosystems and marine ecosystems respectively.  Protected Area refers to all or partially protected areas of at least 1000 hectares that are designated as national parks, natural monuments, natural reserves or wildlife sanctuaries, protected landscapes and seascapes or scientific reserves with limited public access. The data do not include sites protected under local or provincial law.",
   "theme": 2,
-  "type": "environmental",
+  "type": "esri",
   "indicatorDefinition": {
       "serviceName": "NRT_AD_ProtectedArea",
       "featureServer": 2,
@@ -237,4 +237,45 @@
         }
       ]
     }
+}, {
+  "short_name": "Seagrass area (Blue carbon)",
+  "title": "Seagrass area (Blue Carbon)",
+  "description": "Seagrass area (Blue carbon)",
+  "theme": 2,
+  "type": "cartodb",
+  "indicatorDefinition": {
+    "apiUrl": "http://localhost:3002",
+    "cartodb_user": "carbon-tool",
+    "cartodb_tablename": "nrt_bc_seagrass_copy",
+    "query": "SELECT SUM(area_ha) FROM nrt_bc_seagrass_copy",
+    "unit": "ha",
+    "period": "annual",
+    "xAxis": "year",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "year",
+          "type": "integer"
+        },
+        "name": "year",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "integer"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
+  }
 }]
