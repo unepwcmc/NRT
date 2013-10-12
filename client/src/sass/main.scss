@@ -591,8 +591,8 @@ aside {
   p {
     font-size: 12px;
   }
-  button, h3 button {
-    font-size: 12px;
+  button {
+    font-size: 1em;
     line-height: 25px;
     color: $linkBlue;
     border: none;
@@ -608,11 +608,33 @@ aside {
     }
   }
 
+  .owner-block {
+    position: relative;
+    padding: 8px 0 10px 0;
+    line-height: 1.4em;
+    button {
+      position: absolute;
+      line-height: 1.4em;
+      right: 0;
+    }
+  }
+
+  .owner-name{
+    display: inline-block;
+    width: 190px;
+  }
+
+  .permissions-view {
+    font-size: 1.1em;
+    color: $mediumGrey;
+  }
+
   .dialog {
     background: $bkgGrey;
     padding: 15px;
     display: none;
     height: 95px;
+    position: relative;
 
     h4 {
       font-weight: normal;
@@ -622,32 +644,36 @@ aside {
       line-height: 12px;
     }
     i.close {
-      float: right;
-      color: $mediumGrey;
-      font-size: 14px;
-      line-height: 12px;
+      position: absolute;
+      right: 10px;
+      top: 13px;
+      color: $lightishGrey;
+      font-size: 1em;
       &:hover {
-        color: $buttonBlue;
-        @include transition(0.5s);
+        cursor: pointer;
+        color: $mainFont;
       }
     }
     input {
-      border: 1px solid $lightGrey;
+      border: 1px solid #DDDDDD;
       -webkit-border-radius: 3px;
       -moz-border-radius: 3px;
       border-radius: 3px;
-      padding: 4px 0 4px 7px;
-      width: 96%;
+      padding: 5px 10px 5px 10px;
+      width: 100%;
       color: $mediumGrey;
+      font-size: 1em;
+      @include box-sizing(border-box);
     }
 
     button {
       background: $green;
       text-align: center;
-      width: 99%;
+      @include box-sizing(border-box);
+      width: 100%;
       color: $white;
       text-decoration: none;
-      font-size: 14px;
+      font-size: 1.1em;
       margin-top: 10px;
       padding: 4px;
       &:hover {
@@ -660,6 +686,7 @@ aside {
       border: 1px solid #eee;
       box-shadow: 4px 1px 5px rgba(0, 0, 0, 0.025);
       position: absolute;
+      z-index: 1;
       background: $white;
       overflow: scroll;
       max-height: 100px;
@@ -672,7 +699,8 @@ aside {
         line-height: 24px;
         color: $mediumGrey;
         &:hover {
-          color: #008ED6;
+          background-color: #168bdc;
+          color: $white;
           cursor: pointer;
         }
       }
