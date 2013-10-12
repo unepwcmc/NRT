@@ -49,17 +49,14 @@ exports.showDraft = (req, res) ->
       console.error error
       return res.send(404, error)
 
-    theme = theme.toObjectWithNestedPage(draft: true)
-    .then((themeObject) ->
-      Theme.getIndicatorsByTheme( themeObject.externalId, (err, indicators) ->
-        res.render "themes/show",
-          theme: themeObject,
-          themeJSON: JSON.stringify(themeObject),
-          indicators: indicators
-      )
-    ).fail((err) ->
-      console.error err
-      return res.render(500, "Error fetching the theme page")
+    theme.toObjectWithNestedPage(draft: true)
+  ).then( (themeObject) ->
+
+    Theme.getIndicatorsByTheme( themeObject.externalId, (err, indicators) ->
+      res.render "themes/show",
+        theme: themeObject,
+        themeJSON: JSON.stringify(themeObject),
+        indicators: indicators
     )
 
   ).fail((err) ->
@@ -68,29 +65,29 @@ exports.showDraft = (req, res) ->
   )
 
 exports.publishDraft = (req, res) ->
+  theTheme = null
+
   Q.nsend(
     Theme.findOne(_id: req.params.id).populate('owner'),
     'exec'
   ).then( (theme) ->
+    theTheme = theme
+
     unless theme?
       error = "Could not find theme with ID #{req.params.id}"
       console.error error
       return res.send(404, error)
 
-    page = null
-    theme.publishDraftPage()
-    .then( (publishedPage) ->
-      theme.toObjectWithNestedPage()
-    ).then( (themeObject) ->
-      Theme.getIndicatorsByTheme( themeObject.externalId, (err, indicators) ->
-        res.render "themes/show",
-          theme: themeObject,
-          themeJSON: JSON.stringify(themeObject),
-          indicators: indicators
-      )
-    ).fail((err) ->
-      console.error err
-      return res.render(500, "Error fetching the theme page")
+    theTheme.publishDraftPage()
+  ).then( (publishedPage) ->
+    theTheme.toObjectWithNestedPage()
+  ).then( (themeObject) ->
+
+    Theme.getIndicatorsByTheme( themeObject.externalId, (err, indicators) ->
+      res.render "themes/show",
+        theme: themeObject,
+        themeJSON: JSON.stringify(themeObject),
+        indicators: indicators
     )
 
   ).fail((err) ->
@@ -99,29 +96,29 @@ exports.publishDraft = (req, res) ->
   )
 
 exports.discardDraft = (req, res) ->
+  theTheme = null
+
   Q.nsend(
     Theme.findOne(_id: req.params.id).populate('owner'),
     'exec'
   ).then( (theme) ->
+    theTheme = theme
+
     unless theme?
       error = "Could not find theme with ID #{req.params.id}"
       console.error error
       return res.send(404, error)
 
-    page = null
-    theme.discardDraft()
-    .then( (publishedPage) ->
-      theme.toObjectWithNestedPage()
-    ).then( (themeObject) ->
-      Theme.getIndicatorsByTheme( themeObject.externalId, (err, indicators) ->
-        res.render "themes/show",
-          theme: themeObject,
-          themeJSON: JSON.stringify(themeObject),
-          indicators: indicators
-      )
-    ).fail((err) ->
-      console.error err
-      return res.render(500, "Error fetching the theme page")
+    theTheme.discardDraft()
+  ).then( (publishedPage) ->
+    theTheme.toObjectWithNestedPage()
+  ).then( (themeObject) ->
+
+    Theme.getIndicatorsByTheme( themeObject.externalId, (err, indicators) ->
+      res.render "themes/show",
+        theme: themeObject,
+        themeJSON: JSON.stringify(themeObject),
+        indicators: indicators
     )
 
   ).fail((err) ->
