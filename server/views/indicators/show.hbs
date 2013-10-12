@@ -43,7 +43,7 @@
 <div class="content indicator">
   <article>
     <header>
-      <div class="parameter">
+      <div {{#if indicator.page.is_draft}}class="parameter p-select"{{else}}class="parameter"{{/if}}>
         <div class="score">
           <span class="number">
             {{indicator.page.headline.value}}
@@ -53,8 +53,7 @@
           </span>
         </div>
         <p>Refers to data collected up to {{indicator.page.headline.year}}</p>
-        <div class="clear"></div>
-      <div><!--card-->
+      </div><!--card-->
       <h1>{{indicator.title}}</h1>
     </header>
 
