@@ -10,10 +10,8 @@ suite('Indicator index')
 test("With a series of indicators, I should see their titles", (done) ->
   themeAttributes = [{
     title: 'Theme 1'
-    externalId: 1
   },{
     title: 'Theme 2'
-    externalId: 2
   }]
 
   helpers.createThemesFromAttributes(
@@ -21,10 +19,10 @@ test("With a series of indicators, I should see their titles", (done) ->
   ).then( (themes) ->
     indicatorAttributes = [{
       title: "I am an indicator of theme 1"
-      theme: themes[0].externalId
+      theme: themes[0]._id
     },{
       title: "theme 2 indicator"
-      theme: themes[1].externalId
+      theme: themes[1]._id
     }]
 
     helpers.createIndicatorModels(

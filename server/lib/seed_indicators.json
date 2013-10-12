@@ -2,7 +2,7 @@
   "short_name": "Green house gases",
   "title": "Emissions of Greenhouse Gases",
   "description": "Anthropogenic emissions, less removal by sinks, of the greenhouse gases carbon dioxide (CO2), methane (CH4), nitrous oxide (N2O), hydrofluorocarbons (HFCs), perfluorocarbons (PFCs), sulfur hexafluoride (SF6).",
-  "theme": 1,
+  "theme": "Atmosphere",
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
@@ -28,7 +28,7 @@
   "short_name": "Protected areas",
   "title": "Protected Area as a Percent of Total area",
   "description": "This indicator measures the area of protected land ecosystems, inland water ecosystems, and marine ecosystems expressed as a percentage of the total area of land ecosystems, inland water ecosystems and marine ecosystems respectively.  Protected Area refers to all or partially protected areas of at least 1000 hectares that are designated as national parks, natural monuments, natural reserves or wildlife sanctuaries, protected landscapes and seascapes or scientific reserves with limited public access. The data do not include sites protected under local or provincial law.",
-  "theme": 2,
+  "theme": "Biodiversity",
   "type": "environmental",
   "indicatorDefinition": {
       "serviceName": "NRT_AD_ProtectedArea",
@@ -69,7 +69,7 @@
   "short_name": "Threatened species",
   "title": "Percentage of Threatened Species",
   "description": "Number of species at risk of extinction in proportion to the total number of native species.",
-  "theme": 2,
+  "theme": "Biodiversity",
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
@@ -95,7 +95,7 @@
   "short_name": "Urban air pollution",
   "title": "Ambient Concentration of Air Pollutants in Urban Areas",
   "description": "Ambient air pollution concentrations of ozone, particulate matter (PM10, and PM2,5, if those are not available: SPM, black smoke), sulfur dioxide, nitrogen dioxide, lead. Additional:  carbon monoxide, volatile organic compounds including benzene (VOCs). The priority is collection of the indicator in large cities (over 1 million population).",
-  "theme": 1,
+  "theme": "Atmosphere",
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
@@ -121,7 +121,7 @@
   "short_name": "Drinking water",
   "title": "Access to Safe Drinking Water",
   "description": "Percentage of population with access to an adequate amount of safe drinking water (in the home or with reasonable access) in the following categories of supply: 1) Continuous water supply inside the dwelling and of adequate amount 2) Intermittent (discontinuous) supply inside the dwelling 3) Supply within a convenient distance from the dwelling. Or Proportion of population with access to an adequate amount of safe drinking water in a dwelling or located within a convenient distance from the users dwelling",
-  "theme": 3,
+  "theme": "Water",
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
@@ -147,7 +147,7 @@
   "short_name": "Red List species",
   "title": "Abu Dhabi Red List Indices For All Species Groups",
   "description": "",
-  "theme": 2,
+  "theme": "Biodiversity",
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
@@ -173,7 +173,7 @@
   "short_name": "Annual Fish Catch",
   "title": "Abu Dhabi Red List Indices For All Species Groups",
   "description": "Annual catch of major species in relation to spawning biomass if available or in relation to the year of maximum catches in the time series.",
-  "theme": 3,
+  "theme": "Water",
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
@@ -199,7 +199,7 @@
   "short_name": "World Bank PA cover",
   "title": "Protected Area coverage (World Bank)",
   "description": "Protected Area coverage (World Bank)",
-  "theme": 2,
+  "theme": "Biodviersity",
   "type": "worldBank",
   "indicatorDefinition": {
       "apiUrl": "http://localhost:3002/wb/ARE",

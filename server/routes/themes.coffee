@@ -27,7 +27,7 @@ exports.show = (req, res) ->
         return res.send(404, error)
 
       theme.toObjectWithNestedPage().then( (themeObject) ->
-        Theme.getIndicatorsByTheme( themeObject.externalId, (err, indicators) ->
+        Theme.getIndicatorsByTheme( themeObject._id, (err, indicators) ->
           res.render "themes/show",
             theme: themeObject,
             themeJSON: JSON.stringify(themeObject),
@@ -52,7 +52,7 @@ exports.showDraft = (req, res) ->
     theme.toObjectWithNestedPage(draft: true)
   ).then( (themeObject) ->
 
-    Theme.getIndicatorsByTheme( themeObject.externalId, (err, indicators) ->
+    Theme.getIndicatorsByTheme( themeObject._id, (err, indicators) ->
       res.render "themes/show",
         theme: themeObject,
         themeJSON: JSON.stringify(themeObject),
@@ -83,7 +83,7 @@ exports.publishDraft = (req, res) ->
     theTheme.toObjectWithNestedPage()
   ).then( (themeObject) ->
 
-    Theme.getIndicatorsByTheme( themeObject.externalId, (err, indicators) ->
+    Theme.getIndicatorsByTheme( themeObject._id, (err, indicators) ->
       res.render "themes/show",
         theme: themeObject,
         themeJSON: JSON.stringify(themeObject),
@@ -114,7 +114,7 @@ exports.discardDraft = (req, res) ->
     theTheme.toObjectWithNestedPage()
   ).then( (themeObject) ->
 
-    Theme.getIndicatorsByTheme( themeObject.externalId, (err, indicators) ->
+    Theme.getIndicatorsByTheme( themeObject._id, (err, indicators) ->
       res.render "themes/show",
         theme: themeObject,
         themeJSON: JSON.stringify(themeObject),
