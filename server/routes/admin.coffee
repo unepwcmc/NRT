@@ -20,7 +20,6 @@ exports.updateAll = (req, res) ->
     Indicator.find(), 
     'exec'
   ).then( (indicators) ->
-    console.log indicators
     res.render 'admin/updateAll', indicators: indicators
   ).fail((err) ->
     console.log err.stack

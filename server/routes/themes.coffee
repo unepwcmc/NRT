@@ -80,15 +80,8 @@ exports.publishDraft = (req, res) ->
 
     theTheme.publishDraftPage()
   ).then( (publishedPage) ->
-    theTheme.toObjectWithNestedPage()
-  ).then( (themeObject) ->
 
-    Theme.getIndicatorsByTheme( themeObject.externalId, (err, indicators) ->
-      res.render "themes/show",
-        theme: themeObject,
-        themeJSON: JSON.stringify(themeObject),
-        indicators: indicators
-    )
+    res.redirect("/themes/#{theTheme.id}")
 
   ).fail((err) ->
     console.error err
@@ -111,15 +104,8 @@ exports.discardDraft = (req, res) ->
 
     theTheme.discardDraft()
   ).then( (publishedPage) ->
-    theTheme.toObjectWithNestedPage()
-  ).then( (themeObject) ->
 
-    Theme.getIndicatorsByTheme( themeObject.externalId, (err, indicators) ->
-      res.render "themes/show",
-        theme: themeObject,
-        themeJSON: JSON.stringify(themeObject),
-        indicators: indicators
-    )
+    res.redirect("/themes/#{theTheme.id}")
 
   ).fail((err) ->
     console.error err
