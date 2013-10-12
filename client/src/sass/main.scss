@@ -268,17 +268,21 @@ h1, h2, h3, h4, h5 {
   box-shadow: 0 0 3px #888888;
 
   /* Split background in to two halves */
-  background-color: white;
-  background-image: url('/images/header-bg.png');
-  background-size: 50%;
-  background-repeat: repeat-y;
+  background: #168bdc; /* Old browsers */
+  background: -moz-linear-gradient(left, #168bdc 0%, #168bdc 50%, #ffffff 51%, #ffffff 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#168bdc), color-stop(50%,#168bdc), color-stop(51%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, #168bdc 0%,#168bdc 50%,#ffffff 51%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, #168bdc 0%,#168bdc 50%,#ffffff 51%,#ffffff 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, #168bdc 0%,#168bdc 50%,#ffffff 51%,#ffffff 100%); /* IE10+ */
+  background: linear-gradient(to right, #168bdc 0%,#168bdc 50%,#ffffff 51%,#ffffff 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#168bdc', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
   height: 79px;
-  background-color: $white;
 
   .inner {
     margin: 0 auto;
-    width: 980px;
-    padding: 0 20px;
+    width: 1020px;
+    height: 80px;
+    background: white;
   }
 
   h1 {
@@ -286,7 +290,8 @@ h1, h2, h3, h4, h5 {
     font-size: 1.2em;
     color: white;
     float: left;
-    margin-top: 15px;
+    padding-top: 15px;
+    padding-right: 15px;
     padding-bottom: 0;
     small {
       font-weight: bold;
@@ -295,18 +300,29 @@ h1, h2, h3, h4, h5 {
     }
   }
 
+  .left {
+    height: 79px;
+    padding-left: 20px;
+    position: relative;
+    display: inline-block;
+    background-color: $mainBlue;
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      border-right: 37px solid transparent;
+      top: 0;
+      right: -37px;
+      border-top: 79px solid $mainBlue;
+    }
+  }
+
   ul.right {
     float: right;
-    background: white;
+    padding-right: 20px;
     width: 700px;
-    height: 79px;
-    /* Skew to achieve slanted blue section */
-    @include skew(-25deg, 0);
-
-    /* Unskew children */
-    * {
-      @include skew(25deg, 0);
-    }
+    height: 80px;
 
     li, a {
       color: rgba(0,0,0,0.6);
