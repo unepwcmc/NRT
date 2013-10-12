@@ -1037,6 +1037,7 @@ footer{
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   backface-visibility: hidden;
+  -webkit-transform-origin: 0% 0%;
   -webkit-transform: translateX(-50%) translateY(-50%);
   -moz-transform: translateX(-50%) translateY(-50%);
   -ms-transform: translateX(-50%) translateY(-50%);
@@ -1186,4 +1187,5 @@ footer{
   -ms-transform: scale(1);
   transform: scale(1);
   opacity: 1;
+  zoom: 1;
 }
