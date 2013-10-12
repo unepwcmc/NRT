@@ -250,7 +250,7 @@
     "fields": [
       {
         "source": {
-          "name": "date",
+          "name": "year",
           "type": "integer"
         },
         "name": "year",

@@ -112,7 +112,22 @@ SOURCE_DATA_PARSERS =
       indicator: @_id
       data: responseBody[1]
     }
-    
+
+  cartodb: (responseBody) ->
+    unless responseBody.rows? and _.isArray(responseBody.rows)
+      throw "Can't convert poorly formed indicator data reponse:\n#{
+        JSON.stringify(responseBody)
+      }\n expected response to be a cartodb api response;#{
+      } an array with a rows array"
+
+    return convertedData = {
+      indicator: @_id
+      data: [
+        value: responseBody.rows[0].sum
+        year: "2013"
+        text: "fine"
+      ]
+    }
 
 module.exports =
   statics: {}

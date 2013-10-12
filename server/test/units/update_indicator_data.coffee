@@ -276,6 +276,60 @@ test('.convertResponseToIndicatorData on a worldBank indicator
   )
 )
 
+test('.convertResponseToIndicatorData for a cartodb indicator
+  takes data from remote server and prepares for writing to database', (done)->
+  responseData = {"time":0.005,"fields":{"sum":{"type":"numeric"}},"total_rows":1,"rows":[{"sum":10.5}]}
+
+  helpers.createIndicatorModels([{
+    type: 'cartodb'
+  }]).then( (indicators) ->
+    indicator = indicators[0]
+
+    expectedIndicatorData = {
+      indicator: indicator._id
+      data: [
+        {
+          "value": 10.5,
+          "year": "2013"
+        }
+      ]
+    }
+
+    convertedData = indicator.convertResponseToIndicatorData(responseData)
+
+    assert.ok(
+      _.isEqual(convertedData, expectedIndicatorData),
+      "Expected converted data:\n
+      #{JSON.stringify(convertedData)}\n
+        to look like expected indicator data:\n
+      #{JSON.stringify(expectedIndicatorData)}"
+    )
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.convertResponseToIndicatorData on a cartodb indicator
+  when given a garbage response it throws an error', ->
+  indicator = new Indicator(
+    type: 'cartodb'
+  )
+
+  garbageData = {hats: 'boats'}
+  assert.throws(
+    (->
+      indicator.convertResponseToIndicatorData(garbageData)
+    ), "Can't convert poorly formed indicator data reponse:\n#{
+          JSON.stringify(garbageData)
+        }\n expected response to be a cartodb api response;#{
+      } an array with a rows array"
+  )
+)
+
 test(".validateIndicatorDataFields given the correct fields returns no errors", ->
   indicator = new Indicator(
     indicatorDefinition:
