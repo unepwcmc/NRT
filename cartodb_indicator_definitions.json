@@ -1,0 +1,10 @@
+{
+  "carbon-tool:nrt_bc_seagrass_copy": {
+    "valueField": "value",
+    "ranges":[
+      {"minValue": 12000, "message": "Excellent"},
+      {"minValue": 0, "message": "Poor"}
+    ]
+  }
+}
+
