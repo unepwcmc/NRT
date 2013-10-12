@@ -1075,17 +1075,20 @@ footer{
   margin: 0 auto;
   font-weight: 300;
   font-size: 1.15em;
+  zoom: 1;
 }
 
 .md-box .md-title {
   overflow: hidden;
   border-bottom: 1px solid $lightGrey;
   padding: 20px 30px;
+  font-weight: 400;
 
 }
 
 .md-box h3 {
   color: $mainFont;
+  color: rgba(0,0,0,0.8);
   font-size: 1.2em;
   font-weight: 400;
   width: 490px;
@@ -1103,7 +1106,9 @@ footer{
   width: 425px;
   line-height: 1.6em;
   color: $mainFont;
+  color: rgba(0,0,0,0.8);
   margin-top: 15px;
+  font-weight: 400;
 }
 
 .md-box .md-content img {
