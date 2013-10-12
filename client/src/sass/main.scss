@@ -160,9 +160,12 @@ header, section, footer{
 
 header {
   position: relative;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
   border-bottom: 1px solid #eee;
-  padding-bottom: 20px;
+
+  h1 {
+    font-size: 2.4em;
+  }
 
   button, .button {
     position: absolute;
@@ -275,7 +278,6 @@ h1, h2, h3, h4, h5 {
   background: -o-linear-gradient(left, #168bdc 0%,#168bdc 50%,#ffffff 51%,#ffffff 100%); /* Opera 11.10+ */
   background: -ms-linear-gradient(left, #168bdc 0%,#168bdc 50%,#ffffff 51%,#ffffff 100%); /* IE10+ */
   background: linear-gradient(to right, #168bdc 0%,#168bdc 50%,#ffffff 51%,#ffffff 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#168bdc', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
   height: 79px;
 
   .inner {
@@ -460,6 +462,7 @@ h1, h2, h3, h4, h5 {
 
 .breadcrumbs {
   border-bottom: 1px solid #eee;
+  padding-top: 79px;
 
   a.button {
     color: $lightishGrey;
@@ -478,7 +481,7 @@ h1, h2, h3, h4, h5 {
   }
 
   .inner {
-    margin: 79px auto 0 auto;
+    margin: 0 auto;
     padding: 0 20px 15px 20px;
     width: 980px;
     position: relative;
