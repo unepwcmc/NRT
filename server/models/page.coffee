@@ -11,6 +11,7 @@ pageSchema = mongoose.Schema(
   parent_type: String
   sections: [SectionSchema]
   is_draft: type: Boolean, default: false
+  headline: mongoose.Schema.Types.Mixed
 )
 
 _.extend(pageSchema.statics, sectionNestingModel)
