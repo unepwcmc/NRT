@@ -4,7 +4,8 @@
 
 section {
   display: block;
-  padding: 70px 20px;
+  position: relative;
+  padding: 60px 20px;
   width: 980px;
   margin: auto;
   overflow: hidden;
@@ -19,7 +20,7 @@ section {
   }
   p {
     font-size: 0.8em;
-    line-height: 1.5em;
+    line-height: 1.6em;
     padding-bottom: 10px;
   }
   button {
@@ -35,9 +36,9 @@ section {
     padding: 0;
     margin: auto;
     &.float-right {
-      float: right;
-      width: 52.5%;
-      position: relative;
+      position: absolute;
+      right: 0;
+      top: 60px;
     }
   }
   blockquote {
@@ -47,7 +48,7 @@ section {
     line-height: 1.35em;
   }
   .column {
-    width: 47.5%;
+    width: 460px;
     &.left {
       float: left;
     }
@@ -56,7 +57,7 @@ section {
     }
   }
   &#quote {
-    padding: 0 20px 70px 20px;
+    padding: 50px 20px 60px 20px;
   }
   &#feedback {
     border-top: 1px solid $lightGrey;
@@ -92,7 +93,7 @@ div#heading-container {
   background-color: $bkgGrey;
   section {
     display: block;
-    padding: 70px 0 0 0;
+    padding: 50px 0 0 0;
     margin: auto;
     h1, h2 {
       text-align: center;
