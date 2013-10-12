@@ -211,6 +211,19 @@ test('.getIndicatorData with an integer filter \'min\' value
   )
 )
 
+test('.getIndicatorData on an indicator with no indicator data 
+  returns an empty array', (done) ->
+  indicator = new Indicator()
+
+  indicator.getIndicatorData((err, data) ->
+    if err?
+      throw err
+
+    assert.ok _.isEqual(data, []), "Expected returned data to be an empty array"
+    done()
+  )
+)
+
 test('.getRecentHeadlines returns the given number of most recent headlines 
   in decending date order', (done)->
   indicatorData = [

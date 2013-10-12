@@ -83,6 +83,8 @@ indicatorSchema.methods.getIndicatorData = (filters, callback) ->
     if err?
       console.error err
       callback err
+    else if !res?
+      callback null, []
     else
       data = filterIndicatorData(res.data, filters)
 
