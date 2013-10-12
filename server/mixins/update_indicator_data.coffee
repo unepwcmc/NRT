@@ -4,7 +4,7 @@ request = require('request')
 _ = require('underscore')
 
 CONFIG =
-  environmental:
+  esri:
     indicatorServer: 'localhost:3002/esri'
     defaultQueryParameters:
       'where': 'objectid > 0'
@@ -42,13 +42,13 @@ CONVERSIONS =
       new Date(value).getFullYear()
 
 URL_BUILDERS =
-  environmental: ->
+  esri: ->
     if @indicatorDefinition?
       serviceName = @indicatorDefinition.serviceName
       featureServer = @indicatorDefinition.featureServer
 
     unless serviceName? and featureServer?
-      throw "Cannot generate update URL, environmental indicator has no serviceName or featureServer in its indicator definition"
+      throw "Cannot generate update URL, esri indicator has no serviceName or featureServer in its indicator definition"
 
     url = "http://#{CONFIG[@type].indicatorServer}/#{serviceName}/#{featureServer}"
     return url
@@ -66,7 +66,7 @@ URL_BUILDERS =
     return url
 
 SOURCE_DATA_PARSERS =
-  environmental: (responseBody) ->
+  esri: (responseBody) ->
     unless _.isArray(responseBody.features)
       throw "Can't convert poorly formed indicator data reponse:\n#{
         JSON.stringify(responseBody)

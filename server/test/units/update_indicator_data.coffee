@@ -16,10 +16,10 @@ test('.getUpdateUrl on indicator with no type throws an appropriate error', ->
   ), "Couldn't find a url builder for indicator.type: 'undefined'")
 )
 
-test('.getUpdateUrl on an environmental indicator with a valid serviceName and featureServer
+test('.getUpdateUrl on an esri indicator with a valid serviceName and featureServer
  it returns a valid url', ->
   indicator = new Indicator
-    type: 'environmental'
+    type: 'esri'
     indicatorDefinition:
       serviceName:  'NRT_AD_ProtectedArea'
       featureServer: 2
@@ -29,13 +29,13 @@ test('.getUpdateUrl on an environmental indicator with a valid serviceName and f
   assert.strictEqual url, expectedUrl
 )
 
-test('.getUpdateUrl on an environmental indicator with no serviceName and featureServer
+test('.getUpdateUrl on an esri indicator with no serviceName and featureServer
  it throws an error', ->
   indicator = new Indicator(
-    type: 'environmental'
+    type: 'esri'
   )
 
-  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, environmental indicator has no serviceName or featureServer in its indicator definition"
+  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, esri indicator has no serviceName or featureServer in its indicator definition"
 )
 
 test('.getUpdateUrl on a worldBank indicator with a valid apiUrl and apiIndicatorName', ->
@@ -60,7 +60,7 @@ test('.getUpdateUrl on a worldBank indicator with missing apiUrl and apiIndicato
 
 test('.queryIndicatorData queries the remote server for indicator data', (done) ->
   indicator = new Indicator
-    type: 'environmental'
+    type: 'esri'
     indicatorDefinition:
       serviceName:  'NRT_AD_ProtectedArea'
       featureServer: 2
@@ -112,7 +112,7 @@ test('.convertResponseToIndicatorData on indicator with no type throws an approp
   ), "Couldn't find a data parser for indicator.type: 'undefined'")
 )
 
-test('.convertResponseToIndicatorData for an environmental indicator
+test('.convertResponseToIndicatorData for an esri indicator
   takes data from remote server and prepares for writing to database', (done)->
   responseData = {
     features: [
@@ -131,7 +131,7 @@ test('.convertResponseToIndicatorData for an environmental indicator
   }
 
   helpers.createIndicatorModels([{
-    type: 'environmental'
+    type: 'esri'
   }]).then( (indicators) ->
     indicator = indicators[0]
 
@@ -166,10 +166,10 @@ test('.convertResponseToIndicatorData for an environmental indicator
   )
 )
 
-test('.convertResponseToIndicatorData on an environmental indicator
+test('.convertResponseToIndicatorData on an esri indicator
   when given a garbage response it throws an error', ->
   indicator = new Indicator(
-    type: 'environmental'
+    type: 'esri'
   )
 
   garbageData = {hats: 'boats'}
