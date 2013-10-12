@@ -62,10 +62,12 @@ test('.getUpdateUrl on a cartodb indicator with a valid user and query', ->
   indicator = new Indicator
     type: 'cartodb'
     indicatorDefinition:
+      "apiUrl": "http://localhost:3002"
       "cartodb_user": "carbon-tool",
-      "query": "SELECT SUM(area_ha) FROM nrt_bc_seagrass_copy",
+      "cartodb_tablename": "nrt_bc_seagrass_copy",
+      "query": "SELECT SUM(area_ha) FROM nrt_bc_seagrass_copy"
 
-  expectedUrl = "http://carbon-tool.cartodb.com/api/v2/sql?q=SELECT%20SUM(area_ha)%20FROM%20nrt_bc_seagrass_copy"
+  expectedUrl = "http://localhost:3002/carbon-tool/nrt_bc_seagrass_copy/SELECT%20SUM(area_ha)%20FROM%20nrt_bc_seagrass_copy"
   url = indicator.getUpdateUrl()
 
   assert.strictEqual url, expectedUrl
@@ -75,7 +77,7 @@ test('.getUpdateUrl on a cartodb indicator with missing cartodb_user and query
  it throws an error', ->
   indicator = new Indicator(type: 'cartodb')
 
-  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, indicator of type 'cartodb' has no user or query in its indicator definition"
+  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, indicator of type 'cartodb' has no cartodb_user or query in its indicator definition"
 )
 
 test('.queryIndicatorData queries the remote server for indicator data', (done) ->

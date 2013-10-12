@@ -240,7 +240,9 @@
   "theme": 2,
   "type": "cartodb",
   "indicatorDefinition": {
+    "apiUrl": "http://localhost:3002"
     "cartodb_user": "carbon-tool",
+    "cartodb_tablename": "nrt_bc_seagrass_copy",
     "query": "SELECT SUM(area_ha) FROM nrt_bc_seagrass_copy",
     "unit": "ha",
     "period": "annual",

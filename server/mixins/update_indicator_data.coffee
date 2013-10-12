@@ -2,7 +2,6 @@ async = require('async')
 Q = require('q')
 request = require('request')
 _ = require('underscore')
-querystring = require("querystring")
 
 CONFIG =
   esri:
@@ -38,9 +37,7 @@ CONFIG =
       "format": "json"
 
   cartodb:
-    cartodb_server_url: "cartodb.com/api/v2"
-    cartodb_user: "carbon-tool"
-    raw_sql_query: "SELECT SUM(area_ha) FROM nrt_bc_seagrass_copy"
+    cartodb_api_url: "cartodb.com/api/v2"
 
 
 CONVERSIONS =
@@ -74,13 +71,15 @@ URL_BUILDERS =
 
   cartodb: ->
     if @indicatorDefinition?
-      user = @indicatorDefinition.cartodb_user
-      query = querystring.stringify(q: @indicatorDefinition.query)
+      apiUrl = @indicatorDefinition.apiUrl
+      cartodb_user = @indicatorDefinition.cartodb_user
+      cartodb_tablename = @indicatorDefinition.cartodb_tablename
+      query = encodeURIComponent(@indicatorDefinition.query)
 
-    unless user? and query?
-      throw "Cannot generate update URL, indicator of type 'cartodb' has no user or query in its indicator definition"
+    unless cartodb_user? and query?
+      throw "Cannot generate update URL, indicator of type 'cartodb' has no cartodb_user or query in its indicator definition"
 
-    url = "http://#{user}.#{CONFIG[@type].cartodb_server_url}/sql?#{query}"
+    url = "#{apiUrl}/#{cartodb_user}/#{cartodb_tablename}/#{query}"
     return url
 
 
@@ -187,7 +186,7 @@ module.exports =
       for field in @indicatorDefinition.fields
         if field.source.name is sourceName
           return field
-      
+
       return false
 
     convertSourceValueToInternalValue: (sourceName, value) ->
