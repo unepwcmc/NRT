@@ -3,6 +3,65 @@ Q = require('q')
 Page = require('../models/page').model
 
 module.exports = {
+  publishDraftPage: ->
+    deferred = Q.defer()
+
+    publishedPage = null
+
+    Q.nsend(
+      Page.findOne({parent_id: @_id, is_draft: true}), 'exec'
+    ).then( (page) =>
+
+      if page?
+        page.is_draft = false
+
+        Q.nsend(
+          page, 'save'
+        )
+      else
+        @getPage()
+
+    ).spread( (page) =>
+      publishedPage = page
+
+      @deleteAllPagesExcept(publishedPage.id)
+    ).then( ->
+      deferred.resolve(publishedPage)
+    ).fail( (err) ->
+      deferred.reject(err)
+    )
+
+    return deferred.promise
+
+  discardDraft: ->
+    deferred = Q.defer()
+
+    thePage = null
+
+    @getPage().then( (page) =>
+      thePage = page
+      @deleteAllPagesExcept(page.id)
+    ).then( (deletedPage) ->
+      deferred.resolve(thePage)
+    ).fail( (err) ->
+      deferred.reject(err)
+    )
+
+    return deferred.promise
+
+  deleteAllPagesExcept: (pageId) ->
+    deferred = Q.defer()
+
+    Q.nsend(
+      Page.remove(parent_id: @_id, _id: {'$ne': pageId }), 'exec'
+    ).then( (deletedPage) ->
+      deferred.resolve(deletedPage)
+    ).fail( (err) ->
+      deferred.reject(err)
+    )
+
+    return deferred.promise
+
   getDraftPage: ->
     deferred = Q.defer()
 
@@ -15,7 +74,11 @@ module.exports = {
         @getPage().then( (nonDraftPage) ->
           nonDraftPage.createDraftClone()
         ).then( (clonedPage) ->
-          deferred.resolve(clonedPage)
+          Q.nsend(
+            Page, 'findFatModel', clonedPage._id
+          )
+        ).then( (fatPage) ->
+          deferred.resolve(fatPage)
         )
     ).fail( (err) ->
       deferred.reject(err)
@@ -27,7 +90,7 @@ module.exports = {
     deferred = Q.defer()
 
     Q.nsend(
-      Page.findOne(parent_id: @_id), 'exec'
+      Page.findOne(parent_id: @_id, is_draft: false), 'exec'
     ).then( (page) =>
       if page?
         deferred.resolve(page)
@@ -64,10 +127,13 @@ module.exports = {
 
     return deferred.promise
 
-  toObjectWithNestedPage: ->
+  toObjectWithNestedPage: (options = {draft: false}) ->
     deferred = Q.defer()
 
-    @getFatPage().then( (page) =>
+    getMethod = @getFatPage
+    getMethod = @getDraftPage if options.draft
+
+    getMethod.call(@).then( (page) =>
       object = @toObject()
       object.page = page
 

@@ -26,7 +26,7 @@ exports.show = (req, res) ->
     indicator.toObjectWithNestedPage()
     .then((indicatorObject) ->
       res.render("indicators/show",
-        indicator: indicator, indicatorJSON: JSON.stringify(indicatorObject)
+        indicator: indicatorObject, indicatorJSON: JSON.stringify(indicatorObject)
       )
     ).fail((err) ->
       console.error err
@@ -37,3 +37,83 @@ exports.show = (req, res) ->
     console.error err
     return res.render(500, "Error fetching the indicator")
   )
+
+exports.showDraft = (req, res) ->
+  Q.nsend(
+    Indicator.findOne(_id: req.params.id).populate('owner'),
+    'exec'
+  ).then( (indicator) ->
+    unless indicator?
+      error = "Could not find indicator with ID #{req.params.id}"
+      console.error error
+      return res.send(404, error)
+
+    indicator.toObjectWithNestedPage(draft: true)
+  ).then( (indicatorObject) ->
+    res.render("indicators/show",
+      indicator: indicatorObject,
+      indicatorJSON: JSON.stringify(indicatorObject)
+    )
+  ).fail((err) ->
+    console.error err
+    return res.render(500, "Error fetching the indicator")
+  )
+
+exports.publishDraft = (req, res) ->
+  theIndicator = null
+
+  Q.nsend(
+    Indicator.findOne(_id: req.params.id).populate('owner'),
+    'exec'
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    unless indicator?
+      error = "Could not find indicator with ID #{req.params.id}"
+      console.error error
+      return res.send(404, error)
+
+    theIndicator.publishDraftPage()
+  ).then( (publishedPage) ->
+    theIndicator.toObjectWithNestedPage()
+  ).then( (indicatorObject) ->
+
+    res.render("indicators/show",
+      indicator: indicatorObject,
+      indicatorJSON: JSON.stringify(indicatorObject)
+    )
+
+  ).fail((err) ->
+    console.error err
+    return res.render(500, "Error fetching the indicator")
+  )
+
+exports.discardDraft = (req, res) ->
+  theIndicator = null
+
+  Q.nsend(
+    Indicator.findOne(_id: req.params.id).populate('owner'),
+    'exec'
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    unless indicator?
+      error = "Could not find indicator with ID #{req.params.id}"
+      console.error error
+      return res.send(404, error)
+
+    theIndicator.discardDraft()
+  ).then( (publishedPage) ->
+    theIndicator.toObjectWithNestedPage()
+  ).then( (indicatorObject) ->
+
+    res.render("indicators/show",
+      indicator: indicatorObject,
+      indicatorJSON: JSON.stringify(indicatorObject)
+    )
+
+  ).fail((err) ->
+    console.error err
+    return res.render(500, "Error fetching the indicator")
+  )
+

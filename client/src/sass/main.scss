@@ -193,7 +193,7 @@ h2 {
     font-family: 'Open sans', sans-serif;
     position: relative;
     top: 6px;
-    padding-left: 5px;
+    padding-left: 10px;
   }
 }
 
@@ -218,7 +218,7 @@ h1, h2, h3, h4, h5 {
 
 .content {
   width: 980px;
-  padding: 30px 0;
+  padding: 30px 20px;
   margin: 0 auto;
   outline: 0;
   word-wrap: break-word;
@@ -268,6 +268,7 @@ h1, h2, h3, h4, h5 {
   box-shadow: 0 0 3px #888888;
 
   /* Split background in to two halves */
+  background-color: white;
   background-image: url('/images/header-bg.png');
   background-size: 50%;
   background-repeat: repeat-y;
@@ -277,6 +278,7 @@ h1, h2, h3, h4, h5 {
   .inner {
     margin: 0 auto;
     width: 980px;
+    padding: 0 20px;
   }
 
   h1 {
@@ -398,21 +400,34 @@ h1, h2, h3, h4, h5 {
 .breadcrumbs {
   border-bottom: 1px solid #eee;
 
-  button{
+  a.button {
+    color: $lightishGrey;
+    line-height: normal;
     position: absolute;
     right: 0;
     top: 12px;
+
+    &:hover {
+      color: $buttonBlue;
+    }
+
+    &:active {
+      color: white;
+    }
   }
 
   .inner {
     margin: 79px auto 0 auto;
-    padding: 0 0 15px 0;
+    padding: 0 20px 15px 20px;
     width: 980px;
     position: relative;
   }
 
   li, a {
-    color: #0088ff;
+    color: $linkBlue;
+    &:hover{
+      color: lighten($linkBlue, 10);
+    }
   }
 
   ul li {
@@ -866,11 +881,9 @@ footer{
   height: 50px;
   padding: 5px 0;
   box-shadow: 0 0 3px rgba(0,0,0,0.15);
+  top: 79px;
   @include transition(top 0.6s ease-in-out);
-  &.opened{
-    top: 79px;
-    @include transition(top 0.6s ease-in-out);
-  }
+
   .edit-bar {
     width: 980px;
     margin: auto;
@@ -885,23 +898,27 @@ footer{
         line-height: 50px;
       }
     }
+
     .publish-delete {
       float: right;
       padding-top: 8px;
-      button {
+      a.button {
+        padding: 5px 15px;
         float: right;
         margin-left: 10px;
-        &#publish {
+        line-height: normal;
+
+        &#publish, &#publish:active {
           color: $white;
           background-color: $green;
           border-color: $green;
         }
-        &#save:hover{
+        &#save:hover, &#save:active {
           color: #444;
           background-color: $white;
           border-color: $white;
         }
-        &#delete:hover{
+        &#delete:hover, &#delete:active {
           color: $white;
           background-color: $red;
           border-color: $red;

@@ -136,8 +136,8 @@ test(".toObjectWithNestedPage returns an object representation of the
 )
 
 test(".getDraftPage
-  when no draft page is associated 
-  and a non-draft page is associated 
+  when no draft page is associated
+  and a non-draft page is associated
   it creates a clones of the non-draft and returns it", (done) ->
 
   theIndicator = nonDraftPage = draftPage = null
@@ -181,10 +181,167 @@ test(".getDraftPage
   ).then( (foundPage) ->
 
     assert.strictEqual(
-      foundPage.id, draftPage.id,
-      "Expected to find the same page when looking for _id #{draftPage.id} 
+      foundPage.id, draftPage._id.toString(),
+      "Expected to find the same page when looking for _id #{draftPage._id}
         but found page with id #{foundPage.id}"
     )
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test(".publishDraftPage sets the page's draft status to false and
+  deletes the current published version", (done) ->
+
+  theIndicator = nonDraftPage = draftPage = publishedPage = null
+
+  Q.nfcall(
+    helpers.createIndicator, {}
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    helpers.createPage(
+      parent_id: indicator.id
+      parent_type: "Indicator"
+      is_draft: false
+      title: "Sup Bro"
+    )
+
+  ).then( (page) ->
+    nonDraftPage = page
+
+    theIndicator.getDraftPage()
+  ).then( (page)->
+    draftPage = page
+
+    theIndicator.publishDraftPage()
+  ).then( (page) ->
+    publishedPage = page
+
+    assert.strictEqual(
+      publishedPage.parent_id.toString(), theIndicator.id,
+      "Expected publishedPage.parent_id #{draftPage.parent_id} to be the _id of the
+      parent indicator (#{theIndicator.id})"
+    )
+    assert.strictEqual publishedPage.parent_type, "Indicator"
+
+    assert.isFalse publishedPage.is_draft, "Expected is_draft to be false for publishedPage"
+
+    assert.strictEqual(
+      publishedPage.title,
+      nonDraftPage.title,
+      "Expected published page title to be the same as the original"
+    )
+
+    Q.nsend(
+      Page.find(parent_id: theIndicator.id), 'exec'
+    )
+
+  ).then( (foundPages) ->
+
+    assert.lengthOf foundPages, 1, "Expected only one Page to exist after publishing"
+
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test(".deleteAllPagesExcept deletes all pages except the one passed in", (done) ->
+  theIndicator = null
+  thePages = []
+
+  Q.nfcall(
+    helpers.createIndicator, {}
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    helpers.createPage(
+      parent_id: theIndicator.id
+      parent_type: "Indicator"
+      title: "Sup Bro"
+    )
+
+  ).then( (page) ->
+    thePages.push(page)
+
+    helpers.createPage(
+      parent_id: theIndicator.id
+      parent_type: "Indicator"
+      title: "Sup Bro"
+    )
+
+  ).then( (page) ->
+    thePages.push(page)
+
+    theIndicator.deleteAllPagesExcept(thePages[0].id)
+  ).then( ->
+
+    Q.nsend(
+      Page.find(parent_id: theIndicator.id), 'exec'
+    )
+
+  ).then( (foundPages) ->
+
+    assert.lengthOf foundPages, 1, "Expected one page to remain after deletion"
+
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test(".discardDraft discards the draft version of a page", (done) ->
+  theIndicator = null
+  thePages = []
+
+  Q.nfcall(
+    helpers.createIndicator, {}
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    helpers.createPage(
+      parent_id: theIndicator.id
+      parent_type: "Indicator"
+      is_draft: false
+      title: "Sup Bro"
+    )
+
+  ).then( (page) ->
+    thePages.push(page)
+
+    helpers.createPage(
+      parent_id: theIndicator.id
+      parent_type: "Indicator"
+      is_draft: true
+      title: "Sup Bro"
+    )
+
+  ).then( (page) ->
+    thePages.push(page)
+
+    theIndicator.discardDraft()
+  ).then( ->
+
+    Q.nsend(
+      Page.find(parent_id: theIndicator.id), 'exec'
+    )
+
+  ).then( (foundPages) ->
+
+    assert.lengthOf foundPages, 1, "Expected one page to remain after discarding drafts"
+    assert.strictEqual(
+      foundPages[0].id,
+      thePages[0].id
+    )
+
     done()
 
   ).fail( (err) ->
