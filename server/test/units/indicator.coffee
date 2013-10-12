@@ -211,7 +211,76 @@ test('.getIndicatorData with an integer filter \'min\' value
   )
 )
 
-test('.calculateIndicatorDataBounds should return the upper and lower bounds of data', (done) ->
+test('.getRecentHeadlines returns the given number of most recent headlines 
+  in decending date order', (done)->
+  indicatorData = [
+    {
+      "year": 2000,
+      "value": 2
+      "text": 'Poor'
+    }, {
+      "year": 2001,
+      "value": 9
+      "text": 'Great'
+    }, {
+      "year": 2002,
+      "value": 4
+      "text": 'Fair'
+    }
+  ]
+
+  indicatorDefinition =
+    xAxis: 'year'
+    yAxis: 'value'
+    textField: 'text'
+    fields: [{
+      name: 'year'
+      type: 'integer'
+    }, {
+      name: "value",
+      type: "integer"
+    }, {
+      name: 'text'
+      name: 'text'
+    }]
+
+  theIndicator = null
+
+  Q.nsend(
+    Indicator, 'create',
+      indicatorDefinition: indicatorDefinition
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    Q.nsend(
+      IndicatorData, 'create'
+        indicator: theIndicator
+        data: indicatorData
+    )
+  ).then( ->
+    theIndicator.getRecentHeadlines(2)
+  ).then( (data) ->
+
+    assert.lengthOf data, 2, "Expected 2 headlines to be returned"
+
+    mostRecentHeadline = data[0]
+
+    assert.strictEqual(mostRecentHeadline.year, 2002,
+      "Expected most recent headline year value to be 2002")
+    assert.strictEqual(mostRecentHeadline.value, 4,
+      "Expected most recent headline value to be 4")
+    assert.strictEqual(mostRecentHeadline.text, "Fair",
+      "Expected most recent headline text to be 'Fair'")
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('#calculateIndicatorDataBounds should return the upper and lower bounds of data', (done) ->
   indicatorData = [
     {
       "year": 2000,

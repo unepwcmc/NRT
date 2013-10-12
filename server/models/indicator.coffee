@@ -138,6 +138,22 @@ boundAggregators =
     return bounds
   text: () -> "It's text, dummy"
 
+indicatorSchema.methods.getRecentHeadlines = (amount) ->
+  deferred = Q.defer()
+
+  Q.nsend(
+    @, 'getIndicatorData'
+  ).then( (data) =>
+
+    headlines = _.last(data, amount)
+    deferred.resolve(headlines.reverse())
+
+  ).fail( (err) ->
+    deferred.reject(err)
+  )
+
+  return deferred.promise
+
 # Probably going to need a refactor at some point
 indicatorSchema.methods.getCurrentYAxis = (callback) ->
   @getIndicatorData((error, data) =>
