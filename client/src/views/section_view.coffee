@@ -47,6 +47,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
       noTitleOrIndicator: !@section.hasTitleOrIndicator()
       narrative: @section.get('narrative')
       visualisation: @section.get('visualisation')
+      isEditable: @section.isEditable()
     ))
     @renderSubViews()
     return @

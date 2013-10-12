@@ -5,7 +5,7 @@ _ = require('underscore')
 
 CONFIG =
   environmental:
-    indicatorServer: '196.218.36.14/ka'
+    indicatorServer: 'localhost:3002/esri'
     defaultQueryParameters:
       'where': 'objectid > 0'
       'objectIds': ''
@@ -50,7 +50,7 @@ URL_BUILDERS =
     unless serviceName? and featureServer?
       throw "Cannot generate update URL, environmental indicator has no serviceName or featureServer in its indicator definition"
 
-    url = "http://#{CONFIG[@type].indicatorServer}/rest/services/#{serviceName}/FeatureServer/#{featureServer}/query"
+    url = "http://#{CONFIG[@type].indicatorServer}/#{serviceName}/#{featureServer}"
     return url
 
   worldBank: ->
@@ -62,7 +62,7 @@ URL_BUILDERS =
     unless apiUrl? and apiIndicatorName?
       throw "Cannot generate update URL, indicator has no apiUrl or apiIndicatorName in its indicator definition"
 
-    url = "#{apiUrl}/indicators/#{apiIndicatorName}"
+    url = "#{apiUrl}/#{apiIndicatorName}"
     return url
 
 SOURCE_DATA_PARSERS =

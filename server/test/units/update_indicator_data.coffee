@@ -23,7 +23,7 @@ test('.getUpdateUrl on an environmental indicator with a valid serviceName and f
     indicatorDefinition:
       serviceName:  'NRT_AD_ProtectedArea'
       featureServer: 2
-  expectedUrl = 'http://196.218.36.14/ka/rest/services/NRT_AD_ProtectedArea/FeatureServer/2/query'
+  expectedUrl = 'http://localhost:3002/esri/NRT_AD_ProtectedArea/2'
   url = indicator.getUpdateUrl()
 
   assert.strictEqual url, expectedUrl
@@ -45,7 +45,7 @@ test('.getUpdateUrl on a worldBank indicator with a valid apiUrl and apiIndicato
       apiUrl: "http://api.worldbank.org/countries/ARE"
       apiIndicatorName: "NY.ADJ.DCO2.GN.ZS"
 
-  expectedUrl = "http://api.worldbank.org/countries/ARE/indicators/NY.ADJ.DCO2.GN.ZS"
+  expectedUrl = "http://api.worldbank.org/countries/ARE/NY.ADJ.DCO2.GN.ZS"
   url = indicator.getUpdateUrl()
 
   assert.strictEqual url, expectedUrl
