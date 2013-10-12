@@ -3,6 +3,7 @@
 {{#contentFor 'header'}}
   <link rel="stylesheet" href="/css/theme.css">
   <link rel="stylesheet" href="/css/medium-editor.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
 
   <script src="/js/lib/d3.min.js"></script>
   <script src="/js/lib/underscore-min.js"></script>
@@ -18,6 +19,10 @@
   <li><a href="/">Back to theme list</a></li>
 {{/contentFor}}
 
+{{#contentFor 'extra-body'}}
+class="theme-page"
+{{/contentFor}}
+
 <div class="content theme">
   <article>
     <header>
@@ -25,27 +30,35 @@
     </header>
 
     <div class='main-content'>
-      <section>
-        <h2>Indicators</h2>
-
-        <p>Here are the indicators under this Theme.</p>
-
-        {{#indicators}}
-          <h3>
-            <a href="/indicators/{{id}}">{{title}}</a>
-          </h3>
-        {{/indicators}}
-      </section>
     </div>
 
     <aside class="content-sidebar metadata">
      <!-- <h3>{{{t "theme/owned_by"}}}</h3> -->
-      <p>
-        <i class="icon-user append"></i>
-        Dr. Anybody
-      </p>
     </aside>
   </article>
+</div>
+<div class="theme-indicators">
+  <div class="inner">
+    <div class="theme-block">
+      <h2>Indicators under this theme</h2>
+
+      {{#indicators}}
+        <a class="indicator-box" href="/indicators/{{id}}">
+          <div class="full-name">{{title}}<span>›</span></div>
+          <div class="brief">Annual catch of major species in relation to spawning biomass if available or in relation...</div><!--{{brief}}-->
+          <div class="box-header">
+            <div class="title"><h3><span>O3 Human Health Ozone<!--{{small-title}}--></span></h3></div>
+          </div>
+          <div class="context-text concerning">Concerning <!-- {{context}} --></div>
+          <div class="parameter">
+            <h4><!--{{parameter}}-->53</h4>
+            <div class="unit">mg/L</div>
+          </div>
+          <div class="last-update"><span class="status updated"><!-- {{last-update}} --></span>Up to date <!-- {{last-update}} --></div>
+        </a>
+      {{/indicators}}
+    </div>
+  </div>
 </div>
 
 <script type="text/javascript">
