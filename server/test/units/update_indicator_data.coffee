@@ -23,7 +23,7 @@ test('.getUpdateUrl on an environmental indicator with a valid serviceName and f
     indicatorDefinition:
       serviceName:  'NRT_AD_ProtectedArea'
       featureServer: 2
-  expectedUrl = 'http://localhost:3001/esri/NRT_AD_ProtectedArea/2'
+  expectedUrl = 'http://localhost:3002/esri/NRT_AD_ProtectedArea/2'
   url = indicator.getUpdateUrl()
 
   assert.strictEqual url, expectedUrl
