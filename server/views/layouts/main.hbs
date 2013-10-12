@@ -36,18 +36,29 @@
         <div class='save-status-container'></div>
 
         <ul class="right">
-          <li>
-            {{#if settings.localeIsArabic}}
-              <a href="/locale/en">English</a>
-            {{else}}
-              <a href="/locale/ar">العربية</a>
-            {{/if}}
-          </li>
+          {{#if settings.localeIsArabic}}
+          <a href="/locale/en">
+            <li>
+              English
+            </li>
+          </a>
+          {{else}}
+          <a href="/locale/ar">
+            <li>
+              العربية
+            </li>
+          </a>
+          {{/if}}
 
           {{#if currentUser}}
-            <li>
+          <a href="#signout">
+            <li class="current-user">
+              <span class="name">
               {{ currentUser.name }}
+              </span>
+              <span class="logout"><span>›</span>Sign Out</span>
             </li>
+          </a>
           {{/if}}
         </ul>
       </div>
