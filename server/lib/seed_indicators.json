@@ -233,4 +233,44 @@
         }
       ]
     }
-}]
+}, {
+  "short_name": "Seagrass area (Blue carbon)",
+  "title": "Seagrass area (Blue Carbon)",
+  "description": "Seagrass area (Blue carbon)",
+  "theme": 2,
+  "type": "cartodb",
+  "indicatorDefinition": {
+    "cartodb_user": "carbon-tool",
+    "query": "SELECT SUM(area_ha) FROM nrt_bc_seagrass_copy",
+    "unit": "ha",
+    "period": "annual",
+    "xAxis": "year",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "date",
+          "type": "integer"
+        },
+        "name": "year",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "integer"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+        ]
+    }
+  }
+]

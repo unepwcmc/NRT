@@ -2,6 +2,7 @@ async = require('async')
 Q = require('q')
 request = require('request')
 _ = require('underscore')
+querystring = require("querystring")
 
 CONFIG =
   esri:
@@ -36,6 +37,12 @@ CONFIG =
       "date": "1960:2013"
       "format": "json"
 
+  cartodb:
+    cartodb_server_url: "cartodb.com/api/v2"
+    cartodb_user: "carbon-tool"
+    raw_sql_query: "SELECT SUM(area_ha) FROM nrt_bc_seagrass_copy"
+
+
 CONVERSIONS =
   epoch:
     integer: (value) ->
@@ -64,6 +71,18 @@ URL_BUILDERS =
 
     url = "#{apiUrl}/#{apiIndicatorName}"
     return url
+
+  cartodb: ->
+    if @indicatorDefinition?
+      user = @indicatorDefinition.cartodb_user
+      query = querystring.stringify(q: @indicatorDefinition.query)
+
+    unless user? and query?
+      throw "Cannot generate update URL, indicator of type 'cartodb' has no user or query in its indicator definition"
+
+    url = "http://#{user}.#{CONFIG[@type].cartodb_server_url}/sql?#{query}"
+    return url
+
 
 SOURCE_DATA_PARSERS =
   esri: (responseBody) ->
