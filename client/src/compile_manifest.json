@@ -1,4 +1,5 @@
 [
+  "src/mixins/edit_mode.coffee",
   "src/models/user.coffee",
   "src/models/page.coffee",
   "src/models/report.coffee",

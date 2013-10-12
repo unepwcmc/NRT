@@ -11,6 +11,7 @@ class Backbone.Views.TextEditView extends Backbone.View
 
   initialize: (options) ->
     @model = options.model
+
     @attributeName = options.attributeName
     @tagName = options.tagName || 'div'
     @disableNewlines = options.disableNewlines || false
@@ -27,16 +28,17 @@ class Backbone.Views.TextEditView extends Backbone.View
     return @
 
   showEditingView: ->
-    unless @editingView?
-      @$el.addClass('editing')
-      @editingView = new Backbone.Views.TextEditingView(
-        tagName: @tagName
-        position: @getPositionRelativeToViewport()
-        content: @model.get(@attributeName)
-        disableNewlines: @disableNewlines
-      )
-      @setupEditingViewBindings()
-      @$el.append(@editingView.el)
+    if @model.isEditable()
+      unless @editingView?
+        @$el.addClass('editing')
+        @editingView = new Backbone.Views.TextEditingView(
+          tagName: @tagName
+          position: @getPositionRelativeToViewport()
+          content: @model.get(@attributeName)
+          disableNewlines: @disableNewlines
+        )
+        @setupEditingViewBindings()
+        @$el.append(@editingView.el)
 
   getPositionRelativeToViewport: =>
     top: @$el.offset().top - $(window).scrollTop()

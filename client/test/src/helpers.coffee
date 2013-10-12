@@ -85,6 +85,6 @@ Factory.visualisation = (attributes = {}) ->
     attributes.data =
       results: []
       bounds: {}
-    
+
   new Backbone.Models.Visualisation(attributes)
 
