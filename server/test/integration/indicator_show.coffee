@@ -136,12 +136,6 @@ test("GET /:id/discard_draft discards all drafts and renders the published versi
 
     assert.lengthOf pages, 1
 
-    assert.notStrictEqual(
-      draftPage.id,
-      originalPage.id,
-      "Expected draftPage to have a different ID to the original Page"
-    )
-
     done()
 
   ).fail( (err) ->
