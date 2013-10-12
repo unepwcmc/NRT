@@ -1,0 +1,35 @@
+{{!< main}}
+
+<div class="content">
+  <header>
+    <h1>
+      Manage IndicatorData updates
+    </h1>
+  </header>
+
+  <table>
+    <thead>
+      <tr>
+        <td>Short name</td>
+        <td>Actions</td>
+        <td>Last update</td>
+      </tr>
+    </thead>
+    <tbody>
+      {{#indicators}}
+        <tr>
+          <td>
+            <p>
+            {{title}}
+            </p>
+            <small>{{id}}</small>
+          </td>
+          <td>
+            <a href="/admin/updateIndicatorData/{{id}}" class='button'>Update </a>
+          </td>
+          <td>No data</td>
+        </tr>
+      {{/indicators}}
+    </tbody>
+  </table>
+</div>
