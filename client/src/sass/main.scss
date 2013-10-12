@@ -935,7 +935,7 @@ footer{
   top: 50%;
   left: 50%;
   width: 50%;
-  max-width: 630px;
+  max-width: 800px;
   min-width: 320px;
   height: auto;
   z-index: 2000;
@@ -973,7 +973,6 @@ footer{
   visibility: visible;
 }
 
-/* Content styles */
 .md-content {
   color: $mediumGrey;
   background: $white;
@@ -983,18 +982,16 @@ footer{
 }
 
 .md-content h3 {
+  color: $mainFont;
   margin: 0;
-  padding: 0.4em;
-  text-align: center;
-  font-size: 2.4em;
-  font-weight: 300;
+  text-align: left;
+  font-size: 1.4em;
+  font-weight: 400;
   opacity: 0.8;
-  background: rgba(0,0,0,0.1);
-  border-radius: 3px 3px 0 0;
 }
 
 .md-content > div {
-  padding: 15px 40px 30px;
+  padding: 15px 30px;
   margin: 0;
   font-weight: 300;
   font-size: 1.15em;
@@ -1002,16 +999,9 @@ footer{
 
 .md-content > div p {
   margin: 0;
-  padding: 10px 0;
-}
-
-.md-content > div ul {
-  margin: 0;
-  padding: 0 0 30px 20px;
-}
-
-.md-content > div ul li {
-  padding: 5px 0;
+  padding: 20px 0;
+  margin-top: 10px;
+  border-top: 1px solid $lightGrey;
 }
 
 .md-content button {
@@ -1020,9 +1010,6 @@ footer{
   font-size: 0.8em;
 }
 
-/* Individual modal styles with animations/transitions */
-
-/* Effect 1: Fade in and scale up */
 .md-effect-1 .md-content {
   -webkit-transform: scale(0.7);
   -moz-transform: scale(0.7);
