@@ -4,7 +4,7 @@ request = require('request')
 _ = require('underscore')
 
 CONFIG =
-  environmental:
+  esri:
     indicatorServer: 'localhost:3002/esri'
     defaultQueryParameters:
       'where': 'objectid > 0'
@@ -35,6 +35,8 @@ CONFIG =
       "per_page": 100
       "date": "1960:2013"
       "format": "json"
+  cartodb: 
+    defaultQueryParameters: {}
 
 CONVERSIONS =
   epoch:
@@ -42,13 +44,13 @@ CONVERSIONS =
       new Date(value).getFullYear()
 
 URL_BUILDERS =
-  environmental: ->
+  esri: ->
     if @indicatorDefinition?
       serviceName = @indicatorDefinition.serviceName
       featureServer = @indicatorDefinition.featureServer
 
     unless serviceName? and featureServer?
-      throw "Cannot generate update URL, environmental indicator has no serviceName or featureServer in its indicator definition"
+      throw "Cannot generate update URL, esri indicator has no serviceName or featureServer in its indicator definition"
 
     url = "http://#{CONFIG[@type].indicatorServer}/#{serviceName}/#{featureServer}"
     return url
@@ -65,8 +67,22 @@ URL_BUILDERS =
     url = "#{apiUrl}/#{apiIndicatorName}"
     return url
 
+  cartodb: ->
+    if @indicatorDefinition?
+      apiUrl = @indicatorDefinition.apiUrl
+      cartodb_user = @indicatorDefinition.cartodb_user
+      cartodb_tablename = @indicatorDefinition.cartodb_tablename
+      query = encodeURIComponent(@indicatorDefinition.query)
+
+    unless cartodb_user? and query?
+      throw "Cannot generate update URL, indicator of type 'cartodb' has no cartodb_user or query in its indicator definition"
+
+    url = "#{apiUrl}/cdb/#{cartodb_user}/#{cartodb_tablename}/#{query}"
+    return url
+
+
 SOURCE_DATA_PARSERS =
-  environmental: (responseBody) ->
+  esri: (responseBody) ->
     unless _.isArray(responseBody.features)
       throw "Can't convert poorly formed indicator data reponse:\n#{
         JSON.stringify(responseBody)
@@ -93,7 +109,17 @@ SOURCE_DATA_PARSERS =
       indicator: @_id
       data: responseBody[1]
     }
-    
+
+  cartodb: (responseBody) ->
+    unless responseBody.data?
+      throw "Can't convert poorly formed indicator data reponse:\n#{
+        JSON.stringify(responseBody)
+      }\n expected response to be a cartodb api response"
+
+    return convertedData = {
+      indicator: @_id
+      data: responseBody.data
+    }
 
 module.exports =
   statics: {}
@@ -153,7 +179,7 @@ module.exports =
       for field in @indicatorDefinition.fields
         if field.source.name is sourceName
           return field
-      
+
       return false
 
     convertSourceValueToInternalValue: (sourceName, value) ->
