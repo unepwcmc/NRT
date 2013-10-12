@@ -1,7 +1,7 @@
 express = require('express')
 http = require('http')
-worldBankQuery = require('./worldbank')
-esriQuery = require('./esriQuery')
+worldBankQuery = require('./worldbank_query')
+esriQuery = require('./esri_query')
 
 PORT = 3001
 
