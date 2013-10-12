@@ -201,8 +201,8 @@
   "theme": 2,
   "type": "worldBank",
   "indicatorDefinition": {
-      "apiUrl": "http://api.worldbank.org/countries/ARE/",
-      "apiIndicatorName": "ER.MRN.PTMR.ZS",
+      "apiUrl": "http://localhost:3001/wb/ARE",
+      "apiIndicatorName": "NY.ADJ.DCO2.GN.ZS",
       "period": "annual",
       "xAxis": "year",
       "yAxis": "value",
@@ -222,6 +222,13 @@
           },
           "name": "value",
           "type": "integer"
+        }, {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
         }
       ]
     }
