@@ -154,6 +154,17 @@ indicatorSchema.methods.getRecentHeadlines = (amount) ->
 
   return deferred.promise
 
+indicatorSchema.methods.getNewestHeadline = ->
+  deferred = Q.defer()
+
+  @getRecentHeadlines(1).then((headlines) ->
+    deferred.resolve headlines[0]
+  ).fail( (err) ->
+    deferred.reject err
+  )
+
+  return deferred.promise
+
 # Probably going to need a refactor at some point
 indicatorSchema.methods.getCurrentYAxis = (callback) ->
   @getIndicatorData((error, data) =>
