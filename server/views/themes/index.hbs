@@ -5,18 +5,10 @@
 {{/contentFor}}
 
 {{#contentFor 'extra-body'}}
-class="theme-list"
+  class="theme-list"
 {{/contentFor}}
 
 <div class="content">
-  <!--<header>
-    <h1>{{{t "indicators/title"}}}</h1>
-  </header>
-
-  <div class='intro-text'>
-    This is an annual snapshot of the state of the environment in Abu Dhabi for 2013. The state is generally positive. Some key areas for investigation are XX and YY. There has been excellent progress in the areas of AA and BB.
-
-  </div>-->
   <div class="indicators-container">
     <div class="report-content">
       {{#themes}}
@@ -24,101 +16,20 @@ class="theme-list"
         <a href="/themes/{{_id}}">
           <h2>{{title}}<span>›</span></h2>
         </a>
+
         <p>This is the summary of the state for the Atmosphere theme. In general, the state is XX. Some concerns are in area YY. There is good progress in ZZ and BB areas. See below for the Indicators which comprise this Theme. <span><a href="/themes/{{_id}}">(Read more)</a></span></p>
-        {{#unless indicators}}
-        <a class="indicator-box" href="/indicators/{{id}}">
-          <div class="full-name">Emissions of Greenhouse Gases<span>›</span></div><!--{{full-name}}-->
-          <div class="brief">Anthropogenic emissions, less removal by sinks, of the greenhouse gases carbon dioxide (CO2), methane...</div><!--{{brief}}-->
-          <div class="box-header">
-            <div class="title"><h3><span>NO<sub>2</sub> concentrations<!--{{title}}--></span></h3></div>
-          </div>
-          <div class="context-text good">Good <!-- {{context}} --></div>
-          <div class="parameter">
-            <h4><!--{{parameter}}-->38</h4>
-            <div class="unit">μg/L</div>
-          </div>
-          <div class="last-update"><span class="status updated"><!-- {{last-update}} --></span>Up to date</div>
-        </a>
-        <a class="indicator-box" href="/indicators/{{id}}">
-          <div class="full-name">Abu Dhabi Red List Indices For All Species Groups<span>›</span></div><!--{{full-name}}-->
-          <div class="brief">Anthropogenic emissions, less removal by sinks, of the greenhouse gases carbon dioxide (CO2), methane...</div><!--{{brief}}-->
-          <div class="box-header">
-            <div class="title"><h3><span>SO<sub>2</sub> concentrations<!--{{title}}--></span></h3></div>
-          </div>
-          <div class="context-text concerning">Concerning <!-- {{context}} --></div>
-          <div class="parameter">
-            <h4><!--{{parameter}}-->42</h4>
-            <div class="unit">mg/L</div>
-          </div>
-          <div class="last-update"><span class="status updated"><!-- {{last-update}} --></span>Up to date <!-- {{last-update}} --></div>
-        </a>
-        <a class="indicator-box" href="/indicators/{{id}}">
-          <div class="full-name">Ambient Concentration of Air Pollutants in Urban Areas<span>›</span></div><!--{{full-name}}-->
-          <div class="brief">Ambient air pollution concentrations of ozone, particulate matter (PM10, and PM2,5, if those are not...</div><!--{{brief}}-->
-          <div class="box-header">
-            <div class="title"><h3><span>PM10 concentrations<!--{{title}}--></span></h3></div>
-          </div>
-          <div class="context-text bad">Bad <!-- {{context}} --></div>
-          <div class="parameter">
-            <h4><!--{{parameter}}-->26</h4>
-            <div class="unit">MPN/100ml</div>
-          </div>
-          <div class="last-update"><span class="status close-overdue"><!-- {{last-update}} --></span>Close to overdue <!-- {{last-update}} --></div>
-        </a>
-        <a class="indicator-box" href="/indicators/{{id}}">
-          <div class="full-name">Protected Area as a Percent of Total area<span>›</span></div><!--{{full-name}}-->
-          <div class="brief">This indicator measures the area of protected land ecosystems, inland water ecosystems, and marine...</div><!--{{brief}}-->
-          <div class="box-header">
-            <div class="title"><h3><span>PM2.5 concentrations<!--{{title}}--></span></h3></div>
-          </div>
-          <div class="context-text excellent">Excellent <!-- {{context}} --></div>
-          <div class="parameter">
-            <h4><!--{{parameter}}-->26</h4>
-            <div class="unit">ktonnes</div>
-          </div>
-          <div class="last-update"><span class="status close-overdue"><!-- {{last-update}} --></span>Close to overdue <!-- {{last-update}} --></div>
-        </a>
-        <a class="indicator-box" href="/indicators/{{id}}">
-          <div class="full-name">Percentage of Threatened Species<span>›</span></div><!--{{full-name}}-->
-          <div class="brief">Number of species at risk of extinction in proportion to the total number of native species...</div><!--{{brief}}-->
-          <div class="box-header">
-            <div class="title"><h3><span>SO concentrations<!--{{title}}--></span></h3></div>
-          </div>
-          <div class="context-text catastrophic">Catastrophic <!-- {{context}} --></div>
-          <div class="parameter">
-            <h4><!--{{parameter}}-->41</h4>
-            <div class="unit">μg/L</div>
-          </div>
-          <div class="last-update"><span class="status overdue"><!-- {{last-update}} --></span>Overdue <!-- {{last-update}} --></div>
-        </a>
-        <a class="indicator-box" href="/indicators/{{id}}">
-          <div class="full-name">Annual Fish Catch<span>›</span></div><!--{{full-name}}-->
-          <div class="brief">Annual catch of major species in relation to spawning biomass if available or in relation...</div><!--{{brief}}-->
-          <div class="box-header">
-            <div class="title"><h3><span>O3 Human Health Ozone<!--{{title}}--></span></h3></div>
-          </div>
-          <div class="context-text concerning">Concerning <!-- {{context}} --></div>
-          <div class="parameter">
-            <h4><!--{{parameter}}-->53</h4>
-            <div class="unit">mg/L</div>
-          </div>
-          <div class="last-update"><span class="status updated"><!-- {{last-update}} --></span>Up to date <!-- {{last-update}} --></div>
-        </a>
-        <h3>
-          No indicators
-        </h3>
-        {{/unless}}
+
         {{#indicators}}
         <a class="indicator-box" href="/indicators/{{id}}">
           <div class="full-name">{{title}}<span>›</span></div>
-          <div class="brief">Annual catch of major species in relation to spawning biomass if available or in relation...</div><!--{{brief}}-->
+          <div class="brief">{{description}}</div>
           <div class="box-header">
-            <div class="title"><h3><span>O3 Human Health Ozone<!--{{small-title}}--></span></h3></div>
+            <div class="title"><h3><span>{{short_name}}</span></h3></div>
           </div>
           <div class="context-text concerning">Concerning <!-- {{context}} --></div>
           <div class="parameter">
-            <h4><!--{{parameter}}-->53</h4>
-            <div class="unit">mg/L</div>
+            <h4>43</h4>
+            <div class="unit">{{indicatorDefinition.short_unit}}</div>
           </div>
           <div class="last-update"><span class="status updated"><!-- {{last-update}} --></span>Up to date <!-- {{last-update}} --></div>
         </a>
