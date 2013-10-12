@@ -459,7 +459,7 @@ test(".setHeadlineToMostRecentFromParent when the parent is an indicator
     return deferred.promise
   )
 
-  page = new Page()
+  page = new Page(parent_type: 'Indicator')
   sinon.stub(page, 'getParent', ->
     deferred = Q.defer()
     deferred.resolve indicator
@@ -468,6 +468,20 @@ test(".setHeadlineToMostRecentFromParent when the parent is an indicator
 
   page.setHeadlineToMostRecentFromParent().then(->
     assert.strictEqual page.headline.text, headlineTitle
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test(".setHeadlineToMostRecentFromParent when the parent is not an indicator
+  doesn't modify the page headline attribute", (done) ->
+  page = new Page(parent_type: 'Theme')
+
+  page.setHeadlineToMostRecentFromParent().then(->
+    assert.isUndefined page.headline, "Expected the page headline not to be modified"
+    done()
   ).fail((err) ->
     console.error err
     throw err

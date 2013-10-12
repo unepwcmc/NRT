@@ -88,17 +88,20 @@ pageSchema.methods.canBeEditedBy = (user) ->
 
   return deferred.promise
 
-pageSchema.methods.setHeadlineToMostRecentFromParent = () ->
+pageSchema.methods.setHeadlineToMostRecentFromParent = ->
   deferred = Q.defer()
 
-  @getParent().then( (parent) ->
-    parent.getNewestHeadline()
-  ).then( (headline) =>
-    @headline = headline
-    deferred.resolve(@headline)
-  ).fail( (err) ->
-    deferred.reject(err)
-  )
+  if @parent_type is 'Indicator'
+    @getParent().then( (parent) ->
+      parent.getNewestHeadline()
+    ).then( (headline) =>
+      @headline = headline
+      deferred.resolve(@headline)
+    ).fail( (err) ->
+      deferred.reject(err)
+    )
+  else
+    deferred.resolve()
 
   return deferred.promise
 
