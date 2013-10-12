@@ -44,7 +44,12 @@
 
           {{#if currentUser}}
             <li>
+              <a href="#logout">
+              <span class="current-user">
               {{ currentUser.name }}
+              </span>
+              <span class="logout"><span>›</span> Sign Out</span>
+              </a>
             </li>
           {{/if}}
         </ul>
