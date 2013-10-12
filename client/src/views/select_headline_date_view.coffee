@@ -4,6 +4,9 @@ window.Backbone.Views ||= {}
 class Backbone.Views.SelectHeadlineDateView extends Backbone.View
   template: Handlebars.templates['select_headline_date.hbs']
 
+  events:
+    "click li": "setHeadline"
+      
   initialize: (options) ->
     @indicator = options.indicator
     @page = options.page
@@ -26,12 +29,14 @@ class Backbone.Views.SelectHeadlineDateView extends Backbone.View
       console.error "error querying indicator headlines"
     )
 
-  setHeadline: (event) ->
-    selectedYear = parseInt(event.target.attr('data-headline-year'))
+  setHeadline: (event) =>
+    $target = $(event.target)
+    selectedYear = parseInt($target.attr('data-headline-year'))
     headline = _.where(@headlines, year: selectedYear)[0]
 
     @page.set('headline', headline)
     @page.save()
+    @close()
 
   onClose: ->
     
