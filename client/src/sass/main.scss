@@ -193,7 +193,7 @@ h2 {
     font-family: 'Open sans', sans-serif;
     position: relative;
     top: 6px;
-    padding-left: 5px;
+    padding-left: 10px;
   }
 }
 
@@ -218,7 +218,7 @@ h1, h2, h3, h4, h5 {
 
 .content {
   width: 980px;
-  padding: 30px 0;
+  padding: 30px 20px;
   margin: 0 auto;
   outline: 0;
   word-wrap: break-word;
@@ -277,6 +277,7 @@ h1, h2, h3, h4, h5 {
   .inner {
     margin: 0 auto;
     width: 980px;
+    padding: 0 20px;
   }
 
   h1 {
@@ -406,13 +407,16 @@ h1, h2, h3, h4, h5 {
 
   .inner {
     margin: 79px auto 0 auto;
-    padding: 0 0 15px 0;
+    padding: 0 20px 15px 20px;
     width: 980px;
     position: relative;
   }
 
   li, a {
-    color: #0088ff;
+    color: $linkBlue;
+    &:hover{
+      color: lighten($linkBlue, 10);
+    }
   }
 
   ul li {
