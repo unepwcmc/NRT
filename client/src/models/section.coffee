@@ -33,6 +33,9 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
       includeInJSON: '_id'
   ]
 
+  getPage: ->
+    @get('page')
+
   hasTitleOrIndicator: ->
     if @get('title')? or @get('indicator')?
       return true
@@ -52,3 +55,5 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
 
 #For backbone relational
 Backbone.Models.Section.setup()
+
+_.extend(Backbone.Models.Section::, Backbone.Mixins.EditModeMixin)

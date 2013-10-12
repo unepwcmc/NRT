@@ -305,10 +305,9 @@ test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
 
       done()
     )
-    
+
   ).fail( (err) ->
     console.error err
     throw err
   )
-
 )
