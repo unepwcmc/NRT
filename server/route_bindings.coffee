@@ -41,6 +41,8 @@ module.exports = exports = (app) ->
   app.resource 'api/indicators', indicatorApi, { format: 'json' }
   app.resource 'api/pages', pageApi, { format: 'json' }
   app.resource 'api/users', userApi, { format: 'json' }
+  app.get "/api/indicators/:id/headlines", indicatorApi.headlines
+  app.get "/api/indicators/:id/headlines/:count", indicatorApi.headlines
   app.get "/api/indicators/:id/data", indicatorApi.data
   app.get "/api/indicators/:id/data.csv", indicatorApi.dataAsCSV
 
