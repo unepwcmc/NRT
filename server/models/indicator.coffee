@@ -19,6 +19,7 @@ indicatorSchema = mongoose.Schema(
   theme: {type: mongoose.Schema.Types.ObjectId, ref: 'Theme'}
   type: String
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+  description: String
 )
 
 _.extend(indicatorSchema.methods, pageModel)
