@@ -11,13 +11,14 @@ pageSchema = mongoose.Schema(
   parent_type: String
   sections: [SectionSchema]
   is_draft: type: Boolean, default: false
+  headline: mongoose.Schema.Types.Mixed
 )
 
 _.extend(pageSchema.statics, sectionNestingModel)
 
 pageSchema.methods.getParent = ->
   Ownable = require("./#{@parent_type.toLowerCase()}.coffee").model
-  return Q.nsend(Ownable, 'findOne', @parent_id)
+  return Q.nsend(Ownable, 'findOne', _id: @parent_id)
 
 pageSchema.methods.createDraftClone = ->
   Section = require('./section.coffee').model
@@ -85,6 +86,35 @@ pageSchema.methods.canBeEditedBy = (user) ->
     deferred.resolve()
   else
     deferred.reject(new Error('Must be authenticated as a user to edit pages'))
+
+  return deferred.promise
+
+pageSchema.pre('save', (next) ->
+  if @headline?
+    next()
+  else
+    @setHeadlineToMostRecentFromParent().then(->
+      next()
+    ).fail((err) ->
+      console.error err
+      next(err)
+    )
+)
+
+pageSchema.methods.setHeadlineToMostRecentFromParent = ->
+  deferred = Q.defer()
+
+  if @parent_type is 'Indicator'
+    @getParent().then( (parent) ->
+      parent.getNewestHeadline()
+    ).then( (headline) =>
+      @headline = headline
+      deferred.resolve(@headline)
+    ).fail( (err) ->
+      deferred.reject(err)
+    )
+  else
+    deferred.resolve()
 
   return deferred.promise
 

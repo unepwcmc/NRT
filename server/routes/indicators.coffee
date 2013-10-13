@@ -108,4 +108,3 @@ exports.discardDraft = (req, res) ->
     console.error err
     return res.render(500, "Error fetching the indicator")
   )
-
