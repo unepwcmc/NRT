@@ -3,21 +3,7 @@ app = require('../app')
 test_server = null
 url = require('url')
 mongoose = require('mongoose')
-_ = require('underscore')
-async = require('async')
-Q = require('q')
 factory = require('./factory')
-
-Section = require('../models/section').model
-Report = require('../models/report').model
-Indicator = require('../models/indicator').model
-IndicatorData = require('../models/indicator_data').model
-Visualisation = require('../models/visualisation').model
-Narrative = require('../models/narrative').model
-Theme = require('../models/theme').model
-Page = require('../models/page').model
-User = require('../models/user').model
-Permission = require('../models/permission').model
 
 before( (done) ->
   expressApp = app.start 3001, (err, server) ->
@@ -40,19 +26,20 @@ afterEach( ->
 
 dropDatabase = (connection, done) ->
   models = [
-    Report,
-    Indicator,
-    IndicatorData,
-    Narrative,
-    Section,
-    Visualisation,
-    Theme,
-    Page,
-    User,
-    Permission
+    "report",
+    "indicator",
+    "indicator_data",
+    "narrative",
+    "section",
+    "visualisation",
+    "theme",
+    "page",
+    "user",
+    "permission"
   ]
 
   for model in models
+    model = require("../models/#{model}").model
     model
       .remove()
       .exec()
