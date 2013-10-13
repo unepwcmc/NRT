@@ -57,7 +57,7 @@ seedData = ->
   IndicatorData = require("./models/indicator_data").model
 
   Theme.seedData()
-  .then(Indicator.seedData())
+  .then(Indicator.seedData)
   .then(IndicatorData.seedData)
   .fail((err) ->
     console.error err
