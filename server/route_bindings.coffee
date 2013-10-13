@@ -81,3 +81,5 @@ module.exports = exports = (app) ->
   app.delete "/users/:id", userRoutes.destroy
 
   app.get "/admin/updateIndicatorData/:id", adminRoutes.updateIndicatorData
+  app.get "/admin/updateAll", adminRoutes.updateAll
+  app.get "/admin", adminRoutes.updateAll

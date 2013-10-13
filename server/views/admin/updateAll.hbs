@@ -1,0 +1,54 @@
+{{!< main}}
+
+{{#contentFor 'breadcrumbs'}}
+  <li><a href="/themes">Themes</a></li>
+{{/contentFor}}
+
+<div class="content">
+  <header>
+    <h1>
+      Manage IndicatorData updates
+    </h1>
+  </header>
+
+  <table>
+    <thead>
+      <tr>
+        <td>Short name</td>
+        <td>Actions</td>
+      </tr>
+    </thead>
+    <tbody>
+      {{#indicators}}
+        <tr>
+          <td>
+            <p>
+            <a href="/indicators/{{id}}">{{title}}</a>
+            </p>
+            <small>{{id}}</small>
+          </td>
+          <td class='action-or-response' id="{{id}}">
+            <a id="{{id}}" class='update button'>Update </a>
+            <a href="/admin/updateIndicatorData/{{id}}" class='button'>Details</a>
+          </td>
+        </tr>
+      {{/indicators}}
+    </tbody>
+  </table>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  $('a.update').click(function(e){
+    id = e.currentTarget.id;
+    $.ajax({
+      url: "/admin/updateIndicatorData/"+id,
+      success: function(data) {
+        $("#"+id+".action-or-response").text('Success');
+      },
+      error: function(err){
+        $("#"+id+".action-or-response").text('Failed');
+        console.log("Message from remote server for "+id+": "+ err.responseText);
+      },
+    });
+  })
+</script>

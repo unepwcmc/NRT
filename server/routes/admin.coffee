@@ -15,3 +15,13 @@ exports.updateIndicatorData = (req, res) ->
     return res.send(500, "Error updating the indicator")
   )
 
+exports.updateAll = (req, res) ->
+  Q.nsend(
+    Indicator.find(), 
+    'exec'
+  ).then( (indicators) ->
+    res.render 'admin/updateAll', indicators: indicators
+  ).fail((err) ->
+    console.log err.stack
+    return res.send(500, "Error getting indicators")
+  )

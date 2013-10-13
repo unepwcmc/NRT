@@ -75,13 +75,8 @@ exports.publishDraft = (req, res) ->
 
     theIndicator.publishDraftPage()
   ).then( (publishedPage) ->
-    theIndicator.toObjectWithNestedPage()
-  ).then( (indicatorObject) ->
 
-    res.render("indicators/show",
-      indicator: indicatorObject,
-      indicatorJSON: JSON.stringify(indicatorObject)
-    )
+    res.redirect("/indicators/#{theIndicator.id}")
 
   ).fail((err) ->
     console.error err
@@ -104,13 +99,8 @@ exports.discardDraft = (req, res) ->
 
     theIndicator.discardDraft()
   ).then( (publishedPage) ->
-    theIndicator.toObjectWithNestedPage()
-  ).then( (indicatorObject) ->
 
-    res.render("indicators/show",
-      indicator: indicatorObject,
-      indicatorJSON: JSON.stringify(indicatorObject)
-    )
+    res.redirect("/indicators/#{theIndicator.id}")
 
   ).fail((err) ->
     console.error err
