@@ -14,6 +14,7 @@ updateIndicatorMixin = require('../mixins/update_indicator_data.coffee')
 
 indicatorSchema = mongoose.Schema(
   title: String
+  short_name: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
   theme: Number
   type: String
