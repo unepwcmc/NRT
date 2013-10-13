@@ -4,6 +4,8 @@ window.Backbone.Views ||= {}
 class Backbone.Views.SelectHeadlineDateView extends Backbone.View
   template: Handlebars.templates['select_headline_date.hbs']
 
+  className: 'select-modal'
+
   events:
     "click li": "setHeadline"
       
@@ -35,7 +37,9 @@ class Backbone.Views.SelectHeadlineDateView extends Backbone.View
     headline = _.where(@headlines, year: selectedYear)[0]
 
     @page.set('headline', headline)
-    @page.save()
+    @page.save().done(=>
+      location.reload()
+    )
     @close()
 
   onClose: ->
