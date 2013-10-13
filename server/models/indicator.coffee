@@ -19,6 +19,7 @@ indicatorSchema = mongoose.Schema(
   theme: {type: mongoose.Schema.Types.ObjectId, ref: 'Theme'}
   type: String
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+  description: String
 )
 
 _.extend(indicatorSchema.methods, pageModel)
@@ -84,6 +85,19 @@ indicatorSchema.statics.seedData = ->
   )
 
   return deferred.promise
+
+indicatorSchema.statics.truncateDescription = (indicator) ->
+  description = indicator.description
+  if description.length > 80
+    indicator.description = "#{description.substring(0,80)}..."
+
+  return indicator
+
+indicatorSchema.statics.truncateDescriptions = (indicators) ->
+  for indicator in indicators
+    Indicator.truncateDescription(indicator)
+
+  return indicators
 
 indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
   if arguments.length == 1
