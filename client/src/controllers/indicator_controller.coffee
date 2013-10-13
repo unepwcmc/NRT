@@ -15,3 +15,13 @@ class Backbone.Controllers.IndicatorController extends Backbone.Diorama.Controll
     )
 
     $('.content-sidebar').prepend(permissionsView.el)
+
+    if indicator.get('page').get('is_draft')
+      $('.score').click(->
+        view = new Backbone.Views.SelectHeadlineDateView(
+          indicator: indicator
+          page: indicator.get('page')
+        )
+        $('.score').parent().append(view.el)
+      )
+
