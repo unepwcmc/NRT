@@ -67,7 +67,9 @@ test(".setHeadline sets the headline on the page and calls save ", ->
     target: view.$el.find("[data-headline-year=#{headline.year}]")[0]
   }
 
-  pageSaveStub = sinon.stub(page, 'save', ->)
+  pageSaveStub = sinon.stub(page, 'save', ->
+    return done: ->
+  )
 
   view.setHeadline(pretendClickEvent)
 
