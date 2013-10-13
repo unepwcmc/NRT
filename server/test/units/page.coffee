@@ -103,7 +103,7 @@ test('get "fat" page with all related children by page ID', (done) ->
 test('get "fat" page with no related children by page ID', (done) ->
   Page = require('../../models/page.coffee').model
 
-  helpers.createSection((err, section) ->
+  helpers.createSection(indicator: undefined, (err, section) ->
     helpers.createPage({sections: [section]}).then(
       (page) ->
         Page.findFatModel(page._id, (err, fatPage) ->
