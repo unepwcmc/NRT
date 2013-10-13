@@ -16,10 +16,10 @@ test('.getUpdateUrl on indicator with no type throws an appropriate error', ->
   ), "Couldn't find a url builder for indicator.type: 'undefined'")
 )
 
-test('.getUpdateUrl on an environmental indicator with a valid serviceName and featureServer
+test('.getUpdateUrl on an esri indicator with a valid serviceName and featureServer
  it returns a valid url', ->
   indicator = new Indicator
-    type: 'environmental'
+    type: 'esri'
     indicatorDefinition:
       serviceName:  'NRT_AD_ProtectedArea'
       featureServer: 2
@@ -29,13 +29,13 @@ test('.getUpdateUrl on an environmental indicator with a valid serviceName and f
   assert.strictEqual url, expectedUrl
 )
 
-test('.getUpdateUrl on an environmental indicator with no serviceName and featureServer
+test('.getUpdateUrl on an esri indicator with no serviceName and featureServer
  it throws an error', ->
   indicator = new Indicator(
-    type: 'environmental'
+    type: 'esri'
   )
 
-  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, environmental indicator has no serviceName or featureServer in its indicator definition"
+  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, esri indicator has no serviceName or featureServer in its indicator definition"
 )
 
 test('.getUpdateUrl on a worldBank indicator with a valid apiUrl and apiIndicatorName', ->
@@ -58,9 +58,31 @@ test('.getUpdateUrl on a worldBank indicator with missing apiUrl and apiIndicato
   assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, indicator has no apiUrl or apiIndicatorName in its indicator definition"
 )
 
+test('.getUpdateUrl on a cartodb indicator with a valid user and query', ->
+  indicator = new Indicator
+    type: 'cartodb'
+    indicatorDefinition:
+      "apiUrl": "http://localhost:3002"
+      "cartodb_user": "carbon-tool",
+      "cartodb_tablename": "nrt_bc_seagrass_copy",
+      "query": "SELECT SUM(area_ha) FROM nrt_bc_seagrass_copy"
+
+  expectedUrl = "http://localhost:3002/cdb/carbon-tool/nrt_bc_seagrass_copy/SELECT%20SUM(area_ha)%20FROM%20nrt_bc_seagrass_copy"
+  url = indicator.getUpdateUrl()
+
+  assert.strictEqual url, expectedUrl
+)
+
+test('.getUpdateUrl on a cartodb indicator with missing cartodb_user and query
+ it throws an error', ->
+  indicator = new Indicator(type: 'cartodb')
+
+  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, indicator of type 'cartodb' has no cartodb_user or query in its indicator definition"
+)
+
 test('.queryIndicatorData queries the remote server for indicator data', (done) ->
   indicator = new Indicator
-    type: 'environmental'
+    type: 'esri'
     indicatorDefinition:
       serviceName:  'NRT_AD_ProtectedArea'
       featureServer: 2
@@ -112,7 +134,7 @@ test('.convertResponseToIndicatorData on indicator with no type throws an approp
   ), "Couldn't find a data parser for indicator.type: 'undefined'")
 )
 
-test('.convertResponseToIndicatorData for an environmental indicator
+test('.convertResponseToIndicatorData for an esri indicator
   takes data from remote server and prepares for writing to database', (done)->
   responseData = {
     features: [
@@ -131,7 +153,7 @@ test('.convertResponseToIndicatorData for an environmental indicator
   }
 
   helpers.createIndicatorModels([{
-    type: 'environmental'
+    type: 'esri'
   }]).then( (indicators) ->
     indicator = indicators[0]
 
@@ -166,10 +188,10 @@ test('.convertResponseToIndicatorData for an environmental indicator
   )
 )
 
-test('.convertResponseToIndicatorData on an environmental indicator
+test('.convertResponseToIndicatorData on an esri indicator
   when given a garbage response it throws an error', ->
   indicator = new Indicator(
-    type: 'environmental'
+    type: 'esri'
   )
 
   garbageData = {hats: 'boats'}
@@ -253,6 +275,60 @@ test('.convertResponseToIndicatorData on a worldBank indicator
           JSON.stringify(garbageData)
         }\n expected response to be a world bank api response;#{
       } an array with a data array as the second element"
+  )
+)
+
+test('.convertResponseToIndicatorData for a cartodb indicator
+  takes data from remote server and prepares for writing to database', (done)->
+  responseData = {"data":[{"value":10.5,"year":2013,"text":"Excellent"}]} 
+
+  helpers.createIndicatorModels([{
+    type: 'cartodb'
+  }]).then( (indicators) ->
+    indicator = indicators[0]
+
+    expectedIndicatorData = {
+      indicator: indicator._id
+      data: [
+        {
+          "value": 10.5,
+          "year": 2013,
+          "text": "Excellent"
+        }
+      ]
+    }
+
+    convertedData = indicator.convertResponseToIndicatorData(responseData)
+
+    assert.ok(
+      _.isEqual(convertedData, expectedIndicatorData),
+      "Expected converted data:\n
+      #{JSON.stringify(convertedData)}\n
+        to look like expected indicator data:\n
+      #{JSON.stringify(expectedIndicatorData)}"
+    )
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.convertResponseToIndicatorData on a cartodb indicator
+  when given a garbage response it throws an error', ->
+  indicator = new Indicator(
+    type: 'cartodb'
+  )
+
+  garbageData = {hats: 'boats'}
+  assert.throws(
+    (->
+      indicator.convertResponseToIndicatorData(garbageData)
+    ), "Can't convert poorly formed indicator data reponse:\n#{
+          JSON.stringify(garbageData)
+        }\n expected response to be a cartodb api response"
   )
 )
 

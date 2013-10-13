@@ -1174,3 +1174,9 @@ footer{
   transform: scale(1);
   opacity: 1;
 }
+
+.action-or-response {
+  a {
+    cursor: pointer;
+  }
+}
