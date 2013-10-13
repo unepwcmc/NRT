@@ -75,12 +75,9 @@ themeSchema.statics.getIndicatorsByTheme = (themeId, callback) ->
   Indicator.find(theme: themeId)
     .sort(_id: 1)
     .exec( (err, indicators) ->
-      console.log 'exec'
       if err?
         console.error(err)
         return callback(err)
-
-      console.log 'what'
 
       callback(err, indicators)
     )
