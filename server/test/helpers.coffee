@@ -72,90 +72,19 @@ beforeEach( (done) ->
 exports.appurl = (path) ->
   url.resolve('http://localhost:3001', path)
 
-exports.createReport = (attributes, callback) ->
-  if arguments.length == 1
-    callback = attributes
-    attributes = undefined
-
-  report = new Report(attributes || title: "new report")
-
-  report.save (err, report) ->
-    if err?
-      throw 'could not save report'
-
-    callback(report)
-
-exports.createIndicator = (attributes, callback) ->
-  if arguments.length == 1
-    callback = attributes
-    attributes = undefined
-
-  indicator = new Indicator(attributes || title: "new indicator")
-
-  indicator.save (err, indicator) ->
-    if err?
-      throw 'could not save indicator'
-
-    callback(null, indicator)
-
-exports.createIndicatorData = (attributes, callback) ->
-  attributes.data ||= []
-
-  IndicatorData.create(attributes, (error, results) ->
-    if error?
-      console.error error
-      throw 'could not save indicator data'
-
-    callback(error, results)
-  )
-
-exports.createVisualisation = (attributes, callback) ->
-  if arguments.length == 1
-    callback = attributes
-    attributes = undefined
-
-  visualisation = new Visualisation(attributes || data: "new visualisation")
-
-  visualisation.save (err, Visualisation) ->
-    if err?
-      throw 'could not save visualisation'
-
-    callback(null, visualisation)
-
-exports.createNarrative = (attributes, callback) ->
-  if arguments.length == 1
-    callback = attributes
-    attributes = undefined
-
-  narrative = new Narrative(attributes || content: "new narrative")
-
-  narrative.save (err, narrative) ->
-    if err?
-      throw 'could not save narrative'
-
-    callback(null, narrative)
-
-exports.createSection = (attributes, callback) ->
-  if arguments.length == 1
-    callback = attributes
-    attributes = undefined
-
-  section = new Section(attributes || content: "a section")
-
-  section.save (err, section) ->
-    if err?
-      throw 'could not save section'
-
-    callback(null, section)
+exports.createReport = factory.defineWithCallback("report", title: 'new report')
+exports.createIndicator = factory.defineWithCallback("indicator", title: 'new indicator')
+exports.createIndicatorData = factory.defineWithCallback("indicator_data", data: 'data')
+exports.createVisualisation = factory.defineWithCallback("visualisation", data: 'new viz')
+exports.createNarrative = factory.defineWithCallback("narrative", content: 'new narrative')
+exports.createSection = factory.defineWithCallback("section", title: 'a section')
 
 exports.createIndicatorModels = factory.define("indicator", title: "new report")
 exports.createReportModels = factory.define("report", title: "new report")
 exports.createThemesFromAttributes = factory.define("theme", title: "new theme")
-
 exports.createUser = factory.define("user",
   email: "hats@boats.com"
   password: "yomamalikeshats"
 )
-
 exports.createTheme = factory.define("theme", title: "new theme")
 exports.createPage = factory.define("page", title: "new page")
