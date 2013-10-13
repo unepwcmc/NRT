@@ -311,3 +311,151 @@ test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
     throw err
   )
 )
+
+test('GET /:id/headlines returns the 5 most recent headlines', (done) ->
+  indicatorData = [
+    {
+      "year": 2000,
+      "value": 2
+      "text": 'Poor'
+    }, {
+      "year": 2001,
+      "value": 9
+      "text": 'Great'
+    }, {
+      "year": 2002,
+      "value": 4
+      "text": 'Fair'
+    }, {
+      "year": 2003,
+      "value": 4
+      "text": 'Fair'
+    }, {
+      "year": 2004,
+      "value": 4
+      "text": 'Fair'
+    }
+  ]
+
+  indicatorDefinition =
+    xAxis: 'year'
+    yAxis: 'value'
+    textField: 'text'
+    fields: [{
+      name: 'year'
+      type: 'integer'
+    }, {
+      name: "value",
+      type: "integer"
+    }, {
+      name: 'text'
+      name: 'text'
+    }]
+
+  theIndicator = null
+
+  Q.nsend(
+    Indicator, 'create',
+      indicatorDefinition: indicatorDefinition
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    Q.nsend(
+      IndicatorData, 'create'
+        indicator: theIndicator
+        data: indicatorData
+    )
+  ).then( ->
+    Q.nfcall(
+      request.get, {
+        url: helpers.appurl("api/indicators/#{theIndicator.id}/headlines")
+      }
+    )
+  ).spread( (res, body) ->
+    headlines = JSON.parse(body)
+
+    assert.equal res.statusCode, 200
+
+    assert.lengthOf headlines, 5, "Expected 5 headlines to be returned"
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('GET /:id/headlines/:number returns the n most recent headlines', (done) ->
+  indicatorData = [
+    {
+      "year": 2000,
+      "value": 2
+      "text": 'Poor'
+    }, {
+      "year": 2001,
+      "value": 9
+      "text": 'Great'
+    }, {
+      "year": 2002,
+      "value": 4
+      "text": 'Fair'
+    }, {
+      "year": 2003,
+      "value": 4
+      "text": 'Fair'
+    }, {
+      "year": 2004,
+      "value": 4
+      "text": 'Fair'
+    }
+  ]
+
+  indicatorDefinition =
+    xAxis: 'year'
+    yAxis: 'value'
+    textField: 'text'
+    fields: [{
+      name: 'year'
+      type: 'integer'
+    }, {
+      name: "value",
+      type: "integer"
+    }, {
+      name: 'text'
+      name: 'text'
+    }]
+
+  theIndicator = null
+
+  Q.nsend(
+    Indicator, 'create',
+      indicatorDefinition: indicatorDefinition
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    Q.nsend(
+      IndicatorData, 'create'
+        indicator: theIndicator
+        data: indicatorData
+    )
+  ).then( ->
+    Q.nfcall(
+      request.get, {
+        url: helpers.appurl("api/indicators/#{theIndicator.id}/headlines/3")
+      }
+    )
+  ).spread( (res, body) ->
+    headlines = JSON.parse(body)
+
+    assert.equal res.statusCode, 200
+
+    assert.lengthOf headlines, 3, "Expected 3 headlines to be returned"
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)

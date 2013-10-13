@@ -8,7 +8,6 @@ section.introduction {
   &.indicator {
     padding-top: 40px;
     header {
-      overflow:hidden;
       h1{
         padding-top: 15px;
         padding-bottom: 25px;
@@ -24,6 +23,17 @@ section.introduction {
       }
       .parameter {
         width: 650px;
+        position: relative;
+        color: $lightishGrey;
+        &.p-select{
+          .score{
+            cursor: pointer;
+          }
+        }
+        h4{
+          text-align: center;
+          color: $white;
+        }
         p {
           color: $lightishGrey;
           font-size: 0.8em;
@@ -60,6 +70,44 @@ section.introduction {
               font-weight: normal;
             }
           }
+        }
+      }
+    }
+  }
+
+  .select-modal {
+    padding: 10px 10px 5px;
+    background-color: #333;
+    border-radius: 4px;
+    position: absolute;
+    top: 47px;
+    left: 0;
+    z-index: 1;
+    &:before{
+      content:'';
+      display:block;
+      width:0;
+      height:0;
+      position:absolute;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid #333;
+      top: -8px;
+      left: 50%;
+      margin-left: -4px;
+    }
+    ul{
+      list-style: none;
+      padding: 10px 0 0 0;
+      li{
+        padding: 5px 20px;
+        font-size: 0.8em;
+        text-align: left;
+        border-top: 1px solid #4d4d4d;
+        &:hover{
+          cursor: pointer;
+          color: $white;
+          background-color: $mainBlue;
         }
       }
     }
