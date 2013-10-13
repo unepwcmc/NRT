@@ -8,39 +8,54 @@ Q = require('q')
 IndicatorData = require('./indicator_data').model
 Page = require('./page').model
 
+# Mixins
 pageModel = require('../mixins/page_model.coffee')
+updateIndicatorMixin = require('../mixins/update_indicator_data.coffee')
 
 indicatorSchema = mongoose.Schema(
   title: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
   theme: Number
+  type: String
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 )
 
 _.extend(indicatorSchema.methods, pageModel)
+_.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
+_.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
 
-indicatorSchema.statics.seedData = (callback) ->
-  # Seed some indicators
-  dummyIndicators = JSON.parse(
-    fs.readFileSync("#{process.cwd()}/lib/sample_indicators.json", 'UTF8')
-  )
+indicatorSchema.statics.seedData = ->
+  deferred = Q.defer()
+
+  getAllIndicators = ->
+    Indicator.find((err, indicators) ->
+      if err?
+        deferred.reject(err)
+      else
+        deferred.resolve(indicators)
+    )
 
   Indicator.count(null, (error, count) ->
     if error?
-      console.error error
-      return callback(error)
+      return deferred.reject(error)
 
-    if count == 0
+    if count is 0
+      dummyIndicators = JSON.parse(
+        fs.readFileSync("#{process.cwd()}/lib/seed_indicators.json", 'UTF8')
+      )
+
       Indicator.create(dummyIndicators, (error, results) ->
         if error?
-          console.error error
-          return callback(error)
+          return deferred.reject(error)
         else
-          return callback(null, results)
+          getAllIndicators()
       )
     else
-      callback()
+      getAllIndicators()
+      
   )
+
+  return deferred.promise
 
 indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
   if arguments.length == 1
@@ -64,7 +79,7 @@ indicatorSchema.methods.getIndicatorData = (filters, callback) ->
     callback = filters
     filters = {}
 
-  IndicatorData.findOne externalId: @indicatorDefinition.externalId, (err, res) ->
+  IndicatorData.findOne indicator: @_id, (err, res) ->
     if err?
       console.error err
       callback err
@@ -83,7 +98,7 @@ filterIndicatorData = (data, filters) ->
         console.error "No function to perform filter operation '#{operation}'"
 
   return data
- 
+
 # Functions which filter indicator data using different operations
 filterOperations =
   min: (data, field, value) ->
@@ -121,6 +136,7 @@ boundAggregators =
       row[fieldName]
     )[fieldName]
     return bounds
+  text: () -> "It's text, dummy"
 
 # Probably going to need a refactor at some point
 indicatorSchema.methods.getCurrentYAxis = (callback) ->

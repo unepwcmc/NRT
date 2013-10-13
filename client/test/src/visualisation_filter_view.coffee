@@ -14,22 +14,24 @@ yearValueIndicatorDefinition =
     }
   ]
 
-test(".getFieldData should add subViewName to the indicator field list", ->
+test(".getFieldData returns subViews for types where subViews exists", ->
   visualisation = new Backbone.Models.Visualisation(
     indicator: Factory.indicator(
       indicatorDefinition:
-        fields: [
-          {
-            name: "year"
-            type: "integer"
-          }
-        ]
+        fields: [{
+          name: "year"
+          type: "integer"
+        },{
+          name: "value"
+          type: "text"
+        }]
     )
   )
 
   view = new Backbone.Views.VisualisationFilterView(visualisation: visualisation)
 
   fieldData = view.getFieldData()
+  assert.lengthOf fieldData, 1
   assert.strictEqual fieldData[0].subViewName, "IntegerFilterView"
 
   view.close()

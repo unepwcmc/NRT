@@ -19,6 +19,7 @@ reportRoutes    = require('./routes/reports.coffee')
 userRoutes      = require('./routes/users.coffee')
 staticRoutes    = require('./routes/static.coffee')
 testRoutes      = require('./routes/tests.coffee')
+adminRoutes     = require('./routes/admin.coffee')
 
 module.exports = exports = (app) ->
   ensureAuthenticated = (req, res, next) ->
@@ -51,7 +52,13 @@ module.exports = exports = (app) ->
   app.get "/reports", reportRoutes.index
 
   app.get "/indicators/:id", indicatorRoutes.show
+  app.get "/indicators/:id/draft", indicatorRoutes.showDraft
+  app.get "/indicators/:id/discard_draft", indicatorRoutes.discardDraft
+  app.get "/indicators/:id/publish", indicatorRoutes.publishDraft
   app.get "/themes/:id", themeRoutes.show
+  app.get "/themes/:id/draft", themeRoutes.showDraft
+  app.get "/themes/:id/discard_draft", themeRoutes.discardDraft
+  app.get "/themes/:id/publish", themeRoutes.publishDraft
 
   app.get "/reports/new", reportRoutes.new
   app.get "/reports/:id", reportRoutes.show
@@ -70,3 +77,7 @@ module.exports = exports = (app) ->
 
   app.post "/users", userRoutes.create
   app.delete "/users/:id", userRoutes.destroy
+
+  app.get "/admin/updateIndicatorData/:id", adminRoutes.updateIndicatorData
+  app.get "/admin/updateAll", adminRoutes.updateAll
+  app.get "/admin", adminRoutes.updateAll

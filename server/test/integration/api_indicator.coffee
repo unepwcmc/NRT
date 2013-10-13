@@ -3,6 +3,7 @@ helpers = require '../helpers'
 request = require('request')
 url = require('url')
 _ = require('underscore')
+Q = require 'q'
 async = require('async')
 
 suite('API - Indicator')
@@ -139,19 +140,14 @@ test('PUT indicator does not fail when an _id is given', (done) ->
 )
 
 test('GET indicator/:id/data returns the indicator data and bounds as JSON', (done) ->
-  externalId = 5
   theData = [{
     year: 2000
     value: 4
   }]
+  theIndicator = null
 
-  indicatorDataAttrbutes =
-    externalId: externalId
-    data: theData
-
-  helpers.createIndicator({
+  helpers.createIndicatorModels([
     indicatorDefinition: {
-      externalId: externalId
       fields: [{
         name: 'year'
         type: 'integer'
@@ -160,30 +156,39 @@ test('GET indicator/:id/data returns the indicator data and bounds as JSON', (do
         type: 'integer'
       }]
     }
-  }, (err, indicator) ->
+  ]).then( (indicators) ->
+    theIndicator = indicators[0]
 
-    helpers.createIndicatorData(indicatorDataAttrbutes, (error, indicatorData) ->
-
-      request.get({
-        url: helpers.appurl("/api/indicators/#{indicator.id}/data")
-        json: true
-      }, (err, res, body) ->
-        assert.equal res.statusCode, 200
-
-        assert.match(res.headers['content-type'], new RegExp('json'))
-
-        assert.property(body, 'results')
-        assert.ok(_.isEqual body.results, theData)
-        assert.property(body, 'bounds')
-
-        done()
-      )
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        data: theData
+        indicator: theIndicator
+      }
     )
+  ).then( ->
+
+    request.get({
+      url: helpers.appurl("/api/indicators/#{theIndicator.id}/data")
+      json: true
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 200
+
+      assert.match(res.headers['content-type'], new RegExp('json'))
+
+      assert.property(body, 'results')
+      assert.ok(_.isEqual body.results, theData)
+      assert.property(body, 'bounds')
+
+      done()
+    )
+
+  ).fail( (err) ->
+    console.error err
+    throw new Error(err)
   )
 )
 
 test('GET indicator/:id/data with a \'min\' filter filters the result', (done) ->
-  externalId = 5
   theData = [{
     year: 2000
     value: 4
@@ -192,13 +197,10 @@ test('GET indicator/:id/data with a \'min\' filter filters the result', (done) -
     value: 50
   }]
 
-  indicatorDataAttrbutes =
-    externalId: externalId
-    data: theData
+  theIndicator = null
 
-  helpers.createIndicator({
+  helpers.createIndicatorModels([
     indicatorDefinition: {
-      externalId: externalId
       fields: [{
         name: 'year'
         type: 'integer'
@@ -207,26 +209,34 @@ test('GET indicator/:id/data with a \'min\' filter filters the result', (done) -
         type: 'integer'
       }]
     }
-  }, (err, indicator) ->
+  ]).then( (indicators) ->
+    theIndicator = indicators[0]
 
-    helpers.createIndicatorData(indicatorDataAttrbutes, (error, indicatorData) ->
-
-      request.get({
-        url: helpers.appurl("/api/indicators/#{indicator.id}/data?filters[value][min]=5")
-        json: true
-      }, (err, res, body) ->
-        assert.equal res.statusCode, 200
-
-        # Assert only the value about 40 is returned
-        assert.ok(_.isEqual(
-          body.results,
-          [theData[1]]
-        ), "Expected \n#{body.results} \nto equal \n#{[theData[1]]}")
-        assert.property(body, 'bounds')
-
-        done()
-      )
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        data: theData
+        indicator: theIndicator
+      }
     )
+  ).then( ->
+    request.get({
+      url: helpers.appurl("/api/indicators/#{theIndicator.id}/data?filters[value][min]=5")
+      json: true
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 200
+
+      # Assert only the value about 40 is returned
+      assert.ok(_.isEqual(
+        body.results,
+        [theData[1]]
+      ), "Expected \n#{body.results} \nto equal \n#{[theData[1]]}")
+      assert.property(body, 'bounds')
+
+      done()
+    )
+  ).fail( (err) ->
+    console.error err
+    throw new Error(err)
   )
 )
 
@@ -265,35 +275,39 @@ test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
     "year","value"\r\n"2000","3"\r\n"2001","4"\r\n"2002","4"\r\n
   """
 
-  indicator = new Indicator(
+  theIndicator = null
+
+  helpers.createIndicatorModels([
     indicatorDefinition:
       xAxis: 'year'
       yAxis: 'value'
-      externalId: 14
-  )
-  indicatorData = new IndicatorData(
-    externalId: 14, data: data
-  )
+  ]).then( (indicators) ->
+    theIndicator = indicators[0]
 
-  async.parallel([
-        (cb) -> indicator.save(cb)
-      ,
-        (cb) -> indicatorData.save(cb)
-    ], (err, results) ->
-      if err?
-        console.error err
-      else
-        request.get {
-          url: helpers.appurl("/api/indicators/#{indicator.id}/data.csv")
-        }, (err, res, body) ->
-          assert.equal res.statusCode, 200
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        data: data
+        indicator: theIndicator
+      }
+    )
+  ).then( ->
 
-          assert.strictEqual(
-             body,
-             expectedData,
-             "Expected \n#{body} \nto equal \n #{expectedData}"
-          )
+    request.get({
+      url: helpers.appurl("/api/indicators/#{theIndicator.id}/data.csv")
+    }, (err, res, body) ->
+      assert.equal res.statusCode, 200
 
-          done()
+      assert.strictEqual(
+         body,
+         expectedData,
+         "Expected \n#{body} \nto equal \n #{expectedData}"
+      )
+
+      done()
+    )
+
+  ).fail( (err) ->
+    console.error err
+    throw err
   )
 )

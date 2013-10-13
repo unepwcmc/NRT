@@ -4,34 +4,39 @@
   <link rel="stylesheet" href="/css/dashboard.css">
 {{/contentFor}}
 
+{{#contentFor 'extra-body'}}
+  class="theme-list"
+{{/contentFor}}
+
 <div class="content">
-  <header>
-    <h1>{{{t "indicators/title"}}}</h1>
-  </header>
-
-  <div class='intro-text'>
-    This is an annual snapshot of the state of the environment in Abu Dhabi for 2013. The state is generally positive. Some key areas for investigation are XX and YY. There has been excellent progress in the areas of AA and BB.
-
-  </div>
   <div class="indicators-container">
     <div class="report-content">
       {{#themes}}
-      <a href="/themes/{{_id}}">
-        <h2>{{title}}</h2>
-      </a>
-        {{#unless indicators}}
-        <h3>
-          No indicators
-        </h3>
-        {{/unless}}
+      <div class="theme-block">
+        <a href="/themes/{{_id}}">
+          <h2>{{title}}<span>›</span></h2>
+        </a>
+
+        <p>This is the summary of the state for the Atmosphere theme. In general, the state is XX. Some concerns are in area YY. There is good progress in ZZ and BB areas. See below for the Indicators which comprise this Theme. <span><a href="/themes/{{_id}}">(Read more)</a></span></p>
+
         {{#indicators}}
-        <a href="/indicators/{{id}}"><h3>{{title}}</h3></a>
+        <a class="indicator-box" href="/indicators/{{id}}">
+          <div class="full-name">{{title}}<span>›</span></div>
+          <div class="brief">{{description}}</div>
+          <div class="box-header">
+            <div class="title"><h3><span>{{short_name}}</span></h3></div>
+          </div>
+          <div class="context-text concerning">Concerning <!-- {{context}} --></div>
+          <div class="parameter">
+            <h4>43</h4>
+            <div class="unit">{{indicatorDefinition.short_unit}}</div>
+          </div>
+          <div class="last-update"><span class="status updated"><!-- {{last-update}} --></span>Up to date <!-- {{last-update}} --></div>
+        </a>
         {{/indicators}}
+        </div>
       {{/themes}}
     </div>
-
-
-    <div class="report-sidebar">
-    </div>
+    <!--<div class="report-sidebar"></div>-->
   </div>
 </div>

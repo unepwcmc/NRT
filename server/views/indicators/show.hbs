@@ -2,6 +2,7 @@
 
 {{#contentFor 'header'}}
   <link rel="stylesheet" href="/css/indicator.css">
+  <link rel="stylesheet" href="/css/medium-editor.css">
 
   <script src="/js/lib/d3.min.js"></script>
   <script src="/js/lib/underscore-min.js"></script>
@@ -9,35 +10,55 @@
   <script src="/js/lib/backbone-relational.js"></script>
   <script src="/js/lib/handlebars.js"></script>
   <script src="/js/lib/diorama.js"></script>
+  <script src="/js/lib/medium-editor.min.js"></script>
   <script src="/js/application.js"></script>
 {{/contentFor}}
+
+{{#contentFor 'breadcrumbs'}}
+  <li class="home"><i class="icon-home"></i><a href="/">Home</a></li>
+  <!-- THIS NAVIGATION MUST BE FIXED {{ indicator.theme.title }} -->
+  <li><a href="#">Go back to theme {{ indicator.theme }}</a></li>
+
+  <a class="button" href="/indicators/{{indicator._id}}/draft">
+    <i class="icon-edit"></i> {{{t "indicator/update"}}}
+  </a>
+{{/contentFor}}
+
+{{#if indicator.page.is_draft}}
+  <div class="edit-bar-container">
+    <div class="edit-bar">
+      <div class="back">
+        <p>Last edited on 7 July 2013</p>
+      </div>
+
+      <div class="publish-delete">
+        <a class="button" id="publish" href="publish">Publish</a>
+        <a class="button" id="save" href="./">Save and exit</a>
+        <a class="button" id="delete" href="discard_draft">Discard Draft</a>
+      </div>
+    </div>
+  </div>
+{{/if}}
 
 <div class="content indicator">
   <article>
     <header>
+      <div class="parameter">
+        <div class="score">
+          <span class="number">38%</span><span class="keyword">Excellent</span>
+        </div>
+        <p>Refers to data collected until 7 July 2013</p>
+        <div class="clear"></div>
+      <div><!--card-->
       <h1>{{indicator.title}}</h1>
-
-      <div class='indicator-buttons'>
-        <a href="/api/indicators/{{indicator._id}}/data" class="button grey">
-          <i class="icon-file-text-alt"></i> {{{t "indicator/view"}}}
-        </a>
-
-        <a href="/api/indicators/{{indicator._id}}/data.csv" class="button grey">
-          <i class="icon-file-text-alt"></i> {{{t "indicator/download"}}}
-        </a>
-      </div>
     </header>
 
     <div class='main-content'>
     </div>
 
     <aside class="content-sidebar metadata">
-      <h3>{{{t "indicator/owned_by"}}}</h3>
-      <p>
-        <i class="icon-user append"></i>
-        Dr. Anybody
-      </p>
-
+    <div class="metadata-placeholder">
+    </div>
       <section>
         <h3>{{{t "indicator/metadata"}}}</h3>
         <ul>
@@ -62,24 +83,27 @@
             <h4>{{{t "indicator/metadata/oldest_data"}}}</h4>
             <span>3 June 2013</span>
           </li>
-        </ul>
-      </section>
-
-      <section>
-        <h3>{{{t "indicator/similar"}}}</h3>
-        <ul>
           <li>
-            Average evaporation rate
+            <h4>{{{t "indicator/metadata/frequency"}}}</h4>
+            <span>Yearly</span>
           </li>
           <li>
-            Average minimum and maximum temperature
+            <h4>{{{t "indicator/metadata/collected_by"}}}</h4>
+            <span>Dr. Laila Ibrahim Al Dhaheri</span>
+          </li>
+          <li>
+            <h4>{{{t "indicator/metadata/data_feed_url"}}}</h4>
+            <span>Al Wathba Wetland Reserve</span>
+          </li>
+          <li>
+            <h4>{{{t "indicator/metadata/contact"}}}</h4>
+            <span>Dr. Laila Ibrahim Al Dhaheri, Executive Director, Terrestrial & Marine Biodiversity</span>
           </li>
         </ul>
       </section>
     </aside>
   </article>
 </div>
-
 <script type="text/javascript">
   i18n.onReady(function() {
     new Backbone.Controllers.IndicatorController({{{ indicatorJSON }}});

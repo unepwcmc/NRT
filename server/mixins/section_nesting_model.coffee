@@ -1,5 +1,4 @@
 async = require('async')
-Section = require('../models/section.coffee').model
 Narrative = require('../models/narrative.coffee').model
 Visualisation = require('../models/visualisation.coffee').model
 
