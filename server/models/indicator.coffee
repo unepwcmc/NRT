@@ -16,7 +16,7 @@ indicatorSchema = mongoose.Schema(
   title: String
   short_name: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
-  theme: Number
+  theme: {type: mongoose.Schema.Types.ObjectId, ref: 'Theme'}
   type: String
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 )
@@ -24,6 +24,29 @@ indicatorSchema = mongoose.Schema(
 _.extend(indicatorSchema.methods, pageModel)
 _.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
 _.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
+
+replaceThemeNameWithId = (indicators) ->
+  Theme = require('./theme').model
+
+  deferred = Q.defer()
+
+  getThemeFromTitle = (indicator, callback) ->
+    Theme.findOne(title: indicator.theme, (err, theme) ->
+      if err? or !theme?
+        return callback(err)
+
+      indicator.theme = theme._id
+      callback(null, indicator)
+    )
+
+  async.map(indicators, getThemeFromTitle, (err, indicatorsWithThemes) ->
+    if err?
+      deferred.reject(err)
+
+    deferred.resolve(indicatorsWithThemes)
+  )
+
+  return deferred.promise
 
 indicatorSchema.statics.seedData = ->
   deferred = Q.defer()
@@ -45,15 +68,19 @@ indicatorSchema.statics.seedData = ->
         fs.readFileSync("#{process.cwd()}/lib/seed_indicators.json", 'UTF8')
       )
 
-      Indicator.create(dummyIndicators, (error, results) ->
-        if error?
-          return deferred.reject(error)
-        else
-          getAllIndicators()
-      )
+      replaceThemeNameWithId(dummyIndicators)
+        .then( (indicators) ->
+          Indicator.create(dummyIndicators, (error) ->
+            if error?
+              return deferred.reject(error)
+            else
+              getAllIndicators()
+          )
+        ).fail( (err) ->
+          deferred.reject(error)
+        )
     else
       getAllIndicators()
-      
   )
 
   return deferred.promise
