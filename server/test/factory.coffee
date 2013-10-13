@@ -4,44 +4,32 @@ async = require('async')
 
 class Factory
   define: (modelName, attributes) ->
-    modelName = modelName.toLowerCase()
-
-    @[modelName] = (_attributes) ->
+    @[modelName] = (_attributes) =>
       deferred = Q.defer()
-      Model = require("../models/#{modelName}").model
+      Model = require("../models/#{modelName.toLowerCase()}").model
 
-      if _attributes && _attributes.length != undefined
+      if _.isArray(_attributes)
+
         _attributes ||= []
 
-        console.log 'using multiple models'
-        createFunctions = []
-        for attribute in _attributes
-          createFunctions.push (->
-            theAttributes = attribute
-            return (cb) ->
-              Model.create(theAttributes, cb)
-          )()
+        async.map(_attributes, Model.create.bind(Model), (err, models) ->
+          if err?
+            deffered.reject(new Error(err))
 
-        async.parallel(
-          createFunctions,
-          (err, models) ->
-            if err?
-              deffered.reject(new Error(err))
-
-            console.log models
-            deferred.resolve(models)
+          deferred.resolve(models)
         )
+
       else
+
         _attributes ||= {}
         _attributes = _.extend(attributes, _attributes)
 
-        model = new Model(_attributes)
-
-        model.save (err, model) ->
+        Model.create(attributes, (err, model) ->
           if err?
             deferred.reject(new Error(err))
 
           deferred.resolve(model)
+        )
 
       return deferred.promise
 

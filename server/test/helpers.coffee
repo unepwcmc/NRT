@@ -148,56 +148,8 @@ exports.createSection = (attributes, callback) ->
 
     callback(null, section)
 
-exports.createIndicatorModels = (attributes) ->
-  deferred = Q.defer()
-
-  createFunctions = _.map(attributes, (attributeSet) ->
-    return (callback) ->
-      indicator = new Indicator(attributeSet)
-      return indicator.save( (err, indicators) ->
-        if err?
-          callback()
-
-        callback(null, indicators)
-      )
-  )
-
-  async.parallel(
-    createFunctions,
-    (error, results) ->
-      if error?
-        deferred.reject(new Error(err))
-      else
-        deferred.resolve(results)
-  )
-
-  return deferred.promise
-
-exports.createReportModels = (attributes) ->
-  deferred = Q.defer()
-
-  createFunctions = _.map(attributes, (attributeSet) ->
-    return (callback) ->
-      report = new Report(attributeSet)
-      return report.save( (err, indicators)->
-        if err?
-          callback()
-
-        callback(null, indicators)
-      )
-  )
-
-  async.parallel(
-    createFunctions,
-    (error, results) ->
-      if error?
-        deferred.reject(new Error(err))
-      else
-        deferred.resolve(results)
-  )
-
-  return deferred.promise
-
+exports.createIndicatorModels = factory.define("indicator", title: "new report")
+exports.createReportModels = factory.define("report", title: "new report")
 exports.createThemesFromAttributes = factory.define("theme", title: "new theme")
 
 exports.createUser = factory.define("user",
