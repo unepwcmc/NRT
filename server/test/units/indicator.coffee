@@ -224,8 +224,9 @@ test('.getIndicatorData on an indicator with no indicator data
   )
 )
 
-test('.getRecentHeadlines returns the given number of most recent headlines 
-  in decending date order', (done)->
+test('.getRecentHeadlines returns the given number of most recent headlines
+  in decending date order with the period end calculated for annual
+  indicator data', (done)->
   indicatorData = [
     {
       "year": 2000,
@@ -284,6 +285,9 @@ test('.getRecentHeadlines returns the given number of most recent headlines
       "Expected most recent headline value to be 4")
     assert.strictEqual(mostRecentHeadline.text, "Fair",
       "Expected most recent headline text to be 'Fair'")
+
+    assert.strictEqual(mostRecentHeadline.periodEnd, "31 Dec 2002",
+      "Expected most recent headline period end to be '31 Dec 2002")
 
     done()
 

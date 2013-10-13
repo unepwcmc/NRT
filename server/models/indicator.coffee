@@ -4,6 +4,7 @@ fs = require('fs')
 _ = require('underscore')
 async = require('async')
 Q = require('q')
+moment = require('moment')
 
 IndicatorData = require('./indicator_data').model
 Page = require('./page').model
@@ -140,6 +141,13 @@ boundAggregators =
     return bounds
   text: () -> "It's text, dummy"
 
+indicatorSchema.statics.parseDateInHeadlines = (headlines) ->
+  for headline in headlines
+    headline.periodEnd = moment("#{headline.year}")
+      .add('years', 1).subtract('days', 1).format("D MMM YYYY")
+
+  return headlines
+
 indicatorSchema.methods.getRecentHeadlines = (amount) ->
   deferred = Q.defer()
 
@@ -148,6 +156,8 @@ indicatorSchema.methods.getRecentHeadlines = (amount) ->
   ).then( (data) =>
 
     headlines = _.last(data, amount)
+    headlines = Indicator.parseDateInHeadlines(headlines)
+
     deferred.resolve(headlines.reverse())
 
   ).fail( (err) ->
