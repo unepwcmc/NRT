@@ -286,3 +286,31 @@ test(".toObjectWithNestedPage is mixed in", ->
   indicator = new Indicator()
   assert.typeOf indicator.toObjectWithNestedPage, 'Function'
 )
+
+test("#findWhereIndicatorHasData returns only indicators with indicator data", (done)->
+  indicatorWithData = indicatorWithoutData = null
+
+  helpers.createIndicatorModels([{},{}]).then((indicators) ->
+    indicatorWithData = indicators[0]
+    indicatorWithoutData = indicators[1]
+
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        indicator: indicatorWithData
+        data: [{some: 'data'}]
+      }
+    )
+  ).then((indicatorData) ->
+    Indicator.findWhereIndicatorHasData()
+  ).then((indicators) ->
+    
+    assert.lengthOf indicators, 1, "Expected only the one indicator with data to be returned"
+    assert.strictEqual indicators[0]._id, indicatorWithData[0]._id,
+      "Expected the returned indicator to be the indicator with data"
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+
+)
