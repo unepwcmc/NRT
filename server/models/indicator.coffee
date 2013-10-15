@@ -19,6 +19,7 @@ indicatorSchema = mongoose.Schema(
   theme: {type: mongoose.Schema.Types.ObjectId, ref: 'Theme'}
   type: String
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+  description: String
 )
 
 _.extend(indicatorSchema.methods, pageModel)
@@ -85,6 +86,19 @@ indicatorSchema.statics.seedData = ->
 
   return deferred.promise
 
+indicatorSchema.statics.truncateDescription = (indicator) ->
+  description = indicator.description
+  if description.length > 80
+    indicator.description = "#{description.substring(0,80)}..."
+
+  return indicator
+
+indicatorSchema.statics.truncateDescriptions = (indicators) ->
+  for indicator in indicators
+    Indicator.truncateDescription(indicator)
+
+  return indicators
+
 indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
   if arguments.length == 1
     callback = filters
@@ -111,6 +125,8 @@ indicatorSchema.methods.getIndicatorData = (filters, callback) ->
     if err?
       console.error err
       callback err
+    else if !res?
+      callback null, []
     else
       data = filterIndicatorData(res.data, filters)
 
@@ -165,6 +181,33 @@ boundAggregators =
     )[fieldName]
     return bounds
   text: () -> "It's text, dummy"
+
+indicatorSchema.methods.getRecentHeadlines = (amount) ->
+  deferred = Q.defer()
+
+  Q.nsend(
+    @, 'getIndicatorData'
+  ).then( (data) =>
+
+    headlines = _.last(data, amount)
+    deferred.resolve(headlines.reverse())
+
+  ).fail( (err) ->
+    deferred.reject(err)
+  )
+
+  return deferred.promise
+
+indicatorSchema.methods.getNewestHeadline = ->
+  deferred = Q.defer()
+
+  @getRecentHeadlines(1).then((headlines) ->
+    deferred.resolve headlines[0]
+  ).fail( (err) ->
+    deferred.reject err
+  )
+
+  return deferred.promise
 
 # Probably going to need a refactor at some point
 indicatorSchema.methods.getCurrentYAxis = (callback) ->

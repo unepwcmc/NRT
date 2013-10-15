@@ -61,6 +61,7 @@ themeSchema.statics.getFatThemes = (callback) ->
           populateFunctions.push(
             (cb) ->
               Indicator.find(theme: theTheme._id).exec( (err, indicators) ->
+                indicators = Indicator.truncateDescriptions(indicators)
                 themes[theIndex].indicators = indicators
                 cb()
               )
