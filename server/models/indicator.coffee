@@ -88,7 +88,7 @@ indicatorSchema.statics.seedData = ->
 
 indicatorSchema.statics.truncateDescription = (indicator) ->
   description = indicator.description
-  if description.length > 80
+  if description? and description.length > 80
     indicator.description = "#{description.substring(0,80)}..."
 
   return indicator
