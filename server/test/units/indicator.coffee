@@ -496,6 +496,7 @@ test("#findWhereIndicatorHasData respects the given filters", (done)->
     console.error err.stack
     throw err
   )
+)
 
 test(".truncateDescription truncates descriptions over 80 characters and
   suffixes them with '...'", ->
