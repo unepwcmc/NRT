@@ -429,6 +429,75 @@ test(".toObjectWithNestedPage is mixed in", ->
   assert.typeOf indicator.toObjectWithNestedPage, 'Function'
 )
 
+test("#findWhereIndicatorHasData returns only indicators with indicator data", (done)->
+  indicatorWithData = indicatorWithoutData = null
+
+  helpers.createIndicatorModels([{},{}]).then((indicators) ->
+    indicatorWithData = indicators[0]
+    indicatorWithoutData = indicators[1]
+
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        indicator: indicatorWithData
+        data: [{some: 'data'}]
+      }
+    )
+  ).then((indicatorData) ->
+    Indicator.findWhereIndicatorHasData()
+  ).then((indicators) ->
+    
+    assert.lengthOf indicators, 1, "Expected only the one indicator with data to be returned"
+    assert.strictEqual indicators[0]._id.toString(), indicatorWithData._id.toString(),
+      "Expected the returned indicator to be the indicator with data"
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    console.error err.stack
+    throw err
+  )
+
+)
+
+test("#findWhereIndicatorHasData respects the given filters", (done)->
+  indicatorToFind = indicatorToFilterOut = null
+
+  helpers.createIndicatorModels([{},{}]).then((indicators) ->
+    indicatorToFind = indicators[0]
+    indicatorToFilterOut = indicators[1]
+
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        indicator: indicatorToFind
+        data: [{some: 'data'}]
+      }
+    )
+  ).then((indicatorData) ->
+
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        indicator: indicatorToFilterOut
+        data: [{some: 'data'}]
+      }
+    )
+  ).then((indicatorData) ->
+    Indicator.findWhereIndicatorHasData(_id: indicatorToFind._id)
+  ).then((indicators) ->
+    
+    assert.lengthOf indicators, 1, "Expected only the one indicator with data to be returned"
+    assert.strictEqual indicators[0]._id.toString(), indicatorToFind._id.toString(),
+      "Expected the returned indicator to be the indicator with data"
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    console.error err.stack
+    throw err
+  )
+)
+
 test(".truncateDescription truncates descriptions over 80 characters and
   suffixes them with '...'", ->
     indicator = new Indicator(description: "Oh, yeah, the guy in the the $4,000 suit is holding the elevator for a guy who doesn't make that in three months. Come on!")

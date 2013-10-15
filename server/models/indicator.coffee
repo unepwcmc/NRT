@@ -245,6 +245,35 @@ indicatorSchema.statics.calculateCurrentValues = (indicators, callback) ->
       callback(null, indicators)
   )
 
+indicatorSchema.statics.findWhereIndicatorHasData = (conditions) ->
+  deferred = Q.defer()
+
+  Q.nsend(
+    Indicator.find(conditions), 'exec'
+  ).then((indicators) ->
+    indicatorsWithData = []
+
+    addIndicatorIfHasData = (indicator, callback) ->
+      indicator.getIndicatorData((err, data) ->
+        if err?
+          return callback(err)
+        else if data.length > 0
+          indicatorsWithData.push indicator
+        callback()
+      )
+
+    async.each indicators, addIndicatorIfHasData, (err) ->
+      if err?
+        deferred.reject(err)
+      else
+        deferred.resolve(indicatorsWithData)
+
+  ).fail((err)->
+    deferred.reject(err)
+  )
+
+  return deferred.promise
+
 Indicator = mongoose.model('Indicator', indicatorSchema)
 
 module.exports = {
