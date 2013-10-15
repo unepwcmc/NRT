@@ -447,11 +447,14 @@ test("#findWhereIndicatorHasData returns only indicators with indicator data", (
   ).then((indicators) ->
     
     assert.lengthOf indicators, 1, "Expected only the one indicator with data to be returned"
-    assert.strictEqual indicators[0]._id, indicatorWithData[0]._id,
+    assert.strictEqual indicators[0]._id.toString(), indicatorWithData._id.toString(),
       "Expected the returned indicator to be the indicator with data"
+
+    done()
 
   ).fail((err) ->
     console.error err
+    console.error err.stack
     throw err
   )
 
