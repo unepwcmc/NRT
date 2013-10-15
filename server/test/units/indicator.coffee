@@ -459,3 +459,42 @@ test("#findWhereIndicatorHasData returns only indicators with indicator data", (
   )
 
 )
+
+test("#findWhereIndicatorHasData respects the given filters", (done)->
+  indicatorToFind = indicatorToFilterOut = null
+
+  helpers.createIndicatorModels([{},{}]).then((indicators) ->
+    indicatorToFind = indicators[0]
+    indicatorToFilterOut = indicators[1]
+
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        indicator: indicatorToFind
+        data: [{some: 'data'}]
+      }
+    )
+  ).then((indicatorData) ->
+
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        indicator: indicatorToFilterOut
+        data: [{some: 'data'}]
+      }
+    )
+  ).then((indicatorData) ->
+    Indicator.findWhereIndicatorHasData(_id: indicatorToFind._id)
+  ).then((indicators) ->
+    
+    assert.lengthOf indicators, 1, "Expected only the one indicator with data to be returned"
+    assert.strictEqual indicators[0]._id.toString(), indicatorToFind._id.toString(),
+      "Expected the returned indicator to be the indicator with data"
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    console.error err.stack
+    throw err
+  )
+
+)
