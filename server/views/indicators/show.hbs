@@ -16,8 +16,7 @@
 
 {{#contentFor 'breadcrumbs'}}
   <li class="home"><i class="icon-home"></i><a href="/">Home</a></li>
-  <!-- THIS NAVIGATION MUST BE FIXED {{ indicator.theme.title }} -->
-  <li><a href="#">Go back to theme {{ indicator.theme }}</a></li>
+  <li><a href="/themes/{{indicator.theme._id}}">Go back to theme {{ indicator.theme.title }}</a></li>
 
   <a class="button" href="/indicators/{{indicator._id}}/draft">
     <i class="icon-edit"></i> {{{t "indicator/update"}}}
@@ -43,13 +42,17 @@
 <div class="content indicator">
   <article>
     <header>
-      <div class="parameter">
+      <div {{#if indicator.page.is_draft}}class="parameter p-select"{{else}}class="parameter"{{/if}}>
         <div class="score">
-          <span class="number">38%</span><span class="keyword">Excellent</span>
+          <span class="number">
+            {{indicator.page.headline.value}}
+          </span>
+          <span class="keyword">
+            {{indicator.page.headline.text}}
+          </span>
         </div>
-        <p>Refers to data collected until 7 July 2013</p>
-        <div class="clear"></div>
-      <div><!--card-->
+        <p>Refers to data collected up to {{indicator.page.headline.year}}</p>
+      </div><!--card-->
       <h1>{{indicator.title}}</h1>
     </header>
 

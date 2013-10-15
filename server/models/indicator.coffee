@@ -14,15 +14,40 @@ updateIndicatorMixin = require('../mixins/update_indicator_data.coffee')
 
 indicatorSchema = mongoose.Schema(
   title: String
+  short_name: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
-  theme: Number
+  theme: {type: mongoose.Schema.Types.ObjectId, ref: 'Theme'}
   type: String
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+  description: String
 )
 
 _.extend(indicatorSchema.methods, pageModel)
 _.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
 _.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
+
+replaceThemeNameWithId = (indicators) ->
+  Theme = require('./theme').model
+
+  deferred = Q.defer()
+
+  getThemeFromTitle = (indicator, callback) ->
+    Theme.findOne(title: indicator.theme, (err, theme) ->
+      if err? or !theme?
+        return callback(err)
+
+      indicator.theme = theme._id
+      callback(null, indicator)
+    )
+
+  async.map(indicators, getThemeFromTitle, (err, indicatorsWithThemes) ->
+    if err?
+      deferred.reject(err)
+
+    deferred.resolve(indicatorsWithThemes)
+  )
+
+  return deferred.promise
 
 indicatorSchema.statics.seedData = ->
   deferred = Q.defer()
@@ -44,18 +69,35 @@ indicatorSchema.statics.seedData = ->
         fs.readFileSync("#{process.cwd()}/lib/seed_indicators.json", 'UTF8')
       )
 
-      Indicator.create(dummyIndicators, (error, results) ->
-        if error?
-          return deferred.reject(error)
-        else
-          getAllIndicators()
-      )
+      replaceThemeNameWithId(dummyIndicators)
+        .then( (indicators) ->
+          Indicator.create(dummyIndicators, (error) ->
+            if error?
+              return deferred.reject(error)
+            else
+              getAllIndicators()
+          )
+        ).fail( (err) ->
+          deferred.reject(error)
+        )
     else
       getAllIndicators()
-      
   )
 
   return deferred.promise
+
+indicatorSchema.statics.truncateDescription = (indicator) ->
+  description = indicator.description
+  if description.length > 80
+    indicator.description = "#{description.substring(0,80)}..."
+
+  return indicator
+
+indicatorSchema.statics.truncateDescriptions = (indicators) ->
+  for indicator in indicators
+    Indicator.truncateDescription(indicator)
+
+  return indicators
 
 indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
   if arguments.length == 1
@@ -83,6 +125,8 @@ indicatorSchema.methods.getIndicatorData = (filters, callback) ->
     if err?
       console.error err
       callback err
+    else if !res?
+      callback null, []
     else
       data = filterIndicatorData(res.data, filters)
 
@@ -137,6 +181,33 @@ boundAggregators =
     )[fieldName]
     return bounds
   text: () -> "It's text, dummy"
+
+indicatorSchema.methods.getRecentHeadlines = (amount) ->
+  deferred = Q.defer()
+
+  Q.nsend(
+    @, 'getIndicatorData'
+  ).then( (data) =>
+
+    headlines = _.last(data, amount)
+    deferred.resolve(headlines.reverse())
+
+  ).fail( (err) ->
+    deferred.reject(err)
+  )
+
+  return deferred.promise
+
+indicatorSchema.methods.getNewestHeadline = ->
+  deferred = Q.defer()
+
+  @getRecentHeadlines(1).then((headlines) ->
+    deferred.resolve headlines[0]
+  ).fail( (err) ->
+    deferred.reject err
+  )
+
+  return deferred.promise
 
 # Probably going to need a refactor at some point
 indicatorSchema.methods.getCurrentYAxis = (callback) ->

@@ -15,7 +15,9 @@ exports.index = (req, res) ->
 
 exports.show = (req, res) ->
   Q.nsend(
-    Indicator.findOne(_id: req.params.id).populate('owner'),
+    Indicator
+      .findOne(_id: req.params.id)
+      .populate('owner theme'),
     'exec'
   ).then( (indicator) ->
     unless indicator?
@@ -106,4 +108,3 @@ exports.discardDraft = (req, res) ->
     console.error err
     return res.render(500, "Error fetching the indicator")
   )
-

@@ -12,6 +12,7 @@
   <div class="indicators-container">
     <div class="report-content">
       {{#themes}}
+      {{#if indicators.length}}
       <div class="theme-block">
         <a href="/themes/{{_id}}">
           <h2>{{title}}<span>›</span></h2>
@@ -35,8 +36,8 @@
         </a>
         {{/indicators}}
         </div>
+      {{/if}}
       {{/themes}}
     </div>
-    <!--<div class="report-sidebar"></div>-->
   </div>
 </div>

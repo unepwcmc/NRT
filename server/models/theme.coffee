@@ -3,6 +3,7 @@ fs = require('fs')
 _ = require('underscore')
 async = require('async')
 Indicator = require('./indicator').model
+Q = require('q')
 
 pageModel = require('../mixins/page_model.coffee')
 
@@ -16,27 +17,36 @@ themeSchema = mongoose.Schema(
 _.extend(themeSchema.methods, pageModel)
 
 themeSchema.statics.seedData = (callback) ->
-  # Seed some themes
-  dummyThemes = JSON.parse(
-    fs.readFileSync("#{process.cwd()}/lib/sample_themes.json", 'UTF8')
-  )
+  deferred = Q.defer()
+
+  getAllThemes = ->
+    Theme.find((err, themes) ->
+      if err?
+        deferred.reject(err)
+      else
+        deferred.resolve(themes)
+    )
 
   Theme.count(null, (error, count) ->
     if error?
-      console.error error
-      return callback(error)
+      return deferred.reject(error)
 
     if count == 0
+      dummyThemes = JSON.parse(
+        fs.readFileSync("#{process.cwd()}/lib/sample_themes.json", 'UTF8')
+      )
+
       Theme.create(dummyThemes, (error, results) ->
         if error?
-          console.error error
-          return callback(error)
-        else
-          return callback(null, results)
+          return deferred.reject(error)
+
+        deferred.resolve(results)
       )
     else
-      callback()
+      getAllThemes()
   )
+
+  return deferred.promise
 
 themeSchema.statics.getFatThemes = (callback) ->
   Theme.find({})
@@ -50,7 +60,8 @@ themeSchema.statics.getFatThemes = (callback) ->
           theIndex = index
           populateFunctions.push(
             (cb) -> 
-              Indicator.find(theme: theTheme.externalId).exec( (err, indicators) ->
+              Indicator.find(theme: theTheme._id).exec( (err, indicators) ->
+                indicators = Indicator.truncateDescriptions(indicators)
                 themes[theIndex].indicators = indicators
                 cb()
               )
@@ -74,7 +85,7 @@ themeSchema.statics.getIndicatorsByTheme = (themeId, callback) ->
 
 themeSchema.methods.getIndicators = (callback) ->
   Theme = require('./theme.coffee').model
-  Theme.getIndicatorsByTheme(@externalId, callback)
+  Theme.getIndicatorsByTheme(@_id, callback)
 
 Theme = mongoose.model('Theme', themeSchema)
 

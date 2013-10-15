@@ -11,10 +11,8 @@ suite('Theme')
 test('.getFatThemes returns all the themes with their indicators populated', (done) ->
   themeAttributes = [{
     title: 'Theme 1'
-    externalId: 1
   },{
     title: 'Theme 2'
-    externalId: 2
   }]
 
   helpers.createThemesFromAttributes(
@@ -22,10 +20,10 @@ test('.getFatThemes returns all the themes with their indicators populated', (do
   ).then((themes) ->
     indicatorAttributes = [{
       title: "I'm an indicator of theme 1"
-      theme: themes[0].externalId
+      theme: themes[0]._id
     },{
       title: "theme 2 indicator"
-      theme: themes[1].externalId
+      theme: themes[1]._id
     }]
 
     helpers.createIndicatorModels(
@@ -62,7 +60,6 @@ test('.getFatThemes returns all the themes with their indicators populated', (do
 test('.getIndicatorsByTheme returns all Indicators for given Theme', (done) ->
   themeAttributes = [{
     title: 'Theme 1'
-    externalId: 1
   }]
 
   helpers.createThemesFromAttributes(
@@ -70,13 +67,13 @@ test('.getIndicatorsByTheme returns all Indicators for given Theme', (done) ->
   ).then( (themes) =>
     indicatorAttributes = [{
       title: "I'm an indicator of theme 1"
-      theme: themes[0].externalId
+      theme: themes[0]._id
     }]
 
     helpers.createIndicatorModels(
       indicatorAttributes
     ).then( (subIndicators)->
-      Theme.getIndicatorsByTheme(themes[0].externalId, (err, returnedIndicators) ->
+      Theme.getIndicatorsByTheme(themes[0]._id, (err, returnedIndicators) ->
         if err?
           console.error(err)
           throw new Error(err)
@@ -99,7 +96,6 @@ test('.getIndicatorsByTheme returns all Indicators for given Theme', (done) ->
 test('.getIndicators returns all Indicators for given Theme', (done) ->
   themeAttributes = [{
     title: 'Theme 1'
-    externalId: 1
   }]
 
   helpers.createThemesFromAttributes(
@@ -107,7 +103,7 @@ test('.getIndicators returns all Indicators for given Theme', (done) ->
   ).then( (themes) ->
     indicatorAttributes = [{
       title: "I'm an indicator of theme 1"
-      theme: themes[0].externalId
+      theme: themes[0]._id
     }]
 
     helpers.createIndicatorModels(

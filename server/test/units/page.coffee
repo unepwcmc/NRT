@@ -3,16 +3,17 @@ helpers = require '../helpers'
 _ = require('underscore')
 async = require('async')
 Q = require('q')
+sinon = require('sinon')
 
 User = require('../../models/user.coffee').model
 Narrative = require('../../models/narrative.coffee').model
 Visualisation = require('../../models/visualisation.coffee').model
 Indicator = require('../../models/indicator.coffee').model
 Section = require('../../models/section.coffee').model
+Page = require('../../models/page').model
 
 suite('Page')
 test('.create', (done) ->
-  Page = require('../../models/page').model
 
   page_attributes =
     title: 'Lovely Page'
@@ -443,6 +444,67 @@ test(".giveSectionsNewIds on a page with one section
     done()
 
   ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test(".setHeadlineToMostRecentFromParent when the parent is an indicator
+  sets the headline to the indicator's most recent headline", (done) ->
+  indicator = new Indicator()
+  headlineTitle = 'Good'
+  sinon.stub(indicator, 'getNewestHeadline', ->
+    deferred = Q.defer()
+    deferred.resolve {text: headlineTitle}
+    return deferred.promise
+  )
+
+  page = new Page(parent_type: 'Indicator')
+  sinon.stub(page, 'getParent', ->
+    deferred = Q.defer()
+    deferred.resolve indicator
+    return deferred.promise
+  )
+
+  page.setHeadlineToMostRecentFromParent().then(->
+    assert.strictEqual page.headline.text, headlineTitle
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test(".setHeadlineToMostRecentFromParent when the parent is not an indicator
+  doesn't modify the page headline attribute", (done) ->
+  page = new Page(parent_type: 'Theme')
+
+  page.setHeadlineToMostRecentFromParent().then(->
+    assert.isUndefined page.headline, "Expected the page headline not to be modified"
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test("When no headline is set,
+  setHeadlineToMostRecentFromParent should be called on save", (done)->
+  page = new Page()
+  newHeadline = text: 'hat'
+  sinon.stub(page, 'setHeadlineToMostRecentFromParent', ->
+    deferred = Q.defer()
+    @headline =  newHeadline
+    deferred.resolve newHeadline
+    return deferred.promise
+  )
+
+  Q.nsend(
+    page, 'save'
+  ).then(->
+    assert.strictEqual page.headline, newHeadline
+    done()
+  ).fail((err) ->
     console.error err
     throw err
   )

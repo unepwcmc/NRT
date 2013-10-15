@@ -1,30 +1,23 @@
 [
   {
-    "title": "Atmosphere",
-    "externalId": 1
+    "title": "Atmosphere"
   },
   {
-    "title": "Biodiversity",
-    "externalId": 2
+    "title": "Biodiversity"
   },
   {
-    "title": "Water",
-    "externalId": 3
+    "title": "Water"
   },
   {
-    "title": "Health",
-    "externalId": 4
+    "title": "Health"
   },
   {
-    "title": "Waste",
-    "externalId": 5
+    "title": "Waste"
   },
   {
-    "title": "Energy",
-    "externalId": 6
+    "title": "Energy"
   },
   {
-    "title": "Transport",
-    "externalId": 7
+    "title": "Transport"
   }
 ]
