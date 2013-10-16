@@ -1,10 +1,34 @@
 mongoose = require('mongoose')
 fs = require('fs')
+bcrypt = require('bcrypt')
+Q = require('q')
 
 userSchema = mongoose.Schema(
   name: String
   email: String
   password: String
+)
+
+userSchema.pre('save', (next) ->
+  user = @
+
+  unless user.isModified('password')
+    return next()
+
+  bcrypt.genSalt(5, (err, salt) ->
+    if err?
+      console.log err
+      return next(err)
+
+    bcrypt.hash(user.password, salt, (err, hash) ->
+      if err?
+        console.log err
+        return next(err)
+
+      user.password = hash
+      next()
+    )
+  )
 )
 
 userSchema.statics.seedData = (callback) ->
@@ -30,6 +54,18 @@ userSchema.statics.seedData = (callback) ->
     else
       callback()
   )
+
+userSchema.methods.isValidPassword = (password) ->
+  deferred = Q.defer()
+
+  bcrypt.compare(password, @password, (err, matched) ->
+    if err?
+      deferred.reject(err)
+
+    deferred.resolve(matched)
+  )
+
+  return deferred.promise
 
 userSchema.methods.validPassword = (password) ->
   @password == password
