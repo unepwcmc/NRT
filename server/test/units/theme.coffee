@@ -4,11 +4,13 @@ Theme = require('../../models/theme').model
 Indicator = require('../../models/indicator').model
 helpers = require '../helpers'
 async = require('async')
+Q = require('q')
 _ = require('underscore')
 
 suite('Theme')
 
-test('.getFatThemes returns all the themes with their indicators populated', (done) ->
+test('.getFatThemes returns all the themes with their indicators (with data) populated', (done) ->
+  indicatorAttributes = null
   themeAttributes = [{
     title: 'Theme 1'
   },{
@@ -28,29 +30,44 @@ test('.getFatThemes returns all the themes with their indicators populated', (do
 
     helpers.createIndicatorModels(
       indicatorAttributes
-    ).then( (subIndicators)->
-      Theme.getFatThemes((err, returnedThemes) ->
-        if err
-          console.error err
-          throw new Error(err)
-
-        assert.lengthOf returnedThemes, 2
-
-        assert.strictEqual returnedThemes[0].title, themeAttributes[0].title
-        assert.strictEqual returnedThemes[1].title, themeAttributes[1].title
-
-        assert.lengthOf returnedThemes[0].indicators, 1
-        assert.lengthOf returnedThemes[1].indicators, 1
-
-        assert.strictEqual returnedThemes[0].indicators[0].title, indicatorAttributes[0].title
-        assert.strictEqual returnedThemes[1].indicators[0].title, indicatorAttributes[1].title
-
-        done()
-      )
-    ).fail( (err) ->
-      console.error err
-      throw new Error(err)
     )
+  ).then( (subIndicators)->
+    # create indicator data
+    deferred = Q.defer()
+
+    createIndicatorData = (indicator, callback) ->
+      helpers.createIndicatorData({
+        indicator: indicator
+        data: [{}]
+      }, ->
+        callback()
+      )
+
+    async.each subIndicators, createIndicatorData, (err) ->
+      if err?
+        deferred.reject(err)
+      else
+        deferred.resolve()
+
+    return deferred.promise
+  ).then( ->
+    Q.nfcall(
+      Theme.getFatThemes
+    )
+  ).then( (returnedThemes) ->
+
+    assert.lengthOf returnedThemes, 2
+
+    assert.strictEqual returnedThemes[0].title, themeAttributes[0].title
+    assert.strictEqual returnedThemes[1].title, themeAttributes[1].title
+
+    assert.lengthOf returnedThemes[0].indicators, 1
+    assert.lengthOf returnedThemes[1].indicators, 1
+
+    assert.strictEqual returnedThemes[0].indicators[0].title, indicatorAttributes[0].title
+    assert.strictEqual returnedThemes[1].indicators[0].title, indicatorAttributes[1].title
+
+    done()
   ).fail((err)->
     console.error err
     throw new Error(err)

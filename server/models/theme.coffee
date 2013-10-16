@@ -51,7 +51,7 @@ themeSchema.statics.seedData = (callback) ->
 themeSchema.statics.getFatThemes = (callback) ->
   Theme.find({})
     .sort(_id: 1)
-    .exec( (err, themes) -> 
+    .exec( (err, themes) ->
       populateFunctions = []
       for theme, index in themes
         themes[index] = theme.toObject()
@@ -59,11 +59,15 @@ themeSchema.statics.getFatThemes = (callback) ->
           theTheme = theme
           theIndex = index
           populateFunctions.push(
-            (cb) -> 
-              Indicator.find(theme: theTheme._id).exec( (err, indicators) ->
+            (cb) ->
+              Indicator.findWhereIndicatorHasData(
+                theme: theTheme._id
+              ).then( (indicators) ->
                 indicators = Indicator.truncateDescriptions(indicators)
                 themes[theIndex].indicators = indicators
                 cb()
+              ).fail((err) ->
+                cb(err)
               )
           )
         )()
