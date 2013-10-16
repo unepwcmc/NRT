@@ -1,24 +1,24 @@
 _ = require('underscore')
 
 passport = require('./initializers/authentication')
-tokenAuthentication = require('./lib/token_authentication.coffee')
+tokenAuthentication = require('./lib/token_authentication')
 
-narrativeApi     = require('./routes/api/narrative')
 visualisationApi = require('./routes/api/visualisation')
-reportApi        = require('./routes/api/report')
+narrativeApi     = require('./routes/api/narrative')
 indicatorApi     = require('./routes/api/indicator')
+reportApi        = require('./routes/api/report')
 themeApi         = require('./routes/api/theme')
 pageApi          = require('./routes/api/page')
 userApi          = require('./routes/api/user')
 
-dashboardRoutes = require('./routes/dashboard.coffee')
-themeRoutes     = require('./routes/themes.coffee')
-indicatorRoutes = require('./routes/indicators.coffee')
-localeRoutes    = require('./routes/locale.coffee')
-reportRoutes    = require('./routes/reports.coffee')
-staticRoutes    = require('./routes/static.coffee')
-testRoutes      = require('./routes/tests.coffee')
-adminRoutes     = require('./routes/admin.coffee')
+dashboardRoutes = require('./routes/dashboard')
+indicatorRoutes = require('./routes/indicators')
+localeRoutes    = require('./routes/locale')
+reportRoutes    = require('./routes/reports')
+staticRoutes    = require('./routes/static')
+adminRoutes     = require('./routes/admin')
+themeRoutes     = require('./routes/themes')
+testRoutes      = require('./routes/tests')
 
 module.exports = exports = (app) ->
   ensureAuthenticated = (req, res, next) ->
