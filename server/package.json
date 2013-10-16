@@ -30,7 +30,8 @@
     "markdown": "0.5.0",
     "express-csv": "0.6.0",
     "q": "0.9.7",
-    "passport-stub": "0.1.5"
+    "passport-stub": "0.1.5",
+    "moment": "~2.3.1"
   },
   "devDependencies": {
     "Faker": "0.5.11",

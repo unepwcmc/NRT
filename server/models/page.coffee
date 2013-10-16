@@ -4,6 +4,7 @@ _ = require('underscore')
 sectionNestingModel = require('../mixins/section_nesting_model.coffee')
 SectionSchema = require('./section.coffee').schema
 Q = require('q')
+moment = require('moment')
 
 pageSchema = mongoose.Schema(
   title: String
@@ -100,6 +101,25 @@ pageSchema.pre('save', (next) ->
       next(err)
     )
 )
+
+pageSchema.methods.calculateRecencyOfHeadline = ->
+  deferred = Q.defer()
+
+  @getParent().then( (parent) ->
+    parent.getNewestHeadline()
+  ).then( (dataHeadline) =>
+    pageHeadline = @headline
+
+    if moment(pageHeadline.periodEnd).isBefore(dataHeadline.periodEnd)
+      deferred.resolve("Out of date")
+    else
+      deferred.resolve("Up to date")
+
+  ).fail( (err) ->
+    deferred.reject(err)
+  )
+
+  return deferred.promise
 
 pageSchema.methods.setHeadlineToMostRecentFromParent = ->
   deferred = Q.defer()
