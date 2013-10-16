@@ -141,15 +141,15 @@ For example, run your app as so:
 
 #### Listing all users
 
-    curl http://<domain>/users\?token\=my-very-secret-token
+    curl http://<domain>/api/users\?token\=my-very-secret-token
 
 #### Adding a user
 
-    curl -X POST -d "email=hats@boats.com&password=password" http://<domain>/users\?token\=my-very-secret-token
+    curl -X POST -d "email=hats@boats.com&password=password" http://<domain>/api/users\?token\=my-very-secret-token
 
 #### Deleting a user
 
-    curl -i -X DELETE http://<domain>/users/<id>\?token\=my-very-secret-token
+    curl -i -X DELETE http://<domain>/api/users/<id>\?token\=my-very-secret-token
 
 
 ## Production

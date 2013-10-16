@@ -16,7 +16,6 @@ themeRoutes     = require('./routes/themes.coffee')
 indicatorRoutes = require('./routes/indicators.coffee')
 localeRoutes    = require('./routes/locale.coffee')
 reportRoutes    = require('./routes/reports.coffee')
-userRoutes      = require('./routes/users.coffee')
 staticRoutes    = require('./routes/static.coffee')
 testRoutes      = require('./routes/tests.coffee')
 adminRoutes     = require('./routes/admin.coffee')
@@ -26,7 +25,10 @@ module.exports = exports = (app) ->
     return next() if app.settings.env is 'test'
 
     authMethod = passport.authenticate('basic')
-    authMethod = tokenAuthentication if req.path.match(/^\/users/)?
+
+    # Secure the user API with an auth token
+    if _.contains(["POST", "DELETE"], req.method) and req.path.match(/^\/api\/users/)?
+      authMethod = tokenAuthentication
 
     authMethod.call(@, req, res, next)
 
@@ -71,14 +73,6 @@ module.exports = exports = (app) ->
   ## Tests
   unless app.settings.env == 'production'
     app.get "/tests", testRoutes.test
-
-  ## User CRUD
-  ## express-resource doesn't support using middlewares
-  app.get "/users", userRoutes.index
-  app.get "/users/:id", userRoutes.show
-
-  app.post "/users", userRoutes.create
-  app.delete "/users/:id", userRoutes.destroy
 
   app.get "/admin/updateIndicatorData/:id", adminRoutes.updateIndicatorData
   app.get "/admin/updateAll", adminRoutes.updateAll
