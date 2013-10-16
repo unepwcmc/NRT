@@ -67,9 +67,6 @@ userSchema.methods.isValidPassword = (password) ->
 
   return deferred.promise
 
-userSchema.methods.validPassword = (password) ->
-  @password == password
-
 userSchema.methods.canEdit = (model) ->
   model.canBeEditedBy(@)
 

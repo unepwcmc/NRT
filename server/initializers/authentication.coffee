@@ -1,5 +1,6 @@
 passport = require('passport')
-BasicStrategy = require('passport-http').BasicStrategy
+LocalStrategy = require('passport-local').Strategy
+Q = require('q')
 
 passport.serializeUser (user, done) ->
   done(null, user._id)
@@ -22,21 +23,32 @@ passport.deserializeUser (id, done) ->
     )
 
 passport.use(
-  new BasicStrategy(
+  new LocalStrategy(
     (username, password, done) ->
       User = require('../models/user').model
-      User.findOne({email: username}, (err, user) ->
-        if err?
-          console.error err
-          return done(err, false)
+
+      theUser = null
+
+      Q.nsend(
+        User.findOne({email: username}), 'exec'
+      ).then( (user) ->
+        theUser = user
 
         if !user
           return done(null, false, { message: 'Incorrect username.' })
 
-        if !user.validPassword(password)
-          return done(null, false, { message: 'Incorrect password.' })
+        user.isValidPassword(password)
 
-        return done(null, user)
+      ).then( (isValid) ->
+
+          if isValid
+            return done(null, theUser)
+          else
+            return done(null, false, { message: 'Incorrect password.' })
+
+      ).fail( (err) ->
+        console.error err
+        done(err, false)
       )
   )
 )
