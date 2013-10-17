@@ -14,12 +14,16 @@ exports.index = (req, res) ->
   )
 
 exports.show = (req, res) ->
+  theIndicator = null
+
   Q.nsend(
     Indicator
       .findOne(_id: req.params.id)
       .populate('owner theme'),
     'exec'
   ).then( (indicator) ->
+    theIndicator = indicator
+
     unless indicator?
       error = "Could not find indicator with ID #{req.params.id}"
       console.error error
@@ -28,7 +32,9 @@ exports.show = (req, res) ->
     indicator.toObjectWithNestedPage()
     .then((indicatorObject) ->
       res.render("indicators/show",
-        indicator: indicatorObject, indicatorJSON: JSON.stringify(indicatorObject)
+        indicator: indicatorObject,
+        indicatorJSON: JSON.stringify(indicatorObject),
+        canEdit: req.isAuthenticated()
       )
     ).fail((err) ->
       console.error err
@@ -41,6 +47,8 @@ exports.show = (req, res) ->
   )
 
 exports.showDraft = (req, res) ->
+  return res.redirect('back') unless req.isAuthenticated()
+
   Q.nsend(
     Indicator.findOne(_id: req.params.id).populate('owner'),
     'exec'

@@ -5,6 +5,7 @@ url = require('url')
 _ = require('underscore')
 async = require('async')
 Q = require('q')
+passportStub = require 'passport-stub'
 
 Indicator = require('../../models/indicator').model
 Page = require('../../models/page').model
@@ -43,9 +44,16 @@ test("When given an indicator that doesn't exist, I should get a 404 response", 
 test("GET /:id/draft clones the Indicator's Page and renders the indicator", (done) ->
   theIndicator = originalPage = null
 
-  helpers.createIndicatorModels([
-    title: 'An indicator'
-  ]).then( (indicators) ->
+  helpers.createUser(
+    email: "hats"
+    password: "boats"
+  ).then( (user) ->
+    passportStub.login user
+
+    helpers.createIndicatorModels([
+      title: 'An indicator'
+    ])
+  ).then( (indicators) ->
 
     theIndicator = indicators[0]
 
@@ -84,6 +92,45 @@ test("GET /:id/draft clones the Indicator's Page and renders the indicator", (do
       originalPage.id,
       "Expected clonedPage to have a different ID to the original Page"
     )
+
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test("GET /:id/draft clones the Indicator's Page and renders the indicator", (done) ->
+  theIndicator = originalPage = null
+
+  helpers.createIndicatorModels([
+    title: 'An indicator'
+  ]).then( (indicators) ->
+
+    theIndicator = indicators[0]
+
+    helpers.createPage(
+      title: 'A page'
+      parent_type: 'Indicator'
+      parent_id: theIndicator.id
+    )
+
+  ).then( (page) ->
+
+    originalPage = page
+
+    Q.nfcall(
+      request.get, {
+        url: helpers.appurl("indicators/#{theIndicator.id}/draft")
+      }
+    )
+
+  ).spread( (res, body) ->
+
+    assert.equal res.statusCode, 200
+
+    assert.notMatch body, new RegExp(".*An indicator.*")
 
     done()
 
