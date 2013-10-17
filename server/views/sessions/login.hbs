@@ -1,0 +1,33 @@
+{{!< main}}
+
+{{#contentFor 'breadcrumbs'}}
+  <li class="home"><i class="icon-home"></i><a href="/">Home</a></li>
+{{/contentFor}}
+
+{{#contentFor 'header'}}
+  <link rel="stylesheet" href="/css/login.css">
+{{/contentFor}}
+
+<div class="content login">
+  <section>
+    <form method="post" action="/login">
+      <fieldset>
+        <dl>
+          <dt><label for="username">Email</label></dt>
+          <dd><input type="text" name="username"></dd>
+        </dl>
+      </fieldset>
+
+      <fieldset>
+        <dl>
+          <dt><label for="password">Password</label></dt>
+          <dd><input type="password" name="password"></dd>
+        </dl>
+      </fieldset>
+
+      <fieldset>
+        <button>Submit</button>
+      </fieldset>
+    </form>
+  </section>
+</div>
