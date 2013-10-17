@@ -75,6 +75,7 @@ test(".save hashes the user's password before saving", (done) ->
 
   user.save( (err, savedUser) ->
     if err?
+      console.error err
       throw new Error(err)
 
     assert.notStrictEqual(
