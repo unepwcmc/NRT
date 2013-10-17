@@ -3,7 +3,7 @@
     "valueField": "value",
     "ranges":[
       {"minValue": 0.25, "message": "Excellent"},
-      {"minValue": 0, "message": "Rubbish"}
+      {"minValue": 0, "message": "Moderate"}
     ]
   }
 }
