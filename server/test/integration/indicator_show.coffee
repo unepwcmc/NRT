@@ -101,7 +101,7 @@ test("GET /:id/draft clones the Indicator's Page and renders the indicator", (do
   )
 )
 
-test("GET /:id/draft clones the Indicator's Page and renders the indicator", (done) ->
+test("GET /:id/draft redirects back if the user is not logged in", (done) ->
   theIndicator = originalPage = null
 
   helpers.createIndicatorModels([
@@ -143,9 +143,16 @@ test("GET /:id/draft clones the Indicator's Page and renders the indicator", (do
 test("GET /:id/discard_draft discards all drafts and renders the published version", (done) ->
   theIndicator = originalPage = draftPage =null
 
-  helpers.createIndicatorModels([
-    title: 'An indicator'
-  ]).then( (indicators) ->
+  helpers.createUser(
+    email: "hats"
+    password: "boats"
+  ).then( (user) ->
+    passportStub.login user
+
+    helpers.createIndicatorModels([
+      title: 'An indicator'
+    ])
+  ).then( (indicators) ->
 
     theIndicator = indicators[0]
 
@@ -191,13 +198,61 @@ test("GET /:id/discard_draft discards all drafts and renders the published versi
   )
 )
 
-test('GET /:id/publish publishes the current draft and makes it publicly
-  viewable', (done) ->
+test("GET /:id/discard_draft redirects back if the user is not logged in", (done) ->
   theIndicator = originalPage = draftPage = null
 
   helpers.createIndicatorModels([
     title: 'An indicator'
   ]).then( (indicators) ->
+
+    theIndicator = indicators[0]
+
+    helpers.createPage(
+      title: 'A page'
+      parent_type: 'Indicator'
+      parent_id: theIndicator.id
+    )
+
+  ).then( (page) ->
+    originalPage = page
+
+    page.createDraftClone()
+  ).then( (clonedPage) ->
+    draftPage = clonedPage
+
+    Q.nfcall(
+      request.get, {
+        url: helpers.appurl("indicators/#{theIndicator.id}/discard_draft")
+      }
+    )
+
+  ).spread( (res, body) ->
+
+    assert.equal res.statusCode, 200
+
+    assert.notMatch body, new RegExp(".*An indicator.*")
+
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+test('GET /:id/publish publishes the current draft and makes it publicly
+  viewable', (done) ->
+  theIndicator = originalPage = draftPage = null
+
+  helpers.createUser(
+    email: "hats"
+    password: "boats"
+  ).then( (user) ->
+    passportStub.login user
+
+    helpers.createIndicatorModels([
+      title: 'An indicator'
+    ])
+  ).then( (indicators) ->
 
     theIndicator = indicators[0]
 
@@ -246,6 +301,47 @@ test('GET /:id/publish publishes the current draft and makes it publicly
   ).then( (draftPages) ->
 
     assert.lengthOf draftPages, 0, "Expected no draft pages to exist"
+
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('GET /:id/publish redirects back if the user is not logged in', (done) ->
+  theIndicator = originalPage = draftPage = null
+
+  helpers.createIndicatorModels([
+    title: 'An indicator'
+  ]).then( (indicators) ->
+
+    theIndicator = indicators[0]
+
+    helpers.createPage(
+      title: 'A page'
+      parent_type: 'Indicator'
+      parent_id: theIndicator.id
+    )
+
+  ).then( (page) ->
+    originalPage = page
+
+    page.createDraftClone()
+  ).then( (clonedPage) ->
+    draftPage = clonedPage
+
+    Q.nfcall(
+      request.get, {
+        url: helpers.appurl("indicators/#{theIndicator.id}/publish")
+      }
+    )
+  ).spread( (res, body) ->
+
+    assert.equal res.statusCode, 200
+
+    assert.notMatch body, new RegExp(".*An indicator.*")
 
     done()
 

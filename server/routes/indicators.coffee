@@ -70,6 +70,8 @@ exports.showDraft = (req, res) ->
   )
 
 exports.publishDraft = (req, res) ->
+  return res.redirect('back') unless req.isAuthenticated()
+
   theIndicator = null
 
   Q.nsend(
@@ -94,6 +96,8 @@ exports.publishDraft = (req, res) ->
   )
 
 exports.discardDraft = (req, res) ->
+  return res.redirect('back') unless req.isAuthenticated()
+
   theIndicator = null
 
   Q.nsend(
