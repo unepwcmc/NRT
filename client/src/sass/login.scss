@@ -1,0 +1,18 @@
+fieldset {
+  border: none;
+}
+
+section {
+  background-color: #eee;
+  width: 275px;
+  margin: 0 auto;
+  padding-top: 10px;
+
+  input {
+    -webkit-appearance: textfield;
+  }
+
+  button {
+    float: right;
+  }
+}

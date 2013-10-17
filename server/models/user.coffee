@@ -1,11 +1,36 @@
 mongoose = require('mongoose')
 fs = require('fs')
+bcrypt = require('bcrypt')
+Q = require('q')
 
 userSchema = mongoose.Schema(
   name: String
   email: String
   password: String
 )
+
+hashPassword = (next) ->
+  user = @
+
+  unless user.isModified('password')
+    return next()
+
+  bcrypt.genSalt(5, (err, salt) ->
+    if err?
+      console.log err
+      return next(err)
+
+    bcrypt.hash(user.password, salt, (err, hash) ->
+      if err?
+        console.log err
+        return next(err)
+
+      user.password = hash
+      next()
+    )
+  )
+
+userSchema.pre('save', hashPassword)
 
 userSchema.statics.seedData = (callback) ->
   return callback() if process.env.NODE_ENV is 'production'
@@ -31,8 +56,17 @@ userSchema.statics.seedData = (callback) ->
       callback()
   )
 
-userSchema.methods.validPassword = (password) ->
-  @password == password
+userSchema.methods.isValidPassword = (password) ->
+  deferred = Q.defer()
+
+  bcrypt.compare(password, @password, (err, matched) ->
+    if err?
+      deferred.reject(err)
+
+    deferred.resolve(matched)
+  )
+
+  return deferred.promise
 
 userSchema.methods.canEdit = (model) ->
   model.canBeEditedBy(@)
