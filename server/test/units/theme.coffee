@@ -9,7 +9,9 @@ _ = require('underscore')
 
 suite('Theme')
 
-test('.getFatThemes returns all the themes with their indicators (with data) populated', (done) ->
+test('.getFatThemes returns all the themes
+  with their indicators that have data populated
+  and their sub pages populated', (done) ->
   indicatorAttributes = null
   themeAttributes = [{
     title: 'Theme 1'
@@ -38,7 +40,7 @@ test('.getFatThemes returns all the themes with their indicators (with data) pop
     createIndicatorData = (indicator, callback) ->
       helpers.createIndicatorData({
         indicator: indicator
-        data: [{}]
+        data: [{data: 'yeah'}]
       }, ->
         callback()
       )
@@ -66,6 +68,9 @@ test('.getFatThemes returns all the themes with their indicators (with data) pop
 
     assert.strictEqual returnedThemes[0].indicators[0].title, indicatorAttributes[0].title
     assert.strictEqual returnedThemes[1].indicators[0].title, indicatorAttributes[1].title
+
+    assert.property returnedThemes[0].indicators[0], 'page',
+      "Expected indicators to have their page attribute populated"
 
     done()
   ).fail((err)->
