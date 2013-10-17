@@ -3,7 +3,12 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 
-    <title>{{title}}</title>
+    <title>
+      National Reporting Toolkit
+      {{#if title}}
+        | {{title}}
+      {{/if}}
+    </title>
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,300' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -80,7 +85,6 @@
       </div>
     </div>
 
-    <!-- MODAL BOX INFOWINDOW -->
     <div class="md-modal md-effect-1" id="modal-1">
       <div class="md-box">
         <div class="md-title">
@@ -92,7 +96,7 @@
         </div>
         <div class="md-buttons">
           <a href="/about"><button class="know-more">I want to know more about NRT</button></a>
-          <button class="md-close" onclick="$('#modal-1').removeClass('md-show');">Start exploring data</button>
+          <button class="md-close">Start exploring data</button>
         </div>
       </div>
     </div>
@@ -105,6 +109,47 @@
         <img src="/images/unep-logo.png" alt=""><img src="/images/ead-logo.png" alt=""><img src="/images/agedi-logo.png" alt="">
       </div>
     </footer>
+
+    <script>
+      $('.md-overlay, .md-close').click(function() {
+        $('#modal-1').removeClass('md-show');
+      });
+
+      (function() {
+        var getCookie = function(cookieName) {
+          var cookies = document.cookie.split(';');
+
+          for (var i = 0, j = cookies.length; i < j; i += 1) {
+            var cookie = cookies[i];
+            var name = cookieName + "=";
+
+            // Trim leading whitespace
+            while (cookie.charAt(0) == ' ') {
+              cookie = cookie.substring(1, cookie.length);
+            }
+
+            if (cookie.indexOf(name) == 0) {
+              return cookie.substring(name.length, cookie.length);
+            }
+          }
+
+          return null;
+        };
+
+        var setCookie = function(name, value) {
+          document.cookie = name + "=" + value;
+        };
+
+        var showModal = function() {
+          $('#modal-1').addClass('md-show');
+        };
+
+        if (getCookie('nrt_visited') === null) {
+          showModal();
+          setCookie('nrt_visited', 'yup');
+        }
+      })()
+    </script>
 
   </body>
 </html>
