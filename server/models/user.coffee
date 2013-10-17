@@ -9,7 +9,7 @@ userSchema = mongoose.Schema(
   password: String
 )
 
-userSchema.pre('save', (next) ->
+hashPassword = (next) ->
   user = @
 
   unless user.isModified('password')
@@ -29,7 +29,8 @@ userSchema.pre('save', (next) ->
       next()
     )
   )
-)
+
+userSchema.pre('save', hashPassword)
 
 userSchema.statics.seedData = (callback) ->
   return callback() if process.env.NODE_ENV is 'production'
