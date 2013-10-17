@@ -1,10 +1,10 @@
 {
-  "carbon-tools:seagrass": {
+  "ER.LND.PTLD.ZS": {
     "valueField": "value",
     "ranges":[
-      {"minValue": 0.35, "message": "Excellent"},
-      {"minValue": 0, "message": "Acceptable"}
+      {"minValue": 5, "message": "Excellent"},
+      {"minValue": 0.3, "message": "Medium good"},
+      {"minValue": 0, "message": "Rubbish"}
     ]
   }
 }
-
