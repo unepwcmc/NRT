@@ -1,13 +1,43 @@
 mongoose = require('mongoose')
 fs = require('fs')
-bcrypt = require('bcrypt')
 Q = require('q')
+crypto = require('crypto')
 
 userSchema = mongoose.Schema(
   name: String
   email: String
   password: String
+  salt: String
 )
+
+generateHash = (password, salt) ->
+  deferred = Q.defer()
+
+  theSalt = null
+
+  Q.nsend(
+    crypto, 'randomBytes', 32
+  ).then( (buffer) ->
+
+    if salt?
+      theSalt = salt
+    else
+      theSalt = buffer.toString('hex')
+
+    Q.nsend(
+      crypto, 'pbkdf2',
+      password, theSalt, 2000, 64
+    )
+  ).then( (buffer) ->
+
+    hash = buffer.toString('hex')
+    deferred.resolve(hash: hash, salt: theSalt)
+
+  ).fail( (err) ->
+    deferred.reject(err)
+  )
+
+  return deferred.promise
 
 hashPassword = (next) ->
   user = @
@@ -15,19 +45,15 @@ hashPassword = (next) ->
   unless user.isModified('password')
     return next()
 
-  bcrypt.genSalt(5, (err, salt) ->
-    if err?
-      console.log err
-      return next(err)
+  generateHash(user.password).then( (hashComponents) ->
 
-    bcrypt.hash(user.password, salt, (err, hash) ->
-      if err?
-        console.log err
-        return next(err)
+    user.password = hashComponents.hash
+    user.salt = hashComponents.salt
+    next()
 
-      user.password = hash
-      next()
-    )
+  ).fail( (err) ->
+    console.error err
+    next(err)
   )
 
 userSchema.pre('save', hashPassword)
@@ -59,11 +85,10 @@ userSchema.statics.seedData = (callback) ->
 userSchema.methods.isValidPassword = (password) ->
   deferred = Q.defer()
 
-  bcrypt.compare(password, @password, (err, matched) ->
-    if err?
-      deferred.reject(err)
-
-    deferred.resolve(matched)
+  generateHash(password, @salt).then( (hashComponents) =>
+    deferred.resolve(hashComponents.hash == @password)
+  ).fail( (err) ->
+    deferred.reject(err)
   )
 
   return deferred.promise
