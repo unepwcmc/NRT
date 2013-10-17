@@ -9,6 +9,7 @@ passportStub = require 'passport-stub'
 
 Indicator = require('../../models/indicator').model
 Page = require('../../models/page').model
+User = require('../../models/user').model
 
 suite('Indicator show')
 
@@ -44,16 +45,12 @@ test("When given an indicator that doesn't exist, I should get a 404 response", 
 test("GET /:id/draft clones the Indicator's Page and renders the indicator", (done) ->
   theIndicator = originalPage = null
 
-  helpers.createUser(
-    email: "hats"
-    password: "boats"
-  ).then( (user) ->
-    passportStub.login user
+  user = new User(email: "hats", password: "boats")
+  passportStub.login user
 
-    helpers.createIndicatorModels([
-      title: 'An indicator'
-    ])
-  ).then( (indicators) ->
+  helpers.createIndicatorModels([
+    title: 'An indicator'
+  ]).then( (indicators) ->
 
     theIndicator = indicators[0]
 
@@ -143,16 +140,12 @@ test("GET /:id/draft redirects back if the user is not logged in", (done) ->
 test("GET /:id/discard_draft discards all drafts and renders the published version", (done) ->
   theIndicator = originalPage = draftPage =null
 
-  helpers.createUser(
-    email: "hats"
-    password: "boats"
-  ).then( (user) ->
-    passportStub.login user
+  user = new User(email: "hats", password: "boats")
+  passportStub.login user
 
-    helpers.createIndicatorModels([
-      title: 'An indicator'
-    ])
-  ).then( (indicators) ->
+  helpers.createIndicatorModels([
+    title: 'An indicator'
+  ]).then( (indicators) ->
 
     theIndicator = indicators[0]
 
@@ -243,16 +236,12 @@ test('GET /:id/publish publishes the current draft and makes it publicly
   viewable', (done) ->
   theIndicator = originalPage = draftPage = null
 
-  helpers.createUser(
-    email: "hats"
-    password: "boats"
-  ).then( (user) ->
-    passportStub.login user
+  user = new User(email: "hats", password: "boats")
+  passportStub.login user
 
-    helpers.createIndicatorModels([
-      title: 'An indicator'
-    ])
-  ).then( (indicators) ->
+  helpers.createIndicatorModels([
+    title: 'An indicator'
+  ]).then( (indicators) ->
 
     theIndicator = indicators[0]
 
