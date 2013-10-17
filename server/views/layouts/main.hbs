@@ -83,7 +83,6 @@
       </div>
     </div>
 
-    <!-- MODAL BOX INFOWINDOW -->
     <div class="md-modal md-effect-1" id="modal-1">
       <div class="md-box">
         <div class="md-title">
@@ -95,7 +94,7 @@
         </div>
         <div class="md-buttons">
           <a href="/about"><button class="know-more">I want to know more about NRT</button></a>
-          <button class="md-close" onclick="$('#modal-1').removeClass('md-show');">Start exploring data</button>
+          <button class="md-close">Start exploring data</button>
         </div>
       </div>
     </div>
@@ -108,6 +107,12 @@
         <img src="/images/unep-logo.png" alt=""><img src="/images/ead-logo.png" alt=""><img src="/images/agedi-logo.png" alt="">
       </div>
     </footer>
+
+    <script>
+      $('.md-overlay, .md-close').click(function() {
+        $('#modal-1').removeClass('md-show');
+      });
+    </script>
 
   </body>
 </html>
