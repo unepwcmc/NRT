@@ -535,6 +535,25 @@ test(".convertSourceValueToInternalValue when given a type conversion which
     
 )
 
+test(".convertSourceValueToInternalValue when given a decimalPercentage to 
+  integer conversion, it multiplies by 100", ->
+  indicator = new Indicator(
+    indicatorDefinition:
+      fields: [{
+        source:
+          name: 'value'
+          type: 'decimalPercentage'
+        name: 'value'
+        type: 'integer'
+      }]
+  )
+
+  result = indicator.convertSourceValueToInternalValue('value', 0.504)
+  assert.strictEqual result, 50.4,
+    "Expected value to be mutliplied by 100"
+    
+)
+
 test(".replaceIndicatorData when called on an  indicator where indicator data
   already exists,
   it replaces the existing data with the new given data", (done) ->
