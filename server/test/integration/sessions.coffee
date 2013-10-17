@@ -16,7 +16,7 @@ test('GET /login renders a log in form', (done) ->
     assert.equal res.statusCode, 200
 
     assert.match body, new RegExp(".*form.*")
-    assert.match body, new RegExp(".*Username.*")
+    assert.match body, new RegExp(".*Email.*")
     assert.match body, new RegExp(".*Password.*")
 
     done()
@@ -77,35 +77,6 @@ test('POST /login redirects to the GET /login if unsuccessful', (done) ->
 
     assert.strictEqual res.statusCode, 302
     assert.strictEqual res.headers.location, '/login'
-
-    done()
-
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
-)
-
-test('GET /logout logs the user out and redirects to index', (done) ->
-  theUser = null
-  helpers.createUser(
-    name: 'Tyler Creator'
-    email: "tyler"
-    password: "ofwgkta"
-  ).then( (user) ->
-    theUser = user
-    passportStub.login user
-
-    Q.nfcall(
-      request.get, {
-        url: helpers.appurl("/logout")
-      }
-    )
-  ).spread( (res, body) ->
-
-    assert.equal res.statusCode, 200
-
-    assert.notMatch body, new RegExp(".*#{theUser.name}.*")
 
     done()
 
