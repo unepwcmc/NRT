@@ -35,13 +35,16 @@ CONFIG =
       "per_page": 100
       "date": "1960:2013"
       "format": "json"
-  cartodb: 
+  cartodb:
     defaultQueryParameters: {}
 
 CONVERSIONS =
   epoch:
     integer: (value) ->
       new Date(value).getFullYear()
+  decimalPercentage:
+    percentage: (value)->
+      value * 100
 
 URL_BUILDERS =
   esri: ->
