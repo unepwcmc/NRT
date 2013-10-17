@@ -1,5 +1,5 @@
 {
-  "ER.LND.PTLD.ZS": {
+  "NY.ADJ.DCO2.GN.ZS": {
     "valueField": "value",
     "ranges":[
       {"minValue": 5, "message": "Excellent"},
