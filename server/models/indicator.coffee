@@ -183,13 +183,6 @@ boundAggregators =
     return bounds
   text: () -> "It's text, dummy"
 
-indicatorSchema.statics.parseDateInHeadlines = (headlines) ->
-  for headline in headlines
-    headline.periodEnd = moment("#{headline.year}")
-      .add('years', 1).subtract('days', 1).format("D MMM YYYY")
-
-  return headlines
-
 indicatorSchema.methods.getRecentHeadlines = (amount) ->
   deferred = Q.defer()
 
@@ -197,8 +190,8 @@ indicatorSchema.methods.getRecentHeadlines = (amount) ->
     @, 'getIndicatorData'
   ).then( (data) =>
 
-    headlines = _.last(data, amount)
-    headlines = Indicator.parseDateInHeadlines(headlines)
+    headlineData = _.last(data, amount)
+    headlines = IndicatorData.convertDataToHeadline(headlineData)
 
     deferred.resolve(headlines.reverse())
 

@@ -36,6 +36,25 @@ indicatorDataSchema.statics.seedData = (indicators) ->
 
   return deferred.promise
 
+indicatorDataSchema.statics.convertDataToHeadline = (data) ->
+  data = IndicatorData.parseDateInHeadlines(data)
+  data = IndicatorData.roundHeadlineValues(data)
+  return data
+
+indicatorDataSchema.statics.parseDateInHeadlines = (headlines) ->
+  for headline in headlines
+    headline.periodEnd = moment("#{headline.year}")
+      .add('years', 1).subtract('days', 1).format("D MMM YYYY")
+
+  return headlines
+
+indicatorDataSchema.statics.roundHeadlineValues = (headlines) ->
+  for headline in headlines
+    unless isNaN(headline.value)
+      headline.value = Math.round(headline.value*1000)/1000
+
+  return headlines
+
 IndicatorData = mongoose.model('IndicatorData', indicatorDataSchema)
 
 module.exports = {
