@@ -5,6 +5,23 @@ User = require('../../models/user').model
 
 suite('User')
 
+test('Password salt values can be stored on user', (done) ->
+  user = new User(salt: 'sodiumchloride')
+  user.save( (err, theUser) ->
+    if err?
+      console.error err
+      throw new Error(err)
+
+    assert.strictEqual(
+      theUser.salt,
+      'sodiumchloride',
+      "Expected user's salt to be sodiumchloride"
+    )
+
+    done()
+  )
+)
+
 test('.canEdit resolves when given a page whose parent is owned by the user', (done) ->
   theOwner = theIndicator = thePage = null
   helpers.createUser().then((user) ->
