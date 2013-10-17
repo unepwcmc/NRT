@@ -45,6 +45,7 @@ test(".isValidPassword checks if bcrypt(password)
 
   user.save( (err, savedUser) ->
     if err?
+      console.error err
       throw new Error(err)
 
     savedUser
