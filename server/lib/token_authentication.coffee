@@ -7,8 +7,7 @@ authenticateToken = (token) ->
   return false
 
 module.exports = (req, res, next) ->
-  if _.contains(["POST", "DELETE"], req.method)
-    unless authenticateToken(req.query.token || null)
-      return res.send(401, 'Unauthorised')
+  unless authenticateToken(req.query.token || null)
+    return res.send(401, 'Unauthorised')
 
   next()
