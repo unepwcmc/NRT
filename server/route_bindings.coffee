@@ -13,6 +13,7 @@ userApi          = require('./routes/api/user')
 
 dashboardRoutes = require('./routes/dashboard')
 indicatorRoutes = require('./routes/indicators')
+sessionRoutes   = require('./routes/session')
 localeRoutes    = require('./routes/locale')
 reportRoutes    = require('./routes/reports')
 staticRoutes    = require('./routes/static')
@@ -21,19 +22,11 @@ themeRoutes     = require('./routes/themes')
 testRoutes      = require('./routes/tests')
 
 module.exports = exports = (app) ->
-  ensureAuthenticated = (req, res, next) ->
-    return next() if app.settings.env is 'test'
-
-    authMethod = passport.authenticate('basic')
-
-    # Secure the user API with an auth token
-    if _.contains(["POST", "DELETE"], req.method) and req.path.match(/^\/api\/users/)?
-      authMethod = tokenAuthentication
-
-    authMethod.call(@, req, res, next)
-
   app.use passport.addCurrentUserToLocals
-  app.all('*', ensureAuthenticated)
+
+  app.get "/login", sessionRoutes.login
+  app.get "/logout", sessionRoutes.logout
+  app.post '/login', passport.authenticate('local', { failureRedirect: '/login' }), sessionRoutes.loginSuccess
 
   # REST API
   app.resource 'api/narratives', narrativeApi, { format: 'json' }
@@ -42,11 +35,17 @@ module.exports = exports = (app) ->
   app.resource 'api/themes', themeApi, { format: 'json' }
   app.resource 'api/indicators', indicatorApi, { format: 'json' }
   app.resource 'api/pages', pageApi, { format: 'json' }
-  app.resource 'api/users', userApi, { format: 'json' }
   app.get "/api/indicators/:id/headlines", indicatorApi.headlines
   app.get "/api/indicators/:id/headlines/:count", indicatorApi.headlines
   app.get "/api/indicators/:id/data", indicatorApi.data
   app.get "/api/indicators/:id/data.csv", indicatorApi.dataAsCSV
+
+  ## User CRUD
+  ## express-resource doesn't support using middlewares
+  app.get "/api/users", userApi.index
+  app.get "/api/users/:id", userApi.show
+  app.post "/api/users", tokenAuthentication, userApi.create
+  app.delete "/api/users/:id", tokenAuthentication, userApi.destroy
 
   app.get "/", themeRoutes.index
   app.get "/about", staticRoutes.about

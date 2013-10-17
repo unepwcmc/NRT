@@ -6,18 +6,18 @@ Q = require('q')
 exports.index = (req, res) ->
   Q.nsend(User.find().select('-password'), 'exec')
   .then( (users) ->
-    res.send(JSON.stringify(users))
+    res.send(users)
   ).fail( (err) ->
     console.error err
     return res.send(500, "Could not retrieve users")
   )
 
 exports.show = (req, res) ->
-  User.find(_id: req.params.user, (err, user) ->
+  User.find(_id: req.params.id, (err, user) ->
     if err?
       return res.send(500, {errors: ["could not retrieve user"]})
 
-    res.send(JSON.stringify(user: user))
+    res.send(user)
   )
 
 exports.create = (req, res) ->
@@ -29,7 +29,7 @@ exports.create = (req, res) ->
     if err?
       return res.send(500, {errors: ["could not save user"]})
 
-    res.send(JSON.stringify(user: user))
+    res.send(user)
 
 exports.destroy = (req, res) ->
   User.remove(

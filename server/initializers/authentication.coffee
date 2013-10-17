@@ -38,7 +38,6 @@ passport.use(
           return done(null, false, { message: 'Incorrect username.' })
 
         user.isValidPassword(password)
-
       ).then( (isValid) ->
 
           if isValid
