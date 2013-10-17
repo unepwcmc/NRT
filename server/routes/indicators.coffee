@@ -33,8 +33,7 @@ exports.show = (req, res) ->
     .then((indicatorObject) ->
       res.render("indicators/show",
         indicator: indicatorObject,
-        indicatorJSON: JSON.stringify(indicatorObject),
-        canEdit: req.isAuthenticated()
+        indicatorJSON: JSON.stringify(indicatorObject)
       )
     ).fail((err) ->
       console.error err
