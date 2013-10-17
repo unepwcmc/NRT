@@ -59,20 +59,14 @@ test('POST /login redirects to GET / if successful', (done) ->
 )
 
 test('POST /login redirects to the GET /login if unsuccessful', (done) ->
-  user =
-    email: "george_oscar_bluth"
-    password: "michael"
-
-  helpers.createUser(
-    user
-  ).then( (user) ->
-    Q.nfcall(
-      request.post, {
-        url: helpers.appurl("/login")
-        json: true
-        body: user
-      }
-    )
+  Q.nfcall(
+    request.post, {
+      url: helpers.appurl("/login")
+      json: true
+      body:
+        email: "george_oscar_bluth"
+        password: "michael"
+    }
   ).spread( (res, body) ->
 
     assert.strictEqual res.statusCode, 302
