@@ -112,6 +112,31 @@
       $('.md-overlay, .md-close').click(function() {
         $('#modal-1').removeClass('md-show');
       });
+
+      (function() {
+        var getCookie = function(cookieName) {
+          var cookies = document.cookie.split(';');
+
+          for (var i = 0, j = cookies.length; i < j; i += 1) {
+            var cookie = cookies[i];
+            var name = cookieName + "=";
+
+            if (cookie.indexOf(name) == 0) {
+              return cookie.substring(name.length, cookie.length);
+            }
+          }
+
+          return null;
+        };
+
+        var showModal = function() {
+          $('#modal-1').addClass('md-show');
+        };
+
+        if (getCookie('nrt_visited') === null) {
+          showModal();
+        }
+      })()
     </script>
 
   </body>
