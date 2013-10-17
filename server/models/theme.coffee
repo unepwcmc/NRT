@@ -53,6 +53,7 @@ themeSchema.statics.getFatThemes = (callback) ->
     .sort(_id: 1)
     .exec( (err, themes) ->
       populateFunctions = []
+
       for theme, index in themes
         themes[index] = theme.toObject()
         ( ->
@@ -63,16 +64,34 @@ themeSchema.statics.getFatThemes = (callback) ->
               Indicator.findWhereIndicatorHasData(
                 theme: theTheme._id
               ).then( (indicators) ->
+
                 indicators = Indicator.truncateDescriptions(indicators)
-                themes[theIndex].indicators = indicators
-                cb()
+
+                populatePage = (indicator, callback) ->
+                  indicator.populatePage().then(->
+                    callback()
+                  ).fail((err) ->
+                    callback(err)
+                  )
+
+                async.each indicators, populatePage, (err) ->
+                  if err?
+                    cb(err)
+                  themes[theIndex].indicators = indicators
+                  cb()
+
               ).fail((err) ->
                 cb(err)
               )
           )
         )()
-      async.parallel(populateFunctions, (err, results) ->
-        callback err, themes
+
+      Q.nfcall(
+        async.parallel, populateFunctions
+      ).then( (results) ->
+        callback null, themes
+      ).fail( (err) ->
+        callback err
       )
   )
 

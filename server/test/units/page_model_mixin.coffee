@@ -7,6 +7,7 @@ IndicatorData = require('../../models/indicator_data').model
 async = require('async')
 _ = require('underscore')
 Q = require('q')
+sinon = require('sinon')
 
 suite('Page Model Mixin')
 
@@ -348,4 +349,30 @@ test(".discardDraft discards the draft version of a page", (done) ->
     console.error err
     throw err
   )
+)
+
+test('.populatePage should add a (shallow) page attribute to an indicator', (done)->
+  indicator = new Indicator()
+  page = new Page()
+  sinon.stub(indicator, 'getPage', ->
+    deferred = Q.defer()
+    deferred.resolve(page)
+    return deferred.promise
+  )
+
+  indicator.populatePage().then(->
+
+    assert.property indicator, 'page',
+      "Expected the indicator to have a page attribute"
+    assert.strictEqual indicator.page._id, page._id,
+      "Expected the populated indicator page attribute to have the same ID as the page"
+    assert.strictEqual indicator.page.constructor.modelName, "Page",
+      "Expected the populated indicator page attribute to be an instance of the page model"
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+
 )
