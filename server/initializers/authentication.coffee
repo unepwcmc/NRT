@@ -40,10 +40,10 @@ passport.use(
         user.isValidPassword(password)
       ).then( (isValid) ->
 
-          if isValid
-            return done(null, theUser)
-          else
-            return done(null, false, { message: 'Incorrect password.' })
+        if isValid
+          return done(null, theUser)
+        else
+          return done(null, false, { message: 'Incorrect password.' })
 
       ).fail( (err) ->
         console.error err
