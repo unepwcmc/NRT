@@ -47,7 +47,7 @@
       <div {{#if indicator.page.is_draft}}class="parameter p-select"{{else}}class="parameter"{{/if}}>
         <div class="score">
           <span class="number">
-            {{indicator.page.headline.value}}
+            {{indicator.page.headline.value}} {{indicator.indicatorDefinition.short_unit}}
           </span>
           <span class="keyword">
             {{indicator.page.headline.text}}

@@ -35,6 +35,7 @@
       "serviceName": "NRT_AD_ProtectedArea",
       "featureServer": 2,
       "unit": "%",
+      "short_unit": "%",
       "period": "annual",
       "xAxis": "year",
       "yAxis": "value",
@@ -51,7 +52,7 @@
         {
           "source": {
             "name": "value",
-            "type": "integer"
+            "type": "decimalPercentage"
           },
           "name": "value",
           "type": "integer"
@@ -264,7 +265,7 @@
       }, {
         "source": {
           "name": "value",
-          "type": "integer"
+          "type": "decimalPercentage"
         },
         "name": "value",
         "type": "integer"
