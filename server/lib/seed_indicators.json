@@ -203,7 +203,7 @@
   "short_name": "World Bank PA cover",
   "title": "Protected Area coverage (World Bank)",
   "description": "Protected Area coverage (World Bank)",
-  "theme": "Biodviersity",
+  "theme": "Biodiversity",
   "type": "worldBank",
   "indicatorDefinition": {
       "apiUrl": "http://localhost:3002/wb/ARE",
@@ -241,7 +241,7 @@
   "short_name": "Seagrass area (Blue carbon)",
   "title": "Seagrass area (Blue Carbon)",
   "description": "Seagrass area (Blue carbon)",
-  "theme": 2,
+  "theme": "Biodiversity",
   "type": "cartodb",
   "indicatorDefinition": {
     "apiUrl": "http://localhost:3002",

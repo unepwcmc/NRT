@@ -59,6 +59,7 @@ seedData = ->
   .then(Indicator.seedData)
   .then(IndicatorData.seedData)
   .fail((err) ->
+    console.log "error seeding indicator data:"
     console.error err
     throw err
   )
