@@ -536,7 +536,7 @@ test(".convertSourceValueToInternalValue when given a type conversion which
 )
 
 test(".convertSourceValueToInternalValue when given a decimalPercentage to 
-  percentage conversion, it multiplies by 100", ->
+  integer conversion, it multiplies by 100", ->
   indicator = new Indicator(
     indicatorDefinition:
       fields: [{
@@ -544,7 +544,7 @@ test(".convertSourceValueToInternalValue when given a decimalPercentage to
           name: 'value'
           type: 'decimalPercentage'
         name: 'value'
-        type: 'percentage'
+        type: 'integer'
       }]
   )
 

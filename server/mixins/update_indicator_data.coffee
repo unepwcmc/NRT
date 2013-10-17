@@ -43,7 +43,7 @@ CONVERSIONS =
     integer: (value) ->
       new Date(value).getFullYear()
   decimalPercentage:
-    percentage: (value)->
+    integer: (value)->
       value * 100
 
 URL_BUILDERS =
