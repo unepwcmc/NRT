@@ -40,7 +40,7 @@ test("With a series of indicators, I should see their titles", (done) ->
     createIndicatorData = (indicator, callback) ->
       helpers.createIndicatorData({
         indicator: indicator
-        data: [{}]
+        data: [{year: 'data'}]
       }, ->
         callback()
       )
