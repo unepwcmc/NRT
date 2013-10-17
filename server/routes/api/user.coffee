@@ -15,7 +15,7 @@ exports.index = (req, res) ->
 exports.show = (req, res) ->
   Q.nsend(
     User
-      .findOne()
+      .findOne(_id: req.params.id)
       .select('-password'),
       'exec'
   ).then( (user) ->
