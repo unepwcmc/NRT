@@ -13,11 +13,18 @@ exports.index = (req, res) ->
   )
 
 exports.show = (req, res) ->
-  User.find(_id: req.params.id, (err, user) ->
-    if err?
-      return res.send(500, {errors: ["could not retrieve user"]})
+  Q.nsend(
+    User
+      .findOne()
+      .select('-password'),
+      'exec'
+  ).then( (user) ->
 
     res.send(user)
+
+  ).fail( (err) ->
+    console.error err
+    return res.send(500, "Could not retrieve users")
   )
 
 exports.create = (req, res) ->
