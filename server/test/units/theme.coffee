@@ -96,6 +96,8 @@ test('#getFatThemes when given filters a mongoose filter it filters the themes',
 
     assert.ok themeSpy.calledOnce, "Expected Theme.find to be called once"
     assert.ok themeSpy.calledWith(filter), "Expected Theme.find to be called with the filter"
+
+    themeSpy.restore()
     done()
   )
 )
