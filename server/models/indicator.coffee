@@ -50,6 +50,58 @@ replaceThemeNameWithId = (indicators) ->
 
   return deferred.promise
 
+createSectionWithNarrative = (attributes, callback) ->
+  Section = require('./section.coffee').model
+  Narrative = require('./narrative.coffee').model
+
+  savedSection = null
+
+  section = new Section(title: attributes.title)
+  Q.nsend(
+    section, 'save'
+  ).spread( (section, rowsChanged) ->
+    savedSection = section
+
+    narrative = new Narrative(section: savedSection.id, content: attributes.content)
+
+    Q.nsend(
+      narrative, 'save'
+    )
+  ).then( (savedNarrative) ->
+    callback(null, savedSection)
+  ).fail( (err) ->
+    callback(err)
+  )
+
+createIndicatorWithSections = (indicatorAttributes, callback) ->
+  theIndicator = thePage = null
+
+  Q.nsend(
+    Indicator, 'create', indicatorAttributes
+  ).then( (indicator) ->
+    theIndicator = indicator
+    theIndicator.getPage()
+  ).then( (page) ->
+    thePage = page
+
+    sections = indicatorAttributes.sections
+
+    Q.nsend(
+      async, 'map', sections, createSectionWithNarrative
+    )
+  ).then( (sections) ->
+
+    thePage.sections = thePage.sections.concat(sections || [])
+
+    Q.nsend(
+      thePage, 'save'
+    )
+  ).then( (page) ->
+    callback(null, theIndicator)
+  ).fail( (err) ->
+    callback(err)
+  )
+
 indicatorSchema.statics.seedData = ->
   deferred = Q.defer()
 
@@ -70,17 +122,15 @@ indicatorSchema.statics.seedData = ->
         fs.readFileSync("#{process.cwd()}/lib/seed_indicators.json", 'UTF8')
       )
 
-      replaceThemeNameWithId(dummyIndicators)
-        .then( (indicators) ->
-          Indicator.create(dummyIndicators, (error) ->
-            if error?
-              return deferred.reject(error)
-            else
-              getAllIndicators()
-          )
-        ).fail( (err) ->
-          deferred.reject(error)
+      replaceThemeNameWithId(
+        dummyIndicators
+      ).then( (indicators) ->
+        async.map(dummyIndicators, createIndicatorWithSections, (err, indicators) ->
+          deferred.resolve(indicators)
         )
+      ).fail( (err) ->
+        deferred.reject(error)
+      )
     else
       getAllIndicators()
   )
