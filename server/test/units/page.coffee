@@ -503,3 +503,39 @@ test("When no headline is set,
     throw err
   )
 )
+
+test('.setHeadlineToMostRecentFromParent when parent indicator has no
+  data, sets headline text to "Not reported on"', (done) ->
+  indicator = new Indicator()
+  sinon.stub(indicator, 'getIndicatorData', (callback) ->
+    callback(null, [])
+  )
+
+  page = new Page(parent_type: 'Indicator')
+  sinon.stub(page, 'getParent', ->
+    deferred = Q.defer()
+    deferred.resolve indicator
+    return deferred.promise
+  )
+
+  page.setHeadlineToMostRecentFromParent().then( (headline) ->
+    assert.strictEqual(
+      headline.text,
+      "Not reported on",
+      "Expected headline text to be 'Not report on'"
+    )
+
+    assert.strictEqual(
+      headline.value,
+      "-",
+      "Expected headline value to be -"
+    )
+
+    assert.isNull(headline.periodEnd)
+
+    done()
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)

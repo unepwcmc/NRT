@@ -333,7 +333,14 @@ indicatorSchema.methods.calculateRecencyOfHeadline = ->
   @populatePage().then( =>
     @getNewestHeadline()
   ).then( (dataHeadline) =>
+
+    unless dataHeadline?
+      return deferred.resolve("No Data")
+
     pageHeadline = @page.headline
+
+    unless pageHeadline? && pageHeadline.periodEnd?
+      return deferred.resolve("Out of date")
 
     if moment(pageHeadline.periodEnd).isBefore(dataHeadline.periodEnd)
       deferred.resolve("Out of date")

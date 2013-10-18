@@ -581,6 +581,52 @@ test('.calculateRecencyOfHeadline when given an indicator with a headline date
   )
 )
 
+test('.calculateRecencyOfHeadline when given an indicator with no data
+  returns "No Data"', (done) ->
+  indicator = new Indicator()
+
+  page = new Page(parent_type: 'Indicator')
+  sinon.stub(indicator, 'populatePage', ->
+    deferred = Q.defer()
+    deferred.resolve indicator.page = page
+    return deferred.promise
+  )
+
+  indicator.calculateRecencyOfHeadline().then( (recencyText) ->
+    assert.strictEqual "No Data", recencyText
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.calculateRecencyOfHeadline when given a headline with
+  no periodEnd returns "Out of date"', (done) ->
+  indicator = new Indicator()
+  sinon.stub(indicator, 'getNewestHeadline', ->
+    deferred = Q.defer()
+    deferred.resolve {text: "OH HAI"}
+    return deferred.promise
+  )
+
+
+  page = new Page(parent_type: 'Indicator', headline: {text: "Not reported on", value: "-"})
+  sinon.stub(indicator, 'populatePage', ->
+    deferred = Q.defer()
+    deferred.resolve indicator.page = page
+    return deferred.promise
+  )
+
+  indicator.calculateRecencyOfHeadline().then( (recencyText) ->
+    assert.strictEqual "Out of date", recencyText
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
 test('#populatePages given an array of indicators, populates their page attributes', (done) ->
   indicator = new Indicator()
   page = new Page()
