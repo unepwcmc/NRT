@@ -277,6 +277,25 @@ indicatorSchema.statics.findWhereIndicatorHasData = (conditions) ->
 
   return deferred.promise
 
+indicatorSchema.methods.calculateRecencyOfHeadline = ->
+  deferred = Q.defer()
+
+  @populatePage().then( =>
+    @getNewestHeadline()
+  ).then( (dataHeadline) =>
+    pageHeadline = @page.headline
+
+    if moment(pageHeadline.periodEnd).isBefore(dataHeadline.periodEnd)
+      deferred.resolve("Out of date")
+    else
+      deferred.resolve("Up to date")
+
+  ).fail( (err) ->
+    deferred.reject(err)
+  )
+
+  return deferred.promise
+
 Indicator = mongoose.model('Indicator', indicatorSchema)
 
 module.exports = {

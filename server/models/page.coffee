@@ -102,25 +102,6 @@ pageSchema.pre('save', (next) ->
     )
 )
 
-pageSchema.methods.calculateRecencyOfHeadline = ->
-  deferred = Q.defer()
-
-  @getParent().then( (parent) ->
-    parent.getNewestHeadline()
-  ).then( (dataHeadline) =>
-    pageHeadline = @headline
-
-    if moment(pageHeadline.periodEnd).isBefore(dataHeadline.periodEnd)
-      deferred.resolve("Out of date")
-    else
-      deferred.resolve("Up to date")
-
-  ).fail( (err) ->
-    deferred.reject(err)
-  )
-
-  return deferred.promise
-
 pageSchema.methods.setHeadlineToMostRecentFromParent = ->
   deferred = Q.defer()
 

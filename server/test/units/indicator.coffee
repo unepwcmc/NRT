@@ -2,9 +2,11 @@ assert = require('chai').assert
 helpers = require '../helpers'
 Indicator = require('../../models/indicator').model
 IndicatorData = require('../../models/indicator_data').model
+Page = require('../../models/page').model
 async = require('async')
 _ = require('underscore')
 Q = require 'q'
+sinon = require 'sinon'
 
 suite('Indicator')
 
@@ -527,4 +529,54 @@ test(".truncateDescription returns the indicator unchanged if there is no descri
       indicator.id
       truncatedIndicator.id
     )
+)
+
+test('.calculateRecencyOfHeadline when given an indicator with a headline date
+  older than the most recent data returns "Out of date"', (done) ->
+  indicator = new Indicator()
+  sinon.stub(indicator, 'getNewestHeadline', ->
+    deferred = Q.defer()
+    deferred.resolve {periodEnd: '31 Dec 2012'}
+    return deferred.promise
+  )
+
+  page = new Page(parent_type: 'Indicator', headline: {periodEnd: '30 Dec 2012'})
+  sinon.stub(indicator, 'populatePage', ->
+    deferred = Q.defer()
+    deferred.resolve indicator.page = page
+    return deferred.promise
+  )
+
+  indicator.calculateRecencyOfHeadline().then( (recencyText) ->
+    assert.strictEqual "Out of date", recencyText
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.calculateRecencyOfHeadline when given an indicator with a headline date
+  equal to or newer than the most recent data returns "Up to date"', (done) ->
+  indicator = new Indicator()
+  sinon.stub(indicator, 'getNewestHeadline', ->
+    deferred = Q.defer()
+    deferred.resolve {periodEnd: '31 Dec 2012'}
+    return deferred.promise
+  )
+
+  page = new Page(parent_type: 'Indicator', headline: {periodEnd: '01 Jan 2013'})
+  sinon.stub(indicator, 'populatePage', ->
+    deferred = Q.defer()
+    deferred.resolve indicator.page = page
+    return deferred.promise
+  )
+
+  indicator.calculateRecencyOfHeadline().then( (recencyText) ->
+    assert.strictEqual "Up to date", recencyText
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
 )
