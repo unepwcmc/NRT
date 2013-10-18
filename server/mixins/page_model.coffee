@@ -147,13 +147,16 @@ module.exports = {
 
   populatePage: ->
     deferred = Q.defer()
-    
-    @getPage().then((page)=>
-      @page = page
+
+    if @page?
       deferred.resolve()
-    ).fail((err) ->
-      deferred.reject(err)
-    )
+    else
+      @getPage().then((page)=>
+        @page = page
+        deferred.resolve()
+      ).fail((err) ->
+        deferred.reject(err)
+      )
 
     return deferred.promise
 }

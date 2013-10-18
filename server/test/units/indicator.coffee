@@ -580,3 +580,42 @@ test('.calculateRecencyOfHeadline when given an indicator with a headline date
     throw err
   )
 )
+
+test('#populatePages given an array of indicators, populates their page attributes', (done) ->
+  indicator = new Indicator()
+  page = new Page()
+  sinon.stub(indicator, 'populatePage', ->
+    deferred = Q.defer()
+    deferred.resolve indicator.page = page
+    return deferred.promise
+  )
+
+  Indicator.populatePages([indicator]).then( ->
+    assert.ok _.isEqual(indicator.page, page),
+      "Expected the page attribute to be populated with the indicator page"
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('#calculateNarrativeRecency given an array of indicators,
+  calculates their narrative recency', (done) ->
+  indicator = new Indicator()
+  narrativeRecency = "Up to date"
+  sinon.stub(indicator, 'calculateRecencyOfHeadline', ->
+    deferred = Q.defer()
+    deferred.resolve narrativeRecency
+    return deferred.promise
+  )
+
+  Indicator.calculateNarrativeRecency([indicator]).then( ->
+    assert.strictEqual indicator.narrativeRecency, narrativeRecency,
+      "Expected the narrativeRecency attribute to be populated with the narrative recency"
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)

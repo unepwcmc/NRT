@@ -24,6 +24,7 @@ exports.createApp = ->
   )
   app.set "view engine", "hbs"
   app.set "views", __dirname + "/views"
+  require('./initializers/handlebars_helpers')
 
   app.use express.favicon()
   app.use express.bodyParser()

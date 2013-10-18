@@ -296,6 +296,43 @@ indicatorSchema.methods.calculateRecencyOfHeadline = ->
 
   return deferred.promise
 
+populatePage = (indicator, callback) ->
+  indicator.populatePage().then(->
+    callback()
+  ).fail((err) ->
+    callback(err)
+  )
+
+indicatorSchema.statics.populatePages = (indicators) ->
+  deferred = Q.defer()
+
+  async.each indicators, populatePage, (err) ->
+    if err?
+      deferred.reject(err)
+    else
+      deferred.resolve()
+  
+  return deferred.promise
+
+calculateRecency = (indicator, callback) ->
+  indicator.calculateRecencyOfHeadline().then((recency)->
+    indicator.narrativeRecency = recency
+    callback()
+  ).fail((err) ->
+    callback(err)
+  )
+
+indicatorSchema.statics.calculateNarrativeRecency = (indicators) ->
+  deferred = Q.defer()
+
+  async.each indicators, calculateRecency, (err) ->
+    if err?
+      deferred.reject(err)
+    else
+      deferred.resolve()
+
+  return deferred.promise
+
 Indicator = mongoose.model('Indicator', indicatorSchema)
 
 module.exports = {

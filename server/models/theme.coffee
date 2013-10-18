@@ -48,52 +48,38 @@ themeSchema.statics.seedData = (callback) ->
 
   return deferred.promise
 
+
+populateThemeIndicators = (theTheme, cb) ->
+  theIndicators = null
+
+  Indicator.findWhereIndicatorHasData(
+    theme: theTheme._id
+  ).then( (indicators) ->
+
+    theIndicators = Indicator.truncateDescriptions(indicators)
+
+    Indicator.populatePages(theIndicators)
+  ).then(->
+    Indicator.calculateNarrativeRecency(theIndicators)
+  ).then(->
+    theTheme.indicators = theIndicators
+    cb(null, theTheme)
+  ).fail((err) ->
+    cb(err)
+  )
+
 themeSchema.statics.getFatThemes = (callback) ->
   Theme.find({})
     .sort(_id: 1)
     .exec( (err, themes) ->
-      populateFunctions = []
-
-      for theme, index in themes
-        themes[index] = theme.toObject()
-        ( ->
-          theTheme = theme
-          theIndex = index
-          populateFunctions.push(
-            (cb) ->
-              Indicator.findWhereIndicatorHasData(
-                theme: theTheme._id
-              ).then( (indicators) ->
-
-                indicators = Indicator.truncateDescriptions(indicators)
-
-                populatePage = (indicator, callback) ->
-                  indicator.populatePage().then(->
-                    callback()
-                  ).fail((err) ->
-                    callback(err)
-                  )
-
-                async.each indicators, populatePage, (err) ->
-                  if err?
-                    cb(err)
-                  themes[theIndex].indicators = indicators
-                  cb()
-
-              ).fail((err) ->
-                cb(err)
-              )
-          )
-        )()
-
       Q.nfcall(
-        async.parallel, populateFunctions
-      ).then( (results) ->
-        callback null, themes
+        async.map, themes, populateThemeIndicators
+      ).then( (populatedThemes) ->
+        callback null, populatedThemes
       ).fail( (err) ->
         callback err
       )
-  )
+    )
 
 themeSchema.statics.getIndicatorsByTheme = (themeId, callback) ->
   Indicator.find(theme: themeId)
