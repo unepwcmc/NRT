@@ -5,14 +5,6 @@ async = require('async')
 csv = require('express-csv')
 Q = require('q')
 
-exports.index = (req, res) ->
-  Theme.getFatThemes( (err, themes) ->
-    if err?
-      console.error err
-      return res.render(500, "Error fetching the themes")
-    res.render "indicators/index", themes: themes
-  )
-
 exports.show = (req, res) ->
   theIndicator = null
 
