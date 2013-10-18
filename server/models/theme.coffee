@@ -68,12 +68,8 @@ populateThemeIndicators = (theTheme, cb) ->
     cb(err)
   )
 
-themeSchema.statics.getFatThemes = (filter, callback) ->
-  if arguments.length is 1
-    callback = filter
-    filter = {}
-
-  Theme.find(filter)
+themeSchema.statics.getFatThemes = (callback) ->
+  Theme.find({})
     .sort(_id: 1)
     .exec( (err, themes) ->
       Q.nfcall(
