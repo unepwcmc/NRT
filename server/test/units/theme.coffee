@@ -6,10 +6,11 @@ helpers = require '../helpers'
 async = require('async')
 Q = require('q')
 _ = require('underscore')
+sinon = require('sinon')
 
 suite('Theme')
 
-test('.getFatThemes returns all the themes
+test('#getFatThemes returns all the themes
   with their indicators that have data populated
   and their sub pages populated', (done) ->
   indicatorAttributes = null
@@ -80,6 +81,22 @@ test('.getFatThemes returns all the themes
     console.error err
     console.error err.stack
     throw new Error(err)
+  )
+)
+
+test('#getFatThemes when given filters a mongoose filter it filters the themes', (done) ->
+  themeSpy = sinon.spy(Theme, 'find')
+
+  filter = {type: 'esri'}
+
+  Theme.getFatThemes(filter, (err)->
+    if err?
+      console.error err
+      throw err
+
+    assert.ok themeSpy.calledOnce, "Expected Theme.find to be called once"
+    assert.ok themeSpy.calledWith(filter), "Expected Theme.find to be called with the filter"
+    done()
   )
 )
 
