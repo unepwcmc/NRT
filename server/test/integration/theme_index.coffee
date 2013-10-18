@@ -35,7 +35,6 @@ test("With a series of themes and indicators, I should see their titles", (done)
     }
   ).spread((res, body) ->
 
-    console.dir body
     assert.equal res.statusCode, 200
 
     for theme in themeAttributes
