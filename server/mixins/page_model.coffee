@@ -69,7 +69,11 @@ module.exports = {
       Page.findOne({parent_id: @_id, is_draft: true}), 'exec'
     ).then( (page) =>
       if page?
-        deferred.resolve(page)
+        Q.nsend(
+          Page, 'findFatModel', page._id
+        ).then( (fatPage) ->
+          deferred.resolve(fatPage)
+        )
       else
         @getPage().then( (nonDraftPage) ->
           nonDraftPage.createDraftClone()
