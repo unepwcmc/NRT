@@ -207,6 +207,8 @@
   "theme": "Biodiversity",
   "type": "worldBank",
   "indicatorDefinition": {
+      "unit": "%",
+      "short_unit": "%",
       "apiUrl": "http://localhost:3002/wb/ARE",
       "apiIndicatorName": "NY.ADJ.DCO2.GN.ZS",
       "period": "annual",
@@ -250,6 +252,7 @@
     "cartodb_tablename": "nrt_bc_seagrass_copy",
     "query": "SELECT SUM(area_ha) FROM nrt_bc_seagrass_copy",
     "unit": "ha",
+    "short_unit": "ha",
     "period": "annual",
     "xAxis": "year",
     "yAxis": "value",
