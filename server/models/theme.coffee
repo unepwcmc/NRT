@@ -48,46 +48,38 @@ themeSchema.statics.seedData = (callback) ->
 
   return deferred.promise
 
+
+populateThemeIndicators = (theTheme, cb) ->
+  theIndicators = null
+
+  Indicator.findWhereIndicatorHasData(
+    theme: theTheme._id
+  ).then( (indicators) ->
+
+    theIndicators = Indicator.truncateDescriptions(indicators)
+
+    Indicator.populatePages(theIndicators)
+  ).then(->
+    Indicator.calculateNarrativeRecency(theIndicators)
+  ).then(->
+    theTheme.indicators = theIndicators
+    cb(null, theTheme)
+  ).fail((err) ->
+    cb(err)
+  )
+
 themeSchema.statics.getFatThemes = (callback) ->
   Theme.find({})
     .sort(_id: 1)
     .exec( (err, themes) ->
-      populateFunctions = []
-
-      for theme, index in themes
-        themes[index] = theme.toObject()
-        ( ->
-          theTheme = theme
-          theIndex = index
-          theIndicators = null
-          populateFunctions.push(
-            (cb) ->
-              Indicator.findWhereIndicatorHasData(
-                theme: theTheme._id
-              ).then( (indicators) ->
-
-                theIndicators = Indicator.truncateDescriptions(indicators)
-
-                Indicator.populatePages(theIndicators)
-              ).then(->
-                Indicator.calculateNarrativeRecency(theIndicators)
-              ).then(->
-                theTheme.indicators = theIndicators
-                cb(null, theTheme)
-              ).fail((err) ->
-                cb(err)
-              )
-          )
-        )()
-
       Q.nfcall(
-        async.parallel, populateFunctions
+        async.map, themes, populateThemeIndicators
       ).then( (populatedThemes) ->
         callback null, populatedThemes
       ).fail( (err) ->
         callback err
       )
-  )
+    )
 
 themeSchema.statics.getIndicatorsByTheme = (themeId, callback) ->
   Indicator.find(theme: themeId)
