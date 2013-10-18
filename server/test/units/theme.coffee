@@ -72,9 +72,13 @@ test('.getFatThemes returns all the themes
     assert.property returnedThemes[0].indicators[0], 'page',
       "Expected indicators to have their page attribute populated"
 
+    assert.property returnedThemes[0].indicators[0], 'narrativeRecency',
+      "Expected indicators to have their narrative recency attribute calculated"
+
     done()
   ).fail((err)->
     console.error err
+    console.error err.stack
     throw new Error(err)
   )
 )

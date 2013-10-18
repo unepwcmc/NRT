@@ -59,27 +59,21 @@ themeSchema.statics.getFatThemes = (callback) ->
         ( ->
           theTheme = theme
           theIndex = index
+          theIndicators = null
           populateFunctions.push(
             (cb) ->
               Indicator.findWhereIndicatorHasData(
                 theme: theTheme._id
               ).then( (indicators) ->
 
-                indicators = Indicator.truncateDescriptions(indicators)
+                theIndicators = Indicator.truncateDescriptions(indicators)
 
-                populatePage = (indicator, callback) ->
-                  indicator.populatePage().then(->
-                    callback()
-                  ).fail((err) ->
-                    callback(err)
-                  )
-
-                async.each indicators, populatePage, (err) ->
-                  if err?
-                    cb(err)
-                  themes[theIndex].indicators = indicators
-                  cb()
-
+                Indicator.populatePages(theIndicators)
+              ).then(->
+                Indicator.calculateNarrativeRecency(theIndicators)
+              ).then(->
+                theTheme.indicators = theIndicators
+                cb(null, theTheme)
               ).fail((err) ->
                 cb(err)
               )
@@ -88,8 +82,8 @@ themeSchema.statics.getFatThemes = (callback) ->
 
       Q.nfcall(
         async.parallel, populateFunctions
-      ).then( (results) ->
-        callback null, themes
+      ).then( (populatedThemes) ->
+        callback null, populatedThemes
       ).fail( (err) ->
         callback err
       )
