@@ -32,7 +32,10 @@
             <h4>{{page.headline.value}}</h4>
             <div class="unit">{{indicatorDefinition.short_unit}}</div>
           </div>
-          <div class="last-update"><span class="status updated"></span>{{narrativeRecency}}</div>
+          <div class="last-update">
+            <span class="status updated {{css-classify narrativeRecency}}"></span>
+            {{narrativeRecency}}
+          </div>
         </a>
         {{/indicators}}
       </div>

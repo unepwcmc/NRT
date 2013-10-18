@@ -475,10 +475,10 @@ div.row.row-2 {
       height: 10px;
       margin-right: 8px;
       border-radius: 2px;
-      &.updated {
+      &.up-to-date {
         background-color: #66bd63;
       }
-      &.close-overdue {
+      &.out-of-date {
         background-color: #fdb24c;
       }
       &.overdue {
