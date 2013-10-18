@@ -50,6 +50,27 @@ replaceThemeNameWithId = (indicators) ->
 
   return deferred.promise
 
+createIndicatorWithSections = (indicatorAttributes, callback) ->
+  theIndicator = null
+
+  Q.nsend(
+    Indicator, 'create', indicatorAttributes
+  ).then( (indicator) ->
+    theIndicator = indicator
+    theIndicator.getPage()
+  ).then( (page) ->
+
+    page.sections = page.sections.concat(indicatorAttributes.sections || [])
+
+    Q.nsend(
+      page, 'save'
+    )
+  ).then( (page) ->
+    callback(null, theIndicator)
+  ).fail( (err) ->
+    callback(err)
+  )
+
 indicatorSchema.statics.seedData = ->
   deferred = Q.defer()
 
@@ -70,17 +91,15 @@ indicatorSchema.statics.seedData = ->
         fs.readFileSync("#{process.cwd()}/lib/seed_indicators.json", 'UTF8')
       )
 
-      replaceThemeNameWithId(dummyIndicators)
-        .then( (indicators) ->
-          Indicator.create(dummyIndicators, (error) ->
-            if error?
-              return deferred.reject(error)
-            else
-              getAllIndicators()
-          )
-        ).fail( (err) ->
-          deferred.reject(error)
+      replaceThemeNameWithId(
+        dummyIndicators
+      ).then( (indicators) ->
+        async.map(dummyIndicators, createIndicatorWithSections, (err, indicators) ->
+          deferred.resolve(indicators)
         )
+      ).fail( (err) ->
+        deferred.reject(error)
+      )
     else
       getAllIndicators()
   )

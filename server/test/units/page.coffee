@@ -34,8 +34,6 @@ test('.create', (done) ->
 )
 
 test('.create with nested section', (done) ->
-  Page = require('../../models/page').model
-
   page_attributes =
     title: 'Lovely Page'
     brief: 'Gotta be brief'
@@ -56,8 +54,6 @@ test('.create with nested section', (done) ->
 )
 
 test('get "fat" page with all related children by page ID', (done) ->
-  Page = require('../../models/page.coffee').model
-
   helpers.createIndicator( (err, indicator) ->
     helpers.createSection({
       title: 'A section',
@@ -102,8 +98,6 @@ test('get "fat" page with all related children by page ID', (done) ->
 )
 
 test('get "fat" page with no related children by page ID', (done) ->
-  Page = require('../../models/page.coffee').model
-
   helpers.createSection((err, section) ->
     helpers.createPage({sections: [section]}).then(
       (page) ->
