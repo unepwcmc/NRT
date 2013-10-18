@@ -102,6 +102,11 @@ pageSchema.pre('save', (next) ->
     )
 )
 
+NO_DATA_HEADLINE =
+  text: "Not reported on"
+  value: "-"
+  periodEnd: null
+
 pageSchema.methods.setHeadlineToMostRecentFromParent = ->
   deferred = Q.defer()
 
@@ -109,7 +114,11 @@ pageSchema.methods.setHeadlineToMostRecentFromParent = ->
     @getParent().then( (parent) ->
       parent.getNewestHeadline()
     ).then( (headline) =>
-      @headline = headline
+      if headline?
+        @headline = headline
+      else
+        @headline = NO_DATA_HEADLINE
+
       deferred.resolve(@headline)
     ).fail( (err) ->
       deferred.reject(err)

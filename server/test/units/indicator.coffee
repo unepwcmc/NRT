@@ -601,16 +601,17 @@ test('.calculateRecencyOfHeadline when given an indicator with no data
   )
 )
 
-test('.calculateRecencyOfHeadline when given an indicator with data
-  but no headline returns "Out of date"', (done) ->
+test('.calculateRecencyOfHeadline when given a headline with
+  no periodEnd returns "Out of date"', (done) ->
   indicator = new Indicator()
   sinon.stub(indicator, 'getNewestHeadline', ->
     deferred = Q.defer()
-    deferred.resolve {periodEnd: '31 Dec 2012'}
+    deferred.resolve {text: "OH HAI"}
     return deferred.promise
   )
 
-  page = new Page(parent_type: 'Indicator')
+
+  page = new Page(parent_type: 'Indicator', headline: {text: "Not reported on", value: "-"})
   sinon.stub(indicator, 'populatePage', ->
     deferred = Q.defer()
     deferred.resolve indicator.page = page

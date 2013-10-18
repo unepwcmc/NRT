@@ -339,7 +339,7 @@ indicatorSchema.methods.calculateRecencyOfHeadline = ->
 
     pageHeadline = @page.headline
 
-    unless pageHeadline?
+    unless pageHeadline? && pageHeadline.periodEnd?
       return deferred.resolve("Out of date")
 
     if moment(pageHeadline.periodEnd).isBefore(dataHeadline.periodEnd)
