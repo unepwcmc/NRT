@@ -376,3 +376,30 @@ test('.populatePage should add a (shallow) page attribute to an indicator', (don
   )
 
 )
+
+test('.populatePage if the page attribute is already populated, should do nothing', (done)->
+  indicator = new Indicator()
+  page = new Page()
+  indicator.page = page
+  getPageStub = sinon.stub(indicator, 'getPage', ->
+    deferred = Q.defer()
+    deferred.resolve(page)
+    return deferred.promise
+  )
+
+  indicator.populatePage().then(->
+
+    assert.property indicator, 'page',
+      "Expected the indicator to have a page attribute"
+    assert.strictEqual indicator.page._id, page._id,
+      "Expected the populated indicator page attribute to have the same ID as the page"
+    assert.strictEqual getPageStub.callCount, 0,
+      "Expected the getPage method not to be called, as the page attribute was already populated"
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+
+)
