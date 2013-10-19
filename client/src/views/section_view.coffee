@@ -29,7 +29,6 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     @render()
 
   render: =>
-    @closeSubViews()
 
     noContent = !@section.get('narrative')? and !@section.get('visualisation')?
     if @section.get('indicator')?
@@ -49,7 +48,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
       visualisation: @section.get('visualisation')
       isEditable: @section.isEditable()
     ))
-    @renderSubViews()
+    @attachSubViews()
     return @
 
   startTitleEdit: =>
