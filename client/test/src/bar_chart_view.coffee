@@ -16,7 +16,6 @@ test('when initialised with a visualisation with no data, it fetches the data', 
   server = sinon.fakeServer.create()
 
   view = new Backbone.Views.BarChartView(visualisation: visualisation)
-  Helpers.renderViewToTestContainer(view)
 
   # Check we received a data request
   indicatorId = visualisation.get('indicator').get('_id')

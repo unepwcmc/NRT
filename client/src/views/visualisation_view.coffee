@@ -14,6 +14,8 @@ class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
     if typeof @visualisation.get('data') is 'string'
       @visualisation.set('data', Backbone.Faker.Reports.createFakeData())
 
+    @render()
+
   downloadAsJson: ->
     window.location = @visualisation.buildIndicatorDataUrl()
 

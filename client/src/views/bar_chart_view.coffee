@@ -17,6 +17,8 @@ class Backbone.Views.BarChartView extends Backbone.View
     @width = options.width || 250
     @barColor = if options.barColor? then options.barColor else "LightSteelBlue"
 
+    @render()
+
   render: =>
     if @visualisation.get('data')?
       @renderChart()
