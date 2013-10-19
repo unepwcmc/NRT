@@ -11,12 +11,11 @@ class Backbone.Views.ChapterView extends Backbone.Diorama.NestingView
     @render()
 
   render: ->
-    @closeSubViews()
     @$el.html(@template(
       thisView: @
       chapter: @chapter
     ))
-    @renderSubViews()
+    @attachSubViews()
     return @
 
   onClose: ->
