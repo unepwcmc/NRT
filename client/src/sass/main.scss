@@ -904,6 +904,10 @@ table {
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 10;
 
+  &.light {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
   header {
     height: 43px;
   }
