@@ -112,6 +112,22 @@ themeSchema.statics.getIndicatorsByTheme = (themeId, callback) ->
       callback(err, indicators)
     )
 
+themeSchema.statics.populateThemeDescriptions = (themes, callback) ->
+  deferred = Q.defer()
+
+  populateDescriptions = (theme, callback) ->
+    theme.populateDescriptionFromPage().then(->
+      callback()
+    ).fail(callback)
+
+  async.each themes, populateDescriptions, (err) ->
+    if err?
+      deferred.reject(err)
+    else
+      deferred.resolve()
+
+  return deferred.promise
+
 themeSchema.methods.getIndicators = (callback) ->
   Theme = require('./theme.coffee').model
   Theme.getIndicatorsByTheme(@_id, callback)
