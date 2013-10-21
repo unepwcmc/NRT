@@ -31,9 +31,6 @@ sectionSchema.statics.createSectionWithNarrative = (attributes, callback) ->
   Section = require('./section.coffee').model
   Narrative = require('./narrative.coffee').model
 
-  console.log "Creating a section with narrative:"
-  console.dir attributes
-
   savedSection = null
 
   section = new Section(title: attributes.title)

@@ -56,7 +56,7 @@ themeSchema.statics.seedData = (callback) ->
         fs.readFileSync("#{process.cwd()}/lib/sample_themes.json", 'UTF8')
       )
 
-      Theme.create(dummyThemes, (error, results) ->
+      async.map(dummyThemes, createThemeWithSections, (error, results) ->
         if error?
           return deferred.reject(error)
 
