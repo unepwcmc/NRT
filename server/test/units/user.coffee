@@ -120,3 +120,47 @@ test(".isLDAPAccount should return false if the email contains @ead.ae", ->
 test(".isLDAPAccount should return false if the email supplied is not @ead.ae", ->
   assert.isFalse User.isLDAPAccount("michael@bluth-company.com")
 )
+
+test('.loginFromLocalDb fails if the user does not exist', (done) ->
+  authenticationCallback = (err, user) ->
+    assert.notOk user, "Expected returned user to be empty"
+
+    done()
+
+  User.loginFromLocalDb("hats", "boats", authenticationCallback)
+)
+
+test(".loginFromLocalDb succeeds if the user's password is correct", (done) ->
+  helpers.createUser(
+    email: "hats"
+    password: "boats"
+  ).then( (user) ->
+    callbackSpy = (err, user) ->
+      assert.ok user, "Expected user to be returned when authentication successful"
+      assert.strictEqual "hats", user.email
+
+      done()
+
+    User.loginFromLocalDb("hats", "boats", callbackSpy)
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test(".loginFromLocalDb fails if the user's password is incorrect", (done) ->
+  helpers.createUser(
+    email: "hats"
+    password: "boats"
+  ).then( (user) ->
+    callback = (err, user) ->
+      assert.notOk user, "Expected user to not be returned when authentication fails"
+
+      done()
+
+    User.loginFromLocalDb("hats", "ships", callback)
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)

@@ -96,6 +96,30 @@ userSchema.methods.isValidPassword = (password) ->
 userSchema.methods.canEdit = (model) ->
   model.canBeEditedBy(@)
 
+userSchema.statics.loginFromLocalDb = (username, password, callback) ->
+  theUser = null
+
+  Q.nsend(
+    User.findOne({email: username}), 'exec'
+  ).then( (user) ->
+    theUser = user
+
+    if !user
+      throw new Error("Incorrect username or password")
+
+    user.isValidPassword(password)
+  ).then( (isValid) ->
+
+    if isValid
+      return callback(null, theUser)
+    else
+      throw new Error("Incorrect username or password")
+
+  ).fail( (err) ->
+    console.error err
+    return callback(err, false)
+  )
+
 userSchema.statics.isLDAPAccount = (email) ->
   /.*@(.*\.)*ead.ae/.test(email)
 
