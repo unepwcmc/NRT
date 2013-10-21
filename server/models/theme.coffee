@@ -54,6 +54,7 @@ populateThemeIndicators = (theTheme, cb) ->
 
   Indicator.findWhereIndicatorHasData(
     theme: theTheme._id
+    type: "esri"
   ).then( (indicators) ->
 
     theIndicators = Indicator.truncateDescriptions(indicators)

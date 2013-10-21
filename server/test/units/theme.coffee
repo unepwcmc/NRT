@@ -25,9 +25,11 @@ test('.getFatThemes returns all the themes
     indicatorAttributes = [{
       title: "I'm an indicator of theme 1"
       theme: themes[0]._id
+      type: "esri"
     },{
       title: "theme 2 indicator"
       theme: themes[1]._id
+      type: "esri"
     }]
 
     helpers.createIndicatorModels(
@@ -80,6 +82,63 @@ test('.getFatThemes returns all the themes
     console.error err
     console.error err.stack
     throw new Error(err)
+  )
+)
+
+test('#getFetThemes only returns themes with indicators of type ESRI', (done) ->
+  helpers.createThemesFromAttributes(
+    [{title: 'a theme'}]
+  ).then((themes) ->
+    indicatorAttributes = [{
+      title: "ESRI indicator"
+      theme: themes[0]._id
+      type: "esri"
+    },{
+      title: "world bank indicator"
+      theme: themes[0]._id
+      type: "worldbank"
+    }]
+
+    helpers.createIndicatorModels(
+      indicatorAttributes
+    )
+  ).then( (subIndicators)->
+    # create indicator data
+    deferred = Q.defer()
+
+    createIndicatorData = (indicator, callback) ->
+      helpers.createIndicatorData({
+        indicator: indicator
+        data: [{data: 'yeah'}]
+      }, ->
+        callback()
+      )
+
+    async.each subIndicators, createIndicatorData, (err) ->
+      if err?
+        deferred.reject(err)
+      else
+        deferred.resolve()
+
+    return deferred.promise
+  ).then( ->
+    Q.nsend(
+      Theme, 'getFatThemes'
+    )
+  ).then( (fatThemes)->
+    assert.lengthOf fatThemes, 1, "Only expected one theme to be returned"
+
+    fatTheme = fatThemes[0]
+    assert.lengthOf fatTheme.indicators, 1, "Only expected one indicator to be returned"
+
+    assert.strictEqual fatTheme.indicators[0].type, "esri",
+      "Expected the returned indicator to be an ESRI indicator"
+
+    done()
+  ).fail((err) ->
+    console.error err
+    console.error err.stack
+    throw err
   )
 )
 
