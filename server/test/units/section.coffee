@@ -32,6 +32,23 @@ test('.getValidationErrors should return 0 errors if attributes have an indicato
   assert.lengthOf errors, 0
 )
 
+test('.getNarrative returns the first associated narrative', (done) ->
+  narrativeText = "Narrative text"
+  Q.nfcall(
+    Section.createSectionWithNarrative,
+      title: "Description"
+      content: narrativeText
+  ).then( (section) ->
+    section.getNarrative()
+  ).then( (narrative) ->
+    assert.strictEqual narrativeText, narrative.content
+    done()
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
 test('.cloneNarrativesFrom when given a section id of a section with a narrative
   should duplicate that narrative,
   relate it to the new section,

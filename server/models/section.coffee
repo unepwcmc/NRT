@@ -52,6 +52,18 @@ sectionSchema.statics.createSectionWithNarrative = (attributes, callback) ->
 
 
 # METHODS
+sectionSchema.methods.getNarrative = () ->
+  deferred = Q.defer()
+
+  Narrative.find(section: @_id, (err, narratives) ->
+    if err?
+      deferred.reject err
+    else
+      deferred.resolve narratives[0]
+  )
+
+  return deferred.promise
+
 sectionSchema.methods.cloneChildrenBySectionId = (originalSectionId) ->
   deferred = Q.defer()
 

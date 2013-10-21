@@ -2,6 +2,7 @@ assert = require('chai').assert
 helpers = require '../helpers'
 Indicator = require('../../models/indicator').model
 Section = require('../../models/section').model
+Theme = require('../../models/theme').model
 Page = require('../../models/page').model
 IndicatorData = require('../../models/indicator_data').model
 async = require('async')
@@ -402,4 +403,37 @@ test('.populatePage if the page attribute is already populated, should do nothin
     throw err
   )
 
+)
+
+test(".populateDescriptionFromPage on a model where the page model is populated,
+  and it has a section with the title 'description',
+  sets @description to that section's narrative", (done)->
+  descriptionSection = null
+  descriptionText = "My name is my name"
+  theme = new Theme()
+
+  Q.nfcall(
+    Section.createSectionWithNarrative,
+      title: "Description"
+      content: descriptionText
+  ).then( (section) ->
+    descriptionSection = section
+
+    theme.page = new Page(
+      sections: [descriptionSection]
+    )
+
+    theme.populateDescriptionFromPage()
+  ).then( ->
+
+    assert.property theme, 'description', "Expected the description to be populated"
+    assert.strictEqual theme.description, descriptionText,
+      "Expected the description text to be populated correctly"
+
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
 )

@@ -2,6 +2,11 @@ async = require('async')
 Q = require('q')
 Page = require('../models/page').model
 
+findSectionWithTitle = (page, title) ->
+  for section in page.sections
+    return section if section.title is title
+  return null
+
 module.exports = {
   publishDraftPage: ->
     deferred = Q.defer()
@@ -163,4 +168,17 @@ module.exports = {
       )
 
     return deferred.promise
+
+  populateDescriptionFromPage: ->
+    deferred = Q.defer()
+
+    section = findSectionWithTitle(@page, 'Description')
+
+    section.getNarrative().then((narrative) =>
+      @description = narrative.content
+      deferred.resolve(@description)
+    ).fail(deferred.reject)
+
+    return deferred.promise
+
 }
