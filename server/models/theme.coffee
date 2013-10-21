@@ -16,6 +16,26 @@ themeSchema = mongoose.Schema(
 
 _.extend(themeSchema.methods, pageModel)
 
+createThemeWithSections = (themeAttributes, callback) ->
+  theTheme = thePage = null
+
+  Q.nsend(
+    Theme, 'create', themeAttributes
+  ).then( (theme) ->
+    theTheme = theme
+    theTheme.getPage()
+  ).then( (page) ->
+    thePage = page
+
+    sections = themeAttributes.sections
+
+    thePage.createSectionNarratives(sections)
+  ).then( (page) ->
+    callback(null, theTheme)
+  ).fail( (err) ->
+    callback(err)
+  )
+
 themeSchema.statics.seedData = (callback) ->
   deferred = Q.defer()
 

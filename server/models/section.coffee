@@ -27,6 +27,33 @@ sectionSchema.statics.cloneChildren = (clonedSectionAndOriginalSectionId, callba
     .then(-> callback(null))
     .fail(callback)
 
+sectionSchema.statics.createSectionWithNarrative = (attributes, callback) ->
+  Section = require('./section.coffee').model
+  Narrative = require('./narrative.coffee').model
+
+  console.log "Creating a section with narrative:"
+  console.dir attributes
+
+  savedSection = null
+
+  section = new Section(title: attributes.title)
+  Q.nsend(
+    section, 'save'
+  ).spread( (section, rowsChanged) ->
+    savedSection = section
+
+    narrative = new Narrative(section: savedSection.id, content: attributes.content)
+
+    Q.nsend(
+      narrative, 'save'
+    )
+  ).then( (savedNarrative) ->
+    callback(null, savedSection)
+  ).fail( (err) ->
+    callback(err)
+  )
+
+
 # METHODS
 sectionSchema.methods.cloneChildrenBySectionId = (originalSectionId) ->
   deferred = Q.defer()

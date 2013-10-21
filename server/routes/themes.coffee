@@ -8,8 +8,7 @@ exports.index = (req, res) ->
   Theme.getFatThemes( (err, themes) ->
     if err?
       console.error err
-      console.error err.stack
-      return res.send(500, "Error fetching the themes")
+      return res.render(500, "Error fetching the themes")
     res.render "themes/index", themes: themes
   )
 

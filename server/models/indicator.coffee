@@ -50,29 +50,6 @@ replaceThemeNameWithId = (indicators) ->
 
   return deferred.promise
 
-createSectionWithNarrative = (attributes, callback) ->
-  Section = require('./section.coffee').model
-  Narrative = require('./narrative.coffee').model
-
-  savedSection = null
-
-  section = new Section(title: attributes.title)
-  Q.nsend(
-    section, 'save'
-  ).spread( (section, rowsChanged) ->
-    savedSection = section
-
-    narrative = new Narrative(section: savedSection.id, content: attributes.content)
-
-    Q.nsend(
-      narrative, 'save'
-    )
-  ).then( (savedNarrative) ->
-    callback(null, savedSection)
-  ).fail( (err) ->
-    callback(err)
-  )
-
 createIndicatorWithSections = (indicatorAttributes, callback) ->
   theIndicator = thePage = null
 
@@ -86,17 +63,8 @@ createIndicatorWithSections = (indicatorAttributes, callback) ->
 
     sections = indicatorAttributes.sections
 
-    Q.nsend(
-      async, 'map', sections, createSectionWithNarrative
-    )
-  ).then( (sections) ->
-
-    thePage.sections = thePage.sections.concat(sections || [])
-
-    Q.nsend(
-      thePage, 'save'
-    )
-  ).then( (page) ->
+    thePage.createSectionNarratives(sections)
+  ).then( ->
     callback(null, theIndicator)
   ).fail( (err) ->
     callback(err)
@@ -126,6 +94,9 @@ indicatorSchema.statics.seedData = ->
         dummyIndicators
       ).then( (indicators) ->
         async.map(dummyIndicators, createIndicatorWithSections, (err, indicators) ->
+          if err?
+            return deferred.reject(err)
+          
           deferred.resolve(indicators)
         )
       ).fail( (err) ->
