@@ -172,13 +172,26 @@ module.exports = {
   populateDescriptionFromPage: ->
     deferred = Q.defer()
 
-    section = findSectionWithTitle(@page, 'Description')
+    (=>
+      if @page?
+        return Q.fcall(=> return @page)
+      else
+        return @getPage()
+    )().then((page)=>
+      section = findSectionWithTitle(page, 'Description')
 
-    section.getNarrative().then((narrative) =>
-      @description = narrative.content
-      deferred.resolve(@description)
+      if !section?
+        @description = ''
+        deferred.resolve(@description)
+      else
+        section.getNarrative().then((narrative) =>
+          if narrative?
+            @description = narrative.content
+          else
+            @description = ''
+          deferred.resolve(@description)
+        ).fail(deferred.reject)
     ).fail(deferred.reject)
 
     return deferred.promise
-
 }
