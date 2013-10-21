@@ -104,3 +104,19 @@ test(".save hashes the user's password before saving", (done) ->
     done()
   )
 )
+
+test(".isLDAPAccount should return true if the email supplied is @ead.ae", ->
+  assert.isTrue User.isLDAPAccount("kanye@ead.ae")
+)
+
+test(".isLDAPAccount should return true if the email is @subdomain.ead.ae", ->
+  assert.isTrue User.isLDAPAccount("kanye@subdomain.ead.ae")
+)
+
+test(".isLDAPAccount should return false if the email contains @ead.ae", ->
+  assert.isFalse User.isLDAPAccount("gob@bead.ae")
+)
+
+test(".isLDAPAccount should return false if the email supplied is not @ead.ae", ->
+  assert.isFalse User.isLDAPAccount("michael@bluth-company.com")
+)

@@ -96,6 +96,9 @@ userSchema.methods.isValidPassword = (password) ->
 userSchema.methods.canEdit = (model) ->
   model.canBeEditedBy(@)
 
+userSchema.statics.isLDAPAccount = (email) ->
+  /.*@(.*\.)*ead.ae/.test(email)
+
 User = mongoose.model('User', userSchema)
 
 module.exports = {
