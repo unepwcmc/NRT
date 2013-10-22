@@ -34,22 +34,20 @@ passport.use(
           else
             user.loginFromLocalDb(password, done)
         else
-          console.log 'getting dn'
           User.fetchDistinguishedName(username)
             .then( (distinguishedName) ->
 
-              console.log 'got dn'
-
               user = new User(email: username, distinguishedName: distinguishedName)
 
-              Q.nfcall(
-                User, 'save'
+              Q.nsend(
+                user, 'save'
               )
-            ).then( (user) ->
+            ).spread( (user) ->
 
               user.loginFromLDAP(password, done)
 
             ).fail( (err) ->
+              console.log err
               done(null, false, {message: "Incorrect username or password"})
             )
 

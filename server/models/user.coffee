@@ -115,11 +115,12 @@ userSchema.methods.loginFromLocalDb = (password, callback) ->
 
 userSchema.methods.loginFromLDAP = (password, done) ->
   ldap = require('ldapjs')
+
   client = ldap.createClient(
     url: 'ldap://10.10.25.2:389'
   )
 
-  client.bind("CN=James Cox,OU=IntalioUsers,DC=esp,DC=ead,DC=ext", password, (err) =>
+  client.bind(@distinguishedName, password, (err) =>
     if err?
       done(err, false)
     else
@@ -129,70 +130,33 @@ userSchema.methods.loginFromLDAP = (password, done) ->
 userSchema.statics.fetchDistinguishedName = (username) ->
   deferred = Q.defer()
 
-  LDAP = require('LDAP')
-
-  ldap = new LDAP(
-    uri: 'ldap://10.10.25.2:389',
-    version: 3,
-    connecttimeout: 1
+  ldap = require('ldapjs')
+  client = ldap.createClient(
+    url: 'ldap://10.10.25.2:389'
   )
 
-  ldap.open( (err) ->
+  client.bind("CN=James Cox,OU=IntalioUsers,DC=esp,DC=ead,DC=ext", "Password.1", (err) =>
     if err?
-      console.error err
-      throw new Error('Can not connect')
-
-    bind_options =
-      binddn: "CN=James Cox,OU=IntalioUsers,DC=esp,DC=ead,DC=ext"
-      password: "Password.1"
-
-    ldap.simplebind(bind_options, (err) ->
-      if err?
-        throw new Error('can not bind')
-
-      ldap.search(
+      deferred.reject(err)
+    else
+      client.search(
+        "OU=IntalioUsers,DC=esp,DC=ead,DC=ext",
         {
-          base: "OU=IntalioUsers,DC=esp,DC=ead,DC=ext"
-          filter:"(sAMAccountName=James.Cox)"
-          scope: 3
+          filter:"(sAMAccountName=#{username})"
+          scope: 'sub'
+          attributes: ["distinguishedName"]
         },
-        (err, data) ->
-          if err?
-            throw new Error('error searching')
+        (err, search) ->
+          search.on('searchEntry', (entry) ->
+            deferred.resolve(entry.object.distinguishedName)
+          )
 
-          console.log data
+          search.on('end', (result) ->
+            if result.status > 0
+              deferred.reject()
+          )
       )
-    )
   )
-  #ldap.bind("CN=James Cox,OU=IntalioUsers,DC=esp,DC=ead,DC=ext", "Password.1", (err) =>
-    #console.log 'in bind'
-    #if err?
-      #console.log 'er ror'
-      #console.error err
-      #console.log err.message
-      #console.error err.stack
-      #deferred.reject(err)
-    #else
-      #console.log 'about to search'
-      #client.search(
-        #"OU=IntalioUsers,DC=esp,DC=ead,DC=ext",
-        #{
-          #filter:"(sAMAccountName=#{username})"
-          #scope: 'sub'
-          #attributes: ["distinguishedName"]
-        #},
-        #(err, res) ->
-          #console.log 'in search'
-          #search.on('searchEntry', (entry) ->
-            #deferred.resolve(entry.object.distinguishedName)
-          #)
-
-          #search.on('end', (result) ->
-            #if result.status > 0
-              #deferred.reject()
-          #)
-      #)
-  #)
 
   return deferred.promise
 
