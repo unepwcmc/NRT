@@ -71,25 +71,8 @@ themeSchema.statics.seedData = (callback) ->
 
 
 populateThemeIndicators = (theTheme, cb) ->
-  theIndicators = null
-
-  Indicator.findWhereIndicatorHasData(
-    theme: theTheme._id
-    type: "esri"
-  ).then( (indicators) ->
-    theIndicators = indicators
-
-    Indicator.populatePages(theIndicators)
-  ).then(->
-
-    Indicator.populateDescriptionsFromPages(theIndicators)
-  ).then(->
-    theIndicators = Indicator.truncateDescriptions(theIndicators)
-
-    Indicator.calculateNarrativeRecency(theIndicators)
-  ).then(->
-    theTheme.indicators = theIndicators
-    cb(null, theTheme)
+  theTheme.populateIndicators().then( ->
+    cb()
   ).fail((err) ->
     cb(err)
   )
@@ -99,9 +82,9 @@ themeSchema.statics.getFatThemes = (callback) ->
     .sort(_id: 1)
     .exec( (err, themes) ->
       Q.nfcall(
-        async.map, themes, populateThemeIndicators
-      ).then( (populatedThemes) ->
-        callback null, populatedThemes
+        async.each, themes, populateThemeIndicators
+      ).then( ->
+        callback null, themes
       ).fail( (err) ->
         callback err
       )
@@ -122,6 +105,27 @@ themeSchema.statics.getIndicatorsByTheme = (themeId, callback) ->
 themeSchema.methods.getIndicators = (callback) ->
   Theme = require('./theme.coffee').model
   Theme.getIndicatorsByTheme(@_id, callback)
+  
+themeSchema.methods.populateIndicators = ->
+  theIndicators = null
+  Indicator.findWhereIndicatorHasData(
+    theme: @_id
+    type: "esri"
+  ).then( (indicators) ->
+    theIndicators = indicators
+
+    Indicator.populatePages(theIndicators)
+  ).then(->
+
+    Indicator.populateDescriptionsFromPages(theIndicators)
+  ).then(->
+    theIndicators = Indicator.truncateDescriptions(theIndicators)
+
+    Indicator.calculateNarrativeRecency(theIndicators)
+  ).then(=>
+    @indicators = theIndicators
+    Q.fcall(=> @)
+  )
 
 Theme = mongoose.model('Theme', themeSchema)
 
