@@ -113,11 +113,17 @@ userSchema.methods.loginFromLocalDb = (password, callback) ->
     return callback(err, false)
   )
 
+getLDAPConfig = ->
+  JSON.parse(
+    fs.readFileSync("#{process.cwd()}/config/ldap.json", 'UTF8')
+  )
+
 userSchema.methods.loginFromLDAP = (password, done) ->
   ldap = require('ldapjs')
+  ldapConfig = getLDAPConfig()
 
   client = ldap.createClient(
-    url: 'ldap://10.10.25.2:389'
+    url: ldapConfig.host
   )
 
   client.bind(@distinguishedName, password, (err) =>
@@ -127,35 +133,59 @@ userSchema.methods.loginFromLDAP = (password, done) ->
       done(null, @)
   )
 
-userSchema.statics.fetchDistinguishedName = (username) ->
+fetchDistinguishedName = (username) ->
   deferred = Q.defer()
 
   ldap = require('ldapjs')
+  ldapConfig = getLDAPConfig()
+
   client = ldap.createClient(
-    url: 'ldap://10.10.25.2:389'
+    url: ldapConfig.host
   )
 
-  client.bind("CN=James Cox,OU=IntalioUsers,DC=esp,DC=ead,DC=ext", "Password.1", (err) =>
+  client.bind(ldapConfig.auth_base, ldapConfig.auth_password, (err) =>
     if err?
       deferred.reject(err)
     else
       client.search(
-        "OU=IntalioUsers,DC=esp,DC=ead,DC=ext",
+        ldapConfig.search_base,
         {
           filter:"(sAMAccountName=#{username})"
           scope: 'sub'
           attributes: ["distinguishedName"]
         },
         (err, search) ->
+          theUser = null
+
           search.on('searchEntry', (entry) ->
-            deferred.resolve(entry.object.distinguishedName)
+            theUser = entry.object
+            deferred.resolve(theUser.distinguishedName)
           )
 
           search.on('end', (result) ->
-            if result.status > 0
+            if result.status > 0 || !theUser?
               deferred.reject()
           )
       )
+  )
+
+  return deferred.promise
+
+userSchema.statics.createFromLDAPUsername = (username) ->
+  deferred = Q.defer()
+
+  fetchDistinguishedName(
+    username
+  ).then( (distinguishedName) ->
+    user = new User(email: username, distinguishedName: distinguishedName)
+
+    Q.nsend(
+      user, 'save'
+    )
+  ).spread( (user) ->
+    deferred.resolve(user)
+  ).fail( (err) ->
+    deferred.reject()
   )
 
   return deferred.promise

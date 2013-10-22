@@ -34,20 +34,10 @@ passport.use(
           else
             user.loginFromLocalDb(password, done)
         else
-          User.fetchDistinguishedName(username)
-            .then( (distinguishedName) ->
-
-              user = new User(email: username, distinguishedName: distinguishedName)
-
-              Q.nsend(
-                user, 'save'
-              )
-            ).spread( (user) ->
-
+          User.createFromLDAPUsername(username)
+            .then( (user) ->
               user.loginFromLDAP(password, done)
-
             ).fail( (err) ->
-              console.log err
               done(null, false, {message: "Incorrect username or password"})
             )
 
