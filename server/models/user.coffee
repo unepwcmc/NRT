@@ -133,7 +133,7 @@ userSchema.methods.loginFromLDAP = (password, done) ->
       done(null, @)
   )
 
-fetchDistinguishedName = (username) ->
+fetchUserFromLDAP = (username) ->
   deferred = Q.defer()
 
   ldap = require('ldapjs')
@@ -152,14 +152,13 @@ fetchDistinguishedName = (username) ->
         {
           filter:"(sAMAccountName=#{username})"
           scope: 'sub'
-          attributes: ["distinguishedName"]
         },
         (err, search) ->
           theUser = null
 
           search.on('searchEntry', (entry) ->
             theUser = entry.object
-            deferred.resolve(theUser.distinguishedName)
+            deferred.resolve(theUser)
           )
 
           search.on('end', (result) ->
@@ -174,10 +173,14 @@ fetchDistinguishedName = (username) ->
 userSchema.statics.createFromLDAPUsername = (username) ->
   deferred = Q.defer()
 
-  fetchDistinguishedName(
+  fetchUserFromLDAP(
     username
-  ).then( (distinguishedName) ->
-    user = new User(email: username, distinguishedName: distinguishedName)
+  ).then( (user) ->
+    user = new User(
+      email: username
+      distinguishedName: user.distinguishedName
+      name: user.name
+    )
 
     Q.nsend(
       user, 'save'
