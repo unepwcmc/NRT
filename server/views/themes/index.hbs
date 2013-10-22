@@ -18,10 +18,10 @@
           <h2>{{title}}<span>›</span></h2>
         </a>
 
-        <p>
-          {{description}}
-          <span><a href="/themes/{{_id}}">(Read more)</a></span>
-        </p>
+        <div class="description-block">
+          {{{description}}}
+          <a href="/themes/{{_id}}">(Read more)</a>
+        </div>
 
         {{#indicators}}
         <a class="indicator-box" href="/indicators/{{id}}">

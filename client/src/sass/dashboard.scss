@@ -296,6 +296,11 @@ div.row.row-2 {
 
 .theme-block {
   overflow: hidden;
+
+  .description-block {
+    margin-bottom: 15px;
+  }
+
   p {
     font-size: 1em;
     margin-bottom: 25px;
