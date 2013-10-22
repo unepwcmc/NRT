@@ -105,29 +105,34 @@ test(".save hashes the user's password before saving", (done) ->
   )
 )
 
-test(".isLDAPAccount should return true if the email supplied is @ead.ae", ->
-  assert.isTrue User.isLDAPAccount("kanye@ead.ae")
-)
+test('.save with a distinguishedName', (done) ->
+  dn = "CN=The Queen,OU=Royalty"
+  user = new User(distinguishedName: dn)
 
-test(".isLDAPAccount should return true if the email is @subdomain.ead.ae", ->
-  assert.isTrue User.isLDAPAccount("kanye@subdomain.ead.ae")
-)
+  user.save( (err, savedUser) ->
+    if err?
+      console.error err
+      throw new Error(err)
 
-test(".isLDAPAccount should return false if the email contains @ead.ae", ->
-  assert.isFalse User.isLDAPAccount("gob@bead.ae")
-)
-
-test(".isLDAPAccount should return false if the email supplied is not @ead.ae", ->
-  assert.isFalse User.isLDAPAccount("michael@bluth-company.com")
-)
-
-test('.loginFromLocalDb fails if the user does not exist', (done) ->
-  authenticationCallback = (err, user) ->
-    assert.notOk user, "Expected returned user to be empty"
+    assert.strictEqual(
+      dn,
+      savedUser.distinguishedName,
+      "Expected user to have a distinguished name"
+    )
 
     done()
+  )
+)
 
-  User.loginFromLocalDb("hats", "boats", authenticationCallback)
+test(".isLDAPAccount should return true if the account has a distinguished name", ->
+  user = new User(distinguishedName: "CN=The Queen,OU=Royalty")
+  assert.isTrue user.isLDAPAccount()
+)
+
+test(".isLDAPAccount should return false if the account does not have a
+  distinguished name", ->
+  user = new User(distinguishedName: "CN=The Queen,OU=Royalty")
+  assert.isTrue user.isLDAPAccount()
 )
 
 test(".loginFromLocalDb succeeds if the user's password is correct", (done) ->
@@ -135,13 +140,13 @@ test(".loginFromLocalDb succeeds if the user's password is correct", (done) ->
     email: "hats"
     password: "boats"
   ).then( (user) ->
-    callbackSpy = (err, user) ->
+    authenticationCallback = (err, user) ->
       assert.ok user, "Expected user to be returned when authentication successful"
       assert.strictEqual "hats", user.email
 
       done()
 
-    User.loginFromLocalDb("hats", "boats", callbackSpy)
+    user.loginFromLocalDb("boats", authenticationCallback)
   ).fail( (err) ->
     console.error err
     throw err
@@ -158,7 +163,44 @@ test(".loginFromLocalDb fails if the user's password is incorrect", (done) ->
 
       done()
 
-    User.loginFromLocalDb("hats", "ships", callback)
+    user.loginFromLocalDb("ships", callback)
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test(".loginFromLDAP succeeds if the user's credentials allow a successful LDAP bind", (done) ->
+  helpers.createUser(
+    email: "hats"
+    distinguishedName: "CN=Some Guy,DN=The World"
+  ).then( (user) ->
+    callback = (err, user) ->
+      assert.ok user, "Expected user to be returned when authentication succeeds"
+      assert.strictEqual "hats", user.email
+
+      done()
+
+    user.loginFromLDAP("Password.1", callback)
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test(".loginFromLDAP fails if the user's credentials does not allow a
+  successful LDAP bind", (done) ->
+
+  helpers.createUser(
+    email: "hats"
+    distinguishedName: "CN=Some Guy,DN=The World"
+  ).then( (user) ->
+    callback = (err, user) ->
+      assert.notOk user, "Expected user to not be returned when authentication fails"
+
+      done()
+
+    user.loginFromLDAP("not-ships", callback)
   ).fail( (err) ->
     console.error err
     throw err

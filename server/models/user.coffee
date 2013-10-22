@@ -8,6 +8,7 @@ userSchema = mongoose.Schema(
   email: String
   password: String
   salt: String
+  distinguishedName: String
 )
 
 generateHash = (password, salt) ->
@@ -96,22 +97,14 @@ userSchema.methods.isValidPassword = (password) ->
 userSchema.methods.canEdit = (model) ->
   model.canBeEditedBy(@)
 
-userSchema.statics.loginFromLocalDb = (username, password, callback) ->
-  theUser = null
+userSchema.methods.isLDAPAccount = ->
+  return @distinguishedName?
 
-  Q.nsend(
-    User.findOne({email: username}), 'exec'
-  ).then( (user) ->
-    theUser = user
-
-    if !user
-      throw new Error("Incorrect username or password")
-
-    user.isValidPassword(password)
-  ).then( (isValid) ->
+userSchema.methods.loginFromLocalDb = (password, callback) ->
+  @isValidPassword(password).then( (isValid) =>
 
     if isValid
-      return callback(null, theUser)
+      return callback(null, @)
     else
       throw new Error("Incorrect username or password")
 
@@ -120,8 +113,88 @@ userSchema.statics.loginFromLocalDb = (username, password, callback) ->
     return callback(err, false)
   )
 
-userSchema.statics.isLDAPAccount = (email) ->
-  /.*@(.*\.)*ead.ae/.test(email)
+userSchema.methods.loginFromLDAP = (password, done) ->
+  ldap = require('ldapjs')
+  client = ldap.createClient(
+    url: 'ldap://10.10.25.2:389'
+  )
+
+  client.bind("CN=James Cox,OU=IntalioUsers,DC=esp,DC=ead,DC=ext", password, (err) =>
+    if err?
+      done(err, false)
+    else
+      done(null, @)
+  )
+
+userSchema.statics.fetchDistinguishedName = (username) ->
+  deferred = Q.defer()
+
+  LDAP = require('LDAP')
+
+  ldap = new LDAP(
+    uri: 'ldap://10.10.25.2:389',
+    version: 3,
+    connecttimeout: 1
+  )
+
+  ldap.open( (err) ->
+    if err?
+      console.error err
+      throw new Error('Can not connect')
+
+    bind_options =
+      binddn: "CN=James Cox,OU=IntalioUsers,DC=esp,DC=ead,DC=ext"
+      password: "Password.1"
+
+    ldap.simplebind(bind_options, (err) ->
+      if err?
+        throw new Error('can not bind')
+
+      ldap.search(
+        {
+          base: "OU=IntalioUsers,DC=esp,DC=ead,DC=ext"
+          filter:"(sAMAccountName=James.Cox)"
+          scope: 3
+        },
+        (err, data) ->
+          if err?
+            throw new Error('error searching')
+
+          console.log data
+      )
+    )
+  )
+  #ldap.bind("CN=James Cox,OU=IntalioUsers,DC=esp,DC=ead,DC=ext", "Password.1", (err) =>
+    #console.log 'in bind'
+    #if err?
+      #console.log 'er ror'
+      #console.error err
+      #console.log err.message
+      #console.error err.stack
+      #deferred.reject(err)
+    #else
+      #console.log 'about to search'
+      #client.search(
+        #"OU=IntalioUsers,DC=esp,DC=ead,DC=ext",
+        #{
+          #filter:"(sAMAccountName=#{username})"
+          #scope: 'sub'
+          #attributes: ["distinguishedName"]
+        #},
+        #(err, res) ->
+          #console.log 'in search'
+          #search.on('searchEntry', (entry) ->
+            #deferred.resolve(entry.object.distinguishedName)
+          #)
+
+          #search.on('end', (result) ->
+            #if result.status > 0
+              #deferred.reject()
+          #)
+      #)
+  #)
+
+  return deferred.promise
 
 User = mongoose.model('User', userSchema)
 
