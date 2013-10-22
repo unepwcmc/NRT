@@ -521,3 +521,25 @@ test(".populateDescriptionFromPage on a model with a description section with no
     throw err
   )
 )
+
+test("#populateDescriptionsFromPages calls populateDescriptionFromPage
+  on each given page", (done) ->
+  indicator = new Indicator()
+  populateStub = sinon.stub(indicator, 'populateDescriptionFromPage', ->
+    Q.fcall(->
+      indicator.description = "A description"
+    )
+  )
+
+  Indicator.populateDescriptionsFromPages([indicator]).then( ->
+    assert.strictEqual populateStub.callCount, 1,
+      "Expected the indictor's populateDescriptionFromPage to be called once"
+    assert.property indicator, 'description', "Expected indicator.description to be populated"
+
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+
+)

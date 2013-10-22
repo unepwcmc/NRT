@@ -10,7 +10,7 @@ IndicatorData = require('./indicator_data').model
 Page = require('./page').model
 
 # Mixins
-pageModel = require('../mixins/page_model.coffee')
+pageModelMixin = require('../mixins/page_model.coffee')
 updateIndicatorMixin = require('../mixins/update_indicator_data.coffee')
 
 indicatorSchema = mongoose.Schema(
@@ -23,7 +23,8 @@ indicatorSchema = mongoose.Schema(
   description: String
 )
 
-_.extend(indicatorSchema.methods, pageModel)
+_.extend(indicatorSchema.methods, pageModelMixin.methods)
+_.extend(indicatorSchema.statics, pageModelMixin.statics)
 _.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
 _.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
 

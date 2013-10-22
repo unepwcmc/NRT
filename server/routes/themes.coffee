@@ -11,7 +11,7 @@ exports.index = (req, res) ->
       console.error err.stack
       return res.send(500, "Error fetching the themes")
 
-    Theme.populateThemeDescriptions(themes).then(->
+    Theme.populateDescriptionsFromPages(themes).then(->
       res.render "themes/index", themes: themes
     ).fail((err)->
       console.error err
