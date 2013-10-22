@@ -1,6 +1,7 @@
 [
   {
     "title": "Atmosphere",
+    "image_url": "<INSERT URL HERE>",
     "sections": [
       {"title": "Description", "content": "This is the edited theme."}
     ]
