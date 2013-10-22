@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit --reporter spec",
-    "start": "supervisor ./bin/server.coffee",
+    "start": "NODE_ENV=development supervisor -e 'node|js|json|coffee|hbs' ./bin/server.coffee",
     "debug": "coffee --nodejs --debug ./bin/server.coffee",
-    "development": "NODE_ENV=development supervisor -e 'node|js|json|coffee|hbs' ./bin/server.coffee"
+    "development": "echo 'Please use `npm start` to run the server in development mode'",
+    "production": "coffee ./bin/server.coffee"
   },
   "repository": {
     "type": "git",

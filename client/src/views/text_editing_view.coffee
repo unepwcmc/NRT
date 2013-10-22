@@ -14,7 +14,7 @@ class Backbone.Views.TextEditingView extends Backbone.View
     @content = options.content
     @disableNewlines = options.disableNewlines
 
-    @disablerDiv = $('<div class="modal"/>')
+    @disablerDiv = $('<div class="modal light"/>')
     $('body').prepend(@disablerDiv)
     $(@disablerDiv).click(@closeViewAndModal)
 

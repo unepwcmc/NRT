@@ -18,7 +18,10 @@
           <h2>{{title}}<span>›</span></h2>
         </a>
 
-        <p>This is the summary of the state for the Atmosphere theme. In general, the state is XX. Some concerns are in area YY. There is good progress in ZZ and BB areas. See below for the Indicators which comprise this Theme. <span><a href="/themes/{{_id}}">(Read more)</a></span></p>
+        <p>
+          {{description}}
+          <span><a href="/themes/{{_id}}">(Read more)</a></span>
+        </p>
 
         {{#indicators}}
         <a class="indicator-box" href="/indicators/{{id}}">

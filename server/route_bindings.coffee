@@ -51,7 +51,6 @@ module.exports = exports = (app) ->
   app.get "/about", staticRoutes.about
   app.get "/dashboard", dashboardRoutes.index
   app.get "/themes", themeRoutes.index
-  app.get "/indicators", indicatorRoutes.index
   app.get "/reports", reportRoutes.index
 
   app.get "/indicators/:id", indicatorRoutes.show

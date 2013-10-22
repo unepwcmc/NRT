@@ -23,7 +23,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     @closeSubViews()
     @$el.html(@template(
       thisView: @
-      indicators: @indicators.models
+      indicators: @indicators.groupByType()
       section: @section
     ))
     @renderSubViews()
