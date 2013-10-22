@@ -56,6 +56,7 @@
 
   "indicator/view": "عرض البينات.",
   "indicator/download": "تحميل ورقة العمل",
+  "indicator/update": "تحديث هذا المؤشر",
   "indicator/narratives": "السرد لهذا المؤشر",
   "indicator/owned_by": "مؤشر يملكها",
   "indicator/metadata": "البيانات الوصفية",
@@ -66,6 +67,7 @@
   "indicator/add_section": "إضافة القسم",
 
   "theme/download": "تحميل ورقة العمل",
+  "theme/update": "تحديث هذا الموضوع",
   "theme/narratives": "السرد لهذا المؤشر",
   "theme/owned_by": "مؤشر يملكها",
   "theme/metadata": "البيانات الوصفية",
