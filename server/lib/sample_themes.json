@@ -1,7 +1,7 @@
 [
   {
     "title": "Atmosphere",
-    "image_url": "<INSERT URL HERE>",
+    "image_url": "<http://www.environmentalatlas.ae/images/geographicInheritance/montages/3.6.jpg>",
     "sections": [
       {"title": "Description", "content": "This is the edited theme."}
     ]
@@ -15,30 +15,35 @@
   },
   {
     "title": "Water",
+    "image_url": "<http://www.environmentalatlas.ae/images/resourceOfLife/montages/4.1.jpg>",
     "sections": [
       {"title": "Description", "content": "This is the Water theme."}
     ]
   },
   {
     "title": "Health",
+    "image_url": "<http://www.environmentalatlas.ae/images/pathways/static/8.5.jpg>",
     "sections": [
       {"title": "Description", "content": "This is the Health theme."}
     ]
   },
   {
     "title": "Waste",
+    "image_url": "<https://ead.ae/Tacsoft/ImageGallery/News/Litter-found-at-Mussafah---.jpg>",
     "sections": [
       {"title": "Description", "content": "This is the Waste theme."}
     ]
   },
   {
     "title": "Energy",
+    "image_url": "<http://www.environmentalatlas.ae/images/pathways/static/8.5.8_1.jpg>",
     "sections": [
       {"title": "Description", "content": "This is the Energy theme."}
     ]
   },
   {
     "title": "Transport",
+    "image_url": "<http://www.environmentalatlas.ae/images/pathways/montages/8.4.jpg>",
     "sections": [
       {"title": "Description", "content": "This is the Transport theme."}
     ]
