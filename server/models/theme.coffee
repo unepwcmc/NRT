@@ -116,11 +116,8 @@ themeSchema.methods.populateIndicators = ->
 
     Indicator.populatePages(theIndicators)
   ).then(->
-
     Indicator.populateDescriptionsFromPages(theIndicators)
   ).then(->
-    theIndicators = Indicator.truncateDescriptions(theIndicators)
-
     Indicator.calculateNarrativeRecency(theIndicators)
   ).then(=>
     @indicators = theIndicators
