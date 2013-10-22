@@ -2,6 +2,11 @@ async = require('async')
 Q = require('q')
 Page = require('../models/page').model
 
+findSectionWithTitle = (page, title) ->
+  for section in page.sections
+    return section if section.title is title
+  return null
+
 module.exports = {
   publishDraftPage: ->
     deferred = Q.defer()
@@ -161,6 +166,32 @@ module.exports = {
       ).fail((err) ->
         deferred.reject(err)
       )
+
+    return deferred.promise
+
+  populateDescriptionFromPage: ->
+    deferred = Q.defer()
+
+    (=>
+      if @page?
+        return Q.fcall(=> return @page)
+      else
+        return @getPage()
+    )().then((page)=>
+      section = findSectionWithTitle(page, 'Description')
+
+      if !section?
+        @description = ''
+        deferred.resolve(@description)
+      else
+        section.getNarrative().then((narrative) =>
+          if narrative?
+            @description = narrative.content
+          else
+            @description = ''
+          deferred.resolve(@description)
+        ).fail(deferred.reject)
+    ).fail(deferred.reject)
 
     return deferred.promise
 }

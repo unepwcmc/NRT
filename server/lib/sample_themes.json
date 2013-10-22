@@ -1,23 +1,44 @@
 [
   {
-    "title": "Atmosphere"
+    "title": "Atmosphere",
+    "sections": [
+      {"title": "Description", "content": "This is the Atmosphere theme."}
+    ]
   },
   {
-    "title": "Biodiversity"
+    "title": "Biodiversity",
+    "sections": [
+      {"title": "Description", "content": "This is the biodiversity theme."}
+    ]
   },
   {
-    "title": "Water"
+    "title": "Water",
+    "sections": [
+      {"title": "Description", "content": "This is the Water theme."}
+    ]
   },
   {
-    "title": "Health"
+    "title": "Health",
+    "sections": [
+      {"title": "Description", "content": "This is the Health theme."}
+    ]
   },
   {
-    "title": "Waste"
+    "title": "Waste",
+    "sections": [
+      {"title": "Description", "content": "This is the Waste theme."}
+    ]
   },
   {
-    "title": "Energy"
+    "title": "Energy",
+    "sections": [
+      {"title": "Description", "content": "This is the Energy theme."}
+    ]
   },
   {
-    "title": "Transport"
+    "title": "Transport",
+    "sections": [
+      {"title": "Description", "content": "This is the Transport theme."}
+    ]
   }
 ]

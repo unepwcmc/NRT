@@ -62,6 +62,7 @@ seedData = ->
   .fail((err) ->
     console.log "error seeding indicator data:"
     console.error err
+    console.error err.stack
     throw err
   )
 

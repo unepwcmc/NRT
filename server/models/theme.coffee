@@ -16,6 +16,26 @@ themeSchema = mongoose.Schema(
 
 _.extend(themeSchema.methods, pageModel)
 
+createThemeWithSections = (themeAttributes, callback) ->
+  theTheme = thePage = null
+
+  Q.nsend(
+    Theme, 'create', themeAttributes
+  ).then( (theme) ->
+    theTheme = theme
+    theTheme.getPage()
+  ).then( (page) ->
+    thePage = page
+
+    sections = themeAttributes.sections
+
+    thePage.createSectionNarratives(sections)
+  ).then( (page) ->
+    callback(null, theTheme)
+  ).fail( (err) ->
+    callback(err)
+  )
+
 themeSchema.statics.seedData = (callback) ->
   deferred = Q.defer()
 
@@ -36,7 +56,7 @@ themeSchema.statics.seedData = (callback) ->
         fs.readFileSync("#{process.cwd()}/lib/sample_themes.json", 'UTF8')
       )
 
-      Theme.create(dummyThemes, (error, results) ->
+      async.map(dummyThemes, createThemeWithSections, (error, results) ->
         if error?
           return deferred.reject(error)
 
@@ -92,6 +112,22 @@ themeSchema.statics.getIndicatorsByTheme = (themeId, callback) ->
 
       callback(err, indicators)
     )
+
+themeSchema.statics.populateThemeDescriptions = (themes, callback) ->
+  deferred = Q.defer()
+
+  populateDescriptions = (theme, callback) ->
+    theme.populateDescriptionFromPage().then(->
+      callback()
+    ).fail(callback)
+
+  async.each themes, populateDescriptions, (err) ->
+    if err?
+      deferred.reject(err)
+    else
+      deferred.resolve()
+
+  return deferred.promise
 
 themeSchema.methods.getIndicators = (callback) ->
   Theme = require('./theme.coffee').model

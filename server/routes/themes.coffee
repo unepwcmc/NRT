@@ -10,7 +10,15 @@ exports.index = (req, res) ->
       console.error err
       console.error err.stack
       return res.send(500, "Error fetching the themes")
-    res.render "themes/index", themes: themes
+
+    Theme.populateThemeDescriptions(themes).then(->
+      res.render "themes/index", themes: themes
+    ).fail((err)->
+      console.error err
+      console.error err.stack
+      return res.send(500, "Error populating descriptions")
+    )
+
   )
 
 exports.show = (req, res) ->

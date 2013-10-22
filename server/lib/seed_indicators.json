@@ -1,8 +1,10 @@
 [{
   "short_name": "Green house gases",
   "title": "Emissions of Greenhouse Gases",
-  "description": "Anthropogenic emissions, less removal by sinks, of the greenhouse gases carbon dioxide (CO2), methane (CH4), nitrous oxide (N2O), hydrofluorocarbons (HFCs), perfluorocarbons (PFCs), sulfur hexafluoride (SF6).",
   "theme": "Atmosphere",
+  "sections": [
+    {"title": "Description", "content": "Anthropogenic emissions, less removal by sinks, of the greenhouse gases carbon dioxide (CO2), methane (CH4), nitrous oxide (N2O), hydrofluorocarbons (HFCs), perfluorocarbons (PFCs), sulfur hexafluoride (SF6)."}
+  ],
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
@@ -28,8 +30,11 @@
 }, {
   "short_name": "Protected areas",
   "title": "Protected Area as a Percent of Total area",
-  "description": "This indicator measures the area of protected land ecosystems, inland water ecosystems, and marine ecosystems expressed as a percentage of the total area of land ecosystems, inland water ecosystems and marine ecosystems respectively.  Protected Area refers to all or partially protected areas of at least 1000 hectares that are designated as national parks, natural monuments, natural reserves or wildlife sanctuaries, protected landscapes and seascapes or scientific reserves with limited public access. The data do not include sites protected under local or provincial law.",
+  
   "theme": "Biodiversity",
+  "sections": [
+    {"title": "Description", "content": "This indicator measures the area of protected land ecosystems, inland water ecosystems, and marine ecosystems expressed as a percentage of the total area of land ecosystems, inland water ecosystems and marine ecosystems respectively.  Protected Area refers to all or partially protected areas of at least 1000 hectares that are designated as national parks, natural monuments, natural reserves or wildlife sanctuaries, protected landscapes and seascapes or scientific reserves with limited public access. The data do not include sites protected under local or provincial law."}
+  ],
   "type": "esri",
   "indicatorDefinition": {
       "serviceName": "NRT_AD_ProtectedArea",
