@@ -98,6 +98,7 @@ userSchema.methods.canEdit = (model) ->
   model.canBeEditedBy(@)
 
 userSchema.methods.isLDAPAccount = ->
+  return false if "production" is process.env.NODE_ENV
   return @distinguishedName?
 
 userSchema.methods.loginFromLocalDb = (password, callback) ->
