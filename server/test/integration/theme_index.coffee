@@ -11,22 +11,24 @@ Theme = require('../../models/theme').model
 suite('Theme index')
 
 test("With a series of themes and indicators, I should see their titles", (done) ->
-  themeAttributes = [{
+  theme1 = new Theme({
     title: 'Theme 1'
-    indicators: [{
-      title: "I am an indicator of theme 1"
-      narrativeRecency: "Out of date"
-    }]
-  },{
-    title: 'Theme 2'
-    indicators: [{
-      title: "theme 2 indicator"
-      narrativeRecency: "Out of date"
-    }]
+  })
+  theme1.indicators = [{
+    title: "I am an indicator of theme 1"
+    narrativeRecency: "Out of date"
   }]
+  theme2 = new Theme({
+    title: 'Theme 2'
+  })
+  theme2.indicators = [{
+    title: "theme 2 indicator"
+    narrativeRecency: "Out of date"
+  }]
+  themes = [ theme1, theme2]
 
   getFatThemesStub = sinon.stub(Theme, 'getFatThemes', (callback) ->
-    callback(null, themeAttributes)
+    callback(null, themes)
   )
 
   Q.nsend(
@@ -37,7 +39,7 @@ test("With a series of themes and indicators, I should see their titles", (done)
 
     assert.equal res.statusCode, 200
 
-    for theme in themeAttributes
+    for theme in themes
       assert.match body, new RegExp(".*#{theme.title}.*")
 
       for indicator in theme.indicators
