@@ -81,13 +81,16 @@ themeSchema.statics.getFatThemes = (callback) ->
   Theme.find({})
     .sort(_id: 1)
     .exec( (err, themes) ->
-      Q.nfcall(
-        async.each, themes, populateThemeIndicators
-      ).then( ->
-        callback null, themes
-      ).fail( (err) ->
+      if err?
         callback err
-      )
+      else
+        Q.nfcall(
+          async.each, themes, populateThemeIndicators
+        ).then( ->
+          callback null, themes
+        ).fail( (err) ->
+          callback err
+        )
     )
 
 themeSchema.statics.getIndicatorsByTheme = (themeId, callback) ->
