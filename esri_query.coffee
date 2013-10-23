@@ -51,6 +51,32 @@ getFeatureAttributesFromData = (data) ->
     row.attributes
   )
 
+averageRows = (rows, indicatorDefinition) ->
+  if indicatorDefinition.reduceField?
+    valuesByPeriod = {}
+    for row in rows
+      valuesByPeriod[row.periodStart] || = []
+      valuesByPeriod[row.periodStart].push row.value
+    
+    averagedRows = []
+    for periodStart, values of valuesByPeriod
+      sum = _.reduce(values, (memo, value) ->
+        memo + value
+      )
+
+      average = sum/values.length
+
+      averagedRows.push(
+        periodStart: periodStart
+        value: average
+      )
+  
+    return averagedRows
+
+  else
+    return rows
+  
+
 indicatorate = (indicatorCode, data) ->
   data = JSON.parse(data)
 
@@ -60,7 +86,11 @@ indicatorate = (indicatorCode, data) ->
 
   outputRows = []
 
-  valueField = indicatorDefinitions[indicatorCode].valueField
+  indicatorDefinition = indicatorDefinitions[indicatorCode]
+
+  valueField = indicatorDefinition.valueField
+
+  rows = averageRows(rows, indicatorDefinition)
 
   for row in rows
     value = row[valueField]

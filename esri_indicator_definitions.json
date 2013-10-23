@@ -5,5 +5,13 @@
       {"minValue": 0.25, "message": "Excellent"},
       {"minValue": 0, "message": "Moderate"}
     ]
+  },
+  "NRT_AD_AirQuality:2": {
+    "valueField": "value",
+    "reduceField": "station",
+    "ranges":[
+      {"minValue": 70, "message": "Moderate"},
+      {"minValue": 42, "message": "Excellent"}
+    ]
   }
 }
