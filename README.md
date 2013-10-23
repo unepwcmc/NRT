@@ -51,7 +51,7 @@ pick a user from `server/lib/users.json`, e.g.
 
 In production, no users are seeded and have to be created manually.
 However, you can use an LDAP server for authentication once it has been
-configured.
+configured. Note that for EAD LDAP use, you must be within the EAD VPN.
 
 ##### LDAP
 
