@@ -1,33 +1,64 @@
 [{
-  "short_name": "Green house gases",
-  "title": "Emissions of Greenhouse Gases",
+  "short_name": "GHG Emission",
+  "title": "Total GHG emissions as % of year 2010 level of emissions",
   "theme": "Air Quality",
   "sections": [
-    {"title": "Description", "content": "Anthropogenic emissions, less removal by sinks, of the greenhouse gases carbon dioxide (CO2), methane (CH4), nitrous oxide (N2O), hydrofluorocarbons (HFCs), perfluorocarbons (PFCs), sulfur hexafluoride (SF6)."}
+    {"title": "Description", "content": "Total GHG emissions as % of year 2010 level of emissions"}
   ],
+  "type": "esri",
   "indicatorDefinition": {
-      "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
-      "operation": "sum",
-      "short_unit": "Gg",
-      "unit": "Annual GHG emissions in gigagrams (Gg). Emissions of CH4, N2O, HFCs, PFCs and SF6 can be converted to CO2 equivalents using the so-called global warming potentials (GWPs) provided in assessments of the Intergovernmental Panel on Climate Change.",
-      "outFields": "shape.area",
-      "dateField": "datedes",
-      "period": "annual",
-      "xAxis": "year",
-      "yAxis": "value",
-      "geometryField": "geometry",
-      "fields": [
-        {
-          "name": "year",
-          "type": "integer"
-        },
-        {
-          "name": "value",
-          "type": "integer"
-        }
-      ]
-    }
+  }
 }, {
+  "short_name": "NO2 Concentration",
+  "title": "Average annual NO2 concentration in µg per m3",
+  "theme": "Air Quality",
+  "sections": [
+    {"title": "Description", "content": "Average annual NO2 concentration in µg per m3"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+}, {
+  "short_name": "SO2 Concentration",
+  "title": "Hourly average SO2 concentration in µg per m3",
+  "theme": "Air Quality",
+  "sections": [
+    {"title": "Description", "content": "Hourly average SO2 concentration in µg per m3"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},{
+  "short_name": "PM10 Concentration",
+  "title": "Daily average PM10 concentration in µg per m3",
+  "theme": "Air Quality",
+  "sections": [
+    {"title": "Description", "content": "Daily average PM10 concentration in µg per m3"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},{
+  "short_name": "PM25 Concentration",
+  "title": "Annual average PM25 concentration in µg per m3",
+  "theme": "Air Quality",
+  "sections": [
+    {"title": "Description", "content": "Annual average PM25 concentration in µg per m3"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},{
+  "short_name": "O3 Concentration",
+  "title": "1-hr and 8-hr O3 concentration in µg per m3",
+  "theme": "Air Quality",
+  "sections": [
+    {"title": "Description", "content": "Daily average PM10 concentration in µg per m3"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},{
   "short_name": "Protected areas",
   "title": "Protected Area as a Percent of Total area",
   
@@ -73,6 +104,16 @@
       ]
     }
 }, {
+  "short_name": "Area of Key Ecosystems",
+  "title": "Area of Selected Key Ecosystems as a Percent of Total Area",
+  "theme": "Biodiversity",
+  "sections": [
+    {"title": "Description", "content": "Area of Selected Key Ecosystems as a Percent of Total Area"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},{
   "short_name": "Threatened species",
   "title": "Percentage of Threatened Species",
   "description": "Number of species at risk of extinction in proportion to the total number of native species.",
@@ -99,6 +140,109 @@
       ]
     }
 }, {
+  "short_name": "Abundance of Key Species",
+  "title": "Abundance of Selected Key Species",
+  "theme": "Biodiversity",
+  "sections": [
+    {"title": "Description", "content": "Abundance of Selected Key Species"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},{
+  "short_name": "Fish Resource Status",
+  "title": "Annual fish catch from sustainable fisheries",
+  "theme": "Productive Natural Resources",
+  "sections": [
+    {"title": "Description", "content": "Annual fish catch from sustainable fisheries"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+}, {
+  "short_name": "Nitrate-N Concentrations",
+  "title": "Nitrate –N concentration in coastal waters (µg per L)",
+  "theme": "Water",
+  "sections": [
+    {"title": "Description", "content": "Area of Selected Key Ecosystems as a Percent of Total Area"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+}, {
+  "short_name": "Enterococci Concentrations",
+  "title": "Enterococci concentration in 100 ml of coastal waters",
+  "theme": "Water",
+  "sections": [
+    {"title": "Description", "content": "Enterococci concentration in 100 ml of coastal waters"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+}, {
+  "short_name": "Groundwater Reserves",
+  "title": "Effective years remaining in usable groundwater reserves",
+  "theme": "Water",
+  "sections": [
+    {"title": "Description", "content": "Effective years remaining in usable groundwater reserves"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+}, {
+  "short_name": "Salinity",
+  "title": "Area (km2) of aquifer where water quality is <= 1500 ppm TDS concentration",
+  "theme": "Water",
+  "sections": [
+    {"title": "Description", "content": "Area (km2) of aquifer where water quality is less than or equal to 1500 ppm TDS concentration"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},{
+  "short_name": "Awareness of Water",
+  "title": "Awareness on ground water depletion and high domestic water consumption",
+  "theme": "Environmental Awareness",
+  "sections": [
+    {"title": "Description", "content": "Awareness on ground water depletion and high domestic water consumption"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},{
+  "short_name": "Awareness of Fish Stocks",
+  "title": "Awareness on diminishing fish stock",
+  "theme": "Environmental Awareness",
+  "sections": [
+    {"title": "Description", "content": "Awareness on diminishing fish stock"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},{
+  "short_name": "Awareness of air quality",
+  "title": "Awareness on air quality (indoor and outdoor) & noise pollution",
+  "theme": "Environmental Awareness",
+  "sections": [
+    {"title": "Description", "content": "Awareness on air quality (indoor and outdoor) & noise pollution"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},{
+  "short_name": "Awareness of biodiversity",
+  "title": "Awareness on Biodiversity (marine and terrestrial",
+  "theme": "Environmental Awareness",
+  "sections": [
+    {"title": "Description", "content": "Awareness on Biodiversity (marine and terrestrial"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},
+
+
+{
   "short_name": "Urban air pollution",
   "title": "Ambient Concentration of Air Pollutants in Urban Areas",
   "description": "Ambient air pollution concentrations of ozone, particulate matter (PM10, and PM2,5, if those are not available: SPM, black smoke), sulfur dioxide, nitrogen dioxide, lead. Additional:  carbon monoxide, volatile organic compounds including benzene (VOCs). The priority is collection of the indicator in large cities (over 1 million population).",
