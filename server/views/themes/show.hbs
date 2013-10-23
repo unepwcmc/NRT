@@ -52,7 +52,11 @@ class="theme-page"
     <div class="theme-block">
       <h2>Indicators under this theme</h2>
 
-      {{> indicatorList indicators }}
+      {{#if indicators.length}}
+        {{> indicatorList indicators }}
+      {{else}}
+        Currently, no indicators for this theme have any data
+      {{/if}}
     </div>
   </div>
 </div>
