@@ -338,6 +338,40 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": 4,
+      "unit": "µg per litre",
+      "short_unit": "µg/L",
+      "period": "quarterly",
+      "xAxis": "year",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "year",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }
+      ]
   }
 }, {
   "short_name": "Enterococci Concentrations",
@@ -348,6 +382,40 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": 3,
+      "unit": "µg per litre",
+      "short_unit": "µg/L",
+      "period": "quarterly",
+      "xAxis": "year",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "year",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }
+      ]
   }
 }, {
   "short_name": "Groundwater Reserves",
