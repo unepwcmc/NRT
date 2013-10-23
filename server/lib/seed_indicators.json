@@ -1,7 +1,7 @@
 [{
   "short_name": "Green house gases",
   "title": "Emissions of Greenhouse Gases",
-  "theme": "Atmosphere",
+  "theme": "Air Quality",
   "sections": [
     {"title": "Description", "content": "Anthropogenic emissions, less removal by sinks, of the greenhouse gases carbon dioxide (CO2), methane (CH4), nitrous oxide (N2O), hydrofluorocarbons (HFCs), perfluorocarbons (PFCs), sulfur hexafluoride (SF6)."}
   ],
@@ -102,38 +102,12 @@
   "short_name": "Urban air pollution",
   "title": "Ambient Concentration of Air Pollutants in Urban Areas",
   "description": "Ambient air pollution concentrations of ozone, particulate matter (PM10, and PM2,5, if those are not available: SPM, black smoke), sulfur dioxide, nitrogen dioxide, lead. Additional:  carbon monoxide, volatile organic compounds including benzene (VOCs). The priority is collection of the indicator in large cities (over 1 million population).",
-  "theme": "Atmosphere",
+  "theme": "Air Quality",
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
       "short_unit": "µg/m3",
       "unit": "µg/m3, ppm or ppb, as appropriate",
-      "outFields": "shape.area",
-      "dateField": "datedes",
-      "period": "annual",
-      "xAxis": "year",
-      "yAxis": "value",
-      "geometryField": "geometry",
-      "fields": [
-        {
-          "name": "year",
-          "type": "integer"
-        },
-        {
-          "name": "value",
-          "type": "integer"
-        }
-      ]
-    }
-}, {
-  "short_name": "Drinking water",
-  "title": "Access to Safe Drinking Water",
-  "description": "Percentage of population with access to an adequate amount of safe drinking water (in the home or with reasonable access) in the following categories of supply: 1) Continuous water supply inside the dwelling and of adequate amount 2) Intermittent (discontinuous) supply inside the dwelling 3) Supply within a convenient distance from the dwelling. Or Proportion of population with access to an adequate amount of safe drinking water in a dwelling or located within a convenient distance from the users dwelling",
-  "theme": "Water",
-  "indicatorDefinition": {
-      "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
-      "operation": "sum",
-      "unit": "%",
       "outFields": "shape.area",
       "dateField": "datedes",
       "period": "annual",
@@ -182,7 +156,7 @@
   "short_name": "Annual Fish Catch",
   "title": "Abu Dhabi Red List Indices For All Species Groups",
   "description": "Annual catch of major species in relation to spawning biomass if available or in relation to the year of maximum catches in the time series.",
-  "theme": "Water",
+  "theme": "Productive Natural Resources",
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
