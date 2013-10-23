@@ -7,10 +7,10 @@ Q = require 'q'
 
 suite('Indicator Data')
 
-test("#roundHeadlineValues truncates decimals to 3 places", ->
+test("#roundHeadlineValues truncates decimals to 1 place", ->
   result = IndicatorData.roundHeadlineValues([{value: 0.123456789}])
 
-  assert.strictEqual result[0].value, 0.123
+  assert.strictEqual result[0].value, 0.1
 )
 
 test("#roundHeadlineValues when given a value which isn't a number, does nothing", ->
