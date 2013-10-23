@@ -1,32 +1,43 @@
 [{
-  "short_name": "Green house gases",
-  "title": "Emissions of Greenhouse Gases",
+  "short_name": "GHG Emission",
+  "title": "Total GHG emissions as % of year 2010 level of emissions",
   "theme": "Air Quality",
   "sections": [
-    {"title": "Description", "content": "Anthropogenic emissions, less removal by sinks, of the greenhouse gases carbon dioxide (CO2), methane (CH4), nitrous oxide (N2O), hydrofluorocarbons (HFCs), perfluorocarbons (PFCs), sulfur hexafluoride (SF6)."}
+    {"title": "Description", "content": "Total GHG emissions as % of year 2010 level of emissions"}
   ],
+  "type": "esri",
   "indicatorDefinition": {
-      "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
-      "operation": "sum",
-      "short_unit": "Gg",
-      "unit": "Annual GHG emissions in gigagrams (Gg). Emissions of CH4, N2O, HFCs, PFCs and SF6 can be converted to CO2 equivalents using the so-called global warming potentials (GWPs) provided in assessments of the Intergovernmental Panel on Climate Change.",
-      "outFields": "shape.area",
-      "dateField": "datedes",
-      "period": "annual",
-      "xAxis": "year",
-      "yAxis": "value",
-      "geometryField": "geometry",
-      "fields": [
-        {
-          "name": "year",
-          "type": "integer"
-        },
-        {
-          "name": "value",
-          "type": "integer"
-        }
-      ]
-    }
+  }
+}, {
+  "short_name": "NO2 Concentration",
+  "title": "Average annual NO2 concentration in µg per m3",
+  "theme": "Air Quality",
+  "sections": [
+    {"title": "Description", "content": "Average annual NO2 concentration in µg per m3"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+}, {
+  "short_name": "SO2 Concentration",
+  "title": "Hourly average SO2 concentration in µg per m3",
+  "theme": "Air Quality",
+  "sections": [
+    {"title": "Description", "content": "Hourly average SO2 concentration in µg per m3"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},{
+  "short_name": "PM10 Concentration",
+  "title": "Daily average PM10 concentration in µg per m3",
+  "theme": "Air Quality",
+  "sections": [
+    {"title": "Description", "content": "Daily average PM10 concentration in µg per m3"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
 }, {
   "short_name": "Protected areas",
   "title": "Protected Area as a Percent of Total area",
