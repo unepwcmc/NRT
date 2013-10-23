@@ -4,6 +4,7 @@ test_server = null
 url = require('url')
 mongoose = require('mongoose')
 factory = require('./factory')
+async = require('async')
 
 before( (done) ->
   expressApp = app.start 3001, (err, server) ->
@@ -39,6 +40,7 @@ dropDatabase = (connection, done) ->
   ]
 
   removeTable = (table, callback) ->
+    table = require("../models/#{table}").model
     table
       .remove()
       .exec(callback)
