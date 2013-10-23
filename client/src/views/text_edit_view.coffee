@@ -20,8 +20,14 @@ class Backbone.Views.TextEditView extends Backbone.View
 
   render: (options = {}) =>
     content = @model.get(@attributeName)
+    showPlaceholder = false
+
+    if content?
+      contentLenght = $(content).text().length
+      showPlaceholder =  contentLenght == 0 && @model.isEditable()
 
     @$el.html(@template(
+      showPlaceholder: showPlaceholder
       content: content
     ))
 

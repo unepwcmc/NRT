@@ -59,6 +59,13 @@ small {
   padding-bottom: 10px;
   resize: none;
   cursor: pointer;
+
+  span.placeholder {
+    color: #b3b3b3;
+    font-size: inherit;
+    padding: inherit;
+    font-style: italic;
+  }
 }
 
 .content-text-field.editing {
