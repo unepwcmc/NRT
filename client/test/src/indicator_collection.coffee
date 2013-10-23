@@ -2,7 +2,7 @@ assert = chai.assert
 
 suite('IndicatorCollection')
 
-test('.groupByType returns the indicators grouped by primary or secondary', ->
+test('.groupByType returns the indicators grouped by core or external', ->
   collection = new Backbone.Collections.IndicatorCollection([{
     type: 'esri'
   }, {
@@ -17,6 +17,6 @@ test('.groupByType returns the indicators grouped by primary or secondary', ->
 
   groupedIndicators = collection.groupByType()
 
-  assert.lengthOf groupedIndicators.primary, 3
-  assert.lengthOf groupedIndicators.secondary, 2
+  assert.lengthOf groupedIndicators.core, 3
+  assert.lengthOf groupedIndicators.external, 2
 )
