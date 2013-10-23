@@ -107,7 +107,7 @@ userSchema.methods.loginFromLocalDb = (password, callback) ->
     if isValid
       return callback(null, @)
     else
-      throw new Error("Incorrect username or password")
+      return callback("Incorrect username or password")
 
   ).fail( (err) ->
     console.error err
