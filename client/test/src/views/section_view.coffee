@@ -7,19 +7,33 @@ createAndShowSectionViewForSection = (section) ->
 
 suite('Section View')
 
-test("When showing a section without a title or indicator, you see 'Start typing title or add an indicator'", ->
+test("When showing a section without a title or indicator, you see 'New Section'", ->
   section = new Backbone.Models.Section()
 
   view = createAndShowSectionViewForSection(section)
 
   assert.match(
-    $('#test-container').find('.add-title').text(),
-    new RegExp(".*Start typing your new section title.*")
+    $('#test-container').text(),
+    new RegExp(".*New Section.*")
+  )
+
+  view.close()
+)
+
+test("When showing a section without a title or indicator, you see
+  two buttons: 'Add text', 'Add visualisation'", ->
+  section = new Backbone.Models.Section()
+
+  view = createAndShowSectionViewForSection(section)
+
+  assert.match(
+    $('#test-container').find('.add-narrative').text(),
+    new RegExp(".*Add text.*")
   )
 
   assert.match(
-    $('#test-container').find('.choose-indicator').text(),
-    new RegExp(".*reference an indicator.*")
+    $('#test-container').find('.add-visualisation').text(),
+    new RegExp(".*Add visualisation.*")
   )
 
   view.close()
@@ -34,20 +48,6 @@ test("Can see the section title", ->
   assert.match(
     $('#test-container').text(),
     new RegExp(".*#{title}.*")
-  )
-
-  view.close()
-)
-
-test("Can see the section indicator title", ->
-  indicatorTitle = "My Lovely Indicator"
-  section = new Backbone.Models.Section(indicator: {title: indicatorTitle})
-
-  view = createAndShowSectionViewForSection(section)
-
-  assert.match(
-    $('#test-container').find('h2').text(),
-    new RegExp(".*#{indicatorTitle}.*")
   )
 
   view.close()
@@ -69,17 +69,6 @@ test("When section has narrative, can see the narrative", ->
   view.close()
 )
 
-test("When section has no narrative, I should see the 'add-narrative' element", ->
-  section = new Backbone.Models.Section(title: 'title')
-
-  view = createAndShowSectionViewForSection(section)
-
-  assert.equal(
-    $('#test-container').find('.add-narrative').length, 1, "Could not see .add-narrative element"
-  )
-  view.close()
-)
-
 test(".addNarrative creates a narrative record on the section", ->
   section = Factory.section()
 
@@ -95,27 +84,17 @@ test(".addNarrative creates a narrative record on the section", ->
   view.close()
 )
 
-test("chooseIndicator creates a modal indicator selector view", ->
+test(".chooseIndicatorForVisualisation creates a modal indicator selector view", ->
   section = new Backbone.Models.Section(id: 12, title: 'title')
 
   view = createAndShowSectionViewForSection(section)
 
   assert.isNull section.get('indicator')
 
-  view.chooseIndicator()
+  view.chooseIndicatorForVisualisation()
 
   assert.strictEqual $('#test-container .modal').length, 1, "modal DOM element exists"
 
-  view.close()
-)
-
-test(".startTitleEdit sets the title to 'New Section' and calls render", ->
-  section = new Backbone.Models.Section()
-  view = createAndShowSectionViewForSection(section)
-
-  view.startTitleEdit()
-
-  assert.equal section.get('title'), 'New Section'
   view.close()
 )
 

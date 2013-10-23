@@ -7,8 +7,6 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
   className: 'section-view'
 
   events:
-    "click .add-title": "startTitleEdit"
-    "click .choose-indicator": "chooseIndicator"
     "click .add-narrative": "addNarrative"
     "click .add-visualisation": "editVisualisation"
     "click .bar-chart-view": "editVisualisation"
@@ -18,12 +16,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
   initialize: (options) ->
     @section = options.section
 
-    # Ideally refactored in to two separate views for Reports and
-    # Indicators, and Themes
-    parent = @section.get('parent')
-    @isIndicatorPage = parent? && parent instanceof Backbone.Models.Indicator
-    if @isIndicatorPage
-      @section.set('indicator', @section.get('parent'))
+    @addDefaultTitleIfNotSet()
 
     @section.bind('change', @render)
     @render()
@@ -31,38 +24,21 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
   render: =>
     @closeSubViews()
 
-    noContent = !@section.get('narrative')? and !@section.get('visualisation')?
-    if @section.get('indicator')?
-      sectionIndicatorJSON = @section.get('indicator').toJSON()
-
-    parent = @section.get('parent')
-
     @$el.html(@template(
       thisView: @
       section: @section.toJSON()
-      indicator: sectionIndicatorJSON
-      isIndicatorPage: @isIndicatorPage
       sectionModel: @section
-      noContent: noContent
-      noTitleOrIndicator: !@section.hasTitleOrIndicator()
       narrative: @section.get('narrative')
       visualisation: @section.get('visualisation')
       isEditable: @section.isEditable()
     ))
+
     @renderSubViews()
     return @
 
-  startTitleEdit: =>
-    @section.set('title', 'New Section')
-
-  chooseIndicator: =>
-    return if @section.get('indicator')
-
-    indicatorSelectorView = new Backbone.Views.IndicatorSelectorView(
-      section: @section
-    )
-
-    @$el.append(indicatorSelectorView.render().el)
+  addDefaultTitleIfNotSet: =>
+    unless @section.get('title')?
+      @section.set('title', 'New Section')
 
   addNarrative: =>
     narrative = new Backbone.Models.Narrative(
