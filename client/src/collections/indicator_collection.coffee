@@ -8,14 +8,14 @@ class Backbone.Collections.IndicatorCollection extends Backbone.Collection
 
   groupByType: ->
     grouped = {
-      primary: []
-      secondary: []
+      core: []
+      external: []
     }
 
     for indicator in @models
       if indicator.get('type') is 'esri'
-        grouped.primary.push(indicator)
+        grouped.core.push(indicator)
       else
-        grouped.secondary.push(indicator)
+        grouped.external.push(indicator)
 
     return grouped

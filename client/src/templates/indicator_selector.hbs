@@ -4,18 +4,18 @@
     <h2>{{{t "report/indicator/title"}}}</h2>
   </header>
   <article>
-    <h3>Primary Indicators</h3>
-    <ul class="indicators primary">
-      {{#each indicators.primary}}
+    <h3>Core Indicators</h3>
+    <ul class="indicators core">
+      {{#each indicators.core}}
         {{addSubViewTo ../thisView "IndicatorSelectorItemView"
           indicator=this
           section=../section
         }}
       {{/each}}
     </ul>
-    <h3>Secondary Indicators</h3>
-    <ul class="indicators secondary">
-      {{#each indicators.secondary}}
+    <h3>External Indicators</h3>
+    <ul class="indicators external">
+      {{#each indicators.external}}
         {{addSubViewTo ../thisView "IndicatorSelectorItemView"
           indicator=this
           section=../section
