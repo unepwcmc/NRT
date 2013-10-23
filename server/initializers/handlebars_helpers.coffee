@@ -7,9 +7,9 @@ hbs.registerHelper('css-classify', (text) ->
     return classifiedText
 )
 
-hbs.registerHelper('truncate', (text) ->
-  if text? and text.length > 80
-    text = "#{text.substring(0,80)}..."
+hbs.registerHelper('truncate', (text, length) ->
+  if text? and text.length > length
+    text = "#{text.substring(0,length)}..."
 
   return text
 )
