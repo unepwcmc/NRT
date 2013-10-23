@@ -6,3 +6,10 @@ hbs.registerHelper('css-classify', (text) ->
     classifiedText = classifiedText.replace(/\ /g, '-')
     return classifiedText
 )
+
+hbs.registerHelper('truncate', (text) ->
+  if text? and text.length > 80
+    text = "#{text.substring(0,80)}..."
+
+  return text
+)

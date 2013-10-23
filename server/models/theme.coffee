@@ -5,7 +5,7 @@ async = require('async')
 Indicator = require('./indicator').model
 Q = require('q')
 
-pageModel = require('../mixins/page_model.coffee')
+pageModelMixin = require('../mixins/page_model.coffee')
 
 themeSchema = mongoose.Schema(
   title: String
@@ -14,7 +14,8 @@ themeSchema = mongoose.Schema(
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 )
 
-_.extend(themeSchema.methods, pageModel)
+_.extend(themeSchema.methods, pageModelMixin.methods)
+_.extend(themeSchema.statics, pageModelMixin.statics)
 
 createThemeWithSections = (themeAttributes, callback) ->
   theTheme = thePage = null
@@ -80,13 +81,16 @@ themeSchema.statics.getFatThemes = (callback) ->
   Theme.find({})
     .sort(_id: 1)
     .exec( (err, themes) ->
-      Q.nfcall(
-        async.each, themes, populateThemeIndicators
-      ).then( ->
-        callback null, themes
-      ).fail( (err) ->
+      if err?
         callback err
-      )
+      else
+        Q.nfcall(
+          async.each, themes, populateThemeIndicators
+        ).then( ->
+          callback null, themes
+        ).fail( (err) ->
+          callback err
+        )
     )
 
 themeSchema.statics.getIndicatorsByTheme = (themeId, callback) ->
@@ -100,21 +104,6 @@ themeSchema.statics.getIndicatorsByTheme = (themeId, callback) ->
       callback(err, indicators)
     )
 
-themeSchema.statics.populateThemeDescriptions = (themes, callback) ->
-  deferred = Q.defer()
-
-  populateDescriptions = (theme, callback) ->
-    theme.populateDescriptionFromPage().then(->
-      callback()
-    ).fail(callback)
-
-  async.each themes, populateDescriptions, (err) ->
-    if err?
-      deferred.reject(err)
-    else
-      deferred.resolve()
-
-  return deferred.promise
 
 themeSchema.methods.getIndicators = (callback) ->
   Theme = require('./theme.coffee').model
@@ -126,10 +115,11 @@ themeSchema.methods.populateIndicators = ->
     theme: @_id
     type: "esri"
   ).then( (indicators) ->
-
-    theIndicators = Indicator.truncateDescriptions(indicators)
+    theIndicators = indicators
 
     Indicator.populatePages(theIndicators)
+  ).then(->
+    Indicator.populateDescriptionsFromPages(theIndicators)
   ).then(->
     Indicator.calculateNarrativeRecency(theIndicators)
   ).then(=>

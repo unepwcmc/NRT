@@ -10,7 +10,7 @@ IndicatorData = require('./indicator_data').model
 Page = require('./page').model
 
 # Mixins
-pageModel = require('../mixins/page_model.coffee')
+pageModelMixin = require('../mixins/page_model.coffee')
 updateIndicatorMixin = require('../mixins/update_indicator_data.coffee')
 
 indicatorSchema = mongoose.Schema(
@@ -23,7 +23,8 @@ indicatorSchema = mongoose.Schema(
   description: String
 )
 
-_.extend(indicatorSchema.methods, pageModel)
+_.extend(indicatorSchema.methods, pageModelMixin.methods)
+_.extend(indicatorSchema.statics, pageModelMixin.statics)
 _.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
 _.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
 
@@ -107,19 +108,6 @@ indicatorSchema.statics.seedData = ->
   )
 
   return deferred.promise
-
-indicatorSchema.statics.truncateDescription = (indicator) ->
-  description = indicator.description
-  if description? and description.length > 80
-    indicator.description = "#{description.substring(0,80)}..."
-
-  return indicator
-
-indicatorSchema.statics.truncateDescriptions = (indicators) ->
-  for indicator in indicators
-    Indicator.truncateDescription(indicator)
-
-  return indicators
 
 indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
   if arguments.length == 1

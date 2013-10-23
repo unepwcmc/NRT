@@ -504,33 +504,6 @@ test("#findWhereIndicatorHasData respects the given filters", (done)->
   )
 )
 
-test(".truncateDescription truncates descriptions over 80 characters and
-  suffixes them with '...'", ->
-    indicator = new Indicator(description: "Oh, yeah, the guy in the the $4,000 suit is holding the elevator for a guy who doesn't make that in three months. Come on!")
-
-    truncatedDescription = Indicator.truncateDescription(indicator).description
-
-    assert.lengthOf truncatedDescription, 83
-
-    assert.strictEqual(
-      "Oh, yeah, the guy in the the $4,000 suit is holding the elevator for a guy who d...",
-      truncatedDescription
-    )
-)
-
-test(".truncateDescription returns the indicator unchanged if there is no description", ->
-    indicator = new Indicator()
-
-    truncatedIndicator = Indicator.truncateDescription(indicator)
-
-    assert.isUndefined truncatedIndicator.description
-
-    assert.strictEqual(
-      indicator.id
-      truncatedIndicator.id
-    )
-)
-
 test('.calculateRecencyOfHeadline when given an indicator with a headline date
   older than the most recent data returns "Out of date"', (done) ->
   indicator = new Indicator()
