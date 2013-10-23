@@ -41,7 +41,8 @@ CONFIG =
 CONVERSIONS =
   epoch:
     integer: (value) ->
-      new Date(value).getFullYear()
+      new Date(parseInt(value, 10)).getFullYear()
+      
   decimalPercentage:
     integer: (value)->
       value * 100
