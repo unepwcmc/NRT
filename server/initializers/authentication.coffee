@@ -1,12 +1,12 @@
 passport = require('passport')
-BasicStrategy = require('passport-http').BasicStrategy
+LocalStrategy = require('passport-local').Strategy
+Q = require('q')
+User = require('../models/user').model
 
 passport.serializeUser (user, done) ->
   done(null, user._id)
 
 passport.deserializeUser (id, done) ->
-  User = require('../models/user').model
-
   unless id?
     console.error 'No user ID supplied'
     return done(err, false)
@@ -22,21 +22,28 @@ passport.deserializeUser (id, done) ->
     )
 
 passport.use(
-  new BasicStrategy(
+  new LocalStrategy(
     (username, password, done) ->
-      User = require('../models/user').model
-      User.findOne({email: username}, (err, user) ->
-        if err?
-          console.error err
-          return done(err, false)
+      Q.nsend(
+        User.findOne(email: username), 'exec'
+      ).then( (user) ->
 
-        if !user
-          return done(null, false, { message: 'Incorrect username.' })
+        if user?
+          if user.isLDAPAccount()
+            user.loginFromLDAP(password, done)
+          else
+            user.loginFromLocalDb(password, done)
+        else
+          User.createFromLDAPUsername(username)
+            .then( (user) ->
+              user.loginFromLDAP(password, done)
+            ).fail( (err) ->
+              done(null, false, {message: "Incorrect username or password"})
+            )
 
-        if !user.validPassword(password)
-          return done(null, false, { message: 'Incorrect password.' })
-
-        return done(null, user)
+      ).fail( (err) ->
+        console.error err
+        done(null, false, {message: err})
       )
   )
 )

@@ -24,6 +24,7 @@ exports.createApp = ->
   )
   app.set "view engine", "hbs"
   app.set "views", __dirname + "/views"
+  require('./initializers/handlebars_helpers')
 
   app.use express.favicon()
   app.use express.bodyParser()
@@ -59,7 +60,9 @@ seedData = ->
   .then(Indicator.seedData)
   .then(IndicatorData.seedData)
   .fail((err) ->
+    console.log "error seeding indicator data:"
     console.error err
+    console.error err.stack
     throw err
   )
 

@@ -2,11 +2,13 @@ assert = require('chai').assert
 helpers = require '../helpers'
 Indicator = require('../../models/indicator').model
 Section = require('../../models/section').model
+Theme = require('../../models/theme').model
 Page = require('../../models/page').model
 IndicatorData = require('../../models/indicator_data').model
 async = require('async')
 _ = require('underscore')
 Q = require('q')
+sinon = require('sinon')
 
 suite('Page Model Mixin')
 
@@ -348,4 +350,196 @@ test(".discardDraft discards the draft version of a page", (done) ->
     console.error err
     throw err
   )
+)
+
+test('.populatePage should add a (shallow) page attribute to an indicator', (done)->
+  indicator = new Indicator()
+  page = new Page()
+  sinon.stub(indicator, 'getPage', ->
+    deferred = Q.defer()
+    deferred.resolve(page)
+    return deferred.promise
+  )
+
+  indicator.populatePage().then(->
+
+    assert.property indicator, 'page',
+      "Expected the indicator to have a page attribute"
+    assert.strictEqual indicator.page._id, page._id,
+      "Expected the populated indicator page attribute to have the same ID as the page"
+    assert.strictEqual indicator.page.constructor.modelName, "Page",
+      "Expected the populated indicator page attribute to be an instance of the page model"
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+
+)
+
+test('.populatePage if the page attribute is already populated, should do nothing', (done)->
+  indicator = new Indicator()
+  page = new Page()
+  indicator.page = page
+  getPageStub = sinon.stub(indicator, 'getPage', ->
+    deferred = Q.defer()
+    deferred.resolve(page)
+    return deferred.promise
+  )
+
+  indicator.populatePage().then(->
+
+    assert.property indicator, 'page',
+      "Expected the indicator to have a page attribute"
+    assert.strictEqual indicator.page._id, page._id,
+      "Expected the populated indicator page attribute to have the same ID as the page"
+    assert.strictEqual getPageStub.callCount, 0,
+      "Expected the getPage method not to be called, as the page attribute was already populated"
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+
+)
+
+test(".populateDescriptionFromPage on a model where the page model is populated,
+  and it has a section with the title 'description',
+  sets @description to that section's narrative", (done)->
+  descriptionSection = null
+  descriptionText = "My name is my name"
+  theme = new Theme()
+
+  Q.nfcall(
+    Section.createSectionWithNarrative,
+      title: "Description"
+      content: descriptionText
+  ).then( (section) ->
+    descriptionSection = section
+
+    theme.page = new Page(
+      sections: [descriptionSection]
+    )
+
+    theme.populateDescriptionFromPage()
+  ).then( ->
+
+    assert.property theme, 'description', "Expected the description to be populated"
+    assert.strictEqual theme.description, descriptionText,
+      "Expected the description text to be populated correctly"
+
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test(".populateDescriptionFromPage on a model where the page model isn't populated,
+  gets the page, and gets @description from the page", (done)->
+  descriptionSection = null
+  descriptionText = "My name is my name"
+  theme = new Theme()
+
+  Q.nfcall(
+    Section.createSectionWithNarrative,
+      title: "Description"
+      content: descriptionText
+  ).then( (section) ->
+    descriptionSection = section
+
+    sinon.stub(theme, 'getPage', ->
+      Q.fcall(->
+        return new Page(
+          sections: [descriptionSection]
+        )
+      )
+    )
+
+    theme.populateDescriptionFromPage()
+  ).then( ->
+
+    assert.property theme, 'description', "Expected the description to be populated"
+    assert.strictEqual theme.description, descriptionText,
+      "Expected the description text to be populated correctly"
+
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test(".populateDescriptionFromPage on a model with no sections
+  sets @description to an empty string", (done)->
+  theme = new Theme()
+
+  theme.page = new Page(
+    sections: [title: 'Description']
+  )
+
+  theme.populateDescriptionFromPage().then( ->
+
+    assert.property theme, 'description', "Expected the description to be populated"
+    assert.strictEqual theme.description, '',
+      "Expected the description text to be an empty string"
+
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test(".populateDescriptionFromPage on a model with a description section with no narrative
+  sets @description to an empty string", (done)->
+  theme = new Theme()
+
+  sinon.stub(theme, 'getPage', ->
+    Q.fcall(->
+      return new Page(
+        sections: []
+      )
+    )
+  )
+
+  theme.populateDescriptionFromPage().then( ->
+
+    assert.property theme, 'description', "Expected the description to be populated"
+    assert.strictEqual theme.description, '',
+      "Expected the description text to be an empty string"
+
+    done()
+
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test("#populateDescriptionsFromPages calls populateDescriptionFromPage
+  on each given page", (done) ->
+  indicator = new Indicator()
+  populateStub = sinon.stub(indicator, 'populateDescriptionFromPage', ->
+    Q.fcall(->
+      indicator.description = "A description"
+    )
+  )
+
+  Indicator.populateDescriptionsFromPages([indicator]).then( ->
+    assert.strictEqual populateStub.callCount, 1,
+      "Expected the indictor's populateDescriptionFromPage to be called once"
+    assert.property indicator, 'description', "Expected indicator.description to be populated"
+
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+
 )

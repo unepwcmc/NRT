@@ -2,9 +2,11 @@ assert = require('chai').assert
 helpers = require '../helpers'
 Indicator = require('../../models/indicator').model
 IndicatorData = require('../../models/indicator_data').model
+Page = require('../../models/page').model
 async = require('async')
 _ = require('underscore')
 Q = require 'q'
+sinon = require 'sinon'
 
 suite('Indicator')
 
@@ -224,8 +226,9 @@ test('.getIndicatorData on an indicator with no indicator data
   )
 )
 
-test('.getRecentHeadlines returns the given number of most recent headlines 
-  in decending date order', (done)->
+test('.getRecentHeadlines returns the given number of most recent headlines
+  in decending date order with the period end calculated for annual
+  indicator data', (done)->
   indicatorData = [
     {
       "year": 2000,
@@ -284,6 +287,9 @@ test('.getRecentHeadlines returns the given number of most recent headlines
       "Expected most recent headline value to be 4")
     assert.strictEqual(mostRecentHeadline.text, "Fair",
       "Expected most recent headline text to be 'Fair'")
+
+    assert.strictEqual(mostRecentHeadline.periodEnd, "31 Dec 2002",
+      "Expected most recent headline period end to be '31 Dec 2002")
 
     done()
 
@@ -429,29 +435,206 @@ test(".toObjectWithNestedPage is mixed in", ->
   assert.typeOf indicator.toObjectWithNestedPage, 'Function'
 )
 
-test(".truncateDescription truncates descriptions over 80 characters and
-  suffixes them with '...'", ->
-    indicator = new Indicator(description: "Oh, yeah, the guy in the the $4,000 suit is holding the elevator for a guy who doesn't make that in three months. Come on!")
+test("#findWhereIndicatorHasData returns only indicators with indicator data", (done)->
+  indicatorWithData = indicatorWithoutData = null
 
-    truncatedDescription = Indicator.truncateDescription(indicator).description
+  helpers.createIndicatorModels([{},{}]).then((indicators) ->
+    indicatorWithData = indicators[0]
+    indicatorWithoutData = indicators[1]
 
-    assert.lengthOf truncatedDescription, 83
-
-    assert.strictEqual(
-      "Oh, yeah, the guy in the the $4,000 suit is holding the elevator for a guy who d...",
-      truncatedDescription
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        indicator: indicatorWithData
+        data: [{some: 'data'}]
+      }
     )
+  ).then((indicatorData) ->
+    Indicator.findWhereIndicatorHasData()
+  ).then((indicators) ->
+    
+    assert.lengthOf indicators, 1, "Expected only the one indicator with data to be returned"
+    assert.strictEqual indicators[0]._id.toString(), indicatorWithData._id.toString(),
+      "Expected the returned indicator to be the indicator with data"
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    console.error err.stack
+    throw err
+  )
+
 )
 
-test(".truncateDescription returns the indicator unchanged if there is no description", ->
-    indicator = new Indicator()
+test("#findWhereIndicatorHasData respects the given filters", (done)->
+  indicatorToFind = indicatorToFilterOut = null
 
-    truncatedIndicator = Indicator.truncateDescription(indicator)
+  helpers.createIndicatorModels([{},{}]).then((indicators) ->
+    indicatorToFind = indicators[0]
+    indicatorToFilterOut = indicators[1]
 
-    assert.isUndefined truncatedIndicator.description
-
-    assert.strictEqual(
-      indicator.id
-      truncatedIndicator.id
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        indicator: indicatorToFind
+        data: [{some: 'data'}]
+      }
     )
+  ).then((indicatorData) ->
+
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        indicator: indicatorToFilterOut
+        data: [{some: 'data'}]
+      }
+    )
+  ).then((indicatorData) ->
+    Indicator.findWhereIndicatorHasData(_id: indicatorToFind._id)
+  ).then((indicators) ->
+    
+    assert.lengthOf indicators, 1, "Expected only the one indicator with data to be returned"
+    assert.strictEqual indicators[0]._id.toString(), indicatorToFind._id.toString(),
+      "Expected the returned indicator to be the indicator with data"
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    console.error err.stack
+    throw err
+  )
+)
+
+test('.calculateRecencyOfHeadline when given an indicator with a headline date
+  older than the most recent data returns "Out of date"', (done) ->
+  indicator = new Indicator()
+  sinon.stub(indicator, 'getNewestHeadline', ->
+    deferred = Q.defer()
+    deferred.resolve {periodEnd: '31 Dec 2012'}
+    return deferred.promise
+  )
+
+  page = new Page(parent_type: 'Indicator', headline: {periodEnd: '30 Dec 2012'})
+  sinon.stub(indicator, 'populatePage', ->
+    deferred = Q.defer()
+    deferred.resolve indicator.page = page
+    return deferred.promise
+  )
+
+  indicator.calculateRecencyOfHeadline().then( (recencyText) ->
+    assert.strictEqual "Out of date", recencyText
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.calculateRecencyOfHeadline when given an indicator with a headline date
+  equal to or newer than the most recent data returns "Up to date"', (done) ->
+  indicator = new Indicator()
+  sinon.stub(indicator, 'getNewestHeadline', ->
+    deferred = Q.defer()
+    deferred.resolve {periodEnd: '31 Dec 2012'}
+    return deferred.promise
+  )
+
+  page = new Page(parent_type: 'Indicator', headline: {periodEnd: '01 Jan 2013'})
+  sinon.stub(indicator, 'populatePage', ->
+    deferred = Q.defer()
+    deferred.resolve indicator.page = page
+    return deferred.promise
+  )
+
+  indicator.calculateRecencyOfHeadline().then( (recencyText) ->
+    assert.strictEqual "Up to date", recencyText
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.calculateRecencyOfHeadline when given an indicator with no data
+  returns "No Data"', (done) ->
+  indicator = new Indicator()
+
+  page = new Page(parent_type: 'Indicator')
+  sinon.stub(indicator, 'populatePage', ->
+    deferred = Q.defer()
+    deferred.resolve indicator.page = page
+    return deferred.promise
+  )
+
+  indicator.calculateRecencyOfHeadline().then( (recencyText) ->
+    assert.strictEqual "No Data", recencyText
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.calculateRecencyOfHeadline when given a headline with
+  no periodEnd returns "Out of date"', (done) ->
+  indicator = new Indicator()
+  sinon.stub(indicator, 'getNewestHeadline', ->
+    deferred = Q.defer()
+    deferred.resolve {text: "OH HAI"}
+    return deferred.promise
+  )
+
+
+  page = new Page(parent_type: 'Indicator', headline: {text: "Not reported on", value: "-"})
+  sinon.stub(indicator, 'populatePage', ->
+    deferred = Q.defer()
+    deferred.resolve indicator.page = page
+    return deferred.promise
+  )
+
+  indicator.calculateRecencyOfHeadline().then( (recencyText) ->
+    assert.strictEqual "Out of date", recencyText
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('#populatePages given an array of indicators, populates their page attributes', (done) ->
+  indicator = new Indicator()
+  page = new Page()
+  sinon.stub(indicator, 'populatePage', ->
+    deferred = Q.defer()
+    deferred.resolve indicator.page = page
+    return deferred.promise
+  )
+
+  Indicator.populatePages([indicator]).then( ->
+    assert.ok _.isEqual(indicator.page, page),
+      "Expected the page attribute to be populated with the indicator page"
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('#calculateNarrativeRecency given an array of indicators,
+  calculates their narrative recency', (done) ->
+  indicator = new Indicator()
+  narrativeRecency = "Up to date"
+  sinon.stub(indicator, 'calculateRecencyOfHeadline', ->
+    deferred = Q.defer()
+    deferred.resolve narrativeRecency
+    return deferred.promise
+  )
+
+  Indicator.calculateNarrativeRecency([indicator]).then( ->
+    assert.strictEqual indicator.narrativeRecency, narrativeRecency,
+      "Expected the narrativeRecency attribute to be populated with the narrative recency"
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
 )

@@ -296,6 +296,11 @@ div.row.row-2 {
 
 .theme-block {
   overflow: hidden;
+
+  .description-block {
+    margin-bottom: 15px;
+  }
+
   p {
     font-size: 1em;
     margin-bottom: 25px;
@@ -475,10 +480,10 @@ div.row.row-2 {
       height: 10px;
       margin-right: 8px;
       border-radius: 2px;
-      &.updated {
+      &.up-to-date {
         background-color: #66bd63;
       }
-      &.close-overdue {
+      &.out-of-date {
         background-color: #fdb24c;
       }
       &.overdue {

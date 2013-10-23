@@ -4,12 +4,13 @@ fs = require('fs')
 _ = require('underscore')
 async = require('async')
 Q = require('q')
+moment = require('moment')
 
 IndicatorData = require('./indicator_data').model
 Page = require('./page').model
 
 # Mixins
-pageModel = require('../mixins/page_model.coffee')
+pageModelMixin = require('../mixins/page_model.coffee')
 updateIndicatorMixin = require('../mixins/update_indicator_data.coffee')
 
 indicatorSchema = mongoose.Schema(
@@ -22,7 +23,8 @@ indicatorSchema = mongoose.Schema(
   description: String
 )
 
-_.extend(indicatorSchema.methods, pageModel)
+_.extend(indicatorSchema.methods, pageModelMixin.methods)
+_.extend(indicatorSchema.statics, pageModelMixin.statics)
 _.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
 _.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
 
@@ -49,6 +51,26 @@ replaceThemeNameWithId = (indicators) ->
 
   return deferred.promise
 
+createIndicatorWithSections = (indicatorAttributes, callback) ->
+  theIndicator = thePage = null
+
+  Q.nsend(
+    Indicator, 'create', indicatorAttributes
+  ).then( (indicator) ->
+    theIndicator = indicator
+    theIndicator.getPage()
+  ).then( (page) ->
+    thePage = page
+
+    sections = indicatorAttributes.sections
+
+    thePage.createSectionNarratives(sections)
+  ).then( ->
+    callback(null, theIndicator)
+  ).fail( (err) ->
+    callback(err)
+  )
+
 indicatorSchema.statics.seedData = ->
   deferred = Q.defer()
 
@@ -69,35 +91,23 @@ indicatorSchema.statics.seedData = ->
         fs.readFileSync("#{process.cwd()}/lib/seed_indicators.json", 'UTF8')
       )
 
-      replaceThemeNameWithId(dummyIndicators)
-        .then( (indicators) ->
-          Indicator.create(dummyIndicators, (error) ->
-            if error?
-              return deferred.reject(error)
-            else
-              getAllIndicators()
-          )
-        ).fail( (err) ->
-          deferred.reject(error)
+      replaceThemeNameWithId(
+        dummyIndicators
+      ).then( (indicators) ->
+        async.map(dummyIndicators, createIndicatorWithSections, (err, indicators) ->
+          if err?
+            return deferred.reject(err)
+          
+          deferred.resolve(indicators)
         )
+      ).fail( (err) ->
+        deferred.reject(error)
+      )
     else
       getAllIndicators()
   )
 
   return deferred.promise
-
-indicatorSchema.statics.truncateDescription = (indicator) ->
-  description = indicator.description
-  if description? and description.length > 80
-    indicator.description = "#{description.substring(0,80)}..."
-
-  return indicator
-
-indicatorSchema.statics.truncateDescriptions = (indicators) ->
-  for indicator in indicators
-    Indicator.truncateDescription(indicator)
-
-  return indicators
 
 indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
   if arguments.length == 1
@@ -189,7 +199,9 @@ indicatorSchema.methods.getRecentHeadlines = (amount) ->
     @, 'getIndicatorData'
   ).then( (data) =>
 
-    headlines = _.last(data, amount)
+    headlineData = _.last(data, amount)
+    headlines = IndicatorData.convertDataToHeadline(headlineData)
+
     deferred.resolve(headlines.reverse())
 
   ).fail( (err) ->
@@ -244,6 +256,98 @@ indicatorSchema.statics.calculateCurrentValues = (indicators, callback) ->
     , (err, items) ->
       callback(null, indicators)
   )
+
+indicatorSchema.statics.findWhereIndicatorHasData = (conditions) ->
+  deferred = Q.defer()
+
+  Q.nsend(
+    Indicator.find(conditions), 'exec'
+  ).then((indicators) ->
+    indicatorsWithData = []
+
+    addIndicatorIfHasData = (indicator, callback) ->
+      indicator.getIndicatorData((err, data) ->
+        if err?
+          return callback(err)
+        else if data.length > 0
+          indicatorsWithData.push indicator
+        callback()
+      )
+
+    async.each indicators, addIndicatorIfHasData, (err) ->
+      if err?
+        deferred.reject(err)
+      else
+        deferred.resolve(indicatorsWithData)
+
+  ).fail((err)->
+    deferred.reject(err)
+  )
+
+  return deferred.promise
+
+indicatorSchema.methods.calculateRecencyOfHeadline = ->
+  deferred = Q.defer()
+
+  @populatePage().then( =>
+    @getNewestHeadline()
+  ).then( (dataHeadline) =>
+
+    unless dataHeadline?
+      return deferred.resolve("No Data")
+
+    pageHeadline = @page.headline
+
+    unless pageHeadline? && pageHeadline.periodEnd?
+      return deferred.resolve("Out of date")
+
+    if moment(pageHeadline.periodEnd).isBefore(dataHeadline.periodEnd)
+      deferred.resolve("Out of date")
+    else
+      deferred.resolve("Up to date")
+
+  ).fail( (err) ->
+    deferred.reject(err)
+  )
+
+  return deferred.promise
+
+populatePage = (indicator, callback) ->
+  indicator.populatePage().then(->
+    callback()
+  ).fail((err) ->
+    callback(err)
+  )
+
+indicatorSchema.statics.populatePages = (indicators) ->
+  deferred = Q.defer()
+
+  async.each indicators, populatePage, (err) ->
+    if err?
+      deferred.reject(err)
+    else
+      deferred.resolve()
+  
+  return deferred.promise
+
+calculateRecency = (indicator, callback) ->
+  indicator.calculateRecencyOfHeadline().then((recency)->
+    indicator.narrativeRecency = recency
+    callback()
+  ).fail((err) ->
+    callback(err)
+  )
+
+indicatorSchema.statics.calculateNarrativeRecency = (indicators) ->
+  deferred = Q.defer()
+
+  async.each indicators, calculateRecency, (err) ->
+    if err?
+      deferred.reject(err)
+    else
+      deferred.resolve()
+
+  return deferred.promise
 
 Indicator = mongoose.model('Indicator', indicatorSchema)
 

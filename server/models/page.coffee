@@ -4,6 +4,7 @@ _ = require('underscore')
 sectionNestingModel = require('../mixins/section_nesting_model.coffee')
 SectionSchema = require('./section.coffee').schema
 Q = require('q')
+moment = require('moment')
 
 pageSchema = mongoose.Schema(
   title: String
@@ -101,6 +102,11 @@ pageSchema.pre('save', (next) ->
     )
 )
 
+NO_DATA_HEADLINE =
+  text: "Not reported on"
+  value: "-"
+  periodEnd: null
+
 pageSchema.methods.setHeadlineToMostRecentFromParent = ->
   deferred = Q.defer()
 
@@ -108,13 +114,41 @@ pageSchema.methods.setHeadlineToMostRecentFromParent = ->
     @getParent().then( (parent) ->
       parent.getNewestHeadline()
     ).then( (headline) =>
-      @headline = headline
+      if headline?
+        @headline = headline
+      else
+        @headline = NO_DATA_HEADLINE
+
       deferred.resolve(@headline)
     ).fail( (err) ->
       deferred.reject(err)
     )
   else
     deferred.resolve()
+
+  return deferred.promise
+
+pageSchema.methods.createSectionNarratives = (attributes) ->
+  deferred = Q.defer()
+
+  unless attributes?
+    deferred.resolve()
+
+  Section = require('./section').model
+  Q.nsend(
+    async, 'map', attributes, Section.createSectionWithNarrative
+  ).then( (sections) =>
+
+    @sections = @sections.concat(sections || [])
+
+    Q.nsend(
+      @, 'save'
+    )
+  ).then(->
+    deferred.resolve()
+  ).fail((err) ->
+    deferred.reject(err)
+  )
 
   return deferred.promise
 

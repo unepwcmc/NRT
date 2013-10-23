@@ -1,14 +1,26 @@
 <div class="editor">
-  <span class="close">{{{t "report/modal/close"}}}</span>
+  <span class="close">{{{t "report/modal/close"}}}<i class="icon-remove-circle"></i></span>
   <header>
     <h2>{{{t "report/indicator/title"}}}</h2>
   </header>
-  <ul class="indicators">
-    {{#each indicators}}
-      {{addSubViewTo ../thisView "IndicatorSelectorItemView"
-        indicator=this
-        section=../section
-      }}
-    {{/each}}
-  </ul>
+  <article>
+    <h3>Core Indicators</h3>
+    <ul class="indicators core">
+      {{#each indicators.core}}
+        {{addSubViewTo ../thisView "IndicatorSelectorItemView"
+          indicator=this
+          section=../section
+        }}
+      {{/each}}
+    </ul>
+    <h3>External Indicators</h3>
+    <ul class="indicators external">
+      {{#each indicators.external}}
+        {{addSubViewTo ../thisView "IndicatorSelectorItemView"
+          indicator=this
+          section=../section
+        }}
+      {{/each}}
+    </ul>
+  </article>
 </div>

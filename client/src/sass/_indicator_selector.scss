@@ -2,11 +2,20 @@
 @import "mixins";
 
 .indicator-selector {
-  .indicators {
+
+  article {
     height: 480px;
     overflow: scroll;
-    border: 1px solid #DDD;
+    border-top: 1px solid #DDD;
     width: 100%;
+
+    h3 {
+      padding: 10px 20px;
+      background-color: #DDD;
+    }
+  }
+
+  .indicators {
     background-color: $white;
     @include box-sizing(border-box);
     border-bottom-left-radius: 4px;
@@ -27,18 +36,22 @@
 
       .icon {
         width: 13px;
-        padding: 20px 23px;
+        padding: 10px 23px;
       }
 
       .info {
         width: 808px;
-        padding: 20px 15px;
+        padding: 10px 15px;
         border-left: 1px solid #DDD;
 
         &:hover {
           background: $linkBlue;
           color: white;
           cursor: pointer;
+
+          h4 {
+            color: white;
+          }
         }
 
         p {

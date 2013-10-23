@@ -8,8 +8,17 @@ exports.index = (req, res) ->
   Theme.getFatThemes( (err, themes) ->
     if err?
       console.error err
-      return res.render(500, "Error fetching the themes")
-    res.render "themes/index", themes: themes
+      console.error err.stack
+      return res.send(500, "Error fetching the themes")
+
+    Theme.populateDescriptionsFromPages(themes).then(->
+      res.render "themes/index", themes: themes
+    ).fail((err)->
+      console.error err
+      console.error err.stack
+      return res.send(500, "Error populating descriptions")
+    )
+
   )
 
 exports.show = (req, res) ->
@@ -26,13 +35,18 @@ exports.show = (req, res) ->
         console.error error
         return res.send(404, error)
 
-      theme.toObjectWithNestedPage().then( (themeObject) ->
-        Theme.getIndicatorsByTheme( themeObject._id, (err, indicators) ->
-          res.render "themes/show",
-            theme: themeObject,
-            themeJSON: JSON.stringify(themeObject),
-            indicators: indicators
-        )
+      indicators = []
+      theme.populateIndicators().then(->
+        indicators = theme.indicators
+
+        theme.toObjectWithNestedPage()
+      ).then( (themeObject) ->
+
+        res.render "themes/show",
+          theme: themeObject,
+          themeJSON: JSON.stringify(themeObject),
+          indicators: indicators
+
       ).fail( (err) ->
         console.error err
         return res.render(500, "Error fetching theme page")

@@ -1,11 +1,64 @@
 mongoose = require('mongoose')
 fs = require('fs')
+Q = require('q')
+crypto = require('crypto')
+_ = require('underscore')
 
 userSchema = mongoose.Schema(
   name: String
   email: String
   password: String
+  salt: String
+  distinguishedName: String
 )
+
+generateHash = (password, salt) ->
+  deferred = Q.defer()
+
+  theSalt = null
+
+  Q.nsend(
+    crypto, 'randomBytes', 32
+  ).then( (buffer) ->
+
+    if salt?
+      theSalt = salt
+    else
+      theSalt = buffer.toString('hex')
+
+    Q.nsend(
+      crypto, 'pbkdf2',
+      password, theSalt, 2000, 64
+    )
+  ).then( (buffer) ->
+
+    hash = buffer.toString('hex')
+    deferred.resolve(hash: hash, salt: theSalt)
+
+  ).fail( (err) ->
+    deferred.reject(err)
+  )
+
+  return deferred.promise
+
+hashPassword = (next) ->
+  user = @
+
+  unless user.isModified('password')
+    return next()
+
+  generateHash(user.password).then( (hashComponents) ->
+
+    user.password = hashComponents.hash
+    user.salt = hashComponents.salt
+    next()
+
+  ).fail( (err) ->
+    console.error err
+    next(err)
+  )
+
+userSchema.pre('save', hashPassword)
 
 userSchema.statics.seedData = (callback) ->
   return callback() if process.env.NODE_ENV is 'production'
@@ -31,11 +84,117 @@ userSchema.statics.seedData = (callback) ->
       callback()
   )
 
-userSchema.methods.validPassword = (password) ->
-  @password == password
+userSchema.methods.isValidPassword = (password) ->
+  deferred = Q.defer()
+
+  generateHash(password, @salt).then( (hashComponents) =>
+    deferred.resolve(hashComponents.hash == @password)
+  ).fail( (err) ->
+    deferred.reject(err)
+  )
+
+  return deferred.promise
 
 userSchema.methods.canEdit = (model) ->
   model.canBeEditedBy(@)
+
+userSchema.methods.isLDAPAccount = ->
+  return false if "production" is process.env.NODE_ENV
+  return @distinguishedName?
+
+userSchema.methods.loginFromLocalDb = (password, callback) ->
+  @isValidPassword(password).then( (isValid) =>
+
+    if isValid
+      return callback(null, @)
+    else
+      return callback("Incorrect username or password")
+
+  ).fail( (err) ->
+    console.error err
+    return callback(err, false)
+  )
+
+getLDAPConfig = _.memoize( ->
+  JSON.parse(
+    fs.readFileSync("#{process.cwd()}/config/ldap.json", 'UTF8')
+  )
+)
+
+userSchema.methods.loginFromLDAP = (password, done) ->
+  ldap = require('ldapjs')
+  ldapConfig = getLDAPConfig()
+
+  client = ldap.createClient(
+    url: ldapConfig.host
+  )
+
+  client.bind(@distinguishedName, password, (err) =>
+    if err?
+      done(err, false)
+    else
+      done(null, @)
+  )
+
+fetchUserFromLDAP = (username) ->
+  deferred = Q.defer()
+
+  ldap = require('ldapjs')
+  ldapConfig = getLDAPConfig()
+
+  client = ldap.createClient(
+    url: ldapConfig.host
+  )
+
+  client.bind(ldapConfig.auth_base, ldapConfig.auth_password, (err) =>
+    if err?
+      deferred.reject(err)
+    else
+      client.search(
+        ldapConfig.search_base,
+        {
+          filter:"(sAMAccountName=#{username})"
+          scope: 'sub'
+        },
+        (err, search) ->
+          theUser = null
+
+          search.on('searchEntry', (entry) ->
+            theUser = entry.object
+            deferred.resolve(theUser)
+          )
+
+          search.on('end', (result) ->
+            if result.status > 0 || !theUser?
+              deferred.reject()
+          )
+      )
+  )
+
+  return deferred.promise
+
+userSchema.statics.createFromLDAPUsername = (username) ->
+  deferred = Q.defer()
+
+  fetchUserFromLDAP(
+    username
+  ).then( (user) ->
+    user = new User(
+      email: username
+      distinguishedName: user.distinguishedName
+      name: user.name
+    )
+
+    Q.nsend(
+      user, 'save'
+    )
+  ).spread( (user) ->
+    deferred.resolve(user)
+  ).fail( (err) ->
+    deferred.reject()
+  )
+
+  return deferred.promise
 
 User = mongoose.model('User', userSchema)
 

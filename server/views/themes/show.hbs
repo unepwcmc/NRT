@@ -17,11 +17,21 @@
 
 {{#contentFor 'breadcrumbs'}}
   <li><a href="/">Back to theme list</a></li>
+
+  {{#if currentUser}}
+    <a class="button" href="/themes/{{theme._id}}/draft">
+      <i class="icon-edit"></i> {{{t "theme/update"}}}
+    </a>
+  {{/if}}
 {{/contentFor}}
 
 {{#contentFor 'extra-body'}}
 class="theme-page"
 {{/contentFor}}
+
+{{#if theme.page.is_draft}}
+  {{> pageEditControls}}
+{{/if}}
 
 <div class="content theme">
   <article>
@@ -30,6 +40,7 @@ class="theme-page"
     </header>
 
     <div class='main-content'>
+      <img src="{{theme.image_url}}"/>
     </div>
 
     <aside class="content-sidebar metadata">
@@ -42,21 +53,11 @@ class="theme-page"
     <div class="theme-block">
       <h2>Indicators under this theme</h2>
 
-      {{#indicators}}
-        <a class="indicator-box" href="/indicators/{{id}}">
-          <div class="full-name">{{title}}<span>›</span></div>
-          <div class="brief">Annual catch of major species in relation to spawning biomass if available or in relation...</div><!--{{brief}}-->
-          <div class="box-header">
-            <div class="title"><h3><span>O3 Human Health Ozone<!--{{small-title}}--></span></h3></div>
-          </div>
-          <div class="context-text concerning">Concerning <!-- {{context}} --></div>
-          <div class="parameter">
-            <h4><!--{{parameter}}-->53</h4>
-            <div class="unit">mg/L</div>
-          </div>
-          <div class="last-update"><span class="status updated"><!-- {{last-update}} --></span>Up to date <!-- {{last-update}} --></div>
-        </a>
-      {{/indicators}}
+      {{#if indicators.length}}
+        {{> indicatorList indicators }}
+      {{else}}
+        Currently, no indicators for this theme have any data
+      {{/if}}
     </div>
   </div>
 </div>

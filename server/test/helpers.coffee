@@ -38,13 +38,17 @@ dropDatabase = (connection, done) ->
     "permission"
   ]
 
-  for model in models
-    model = require("../models/#{model}").model
-    model
+  removeTable = (table, callback) ->
+    table
       .remove()
-      .exec()
+      .exec(callback)
 
-  done()
+  async.each(models, removeTable, (err) ->
+    if err?
+      console.error 'Could not clean database'
+
+    done()
+  )
 
 beforeEach( (done) ->
   connection = mongoose.connection
