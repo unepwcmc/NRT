@@ -72,6 +72,7 @@
 
   "theme/view": "View the dataset",
   "theme/download": "Download the dataset",
+  "theme/update": "Update this theme",
   "theme/owned_by": "Theme owned by",
   "theme/metadata": "Metadata",
   "theme/metadata/category": "Category",
