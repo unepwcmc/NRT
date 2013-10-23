@@ -153,3 +153,23 @@ test(".createVisualisation creates a visualisation record on the section
 
   view.close()
 )
+
+test(".destroySection calls destroy on the section, save on the parent page,
+  and closes the view", ->
+  page = Factory.page(sections: [{}])
+  pageSaveStub = sinon.stub(page, 'save', ->
+  )
+  collection = page.get('sections')
+
+  view = new Backbone.Views.SectionView(section: collection.models[0])
+
+  viewCloseSpy = sinon.spy(view, 'close')
+
+  view.destroySection()
+
+  assert.lengthOf collection.models, 0,
+    "Expected section collection to be empty"
+
+  Helpers.assertCalledOnce(pageSaveStub)
+  Helpers.assertCalledOnce(viewCloseSpy)
+)

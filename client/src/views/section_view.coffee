@@ -89,5 +89,11 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
 
     $('body').append(editVisualisationView.render().el)
 
+  destroySection: ->
+    page = @section.get('page')
+    @section.destroy()
+    page.save()
+    @close()
+
   onClose: ->
     @closeSubViews()
