@@ -59,10 +59,17 @@ small {
   padding-bottom: 10px;
   resize: none;
   cursor: pointer;
+
+  span.placeholder {
+    color: #b3b3b3;
+    font-size: inherit;
+    padding: inherit;
+    font-style: italic;
+  }
 }
 
 .content-text-field.editing {
-  white-space: nowrap;
+  visibility: hidden;
   cursor: auto;
 }
 
@@ -76,6 +83,7 @@ small {
 }
 
 .text-editing-view {
+  width: 650px;
   position: fixed;
   z-index: 10;
   background-color: white;
