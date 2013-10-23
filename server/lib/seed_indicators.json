@@ -17,6 +17,40 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 2,
+      "unit": "µg per m3",
+      "short_unit": "µg/m3",
+      "period": "quarterly",
+      "xAxis": "year",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "year",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }
+      ]
   }
 }, {
   "short_name": "SO2 Concentration",
@@ -27,6 +61,40 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 5,
+      "unit": "µg per m3",
+      "short_unit": "µg/m3",
+      "period": "quarterly",
+      "xAxis": "year",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "year",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }
+      ]
   }
 },{
   "short_name": "PM10 Concentration",
@@ -37,6 +105,40 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 4,
+      "unit": "µg per m3",
+      "short_unit": "µg/m3",
+      "period": "quarterly",
+      "xAxis": "year",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "year",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }
+      ]
   }
 },{
   "short_name": "PM25 Concentration",
@@ -47,6 +149,40 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": -1,
+      "unit": "µg per m3",
+      "short_unit": "µg/m3",
+      "period": "quarterly",
+      "xAxis": "year",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "year",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }
+      ]
   }
 },{
   "short_name": "O3 Concentration",
@@ -57,6 +193,40 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 3,
+      "unit": "µg per m3",
+      "short_unit": "µg/m3",
+      "period": "quarterly",
+      "xAxis": "year",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "year",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }
+      ]
   }
 },{
   "short_name": "Protected areas",
