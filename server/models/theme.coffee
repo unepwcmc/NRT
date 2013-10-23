@@ -10,6 +10,7 @@ pageModelMixin = require('../mixins/page_model.coffee')
 themeSchema = mongoose.Schema(
   title: String
   externalId: Number
+  image_url: String
   page: Object
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 )
