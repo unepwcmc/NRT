@@ -398,67 +398,31 @@ h1, h2, h3, h4, h5 {
       }
     }
   }
+}
 
-  .save-status {
-    overflow: hidden;
-    color: #BBB;
-    background-color: #fff;
-    border-bottom: 1px solid #DDD;
-    border-right: 1px solid #DDD;
+.save-status-container {
+  padding-top: 8px;
+}
+
+.save-status {
+  overflow: hidden;
+  color: #BBB;
+  position: relative;
+  z-index: 3;
+  @include clearfix;
+
+  i{
+    display: inline-block;
+    font-size: 1.4em;
     position: relative;
-    z-index: 3;
-    @include clearfix;
-    @include transition(width 0.5s);
-
-    input[type="text"] {
-      float: left;
-      width: 540px;
-      font-size: 1.2em;
-      border: none;
-      padding: 0 15px;
-      color: $mainFont;
-      color: rgba(0,0,0,0.8);
-    }
-
-    i{
-      display: inline-block;
-      font-size: 1.4em;
-      position: relative;
-      top: 2px;
-    }
+    top: 2px;
   }
+}
 
-  .save-status-container {
-    float: left;
-  }
-
-  .save-status {
-    color: $white;
-    width: 0px;
-    text-align: center;
-    @include transition(background-color 0.3s);
-
-    &.empty {
-      display: none;
-      background-color: $white;
-      border-bottom: 1px solid $white;
-    }
-    &.saving {
-      display: none;
-      background-color: $savingBlue;
-      border-bottom: 1px solid $savingBlue;
-    }
-    &.saved {
-      display: none;
-      background-color: $green;
-      border-bottom: 1px solid $green;
-    }
-    &.error {
-      display: none;
-      background-color: $black;
-      border-bottom: 1px solid $black;
-    }
-  }
+.save-status {
+  color: $white;
+  text-align: center;
+  display: none;
 }
 
 .breadcrumbs {

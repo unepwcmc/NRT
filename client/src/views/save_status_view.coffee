@@ -14,7 +14,7 @@ class Backbone.Views.SaveStatusView extends Backbone.View
     return @
 
   onClose: ->
-    
+
   animateStatus: (toStatus) =>
 
     if toStatus == @statusVisible
@@ -25,24 +25,15 @@ class Backbone.Views.SaveStatusView extends Backbone.View
       $oldStatus = @$el.find(".save-status.#{@statusVisible}")
       $newStatus = @$el.find(".save-status.#{toStatus}")
 
-      $newStatus.css display: 'block'
-
-      $oldStatus.animate width: '0px'
-      $newStatus.animate width: '120px'
-      
-      $oldStatus.css display: 'none'
+      $oldStatus.hide()
+      $newStatus.fadeIn()
 
       @statusVisible = toStatus
       @startDecay()
 
-    else  
-      @$el.find('.save-status').css(
-        width: '0px'
-        display: 'none'
-      )
+    else
       $status = @$el.find(".save-status.#{toStatus}")
-      $status.css display: 'block'
-      $status.animate width:'120px'
+      $status.fadeIn()
       @statusVisible = toStatus
       @startDecay()
 
@@ -53,7 +44,4 @@ class Backbone.Views.SaveStatusView extends Backbone.View
       @statusDecay = setTimeout @clearStatus, 3000
 
   clearStatus: =>
-    @$el.find('.save-status').animate(
-      width: '0px'
-      display: 'none'
-    ) 
+    @$el.find('.save-status').fadeOut()
