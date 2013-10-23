@@ -62,7 +62,7 @@ small {
 }
 
 .content-text-field.editing {
-  white-space: nowrap;
+  visibility: hidden;
   cursor: auto;
 }
 
@@ -76,6 +76,7 @@ small {
 }
 
 .text-editing-view {
+  width: 650px;
   position: fixed;
   z-index: 10;
   background-color: white;

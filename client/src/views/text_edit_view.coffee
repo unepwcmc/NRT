@@ -38,7 +38,7 @@ class Backbone.Views.TextEditView extends Backbone.View
           disableNewlines: @disableNewlines
         )
         @setupEditingViewBindings()
-        @$el.append(@editingView.el)
+        @$el.parent().append(@editingView.el)
 
   getPositionRelativeToViewport: =>
     top: @$el.offset().top - $(window).scrollTop()
