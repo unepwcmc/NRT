@@ -179,6 +179,26 @@
   "type": "esri",
   "indicatorDefinition": {
   }
+}, {
+  "short_name": "Groundwater Reserves",
+  "title": "Effective years remaining in usable groundwater reserves",
+  "theme": "Water",
+  "sections": [
+    {"title": "Description", "content": "Effective years remaining in usable groundwater reserves"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+}, {
+  "short_name": "Salinity",
+  "title": "Area (km2) of aquifer where water quality is <= 1500 ppm TDS concentration",
+  "theme": "Water",
+  "sections": [
+    {"title": "Description", "content": "Area (km2) of aquifer where water quality is less than or equal to 1500 ppm TDS concentration"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
 },{
   "short_name": "Urban air pollution",
   "title": "Ambient Concentration of Air Pollutants in Urban Areas",
