@@ -1,3 +1,6 @@
+{{#if isEditable}}
+  <span class="delete">Delete this section<i class="icon-remove-circle"></i></span>
+{{/if}}
 <div id="section-{{section._id}}">
   {{#if noTitleOrIndicator}}
     {{#if isEditable}}

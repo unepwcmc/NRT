@@ -14,6 +14,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     "click .bar-chart-view": "editVisualisation"
     "click .visualisation-table-view": "editVisualisation"
     "click .map-view": "editVisualisation"
+    "click .delete": "confirmDestroy"
 
   initialize: (options) ->
     @section = options.section
@@ -88,6 +89,10 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     @listenToOnce(editVisualisationView, 'close', @render)
 
     $('body').append(editVisualisationView.render().el)
+
+  confirmDestroy: =>
+    if confirm("Are you sure you want to delete this section?")
+      @destroySection()
 
   destroySection: ->
     page = @section.get('page')
