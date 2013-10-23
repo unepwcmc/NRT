@@ -23,7 +23,7 @@ class Backbone.Views.TextEditView extends Backbone.View
     showPlaceholder = false
 
     if content?
-      contentLength = $(content).text().length
+      contentLength = $('<div />').append(content).text().length
       showPlaceholder =  contentLength == 0 && @model.isEditable()
 
     @$el.html(@template(
