@@ -2,6 +2,7 @@ mongoose = require('mongoose')
 fs = require('fs')
 Q = require('q')
 crypto = require('crypto')
+_ = require('underscore')
 
 userSchema = mongoose.Schema(
   name: String
@@ -114,10 +115,11 @@ userSchema.methods.loginFromLocalDb = (password, callback) ->
     return callback(err, false)
   )
 
-getLDAPConfig = ->
+getLDAPConfig = _.memoize( ->
   JSON.parse(
     fs.readFileSync("#{process.cwd()}/config/ldap.json", 'UTF8')
   )
+)
 
 userSchema.methods.loginFromLDAP = (password, done) ->
   ldap = require('ldapjs')
