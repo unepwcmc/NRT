@@ -38,7 +38,27 @@
   "type": "esri",
   "indicatorDefinition": {
   }
-}, {
+},{
+  "short_name": "PM25 Concentration",
+  "title": "Annual average PM25 concentration in µg per m3",
+  "theme": "Air Quality",
+  "sections": [
+    {"title": "Description", "content": "Annual average PM25 concentration in µg per m3"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},{
+  "short_name": "O3 Concentration",
+  "title": "1-hr and 8-hr O3 concentration in µg per m3",
+  "theme": "Air Quality",
+  "sections": [
+    {"title": "Description", "content": "Daily average PM10 concentration in µg per m3"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},{
   "short_name": "Protected areas",
   "title": "Protected Area as a Percent of Total area",
   
@@ -84,6 +104,16 @@
       ]
     }
 }, {
+  "short_name": "Area of Key Ecosystems",
+  "title": "Area of Selected Key Ecosystems as a Percent of Total Area",
+  "theme": "Biodiversity",
+  "sections": [
+    {"title": "Description", "content": "Area of Selected Key Ecosystems as a Percent of Total Area"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},{
   "short_name": "Threatened species",
   "title": "Percentage of Threatened Species",
   "description": "Number of species at risk of extinction in proportion to the total number of native species.",
@@ -110,6 +140,46 @@
       ]
     }
 }, {
+  "short_name": "Abundance of Key Species",
+  "title": "Abundance of Selected Key Species",
+  "theme": "Biodiversity",
+  "sections": [
+    {"title": "Description", "content": "Abundance of Selected Key Species"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},{
+  "short_name": "Fish Resource Status",
+  "title": "Annual fish catch from sustainable fisheries",
+  "theme": "Productive Natural Resources",
+  "sections": [
+    {"title": "Description", "content": "Annual fish catch from sustainable fisheries"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+}, {
+  "short_name": "Nitrate-N Concentrations",
+  "title": "Nitrate –N concentration in coastal waters (µg per L)",
+  "theme": "Water",
+  "sections": [
+    {"title": "Description", "content": "Area of Selected Key Ecosystems as a Percent of Total Area"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+}, {
+  "short_name": "Enterococci Concentrations",
+  "title": "Enterococci concentration in 100 ml of coastal waters",
+  "theme": "Water",
+  "sections": [
+    {"title": "Description", "content": "Enterococci concentration in 100 ml of coastal waters"}
+  ],
+  "type": "esri",
+  "indicatorDefinition": {
+  }
+},{
   "short_name": "Urban air pollution",
   "title": "Ambient Concentration of Air Pollutants in Urban Areas",
   "description": "Ambient air pollution concentrations of ozone, particulate matter (PM10, and PM2,5, if those are not available: SPM, black smoke), sulfur dioxide, nitrogen dioxide, lead. Additional:  carbon monoxide, volatile organic compounds including benzene (VOCs). The priority is collection of the indicator in large cities (over 1 million population).",
