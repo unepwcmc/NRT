@@ -104,3 +104,68 @@ test(".save hashes the user's password before saving", (done) ->
     done()
   )
 )
+
+test('.save with a distinguishedName', (done) ->
+  dn = "CN=The Queen,OU=Royalty"
+  user = new User(distinguishedName: dn)
+
+  user.save( (err, savedUser) ->
+    if err?
+      console.error err
+      throw new Error(err)
+
+    assert.strictEqual(
+      dn,
+      savedUser.distinguishedName,
+      "Expected user to have a distinguished name"
+    )
+
+    done()
+  )
+)
+
+test(".isLDAPAccount should return true if the account has a distinguished name", ->
+  user = new User(distinguishedName: "CN=The Queen,OU=Royalty")
+  assert.isTrue user.isLDAPAccount()
+)
+
+test(".isLDAPAccount should return false if the account does not have a
+  distinguished name", ->
+  user = new User(distinguishedName: "CN=The Queen,OU=Royalty")
+  assert.isTrue user.isLDAPAccount()
+)
+
+test(".loginFromLocalDb succeeds if the user's password is correct", (done) ->
+  helpers.createUser(
+    email: "hats"
+    password: "boats"
+  ).then( (user) ->
+    authenticationCallback = (err, user) ->
+      assert.ok user, "Expected user to be returned when authentication successful"
+      assert.strictEqual "hats", user.email
+
+      done()
+
+    user.loginFromLocalDb("boats", authenticationCallback)
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
+
+test(".loginFromLocalDb fails if the user's password is incorrect", (done) ->
+  helpers.createUser(
+    email: "hats"
+    password: "boats"
+  ).then( (user) ->
+    callback = (err, user) ->
+      assert.notOk user, "Expected user to not be returned when authentication fails"
+
+      done()
+
+    user.loginFromLocalDb("ships", callback)
+  ).fail( (err) ->
+    console.error err
+    throw err
+  )
+)
