@@ -35,7 +35,7 @@ class Backbone.Views.TextEditingView extends Backbone.View
     return @
 
   setPositionToParent: =>
-    parentEl = @$el.parents('.editing')
+    parentEl = @$el.siblings('.editing')
     @setPosition(
       top: parentEl.offset().top - $(window).scrollTop()
       left: parentEl.offset().left - $(window).scrollLeft()

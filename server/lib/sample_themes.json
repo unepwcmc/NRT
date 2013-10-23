@@ -1,7 +1,7 @@
 [
   {
     "title": "Air Quality",
-    "image_url": "<http://www.environmentalatlas.ae/images/geographicInheritance/montages/3.6.jpg>",
+    "image_url": "http://www.environmentalatlas.ae/images/geographicInheritance/montages/3.6.jpg",
     "sections": [
       {"title": "Description", "content": "Clean air is a valuable resource for the residents of Abu Dhabi, and one that the government of Abu Dhabi is determined to protect. The quality of Abu Dhabi’s air is naturally poor on occasion due to naturally occurring high levels of particulate matter originating from the desert environment or resulting from the arrival of winds from outside the country, but man-made causes of pollution need to be monitored and controlled. Additionally, sudden increases in global CO2 concentrations, coinciding with the Industrial Revolution, have led scientists to believe with greater than 90% probability that most of the global warming witnessed in the last 50 years is the result of human activities."}
     ]
@@ -15,7 +15,7 @@
   },
   {
     "title": "Water",
-    "image_url": "<http://www.environmentalatlas.ae/images/resourceOfLife/montages/4.1.jpg>",
+    "image_url": "http://www.environmentalatlas.ae/images/resourceOfLife/montages/4.1.jpg",
     "sections": [
       {"title": "Description", "content": "Until about fifty years ago, Abu Dhabi's water requirements were met solely from groundwater using traditional extraction methods. These often involved shallow, hand-dug wells or the falaj system (man-made wells and channels that collect ground, spring and surface water and distribute it by gravity to where it is most needed). Past societies fully appreciated the finite nature and true value of water and evolved ingenious conservation techniques for all stages of water management, especially for its allocation and distribution. Today, Abu Dhabi residents enjoy a level of access to safe and clean water that was unimaginable only decades ago. The construction of the first desalination plant in 1960 marked a milestone in Abu Dhabi's development allowing plentiful salt water to be converted into fresh water, thereby diminishing dependence on limited natural fresh water sources. This capacity not only improved the quality of life of citizens but effectively opened the previously water-deficient islands and surrounding coastline to rapid urban development and population growth, which continues today."}
     ]
@@ -29,7 +29,7 @@
   },
   {
     "title": "Environmental Awareness",
-    "image_url": "<http://www.environmentalatlas.ae/images/pathways/static/8.5.6.jpg>",
+    "image_url": "http://www.environmentalatlas.ae/images/pathways/static/8.5.6.jpg",
     "sections": [
       {"title": "Description", "content": "Public education and awareness ensure that residents are able to be effectively sustainable in their daily lives. Abu Dhabi has invested significant effort in creating awareness towards meaningful change to benefit the environment. Campaigns aimed at youth include the Sustainable Schools Initiative, Shaheen’s World, UAE Enviro-Spellathon, Annual Environment Competition, while other initiatives have included Green Your Life, Heroes of the UAE, Choose Wisely Campaign, as well as ADWEA and CWM awareness campaigns."}
     ]

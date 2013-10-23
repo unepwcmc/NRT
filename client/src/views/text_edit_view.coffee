@@ -20,8 +20,14 @@ class Backbone.Views.TextEditView extends Backbone.View
 
   render: (options = {}) =>
     content = @model.get(@attributeName)
+    showPlaceholder = false
+
+    if content?
+      contentLength = $(content).text().length
+      showPlaceholder =  contentLength == 0 && @model.isEditable()
 
     @$el.html(@template(
+      showPlaceholder: showPlaceholder
       content: content
     ))
 
@@ -38,7 +44,7 @@ class Backbone.Views.TextEditView extends Backbone.View
           disableNewlines: @disableNewlines
         )
         @setupEditingViewBindings()
-        @$el.append(@editingView.el)
+        @$el.parent().append(@editingView.el)
 
   getPositionRelativeToViewport: =>
     top: @$el.offset().top - $(window).scrollTop()
