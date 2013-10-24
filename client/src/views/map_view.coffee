@@ -32,8 +32,6 @@ class Backbone.Views.MapView extends Backbone.View
       'http://{s}.tiles.mapbox.com/v3/onlyjsmith.map-9zy5lnfp/{z}/{x}/{y}.png'
     ).addTo(@map)
 
-    @map.on('moveend', @saveMapBounds)
-
     @fitToBounds()
     @renderDataToMap()
 
@@ -60,15 +58,8 @@ class Backbone.Views.MapView extends Backbone.View
     @map.fitBounds(bounds)
 
   renderDataToMap: ->
-    styleGeojson =
-      "color": "#ff7800"
-      "weight": 1
-      "opacity": 0.65
-
-    geojsonFeature = @visualisation.getHighestXRow()[@visualisation.getGeometryField()]
-    L.geoJson(
-      geojsonFeature
-      style: styleGeojson
+    L.esri.dynamicMapLayer('http://196.218.36.14/ka/rest/services/NRT_AD_ProtectedArea/MapServer',
+      opacity: 0.4
     ).addTo(@map)
 
   onClose: ->
