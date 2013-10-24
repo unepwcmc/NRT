@@ -93,7 +93,28 @@ test(".chooseIndicatorForVisualisation creates a modal indicator selector view",
 
   view.chooseIndicatorForVisualisation()
 
-  assert.strictEqual $('#test-container .modal').length, 1, "modal DOM element exists"
+  assert.strictEqual $('.modal').length, 1, "modal DOM element exists"
+
+  view.close()
+)
+
+test(".chooseIndicatorForVisualisation binds createVisualisation to the
+indicator selector view 'indicatorSelected' event", (done) ->
+  section = new Backbone.Models.Section(id: 12, title: 'title')
+
+  view = createAndShowSectionViewForSection(section)
+
+  sinon.stub(view, 'createVisualisation', (indicator)->
+    assert.strictEqual indicator.cid, selectedIndicator.cid,
+      "Expected createVisualisation to be called with the selected indicator"
+    done()
+  )
+
+  view.chooseIndicatorForVisualisation()
+
+  selectedIndicator = Factory.indicator()
+
+  view.indicatorSelectorView.trigger('indicatorSelected', selectedIndicator)
 
   view.close()
 )
@@ -115,20 +136,31 @@ test("Can see the section visualisation", ->
   view.close()
 )
 
-test(".createVisualisation creates a visualisation record on the section
-  and saves it", ->
-  section = new Backbone.Models.Section(
-    title: 'This title is'
-    indicator: Factory.indicator()
-  )
+test(".createVisualisation creates a visualisation on the section with an indicator set
+  and calls editVisualisation", ->
+  section = Factory.section()
 
-  view = createAndShowSectionViewForSection(section)
+  view = new Backbone.Views.SectionView(section: section)
 
   assert.isNull section.get('visualisation')
 
-  view.createVisualisation()
+  indicator = Factory.indicator()
+
+  createVisualiationStub = sinon.stub(view, 'editVisualisation', ->)
+  view.createVisualisation(indicator)
 
   assert.equal section.get('visualisation').constructor.name, 'Visualisation'
+  assert.strictEqual(
+    section.get('visualisation').get('section').cid,
+    section.cid
+  )
+
+  assert.strictEqual(
+    section.get('visualisation').get('indicator').cid,
+    indicator.cid
+  )
+
+  Helpers.assertCalledOnce(createVisualiationStub)
 
   view.close()
 )

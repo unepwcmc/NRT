@@ -54,14 +54,29 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
 
     $('body').append(@indicatorSelectorView.render().el)
 
+    @listenToOnce(@indicatorSelectorView, 'indicatorSelected', (indicator) =>
+      @closeIndicatorSelector()
+      @createVisualisation(indicator)
+    )
+
+  closeIndicatorSelector: ->
+    @indicatorSelectorView.close()
+
+  createVisualisation: (indicator) =>
+    @section.set('visualisation', indicator: indicator)
+
+    @editVisualisation()
+
   editVisualisation: =>
-    editVisualisationView = new Backbone.Views.ReportEditVisualisationView(
+    @editVisualisationView = new Backbone.Views.ReportEditVisualisationView(
       visualisation: @section.get('visualisation')
     )
 
-    @listenToOnce(editVisualisationView, 'close', @render)
+    @listenToOnce(@editVisualisationView, 'close', @render)
 
-    $('body').append(editVisualisationView.render().el)
+    $('body').append(@editVisualisationView.render().el)
 
   onClose: ->
+    @editVisualisationView.close() if @editVisualisationView?
+    @indicatorSelectorView.close() if @indicatorSelectorView?
     @closeSubViews()
