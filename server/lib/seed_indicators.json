@@ -32,7 +32,7 @@
             "type": "epoch"
           },
           "name": "year",
-          "type": "integer"
+          "type": "date"
         },
         {
           "source": {
