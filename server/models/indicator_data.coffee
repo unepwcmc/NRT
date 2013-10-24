@@ -51,7 +51,7 @@ indicatorDataSchema.statics.parseDateInHeadlines = (headlines) ->
 indicatorDataSchema.statics.roundHeadlineValues = (headlines) ->
   for headline in headlines
     unless isNaN(headline.value)
-      headline.value = Math.round(headline.value*1000)/1000
+      headline.value = Math.round(headline.value*10)/10
 
   return headlines
 
