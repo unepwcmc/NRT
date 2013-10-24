@@ -120,6 +120,15 @@ boundAggregators =
       row[fieldName]
     )[fieldName]
     return bounds
+  date: (data, fieldName) ->
+    bounds = {}
+    bounds.min = _.min(data, (row) ->
+      row[fieldName]
+    )[fieldName]
+    bounds.max = _.max(data, (row) ->
+      row[fieldName]
+    )[fieldName]
+    return bounds
   text: () -> "It's text, dummy"
 
 indicatorSchema.statics.calculateBoundsForType = (fieldType, data, fieldName) ->

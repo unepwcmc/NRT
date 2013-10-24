@@ -645,3 +645,15 @@ test("#calculateBoundsForType when given an unkown type throws an appropriate er
     ,"Don't know how to calculate the bounds of type 'party'"
   )
 )
+
+test("#calculateBoundsForType given an array of dates returns the correct bounds", ->
+  dates = [
+    {value: new Date("2011")},
+    {value: new Date("2016")},
+    {value: new Date("2014")}
+  ]
+  bounds = Indicator.calculateBoundsForType("date", dates, 'value')
+
+  assert.strictEqual bounds.min.getFullYear(), 2011
+  assert.strictEqual bounds.max.getFullYear(), 2016
+)
