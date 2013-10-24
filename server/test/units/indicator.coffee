@@ -638,3 +638,10 @@ test('#calculateNarrativeRecency given an array of indicators,
     throw err
   )
 )
+
+test("#calculateBoundsForType when given an unkown type throws an appropriate error", ->
+  assert.throws((->
+    Indicator.calculateBoundsForType("party", [], 'fieldName'))
+    ,"Don't know how to calculate the bounds of type 'party'"
+  )
+)
