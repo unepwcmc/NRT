@@ -5,7 +5,7 @@ class Backbone.Views.IndicatorView extends Backbone.Diorama.NestingView
   template: Handlebars.templates['indicator.hbs']
 
   events:
-    'click .add-indicator-section': 'addSection'
+    'click .add-section button': 'addSection'
 
   initialize: (options) ->
     @indicator = options.indicator
