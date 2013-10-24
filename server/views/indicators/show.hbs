@@ -61,8 +61,8 @@
           <li>
             <h4>{{{t "indicator/metadata/category"}}}</h4>
             <span>
-              <i class="icon-cloud append"></i>
-              Atmosphere
+              <i class="icon-{{themeIconClass indicator.theme.title}} append"></i>
+              {{indicator.theme.title}}
             </span>
           </li>
           <li>
@@ -81,7 +81,7 @@
           </li>
           <li>
             <h4>{{{t "indicator/metadata/frequency"}}}</h4>
-            <span>Yearly</span>
+            <span>{{indicator.indicatorDefinition.period}}</span>
           </li>
           <li>
             <h4>{{{t "indicator/metadata/collected_by"}}}</h4>
