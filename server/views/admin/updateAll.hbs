@@ -10,6 +10,7 @@
       Manage IndicatorData updates
     </h1>
   </header>
+  <a class='button update-all'>Update all</a>
 
   <table>
     <thead>
@@ -51,4 +52,9 @@
       },
     });
   })
+
+  $('a.update-all').click(function(e){
+    $(".button.update").trigger("click");
+  })
+
 </script>

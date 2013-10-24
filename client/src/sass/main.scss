@@ -12,6 +12,7 @@ body, html {
 
 body {
   font-family: 'Open sans';
+  -webkit-font-smoothing: subpixel-antialiased;
   font-size: 1.15em;
   line-height: 1.6em;
   color: $mainFont;
@@ -288,15 +289,16 @@ h1, h2, h3, h4, h5 {
   }
 
   h1 {
-    font-family: "PT Sans";
-    font-size: 1.2em;
+    font-family: "Open Sans";
+    font-size: 1.1em;
+    font-weight: 200;
     color: white;
     float: left;
-    padding-top: 15px;
+    padding-top: 16px;
     padding-right: 15px;
     padding-bottom: 0;
     small {
-      font-weight: bold;
+      font-weight: 600;
       display: block;
       color: white;
     }
@@ -1010,16 +1012,11 @@ footer{
   left: 50%;
   width: 50%;
   width: 850px;
-  height: auto;
+  height: 505px;
   z-index: 2000;
   visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  -moz-transform: translateX(-50%) translateY(-50%);
-  -ms-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
+  margin: auto;
+  top: 0; left: 0; bottom: 0; right: 0;
 }
 
 .md-show {
@@ -1067,7 +1064,7 @@ footer{
   color: $mainFont;
   font-size: 1.2em;
   font-weight: 400;
-  width: 490px;
+  width: 510px;
   float: left;
 }
 
@@ -1084,6 +1081,7 @@ footer{
   color: $mainFont;
   margin-top: 15px;
   font-size: 0.75em;
+  font-weight: normal;
 }
 
 .md-box .md-content img {
