@@ -59,7 +59,7 @@ class Backbone.Views.MapView extends Backbone.View
 
   renderDataToMap: ->
     L.esri.dynamicMapLayer('http://196.218.36.14/ka/rest/services/NRT_AD_ProtectedArea/MapServer',
-      opacity: 0.4
+      opacity: 0.6
     ).addTo(@map)
 
   onClose: ->
