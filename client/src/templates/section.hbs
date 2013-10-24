@@ -1,91 +1,31 @@
 <div id="section-{{section._id}}">
-  {{#if noTitleOrIndicator}}
-    {{#if isEditable}}
-      <div class="section-actions">
-        <span class="add-title">
-          {{{t "report/section/add_title"}}}
-        </span>
-        <button class="choose-indicator">
-          <i class="icon-table"></i> {{{t "report/section/reference_indicator"}}}
-        </span>
-      </div>
-    {{/if}}
-  {{else}}
-    {{#if isIndicatorPage}}
-      <h2>
-        {{addSubViewTo thisView "TextEditView" type='input'
-          attributeName='title' model=sectionModel disableNewlines=true}}
-      </h2>
-    {{else}}
-      {{#if indicator}}
-        <h2>{{indicator.title}}</h2>
-      {{else}}
-        <h2>
-          {{addSubViewTo thisView "TextEditView" type='input'
-            attributeName='title' model=sectionModel disableNewlines=true}}
-        </h2>
-      {{/if}}
-    {{/if}}
+  <h2>
+    {{addSubViewTo thisView "TextEditView" type='input'
+      attributeName='title' model=sectionModel disableNewlines=true}}
+  </h2>
+
+  {{#if visualisation}}
+    {{addSubViewTo thisView "VisualisationView" visualisation=visualisation}}
   {{/if}}
 
-  {{#unless noTitleOrIndicator}}
-    {{#if noContent}}
-      {{#if isEditable}}
-        <div class="section-actions add-narrative">
-          {{{t "report/section/type_narrative_indicator"}}}
+  {{#if narrative}}
+    {{addSubViewTo thisView "TextEditView" type='input'
+      attributeName='content' model=narrative}}
+  {{/if}}
 
-            {{#if indicator}}
-              {{{t "report/section/or"}}}
-              <button class="add-visualisation">
-                <i class="icon-table append"></i>{{{t "report/section/add_vis"}}}
-              </button>
-            {{/if}}
-        </div>
-      {{/if}}
-    {{else}}
-      {{#if isEditable}}
+  {{#if isEditable}}
+    <div class="section-actions">
+      {{#unless narrative}}
+        <button class="add-narrative">
+          <i class="icon-align-justify append"></i>Add text
+        </button>
+      {{/unless}}
 
-        {{#if narrative}}
-          {{addSubViewTo thisView "TextEditView" type='input'
-            attributeName='content' model=narrative}}
-
-          {{#unless visualisation}}
-            {{#if indicator }}
-              <div class="section-actions add-narrative">
-                <button class="add-visualisation">
-                  <i class="icon-table append"></i>{{{t "report/section/add_vis"}}}
-                </button>
-              </div>
-            {{/if}}
-          {{/unless}}
-        {{else}}
-          <div class="section-actions add-narrative">
-            {{{t "report/section/type_narrative"}}}
-            {{#if indicator}}
-              {{{t "report/section/indicator"}}}
-            {{else}}
-              {{{t "report/section/section"}}}
-            {{/if}}
-            {{{t "report/section/here"}}}
-          </div>
-        {{/if}}
-
-        {{#if visualisation}}
-          {{addSubViewTo thisView "VisualisationView" visualisation=visualisation}}
-        {{/if}}
-
-      {{else}}
-
-        {{#if visualisation}}
-          {{addSubViewTo thisView "VisualisationView" visualisation=visualisation}}
-        {{/if}}
-
-        {{#if narrative}}
-          {{addSubViewTo thisView "TextEditView" type='input'
-            attributeName='content' model=narrative}}
-        {{/if}}
-
-      {{/if}}
-    {{/if}}
-  {{/unless}}
+      {{#unless visualisation}}
+        <button class="add-visualisation">
+          <i class="icon-table append"></i>Add visualisation
+        </button>
+      {{/unless}}
+    </div>
+  {{/if}}
 </div>

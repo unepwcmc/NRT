@@ -5,7 +5,7 @@ class Backbone.Views.IndicatorView extends Backbone.Diorama.NestingView
   template: Handlebars.templates['indicator.hbs']
 
   events:
-    'click .add-indicator-section': 'addSection'
+    'click .add-section button': 'addSection'
 
   initialize: (options) ->
     @indicator = options.indicator
@@ -27,12 +27,17 @@ class Backbone.Views.IndicatorView extends Backbone.Diorama.NestingView
   addSection: =>
     if @indicator.get('_id')?
       @page.get('sections').add({})
-      @render()
+      @page.save(
+        success: @render
+        error: (model, xhr, options) ->
+          console.log xhr
+          alert('Unable to save section, please try again')
+      )
     else
       @indicator.save(null,
         success: @addSection
-        error: (err) ->
-          console.log err
+        error: (model, xhr, options) ->
+          console.log xhr
           alert('Unable to save indicator, please try again')
       )
 

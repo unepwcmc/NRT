@@ -32,6 +32,38 @@ test('Renders a list of indicators', ->
   view.close()
 )
 
+test('When an indicator is selected, an `indicatorSelected` event is
+  fired with the selected indicator', (done)->
+  indicatorText = 'hats'
+  indicatorAttributes = [{
+    type: 'cartodb'
+    title: indicatorText
+  }]
+
+  indicatorCollectionFetchStub = sinon.stub(
+    Backbone.Collections.IndicatorCollection::, 'fetch', (options) ->
+      @set(indicatorAttributes)
+      options.success()
+  )
+
+  view = new Backbone.Views.IndicatorSelectorView()
+
+  indicatorSelectedCallback = (indicator) ->
+    assert.strictEqual indicator.get('title'), indicatorText
+    done()
+
+  view.on('indicatorSelected', indicatorSelectedCallback)
+
+  assert.lengthOf view.subViews, 1,
+    "Expected the view to have an indicator sub view"
+  indicatorItemSubView = view.subViews[0]
+  indicatorItemSubView.trigger('indicatorSelected', indicatorItemSubView.indicator)
+
+  indicatorCollectionFetchStub.restore()
+
+  view.close()
+)
+
 test('core and external indicators are listed separately', ->
   section = new Backbone.Models.Section(
     _id: Factory.findNextFreeId('Section')
