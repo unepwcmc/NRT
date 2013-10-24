@@ -7,7 +7,6 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
   events:
     "click .close": "close"
-    "click .indicators li .info": "selectIndicator"
 
   initialize: (options) ->
     @section = options.section
@@ -29,9 +28,6 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     @renderSubViews()
 
     return @
-
-  selectIndicator: ->
-    @close()
 
   onClose: ->
     $('body').removeClass('stop-scrolling')

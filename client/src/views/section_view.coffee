@@ -8,7 +8,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
 
   events:
     "click .add-narrative": "addNarrative"
-    "click .add-visualisation": "editVisualisation"
+    "click .add-visualisation": "chooseIndicatorForVisualisation"
     "click .bar-chart-view": "editVisualisation"
     "click .visualisation-table-view": "editVisualisation"
     "click .map-view": "editVisualisation"
