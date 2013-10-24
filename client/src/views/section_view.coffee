@@ -47,16 +47,14 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     )
     @section.set('narrative', narrative)
 
-  createVisualisation: =>
-    return new Backbone.Models.Visualisation(
+  chooseIndicatorForVisualisation: =>
+    @indicatorSelectorView = new Backbone.Views.IndicatorSelectorView(
       section: @section
-      indicator: @section.get('indicator')
     )
 
-  editVisualisation: =>
-    unless @section.get('visualisation')
-      @createVisualisation()
+    $('body').append(@indicatorSelectorView.render().el)
 
+  editVisualisation: =>
     editVisualisationView = new Backbone.Views.ReportEditVisualisationView(
       visualisation: @section.get('visualisation')
     )

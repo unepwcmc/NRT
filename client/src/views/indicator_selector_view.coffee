@@ -27,9 +27,16 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     ))
     @renderSubViews()
 
+    @bindToIndicatorSelection()
+
     return @
+
+  bindToIndicatorSelection: ->
+    for subView in @subViews
+      @listenTo(subView, 'indicatorSelected', @close)
 
   onClose: ->
     $('body').removeClass('stop-scrolling')
 
+    @stopListening()
     @closeSubViews()

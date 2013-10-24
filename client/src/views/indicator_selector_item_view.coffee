@@ -16,10 +16,27 @@ class Backbone.Views.IndicatorSelectorItemView extends Backbone.View
 
   selectIndicator: ->
     @section.set('indicator', @indicator)
-    @section.save()
+    @section.save(
+      success: =>
+        @addVisualisation()
+    )
+
+  createVisualisation: =>
+    @section.set('visualisation', indicator: @section.get('indicator'))
+
+  addVisualisation: =>
+    unless @section.get('visualisation')
+      @createVisualisation()
+
+    editVisualisationView = new Backbone.Views.ReportEditVisualisationView(
+      visualisation: @section.get('visualisation')
+    )
+
+    $('body').append(editVisualisationView.render().el)
+
+    @trigger('indicatorSelected')
 
   render: =>
     @$el.html(@template(title: @indicator.get('title')))
 
   onClose: ->
-     
