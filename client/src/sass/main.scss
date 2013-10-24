@@ -87,6 +87,20 @@ small {
   }
 }
 
+.download-actions {
+  height: 34px;
+  margin-bottom: 20px;
+
+  button {
+    float: right;
+    margin-right: 10px;
+
+    &:first-of-type {
+      margin-right: 0;
+    }
+  }
+}
+
 .section-actions {
   color: $lightishGrey;
 
