@@ -59,6 +59,7 @@ class Backbone.Views.MapView extends Backbone.View
 
   renderDataToMap: ->
     serviceName = @visualisation.get('indicator').get('indicatorDefinition').serviceName
+    serviceName ||= "NRT_AD_ProtectedArea"
     L.esri.dynamicMapLayer("http://196.218.36.14/ka/rest/services/#{serviceName}/MapServer",
       opacity: 0.6
     ).addTo(@map)
