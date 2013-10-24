@@ -76,7 +76,7 @@
             "type": "epoch"
           },
           "name": "year",
-          "type": "integer"
+          "type": "date"
         },
         {
           "source": {
@@ -120,7 +120,7 @@
             "type": "epoch"
           },
           "name": "year",
-          "type": "integer"
+          "type": "date"
         },
         {
           "source": {
@@ -164,7 +164,7 @@
             "type": "epoch"
           },
           "name": "year",
-          "type": "integer"
+          "type": "date"
         },
         {
           "source": {
@@ -208,7 +208,7 @@
             "type": "epoch"
           },
           "name": "year",
-          "type": "integer"
+          "type": "date"
         },
         {
           "source": {
@@ -353,7 +353,7 @@
             "type": "epoch"
           },
           "name": "year",
-          "type": "integer"
+          "type": "date"
         },
         {
           "source": {
@@ -397,7 +397,7 @@
             "type": "epoch"
           },
           "name": "year",
-          "type": "integer"
+          "type": "date"
         },
         {
           "source": {
