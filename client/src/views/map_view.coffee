@@ -47,7 +47,7 @@ class Backbone.Views.MapView extends Backbone.View
     @visualisation.set('map_bounds', bbox)
 
   fitToBounds: =>
-    if @visualisation.get('map_bounds')?
+    if @visualisation.get('map_bounds') and @visualisation.get('map_bounds').length > 1 ?
       bounds = @visualisation.get('map_bounds')
     else
       bounds = [
@@ -58,7 +58,8 @@ class Backbone.Views.MapView extends Backbone.View
     @map.fitBounds(bounds)
 
   renderDataToMap: ->
-    L.esri.dynamicMapLayer('http://196.218.36.14/ka/rest/services/NRT_AD_ProtectedArea/MapServer',
+    serviceName = @visualisation.get('indicator').get('indicatorDefinition').serviceName
+    L.esri.dynamicMapLayer("http://196.218.36.14/ka/rest/services/#{serviceName}/MapServer",
       opacity: 0.6
     ).addTo(@map)
 
