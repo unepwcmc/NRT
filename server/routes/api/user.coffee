@@ -4,7 +4,7 @@ mongoose = require('mongoose')
 Q = require('q')
 
 exports.index = (req, res) ->
-  Q.nsend(User.find().select('-password'), 'exec')
+  Q.nsend(User.find().select('-password -salt'), 'exec')
   .then( (users) ->
     res.send(users)
   ).fail( (err) ->
@@ -16,7 +16,7 @@ exports.show = (req, res) ->
   Q.nsend(
     User
       .findOne(_id: req.params.id)
-      .select('-password'),
+      .select('-password -salt'),
       'exec'
   ).then( (user) ->
 
