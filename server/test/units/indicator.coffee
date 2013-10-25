@@ -638,3 +638,32 @@ test('#calculateNarrativeRecency given an array of indicators,
     throw err
   )
 )
+
+test("#calculateBoundsForType when given an unkown type throws an appropriate error", ->
+  assert.throws((->
+    Indicator.calculateBoundsForType("party", [], 'fieldName'))
+    ,"Don't know how to calculate the bounds of type 'party'"
+  )
+)
+
+test("#calculateBoundsForType given an array of dates returns the correct bounds", ->
+  dates = [
+    {value: new Date("2011")},
+    {value: new Date("2016")},
+    {value: new Date("2014")}
+  ]
+  bounds = Indicator.calculateBoundsForType("date", dates, 'value')
+
+  assert.strictEqual bounds.min.getFullYear(), 2011
+  assert.strictEqual bounds.max.getFullYear(), 2016
+)
+
+test("#calculateBoundsForType given text returns null", ->
+  text = [
+    {value: 'hat'},
+    {value: 'boat'}
+  ]
+  bounds = Indicator.calculateBoundsForType("text", text, 'value')
+
+  assert.isNull bounds
+)

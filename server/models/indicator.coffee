@@ -109,6 +109,28 @@ indicatorSchema.statics.seedData = ->
 
   return deferred.promise
 
+# Functions to aggregate the data bounds of different types of fields
+boundAggregators = {}
+boundAggregators.integer = (data, fieldName) ->
+  bounds = {}
+  bounds.min = _.min(data, (row) ->
+    row[fieldName]
+  )[fieldName]
+  bounds.max = _.max(data, (row) ->
+    row[fieldName]
+  )[fieldName]
+
+  return bounds
+
+boundAggregators.date = boundAggregators.integer
+boundAggregators.text = -> null
+
+indicatorSchema.statics.calculateBoundsForType = (fieldType, data, fieldName) ->
+  if boundAggregators[fieldType]?
+    return boundAggregators[fieldType](data, fieldName)
+  else
+    throw new Error("Don't know how to calculate the bounds of type '#{fieldType}'")
+
 indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
   if arguments.length == 1
     callback = filters
@@ -174,23 +196,10 @@ indicatorSchema.methods.calculateIndicatorDataBounds = (callback) ->
       callback(errorMsg)
 
     for field in @indicatorDefinition.fields
-      bounds[field.name] = boundAggregators[field.type](data, field.name, field.name)
+      bounds[field.name] = Indicator.calculateBoundsForType(field.type, data, field.name)
 
     callback(null, bounds)
   )
-
-# Functions to aggregate the data bounds of different types of fields
-boundAggregators =
-  integer: (data, fieldName) ->
-    bounds = {}
-    bounds.min = _.min(data, (row) ->
-      row[fieldName]
-    )[fieldName]
-    bounds.max = _.max(data, (row) ->
-      row[fieldName]
-    )[fieldName]
-    return bounds
-  text: () -> "It's text, dummy"
 
 indicatorSchema.methods.getRecentHeadlines = (amount) ->
   deferred = Q.defer()
