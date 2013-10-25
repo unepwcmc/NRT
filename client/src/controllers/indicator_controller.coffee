@@ -10,13 +10,13 @@ class Backbone.Controllers.IndicatorController extends Backbone.Diorama.Controll
     indicatorView.render()
     $('.main-content').prepend(indicatorView.el)
 
-    permissionsView = new Backbone.Views.PermissionsView(
-      ownable: indicator
-    )
-
-    $('.content-sidebar').prepend(permissionsView.el)
-
     if indicator.get('page').get('is_draft')
+      permissionsView = new Backbone.Views.PermissionsView(
+        ownable: indicator
+      )
+
+      $('.content-sidebar').prepend(permissionsView.el)
+
       $('.score').click(->
         view = new Backbone.Views.SelectHeadlineDateView(
           indicator: indicator
