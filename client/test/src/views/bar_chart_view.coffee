@@ -31,3 +31,30 @@ test('when initialised with a visualisation with no data, it fetches the data', 
 
   view.close()
 )
+
+test('when initialised it initialises nrtVis.barChart
+  with the x and y keys from the indicator definition', (done)->
+  indicator = Factory.indicator(
+    indicatorDefinition:
+      xAxis: 'hat'
+      xAxis: 'boat'
+  )
+  visualisation = Factory.visualisation(
+    indicator: indicator
+  )
+
+  barChartStub = sinon.stub(nrtViz, 'barChart', (options) ->
+    try
+      assert.strictEqual options.xKey, indicator.get('indicatorDefinition').xAxis
+      assert.strictEqual options.yKey, indicator.get('indicatorDefinition').yAxis
+    catch e
+      done(e)
+    finally
+      barChartStub.restore()
+
+    done()
+  )
+
+  view = new Backbone.Views.BarChartView(visualisation: visualisation)
+  view.close()
+)
