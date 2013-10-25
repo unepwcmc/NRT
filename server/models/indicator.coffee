@@ -110,26 +110,20 @@ indicatorSchema.statics.seedData = ->
   return deferred.promise
 
 # Functions to aggregate the data bounds of different types of fields
-boundAggregators =
-  integer: (data, fieldName) ->
-    bounds = {}
-    bounds.min = _.min(data, (row) ->
-      row[fieldName]
-    )[fieldName]
-    bounds.max = _.max(data, (row) ->
-      row[fieldName]
-    )[fieldName]
-    return bounds
-  date: (data, fieldName) ->
-    bounds = {}
-    bounds.min = _.min(data, (row) ->
-      row[fieldName]
-    )[fieldName]
-    bounds.max = _.max(data, (row) ->
-      row[fieldName]
-    )[fieldName]
-    return bounds
-  text: -> null
+boundAggregators = {}
+boundAggregators.integer = (data, fieldName) ->
+  bounds = {}
+  bounds.min = _.min(data, (row) ->
+    row[fieldName]
+  )[fieldName]
+  bounds.max = _.max(data, (row) ->
+    row[fieldName]
+  )[fieldName]
+
+  return bounds
+
+boundAggregators.date = boundAggregators.integer
+boundAggregators.text = -> null
 
 indicatorSchema.statics.calculateBoundsForType = (fieldType, data, fieldName) ->
   if boundAggregators[fieldType]?
