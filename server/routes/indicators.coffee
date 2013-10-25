@@ -6,7 +6,7 @@ csv = require('express-csv')
 Q = require('q')
 
 exports.show = (req, res) ->
-  theIndicator = null
+  theIndicator = theHeadlines = null
 
   Q.nsend(
     Indicator
@@ -21,8 +21,14 @@ exports.show = (req, res) ->
       console.error error
       return res.send(404, error)
 
-    indicator.toObjectWithNestedPage()
-    .then((indicatorObject) ->
+    indicator.getRecentHeadlines()
+    .then( (headlines) ->
+      theHeadlines = headlines
+
+      indicator.toObjectWithNestedPage()
+    ).then((indicatorObject) ->
+      indicatorObject.headlines = theHeadlines
+
       res.render("indicators/show",
         indicator: indicatorObject,
         indicatorJSON: JSON.stringify(indicatorObject)
