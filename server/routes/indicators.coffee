@@ -47,7 +47,7 @@ exports.showDraft = (req, res) ->
   return res.redirect('back') unless req.isAuthenticated()
 
   Q.nsend(
-    Indicator.findOne(_id: req.params.id).populate('owner'),
+    Indicator.findOne(_id: req.params.id).populate('owner theme'),
     'exec'
   ).then( (indicator) ->
     unless indicator?
@@ -72,7 +72,7 @@ exports.publishDraft = (req, res) ->
   theIndicator = null
 
   Q.nsend(
-    Indicator.findOne(_id: req.params.id).populate('owner'),
+    Indicator.findOne(_id: req.params.id).populate('owner theme'),
     'exec'
   ).then( (indicator) ->
     theIndicator = indicator
@@ -98,7 +98,7 @@ exports.discardDraft = (req, res) ->
   theIndicator = null
 
   Q.nsend(
-    Indicator.findOne(_id: req.params.id).populate('owner'),
+    Indicator.findOne(_id: req.params.id).populate('owner theme'),
     'exec'
   ).then( (indicator) ->
     theIndicator = indicator
