@@ -1193,3 +1193,23 @@ footer{
     cursor: pointer;
   }
 }
+
+.section {
+  overflow: hidden;
+  h2 {
+    float: left;
+  }
+  button.delete-section {
+    float: right;
+    margin-top: 10px;
+    i {
+      padding-right: 5px;
+    }
+    border: none;
+    &:hover, &:active {
+      background: none;
+      color: $red;
+      @include transition(color 0.5s)
+    }
+  }
+}
