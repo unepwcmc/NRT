@@ -129,7 +129,7 @@ boundAggregators =
       row[fieldName]
     )[fieldName]
     return bounds
-  text: () -> "It's text, dummy"
+  text: -> null
 
 indicatorSchema.statics.calculateBoundsForType = (fieldType, data, fieldName) ->
   if boundAggregators[fieldType]?

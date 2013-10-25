@@ -657,3 +657,13 @@ test("#calculateBoundsForType given an array of dates returns the correct bounds
   assert.strictEqual bounds.min.getFullYear(), 2011
   assert.strictEqual bounds.max.getFullYear(), 2016
 )
+
+test("#calculateBoundsForType given text returns null", ->
+  text = [
+    {value: 'hat'},
+    {value: 'boat'}
+  ]
+  bounds = Indicator.calculateBoundsForType("text", text, 'value')
+
+  assert.isNull bounds
+)
