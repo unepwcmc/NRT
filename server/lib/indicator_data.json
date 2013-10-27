@@ -3,14 +3,14 @@
     "indicator": "NO2 Concentration",
     "data": [
       {
-        "date": 1325450187,
+        "date": 1325450187000,
         "value": 9.9,
         "text": "Below Threshold"
       },
       {
-        "date": 1357072587,
+        "year": 1357072587000,
         "value": 4.9,
-        "text": "Below Threshold"
+        "text": "Great"
       }
     ]
   }
