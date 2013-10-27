@@ -13,6 +13,12 @@ findIndicatorWithShortName = (indicators, shortName) ->
 
   return null
 
+dateReviver = (key, value) ->
+  if key is 'date'
+    return new Date(value)
+  else
+    return value
+
 indicatorDataSchema.statics.seedData = (indicators) ->
   deferred = Q.defer()
 
@@ -23,7 +29,8 @@ indicatorDataSchema.statics.seedData = (indicators) ->
     if count is 0
       # Grab indcator data from disk
       dummyIndicatorData = JSON.parse(
-        fs.readFileSync("#{process.cwd()}/lib/indicator_data.json", 'UTF8')
+        fs.readFileSync("#{process.cwd()}/lib/indicator_data.json", 'UTF8'),
+        dateReviver
       )
 
       # Add indicator IDs to dummy data

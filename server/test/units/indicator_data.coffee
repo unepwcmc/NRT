@@ -53,3 +53,33 @@ test('#seedData given some indicators, links the seed data correctly', (done) ->
   )
   
 )
+
+test("#seedData if the seed includes a 'date' field, convert it to an actual date", (done) ->
+  epoch = 1357072587
+  indicatorData = [{
+    'indicator': 'NO2 Concentration'
+    'data': [{'date': epoch}]
+  }]
+  readFileStub = sinon.stub(fs, 'readFileSync', ->
+    JSON.stringify(indicatorData)
+  )
+
+  IndicatorData.seedData([]).then((createdIndicatorData) ->
+    try
+
+      firstDataRow = createdIndicatorData.data[0]
+      assert.strictEqual firstDataRow.date.toString(), (new Date(epoch)).toString(),
+        "Expected the created data date to be a date object"
+
+      done()
+    catch err
+      done(err)
+    finally
+      readFileStub.restore()
+
+  ).fail((err) ->
+    done(err)
+    readFileStub.restore()
+  )
+  
+)
