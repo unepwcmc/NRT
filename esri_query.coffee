@@ -114,7 +114,6 @@ module.exports = (req, res) ->
   , (err, response) ->
     if err?
       console.error err
-      throw err
       res.send(500, "Couldn't query ESRI Data for #{makeGetUrl(serviceName, featureServer)}")
 
     try
