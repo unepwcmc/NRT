@@ -11,6 +11,8 @@ findIndicatorWithShortName = (indicators, shortName) ->
   for indicator in indicators
     return indicator if indicator.short_name is shortName
 
+  return null
+
 indicatorDataSchema.statics.seedData = (indicators) ->
   deferred = Q.defer()
 
