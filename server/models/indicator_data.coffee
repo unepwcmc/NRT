@@ -7,6 +7,10 @@ indicatorDataSchema = mongoose.Schema(
   data: mongoose.Schema.Types.Mixed
 )
 
+findIndicatorWithShortName = (indicators, shortName) ->
+  for indicator in indicators
+    return indicator if indicator.short_name is shortName
+
 indicatorDataSchema.statics.seedData = (indicators) ->
   deferred = Q.defer()
 
@@ -22,7 +26,8 @@ indicatorDataSchema.statics.seedData = (indicators) ->
 
       # Add indicator IDs to dummy data
       for indicatorData, index in dummyIndicatorData
-        dummyIndicatorData[index].indicator = indicators[indicators.length%index]
+        shortName = dummyIndicatorData[index].indicator
+        dummyIndicatorData[index].indicator = findIndicatorWithShortName(indicators, shortName)
 
       IndicatorData.create(dummyIndicatorData, (error, results) ->
         if error?
