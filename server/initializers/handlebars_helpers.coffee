@@ -24,15 +24,3 @@ hbs.registerHelper('themeIconClass', (title) ->
 
   return themeIconMap[title]
 )
-
-hbs.registerHelper('newestHeadline', (array = []) ->
-  headline = array[0]
-  if headline?
-    return headline.year
-)
-
-hbs.registerHelper('oldestHeadline', (array = []) ->
-  headline = array[array.length - 1]
-  if headline?
-    return headline.year
-)
