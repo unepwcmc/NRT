@@ -359,6 +359,12 @@ indicatorSchema.statics.calculateNarrativeRecency = (indicators) ->
 
   return deferred.promise
 
+indicatorSchema.statics.themeObjectToId = (attributes) ->
+  if attributes.theme? and typeof attributes.theme is 'object'
+    attributes.theme = attributes.theme._id.toString()
+
+  return attributes
+
 Indicator = mongoose.model('Indicator', indicatorSchema)
 
 module.exports = {

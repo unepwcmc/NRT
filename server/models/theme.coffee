@@ -105,7 +105,6 @@ themeSchema.statics.getIndicatorsByTheme = (themeId, callback) ->
       callback(err, indicators)
     )
 
-
 themeSchema.methods.getIndicators = (callback) ->
   Theme = require('./theme.coffee').model
   Theme.getIndicatorsByTheme(@_id, callback)

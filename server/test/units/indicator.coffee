@@ -1,12 +1,14 @@
 assert = require('chai').assert
 helpers = require '../helpers'
-Indicator = require('../../models/indicator').model
-IndicatorData = require('../../models/indicator_data').model
-Page = require('../../models/page').model
 async = require('async')
 _ = require('underscore')
 Q = require 'q'
 sinon = require 'sinon'
+
+Theme = require('../../models/theme').model
+Indicator = require('../../models/indicator').model
+IndicatorData = require('../../models/indicator_data').model
+Page = require('../../models/page').model
 
 suite('Indicator')
 
@@ -708,4 +710,20 @@ test("#calculateBoundsForType given text returns null", ->
   bounds = Indicator.calculateBoundsForType("text", text, 'value')
 
   assert.isNull bounds
+)
+
+test('.themeObjectToId converts a Theme object to a Theme ID', ->
+  indicator = new Indicator()
+  theme = new Theme()
+
+  indicatorAttributes = indicator.toObject()
+  indicatorAttributes.theme = theme.toObject()
+
+  indicatorWithThemeId = Indicator.themeObjectToId(indicatorAttributes)
+
+  assert.strictEqual(
+    indicatorWithThemeId.theme,
+    theme.id,
+    'Expected indicator theme to be an ID only'
+  )
 )
