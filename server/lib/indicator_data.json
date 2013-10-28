@@ -3,14 +3,98 @@
     "indicator": "NO2 Concentration",
     "data": [
       {
-        "date": 1325450187000,
-        "value": 9.9,
-        "text": "Below Threshold"
+        "date": 1357002000000,
+        "value": 53.6875,
+        "text": "Great"
       },
       {
-        "year": 1357072587000,
-        "value": 4.9,
-        "text": "Great"
+        "date": 1364778000000,
+        "value": 52.65625,
+        "text": "Excellent"
+      }
+    ]
+  }, {
+    "indicator": "SO2 Concentration",
+    "data": [
+      {
+        "date": 1357002000000,
+        "value": 58.75,
+        "text": "Moderate"
+      },
+      {
+        "date": 1364778000000,
+        "value": 44.5625,
+        "text": "Excellent"
+      }
+    ]
+  }, {
+    "indicator": "PM10 Concentration",
+    "data": [
+      {
+        "date": 1357002000000,
+        "value": 376.875,
+        "text": "Unknown"
+      },
+      {
+        "date": 1364778000000,
+        "value": 908.75,
+        "text": "Moderate"
+      }
+    ]
+  }, {
+    "indicator": "SO3 Concentration",
+    "data": [
+      {
+        "date": 1357002000000,
+        "value": 125.9090909090909,
+        "text": "Excellent"
+      },
+      {
+        "date": 1364778000000,
+        "value": 159.0909090909091,
+        "text": "Moderate"
+      }
+    ]
+  }, {
+    "indicator": "Protected areas",
+    "data": [
+      {
+        "date": 2012,
+        "value": 29.390622,
+        "text": "Excellent"
+      },
+      {
+        "date": 2013,
+        "value": 22.78165,
+        "text": "Moderate"
+      }
+    ]
+  }, {
+    "indicator": "Nitrate-N Concentrations",
+    "data": [
+      {
+        "date": 1357002000000,
+        "value": 599.8260869565217,
+        "text": "Excellent"
+      },
+      {
+        "date": 1364778000000,
+        "value": 1694.5217391304348,
+        "text": "Excellent"
+      }
+    ]
+  }, {
+    "indicator": "Enterococci Concentrations",
+    "data": [
+      {
+        "date": 1357002000000,
+        "value": 223,
+        "text": "Excellent"
+      },
+      {
+        "date": 1364778000000,
+        "value": 126.5,
+        "text": "Excellent"
       }
     ]
   }
