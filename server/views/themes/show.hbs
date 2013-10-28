@@ -44,7 +44,6 @@ class="theme-page"
     </div>
 
     <aside class="content-sidebar metadata">
-     <!-- <h3>{{{t "theme/owned_by"}}}</h3> -->
     </aside>
   </article>
 </div>
@@ -64,6 +63,11 @@ class="theme-page"
 
 <script type="text/javascript">
   i18n.onReady(function() {
-    new Backbone.Controllers.ThemeController({{{ themeJSON }}});
+      new Backbone.Controllers.ThemeController(
+        {{{ themeJSON }}}
+        {{#if currentUser}}
+          ,{{{currentUserJSON}}}
+        {{/if}}
+      );
   });
 </script>

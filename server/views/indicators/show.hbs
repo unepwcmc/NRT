@@ -53,8 +53,9 @@
     </div>
 
     <aside class="content-sidebar metadata">
-    <div class="metadata-placeholder">
-    </div>
+      <div class="metadata-placeholder">
+      </div>
+
       <section>
         <h3>{{{t "indicator/metadata"}}}</h3>
         <ul>
@@ -84,6 +85,11 @@
 </div>
 <script type="text/javascript">
   i18n.onReady(function() {
-    new Backbone.Controllers.IndicatorController({{{ indicatorJSON }}});
+      new Backbone.Controllers.IndicatorController(
+        {{{ indicatorJSON }}}
+        {{#if currentUser}}
+          ,{{{currentUserJSON}}}
+        {{/if}}
+      );
   });
 </script>

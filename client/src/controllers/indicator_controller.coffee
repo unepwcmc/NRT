@@ -3,7 +3,7 @@ window.Backbone.Controllers ||= {}
 
 
 class Backbone.Controllers.IndicatorController extends Backbone.Diorama.Controller
-  constructor: (indicatorAttributes) ->
+  constructor: (indicatorAttributes, user) ->
     indicator = new Backbone.Models.Indicator indicatorAttributes
     indicatorView = new Backbone.Views.IndicatorView(indicator: indicator)
 
@@ -12,6 +12,7 @@ class Backbone.Controllers.IndicatorController extends Backbone.Diorama.Controll
 
     permissionsView = new Backbone.Views.PermissionsView(
       ownable: indicator
+      user: user
     )
 
     $('.content-sidebar').prepend(permissionsView.el)
