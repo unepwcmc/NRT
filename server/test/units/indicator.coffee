@@ -723,8 +723,8 @@ test("#roundHeadlineValues when given a value which isn't a number, does nothing
 )
 
 test(".parseDateInHeadlines on an indicator with xAxis 'date' (which is an integer),
-  when given an integer date headline row,
-  adds a 'periodEnd' attribute with the date of the period end", ->
+  and no period specified, when given an integer date headline row,
+  adds a 'periodEnd' attribute with the date one year in after the 'date' value", ->
   indicator = new Indicator(
     indicatorDefinition:
       xAxis: "date",
@@ -758,4 +758,27 @@ test(".parseDateInHeadlines on an indicator with no xAxis defined does no proces
 
   assert.ok _.isEqual(convertedHeadline, headlineData),
     "Expected the headline data not to be modified"
+)
+
+test(".parseDateInHeadlines on an indicator where the frequency is 'quarterly' 
+  sets periodEnd to 3 months after the initial 'date'", ->
+
+  indicator = new Indicator(
+    indicatorDefinition:
+      period: 'quarterly'
+      xAxis: 'date'
+      fields: [
+        name: 'date'
+      ]
+  )
+
+  headlineData = [
+    date: "2013-04-01T01:00:00.000Z"
+  ]
+
+  convertedHeadlines = indicator.parseDateInHeadlines(headlineData)
+  convertedHeadline = convertedHeadlines[0]
+
+  assert.strictEqual convertedHeadline.periodEnd, "30 Jun 2013",
+    "Expected the periodEnd to be 3 months from the period start"
 )

@@ -10,6 +10,23 @@ calculateRecency = (indicator, callback) ->
     callback(err)
   )
 
+durationMap =
+  annual:
+    unit: 'years'
+    amount: 1
+  quarterly:
+    unit: 'months'
+    amount: 3
+
+getPeriodEnd = (date, period) ->
+  duration = durationMap[period]
+  duration ||= durationMap.annual
+
+  moment(date.toString())
+    .add(duration.unit, duration.amount)
+    .subtract('days', 1)
+    .format("D MMM YYYY")
+
 module.exports = {
   statics:
     calculateNarrativeRecency: (indicators) ->
@@ -43,8 +60,10 @@ module.exports = {
 
       if xAxis?
         for headline in headlines
-          headline.periodEnd = moment("#{headline[xAxis]}")
-            .add('years', 1).subtract('days', 1).format("D MMM YYYY")
+          headline.periodEnd = getPeriodEnd(
+            headline[xAxis],
+            @indicatorDefinition.period
+          )
 
       return headlines
 
