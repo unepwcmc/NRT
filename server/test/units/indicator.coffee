@@ -719,7 +719,7 @@ test('.themeObjectToId converts a Theme object to a Theme ID', ->
   indicatorAttributes = indicator.toObject()
   indicatorAttributes.theme = theme.toObject()
 
-  indicatorWithThemeId = Indicator.themeObjectToId(indicatorAttributes)
+  indicatorWithThemeId = Indicator.convertNestedParametersToAssociationIds(indicatorAttributes)
 
   assert.strictEqual(
     indicatorWithThemeId.theme,

@@ -359,7 +359,7 @@ indicatorSchema.statics.calculateNarrativeRecency = (indicators) ->
 
   return deferred.promise
 
-indicatorSchema.statics.themeObjectToId = (attributes) ->
+indicatorSchema.statics.convertNestedParametersToAssociationIds = (attributes) ->
   if attributes.theme? and typeof attributes.theme is 'object'
     attributes.theme = attributes.theme._id.toString()
 

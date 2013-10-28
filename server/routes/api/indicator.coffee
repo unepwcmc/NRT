@@ -30,7 +30,7 @@ exports.show = (req, res) ->
 
 exports.update = (req, res) ->
   params = _.omit(req.body, ['_id'])
-  params = Indicator.themeObjectToId(params)
+  params = Indicator.convertNestedParametersToAssociationIds(params)
 
   Indicator.update(
     {_id: req.params.indicator},
