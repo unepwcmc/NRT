@@ -722,3 +722,40 @@ test("#roundHeadlineValues when given a value which isn't a number, does nothing
   assert.strictEqual result[0].value, 'hat'
 )
 
+test(".parseDateInHeadlines on an indicator with xAxis 'date' (which is an integer),
+  when given an integer date headline row,
+  adds a 'periodEnd' attribute with the date of the period end", ->
+  indicator = new Indicator(
+    indicatorDefinition:
+      xAxis: "date",
+     fields: [
+       {
+         name: "date",
+         type: "integer"
+       }
+     ]
+  )
+
+  headlineData = [
+    date: 1997
+  ]
+
+  convertedHeadlines = indicator.parseDateInHeadlines(headlineData)
+  convertedHeadline = convertedHeadlines[0]
+
+  assert.strictEqual convertedHeadline.periodEnd, "31 Dec 1997",
+    "Expected the periodEnd attribute to be calculated"
+)
+
+test(".parseDateInHeadlines on an indicator with no xAxis defined does no processing", ->
+  indicator = new Indicator()
+
+  headlineData = [
+    date: 1997
+  ]
+
+  convertedHeadline = indicator.parseDateInHeadlines(headlineData)
+
+  assert.ok _.isEqual(convertedHeadline, headlineData),
+    "Expected the headline data not to be modified"
+)

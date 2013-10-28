@@ -19,11 +19,11 @@ test(".initialise queries the server for the given indicator's recent headlines"
   server.restore()
 )
 
-test("After fetching headlines I see their text and year", ->
+test("After fetching headlines I see their text and periodEnd", ->
   indicator = Factory.indicator()
 
   headline = {
-    text: "Superb", year: 2005
+    text: "Superb", periodEnd: "31 Dec 2005"
   }
 
   getHeadlinesStub = sinon.stub(Backbone.Views.SelectHeadlineDateView::, 'getHeadlines', ->
@@ -37,8 +37,8 @@ test("After fetching headlines I see their text and year", ->
   assert.match view.$el.text(), new RegExp(".*#{headline.text}.*"),
     "Expected the headline text to be visible"
 
-  assert.match view.$el.text(), new RegExp(".*#{headline.year}.*"),
-    "Expected the headline year to be visible"
+  assert.match view.$el.text(), new RegExp(".*#{headline.periodEnd}.*"),
+    "Expected the headline periodEnd to be visible"
 
   getHeadlinesStub.restore()
   view.close()
@@ -49,7 +49,7 @@ test(".setHeadline sets the headline on the page and calls save ", ->
   page = Factory.page()
 
   headline = {
-    text: "Superb", year: 2005
+    text: "Superb", periodEnd: "31 Dec 2005"
   }
 
   getHeadlinesStub = sinon.stub(Backbone.Views.SelectHeadlineDateView::, 'getHeadlines', ->
@@ -64,7 +64,7 @@ test(".setHeadline sets the headline on the page and calls save ", ->
   viewCloseSpy = sinon.spy(view, 'close')
 
   pretendClickEvent = {
-    target: view.$el.find("[data-headline-year=#{headline.year}]")[0]
+    target: view.$el.find("[data-headline-index=\"0\"]")[0]
   }
 
   pageSaveStub = sinon.stub(page, 'save', ->

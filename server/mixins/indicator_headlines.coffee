@@ -23,20 +23,6 @@ module.exports = {
 
       return deferred.promise
 
-    convertDataToHeadline: (data) ->
-      Indicator = require('../models/indicator.coffee').model
-
-      data = Indicator.parseDateInHeadlines(data)
-      data = Indicator.roundHeadlineValues(data)
-      return data
-
-    parseDateInHeadlines: (headlines) ->
-      for headline in headlines
-        headline.periodEnd = moment("#{headline.year}")
-          .add('years', 1).subtract('days', 1).format("D MMM YYYY")
-
-      return headlines
-
     roundHeadlineValues: (headlines) ->
       for headline in headlines
         unless isNaN(headline.value)
@@ -45,6 +31,23 @@ module.exports = {
       return headlines
 
   methods:
+    convertDataToHeadline: (data) ->
+      Indicator = require('../models/indicator.coffee').model
+
+      data = @parseDateInHeadlines(data)
+      data = Indicator.roundHeadlineValues(data)
+      return data
+
+    parseDateInHeadlines: (headlines) ->
+      xAxis = @indicatorDefinition?.xAxis
+
+      if xAxis?
+        for headline in headlines
+          headline.periodEnd = moment("#{headline[xAxis]}")
+            .add('years', 1).subtract('days', 1).format("D MMM YYYY")
+
+      return headlines
+
     calculateRecencyOfHeadline: ->
       deferred = Q.defer()
 
@@ -82,7 +85,7 @@ module.exports = {
 
         headlineData = data
         headlineData = _.last(data, amount) if amount?
-        headlines = Indicator.convertDataToHeadline(headlineData)
+        headlines = @convertDataToHeadline(headlineData)
 
         deferred.resolve(headlines.reverse())
 
