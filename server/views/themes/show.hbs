@@ -63,6 +63,11 @@ class="theme-page"
 
 <script type="text/javascript">
   i18n.onReady(function() {
-    new Backbone.Controllers.ThemeController({{{ themeJSON }}});
+      new Backbone.Controllers.ThemeController(
+        {{{ themeJSON }}}
+        {{#if currentUser}}
+          ,{{{currentUserJSON}}}
+        {{/if}}
+      );
   });
 </script>

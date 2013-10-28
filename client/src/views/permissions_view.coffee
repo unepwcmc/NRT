@@ -45,6 +45,7 @@ class Backbone.Views.PermissionsView extends Backbone.Diorama.NestingView
     isEditable = @user?
 
     @$el.html(@template(
+      ownableName: @ownable.constructor.name
       owner: ownerJSON
       isEditable: isEditable
     ))
