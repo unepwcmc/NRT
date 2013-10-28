@@ -62,39 +62,21 @@
           <li>
             <h4>{{{t "indicator/metadata/category"}}}</h4>
             <span>
-              <i class="icon-cloud append"></i>
-              Atmosphere
+              <i class="icon-{{themeIconClass indicator.theme.title}} append"></i>
+              {{indicator.theme.title}}
             </span>
           </li>
           <li>
-          <h4>{{{t "indicator/metadata/most_recent"}}}</h4>
-            <span class="outdated">
-              3 June 2013
-              <span class="outdated-notice">
-                <i class="icon-warning-sign"></i>
-                outdated data
-              </span>
-            </span>
+            <h4>{{{t "indicator/metadata/most_recent"}}}</h4>
+            <span>{{indicator.headlines.newest}}</span>
           </li>
           <li>
             <h4>{{{t "indicator/metadata/oldest_data"}}}</h4>
-            <span>3 June 2013</span>
+            <span>{{indicator.headlines.oldest}}</span>
           </li>
           <li>
             <h4>{{{t "indicator/metadata/frequency"}}}</h4>
-            <span>Yearly</span>
-          </li>
-          <li>
-            <h4>{{{t "indicator/metadata/collected_by"}}}</h4>
-            <span>Dr. Laila Ibrahim Al Dhaheri</span>
-          </li>
-          <li>
-            <h4>{{{t "indicator/metadata/data_feed_url"}}}</h4>
-            <span>Al Wathba Wetland Reserve</span>
-          </li>
-          <li>
-            <h4>{{{t "indicator/metadata/contact"}}}</h4>
-            <span>Dr. Laila Ibrahim Al Dhaheri, Executive Director, Terrestrial & Marine Biodiversity</span>
+            <span>{{indicator.indicatorDefinition.period}}</span>
           </li>
         </ul>
       </section>

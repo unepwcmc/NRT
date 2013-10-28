@@ -103,6 +103,7 @@ small {
 
 .section-actions {
   color: $lightishGrey;
+  clear: both;
 
   &:hover {
     color: darken($lightishGrey, 10);
@@ -1191,5 +1192,27 @@ footer{
 .action-or-response {
   a {
     cursor: pointer;
+  }
+}
+
+.section-view {
+  overflow: hidden;
+  h2 {
+    float: left;
+  }
+  button.delete {
+    float: right;
+    margin-top: 10px;
+    padding-left: 0;
+    padding-right: 0;
+    i {
+      padding-right: 5px;
+    }
+    border: none;
+    &:hover, &:active {
+      background: none;
+      color: $red;
+      @include transition(color 0.5s)
+    }
   }
 }

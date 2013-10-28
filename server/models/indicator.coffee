@@ -97,7 +97,7 @@ indicatorSchema.statics.seedData = ->
         async.map(dummyIndicators, createIndicatorWithSections, (err, indicators) ->
           if err?
             return deferred.reject(err)
-          
+
           deferred.resolve(indicators)
         )
       ).fail( (err) ->
@@ -208,7 +208,8 @@ indicatorSchema.methods.getRecentHeadlines = (amount) ->
     @, 'getIndicatorData'
   ).then( (data) =>
 
-    headlineData = _.last(data, amount)
+    headlineData = data
+    headlineData = _.last(data, amount) if amount?
     headlines = IndicatorData.convertDataToHeadline(headlineData)
 
     deferred.resolve(headlines.reverse())
@@ -336,7 +337,7 @@ indicatorSchema.statics.populatePages = (indicators) ->
       deferred.reject(err)
     else
       deferred.resolve()
-  
+
   return deferred.promise
 
 calculateRecency = (indicator, callback) ->

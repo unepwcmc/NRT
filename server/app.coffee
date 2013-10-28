@@ -5,6 +5,7 @@ path = require('path')
 require('express-resource')
 passport = require('passport')
 mongoose = require('mongoose')
+MongoStore = require('connect-mongo')(express)
 i18n = require('i18n')
 
 exports.createApp = ->
@@ -30,7 +31,12 @@ exports.createApp = ->
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use express.cookieParser("your secret here")
-  app.use express.session()
+  app.use express.session(
+    store: new MongoStore(
+      url: "mongodb://localhost/nrt_#{app.get('env')}"
+      maxAge: 300000
+    )
+  )
 
   require('./initializers/i18n')(app)
 
@@ -58,6 +64,7 @@ seedData = ->
 
   Theme.seedData()
   .then(Indicator.seedData)
+  .then(IndicatorData.seedData)
   .fail((err) ->
     console.log "error seeding indicator data:"
     console.error err

@@ -1,31 +1,35 @@
-<div id="section-{{section._id}}">
-  <h2>
-    {{addSubViewTo thisView "TextEditView" type='input'
-      attributeName='title' model=sectionModel disableNewlines=true}}
-  </h2>
+<h2>
+  {{addSubViewTo thisView "TextEditView" type='input'
+    attributeName='title' model=sectionModel disableNewlines=true}}
+</h2>
 
-  {{#if visualisation}}
-    {{addSubViewTo thisView "VisualisationView" visualisation=visualisation}}
-  {{/if}}
+{{#if isEditable}}
+  <button class="delete">
+    <i class="icon-remove"></i>Delete this section
+  </button>
+{{/if}}
 
-  {{#if narrative}}
-    {{addSubViewTo thisView "TextEditView" type='input'
-      attributeName='content' model=narrative}}
-  {{/if}}
+{{#if visualisation}}
+  {{addSubViewTo thisView "VisualisationView" visualisation=visualisation}}
+{{/if}}
 
-  {{#if isEditable}}
-    <div class="section-actions">
-      {{#unless narrative}}
-        <button class="add-narrative">
-          <i class="icon-align-justify append"></i>Add text
-        </button>
-      {{/unless}}
+{{#if narrative}}
+  {{addSubViewTo thisView "TextEditView" type='input'
+    attributeName='content' model=narrative}}
+{{/if}}
 
-      {{#unless visualisation}}
-        <button class="add-visualisation">
-          <i class="icon-table append"></i>Add visualisation
-        </button>
-      {{/unless}}
-    </div>
-  {{/if}}
-</div>
+{{#if isEditable}}
+  <div class="section-actions">
+    {{#unless narrative}}
+      <button class="add-narrative">
+        <i class="icon-align-justify append"></i>Add text
+      </button>
+    {{/unless}}
+
+    {{#unless visualisation}}
+      <button class="add-visualisation">
+        <i class="icon-table append"></i>Add visualisation
+      </button>
+    {{/unless}}
+  </div>
+{{/if}}
