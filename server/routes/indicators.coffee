@@ -6,7 +6,10 @@ csv = require('express-csv')
 Q = require('q')
 
 exports.show = (req, res) ->
-  theIndicator = null
+  theIndicator = theHeadlines = null
+
+  draftMode = req.path.match(/.*\/draft\/?$/)?
+  return res.redirect('back') unless req.isAuthenticated() || !draftMode
 
   Q.nsend(
     Indicator
@@ -21,36 +24,20 @@ exports.show = (req, res) ->
       console.error error
       return res.send(404, error)
 
-    indicator.toObjectWithNestedPage()
-    .then((indicatorObject) ->
-      res.render("indicators/show",
-        indicator: indicatorObject,
-        indicatorJSON: JSON.stringify(indicatorObject)
-      )
-    ).fail((err) ->
-      console.error err
-      return res.render(500, "Error fetching the indicator page")
-    )
+    indicator.getRecentHeadlines()
+  ).then( (headlines) ->
+    theHeadlines = headlines
 
-  ).fail((err) ->
-    console.error err
-    return res.render(500, "Error fetching the indicator")
-  )
-
-exports.showDraft = (req, res) ->
-  return res.redirect('back') unless req.isAuthenticated()
-
-  Q.nsend(
-    Indicator.findOne(_id: req.params.id).populate('owner'),
-    'exec'
-  ).then( (indicator) ->
-    unless indicator?
-      error = "Could not find indicator with ID #{req.params.id}"
-      console.error error
-      return res.send(404, error)
-
-    indicator.toObjectWithNestedPage(draft: true)
+    theIndicator.toObjectWithNestedPage(draft: draftMode)
   ).then( (indicatorObject) ->
+    indicatorObject.headlines = {}
+    xAxis = theIndicator.indicatorDefinition?.xAxis
+
+    if xAxis?
+      indicatorObject.headlines =
+        oldest: theHeadlines[0][xAxis]
+        newest: theHeadlines[theHeadlines.length - 1][xAxis]
+
     res.render("indicators/show",
       indicator: indicatorObject,
       indicatorJSON: JSON.stringify(indicatorObject)
@@ -66,7 +53,7 @@ exports.publishDraft = (req, res) ->
   theIndicator = null
 
   Q.nsend(
-    Indicator.findOne(_id: req.params.id).populate('owner'),
+    Indicator.findOne(_id: req.params.id),
     'exec'
   ).then( (indicator) ->
     theIndicator = indicator
@@ -92,7 +79,7 @@ exports.discardDraft = (req, res) ->
   theIndicator = null
 
   Q.nsend(
-    Indicator.findOne(_id: req.params.id).populate('owner'),
+    Indicator.findOne(_id: req.params.id),
     'exec'
   ).then( (indicator) ->
     theIndicator = indicator

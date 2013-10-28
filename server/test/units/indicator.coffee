@@ -299,6 +299,48 @@ test('.getRecentHeadlines returns the given number of most recent headlines
   )
 )
 
+test('.getRecentHeadlines successfully returns all headline when the
+  number of headlines requested is undefined', (done)->
+  indicatorData = [
+    {
+      "year": 1999,
+      "value": 3
+      "text": 'Poor'
+    },
+    {
+      "year": 2000,
+      "value": 2
+      "text": 'Poor'
+    }
+  ]
+
+  indicator = new Indicator()
+  sinon.stub(indicator, 'getIndicatorData', (callback) ->
+    callback(null, indicatorData)
+  )
+
+  indicator.getRecentHeadlines()
+  .then( (data) ->
+
+    assert.lengthOf data, 2, "Expected 2 headlines to be returned"
+
+    mostRecentHeadline = data[0]
+
+    assert.strictEqual(mostRecentHeadline.year, 2000,
+      "Expected most recent headline year value to be 2000")
+    assert.strictEqual(mostRecentHeadline.value, 2,
+      "Expected most recent headline value to be 2")
+    assert.strictEqual(mostRecentHeadline.text, "Poor",
+      "Expected most recent headline text to be 'Poor'")
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
 test('.getNewestHeadline returns the most recent headline', (done)->
   indicatorData = [
     {
