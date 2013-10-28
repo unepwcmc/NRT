@@ -164,3 +164,24 @@ test(".createVisualisation creates a visualisation on the section with an indica
 
   view.close()
 )
+
+test(".destroySection calls destroy on the section, save on the parent page,
+  and closes the view", ->
+  page = Factory.page(sections: [{}])
+  pageSaveStub = sinon.stub(page, 'save', (attributes, options)->
+    options.success()
+  )
+  collection = page.get('sections')
+
+  view = new Backbone.Views.SectionView(section: collection.models[0])
+
+  viewCloseSpy = sinon.spy(view, 'close')
+
+  view.destroySection()
+
+  assert.lengthOf collection.models, 0,
+    "Expected section collection to be empty"
+
+  Helpers.assertCalledOnce(pageSaveStub)
+  Helpers.assertCalledOnce(viewCloseSpy)
+)
