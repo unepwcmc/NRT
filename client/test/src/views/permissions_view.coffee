@@ -1,9 +1,9 @@
 suite('Permissions View')
 
-test('when given a ownable model with no owner, I see "Choose owner"', ->
+test('when logged in and given a ownable model with no owner, I see "Choose owner"', ->
   ownable = Factory.indicator()
 
-  view = new Backbone.Views.PermissionsView(ownable: ownable)
+  view = new Backbone.Views.PermissionsView(ownable: ownable, user: Factory.user())
 
   Helpers.renderViewToTestContainer(view)
 
@@ -25,8 +25,8 @@ test('when given a ownable model with an owner, I see the owners name', ->
   view.close()
 )
 
-test("when I click 'change' owner, it adds a choose user sub view", ->
-  view = new Backbone.Views.PermissionsView(ownable: Factory.indicator())
+test("when logged in and I click 'change' owner, it adds a choose user sub view", ->
+  view = new Backbone.Views.PermissionsView(ownable: Factory.indicator(), user: Factory.user())
 
   Helpers.renderViewToTestContainer(view)
 

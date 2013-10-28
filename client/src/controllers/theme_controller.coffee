@@ -8,9 +8,3 @@ class Backbone.Controllers.ThemeController extends Backbone.Diorama.Controller
 
     themeView.render()
     $('.main-content').append(themeView.el)
-
-    permissionsView = new Backbone.Views.PermissionsView(
-      ownable: theme
-    )
-
-    $('.content-sidebar').prepend(permissionsView.el)
