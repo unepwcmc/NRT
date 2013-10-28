@@ -9,10 +9,6 @@ moment = require('moment')
 IndicatorData = require('./indicator_data').model
 Page = require('./page').model
 
-# Mixins
-pageModelMixin = require('../mixins/page_model.coffee')
-updateIndicatorMixin = require('../mixins/update_indicator_data.coffee')
-
 indicatorSchema = mongoose.Schema(
   title: String
   short_name: String
@@ -23,10 +19,17 @@ indicatorSchema = mongoose.Schema(
   description: String
 )
 
+# Mixins
+pageModelMixin = require('../mixins/page_model.coffee')
+updateIndicatorMixin = require('../mixins/update_indicator_data.coffee')
+indicatorHeadlinesMixin = require('../mixins/indicator_headlines.coffee')
+
 _.extend(indicatorSchema.methods, pageModelMixin.methods)
 _.extend(indicatorSchema.statics, pageModelMixin.statics)
 _.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
 _.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
+_.extend(indicatorSchema.methods, indicatorHeadlinesMixin.methods)
+_.extend(indicatorSchema.statics, indicatorHeadlinesMixin.statics)
 
 replaceThemeNameWithId = (indicators) ->
   Theme = require('./theme').model
@@ -201,36 +204,6 @@ indicatorSchema.methods.calculateIndicatorDataBounds = (callback) ->
     callback(null, bounds)
   )
 
-indicatorSchema.methods.getRecentHeadlines = (amount) ->
-  deferred = Q.defer()
-
-  Q.nsend(
-    @, 'getIndicatorData'
-  ).then( (data) =>
-
-    headlineData = data
-    headlineData = _.last(data, amount) if amount?
-    headlines = IndicatorData.convertDataToHeadline(headlineData)
-
-    deferred.resolve(headlines.reverse())
-
-  ).fail( (err) ->
-    deferred.reject(err)
-  )
-
-  return deferred.promise
-
-indicatorSchema.methods.getNewestHeadline = ->
-  deferred = Q.defer()
-
-  @getRecentHeadlines(1).then((headlines) ->
-    deferred.resolve headlines[0]
-  ).fail( (err) ->
-    deferred.reject err
-  )
-
-  return deferred.promise
-
 # Probably going to need a refactor at some point
 indicatorSchema.methods.getCurrentYAxis = (callback) ->
   @getIndicatorData((error, data) =>
@@ -291,32 +264,6 @@ indicatorSchema.statics.findWhereIndicatorHasData = (conditions) ->
         deferred.resolve(indicatorsWithData)
 
   ).fail((err)->
-    deferred.reject(err)
-  )
-
-  return deferred.promise
-
-indicatorSchema.methods.calculateRecencyOfHeadline = ->
-  deferred = Q.defer()
-
-  @populatePage().then( =>
-    @getNewestHeadline()
-  ).then( (dataHeadline) =>
-
-    unless dataHeadline?
-      return deferred.resolve("No Data")
-
-    pageHeadline = @page.headline
-
-    unless pageHeadline? && pageHeadline.periodEnd?
-      return deferred.resolve("Out of date")
-
-    if moment(pageHeadline.periodEnd).isBefore(dataHeadline.periodEnd)
-      deferred.resolve("Out of date")
-    else
-      deferred.resolve("Up to date")
-
-  ).fail( (err) ->
     deferred.reject(err)
   )
 

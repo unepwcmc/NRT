@@ -10,18 +10,6 @@ sinon = require 'sinon'
 
 suite('Indicator Data')
 
-test("#roundHeadlineValues truncates decimals to 1 place", ->
-  result = IndicatorData.roundHeadlineValues([{value: 0.123456789}])
-
-  assert.strictEqual result[0].value, 0.1
-)
-
-test("#roundHeadlineValues when given a value which isn't a number, does nothing", ->
-  result = IndicatorData.roundHeadlineValues([{value: 'hat'}])
-
-  assert.strictEqual result[0].value, 'hat'
-)
-
 test('#seedData given some indicators, links the seed data correctly', (done) ->
   indicatorData = [{
     'indicator': 'NO2 Concentration'
