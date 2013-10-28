@@ -709,3 +709,16 @@ test("#calculateBoundsForType given text returns null", ->
 
   assert.isNull bounds
 )
+
+test("#roundHeadlineValues truncates decimals to 1 place", ->
+  result = Indicator.roundHeadlineValues([{value: 0.123456789}])
+
+  assert.strictEqual result[0].value, 0.1
+)
+
+test("#roundHeadlineValues when given a value which isn't a number, does nothing", ->
+  result = Indicator.roundHeadlineValues([{value: 'hat'}])
+
+  assert.strictEqual result[0].value, 'hat'
+)
+
