@@ -33,8 +33,8 @@ class Backbone.Views.SelectHeadlineDateView extends Backbone.View
 
   setHeadline: (event) =>
     $target = $(event.target)
-    selectedYear = parseInt($target.attr('data-headline-year'), 10)
-    headline = _.where(@headlines, year: selectedYear)[0]
+    headlineIndex = parseInt($target.attr('data-headline-index'), 10)
+    headline = @headlines[headlineIndex]
 
     @page.set('headline', headline)
     @page.save().done(=>

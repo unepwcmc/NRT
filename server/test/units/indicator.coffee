@@ -709,3 +709,76 @@ test("#calculateBoundsForType given text returns null", ->
 
   assert.isNull bounds
 )
+
+test("#roundHeadlineValues truncates decimals to 1 place", ->
+  result = Indicator.roundHeadlineValues([{value: 0.123456789}])
+
+  assert.strictEqual result[0].value, 0.1
+)
+
+test("#roundHeadlineValues when given a value which isn't a number, does nothing", ->
+  result = Indicator.roundHeadlineValues([{value: 'hat'}])
+
+  assert.strictEqual result[0].value, 'hat'
+)
+
+test(".parseDateInHeadlines on an indicator with xAxis 'date' (which is an integer),
+  and no period specified, when given an integer date headline row,
+  adds a 'periodEnd' attribute with the date one year in after the 'date' value", ->
+  indicator = new Indicator(
+    indicatorDefinition:
+      xAxis: "date",
+     fields: [
+       {
+         name: "date",
+         type: "integer"
+       }
+     ]
+  )
+
+  headlineData = [
+    date: 1997
+  ]
+
+  convertedHeadlines = indicator.parseDateInHeadlines(headlineData)
+  convertedHeadline = convertedHeadlines[0]
+
+  assert.strictEqual convertedHeadline.periodEnd, "31 Dec 1997",
+    "Expected the periodEnd attribute to be calculated"
+)
+
+test(".parseDateInHeadlines on an indicator with no xAxis defined does no processing", ->
+  indicator = new Indicator()
+
+  headlineData = [
+    date: 1997
+  ]
+
+  convertedHeadline = indicator.parseDateInHeadlines(headlineData)
+
+  assert.ok _.isEqual(convertedHeadline, headlineData),
+    "Expected the headline data not to be modified"
+)
+
+test(".parseDateInHeadlines on an indicator where the frequency is 'quarterly' 
+  sets periodEnd to 3 months after the initial 'date'", ->
+
+  indicator = new Indicator(
+    indicatorDefinition:
+      period: 'quarterly'
+      xAxis: 'date'
+      fields: [
+        name: 'date'
+      ]
+  )
+
+  headlineData = [
+    date: "2013-04-01T01:00:00.000Z"
+  ]
+
+  convertedHeadlines = indicator.parseDateInHeadlines(headlineData)
+  convertedHeadline = convertedHeadlines[0]
+
+  assert.strictEqual convertedHeadline.periodEnd, "30 Jun 2013",
+    "Expected the periodEnd to be 3 months from the period start"
+)
