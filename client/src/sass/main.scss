@@ -103,6 +103,7 @@ small {
 
 .section-actions {
   color: $lightishGrey;
+  clear: both;
 
   &:hover {
     color: darken($lightishGrey, 10);
@@ -1199,7 +1200,7 @@ footer{
   h2 {
     float: left;
   }
-  button.delete-section {
+  button.delete {
     float: right;
     margin-top: 10px;
     padding-left: 0;
