@@ -50,7 +50,8 @@ passport.use(
 
 passport.addCurrentUserToLocals = (req, res, next) ->
   if req.user?
-    res.locals.currentUser = JSON.stringify(req.user)
+    res.locals.currentUser= req.user
+    res.locals.currentUserJSON = JSON.stringify(req.user)
   next()
 
 module.exports = passport
