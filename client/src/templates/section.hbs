@@ -1,8 +1,14 @@
-<div id="section-{{section._id}}">
+<div class="section" id="section-{{section._id}}">
   <h2>
     {{addSubViewTo thisView "TextEditView" type='input'
       attributeName='title' model=sectionModel disableNewlines=true}}
   </h2>
+  
+  {{#if isEditable}}
+    <button class="delete-section">
+      <i class="icon-remove"></i>Delete this section
+    </button>
+  {{/if}}
 
   {{#if visualisation}}
     {{addSubViewTo thisView "VisualisationView" visualisation=visualisation}}
