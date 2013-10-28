@@ -84,8 +84,12 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
   destroySection: ->
     page = @section.get('page')
     @section.destroy()
-    page.save()
-    @close()
+    page.save(null,
+      success: =>
+        @close()
+      error: ->
+        alert('Unable to delete this section, please try again')
+    )
 
   onClose: ->
     @editVisualisationView.close() if @editVisualisationView?

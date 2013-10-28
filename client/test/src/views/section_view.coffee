@@ -168,7 +168,8 @@ test(".createVisualisation creates a visualisation on the section with an indica
 test(".destroySection calls destroy on the section, save on the parent page,
   and closes the view", ->
   page = Factory.page(sections: [{}])
-  pageSaveStub = sinon.stub(page, 'save', ->
+  pageSaveStub = sinon.stub(page, 'save', (attributes, options)->
+    options.success()
   )
   collection = page.get('sections')
 
