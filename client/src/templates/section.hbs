@@ -5,7 +5,7 @@
 
 {{#if isEditable}}
   <button class="delete">
-    <i class="icon-remove"></i>Delete this section
+    <i class="icon-remove"></i>{{t "section/delete_this_section"}}
   </button>
 {{/if}}
 
@@ -22,13 +22,13 @@
   <div class="section-actions">
     {{#unless narrative}}
       <button class="add-narrative">
-        <i class="icon-align-justify append"></i>Add text
+        <i class="icon-align-justify append"></i>{{t "section/add_text"}}
       </button>
     {{/unless}}
 
     {{#unless visualisation}}
       <button class="add-visualisation">
-        <i class="icon-table append"></i>Add visualisation
+        <i class="icon-table append"></i>{{t "section/add_visualisation"}}
       </button>
     {{/unless}}
   </div>

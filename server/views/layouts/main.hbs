@@ -14,7 +14,6 @@
     <link href='//fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/css/main.css">
     <script src="/js/lib/jquery.min.js"></script>
-    <script src="/js/lib/bootstrap-tooltip.js"></script>
     <script src="/js/lib/marked.js"></script>
     <script src="/js/lib/underscore-min.js"></script>
     <script src="/js/lib/backbone-min.js"></script>
@@ -22,7 +21,7 @@
 
     {{{block "header"}}}
 
-    {{#if settings.localeIsArabic}}
+    {{#if localeIsArabic}}
       <link rel="stylesheet" href="/css/rtl_overrides.css">
     {{/if}}
 
@@ -41,7 +40,7 @@
         </div>
 
         <ul class="right">
-          {{#if settings.localeIsArabic}}
+          {{#if localeIsArabic}}
           <a href="/locale/en">
             <li>
               English
@@ -56,7 +55,7 @@
           {{/if}}
 
           <li class="md-trigger" data-modal="modal-1" onclick="$('#modal-1').addClass('md-show');">
-            Help
+            {{t "menu/help"}}
           </li>
 
           {{#if currentUser}}
@@ -65,12 +64,12 @@
                 <span class="name">
                 {{ currentUser.name }}
                 </span>
-                <span class="logout"><span>›</span>Sign Out</span>
+                <span class="logout"><span>›</span>{{t "menu/sign_out"}}</span>
               </li>
             </a>
           {{else}}
             <a href="/login">
-              <li>Log in</li>
+              <li>{{t "menu/log_in"}}</li>
             </a>
           {{/if}}
         </ul>

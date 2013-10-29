@@ -63,8 +63,13 @@
   "indicator/metadata/category": "فئة",
   "indicator/metadata/most_recent": "أحدث البيانات التي تم جمعها",
   "indicator/metadata/oldest_data": "أقدم البيانات التي تم جمعها",
+  "indicator/metadata/frequency": "تواتر",
   "indicator/similar": "مؤشرات مماثلة",
   "indicator/add_section": "إضافة القسم",
+
+  "section/delete_this_section": "حذف هذا القسم",
+  "section/add_text": "إضافة نص",
+  "section/add_visualisation": "إضافة التصور",
 
   "theme/download": "تحميل ورقة العمل",
   "theme/update": "تحديث هذا الموضوع",
@@ -76,6 +81,11 @@
   "theme/metadata/oldest_data": "أقدم البيانات التي تم جمعها",
   "theme/similar": "مؤشرات مماثلة",
   "theme/add_section": "إضافة القسم",
+  "theme/indicators_under_this_theme": "مؤشرات إطار هذا الموضوع",
+
+  "page/publish": "نشر",
+  "page/discard_draft": "التخلص من مسودة",
+  "page/save_and_exit": "حفظ والخروج",
 
   "indicator/bookmark_this_indicator": "المرجعية في هذا المؤشر",
 
@@ -86,5 +96,15 @@
   "menu/dashboard": "لوحة أجهزة القياس",
   "menu/reports": "تقارير",
   "menu/indicators": "مؤشرات",
-  "menu/bookmarks": "الإشارات المرجعية"
+  "menu/bookmarks": "الإشارات المرجعية",
+  "menu/help": "مساعدة",
+  "menu/sign_out": "الخروج",
+  "menu/log_in": "دخول",
+
+  "permissions/title": "التي يملكها",
+  "permissions/change": "تغيير",
+  "permissions/select_a_new_owner": "حدد مالك جديد",
+  "permissions/change_owner": "تغيير مالك",
+  "permissions/enter_a_name_or_an_email": "إدخال اسم أو بريد إلكتروني",
+  "permissions/choose_owner": "اختيار مالك"
 }
