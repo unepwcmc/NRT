@@ -120,9 +120,9 @@ done() function from mocha, but part of Q's promises).
 ##### Running 'em
 
 Ensure you've run `grunt` to compile the tests, and fire up the app
-server in the test environment:
+server:
 
-`NODE_ENV=test npm start`
+`npm start`
 
 Then visit [http://localhost:3000/tests](http://localhost:3000/tests)
 
