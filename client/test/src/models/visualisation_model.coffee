@@ -150,3 +150,35 @@ test('.setFilterParameter when filter is undefined
 
   assert.strictEqual visualisation.get('filters').year.min, 2004
 )
+
+test('.populateFormattedDates populates a formatted object with a string
+formatted date for each row of data on a visualisation where the indicator has
+a field of type date', ->
+  indicator = Factory.indicator(
+    indicatorDefinition:
+      fields: [
+        name: 'date'
+        type: 'date'
+      ]
+  )
+  visualisation = Factory.visualisation(
+    indicator: indicator
+    data: [
+      date: '2013-04-01T01:00:00.000Z'
+      otherField: 'an value'
+    ]
+  )
+
+  visualisation.populateFormattedDates()
+
+  formattedRow = visualisation.get('data')[0]
+
+  assert.property formattedRow, 'formatted',
+    'Expected the data to have a formatted attribute'
+  assert.property formattedRow.formatted, 'date',
+    'Expected the formatted data to include the date'
+  assert.strictEqual formattedRow.formatted.date, '2013-04-01',
+    'Expected the formatted date to be formatted YYYY-MM-DD'
+  assert.strictEqual formattedRow.formatted.otherField, 'an value',
+    "Expected the otherField to be included in the formatted data, but unmodified"
+)
