@@ -78,7 +78,7 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
       row.formatted ||= {}
       for key, value of row
         break if key is 'formatted'
-        if _.contains(dateFields, key)
+        if @get('indicator').getFieldType(key) is 'date'
           date = new Date(value)
           row.formatted[key] = date.toISOString().replace(/T.*/, '')
         else

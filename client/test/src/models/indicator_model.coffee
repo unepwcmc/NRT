@@ -20,3 +20,23 @@ test('.toJSON when model has owner attributes only includes the owner id', ->
   json = indicator.toJSON()
   assert.strictEqual json.owner, owner.get(Backbone.Models.User::idAttribute)
 )
+
+test('.getFieldType returns the type of a field from the indicator definition', ->
+  indicator = Factory.indicator(
+    indicatorDefinition:
+      fields:[
+        name: 'theDate'
+        type: 'date'
+      ]
+  )
+
+  assert.strictEqual indicator.getFieldType('theDate'), 'date'
+)
+
+test('.getFieldType on an indicator with no field definition', ->
+  indicator = Factory.indicator(
+    indicatorDefinition:
+  )
+
+  assert.strictEqual indicator.getFieldType('theDate'), 'date'
+)

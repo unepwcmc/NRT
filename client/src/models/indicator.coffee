@@ -19,6 +19,11 @@ class window.Backbone.Models.Indicator extends Backbone.RelationalModel
     includeInJSON: Backbone.Models.User::idAttribute
   }]
 
+  getFieldType: (fieldName) ->
+    fieldDefinition = _.find(@get('indicatorDefinition').fields, (definition)->
+      definition.name is fieldName
+    )
+    return fieldDefinition.type
 
 #For backbone relational
 Backbone.Models.Indicator.setup()
