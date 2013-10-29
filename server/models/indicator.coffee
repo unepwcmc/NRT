@@ -287,6 +287,31 @@ indicatorSchema.statics.populatePages = (indicators) ->
 
   return deferred.promise
 
+calculateRecency = (indicator, callback) ->
+  indicator.calculateRecencyOfHeadline().then((recency)->
+    indicator.narrativeRecency = recency
+    callback()
+  ).fail((err) ->
+    callback(err)
+  )
+
+indicatorSchema.statics.calculateNarrativeRecency = (indicators) ->
+  deferred = Q.defer()
+
+  async.each indicators, calculateRecency, (err) ->
+    if err?
+      deferred.reject(err)
+    else
+      deferred.resolve()
+
+  return deferred.promise
+
+indicatorSchema.statics.convertNestedParametersToAssociationIds = (attributes) ->
+  if attributes.theme? and typeof attributes.theme is 'object'
+    attributes.theme = attributes.theme._id.toString()
+
+  return attributes
+
 Indicator = mongoose.model('Indicator', indicatorSchema)
 
 module.exports = {

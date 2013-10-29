@@ -8,6 +8,7 @@ async = require('async')
 
 suite('API - Indicator')
 
+Theme = require('../../models/theme').model
 Indicator = require('../../models/indicator').model
 IndicatorData = require('../../models/indicator_data').model
 
@@ -136,6 +137,33 @@ test('PUT indicator does not fail when an _id is given', (done) ->
           done()
         )
     )
+  )
+)
+
+test('PUT indicator does not fail when Theme is given as an object', (done) ->
+  theme = new Theme(
+    title: 'Themes themes themes'
+  )
+
+  Q.nfcall(
+    helpers.createIndicator, {}
+  ).then( (indicator) ->
+    Q.nfcall(
+      request.put, {
+        url: helpers.appurl("/api/indicators/#{indicator.id}")
+        json: true
+        body:
+          theme: theme.toObject()
+      }
+    )
+  ).spread( (res, body) ->
+    assert.equal res.statusCode, 200
+
+    done()
+  ).fail( (err) ->
+    console.error err
+    console.error err.stack
+    done(err)
   )
 )
 
