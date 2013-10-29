@@ -33,6 +33,9 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
       includeInJSON: '_id'
   ]
 
+  getPage: ->
+    @get('page')
+
   hasTitleOrIndicator: ->
     if @get('title')? or @get('indicator')?
       return true
@@ -48,7 +51,11 @@ class window.Backbone.Models.Section extends Backbone.RelationalModel
     if @get('page')?
       @get('page').save(section: attributes, options)
     else
-      throw "You're trying to save a section without a parent page, this shouldn't happen"
+      throw new Error(
+        "You're trying to save a section without a parent page, this shouldn't happen"
+      )
 
 #For backbone relational
 Backbone.Models.Section.setup()
+
+_.extend(Backbone.Models.Section::, Backbone.Mixins.EditModeMixin)

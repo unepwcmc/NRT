@@ -1,0 +1,6 @@
+{
+  "host": "ldap://1.1.1.1:389",
+  "search_base": "",
+  "auth_base": "",
+  "auth_password": ""
+}

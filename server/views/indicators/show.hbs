@@ -2,6 +2,8 @@
 
 {{#contentFor 'header'}}
   <link rel="stylesheet" href="/css/indicator.css">
+  <link rel="stylesheet" href="/css/medium-editor.css">
+  <link rel="stylesheet" href="/css/leaflet.css" />
 
   <script src="/js/lib/d3.min.js"></script>
   <script src="/js/lib/underscore-min.js"></script>
@@ -9,34 +11,50 @@
   <script src="/js/lib/backbone-relational.js"></script>
   <script src="/js/lib/handlebars.js"></script>
   <script src="/js/lib/diorama.js"></script>
+  <script src="/js/lib/leaflet.js"></script>
+  <script src="/js/lib/esri-leaflet.js"></script>
+  <script src="/js/lib/medium-editor.min.js"></script>
   <script src="/js/application.js"></script>
 {{/contentFor}}
+
+{{#contentFor 'breadcrumbs'}}
+  <li class="home"><i class="icon-home"></i><a href="/">Home</a></li>
+  <li><a href="/themes/{{indicator.theme._id}}">Go back to theme {{ indicator.theme.title }}</a></li>
+
+  {{#if currentUser}}
+    <a class="button" href="/indicators/{{indicator._id}}/draft">
+      <i class="icon-edit"></i> {{{t "indicator/update"}}}
+    </a>
+  {{/if}}
+{{/contentFor}}
+
+{{#if indicator.page.is_draft}}
+  {{> pageEditControls}}
+{{/if}}
 
 <div class="content indicator">
   <article>
     <header>
-      <h1>{{indicator.title}}</h1>
-
-      <div class='indicator-buttons'>
-        <a href="/api/indicators/{{indicator._id}}/data" class="button grey">
-          <i class="icon-file-text-alt"></i> {{{t "indicator/view"}}}
-        </a>
-
-        <a href="/api/indicators/{{indicator._id}}/data.csv" class="button grey">
-          <i class="icon-file-text-alt"></i> {{{t "indicator/download"}}}
-        </a>
+      <div {{#if indicator.page.is_draft}}class="parameter p-select"{{else}}class="parameter"{{/if}}>
+        <div class="score">
+          <span class="number">
+            {{indicator.page.headline.value}} {{indicator.indicatorDefinition.short_unit}}
+          </span>
+          <span class="keyword">
+            {{indicator.page.headline.text}}
+          </span>
+        </div>
+        <p>Refers to data collected up to {{indicator.page.headline.periodEnd}}</p>
       </div>
+      <h1>{{indicator.title}}</h1>
     </header>
 
     <div class='main-content'>
     </div>
 
     <aside class="content-sidebar metadata">
-      <h3>{{{t "indicator/owned_by"}}}</h3>
-      <p>
-        <i class="icon-user append"></i>
-        Dr. Anybody
-      </p>
+      <div class="metadata-placeholder">
+      </div>
 
       <section>
         <h3>{{{t "indicator/metadata"}}}</h3>
@@ -44,44 +62,34 @@
           <li>
             <h4>{{{t "indicator/metadata/category"}}}</h4>
             <span>
-              <i class="icon-cloud append"></i>
-              Atmosphere
+              <i class="icon-{{themeIconClass indicator.theme.title}} append"></i>
+              {{indicator.theme.title}}
             </span>
           </li>
           <li>
-          <h4>{{{t "indicator/metadata/most_recent"}}}</h4>
-            <span class="outdated">
-              3 June 2013
-              <span class="outdated-notice">
-                <i class="icon-warning-sign"></i>
-                outdated data
-              </span>
-            </span>
+            <h4>{{{t "indicator/metadata/most_recent"}}}</h4>
+            <span>{{indicator.headlines.newest}}</span>
           </li>
           <li>
             <h4>{{{t "indicator/metadata/oldest_data"}}}</h4>
-            <span>3 June 2013</span>
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h3>{{{t "indicator/similar"}}}</h3>
-        <ul>
-          <li>
-            Average evaporation rate
+            <span>{{indicator.headlines.oldest}}</span>
           </li>
           <li>
-            Average minimum and maximum temperature
+            <h4>{{{t "indicator/metadata/frequency"}}}</h4>
+            <span>{{indicator.indicatorDefinition.period}}</span>
           </li>
         </ul>
       </section>
     </aside>
   </article>
 </div>
-
 <script type="text/javascript">
   i18n.onReady(function() {
-    new Backbone.Controllers.IndicatorController({{{ indicatorJSON }}});
+      new Backbone.Controllers.IndicatorController(
+        {{{ indicatorJSON }}}
+        {{#if currentUser}}
+          ,{{{currentUserJSON}}}
+        {{/if}}
+      );
   });
 </script>

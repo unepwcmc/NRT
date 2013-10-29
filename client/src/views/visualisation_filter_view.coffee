@@ -24,9 +24,14 @@ class Backbone.Views.VisualisationFilterView extends Backbone.Diorama.NestingVie
 
   getFieldData: ->
     fields = @visualisation.get('indicator').get('indicatorDefinition').fields
+    fieldsWithSubViews = []
+
     for field, index in fields
-      fields[index].subViewName = @fieldTypeToSubViewName(field.type)
-    return fields
+      if Backbone.Views[@fieldTypeToSubViewName(field.type)]?
+        field.subViewName = @fieldTypeToSubViewName(field.type)
+        fieldsWithSubViews.push field
+
+    return fieldsWithSubViews
 
   fieldTypeToSubViewName: (type)->
     upcasedType = type.charAt(0).toUpperCase() + type.slice(1)

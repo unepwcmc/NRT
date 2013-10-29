@@ -4,43 +4,135 @@ fs = require('fs')
 _ = require('underscore')
 async = require('async')
 Q = require('q')
+moment = require('moment')
 
 IndicatorData = require('./indicator_data').model
 Page = require('./page').model
 
-pageModel = require('../mixins/page_model.coffee')
-
 indicatorSchema = mongoose.Schema(
   title: String
+  short_name: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
-  theme: Number
+  theme: {type: mongoose.Schema.Types.ObjectId, ref: 'Theme'}
+  type: String
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+  description: String
 )
 
-_.extend(indicatorSchema.methods, pageModel)
+# Mixins
+pageModelMixin = require('../mixins/page_model.coffee')
+updateIndicatorMixin = require('../mixins/update_indicator_data.coffee')
+indicatorHeadlinesMixin = require('../mixins/indicator_headlines.coffee')
 
-indicatorSchema.statics.seedData = (callback) ->
-  # Seed some indicators
-  dummyIndicators = JSON.parse(
-    fs.readFileSync("#{process.cwd()}/lib/sample_indicators.json", 'UTF8')
+_.extend(indicatorSchema.methods, pageModelMixin.methods)
+_.extend(indicatorSchema.statics, pageModelMixin.statics)
+_.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
+_.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
+_.extend(indicatorSchema.methods, indicatorHeadlinesMixin.methods)
+_.extend(indicatorSchema.statics, indicatorHeadlinesMixin.statics)
+
+replaceThemeNameWithId = (indicators) ->
+  Theme = require('./theme').model
+
+  deferred = Q.defer()
+
+  getThemeFromTitle = (indicator, callback) ->
+    Theme.findOne(title: indicator.theme, (err, theme) ->
+      if err? or !theme?
+        return callback(err)
+
+      indicator.theme = theme._id
+      callback(null, indicator)
+    )
+
+  async.map(indicators, getThemeFromTitle, (err, indicatorsWithThemes) ->
+    if err?
+      deferred.reject(err)
+
+    deferred.resolve(indicatorsWithThemes)
   )
+
+  return deferred.promise
+
+createIndicatorWithSections = (indicatorAttributes, callback) ->
+  theIndicator = thePage = null
+
+  Q.nsend(
+    Indicator, 'create', indicatorAttributes
+  ).then( (indicator) ->
+    theIndicator = indicator
+    theIndicator.getPage()
+  ).then( (page) ->
+    thePage = page
+
+    sections = indicatorAttributes.sections
+
+    thePage.createSectionNarratives(sections)
+  ).then( ->
+    callback(null, theIndicator)
+  ).fail( (err) ->
+    callback(err)
+  )
+
+indicatorSchema.statics.seedData = ->
+  deferred = Q.defer()
+
+  getAllIndicators = ->
+    Indicator.find((err, indicators) ->
+      if err?
+        deferred.reject(err)
+      else
+        deferred.resolve(indicators)
+    )
 
   Indicator.count(null, (error, count) ->
     if error?
-      console.error error
-      return callback(error)
+      return deferred.reject(error)
 
-    if count == 0
-      Indicator.create(dummyIndicators, (error, results) ->
-        if error?
-          console.error error
-          return callback(error)
-        else
-          return callback(null, results)
+    if count is 0
+      dummyIndicators = JSON.parse(
+        fs.readFileSync("#{process.cwd()}/lib/seed_indicators.json", 'UTF8')
+      )
+
+      replaceThemeNameWithId(
+        dummyIndicators
+      ).then( (indicators) ->
+        async.map(dummyIndicators, createIndicatorWithSections, (err, indicators) ->
+          if err?
+            return deferred.reject(err)
+
+          deferred.resolve(indicators)
+        )
+      ).fail( (err) ->
+        deferred.reject(error)
       )
     else
-      callback()
+      getAllIndicators()
   )
+
+  return deferred.promise
+
+# Functions to aggregate the data bounds of different types of fields
+boundAggregators = {}
+boundAggregators.integer = (data, fieldName) ->
+  bounds = {}
+  bounds.min = _.min(data, (row) ->
+    row[fieldName]
+  )[fieldName]
+  bounds.max = _.max(data, (row) ->
+    row[fieldName]
+  )[fieldName]
+
+  return bounds
+
+boundAggregators.date = boundAggregators.integer
+boundAggregators.text = -> null
+
+indicatorSchema.statics.calculateBoundsForType = (fieldType, data, fieldName) ->
+  if boundAggregators[fieldType]?
+    return boundAggregators[fieldType](data, fieldName)
+  else
+    throw new Error("Don't know how to calculate the bounds of type '#{fieldType}'")
 
 indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
   if arguments.length == 1
@@ -64,10 +156,12 @@ indicatorSchema.methods.getIndicatorData = (filters, callback) ->
     callback = filters
     filters = {}
 
-  IndicatorData.findOne externalId: @indicatorDefinition.externalId, (err, res) ->
+  IndicatorData.findOne indicator: @_id, (err, res) ->
     if err?
       console.error err
       callback err
+    else if !res?
+      callback null, []
     else
       data = filterIndicatorData(res.data, filters)
 
@@ -83,7 +177,7 @@ filterIndicatorData = (data, filters) ->
         console.error "No function to perform filter operation '#{operation}'"
 
   return data
- 
+
 # Functions which filter indicator data using different operations
 filterOperations =
   min: (data, field, value) ->
@@ -105,22 +199,10 @@ indicatorSchema.methods.calculateIndicatorDataBounds = (callback) ->
       callback(errorMsg)
 
     for field in @indicatorDefinition.fields
-      bounds[field.name] = boundAggregators[field.type](data, field.name, field.name)
+      bounds[field.name] = Indicator.calculateBoundsForType(field.type, data, field.name)
 
     callback(null, bounds)
   )
-
-# Functions to aggregate the data bounds of different types of fields
-boundAggregators =
-  integer: (data, fieldName) ->
-    bounds = {}
-    bounds.min = _.min(data, (row) ->
-      row[fieldName]
-    )[fieldName]
-    bounds.max = _.max(data, (row) ->
-      row[fieldName]
-    )[fieldName]
-    return bounds
 
 # Probably going to need a refactor at some point
 indicatorSchema.methods.getCurrentYAxis = (callback) ->
@@ -157,6 +239,78 @@ indicatorSchema.statics.calculateCurrentValues = (indicators, callback) ->
     , (err, items) ->
       callback(null, indicators)
   )
+
+indicatorSchema.statics.findWhereIndicatorHasData = (conditions) ->
+  deferred = Q.defer()
+
+  Q.nsend(
+    Indicator.find(conditions), 'exec'
+  ).then((indicators) ->
+    indicatorsWithData = []
+
+    addIndicatorIfHasData = (indicator, callback) ->
+      indicator.getIndicatorData((err, data) ->
+        if err?
+          return callback(err)
+        else if data.length > 0
+          indicatorsWithData.push indicator
+        callback()
+      )
+
+    async.each indicators, addIndicatorIfHasData, (err) ->
+      if err?
+        deferred.reject(err)
+      else
+        deferred.resolve(indicatorsWithData)
+
+  ).fail((err)->
+    deferred.reject(err)
+  )
+
+  return deferred.promise
+
+populatePage = (indicator, callback) ->
+  indicator.populatePage().then(->
+    callback()
+  ).fail((err) ->
+    callback(err)
+  )
+
+indicatorSchema.statics.populatePages = (indicators) ->
+  deferred = Q.defer()
+
+  async.each indicators, populatePage, (err) ->
+    if err?
+      deferred.reject(err)
+    else
+      deferred.resolve()
+
+  return deferred.promise
+
+calculateRecency = (indicator, callback) ->
+  indicator.calculateRecencyOfHeadline().then((recency)->
+    indicator.narrativeRecency = recency
+    callback()
+  ).fail((err) ->
+    callback(err)
+  )
+
+indicatorSchema.statics.calculateNarrativeRecency = (indicators) ->
+  deferred = Q.defer()
+
+  async.each indicators, calculateRecency, (err) ->
+    if err?
+      deferred.reject(err)
+    else
+      deferred.resolve()
+
+  return deferred.promise
+
+indicatorSchema.statics.convertNestedParametersToAssociationIds = (attributes) ->
+  if attributes.theme? and typeof attributes.theme is 'object'
+    attributes.theme = attributes.theme._id.toString()
+
+  return attributes
 
 Indicator = mongoose.model('Indicator', indicatorSchema)
 

@@ -26,7 +26,7 @@
 
   "report/section/add_title": "ابدأ بكتابة عنوان القسم الجديد الخاص بك هنا أو",
   "report/section/reference_indicator": "الرجوع مؤشرا",
-  "report/section/type_narrative_indicator": "نوع السردي لهذا المؤشر هنا",
+  "report/section/type_narrative_indicator": "انقر هنا لإضافتة السردي لهذا المؤشر",
   "report/section/type_narrative": "نوع سردي لهذا",
   "report/section/or": "أو",
   "report/section/add_vis": "إضافة التصور",
@@ -56,6 +56,7 @@
 
   "indicator/view": "عرض البينات.",
   "indicator/download": "تحميل ورقة العمل",
+  "indicator/update": "تحديث هذا المؤشر",
   "indicator/narratives": "السرد لهذا المؤشر",
   "indicator/owned_by": "مؤشر يملكها",
   "indicator/metadata": "البيانات الوصفية",
@@ -64,6 +65,17 @@
   "indicator/metadata/oldest_data": "أقدم البيانات التي تم جمعها",
   "indicator/similar": "مؤشرات مماثلة",
   "indicator/add_section": "إضافة القسم",
+
+  "theme/download": "تحميل ورقة العمل",
+  "theme/update": "تحديث هذا الموضوع",
+  "theme/narratives": "السرد لهذا المؤشر",
+  "theme/owned_by": "مؤشر يملكها",
+  "theme/metadata": "البيانات الوصفية",
+  "theme/metadata/category": "فئة",
+  "theme/metadata/most_recent": "أحدث البيانات التي تم جمعها",
+  "theme/metadata/oldest_data": "أقدم البيانات التي تم جمعها",
+  "theme/similar": "مؤشرات مماثلة",
+  "theme/add_section": "إضافة القسم",
 
   "indicator/bookmark_this_indicator": "المرجعية في هذا المؤشر",
 

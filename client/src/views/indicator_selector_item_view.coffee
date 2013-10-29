@@ -11,15 +11,12 @@ class Backbone.Views.IndicatorSelectorItemView extends Backbone.View
 
   initialize: (options) ->
     @indicator = options.indicator
-    @section   = options.section
     @render()
 
-  selectIndicator: ->
-    @section.set('indicator', @indicator)
-    @section.save()
+  selectIndicator: =>
+    @trigger('indicatorSelected', @indicator)
 
   render: =>
     @$el.html(@template(title: @indicator.get('title')))
 
   onClose: ->
-     

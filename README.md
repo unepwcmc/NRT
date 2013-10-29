@@ -1,34 +1,68 @@
 # National Reporting Toolkit
 
+NRT is an online system to help Governments collect, analyse and publish
+environmental information quickly and easily. It’s being built by the
+UNEP World Conservation Monitoring Centre, in partnership with the
+United Nations Environment Programme (UNEP) and the Abu Dhabi Global
+Environmental Data Initiative (AGEDI). You can find out more at
+[nrt.io](http://nrt.io)
+
 ## Setup
 
 * Install and setup NodeJS (0.10.13)
 * `npm install -g handlebars coffee-script grunt-cli`
 * `npm install` in the `client/` and `server/` dirs to get the libs
-* Install mongodb locally (on Mac with [Homebrew](http://brew.sh/) installed, `brew install mongodb`) and start it with
-  `mongod`.
+* Install mongodb locally (on Mac with [Homebrew](http://brew.sh/)
+  installed, `brew install mongodb`) and start it with `mongod`.
 
 ## Running the application
+
+Before you start, you'll need the [NRT-Indicatorator](https://github.com/unepwcmc/NRT-indicatorator) running.
+
+### Development
 
 #### Start the server
 
 In **development**, supervisor is used to handle exceptions:
-
-`cd server/ && npm run-script development`
-
-##### Default user
-In development, the users will be seeded on application boot. To login, pick a user from server/lib/users.json, e.g.
-
-    nrt@nrt.com
-    password
-
-In **production**:
 
 `cd server/ && npm start`
 
 #### Compile coffeescripts
 
 `cd client && grunt watch`
+
+#### Logging in
+
+In development, the users will be seeded on application boot. To login,
+pick a user from `server/lib/users.json`, e.g.
+
+    nrt@nrt.com
+    password
+
+### Production
+
+#### Start the server
+
+`cd server/ && npm run-script production`
+
+#### Compile coffeescripts
+
+`cd client && grunt watch`
+
+#### Authentication and logging in
+
+In production, no users are seeded and have to be created manually.
+However, you can use an LDAP server for authentication once it has been
+configured. Note that for EAD LDAP use, you must be within the EAD VPN.
+
+##### LDAP
+
+LDAP is configured by the file `server/config/ldap.json`, and an example
+can be found in `server/config/ldap.json.example`. See the [deployment secrets
+document](https://docs.google.com/a/peoplesized.com/document/d/1dYMO3PJhRlTDQ2BEUUOcLwqX0IfJ5UP_UYyfQllnXeQ/)
+for the production details you need.
+
+**In development, LDAP is disabled.**
 
 ## Application structure
 
@@ -139,15 +173,15 @@ For example, run your app as so:
 
 #### Listing all users
 
-    curl http://<domain>/users\?token\=my-very-secret-token
+    curl http://<domain>/api/users\?token\=my-very-secret-token
 
 #### Adding a user
 
-    curl -X POST -d "email=hats@boats.com&password=password" http://<domain>/users\?token\=my-very-secret-token
+    curl -X POST -d "email=hats@boats.com&password=password" http://<domain>/api/users\?token\=my-very-secret-token
 
 #### Deleting a user
 
-    curl -i -X DELETE http://<domain>/users/<id>\?token\=my-very-secret-token
+    curl -i -X DELETE http://<domain>/api/users/<id>\?token\=my-very-secret-token
 
 
 ## Production

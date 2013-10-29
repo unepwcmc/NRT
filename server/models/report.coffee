@@ -3,7 +3,7 @@ Section = require('./section.coffee').schema
 async = require('async')
 _ = require('underscore')
 
-pageModel = require('../mixins/page_model.coffee')
+pageModelMixin = require('../mixins/page_model.coffee')
 
 reportSchema = mongoose.Schema(
   title: String
@@ -12,7 +12,8 @@ reportSchema = mongoose.Schema(
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 )
 
-_.extend(reportSchema.methods, pageModel)
+_.extend(reportSchema.methods, pageModelMixin.methods)
+_.extend(reportSchema.statics, pageModelMixin.statics)
 
 Report = mongoose.model('Report', reportSchema)
 

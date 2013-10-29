@@ -7,12 +7,12 @@ _ = require('underscore')
 async = require('async')
 Q = require('q')
 
+Section = require('../models/section').model
 Report = require('../models/report').model
 Indicator = require('../models/indicator').model
 IndicatorData = require('../models/indicator_data').model
 Visualisation = require('../models/visualisation').model
 Narrative = require('../models/narrative').model
-Section = require('../models/section').model
 Theme = require('../models/theme').model
 Page = require('../models/page').model
 User = require('../models/user').model
@@ -51,12 +51,17 @@ dropDatabase = (connection, done) ->
     Permission
   ]
 
-  for model in models
-    model
+  removeTable = (table, callback) ->
+    table
       .remove()
-      .exec()
+      .exec(callback)
 
-  done()
+  async.each(models, removeTable, (err) ->
+    if err?
+      console.error 'Could not clean database'
+
+    done()
+  )
 
 beforeEach( (done) ->
   connection = mongoose.connection

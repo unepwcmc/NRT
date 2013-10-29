@@ -31,7 +31,7 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
 
     return @
 
-  save: ->
+  save: =>
     @visualisation.save()
 
   closeModal: ->

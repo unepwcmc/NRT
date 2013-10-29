@@ -1,5 +1,6 @@
 Indicator = require("../../models/indicator").model
 _ = require('underscore')
+Q = require('q')
 
 exports.index = (req, res) ->
   Indicator.find( (err, indicators) ->
@@ -28,7 +29,8 @@ exports.show = (req, res) ->
   )
 
 exports.update = (req, res) ->
-  params = _.omit(req.body, '_id')
+  params = _.omit(req.body, ['_id'])
+  params = Indicator.convertNestedParametersToAssociationIds(params)
 
   Indicator.update(
     {_id: req.params.indicator},
@@ -96,3 +98,24 @@ exports.data = (req, res) ->
               bounds: bounds
             ))
         )
+
+exports.headlines = (req, res) ->
+  Q.nsend(
+    Indicator.findOne(_id: req.params.id),
+    'exec'
+  ).then( (indicator) ->
+
+    unless indicator?
+      error = "Could not find indicator with ID #{req.params.id}"
+      console.error error
+      return res.send(404, {error_message: error})
+
+    indicator.getRecentHeadlines(req.params.count || 5)
+  ).then( (headlines) ->
+
+    res.send(200, headlines)
+
+  ).fail((err) ->
+    console.error err
+    return res.render(500, "Error fetching the indicator")
+  )

@@ -1,9 +1,14 @@
 assert = require('chai').assert
 helpers = require '../helpers'
-Indicator = require('../../models/indicator').model
-IndicatorData = require('../../models/indicator_data').model
 async = require('async')
 _ = require('underscore')
+Q = require 'q'
+sinon = require 'sinon'
+
+Theme = require('../../models/theme').model
+Indicator = require('../../models/indicator').model
+IndicatorData = require('../../models/indicator_data').model
+Page = require('../../models/page').model
 
 suite('Indicator')
 
@@ -32,27 +37,32 @@ test('.getIndicatorDataForCSV with no filters returns all indicator data in a 2D
     indicatorDefinition:
       xAxis: 'year'
       yAxis: 'value'
-      externalId: 14
   )
   indicatorData = new IndicatorData(
-    externalId: 14, data: data
+    data: data
   )
 
-  async.parallel([
-        (cb) -> indicator.save(cb)
-      ,
-        (cb) -> indicatorData.save(cb)
-    ], (err, results) ->
-      if err?
-        console.error err
-      else
-        indicator.getIndicatorDataForCSV( (err, indicatorData) ->
-          assert.ok(
-            _.isEqual(indicatorData, expectedData),
-            "Expected \n#{JSON.stringify(indicatorData)} \nto equal \n#{JSON.stringify(expectedData)}"
-          )
-          done()
-        )
+  Q.nsend(
+    indicator, 'save'
+  ).then(->
+    indicatorData.indicator = indicator
+
+    Q.nsend(
+      indicatorData, 'save'
+    )
+  ).then( ->
+
+    indicator.getIndicatorDataForCSV( (err, indicatorData) ->
+      assert.ok(
+        _.isEqual(indicatorData, expectedData),
+        "Expected \n#{JSON.stringify(indicatorData)} \nto equal \n#{JSON.stringify(expectedData)}"
+      )
+      done()
+    )
+
+  ).fail((err) ->
+    console.error err
+    throw err
   )
 )
 
@@ -80,31 +90,36 @@ test('.getIndicatorDataForCSV with filters returns data matching filters in a 2D
     indicatorDefinition:
       xAxis: 'year'
       yAxis: 'value'
-      externalId: 14
   )
   indicatorData = new IndicatorData(
-    externalId: 14, data: data
+    data: data
   )
 
   filters =
     value:
       min: '4'
 
-  async.parallel([
-        (cb) -> indicator.save(cb)
-      ,
-        (cb) -> indicatorData.save(cb)
-    ], (err, results) ->
-      if err?
-        console.error err
-      else
-        indicator.getIndicatorDataForCSV( filters, (err, indicatorData) ->
-          assert.ok(
-            _.isEqual(indicatorData, expectedData),
-            "Expected \n#{JSON.stringify(indicatorData)} \nto equal \n#{JSON.stringify(expectedData)}"
-          )
-          done()
-        )
+  Q.nsend(
+    indicator, 'save'
+  ).then(->
+    indicatorData.indicator = indicator
+
+    Q.nsend(
+      indicatorData, 'save'
+    )
+  ).then( ->
+
+    indicator.getIndicatorDataForCSV( filters, (err, indicatorData) ->
+      assert.ok(
+        _.isEqual(indicatorData, expectedData),
+        "Expected \n#{JSON.stringify(indicatorData)} \nto equal \n#{JSON.stringify(expectedData)}"
+      )
+      done()
+    )
+
+  ).fail((err) ->
+    console.error err
+    throw err
   )
 )
 
@@ -122,29 +137,32 @@ test('.getIndicatorData with no filters returns all indicator data for this indi
     }
   ]
 
-  indicator = new Indicator(
-    indicatorDefinition:
-      externalId: 14
-  )
+  indicator = new Indicator()
   indicatorData = new IndicatorData(
-    externalId: 14, data: expectedData
+    data: expectedData
   )
 
-  async.parallel([
-        (cb) -> indicator.save(cb)
-      ,
-        (cb) -> indicatorData.save(cb)
-    ], (err, results) ->
-      if err?
-        console.error err
-      else
-        indicator.getIndicatorData((err, data) ->
-          assert.ok(
-            _.isEqual(data, expectedData),
-            "Expected \n#{JSON.stringify(data)} \nto equal \n#{JSON.stringify(expectedData)}"
-          )
-          done()
-        )
+  Q.nsend(
+    indicator, 'save'
+  ).then(->
+    indicatorData.indicator = indicator
+
+    Q.nsend(
+      indicatorData, 'save'
+    )
+  ).then( ->
+    
+    indicator.getIndicatorData((err, data) ->
+      assert.ok(
+        _.isEqual(data, expectedData),
+        "Expected \n#{JSON.stringify(data)} \nto equal \n#{JSON.stringify(expectedData)}"
+      )
+      done()
+    )
+
+  ).fail((err) ->
+    console.error err
+    throw err
   )
 )
 
@@ -164,37 +182,228 @@ test('.getIndicatorData with an integer filter \'min\' value
   ]
   expectedFilteredData = [fullData[1], fullData[2]]
 
-  indicator = new Indicator(
-    indicatorDefinition:
-      externalId: 14
-  )
+  indicator = new Indicator()
   indicatorData = new IndicatorData(
-    externalId: 14, data: fullData
+    data: fullData
   )
 
   filters =
     value:
       min: '4'
 
-  async.parallel([
-        (cb) -> indicator.save(cb)
-      ,
-        (cb) -> indicatorData.save(cb)
-    ], (err, results) ->
-      if err?
-        console.error err
-      else
-        indicator.getIndicatorData(filters, (err, data) ->
-          assert.ok(
-            _.isEqual(data, expectedFilteredData),
-            "Expected \n#{JSON.stringify(data)} \nto equal \n#{JSON.stringify(expectedFilteredData)}"
-          )
-          done()
-        )
+  Q.nsend(
+    indicator, 'save'
+  ).then(->
+    indicatorData.indicator = indicator
+
+    Q.nsend(
+      indicatorData, 'save'
+    )
+  ).then( ->
+
+    indicator.getIndicatorData(filters, (err, data) ->
+      assert.ok(
+        _.isEqual(data, expectedFilteredData),
+        "Expected \n#{JSON.stringify(data)} \nto equal \n#{JSON.stringify(expectedFilteredData)}"
+      )
+      done()
+    )
+
+  ).fail((err) ->
+    console.error err
+    throw err
   )
 )
 
-test('.calculateIndicatorDataBounds should return the upper and lower bounds of data', (done) ->
+test('.getIndicatorData on an indicator with no indicator data 
+  returns an empty array', (done) ->
+  indicator = new Indicator()
+
+  indicator.getIndicatorData((err, data) ->
+    if err?
+      throw err
+
+    assert.ok _.isEqual(data, []), "Expected returned data to be an empty array"
+    done()
+  )
+)
+
+test('.getRecentHeadlines returns the given number of most recent headlines
+  in decending date order with the period end calculated for annual
+  indicator data', (done)->
+  indicatorData = [
+    {
+      "year": 2000,
+      "value": 2
+      "text": 'Poor'
+    }, {
+      "year": 2001,
+      "value": 9
+      "text": 'Great'
+    }, {
+      "year": 2002,
+      "value": 4
+      "text": 'Fair'
+    }
+  ]
+
+  indicatorDefinition =
+    xAxis: 'year'
+    yAxis: 'value'
+    textField: 'text'
+    fields: [{
+      name: 'year'
+      type: 'integer'
+    }, {
+      name: "value",
+      type: "integer"
+    }, {
+      name: 'text'
+      name: 'text'
+    }]
+
+  theIndicator = null
+
+  Q.nsend(
+    Indicator, 'create',
+      indicatorDefinition: indicatorDefinition
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    Q.nsend(
+      IndicatorData, 'create'
+        indicator: theIndicator
+        data: indicatorData
+    )
+  ).then( ->
+    theIndicator.getRecentHeadlines(2)
+  ).then( (data) ->
+
+    assert.lengthOf data, 2, "Expected 2 headlines to be returned"
+
+    mostRecentHeadline = data[0]
+
+    assert.strictEqual(mostRecentHeadline.year, 2002,
+      "Expected most recent headline year value to be 2002")
+    assert.strictEqual(mostRecentHeadline.value, 4,
+      "Expected most recent headline value to be 4")
+    assert.strictEqual(mostRecentHeadline.text, "Fair",
+      "Expected most recent headline text to be 'Fair'")
+
+    assert.strictEqual(mostRecentHeadline.periodEnd, "31 Dec 2002",
+      "Expected most recent headline period end to be '31 Dec 2002")
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.getRecentHeadlines successfully returns all headline when the
+  number of headlines requested is undefined', (done)->
+  indicatorData = [
+    {
+      "year": 1999,
+      "value": 3
+      "text": 'Poor'
+    },
+    {
+      "year": 2000,
+      "value": 2
+      "text": 'Poor'
+    }
+  ]
+
+  indicator = new Indicator()
+  sinon.stub(indicator, 'getIndicatorData', (callback) ->
+    callback(null, indicatorData)
+  )
+
+  indicator.getRecentHeadlines()
+  .then( (data) ->
+
+    assert.lengthOf data, 2, "Expected 2 headlines to be returned"
+
+    mostRecentHeadline = data[0]
+
+    assert.strictEqual(mostRecentHeadline.year, 2000,
+      "Expected most recent headline year value to be 2000")
+    assert.strictEqual(mostRecentHeadline.value, 2,
+      "Expected most recent headline value to be 2")
+    assert.strictEqual(mostRecentHeadline.text, "Poor",
+      "Expected most recent headline text to be 'Poor'")
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.getNewestHeadline returns the most recent headline', (done)->
+  indicatorData = [
+    {
+      "year": 2001,
+      "value": 9
+      "text": 'Great'
+    }, {
+      "year": 2002,
+      "value": 4
+      "text": 'Fair'
+    }
+  ]
+
+  indicatorDefinition =
+    xAxis: 'year'
+    yAxis: 'value'
+    textField: 'text'
+    fields: [{
+      name: 'year'
+      type: 'integer'
+    }, {
+      name: "value",
+      type: "integer"
+    }, {
+      name: 'text'
+      name: 'text'
+    }]
+
+  theIndicator = null
+
+  Q.nsend(
+    Indicator, 'create',
+      indicatorDefinition: indicatorDefinition
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    Q.nsend(
+      IndicatorData, 'create'
+        indicator: theIndicator
+        data: indicatorData
+    )
+  ).then( ->
+    theIndicator.getNewestHeadline()
+  ).then( (mostRecentHeadline) ->
+
+    assert.strictEqual(mostRecentHeadline.year, 2002,
+      "Expected most recent headline year value to be 2002")
+    assert.strictEqual(mostRecentHeadline.value, 4,
+      "Expected most recent headline value to be 4")
+    assert.strictEqual(mostRecentHeadline.text, "Fair",
+      "Expected most recent headline text to be 'Fair'")
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('#calculateIndicatorDataBounds should return the upper and lower bounds of data', (done) ->
   indicatorData = [
     {
       "year": 2000,
@@ -210,7 +419,6 @@ test('.calculateIndicatorDataBounds should return the upper and lower bounds of 
 
   indicator = new Indicator(
     indicatorDefinition:
-      externalId: 14
       fields: [{
         name: 'year'
         type: 'integer'
@@ -220,32 +428,39 @@ test('.calculateIndicatorDataBounds should return the upper and lower bounds of 
       }]
   )
   indicatorData = new IndicatorData(
-    externalId: 14, data: indicatorData
+    data: indicatorData
   )
 
-  async.parallel([
-        (cb) -> indicator.save(cb)
-      ,
-        (cb) -> indicatorData.save(cb)
-    ], (err, results) ->
-      if err?
-        console.error err
-      else
-        indicator.calculateIndicatorDataBounds((err, data) ->
-          assert.property(
-            data, 'year'
-          )
-          assert.property(
-            data, 'value'
-          )
 
-          assert.strictEqual(data.year.min, 2000)
-          assert.strictEqual(data.year.max, 2002)
+  Q.nsend(
+    indicator, 'save'
+  ).then(->
+    indicatorData.indicator = indicator
 
-          assert.strictEqual(data.value.min, 2)
-          assert.strictEqual(data.value.max, 9)
-          done()
-        )
+    Q.nsend(
+      indicatorData, 'save'
+    )
+  ).then( ->
+
+    indicator.calculateIndicatorDataBounds((err, data) ->
+      assert.property(
+        data, 'year'
+      )
+      assert.property(
+        data, 'value'
+      )
+
+      assert.strictEqual(data.year.min, 2000)
+      assert.strictEqual(data.year.max, 2002)
+
+      assert.strictEqual(data.value.min, 2)
+      assert.strictEqual(data.value.max, 9)
+      done()
+    )
+
+  ).fail((err) ->
+    console.error err
+    throw err
   )
 )
 
@@ -254,7 +469,334 @@ test('.getPage should be mixed in', ->
   assert.typeOf indicator.getPage, 'Function'
 )
 
+test('.getFatPage should be mixed in', ->
+  indicator = new Indicator()
+  assert.typeOf indicator.getFatPage, 'Function'
+)
+
 test(".toObjectWithNestedPage is mixed in", ->
   indicator = new Indicator()
   assert.typeOf indicator.toObjectWithNestedPage, 'Function'
+)
+
+test("#findWhereIndicatorHasData returns only indicators with indicator data", (done)->
+  indicatorWithData = indicatorWithoutData = null
+
+  helpers.createIndicatorModels([{},{}]).then((indicators) ->
+    indicatorWithData = indicators[0]
+    indicatorWithoutData = indicators[1]
+
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        indicator: indicatorWithData
+        data: [{some: 'data'}]
+      }
+    )
+  ).then((indicatorData) ->
+    Indicator.findWhereIndicatorHasData()
+  ).then((indicators) ->
+    
+    assert.lengthOf indicators, 1, "Expected only the one indicator with data to be returned"
+    assert.strictEqual indicators[0]._id.toString(), indicatorWithData._id.toString(),
+      "Expected the returned indicator to be the indicator with data"
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    console.error err.stack
+    throw err
+  )
+
+)
+
+test("#findWhereIndicatorHasData respects the given filters", (done)->
+  indicatorToFind = indicatorToFilterOut = null
+
+  helpers.createIndicatorModels([{},{}]).then((indicators) ->
+    indicatorToFind = indicators[0]
+    indicatorToFilterOut = indicators[1]
+
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        indicator: indicatorToFind
+        data: [{some: 'data'}]
+      }
+    )
+  ).then((indicatorData) ->
+
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        indicator: indicatorToFilterOut
+        data: [{some: 'data'}]
+      }
+    )
+  ).then((indicatorData) ->
+    Indicator.findWhereIndicatorHasData(_id: indicatorToFind._id)
+  ).then((indicators) ->
+    
+    assert.lengthOf indicators, 1, "Expected only the one indicator with data to be returned"
+    assert.strictEqual indicators[0]._id.toString(), indicatorToFind._id.toString(),
+      "Expected the returned indicator to be the indicator with data"
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    console.error err.stack
+    throw err
+  )
+)
+
+test('.calculateRecencyOfHeadline when given an indicator with a headline date
+  older than the most recent data returns "Out of date"', (done) ->
+  indicator = new Indicator()
+  sinon.stub(indicator, 'getNewestHeadline', ->
+    deferred = Q.defer()
+    deferred.resolve {periodEnd: '31 Dec 2012'}
+    return deferred.promise
+  )
+
+  page = new Page(parent_type: 'Indicator', headline: {periodEnd: '30 Dec 2012'})
+  sinon.stub(indicator, 'populatePage', ->
+    deferred = Q.defer()
+    deferred.resolve indicator.page = page
+    return deferred.promise
+  )
+
+  indicator.calculateRecencyOfHeadline().then( (recencyText) ->
+    assert.strictEqual "Out of date", recencyText
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.calculateRecencyOfHeadline when given an indicator with a headline date
+  equal to or newer than the most recent data returns "Up to date"', (done) ->
+  indicator = new Indicator()
+  sinon.stub(indicator, 'getNewestHeadline', ->
+    deferred = Q.defer()
+    deferred.resolve {periodEnd: '31 Dec 2012'}
+    return deferred.promise
+  )
+
+  page = new Page(parent_type: 'Indicator', headline: {periodEnd: '01 Jan 2013'})
+  sinon.stub(indicator, 'populatePage', ->
+    deferred = Q.defer()
+    deferred.resolve indicator.page = page
+    return deferred.promise
+  )
+
+  indicator.calculateRecencyOfHeadline().then( (recencyText) ->
+    assert.strictEqual "Up to date", recencyText
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.calculateRecencyOfHeadline when given an indicator with no data
+  returns "No Data"', (done) ->
+  indicator = new Indicator()
+
+  page = new Page(parent_type: 'Indicator')
+  sinon.stub(indicator, 'populatePage', ->
+    deferred = Q.defer()
+    deferred.resolve indicator.page = page
+    return deferred.promise
+  )
+
+  indicator.calculateRecencyOfHeadline().then( (recencyText) ->
+    assert.strictEqual "No Data", recencyText
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.calculateRecencyOfHeadline when given a headline with
+  no periodEnd returns "Out of date"', (done) ->
+  indicator = new Indicator()
+  sinon.stub(indicator, 'getNewestHeadline', ->
+    deferred = Q.defer()
+    deferred.resolve {text: "OH HAI"}
+    return deferred.promise
+  )
+
+
+  page = new Page(parent_type: 'Indicator', headline: {text: "Not reported on", value: "-"})
+  sinon.stub(indicator, 'populatePage', ->
+    deferred = Q.defer()
+    deferred.resolve indicator.page = page
+    return deferred.promise
+  )
+
+  indicator.calculateRecencyOfHeadline().then( (recencyText) ->
+    assert.strictEqual "Out of date", recencyText
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('#populatePages given an array of indicators, populates their page attributes', (done) ->
+  indicator = new Indicator()
+  page = new Page()
+  sinon.stub(indicator, 'populatePage', ->
+    deferred = Q.defer()
+    deferred.resolve indicator.page = page
+    return deferred.promise
+  )
+
+  Indicator.populatePages([indicator]).then( ->
+    assert.ok _.isEqual(indicator.page, page),
+      "Expected the page attribute to be populated with the indicator page"
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('#calculateNarrativeRecency given an array of indicators,
+  calculates their narrative recency', (done) ->
+  indicator = new Indicator()
+  narrativeRecency = "Up to date"
+  sinon.stub(indicator, 'calculateRecencyOfHeadline', ->
+    deferred = Q.defer()
+    deferred.resolve narrativeRecency
+    return deferred.promise
+  )
+
+  Indicator.calculateNarrativeRecency([indicator]).then( ->
+    assert.strictEqual indicator.narrativeRecency, narrativeRecency,
+      "Expected the narrativeRecency attribute to be populated with the narrative recency"
+    done()
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test("#calculateBoundsForType when given an unkown type throws an appropriate error", ->
+  assert.throws((->
+    Indicator.calculateBoundsForType("party", [], 'fieldName'))
+    ,"Don't know how to calculate the bounds of type 'party'"
+  )
+)
+
+test("#calculateBoundsForType given an array of dates returns the correct bounds", ->
+  dates = [
+    {value: new Date("2011")},
+    {value: new Date("2016")},
+    {value: new Date("2014")}
+  ]
+  bounds = Indicator.calculateBoundsForType("date", dates, 'value')
+
+  assert.strictEqual bounds.min.getFullYear(), 2011
+  assert.strictEqual bounds.max.getFullYear(), 2016
+)
+
+test("#calculateBoundsForType given text returns null", ->
+  text = [
+    {value: 'hat'},
+    {value: 'boat'}
+  ]
+  bounds = Indicator.calculateBoundsForType("text", text, 'value')
+
+  assert.isNull bounds
+)
+
+test('.convertNestedParametersToAssociationIds converts a Theme object to a Theme ID', ->
+  indicator = new Indicator()
+  theme = new Theme()
+
+  indicatorAttributes = indicator.toObject()
+  indicatorAttributes.theme = theme.toObject()
+
+  indicatorWithThemeId = Indicator.convertNestedParametersToAssociationIds(indicatorAttributes)
+
+  assert.strictEqual(
+    indicatorWithThemeId.theme,
+    theme.id,
+    'Expected indicator theme to be an ID only'
+  )
+)
+
+test("#roundHeadlineValues truncates decimals to 1 place", ->
+  result = Indicator.roundHeadlineValues([{value: 0.123456789}])
+
+  assert.strictEqual result[0].value, 0.1
+)
+
+test("#roundHeadlineValues when given a value which isn't a number, does nothing", ->
+  result = Indicator.roundHeadlineValues([{value: 'hat'}])
+
+  assert.strictEqual result[0].value, 'hat'
+)
+
+test(".parseDateInHeadlines on an indicator with xAxis 'date' (which is an integer),
+  and no period specified, when given an integer date headline row,
+  adds a 'periodEnd' attribute with the date one year in after the 'date' value", ->
+  indicator = new Indicator(
+    indicatorDefinition:
+      xAxis: "date",
+     fields: [
+       {
+         name: "date",
+         type: "integer"
+       }
+     ]
+  )
+
+  headlineData = [
+    date: 1997
+  ]
+
+  convertedHeadlines = indicator.parseDateInHeadlines(headlineData)
+  convertedHeadline = convertedHeadlines[0]
+
+  assert.strictEqual convertedHeadline.periodEnd, "31 Dec 1997",
+    "Expected the periodEnd attribute to be calculated"
+)
+
+test(".parseDateInHeadlines on an indicator with no xAxis defined does no processing", ->
+  indicator = new Indicator()
+
+  headlineData = [
+    date: 1997
+  ]
+
+  convertedHeadline = indicator.parseDateInHeadlines(headlineData)
+
+  assert.ok _.isEqual(convertedHeadline, headlineData),
+    "Expected the headline data not to be modified"
+)
+
+test(".parseDateInHeadlines on an indicator where the frequency is 'quarterly' 
+  sets periodEnd to 3 months after the initial 'date'", ->
+
+  indicator = new Indicator(
+    indicatorDefinition:
+      period: 'quarterly'
+      xAxis: 'date'
+      fields: [
+        name: 'date'
+      ]
+  )
+
+  headlineData = [
+    date: "2013-04-01T01:00:00.000Z"
+  ]
+
+  convertedHeadlines = indicator.parseDateInHeadlines(headlineData)
+  convertedHeadline = convertedHeadlines[0]
+
+  assert.strictEqual convertedHeadline.periodEnd, "30 Jun 2013",
+    "Expected the periodEnd to be 3 months from the period start"
 )

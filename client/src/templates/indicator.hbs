@@ -2,4 +2,10 @@
   {{addSubViewTo ../thisView "SectionView" section=this}}
 {{/each}}
 
-<button class="add-indicator-section">{{{t "indicator/add_section"}}}</button>
+{{#if isEditable}}
+  <div class="add-section">
+    <button>
+      <i class="icon-plus append"></i>
+    </button>
+  </div>
+{{/if}}

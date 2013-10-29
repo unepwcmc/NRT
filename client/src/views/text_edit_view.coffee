@@ -6,62 +6,69 @@ class Backbone.Views.TextEditView extends Backbone.View
 
   className: 'show-content content-text-field'
 
-  attributes:
-    'contenteditable': 'true'
-
   events:
-    "click": "replaceContent"
-    "blur": "delaySave"
-    "blur": "delayedRender"
-    "keyup"  : "delaySave"
+    "click": "showEditingView"
 
   initialize: (options) ->
     @model = options.model
+
     @attributeName = options.attributeName
     @tagName = options.tagName || 'div'
+    @disableNewlines = options.disableNewlines || false
 
     @render()
 
   render: (options = {}) =>
-    content = @model.get(@attributeName) || i18n.t("report/type_here")
+    content = @model.get(@attributeName)
+    showPlaceholder = false
+
+    if content?
+      contentLength = $('<div />').append(content).text().length
+      showPlaceholder =  contentLength == 0 && @model.isEditable()
 
     @$el.html(@template(
+      showPlaceholder: showPlaceholder
       content: content
     ))
 
     return @
 
-  replaceContent: ->
-    content = @model.get(@attributeName)
-    content = content.replace(/\n/g, "<br>")
-    @$el.html(content)
+  showEditingView: ->
+    if @model.isEditable()
+      unless @editingView?
+        @$el.addClass('editing')
+        @editingView = new Backbone.Views.TextEditingView(
+          tagName: @tagName
+          position: @getPositionRelativeToViewport()
+          content: @model.get(@attributeName)
+          disableNewlines: @disableNewlines
+        )
+        @setupEditingViewBindings()
+        @$el.parent().append(@editingView.el)
 
-  getContent: =>
-    content = $('<div>')
-      .html(@$el.html())
-    content.html(
-      content.html().replace(/(<br>)|(<br \/>)|(<p>)|(<\/p>)/g, "\r\n")
-    )
-    return content.text()
+  getPositionRelativeToViewport: =>
+    top: @$el.offset().top - $(window).scrollTop()
+    left: @$el.offset().left - $(window).scrollLeft()
 
-  delaySave: =>
-    if @startDelayedSave?
-      clearTimeout @startDelayedSave
+  setupEditingViewBindings: =>
+    @listenTo(@editingView, 'close', @editingFinished)
+    @listenTo(@editingView, 'sizeUpdated', @resizeView)
 
-    @startDelayedSave = setTimeout @saveContent, 2000
+  editingFinished: (newContent) =>
+    @model.set(@attributeName, newContent)
+    @$el.removeClass('editing')
+    @editingView = null
+    @saveContent()
+    @render()
 
-  delayedRender: =>
-    if @startDelayedRender?
-      clearTimeout @startDelayedRender
+  resizeView: (size) =>
+    @$el.css(size)
 
-    @startDelayedRender = setTimeout @render, 1500
-
-  saveContent: (event) =>
+  saveContent: =>
     Backbone.trigger 'save', 'saving'
-    @model.set(@attributeName, @getContent())
     saveState = @model.save()
     saveState.done =>
       Backbone.trigger 'save', 'saved'
 
   onClose: ->
-
+    @stopListening()
