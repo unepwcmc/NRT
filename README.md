@@ -49,7 +49,14 @@ pick a user from `server/lib/users.json`, e.g.
 
 #### Start the server
 
-`cd server/ && npm run-script production`
+**Windows**
+
+* `cd server`
+* `npm run-script win-production`
+
+**Unix**
+
+* `cd server/ && npm run-script production`
 
 #### Compile coffeescripts
 
