@@ -17,9 +17,10 @@ hbs.registerHelper('pluralise', () ->
   return i18n.__n.apply(this, arguments)
 )
 
+addCurrentLocaleToLocales = (req, res, next) ->
+  res.locals.localeIsArabic = (req.locale? and req.locale == "ar")
+  next()
+
 module.exports = (app) ->
   app.use i18n.init
-
-  app.use (req, res, next) ->
-    app.set('localeIsArabic', req.locale? and req.locale == "ar")
-    next()
+  app.use addCurrentLocaleToLocales

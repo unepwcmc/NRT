@@ -21,7 +21,7 @@
 
     {{{block "header"}}}
 
-    {{#if settings.localeIsArabic}}
+    {{#if localeIsArabic}}
       <link rel="stylesheet" href="/css/rtl_overrides.css">
     {{/if}}
 
@@ -40,7 +40,7 @@
         </div>
 
         <ul class="right">
-          {{#if settings.localeIsArabic}}
+          {{#if localeIsArabic}}
           <a href="/locale/en">
             <li>
               English
