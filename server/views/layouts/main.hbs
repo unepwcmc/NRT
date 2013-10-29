@@ -55,7 +55,7 @@
           {{/if}}
 
           <li class="md-trigger" data-modal="modal-1" onclick="$('#modal-1').addClass('md-show');">
-            Help
+            {{t "menu/help"}}
           </li>
 
           {{#if currentUser}}
@@ -64,12 +64,12 @@
                 <span class="name">
                 {{ currentUser.name }}
                 </span>
-                <span class="logout"><span>›</span>Sign Out</span>
+                <span class="logout"><span>›</span>{{t "menu/sign_out"}}</span>
               </li>
             </a>
           {{else}}
             <a href="/login">
-              <li>Log in</li>
+              <li>{{t "menu/log_in"}}</li>
             </a>
           {{/if}}
         </ul>
