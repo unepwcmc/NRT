@@ -67,6 +67,7 @@ module.exports = exports = (app) ->
   app.get "/reports/:id/present", reportRoutes.present
 
   app.get "/locale/:locale", localeRoutes.index
+  app.get "/locales/en-:locale.json", localeRoutes.redirect
 
   ## Tests
   unless app.settings.env == 'production'

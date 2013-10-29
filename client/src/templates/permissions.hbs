@@ -1,15 +1,15 @@
 <h3>
-  Owned by
+  {{t "permissions/title"}}
 </h3>
 {{#if owner}}
   <div class="owner-block">
     <div class="owner-name">{{owner.name}}</div>
     {{#if isEditable}}
-      <button class="change-owner">Change</button>
+      <button class="change-owner">{{t "permissions/change"}}</button>
     {{/if}}
   </div>
 {{else}}
   {{#if isEditable}}
-    <button class="change-owner">Choose owner</button>
+    <button class="change-owner">{{t "permissions/choose_owner"}}</button>
   {{/if}}
 {{/if}}
