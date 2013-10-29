@@ -8,7 +8,9 @@
     "start": "NODE_ENV=development supervisor -e 'node|js|json|coffee|hbs' ./bin/server.coffee",
     "debug": "coffee --nodejs --debug ./bin/server.coffee",
     "development": "echo 'Please use `npm start` to run the server in development mode'",
-    "production": "coffee ./bin/server.coffee"
+    "production": "NODE_ENV=production coffee ./bin/server.coffee",
+    "win-production": "set NODE_ENV=production && coffee ./bin/server.coffee",
+    "win-development": "set NODE_ENV=development && coffee ./bin/server.coffee"
   },
   "repository": {
     "type": "git",
