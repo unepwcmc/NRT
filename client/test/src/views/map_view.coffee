@@ -32,7 +32,7 @@ test('when initialised with a visualisation with no data, it fetches the data', 
   )
   
   # Respond to get data request
-  Helpers.SinonServer.respondWithJson.call(server, [{year: 'data', geometry: {}}])
+  Helpers.SinonServer.respondWithJson.call(server, results: [{year: 'data', geometry: {}}])
   server.restore()
 
   view.close()

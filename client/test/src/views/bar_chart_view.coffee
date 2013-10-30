@@ -26,7 +26,7 @@ test('when initialised with a visualisation with no data, it fetches the data', 
   )
 
   # Respond to get data request
-  Helpers.SinonServer.respondWithJson.call(server, [{some: 'data'}])
+  Helpers.SinonServer.respondWithJson.call(server, results: [{some: 'data'}])
   server.restore()
 
   view.close()
