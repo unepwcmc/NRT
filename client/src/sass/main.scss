@@ -90,6 +90,7 @@ small {
 .download-actions {
   height: 34px;
   margin-bottom: 20px;
+  margin-top: 10px;
 
   button {
     float: right;
@@ -1200,22 +1201,25 @@ footer{
 
 .section-view {
   overflow: hidden;
-  h2 {
-    float: left;
-  }
+
   button.delete {
-    float: right;
     margin-top: 10px;
     padding-left: 0;
     padding-right: 0;
+    border: none;
+    position: absolute;
+    right: 0;
+    top: -6px;
+    @include transition(color 0.5s);
+
     i {
       padding-right: 5px;
     }
-    border: none;
+
     &:hover, &:active {
       background: none;
       color: $red;
-      @include transition(color 0.5s)
+      @include transition(color 0.5s);
     }
   }
 }
