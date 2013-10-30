@@ -1,8 +1,8 @@
 _ = require('underscore')
 
-module.exports = (req, res, next) ->
-  httpVerbWhitelist = ['GET']
+httpVerbWhitelist = ['GET']
 
+module.exports = (req, res, next) ->
   return next() if process.env.NODE_ENV == 'test'
   return next() if req.isAuthenticated() or _.contains(httpVerbWhitelist, req.method)
 
