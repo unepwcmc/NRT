@@ -24,6 +24,7 @@ testRoutes      = require('./routes/tests')
 
 module.exports = exports = (app) ->
   app.use('/api', sessionAuthentication)
+  app.use('/admin', tokenAuthentication)
 
   app.use passport.addCurrentUserToLocals
 
