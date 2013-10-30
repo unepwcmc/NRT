@@ -2,6 +2,7 @@ _ = require('underscore')
 
 passport = require('./initializers/authentication')
 tokenAuthentication = require('./lib/token_authentication')
+sessionAuthentication = require('./lib/session_authentication')
 
 visualisationApi = require('./routes/api/visualisation')
 narrativeApi     = require('./routes/api/narrative')
@@ -22,6 +23,8 @@ themeRoutes     = require('./routes/themes')
 testRoutes      = require('./routes/tests')
 
 module.exports = exports = (app) ->
+  app.use('/api', sessionAuthentication)
+
   app.use passport.addCurrentUserToLocals
 
   app.get "/login", sessionRoutes.login
