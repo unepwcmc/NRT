@@ -21,7 +21,7 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
 
   getIndicatorData: ->
     $.get(@buildIndicatorDataUrl()).done((data)=>
-      @set('data', data)
+      @set('data', @formatData(data))
     ).fail((jqXHR, textStatus, error) ->
       throw new Error("Error fetching indicator data: #{error}")
     )
@@ -66,8 +66,8 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
 
     @set('filters', filters)
 
-  populateFormattedDates: ->
-    for row in @get('data')
+  formatData: (data) ->
+    for row in data
       row.formatted ||= {}
       for key, value of row
         break if key is 'formatted'
@@ -76,6 +76,8 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
           row.formatted[key] = date.toISOString().replace(/T.*/, '')
         else
           row.formatted[key] ||= value
+
+    return data
 
   @visualisationTypes: ['BarChart', 'Map', 'Table']
   

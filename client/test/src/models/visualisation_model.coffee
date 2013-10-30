@@ -62,6 +62,32 @@ test(".getIndicatorData populates the 'data' attribute", (done)->
   server.restore()
 )
 
+test(".getIndicatorData calls formatData after fetching", (done)->
+  visualisation = Factory.visualisation()
+  server = sinon.fakeServer.create()
+
+  formatDataSpy = sinon.spy(visualisation, 'formatData')
+
+  visualisation.on('change:data', ->
+    data = visualisation.get('data')
+    try
+      Helpers.assertCalledOnce formatDataSpy
+      assert.property data[0], 'formatted',
+        "Expected the formatted attribute to be populated"
+      done()
+    catch e
+      done(e)
+    finally
+      visualisation.off('change:data')
+  )
+
+  visualisation.getIndicatorData()
+
+  Helpers.SinonServer.respondWithJson.call(server, [{some: 'data'}])
+
+  server.restore()
+)
+
 test(".buildIndicatorDataUrl appends visualisation filter parameters to url", ->
   visualisation = Factory.visualisation()
   visualisation.setFilterParameter('year', 'min', 2003)
@@ -151,8 +177,8 @@ test('.setFilterParameter when filter is undefined
   assert.strictEqual visualisation.get('filters').year.min, 2004
 )
 
-test('.populateFormattedDates populates a formatted object with a string
-formatted date for each row of data on a visualisation where the indicator has
+test('.formatData adds a formatted object with a string
+formatted date for each row of given data where the indicator has
 a field of type date', ->
   indicator = Factory.indicator(
     indicatorDefinition:
@@ -161,17 +187,16 @@ a field of type date', ->
         type: 'date'
       ]
   )
+  dataToFormat = [
+    date: '2013-04-01T01:00:00.000Z'
+    otherField: 'an value'
+  ]
   visualisation = Factory.visualisation(
     indicator: indicator
-    data: [
-      date: '2013-04-01T01:00:00.000Z'
-      otherField: 'an value'
-    ]
   )
 
-  visualisation.populateFormattedDates()
-
-  formattedRow = visualisation.get('data')[0]
+  formattedRows = visualisation.formatData(dataToFormat)
+  formattedRow = formattedRows[0]
 
   assert.property formattedRow, 'formatted',
     'Expected the data to have a formatted attribute'
