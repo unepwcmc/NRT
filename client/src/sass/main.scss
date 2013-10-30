@@ -1128,13 +1128,15 @@ footer{
   overflow: hidden;
 }
 
-.md-box button {
+.md-box a.button {
   display: inline;
   margin: 0 auto;
   font-size: 0.8em;
+
   &.know-more {
     float: left;
   }
+
   &.md-close {
     float: right;
     color: $white;
@@ -1150,6 +1152,7 @@ footer{
       border: 1px solid darken($buttonBlue, 10);
     }
   }
+
   &.feedback {
       float: right;
       margin-top: 4px;
