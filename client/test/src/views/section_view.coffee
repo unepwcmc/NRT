@@ -59,12 +59,7 @@ test("When section has narrative, can see the narrative", ->
 
   view = createAndShowSectionViewForSection(section)
 
-  subViewExists = false
-  for subView in view.subViews
-    if subView.constructor.name == "TextEditView" and subView.model is narrative
-      subViewExists = true
-
-  assert subViewExists, "could not find narrative sub-view for section"
+  Helpers.viewHasSubViewOfClass view, "TextEditView"
 
   view.close()
 )
@@ -126,12 +121,7 @@ test("Can see the section visualisation", ->
 
   view = createAndShowSectionViewForSection(section)
 
-  subViewExists = false
-  for subView in view.subViews
-    if subView.constructor.name is "VisualisationView" and subView.visualisation is visualisation
-      subViewExists = true
-
-  assert subViewExists, "could not find visualisation sub-view for section"
+  Helpers.viewHasSubViewOfClass view, "VisualisationView"
 
   view.close()
 )

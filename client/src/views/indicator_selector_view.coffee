@@ -28,7 +28,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     return @
 
   bindToIndicatorSelection: ->
-    for subView in @subViews
+    for key, subView of @subViews
       @listenTo(subView, 'indicatorSelected', @triggerIndicatorSelected)
 
   triggerIndicatorSelected: (indicator) =>
