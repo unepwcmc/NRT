@@ -67,13 +67,6 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
     @set('filters', filters)
 
   populateFormattedDates: ->
-    dateFields = @get('indicator').get('indicatorDefinition')?.fields
-    if dateFields?
-      dateFields = _.filter(dateFields, (field) ->
-        field.type is 'date'
-      )
-      dateFields = _.map(dateFields, (field) -> field.name)
-
     for row in @get('data')
       row.formatted ||= {}
       for key, value of row
