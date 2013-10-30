@@ -1,2 +1,11 @@
 @import "indicator_selector";
 @import "visualisation";
+
+.main-content {
+  img:first-of-type {
+    max-width: 650px;
+    height: auto;
+    width: auto;
+    display: block;
+  }
+}

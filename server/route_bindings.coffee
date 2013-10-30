@@ -2,6 +2,7 @@ _ = require('underscore')
 
 passport = require('./initializers/authentication')
 tokenAuthentication = require('./lib/token_authentication')
+sessionAuthentication = require('./lib/session_authentication')
 
 visualisationApi = require('./routes/api/visualisation')
 narrativeApi     = require('./routes/api/narrative')
@@ -22,6 +23,8 @@ themeRoutes     = require('./routes/themes')
 testRoutes      = require('./routes/tests')
 
 module.exports = exports = (app) ->
+  app.use('/api', sessionAuthentication)
+
   app.use passport.addCurrentUserToLocals
 
   app.get "/login", sessionRoutes.login
@@ -51,11 +54,10 @@ module.exports = exports = (app) ->
   app.get "/about", staticRoutes.about
   app.get "/dashboard", dashboardRoutes.index
   app.get "/themes", themeRoutes.index
-  app.get "/indicators", indicatorRoutes.index
   app.get "/reports", reportRoutes.index
 
   app.get "/indicators/:id", indicatorRoutes.show
-  app.get "/indicators/:id/draft", indicatorRoutes.showDraft
+  app.get "/indicators/:id/draft", indicatorRoutes.show
   app.get "/indicators/:id/discard_draft", indicatorRoutes.discardDraft
   app.get "/indicators/:id/publish", indicatorRoutes.publishDraft
   app.get "/themes/:id", themeRoutes.show
@@ -68,6 +70,7 @@ module.exports = exports = (app) ->
   app.get "/reports/:id/present", reportRoutes.present
 
   app.get "/locale/:locale", localeRoutes.index
+  app.get "/locales/en-:locale.json", localeRoutes.redirect
 
   ## Tests
   unless app.settings.env == 'production'
@@ -76,3 +79,4 @@ module.exports = exports = (app) ->
   app.get "/admin/updateIndicatorData/:id", adminRoutes.updateIndicatorData
   app.get "/admin/updateAll", adminRoutes.updateAll
   app.get "/admin", adminRoutes.updateAll
+  app.get "/admin/seedIndicatorData", adminRoutes.seedIndicatorData

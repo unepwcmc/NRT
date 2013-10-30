@@ -70,8 +70,13 @@
   "indicator/similar": "Similar Indicators",
   "indicator/add_section": "Add Section",
 
+  "section/delete_this_section": "Delete this section",
+  "section/add_text": "Add text",
+  "section/add_visualisation": "Add visualisation",
+
   "theme/view": "View the dataset",
   "theme/download": "Download the dataset",
+  "theme/update": "Update this theme",
   "theme/owned_by": "Theme owned by",
   "theme/metadata": "Metadata",
   "theme/metadata/category": "Category",
@@ -79,6 +84,11 @@
   "theme/metadata/oldest_data": "Oldest data collected",
   "theme/similar": "Similar themes",
   "theme/add_section": "Add Section",
+  "theme/indicators_under_this_theme": "Indicators under this theme",
+
+  "page/publish": "Publish",
+  "page/discard_draft": "Discard Draft",
+  "page/save_and_exit": "Save and exit",
 
   "indicator/bookmark_this_indicator": "Bookmark this indicator",
 
@@ -89,5 +99,15 @@
   "menu/dashboard": "Dashboard",
   "menu/reports": "Reports",
   "menu/indicators": "Indicators",
-  "menu/bookmarks": "Bookmarks"
+  "menu/bookmarks": "Bookmarks",
+  "menu/help": "Help",
+  "menu/sign_out": "Sign Out",
+  "menu/log_in": "Log in",
+
+  "permissions/title": "Owned by",
+  "permissions/change": "Change",
+  "permissions/select_a_new_owner": "Select a new owner",
+  "permissions/change_owner": "Change owner",
+  "permissions/enter_a_name_or_an_email": "Enter a name or an email",
+  "permissions/choose_owner": "Choose owner"
 }

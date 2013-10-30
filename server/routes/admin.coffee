@@ -1,4 +1,5 @@
 Indicator = require('../models/indicator').model
+IndicatorData = require('../models/indicator_data').model
 Q = require('q')
 
 exports.updateIndicatorData = (req, res) ->
@@ -17,11 +18,23 @@ exports.updateIndicatorData = (req, res) ->
 
 exports.updateAll = (req, res) ->
   Q.nsend(
-    Indicator.find(), 
+    Indicator.find(),
     'exec'
   ).then( (indicators) ->
     res.render 'admin/updateAll', indicators: indicators
   ).fail((err) ->
     console.log err.stack
     return res.send(500, "Error getting indicators")
+  )
+
+exports.seedIndicatorData = (req, res) ->
+  Q.nsend(
+    Indicator.find(),
+    'exec'
+  ).then(IndicatorData.seedData)
+  .then( ->
+    res.send 200, "Seeded indicator data"
+  ).fail((err) ->
+    console.log err.stack
+    return res.send(500, "Error seeding indicator data")
   )

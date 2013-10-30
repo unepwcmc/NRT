@@ -21,7 +21,7 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
 
   getIndicatorData: ->
     $.get(@buildIndicatorDataUrl()).done((data)=>
-      @set('data', data)
+      @set('data', @formatData(data))
     ).fail((jqXHR, textStatus, error) ->
       throw new Error("Error fetching indicator data: #{error}")
     )
@@ -53,9 +53,13 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
   mapDataToXAndY: ->
     xAxis = @getXAxis()
     yAxis = @getYAxis()
+
     _.map(@get('data').results, (row)->
       x: row[xAxis]
       y: row[yAxis]
+      formatted:
+        x: row.formatted[xAxis]
+        y: row.formatted[yAxis]
     )
 
   setFilterParameter: (field, operation, value)->
@@ -65,6 +69,19 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
     filters[field][operation] = value
 
     @set('filters', filters)
+
+  formatData: (data) ->
+    for row in data.results
+      row.formatted ||= {}
+      for key, value of row
+        break if key is 'formatted'
+        if @get('indicator').getFieldType(key) is 'date'
+          date = new Date(value)
+          row.formatted[key] = date.toISOString().replace(/T.*/, '')
+        else
+          row.formatted[key] ||= value
+
+    return data
 
   @visualisationTypes: ['BarChart', 'Map', 'Table']
   

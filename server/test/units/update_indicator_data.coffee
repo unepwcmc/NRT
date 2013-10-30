@@ -554,6 +554,30 @@ test(".convertSourceValueToInternalValue when given a decimalPercentage to
     
 )
 
+test(".convertSourceValueToInternalValue when given an epoch to 
+  date conversion, it converts the value correctly", ->
+  indicator = new Indicator(
+    indicatorDefinition:
+      fields: [{
+        source:
+          name: 'value'
+          type: 'epoch'
+        name: 'value'
+        type: 'date'
+      }]
+  )
+
+  result = indicator.convertSourceValueToInternalValue('value', 1325376000000)
+
+  assert.ok typeof result.getMonth is 'function',
+    "Expected the result to be a date"
+  assert.strictEqual result.getMonth(), 0,
+    "Expected the date to be in October"
+  assert.strictEqual result.getFullYear(), 2012,
+    "Expected the date to be in 2013"
+    
+)
+
 test(".replaceIndicatorData when called on an  indicator where indicator data
   already exists,
   it replaces the existing data with the new given data", (done) ->

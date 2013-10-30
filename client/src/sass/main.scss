@@ -12,6 +12,7 @@ body, html {
 
 body {
   font-family: 'Open sans';
+  -webkit-font-smoothing: subpixel-antialiased;
   font-size: 1.15em;
   line-height: 1.6em;
   color: $mainFont;
@@ -59,15 +60,51 @@ small {
   padding-bottom: 10px;
   resize: none;
   cursor: pointer;
+
+  span.placeholder {
+    color: #b3b3b3;
+    font-size: inherit;
+    padding: inherit;
+    font-style: italic;
+  }
 }
 
 .content-text-field.editing {
-  white-space: nowrap;
+  visibility: hidden;
   cursor: auto;
+}
+
+.add-section {
+  margin: 20px 0;
+  text-align: center;
+
+  button {
+    width: 40px;
+    height: 40px;
+    font-size: 28px;
+    border-radius: 50%;
+    padding: 0;
+  }
+}
+
+.download-actions {
+  height: 34px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+
+  button {
+    float: right;
+    margin-right: 10px;
+
+    &:first-of-type {
+      margin-right: 0;
+    }
+  }
 }
 
 .section-actions {
   color: $lightishGrey;
+  clear: both;
 
   &:hover {
     color: darken($lightishGrey, 10);
@@ -76,6 +113,7 @@ small {
 }
 
 .text-editing-view {
+  width: 650px;
   position: fixed;
   z-index: 10;
   background-color: white;
@@ -280,15 +318,16 @@ h1, h2, h3, h4, h5 {
   }
 
   h1 {
-    font-family: "PT Sans";
-    font-size: 1.2em;
+    font-family: "Open Sans";
+    font-size: 1.1em;
+    font-weight: 200;
     color: white;
     float: left;
-    padding-top: 15px;
+    padding-top: 16px;
     padding-right: 15px;
     padding-bottom: 0;
     small {
-      font-weight: bold;
+      font-weight: 600;
       display: block;
       color: white;
     }
@@ -390,67 +429,31 @@ h1, h2, h3, h4, h5 {
       }
     }
   }
+}
 
-  .save-status {
-    overflow: hidden;
-    color: #BBB;
-    background-color: #fff;
-    border-bottom: 1px solid #DDD;
-    border-right: 1px solid #DDD;
+.save-status-container {
+  padding-top: 8px;
+}
+
+.save-status {
+  overflow: hidden;
+  color: #BBB;
+  position: relative;
+  z-index: 3;
+  @include clearfix;
+
+  i{
+    display: inline-block;
+    font-size: 1.4em;
     position: relative;
-    z-index: 3;
-    @include clearfix;
-    @include transition(width 0.5s);
-
-    input[type="text"] {
-      float: left;
-      width: 540px;
-      font-size: 1.2em;
-      border: none;
-      padding: 0 15px;
-      color: $mainFont;
-      color: rgba(0,0,0,0.8);
-    }
-
-    i{
-      display: inline-block;
-      font-size: 1.4em;
-      position: relative;
-      top: 2px;
-    }
+    top: 2px;
   }
+}
 
-  .save-status-container {
-    float: left;
-  }
-
-  .save-status {
-    color: $white;
-    width: 0px;
-    text-align: center;
-    @include transition(background-color 0.3s);
-
-    &.empty {
-      display: none;
-      background-color: $white;
-      border-bottom: 1px solid $white;
-    }
-    &.saving {
-      display: none;
-      background-color: $savingBlue;
-      border-bottom: 1px solid $savingBlue;
-    }
-    &.saved {
-      display: none;
-      background-color: $green;
-      border-bottom: 1px solid $green;
-    }
-    &.error {
-      display: none;
-      background-color: $black;
-      border-bottom: 1px solid $black;
-    }
-  }
+.save-status {
+  color: $white;
+  text-align: center;
+  display: none;
 }
 
 .breadcrumbs {
@@ -901,8 +904,12 @@ table {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255,255,255,0.5);
+  background-color: rgba(0, 0, 0, 0.8);
   z-index: 10;
+
+  &.light {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
 
   header {
     height: 43px;
@@ -918,12 +925,23 @@ table {
     margin-top: -278px;
     margin-left: -453px;
     z-index: 1001;
+    border: 1px solid #AAA;
+    box-shadow: 0 2px 2px rgba(0,0,0,.1);
 
     .close {
-      float:right;
-      margin-top: -30px;
-      margin-right: 5px;
+      float: right;
+      margin-top: -29px;
+      margin-right: 0;
       cursor: pointer;
+      background-color: #CCC;
+      padding: 0 7px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+
+      i {
+        margin-left: 5px;
+        color: #444;
+      }
     }
 
     header {
@@ -1023,16 +1041,11 @@ footer{
   left: 50%;
   width: 50%;
   width: 850px;
-  height: auto;
+  height: 505px;
   z-index: 2000;
   visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  -moz-transform: translateX(-50%) translateY(-50%);
-  -ms-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
+  margin: auto;
+  top: 0; left: 0; bottom: 0; right: 0;
 }
 
 .md-show {
@@ -1080,7 +1093,7 @@ footer{
   color: $mainFont;
   font-size: 1.2em;
   font-weight: 400;
-  width: 490px;
+  width: 510px;
   float: left;
 }
 
@@ -1096,6 +1109,8 @@ footer{
   line-height: 1.6em;
   color: $mainFont;
   margin-top: 15px;
+  font-size: 0.75em;
+  font-weight: normal;
 }
 
 .md-box .md-content img {
@@ -1114,13 +1129,15 @@ footer{
   overflow: hidden;
 }
 
-.md-box button {
+.md-box a.button {
   display: inline;
   margin: 0 auto;
   font-size: 0.8em;
+
   &.know-more {
     float: left;
   }
+
   &.md-close {
     float: right;
     color: $white;
@@ -1136,6 +1153,7 @@ footer{
       border: 1px solid darken($buttonBlue, 10);
     }
   }
+
   &.feedback {
       float: right;
       margin-top: 4px;
@@ -1178,5 +1196,30 @@ footer{
 .action-or-response {
   a {
     cursor: pointer;
+  }
+}
+
+.section-view {
+  overflow: hidden;
+
+  button.delete {
+    margin-top: 10px;
+    padding-left: 0;
+    padding-right: 0;
+    border: none;
+    position: absolute;
+    right: 0;
+    top: -6px;
+    @include transition(color 0.5s);
+
+    i {
+      padding-right: 5px;
+    }
+
+    &:hover, &:active {
+      background: none;
+      color: $red;
+      @include transition(color 0.5s);
+    }
   }
 }

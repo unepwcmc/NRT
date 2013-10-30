@@ -1,12 +1,14 @@
 assert = require('chai').assert
 helpers = require '../helpers'
-Indicator = require('../../models/indicator').model
-IndicatorData = require('../../models/indicator_data').model
-Page = require('../../models/page').model
 async = require('async')
 _ = require('underscore')
 Q = require 'q'
 sinon = require 'sinon'
+
+Theme = require('../../models/theme').model
+Indicator = require('../../models/indicator').model
+IndicatorData = require('../../models/indicator_data').model
+Page = require('../../models/page').model
 
 suite('Indicator')
 
@@ -299,6 +301,48 @@ test('.getRecentHeadlines returns the given number of most recent headlines
   )
 )
 
+test('.getRecentHeadlines successfully returns all headline when the
+  number of headlines requested is undefined', (done)->
+  indicatorData = [
+    {
+      "year": 1999,
+      "value": 3
+      "text": 'Poor'
+    },
+    {
+      "year": 2000,
+      "value": 2
+      "text": 'Poor'
+    }
+  ]
+
+  indicator = new Indicator()
+  sinon.stub(indicator, 'getIndicatorData', (callback) ->
+    callback(null, indicatorData)
+  )
+
+  indicator.getRecentHeadlines()
+  .then( (data) ->
+
+    assert.lengthOf data, 2, "Expected 2 headlines to be returned"
+
+    mostRecentHeadline = data[0]
+
+    assert.strictEqual(mostRecentHeadline.year, 2000,
+      "Expected most recent headline year value to be 2000")
+    assert.strictEqual(mostRecentHeadline.value, 2,
+      "Expected most recent headline value to be 2")
+    assert.strictEqual(mostRecentHeadline.text, "Poor",
+      "Expected most recent headline text to be 'Poor'")
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
 test('.getNewestHeadline returns the most recent headline', (done)->
   indicatorData = [
     {
@@ -504,33 +548,6 @@ test("#findWhereIndicatorHasData respects the given filters", (done)->
   )
 )
 
-test(".truncateDescription truncates descriptions over 80 characters and
-  suffixes them with '...'", ->
-    indicator = new Indicator(description: "Oh, yeah, the guy in the the $4,000 suit is holding the elevator for a guy who doesn't make that in three months. Come on!")
-
-    truncatedDescription = Indicator.truncateDescription(indicator).description
-
-    assert.lengthOf truncatedDescription, 83
-
-    assert.strictEqual(
-      "Oh, yeah, the guy in the the $4,000 suit is holding the elevator for a guy who d...",
-      truncatedDescription
-    )
-)
-
-test(".truncateDescription returns the indicator unchanged if there is no description", ->
-    indicator = new Indicator()
-
-    truncatedIndicator = Indicator.truncateDescription(indicator)
-
-    assert.isUndefined truncatedIndicator.description
-
-    assert.strictEqual(
-      indicator.id
-      truncatedIndicator.id
-    )
-)
-
 test('.calculateRecencyOfHeadline when given an indicator with a headline date
   older than the most recent data returns "Out of date"', (done) ->
   indicator = new Indicator()
@@ -664,4 +681,122 @@ test('#calculateNarrativeRecency given an array of indicators,
     console.error err
     throw err
   )
+)
+
+test("#calculateBoundsForType when given an unkown type throws an appropriate error", ->
+  assert.throws((->
+    Indicator.calculateBoundsForType("party", [], 'fieldName'))
+    ,"Don't know how to calculate the bounds of type 'party'"
+  )
+)
+
+test("#calculateBoundsForType given an array of dates returns the correct bounds", ->
+  dates = [
+    {value: new Date("2011")},
+    {value: new Date("2016")},
+    {value: new Date("2014")}
+  ]
+  bounds = Indicator.calculateBoundsForType("date", dates, 'value')
+
+  assert.strictEqual bounds.min.getFullYear(), 2011
+  assert.strictEqual bounds.max.getFullYear(), 2016
+)
+
+test("#calculateBoundsForType given text returns null", ->
+  text = [
+    {value: 'hat'},
+    {value: 'boat'}
+  ]
+  bounds = Indicator.calculateBoundsForType("text", text, 'value')
+
+  assert.isNull bounds
+)
+
+test('.convertNestedParametersToAssociationIds converts a Theme object to a Theme ID', ->
+  indicator = new Indicator()
+  theme = new Theme()
+
+  indicatorAttributes = indicator.toObject()
+  indicatorAttributes.theme = theme.toObject()
+
+  indicatorWithThemeId = Indicator.convertNestedParametersToAssociationIds(indicatorAttributes)
+
+  assert.strictEqual(
+    indicatorWithThemeId.theme,
+    theme.id,
+    'Expected indicator theme to be an ID only'
+  )
+)
+
+test("#roundHeadlineValues truncates decimals to 1 place", ->
+  result = Indicator.roundHeadlineValues([{value: 0.123456789}])
+
+  assert.strictEqual result[0].value, 0.1
+)
+
+test("#roundHeadlineValues when given a value which isn't a number, does nothing", ->
+  result = Indicator.roundHeadlineValues([{value: 'hat'}])
+
+  assert.strictEqual result[0].value, 'hat'
+)
+
+test(".parseDateInHeadlines on an indicator with xAxis 'date' (which is an integer),
+  and no period specified, when given an integer date headline row,
+  adds a 'periodEnd' attribute with the date one year in after the 'date' value", ->
+  indicator = new Indicator(
+    indicatorDefinition:
+      xAxis: "date",
+     fields: [
+       {
+         name: "date",
+         type: "integer"
+       }
+     ]
+  )
+
+  headlineData = [
+    date: 1997
+  ]
+
+  convertedHeadlines = indicator.parseDateInHeadlines(headlineData)
+  convertedHeadline = convertedHeadlines[0]
+
+  assert.strictEqual convertedHeadline.periodEnd, "31 Dec 1997",
+    "Expected the periodEnd attribute to be calculated"
+)
+
+test(".parseDateInHeadlines on an indicator with no xAxis defined does no processing", ->
+  indicator = new Indicator()
+
+  headlineData = [
+    date: 1997
+  ]
+
+  convertedHeadline = indicator.parseDateInHeadlines(headlineData)
+
+  assert.ok _.isEqual(convertedHeadline, headlineData),
+    "Expected the headline data not to be modified"
+)
+
+test(".parseDateInHeadlines on an indicator where the frequency is 'quarterly' 
+  sets periodEnd to 3 months after the initial 'date'", ->
+
+  indicator = new Indicator(
+    indicatorDefinition:
+      period: 'quarterly'
+      xAxis: 'date'
+      fields: [
+        name: 'date'
+      ]
+  )
+
+  headlineData = [
+    date: "2013-04-01T01:00:00.000Z"
+  ]
+
+  convertedHeadlines = indicator.parseDateInHeadlines(headlineData)
+  convertedHeadline = convertedHeadlines[0]
+
+  assert.strictEqual convertedHeadline.periodEnd, "30 Jun 2013",
+    "Expected the periodEnd to be 3 months from the period start"
 )

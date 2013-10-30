@@ -7,11 +7,8 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
   events:
     "click .close": "close"
-    "click .indicators li .info": "selectIndicator"
 
   initialize: (options) ->
-    @section = options.section
-
     @indicators = new Backbone.Collections.IndicatorCollection()
     @indicators.fetch(
       success: @render
@@ -22,17 +19,23 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
     @$el.html(@template(
       thisView: @
-      indicators: @indicators.models
-      section: @section
+      indicators: @indicators.groupByType()
     ))
     @attachSubViews()
 
+    @bindToIndicatorSelection()
+
     return @
 
-  selectIndicator: ->
-    @close()
+  bindToIndicatorSelection: ->
+    for subView in @subViews
+      @listenTo(subView, 'indicatorSelected', @triggerIndicatorSelected)
+
+  triggerIndicatorSelected: (indicator) =>
+    @trigger('indicatorSelected', indicator)
 
   onClose: ->
     $('body').removeClass('stop-scrolling')
 
+    @stopListening()
     @closeSubViews()

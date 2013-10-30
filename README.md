@@ -1,30 +1,35 @@
 # National Reporting Toolkit
 
-NRT is an online system to help Governments collect, analyse and publish environmental information quickly and easily. It’s being built by the UNEP World Conservation Monitoring Centre, in partnership with the United Nations Environment Programme (UNEP) and the Abu Dhabi Global Environmental Data Initiative (AGEDI). You can find out more at [nrt.io](http://nrt.io)
+NRT is an online system to help Governments collect, analyse and publish
+environmental information quickly and easily. It’s being built by the
+UNEP World Conservation Monitoring Centre, in partnership with the
+United Nations Environment Programme (UNEP) and the Abu Dhabi Global
+Environmental Data Initiative (AGEDI). You can find out more at
+[nrt.io](http://nrt.io)
 
 ## Setup
 
-* Install and setup NodeJS (0.10.13)
+**If you're deploying to Windows, install the
+[dependencies](https://github.com/TooTallNate/node-gyp#installation) for
+`node-gyp` first.**
+
+* Install and setup NodeJS (tested on `0.10.*`)
 * `npm install -g handlebars coffee-script grunt-cli`
 * `npm install` in the `client/` and `server/` dirs to get the libs
-* Install mongodb locally (on Mac with [Homebrew](http://brew.sh/) installed, `brew install mongodb`) and start it with
-  `mongod`.
+* Install mongodb locally (on Mac with [Homebrew](http://brew.sh/)
+  installed, `brew install mongodb`) and start it with `mongod`.
 
 ## Running the application
+
+Before you start, you'll need the
+[NRT-Indicatorator](https://github.com/unepwcmc/NRT-indicatorator)
+running.
+
+### Development
 
 #### Start the server
 
 In **development**, supervisor is used to handle exceptions:
-
-`cd server/ && npm run-script development`
-
-##### Default user
-In development, the users will be seeded on application boot. To login, pick a user from server/lib/users.json, e.g.
-
-    nrt@nrt.com
-    password
-
-In **production**:
 
 `cd server/ && npm start`
 
@@ -32,21 +37,65 @@ In **production**:
 
 `cd client && grunt watch`
 
+#### Logging in
+
+In development, the users will be seeded on application boot. To login,
+pick a user from `server/lib/users.json`, e.g.
+
+    nrt@nrt.com
+    password
+
+### Production
+
+#### Start the server
+
+**Windows**
+
+* `cd server`
+* `npm run-script win-production`
+
+**Unix**
+
+* `cd server/ && npm run-script production`
+
+#### Compile coffeescripts
+
+`cd client && grunt watch`
+
+#### Authentication and logging in
+
+In production, no users are seeded and have to be created manually.
+However, you can use an LDAP server for authentication once it has been
+configured. Note that for EAD LDAP use, you must be within the EAD VPN.
+
+##### LDAP
+
+LDAP is configured by the file `server/config/ldap.json`, and an example
+can be found in `server/config/ldap.json.example`. See the [deployment secrets
+document](https://docs.google.com/a/peoplesized.com/document/d/1dYMO3PJhRlTDQ2BEUUOcLwqX0IfJ5UP_UYyfQllnXeQ/)
+for the production details you need.
+
+**In development, LDAP is disabled.**
+
 ## Application structure
 
 ### Server
 
 #### app.coffee
+
 Application entry point. Includes required modules and starts the server
 
 #### route_bindings.coffee
+
 Binds the server paths (e.g. '/indicators/') to the routes in the route folder
 
 #### routes/
+
 Contains the 'actions' in the application, grouped into modules by their
 responsibility. These are mapped to paths by route_bindings.coffee
 
 #### models/
+
 Mongoose schemas, and model instantiation.
 
 ### Client
@@ -78,9 +127,9 @@ done() function from mocha, but part of Q's promises).
 ##### Running 'em
 
 Ensure you've run `grunt` to compile the tests, and fire up the app
-server in the test environment:
+server:
 
-`NODE_ENV=test npm start`
+`npm start`
 
 Then visit [http://localhost:3000/tests](http://localhost:3000/tests)
 
@@ -124,10 +173,10 @@ Writing small (<10 lines), well named functions is preferable to comments, but
 obviously comment when your code isn't intuitive.
 
 #### Documentation
+
 New developers will expected to be able to get the application up and running
 on their development machines purely by reading the README. Doing anything in
 the app workflow which isn't intuitive? Make sure it's in here.
-
 
 ## User Management
 

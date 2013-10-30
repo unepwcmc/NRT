@@ -10,6 +10,8 @@
       Manage IndicatorData updates
     </h1>
   </header>
+  <a class='button update-all'>Update all</a>
+  <a href="/admin/seedIndicatorData" class='button'>Seed from backup</a>
 
   <table>
     <thead>
@@ -51,4 +53,9 @@
       },
     });
   })
+
+  $('a.update-all').click(function(e){
+    $(".button.update").trigger("click");
+  })
+
 </script>

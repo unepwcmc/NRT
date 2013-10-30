@@ -10,6 +10,7 @@ suite('API - Users')
 test('GET index', (done) ->
   helpers.createUser(
     name: "Steve Bennett"
+    password: 'stevey'
   ).then( (user) ->
     request.get({
       url: helpers.appurl("api/users")
@@ -24,6 +25,7 @@ test('GET index', (done) ->
 
       # No passwords
       assert.notProperty users[0], 'password'
+      assert.notProperty users[0], 'salt'
 
       done()
     )
