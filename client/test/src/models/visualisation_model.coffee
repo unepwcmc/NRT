@@ -72,7 +72,7 @@ test(".getIndicatorData calls formatData after fetching", (done)->
     data = visualisation.get('data')
     try
       Helpers.assertCalledOnce formatDataSpy
-      assert.property data[0], 'formatted',
+      assert.property data.results[0], 'formatted',
         "Expected the formatted attribute to be populated"
       done()
     catch e
@@ -83,7 +83,7 @@ test(".getIndicatorData calls formatData after fetching", (done)->
 
   visualisation.getIndicatorData()
 
-  Helpers.SinonServer.respondWithJson.call(server, [{some: 'data'}])
+  Helpers.SinonServer.respondWithJson.call(server, results: [{some: 'data'}])
 
   server.restore()
 )
@@ -140,21 +140,29 @@ test(".getHighestXRow should retrieve the row with the highest value of X in the
   assert.strictEqual visualisation.getHighestXRow().year, 2010
 )
 
-test(".mapDataToXAndY should return data as an array of X and Y attributes", ->
+test(".mapDataToXAndY should return data as an array of X and Y objects, with
+  formatted and non-formatted attributes", ->
   indicator = Factory.indicator(
     indicatorDefinition:
       xAxis: 'year'
       yAxis: 'value'
   )
+
   visualisation = new Backbone.Models.Visualisation(
     indicator: indicator
     data:
       results: [{
         year: 1990
         value: 5
+        formatted:
+          year: 90
+          value: 5.0
       },{
         year: 2010
         value: 6
+        formatted:
+          year: 10
+          value: 6.0
       }]
   )
 
@@ -166,6 +174,11 @@ test(".mapDataToXAndY should return data as an array of X and Y attributes", ->
 
   assert.strictEqual mappedData[0].x, 1990
   assert.strictEqual mappedData[0].y, 5
+
+  assert.strictEqual mappedData[0].formatted.x, 90,
+    "Expected the formatted attribute to include the x axis"
+  assert.strictEqual mappedData[0].formatted.y, 5.0,
+    "Expected the formatted attribute to include the y axis"
 )
 
 test('.setFilterParameter when filter is undefined 
@@ -177,9 +190,8 @@ test('.setFilterParameter when filter is undefined
   assert.strictEqual visualisation.get('filters').year.min, 2004
 )
 
-test('.formatData adds a formatted object with a string
-formatted date for each row of given data where the indicator has
-a field of type date', ->
+test('.formatData adds a formatted object with a string formatted date for each
+row of results in the given data where the type of the field is date', ->
   indicator = Factory.indicator(
     indicatorDefinition:
       fields: [
@@ -187,16 +199,17 @@ a field of type date', ->
         type: 'date'
       ]
   )
-  dataToFormat = [
-    date: '2013-04-01T01:00:00.000Z'
-    otherField: 'an value'
-  ]
+  dataToFormat =
+    results: [
+      date: '2013-04-01T01:00:00.000Z'
+      otherField: 'an value'
+    ]
   visualisation = Factory.visualisation(
     indicator: indicator
   )
 
-  formattedRows = visualisation.formatData(dataToFormat)
-  formattedRow = formattedRows[0]
+  formattedData = visualisation.formatData(dataToFormat)
+  formattedRow = formattedData.results[0]
 
   assert.property formattedRow, 'formatted',
     'Expected the data to have a formatted attribute'

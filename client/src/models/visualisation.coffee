@@ -53,9 +53,13 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
   mapDataToXAndY: ->
     xAxis = @getXAxis()
     yAxis = @getYAxis()
+
     _.map(@get('data').results, (row)->
       x: row[xAxis]
       y: row[yAxis]
+      formatted:
+        x: row.formatted[xAxis]
+        y: row.formatted[yAxis]
     )
 
   setFilterParameter: (field, operation, value)->
@@ -67,7 +71,7 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
     @set('filters', filters)
 
   formatData: (data) ->
-    for row in data
+    for row in data.results
       row.formatted ||= {}
       for key, value of row
         break if key is 'formatted'
