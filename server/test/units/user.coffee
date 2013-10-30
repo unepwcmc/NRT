@@ -169,3 +169,20 @@ test(".loginFromLocalDb fails if the user's password is incorrect", (done) ->
     throw err
   )
 )
+
+test("Usernames must be unique", (done) ->
+  helpers.createUser().then( (user) ->
+    helpers.createUser()
+  ).then( (user) ->
+
+    assert.isUndefined user, "Expected duplicate user creation to fail"
+    done()
+
+  ).fail( (err) ->
+
+    console.error err
+    assert.match err, /duplicate key error index/
+    done()
+
+  )
+)

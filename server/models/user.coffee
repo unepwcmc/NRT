@@ -5,7 +5,7 @@ crypto = require('crypto')
 _ = require('underscore')
 
 userSchema = mongoose.Schema(
-  name: String
+  name: {type: String, unique: true}
   email: String
   password: String
   salt: String
