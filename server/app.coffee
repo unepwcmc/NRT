@@ -28,8 +28,11 @@ exports.createApp = ->
   require('./initializers/handlebars_helpers')
 
   app.use express.favicon()
-  app.use express.bodyParser()
+
+  app.use express.json()
+  app.use express.urlencoded()
   app.use express.methodOverride()
+
   app.use express.cookieParser("your secret here")
   app.use express.session(
     store: new MongoStore(
