@@ -33,10 +33,17 @@ test('.getFieldType returns the type of a field from the indicator definition', 
   assert.strictEqual indicator.getFieldType('theDate'), 'date'
 )
 
-test('.getFieldType on an indicator with no field definition', ->
+test('.getFieldType on an indicator with no field definition returns "Unknown"', ->
+  indicator = Factory.indicator()
+
+  assert.strictEqual indicator.getFieldType('someField'), 'Unknown'
+)
+
+test('.getFieldType on an indicator with no fields in the field definitions
+returns "Unknown"', ->
   indicator = Factory.indicator(
-    indicatorDefinition:
+    indicatorDefinition: {}
   )
 
-  assert.strictEqual indicator.getFieldType('theDate'), 'date'
+  assert.strictEqual indicator.getFieldType('someField'), 'Unknown'
 )

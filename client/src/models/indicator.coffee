@@ -20,10 +20,18 @@ class window.Backbone.Models.Indicator extends Backbone.RelationalModel
   }]
 
   getFieldType: (fieldName) ->
-    fieldDefinition = _.find(@get('indicatorDefinition').fields, (definition)->
-      definition.name is fieldName
-    )
-    return fieldDefinition.type
+    fieldDefinitions = @get('indicatorDefinition')?.fields
+    if fieldDefinitions?
+      fieldDefinition = _.find(fieldDefinitions, (definition)->
+        definition.name is fieldName
+      )
+
+      if fieldDefinition?.type
+        return fieldDefinition.type
+      else
+        return 'Unknown'
+    else
+      return 'Unknown'
 
 #For backbone relational
 Backbone.Models.Indicator.setup()
