@@ -146,23 +146,29 @@ test(".createVisualisation creates a visualisation on the section with an indica
 
   indicator = Factory.indicator()
 
-  createVisualiationStub = sinon.stub(view, 'editVisualisation', ->)
+  editVisualisationStub = sinon.stub(view, 'editVisualisation', ->)
+  getIndicatorDataStub = sinon.stub(Backbone.Models.Visualisation::, 'getIndicatorData', ->)
+
   view.createVisualisation(indicator)
 
-  assert.equal section.get('visualisation').constructor.name, 'Visualisation'
-  assert.strictEqual(
-    section.get('visualisation').get('section').cid,
-    section.cid
-  )
+  try
+    assert.equal section.get('visualisation').constructor.name, 'Visualisation'
+    assert.strictEqual(
+      section.get('visualisation').get('section').cid,
+      section.cid
+    )
 
-  assert.strictEqual(
-    section.get('visualisation').get('indicator').cid,
-    indicator.cid
-  )
+    assert.strictEqual(
+      section.get('visualisation').get('indicator').cid,
+      indicator.cid
+    )
 
-  Helpers.assertCalledOnce(createVisualiationStub)
-
-  view.close()
+    Helpers.assertCalledOnce(editVisualisationStub)
+  catch e
+    throw e
+  finally
+    view.close()
+    getIndicatorDataStub.restore()
 )
 
 test(".destroySection calls destroy on the section, save on the parent page,

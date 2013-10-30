@@ -47,13 +47,13 @@ test('Should render formatted visualisation data into a table', ->
       value: 10
       formatted:
         year: 2015
-        value: 10.0
+        value: "10.0"
     },{
       year: 2014
       value: 8
       formatted:
         year: 2014
-        value: 8.0
+        value: "8.0"
   }])
 
   indicator = visualisation.get('indicator')
