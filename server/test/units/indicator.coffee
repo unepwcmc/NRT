@@ -800,3 +800,70 @@ test(".parseDateInHeadlines on an indicator where the frequency is 'quarterly'
   assert.strictEqual convertedHeadline.periodEnd, "30 Jun 2013",
     "Expected the periodEnd to be 3 months from the period start"
 )
+
+test(".generateMetadataCSV returns CSV arrays containing the name, theme,
+  period and data date", (done) ->
+  theIndicator = theIndicator = null
+
+  Q.nsend(
+    Theme, 'create', {
+      name: 'Air Quality'
+    }
+  ).then( (theme) ->
+    theTheme = theme
+
+    Q.nsend(
+      Indicator, 'create', {
+        title: "Anne Test Indicator"
+        theme: theme
+        indicatorDefinition:
+          period: 'quarterly'
+      }
+    )
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    newestHeadlineStub = sinon.stub(theIndicator, 'getNewestHeadline', ->
+      Q.fcall(->
+        year: 2006
+      )
+    )
+
+    theIndicator.generateMetadataCSV()
+  ).then((csvData) ->
+
+    try
+      assert.lengthOf csvData, 2, "Expected data to have 2 rows: header and data"
+      titleRow = csvData
+      dataRow = csvData
+
+      assert.strictEqual titleRow[0], 'title', "Expected the first column to be the title"
+      assert.strictEqual dataRow[0], theIndicator.title,
+        "Expected the title to be the title of the indicator"
+
+      assert.strictEqual titleRow[1], 'theme', "Expected the second column to be the theme"
+      assert.strictEqual dataRow[1], theTheme.name,
+        "Expected the theme to be the name of the indicator's theme"
+
+      assert.strictEqual titleRow[2], 'collection frequency',
+        "Expected the 3rd column to be the collection frequency"
+      assert.strictEqual dataRow[2], theIndicator.indicatorDefinition.period,
+        "Expected the title to be the indicator period"
+
+      assert.strictEqual titleRow[3], 'date updated',
+        "Expected the 4th column to be the date updated"
+      assert.strictEqual dataRow[3], 2006,
+        "Expected the date updated to be 2006"
+
+      done()
+    catch e
+      done(e)
+    finally
+      newestHeadlineStub.restore()
+
+  ).fail( (err) ->
+    done(err)
+  )
+
+  
+)
