@@ -72,6 +72,10 @@ exports.dataAsCSV = (req, res) ->
           console.error err
           return res.send(500, "Can't retrieve indicator data for #{req.params.id}")
 
+        res.set('Content-Disposition',
+          "attachment; filename=NRT #{indicator.short_name} Data.csv"
+        )
+
         res.csv(indicatorData)
     )
 
