@@ -1,6 +1,7 @@
 Indicator = require("../../models/indicator").model
 _ = require('underscore')
 Q = require('q')
+csv = require('csv')
 
 exports.index = (req, res) ->
   Indicator.find( (err, indicators) ->
@@ -72,11 +73,20 @@ exports.dataAsCSV = (req, res) ->
           console.error err
           return res.send(500, "Can't retrieve indicator data for #{req.params.id}")
 
-        res.set('Content-Disposition',
-          "attachment; filename=NRT #{indicator.short_name} Data.csv"
-        )
+        zip = new require('node-zip')()
 
-        res.csv(indicatorData)
+        csv().from.array(indicatorData).to.string( (csvString, count) ->
+          zip.file('data.csv', csvString)
+
+          data = zip.generate({base64:false,compression:'DEFLATE'})
+
+          res.set('Content-Type', 'application/zip')
+          res.set('Content-Disposition',
+            "attachment; filename=NRT #{indicator.short_name} Data.zip"
+          )
+
+          res.end(data, 'binary')
+        )
     )
 
 exports.data = (req, res) ->
