@@ -54,51 +54,73 @@ test('.create with nested section', (done) ->
 )
 
 test('get "fat" page with all related children by page ID', (done) ->
-  helpers.createIndicator( (err, indicator) ->
-    helpers.createSection({
+  thePage = theSection = null
+
+  fatChildren = {
+    visualisation: new Visualisation()
+    narrative: new Narrative()
+  }
+
+  getFatChildrenStub = sinon.stub(Section::, 'getFatChildren', ->
+    Q.fcall( -> fatChildren)
+  )
+
+  Q.nfcall(
+    helpers.createSection, {
       title: 'A section',
-      indicator: indicator
-    }, (err, section) ->
-      helpers.createVisualisation(
-        {section: section._id},
-        (err, visualisation) ->
+    }
+  ).then( (section) ->
+    theSection = section
 
-          helpers.createNarrative(
-            {section: section._id}
-            (err, narrative) ->
-              helpers.createPage( {sections: [section]}).then((page) ->
-                Page.findFatModel(page._id, (err, fatPage) ->
-                  assert.equal fatPage._id, page.id
+    helpers.createPage(sections: [section])
+  ).then( (page) ->
+    thePage = page
 
-                  reloadedSection = fatPage.sections[0]
-                  assert.equal reloadedSection._id, section.id
-
-                  assert.property reloadedSection, 'indicator'
-                  assert.equal indicator._id.toString(),
-                    reloadedSection.indicator._id.toString()
-
-                  assert.property reloadedSection, 'visualisation'
-                  assert.equal visualisation._id.toString(),
-                    reloadedSection.visualisation._id.toString()
-
-                  assert.property reloadedSection, 'narrative'
-                  assert.equal narrative._id.toString(),
-                    reloadedSection.narrative._id.toString()
-
-                  done()
-                )
-              ).fail((err) ->
-                console.error err
-                throw err
-              )
-          )
-      )
+    Q.nsend(
+      Page, 'findFatModel', page._id
     )
+  ).then( (fatPage) ->
+
+    try
+      console.log fatPage
+
+      assert.equal fatPage._id, thePage.id,
+        "Expected the fetched page to have the correct ID"
+
+      reloadedSection = fatPage.sections[0]
+      assert.equal reloadedSection._id, theSection.id,
+        "Expected reloaded section to have the correct ID"
+
+      assert.property reloadedSection, 'visualisation'
+      assert.equal fatChildren.visualisation._id,
+        reloadedSection.visualisation._id.toString(),
+        "Expected child visualisation to be returned"
+
+      assert.property reloadedSection, 'narrative'
+      assert.equal fatChildren.narrative._id,
+        reloadedSection.narrative._id.toString(),
+        "Expected child narrative to be returned"
+
+      done()
+    catch e
+      done(e)
+    finally
+      getFatChildrenStub.restore()
+
+  ).fail( (err) ->
+    console.error err
+    console.error err.stack
+
+    getFatChildrenStub.restore()
+
+    done(err)
   )
 )
 
 test('get "fat" page with no related children by page ID', (done) ->
-  helpers.createSection((err, section) ->
+  Page = require('../../models/page.coffee').model
+
+  helpers.createSection(indicator: undefined, (err, section) ->
     helpers.createPage({sections: [section]}).then(
       (page) ->
         Page.findFatModel(page._id, (err, fatPage) ->
@@ -255,8 +277,14 @@ test('.createDraftClone clones a public page,
   and sets is_draft to true', (done) ->
 
   publicPage = null
-  helpers.createPage(
-    title: "Lovely Page"
+  Q.nfcall(
+    helpers.createIndicator
+  ).then( (indicator) ->
+    helpers.createPage(
+      title: "Lovely Page"
+      parent_id: indicator.id
+      parent_type: "Indicator"
+    )
   ).then( (page) ->
     publicPage = page
 
@@ -277,10 +305,17 @@ test('.createDraftClone clones a public page,
   and duplicates child sections with new IDs', (done) ->
   originalSection = null
 
-  helpers.createPage(
-    sections: [
-      title: "Lovely Section"
-    ]
+  Q.nfcall(
+    helpers.createIndicator
+  ).then( (indicator) ->
+    helpers.createPage(
+      title: "Lovely Page"
+      parent_id: indicator.id
+      parent_type: "Indicator"
+      sections: [
+        title: "Lovely Section"
+      ]
+    )
   ).then( (page) ->
     originalSection = page.sections[0]
 
@@ -311,10 +346,17 @@ test('.createDraftClone clones a public page,
   and duplicates child narratives', (done) ->
   publicPage = originalNarrative = null
 
-  helpers.createPage(
-    sections: [
-      title: "Lovely Section"
-    ]
+  Q.nfcall(
+    helpers.createIndicator
+  ).then( (indicator) ->
+    helpers.createPage(
+      title: "Lovely Page"
+      parent_id: indicator.id
+      parent_type: "Indicator"
+      sections: [
+        title: "Lovely Section"
+      ]
+    )
   ).then( (page) ->
     publicPage = page
 
@@ -360,10 +402,17 @@ test('.createDraftClone clones a public page,
   and duplicates child visualisations', (done) ->
   publicPage = originalVisualisation = null
 
-  helpers.createPage(
-    sections: [
-      title: "Lovely Section"
-    ]
+  Q.nfcall(
+    helpers.createIndicator
+  ).then( (indicator) ->
+    helpers.createPage(
+      title: "Lovely Page"
+      parent_id: indicator.id
+      parent_type: "Indicator"
+      sections: [
+        title: "Lovely Section"
+      ]
+    )
   ).then( (page) ->
     publicPage = page
 
@@ -409,10 +458,18 @@ test(".giveSectionsNewIds on a page with one section
   gives that section a new ID
   and returns an array containing the section and it's original ID", (done) ->
   originalSectionId = null
-  helpers.createPage(
-    sections: [
-      title: "Lovely Section"
-    ]
+
+  Q.nfcall(
+    helpers.createIndicator
+  ).then( (indicator) ->
+    helpers.createPage(
+      title: "Lovely Page"
+      parent_id: indicator.id
+      parent_type: "Indicator"
+      sections: [
+        title: "Lovely Section"
+      ]
+    )
   ).then( (page) ->
     originalSectionId = page.sections[0].id
 
