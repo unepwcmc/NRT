@@ -818,6 +818,7 @@ test(".generateMetadataCSV returns CSV arrays containing the name, theme,
         theme: theme
         indicatorDefinition:
           period: 'quarterly'
+          xAxis: 'year'
       }
     )
   ).then( (indicator) ->
@@ -864,6 +865,35 @@ test(".generateMetadataCSV returns CSV arrays containing the name, theme,
   ).fail( (err) ->
     done(err)
   )
+)
 
+test(".generateMetadataCSV on an indicator with no theme or indicator defintion
+returns blank values for those fields", (done) ->
+ indicator = new Indicator()
+
+ indicator.generateMetadataCSV().then( (csvData)->
+    try
+      assert.lengthOf csvData, 2, "Expected data to have 2 rows: header and data"
+      titleRow = csvData[0]
+      dataRow = csvData[1]
+
+      assert.strictEqual titleRow[1], 'Theme', "Expected the second column to be the theme"
+      assert.isUndefined dataRow[1], "Expected the theme to be blank"
+
+      assert.strictEqual titleRow[2], 'Collection Frequency',
+        "Expected the 3rd column to be the collection frequency"
+      assert.isUndefined dataRow[2], "Expected the Collection Frequency to be blank"
+
+      assert.strictEqual titleRow[3], 'Date Updated',
+        "Expected the 4th column to be the date updated"
+      assert.strictEqual dataRow[3], '', "Expected the date updated to be blank"
+
+      done()
+    catch e
+      done(e)
+
+ ).fail( (err) ->
+   done(err)
+ )
   
 )

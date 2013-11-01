@@ -230,13 +230,17 @@ indicatorSchema.methods.generateMetadataCSV = ->
     @, 'populate', 'theme'
   ).then(=>
 
-    attributes.push @theme.name
+    attributes.push @theme?.name
     attributes.push @indicatorDefinition?.period
 
     @getNewestHeadline()
   ).then((newestHeadline)=>
+    xAxis = @indicatorDefinition?.xAxis
 
-    attributes.push newestHeadline.year
+    if newestHeadline? and xAxis
+      attributes.push newestHeadline[xAxis]
+    else
+      attributes.push ''
 
     csvData.push attributes
     deferred.resolve(csvData)
