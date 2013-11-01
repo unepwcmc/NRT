@@ -87,7 +87,7 @@ nrtViz.barChart  = (conf={}) ->
     # Equivalent to: selection.node().__data__ 
     data = selection.datum()
     # Data input domains
-    xScale.domain data.map (d) -> d[xKey]  # TODO
+    xScale.domain data.map (d) -> d.formatted[xKey]  # TODO
     yScale.domain [ 0, d3.max(data, (d) -> d[yKey]) ]  # TODO
     # svg generators
     svg = setSvgDomElement selection, [data]

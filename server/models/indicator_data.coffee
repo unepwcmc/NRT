@@ -7,6 +7,18 @@ indicatorDataSchema = mongoose.Schema(
   data: mongoose.Schema.Types.Mixed
 )
 
+findIndicatorWithShortName = (indicators, shortName) ->
+  for indicator in indicators
+    return indicator if indicator.short_name is shortName
+
+  return null
+
+dateReviver = (key, value) ->
+  if key is 'date'
+    return new Date(value)
+  else
+    return value
+
 indicatorDataSchema.statics.seedData = (indicators) ->
   deferred = Q.defer()
 
@@ -17,12 +29,14 @@ indicatorDataSchema.statics.seedData = (indicators) ->
     if count is 0
       # Grab indcator data from disk
       dummyIndicatorData = JSON.parse(
-        fs.readFileSync("#{process.cwd()}/lib/indicator_data.json", 'UTF8')
+        fs.readFileSync("#{process.cwd()}/lib/indicator_data.json", 'UTF8'),
+        dateReviver
       )
 
       # Add indicator IDs to dummy data
       for indicatorData, index in dummyIndicatorData
-        dummyIndicatorData[index].indicator = indicators[indicators.length%index]
+        shortName = dummyIndicatorData[index].indicator
+        dummyIndicatorData[index].indicator = findIndicatorWithShortName(indicators, shortName)
 
       IndicatorData.create(dummyIndicatorData, (error, results) ->
         if error?
@@ -35,25 +49,6 @@ indicatorDataSchema.statics.seedData = (indicators) ->
   )
 
   return deferred.promise
-
-indicatorDataSchema.statics.convertDataToHeadline = (data) ->
-  data = IndicatorData.parseDateInHeadlines(data)
-  data = IndicatorData.roundHeadlineValues(data)
-  return data
-
-indicatorDataSchema.statics.parseDateInHeadlines = (headlines) ->
-  for headline in headlines
-    headline.periodEnd = moment("#{headline.year}")
-      .add('years', 1).subtract('days', 1).format("D MMM YYYY")
-
-  return headlines
-
-indicatorDataSchema.statics.roundHeadlineValues = (headlines) ->
-  for headline in headlines
-    unless isNaN(headline.value)
-      headline.value = Math.round(headline.value*1000)/1000
-
-  return headlines
 
 IndicatorData = mongoose.model('IndicatorData', indicatorDataSchema)
 

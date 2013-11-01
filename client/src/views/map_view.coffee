@@ -8,6 +8,7 @@ class Backbone.Views.MapView extends Backbone.View
   initialize: (options) ->
     @visualisation = options.visualisation
     @listenTo(@visualisation, 'change:data', @render)
+    @render()
 
   render: =>
     if @visualisation.get('data')?
@@ -32,8 +33,6 @@ class Backbone.Views.MapView extends Backbone.View
       'http://{s}.tiles.mapbox.com/v3/onlyjsmith.map-9zy5lnfp/{z}/{x}/{y}.png'
     ).addTo(@map)
 
-    @map.on('moveend', @saveMapBounds)
-
     @fitToBounds()
     @renderDataToMap()
 
@@ -49,7 +48,7 @@ class Backbone.Views.MapView extends Backbone.View
     @visualisation.set('map_bounds', bbox)
 
   fitToBounds: =>
-    if @visualisation.get('map_bounds')?
+    if @visualisation.get('map_bounds') and @visualisation.get('map_bounds').length > 1 ?
       bounds = @visualisation.get('map_bounds')
     else
       bounds = [
@@ -60,15 +59,10 @@ class Backbone.Views.MapView extends Backbone.View
     @map.fitBounds(bounds)
 
   renderDataToMap: ->
-    styleGeojson =
-      "color": "#ff7800"
-      "weight": 1
-      "opacity": 0.65
-
-    geojsonFeature = @visualisation.getHighestXRow()[@visualisation.getGeometryField()]
-    L.geoJson(
-      geojsonFeature
-      style: styleGeojson
+    serviceName = @visualisation.get('indicator').get('indicatorDefinition').serviceName
+    serviceName ||= "NRT_AD_ProtectedArea"
+    L.esri.dynamicMapLayer("http://196.218.36.14/ka/rest/services/#{serviceName}/MapServer",
+      opacity: 0.6
     ).addTo(@map)
 
   onClose: ->

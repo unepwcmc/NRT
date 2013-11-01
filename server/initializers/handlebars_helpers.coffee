@@ -13,3 +13,14 @@ hbs.registerHelper('truncate', (text, length) ->
 
   return text
 )
+
+hbs.registerHelper('themeIconClass', (title) ->
+  themeIconMap =
+    "Air Quality": "cloud"
+    "Biodiversity": "bar-chart"
+    "Water": "beaker"
+    "Productive Natural Resources": "globe"
+    "Environmental Awareness": "picture"
+
+  return themeIconMap[title]
+)

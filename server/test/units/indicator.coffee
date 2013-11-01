@@ -1,12 +1,14 @@
 assert = require('chai').assert
 helpers = require '../helpers'
-Indicator = require('../../models/indicator').model
-IndicatorData = require('../../models/indicator_data').model
-Page = require('../../models/page').model
 async = require('async')
 _ = require('underscore')
 Q = require 'q'
 sinon = require 'sinon'
+
+Theme = require('../../models/theme').model
+Indicator = require('../../models/indicator').model
+IndicatorData = require('../../models/indicator_data').model
+Page = require('../../models/page').model
 
 suite('Indicator')
 
@@ -290,6 +292,48 @@ test('.getRecentHeadlines returns the given number of most recent headlines
 
     assert.strictEqual(mostRecentHeadline.periodEnd, "31 Dec 2002",
       "Expected most recent headline period end to be '31 Dec 2002")
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.getRecentHeadlines successfully returns all headline when the
+  number of headlines requested is undefined', (done)->
+  indicatorData = [
+    {
+      "year": 1999,
+      "value": 3
+      "text": 'Poor'
+    },
+    {
+      "year": 2000,
+      "value": 2
+      "text": 'Poor'
+    }
+  ]
+
+  indicator = new Indicator()
+  sinon.stub(indicator, 'getIndicatorData', (callback) ->
+    callback(null, indicatorData)
+  )
+
+  indicator.getRecentHeadlines()
+  .then( (data) ->
+
+    assert.lengthOf data, 2, "Expected 2 headlines to be returned"
+
+    mostRecentHeadline = data[0]
+
+    assert.strictEqual(mostRecentHeadline.year, 2000,
+      "Expected most recent headline year value to be 2000")
+    assert.strictEqual(mostRecentHeadline.value, 2,
+      "Expected most recent headline value to be 2")
+    assert.strictEqual(mostRecentHeadline.text, "Poor",
+      "Expected most recent headline text to be 'Poor'")
 
     done()
 
@@ -637,4 +681,220 @@ test('#calculateNarrativeRecency given an array of indicators,
     console.error err
     throw err
   )
+)
+
+test("#calculateBoundsForType when given an unkown type throws an appropriate error", ->
+  assert.throws((->
+    Indicator.calculateBoundsForType("party", [], 'fieldName'))
+    ,"Don't know how to calculate the bounds of type 'party'"
+  )
+)
+
+test("#calculateBoundsForType given an array of dates returns the correct bounds", ->
+  dates = [
+    {value: new Date("2011")},
+    {value: new Date("2016")},
+    {value: new Date("2014")}
+  ]
+  bounds = Indicator.calculateBoundsForType("date", dates, 'value')
+
+  assert.strictEqual bounds.min.getFullYear(), 2011
+  assert.strictEqual bounds.max.getFullYear(), 2016
+)
+
+test("#calculateBoundsForType given text returns null", ->
+  text = [
+    {value: 'hat'},
+    {value: 'boat'}
+  ]
+  bounds = Indicator.calculateBoundsForType("text", text, 'value')
+
+  assert.isNull bounds
+)
+
+test('.convertNestedParametersToAssociationIds converts a Theme object to a Theme ID', ->
+  indicator = new Indicator()
+  theme = new Theme()
+
+  indicatorAttributes = indicator.toObject()
+  indicatorAttributes.theme = theme.toObject()
+
+  indicatorWithThemeId = Indicator.convertNestedParametersToAssociationIds(indicatorAttributes)
+
+  assert.strictEqual(
+    indicatorWithThemeId.theme,
+    theme.id,
+    'Expected indicator theme to be an ID only'
+  )
+)
+
+test("#roundHeadlineValues truncates decimals to 1 place", ->
+  result = Indicator.roundHeadlineValues([{value: 0.123456789}])
+
+  assert.strictEqual result[0].value, 0.1
+)
+
+test("#roundHeadlineValues when given a value which isn't a number, does nothing", ->
+  result = Indicator.roundHeadlineValues([{value: 'hat'}])
+
+  assert.strictEqual result[0].value, 'hat'
+)
+
+test(".parseDateInHeadlines on an indicator with xAxis 'date' (which is an integer),
+  and no period specified, when given an integer date headline row,
+  adds a 'periodEnd' attribute with the date one year in after the 'date' value", ->
+  indicator = new Indicator(
+    indicatorDefinition:
+      xAxis: "date",
+     fields: [
+       {
+         name: "date",
+         type: "integer"
+       }
+     ]
+  )
+
+  headlineData = [
+    date: 1997
+  ]
+
+  convertedHeadlines = indicator.parseDateInHeadlines(headlineData)
+  convertedHeadline = convertedHeadlines[0]
+
+  assert.strictEqual convertedHeadline.periodEnd, "31 Dec 1997",
+    "Expected the periodEnd attribute to be calculated"
+)
+
+test(".parseDateInHeadlines on an indicator with no xAxis defined does no processing", ->
+  indicator = new Indicator()
+
+  headlineData = [
+    date: 1997
+  ]
+
+  convertedHeadline = indicator.parseDateInHeadlines(headlineData)
+
+  assert.ok _.isEqual(convertedHeadline, headlineData),
+    "Expected the headline data not to be modified"
+)
+
+test(".parseDateInHeadlines on an indicator where the frequency is 'quarterly' 
+  sets periodEnd to 3 months after the initial 'date'", ->
+
+  indicator = new Indicator(
+    indicatorDefinition:
+      period: 'quarterly'
+      xAxis: 'date'
+      fields: [
+        name: 'date'
+      ]
+  )
+
+  headlineData = [
+    date: "2013-04-01T01:00:00.000Z"
+  ]
+
+  convertedHeadlines = indicator.parseDateInHeadlines(headlineData)
+  convertedHeadline = convertedHeadlines[0]
+
+  assert.strictEqual convertedHeadline.periodEnd, "30 Jun 2013",
+    "Expected the periodEnd to be 3 months from the period start"
+)
+
+test(".generateMetadataCSV returns CSV arrays containing the name, theme,
+  period and data date", (done) ->
+  theIndicator = theTheme = newestHeadlineStub = null
+
+  Q.nsend(
+    Theme, 'create', {
+      title: 'Air Quality'
+    }
+  ).then( (theme) ->
+    theTheme = theme
+
+    Q.nsend(
+      Indicator, 'create', {
+        title: "Anne Test Indicator"
+        theme: theme
+        indicatorDefinition:
+          period: 'quarterly'
+          xAxis: 'year'
+      }
+    )
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    newestHeadlineStub = sinon.stub(theIndicator, 'getNewestHeadline', ->
+      Q.fcall(->
+        year: 2006
+      )
+    )
+
+    theIndicator.generateMetadataCSV()
+  ).then((csvData) ->
+
+    try
+      assert.lengthOf csvData, 2, "Expected data to have 2 rows: header and data"
+      titleRow = csvData[0]
+      dataRow = csvData[1]
+
+      assert.strictEqual titleRow[0], 'Indicator',
+        "Expected the first column to be the indicator title"
+      assert.strictEqual dataRow[0], theIndicator.title,
+        "Expected the indicator title to be the title of the indicator"
+
+      assert.strictEqual titleRow[1], 'Theme', "Expected the second column to be the theme"
+      assert.strictEqual dataRow[1], theTheme.title,
+        "Expected the theme to be the name of the indicator's theme"
+
+      assert.strictEqual titleRow[2], 'Collection Frequency',
+        "Expected the 3rd column to be the collection frequency"
+      assert.strictEqual dataRow[2], theIndicator.indicatorDefinition.period,
+        "Expected the Collection Frequency to be the indicator's period"
+
+      assert.strictEqual titleRow[3], 'Date Updated',
+        "Expected the 4th column to be the date updated"
+      assert.strictEqual dataRow[3], 2006,
+        "Expected the date updated to be 2006"
+
+      done()
+    catch e
+      done(e)
+    finally
+      newestHeadlineStub.restore()
+
+  ).fail( (err) ->
+    done(err)
+  )
+)
+
+test(".generateMetadataCSV on an indicator with no theme or indicator defintion
+returns blank values for those fields", (done) ->
+ indicator = new Indicator()
+
+ indicator.generateMetadataCSV().then( (csvData)->
+    try
+      assert.lengthOf csvData, 2, "Expected data to have 2 rows: header and data"
+      titleRow = csvData[0]
+      dataRow = csvData[1]
+
+      assert.strictEqual titleRow[1], 'Theme', "Expected the second column to be the theme"
+      assert.isUndefined dataRow[1], "Expected the theme to be blank"
+
+      assert.strictEqual titleRow[2], 'Collection Frequency',
+        "Expected the 3rd column to be the collection frequency"
+      assert.isUndefined dataRow[2], "Expected the Collection Frequency to be blank"
+
+      assert.strictEqual titleRow[3], 'Date Updated',
+        "Expected the 4th column to be the date updated"
+      assert.strictEqual dataRow[3], '', "Expected the date updated to be blank"
+
+      done()
+    catch e
+      done(e)
+
+ ).fail( (err) ->
+   done(err)
+ )
+  
 )

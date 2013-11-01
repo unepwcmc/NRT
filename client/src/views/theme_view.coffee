@@ -5,7 +5,7 @@ class Backbone.Views.ThemeView extends Backbone.Diorama.NestingView
   template: Handlebars.templates['theme.hbs']
 
   events:
-    'click .add-theme-section': 'addSection'
+    'click .add-section button': 'addSection'
 
   initialize: (options) ->
     @theme = options.theme
@@ -19,13 +19,12 @@ class Backbone.Views.ThemeView extends Backbone.Diorama.NestingView
     @render()
 
   render: ->
-    @closeSubViews()
     @$el.html(@template(
       thisView: @
       sections: @page.get('sections').models
     ))
 
-    @renderSubViews()
+    @attachSubViews()
     return @
 
   addSection: =>

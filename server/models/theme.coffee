@@ -105,11 +105,10 @@ themeSchema.statics.getIndicatorsByTheme = (themeId, callback) ->
       callback(err, indicators)
     )
 
-
 themeSchema.methods.getIndicators = (callback) ->
   Theme = require('./theme.coffee').model
   Theme.getIndicatorsByTheme(@_id, callback)
-  
+
 themeSchema.methods.populateIndicators = ->
   theIndicators = null
   Indicator.findWhereIndicatorHasData(
@@ -124,7 +123,7 @@ themeSchema.methods.populateIndicators = ->
   ).then(->
     Indicator.calculateNarrativeRecency(theIndicators)
   ).then(=>
-    @indicators = theIndicators
+    @indicators = theIndicators.sort(_id: 1)
     Q.fcall(=> @)
   )
 

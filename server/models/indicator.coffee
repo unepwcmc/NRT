@@ -9,10 +9,6 @@ moment = require('moment')
 IndicatorData = require('./indicator_data').model
 Page = require('./page').model
 
-# Mixins
-pageModelMixin = require('../mixins/page_model.coffee')
-updateIndicatorMixin = require('../mixins/update_indicator_data.coffee')
-
 indicatorSchema = mongoose.Schema(
   title: String
   short_name: String
@@ -23,10 +19,17 @@ indicatorSchema = mongoose.Schema(
   description: String
 )
 
+# Mixins
+pageModelMixin = require('../mixins/page_model.coffee')
+updateIndicatorMixin = require('../mixins/update_indicator_data.coffee')
+indicatorHeadlinesMixin = require('../mixins/indicator_headlines.coffee')
+
 _.extend(indicatorSchema.methods, pageModelMixin.methods)
 _.extend(indicatorSchema.statics, pageModelMixin.statics)
 _.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
 _.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
+_.extend(indicatorSchema.methods, indicatorHeadlinesMixin.methods)
+_.extend(indicatorSchema.statics, indicatorHeadlinesMixin.statics)
 
 replaceThemeNameWithId = (indicators) ->
   Theme = require('./theme').model
@@ -97,7 +100,7 @@ indicatorSchema.statics.seedData = ->
         async.map(dummyIndicators, createIndicatorWithSections, (err, indicators) ->
           if err?
             return deferred.reject(err)
-          
+
           deferred.resolve(indicators)
         )
       ).fail( (err) ->
@@ -108,6 +111,28 @@ indicatorSchema.statics.seedData = ->
   )
 
   return deferred.promise
+
+# Functions to aggregate the data bounds of different types of fields
+boundAggregators = {}
+boundAggregators.integer = (data, fieldName) ->
+  bounds = {}
+  bounds.min = _.min(data, (row) ->
+    row[fieldName]
+  )[fieldName]
+  bounds.max = _.max(data, (row) ->
+    row[fieldName]
+  )[fieldName]
+
+  return bounds
+
+boundAggregators.date = boundAggregators.integer
+boundAggregators.text = -> null
+
+indicatorSchema.statics.calculateBoundsForType = (fieldType, data, fieldName) ->
+  if boundAggregators[fieldType]?
+    return boundAggregators[fieldType](data, fieldName)
+  else
+    throw new Error("Don't know how to calculate the bounds of type '#{fieldType}'")
 
 indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
   if arguments.length == 1
@@ -174,52 +199,10 @@ indicatorSchema.methods.calculateIndicatorDataBounds = (callback) ->
       callback(errorMsg)
 
     for field in @indicatorDefinition.fields
-      bounds[field.name] = boundAggregators[field.type](data, field.name, field.name)
+      bounds[field.name] = Indicator.calculateBoundsForType(field.type, data, field.name)
 
     callback(null, bounds)
   )
-
-# Functions to aggregate the data bounds of different types of fields
-boundAggregators =
-  integer: (data, fieldName) ->
-    bounds = {}
-    bounds.min = _.min(data, (row) ->
-      row[fieldName]
-    )[fieldName]
-    bounds.max = _.max(data, (row) ->
-      row[fieldName]
-    )[fieldName]
-    return bounds
-  text: () -> "It's text, dummy"
-
-indicatorSchema.methods.getRecentHeadlines = (amount) ->
-  deferred = Q.defer()
-
-  Q.nsend(
-    @, 'getIndicatorData'
-  ).then( (data) =>
-
-    headlineData = _.last(data, amount)
-    headlines = IndicatorData.convertDataToHeadline(headlineData)
-
-    deferred.resolve(headlines.reverse())
-
-  ).fail( (err) ->
-    deferred.reject(err)
-  )
-
-  return deferred.promise
-
-indicatorSchema.methods.getNewestHeadline = ->
-  deferred = Q.defer()
-
-  @getRecentHeadlines(1).then((headlines) ->
-    deferred.resolve headlines[0]
-  ).fail( (err) ->
-    deferred.reject err
-  )
-
-  return deferred.promise
 
 # Probably going to need a refactor at some point
 indicatorSchema.methods.getCurrentYAxis = (callback) ->
@@ -232,6 +215,42 @@ indicatorSchema.methods.getCurrentYAxis = (callback) ->
     )
     callback(null, mostCurrentData[@indicatorDefinition.yAxis])
   )
+
+CSV_HEADERS = ['Indicator', 'Theme', 'Collection Frequency', 'Date Updated']
+indicatorSchema.methods.generateMetadataCSV = ->
+  deferred = Q.defer()
+
+  csvData = [CSV_HEADERS]
+
+  attributes = []
+
+  attributes.push @title
+
+  Q.nsend(
+    @, 'populate', 'theme'
+  ).then(=>
+
+    attributes.push @theme?.title
+    attributes.push @indicatorDefinition?.period
+
+    @getNewestHeadline()
+  ).then((newestHeadline)=>
+    xAxis = @indicatorDefinition?.xAxis
+
+    if newestHeadline? and xAxis
+      attributes.push newestHeadline[xAxis]
+    else
+      attributes.push ''
+
+    csvData.push attributes
+    deferred.resolve(csvData)
+
+  ).fail((err)->
+    deferred.reject err
+  )
+
+  return deferred.promise
+
 
 # Add currentYValue to a collection of indicators
 indicatorSchema.statics.calculateCurrentValues = (indicators, callback) ->
@@ -286,32 +305,6 @@ indicatorSchema.statics.findWhereIndicatorHasData = (conditions) ->
 
   return deferred.promise
 
-indicatorSchema.methods.calculateRecencyOfHeadline = ->
-  deferred = Q.defer()
-
-  @populatePage().then( =>
-    @getNewestHeadline()
-  ).then( (dataHeadline) =>
-
-    unless dataHeadline?
-      return deferred.resolve("No Data")
-
-    pageHeadline = @page.headline
-
-    unless pageHeadline? && pageHeadline.periodEnd?
-      return deferred.resolve("Out of date")
-
-    if moment(pageHeadline.periodEnd).isBefore(dataHeadline.periodEnd)
-      deferred.resolve("Out of date")
-    else
-      deferred.resolve("Up to date")
-
-  ).fail( (err) ->
-    deferred.reject(err)
-  )
-
-  return deferred.promise
-
 populatePage = (indicator, callback) ->
   indicator.populatePage().then(->
     callback()
@@ -327,7 +320,7 @@ indicatorSchema.statics.populatePages = (indicators) ->
       deferred.reject(err)
     else
       deferred.resolve()
-  
+
   return deferred.promise
 
 calculateRecency = (indicator, callback) ->
@@ -348,6 +341,12 @@ indicatorSchema.statics.calculateNarrativeRecency = (indicators) ->
       deferred.resolve()
 
   return deferred.promise
+
+indicatorSchema.statics.convertNestedParametersToAssociationIds = (attributes) ->
+  if attributes.theme? and typeof attributes.theme is 'object'
+    attributes.theme = attributes.theme._id.toString()
+
+  return attributes
 
 Indicator = mongoose.model('Indicator', indicatorSchema)
 

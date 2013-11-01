@@ -5,9 +5,11 @@ url = require('url')
 _ = require('underscore')
 Q = require 'q'
 async = require('async')
+sinon = require('sinon')
 
 suite('API - Indicator')
 
+Theme = require('../../models/theme').model
 Indicator = require('../../models/indicator').model
 IndicatorData = require('../../models/indicator_data').model
 
@@ -139,6 +141,33 @@ test('PUT indicator does not fail when an _id is given', (done) ->
   )
 )
 
+test('PUT indicator does not fail when Theme is given as an object', (done) ->
+  theme = new Theme(
+    title: 'Themes themes themes'
+  )
+
+  Q.nfcall(
+    helpers.createIndicator, {}
+  ).then( (indicator) ->
+    Q.nfcall(
+      request.put, {
+        url: helpers.appurl("/api/indicators/#{indicator.id}")
+        json: true
+        body:
+          theme: theme.toObject()
+      }
+    )
+  ).spread( (res, body) ->
+    assert.equal res.statusCode, 200
+
+    done()
+  ).fail( (err) ->
+    console.error err
+    console.error err.stack
+    done(err)
+  )
+)
+
 test('GET indicator/:id/data returns the indicator data and bounds as JSON', (done) ->
   theData = [{
     year: 2000
@@ -258,22 +287,38 @@ test('GET indicator/:id returns the indicator data', (done) ->
 )
 
 test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
-  data = [
-    {
-      "year": 2000,
-      "value": 3
-    }, {
-      "year": 2001,
-      "value": 4
-    }, {
-      "year": 2002,
-      "value": 4
-    }
+  csvData = [
+    ["year, yeah?", "value"],
+    ["2000", "3"],
+    ["2001", "4"],
+    ["2002", "4"]
   ]
 
-  expectedData = """
-    "year","value"\r\n"2000","3"\r\n"2001","4"\r\n"2002","4"\r\n
+  expectedCSVData = """
+    "year, yeah?",value\n2000,3\n2001,4\n2002,4
   """
+
+  getIndicatorDataStub = sinon.stub(Indicator::, 'getIndicatorDataForCSV',
+    (filters, callback) ->
+      callback(null, csvData)
+  )
+
+  metadata = [
+    ['meta']
+    ['data']
+  ]
+
+  expectedMetadata = """
+    meta\ndata
+  """
+
+  generateMetadataCSVStub = sinon.stub(Indicator::, 'generateMetadataCSV', ->
+    Q.fcall(-> metadata)
+  )
+
+  restoreStubs = ->
+    getIndicatorDataStub.restore()
+    generateMetadataCSVStub.restore()
 
   theIndicator = null
 
@@ -284,31 +329,51 @@ test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
   ]).then( (indicators) ->
     theIndicator = indicators[0]
 
-    Q.nfcall(
-      helpers.createIndicatorData, {
-        data: data
-        indicator: theIndicator
-      }
-    )
-  ).then( ->
-
     request.get({
       url: helpers.appurl("/api/indicators/#{theIndicator.id}/data.csv")
+      encoding: null
     }, (err, res, body) ->
-      assert.equal res.statusCode, 200
+      if err?
+        restoreStubs()
+        return done(err)
 
-      assert.strictEqual(
-         body,
-         expectedData,
-         "Expected \n#{body} \nto equal \n #{expectedData}"
-      )
+      try
+        assert.equal res.statusCode, 200
 
-      done()
+        require('node-zip')()
+
+        zipFile = new JSZip()
+        zipFile.load(body.toString("base64"), base64:true)
+
+        csvFile = zipFile.file('data.csv')
+
+        assert.strictEqual(
+           csvFile.asText(),
+           expectedCSVData,
+           "Expected \n#{csvFile.name} \nto contain \n #{expectedCSVData}"
+        )
+
+        csvFile = zipFile.file('metadata.csv')
+
+        assert.isNotNull csvFile, "Expected the metadata to be in the zip file"
+
+        assert.strictEqual(
+           csvFile.asText(),
+           expectedMetadata,
+           "Expected \n#{csvFile.name} \nto contain \n #{expectedCSVData}"
+        )
+
+        done()
+      catch e
+        done(e)
+      finally
+        restoreStubs()
     )
 
   ).fail( (err) ->
     console.error err
-    throw err
+    restoreStubs()
+    done(err)
   )
 )
 

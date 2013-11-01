@@ -15,7 +15,7 @@ Helpers.assertCalledOnce = (sinonObj) ->
 
 Helpers.viewHasSubViewOfClass = (view, subViewClassName) ->
   subViewExists = false
-  for subView in view.subViews
+  for subViewKey, subView of view.subViews
     if subView.constructor.name == subViewClassName
       subViewExists = true
   return subViewExists

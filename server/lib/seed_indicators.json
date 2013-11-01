@@ -17,6 +17,40 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 2,
+      "unit": "µg per m3",
+      "short_unit": "µg/m3",
+      "period": "quarterly",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }
+      ]
   }
 }, {
   "short_name": "SO2 Concentration",
@@ -27,6 +61,40 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 5,
+      "unit": "µg per m3",
+      "short_unit": "µg/m3",
+      "period": "quarterly",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }
+      ]
   }
 },{
   "short_name": "PM10 Concentration",
@@ -37,6 +105,40 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 4,
+      "unit": "µg per m3",
+      "short_unit": "µg/m3",
+      "period": "quarterly",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }
+      ]
   }
 },{
   "short_name": "PM25 Concentration",
@@ -47,6 +149,40 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": -1,
+      "unit": "µg per m3",
+      "short_unit": "µg/m3",
+      "period": "quarterly",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }
+      ]
   }
 },{
   "short_name": "O3 Concentration",
@@ -57,6 +193,40 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 3,
+      "unit": "µg per m3",
+      "short_unit": "µg/m3",
+      "period": "quarterly",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }
+      ]
   }
 },{
   "short_name": "Protected areas",
@@ -73,7 +243,7 @@
       "unit": "%",
       "short_unit": "%",
       "period": "annual",
-      "xAxis": "year",
+      "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
       "fields": [
@@ -82,7 +252,7 @@
             "name": "periodStart",
             "type": "epoch"
           },
-          "name": "year",
+          "name": "date",
           "type": "integer"
         },
         {
@@ -168,6 +338,40 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": 4,
+      "unit": "µg per litre",
+      "short_unit": "µg/L",
+      "period": "quarterly",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }
+      ]
   }
 }, {
   "short_name": "Enterococci Concentrations",
@@ -178,6 +382,40 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": 3,
+      "unit": "µg per litre",
+      "short_unit": "µg/L",
+      "period": "quarterly",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }
+      ]
   }
 }, {
   "short_name": "Groundwater Reserves",
