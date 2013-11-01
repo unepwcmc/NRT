@@ -803,7 +803,7 @@ test(".parseDateInHeadlines on an indicator where the frequency is 'quarterly'
 
 test(".generateMetadataCSV returns CSV arrays containing the name, theme,
   period and data date", (done) ->
-  theIndicator = theIndicator = null
+  theIndicator = theTheme = newestHeadlineStub = null
 
   Q.nsend(
     Theme, 'create', {
@@ -834,23 +834,23 @@ test(".generateMetadataCSV returns CSV arrays containing the name, theme,
 
     try
       assert.lengthOf csvData, 2, "Expected data to have 2 rows: header and data"
-      titleRow = csvData
-      dataRow = csvData
+      titleRow = csvData[0]
+      dataRow = csvData[1]
 
-      assert.strictEqual titleRow[0], 'title', "Expected the first column to be the title"
+      assert.strictEqual titleRow[0], 'Title', "Expected the first column to be the title"
       assert.strictEqual dataRow[0], theIndicator.title,
         "Expected the title to be the title of the indicator"
 
-      assert.strictEqual titleRow[1], 'theme', "Expected the second column to be the theme"
+      assert.strictEqual titleRow[1], 'Theme', "Expected the second column to be the theme"
       assert.strictEqual dataRow[1], theTheme.name,
         "Expected the theme to be the name of the indicator's theme"
 
-      assert.strictEqual titleRow[2], 'collection frequency',
+      assert.strictEqual titleRow[2], 'Collection Frequency',
         "Expected the 3rd column to be the collection frequency"
       assert.strictEqual dataRow[2], theIndicator.indicatorDefinition.period,
-        "Expected the title to be the indicator period"
+        "Expected the Collection Frequency to be the indicator's period"
 
-      assert.strictEqual titleRow[3], 'date updated',
+      assert.strictEqual titleRow[3], 'Date Updated',
         "Expected the 4th column to be the date updated"
       assert.strictEqual dataRow[3], 2006,
         "Expected the date updated to be 2006"
