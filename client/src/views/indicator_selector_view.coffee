@@ -17,19 +17,18 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
   render: =>
     $('body').addClass('stop-scrolling')
 
-    @closeSubViews()
     @$el.html(@template(
       thisView: @
       indicators: @indicators.groupByType()
     ))
-    @renderSubViews()
+    @attachSubViews()
 
     @bindToIndicatorSelection()
 
     return @
 
   bindToIndicatorSelection: ->
-    for subView in @subViews
+    for key, subView of @subViews
       @listenTo(subView, 'indicatorSelected', @triggerIndicatorSelected)
 
   triggerIndicatorSelected: (indicator) =>

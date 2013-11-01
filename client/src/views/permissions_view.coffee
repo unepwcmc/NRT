@@ -37,8 +37,6 @@ class Backbone.Views.PermissionsView extends Backbone.Diorama.NestingView
     )
 
   render: =>
-    @closeSubViews()
-
     owner = @ownable.get('owner')
     ownerJSON = owner? && owner.toJSON()
 
@@ -50,7 +48,7 @@ class Backbone.Views.PermissionsView extends Backbone.Diorama.NestingView
       isEditable: isEditable
     ))
 
-    @renderSubViews()
+    @attachSubViews()
 
     return @
 

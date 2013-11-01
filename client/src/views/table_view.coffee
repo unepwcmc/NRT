@@ -9,6 +9,7 @@ class Backbone.Views.TableView extends Backbone.View
   initialize: (options) ->
     @visualisation = options.visualisation
     @listenTo(@visualisation, 'change:data', @render)
+    @render()
 
   render: =>
     if @visualisation.get('data')?
