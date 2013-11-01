@@ -807,7 +807,7 @@ test(".generateMetadataCSV returns CSV arrays containing the name, theme,
 
   Q.nsend(
     Theme, 'create', {
-      name: 'Air Quality'
+      title: 'Air Quality'
     }
   ).then( (theme) ->
     theTheme = theme
@@ -838,12 +838,13 @@ test(".generateMetadataCSV returns CSV arrays containing the name, theme,
       titleRow = csvData[0]
       dataRow = csvData[1]
 
-      assert.strictEqual titleRow[0], 'Title', "Expected the first column to be the title"
+      assert.strictEqual titleRow[0], 'Indicator',
+        "Expected the first column to be the indicator title"
       assert.strictEqual dataRow[0], theIndicator.title,
-        "Expected the title to be the title of the indicator"
+        "Expected the indicator title to be the title of the indicator"
 
       assert.strictEqual titleRow[1], 'Theme', "Expected the second column to be the theme"
-      assert.strictEqual dataRow[1], theTheme.name,
+      assert.strictEqual dataRow[1], theTheme.title,
         "Expected the theme to be the name of the indicator's theme"
 
       assert.strictEqual titleRow[2], 'Collection Frequency',

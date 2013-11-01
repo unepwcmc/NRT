@@ -216,7 +216,7 @@ indicatorSchema.methods.getCurrentYAxis = (callback) ->
     callback(null, mostCurrentData[@indicatorDefinition.yAxis])
   )
 
-CSV_HEADERS = ['Title', 'Theme', 'Collection Frequency', 'Date Updated']
+CSV_HEADERS = ['Indicator', 'Theme', 'Collection Frequency', 'Date Updated']
 indicatorSchema.methods.generateMetadataCSV = ->
   deferred = Q.defer()
 
@@ -230,7 +230,7 @@ indicatorSchema.methods.generateMetadataCSV = ->
     @, 'populate', 'theme'
   ).then(=>
 
-    attributes.push @theme?.name
+    attributes.push @theme?.title
     attributes.push @indicatorDefinition?.period
 
     @getNewestHeadline()
