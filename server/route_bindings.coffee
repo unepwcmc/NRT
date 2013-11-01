@@ -23,6 +23,7 @@ themeRoutes     = require('./routes/themes')
 testRoutes      = require('./routes/tests')
 
 module.exports = exports = (app) ->
+  app.use('/', sessionAuthentication) if app.get('env') is 'production'
   app.use('/api', sessionAuthentication)
 
   app.use passport.addCurrentUserToLocals

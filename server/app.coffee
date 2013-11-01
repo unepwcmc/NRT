@@ -18,7 +18,6 @@ exports.createApp = ->
   require('./initializers/logging')(app)
   app.use express.static(path.join(__dirname, "public"))
 
-  # assign the handlebars engine to .html files
   app.engine "hbs", hbs.express3(
     partialsDir: __dirname + '/views/partials'
     layoutsDir: __dirname + '/views/layouts'
