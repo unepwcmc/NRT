@@ -23,7 +23,6 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     @render()
 
   render: =>
-    @closeSubViews()
 
     @$el.html(@template(
       thisView: @
@@ -33,8 +32,8 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
       visualisation: @section.get('visualisation')
       isEditable: @section.isEditable()
     ))
+    @attachSubViews()
 
-    @renderSubViews()
     return @
 
   addDefaultTitleIfNotSet: =>

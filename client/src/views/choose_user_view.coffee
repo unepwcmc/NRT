@@ -16,18 +16,17 @@ class Backbone.Views.ChooseUserView extends Backbone.Diorama.NestingView
     @results = new Backbone.Collections.UserCollection()
 
   render: ->
-    @closeSubViews()
     @$el.html(@template(
       thisView: @
       results: @results
     ))
-    @renderSubViews()
+    @attachSubViews()
     @listenToSearchSubViewSelectEvent()
 
     return @
 
   listenToSearchSubViewSelectEvent: ->
-    for subView in @subViews
+    for viewKey, subView of @subViews
       subView.on('select', @setSelectedUser)
 
   setSelectedUser: (user) =>
@@ -36,12 +35,12 @@ class Backbone.Views.ChooseUserView extends Backbone.Diorama.NestingView
     @hideSubView()
 
   hideSubView: ->
-    if @subViews?
-      @subViews[0].$el.hide()
+    for viewKey, subView of @subViews
+      subView.$el.hide()
 
   showSubView: ->
-    if @subViews?
-      @subViews[0].$el.show()
+    for viewKey, subView of @subViews
+      subView.$el.show()
 
   chooseUser: =>
     @trigger('userSelected', @selectedUser)

@@ -64,12 +64,7 @@ test("When given a visualisation with type Map,
     )
   )
 
-  subViewExists = false
-  for subView in view.subViews
-    if subView.constructor.name == "MapView"
-      subViewExists = true
-
-  assert.ok subViewExists
+  Helpers.viewHasSubViewOfClass view, "MapView"
 
   view.close()
 )
@@ -82,12 +77,7 @@ test("When given a visualisation with type Table,
     )
   )
 
-  subViewExists = false
-  for subView in view.subViews
-    if subView.constructor.name == "TableView"
-      subViewExists = true
-
-  assert.ok subViewExists
+  Helpers.viewHasSubViewOfClass view, "TableView"
 
   view.close()
 )

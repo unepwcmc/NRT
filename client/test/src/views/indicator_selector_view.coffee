@@ -54,9 +54,13 @@ test('When an indicator is selected, an `indicatorSelected` event is
 
   view.on('indicatorSelected', indicatorSelectedCallback)
 
-  assert.lengthOf view.subViews, 1,
+  subViews = []
+  for key, subView of view.subViews
+    subViews.push subView
+
+  assert.lengthOf subViews, 1,
     "Expected the view to have an indicator sub view"
-  indicatorItemSubView = view.subViews[0]
+  indicatorItemSubView = subViews[0]
   indicatorItemSubView.trigger('indicatorSelected', indicatorItemSubView.indicator)
 
   indicatorCollectionFetchStub.restore()

@@ -14,6 +14,8 @@ class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
     if typeof @visualisation.get('data') is 'string'
       @visualisation.set('data', Backbone.Faker.Reports.createFakeData())
 
+    @render()
+
   downloadAsJson: ->
     window.location = @visualisation.buildIndicatorDataUrl()
 
@@ -21,13 +23,12 @@ class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
     window.location = @visualisation.buildIndicatorDataUrl('csv')
 
   render: =>
-    @closeSubViews()
     @$el.html(@template(
       thisView: @
       visualisation: @visualisation
       visualisationViewName: @visualisation.get('type') + "View"
     ))
-    @renderSubViews()
+    @attachSubViews()
 
     return @
 
