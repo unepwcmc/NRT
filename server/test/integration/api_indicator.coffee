@@ -303,6 +303,23 @@ test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
       callback(null, csvData)
   )
 
+  metadata = [
+    ['meta']
+    ['data']
+  ]
+
+  expectedMetadata = """
+    meta\ndata
+  """
+
+  generateMetadataCSVStub = sinon.stub(Indicator::, 'generateMetadataCSV', ->
+    Q.fcall(-> metadata)
+  )
+
+  restoreStubs = ->
+    getIndicatorDataStub.restore()
+    generateMetadataCSVStub.restore()
+
   theIndicator = null
 
   helpers.createIndicatorModels([
@@ -317,13 +334,14 @@ test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
       encoding: null
     }, (err, res, body) ->
       if err?
-        done(err)
-
-      assert.equal res.statusCode, 200
-
-      require('node-zip')()
+        restoreStubs()
+        return done(err)
 
       try
+        assert.equal res.statusCode, 200
+
+        require('node-zip')()
+
         zipFile = new JSZip()
         zipFile.load(body.toString("base64"), base64:true)
 
@@ -335,15 +353,26 @@ test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
            "Expected \n#{csvFile.name} \nto contain \n #{expectedCSVData}"
         )
 
+        csvFile = zipFile.file('metadata.csv')
+
+        assert.isNotNull csvFile, "Expected the metadata to be in the zip file"
+
+        assert.strictEqual(
+           csvFile.asText(),
+           expectedMetadata,
+           "Expected \n#{csvFile.name} \nto contain \n #{expectedCSVData}"
+        )
+
         done()
       catch e
         done(e)
       finally
-        getIndicatorDataStub.restore()
+        restoreStubs()
     )
 
   ).fail( (err) ->
     console.error err
+    restoreStubs()
     done(err)
   )
 )
