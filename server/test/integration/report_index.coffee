@@ -11,7 +11,7 @@ appurl = (path) ->
 suite('Report index')
 
 test("GET show", (done) ->
-  helpers.createReport( (report) ->
+  helpers.createReport( (err, report) ->
     request.get {
       url: appurl("/reports/#{report.id}")
     }, (err, res, body) ->

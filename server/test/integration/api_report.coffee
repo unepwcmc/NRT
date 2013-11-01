@@ -17,7 +17,7 @@ test('GET show', (done) ->
   data =
     title: "new report"
 
-  helpers.createReport( (report) ->
+  helpers.createReport( (err, report) ->
     request.get({
       url: helpers.appurl("api/reports/#{report.id}")
       json: true
@@ -34,7 +34,7 @@ test('GET show', (done) ->
 )
 
 test('GET index', (done) ->
-  helpers.createReport( (report) ->
+  helpers.createReport( (err, report) ->
     request.get({
       url: helpers.appurl("api/reports")
       json: true
@@ -57,7 +57,7 @@ test('GET report with page returns page with full nested sections', (done) ->
     }, (err, section) ->
       helpers.createNarrative( {section: section._id}, (err, narrative) ->
         helpers.createVisualisation( {section: section._id}, (err, visualisation) ->
-          helpers.createReport( {title: 'page report'}, (report) ->
+          helpers.createReport( {title: 'page report'}, (err, report) ->
             helpers.createPage(
               sections: [section]
               parent_id: report._id
@@ -106,7 +106,7 @@ test('GET report with page returns page with full nested sections', (done) ->
 )
 
 test('DELETE report', (done) ->
-  helpers.createReport( (report) ->
+  helpers.createReport( (err, report) ->
     request.del({
       url: helpers.appurl("api/reports/#{report.id}")
       json: true
@@ -123,7 +123,7 @@ test('DELETE report', (done) ->
 )
 
 test('PUT report', (done) ->
-  helpers.createReport( (report) ->
+  helpers.createReport( (err, report) ->
     new_title = "Updated title"
     request.put({
       url: helpers.appurl("/api/reports/#{report.id}")
@@ -149,7 +149,7 @@ test('PUT report', (done) ->
 )
 
 test('PUT report succeeds with an _id sent', (done) ->
-  helpers.createReport( (report) ->
+  helpers.createReport( (err, report) ->
     new_title = "Updated title"
     request.put({
       url: helpers.appurl("/api/reports/#{report.id}")
