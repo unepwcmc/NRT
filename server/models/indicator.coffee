@@ -216,6 +216,42 @@ indicatorSchema.methods.getCurrentYAxis = (callback) ->
     callback(null, mostCurrentData[@indicatorDefinition.yAxis])
   )
 
+CSV_HEADERS = ['Indicator', 'Theme', 'Collection Frequency', 'Date Updated']
+indicatorSchema.methods.generateMetadataCSV = ->
+  deferred = Q.defer()
+
+  csvData = [CSV_HEADERS]
+
+  attributes = []
+
+  attributes.push @title
+
+  Q.nsend(
+    @, 'populate', 'theme'
+  ).then(=>
+
+    attributes.push @theme?.title
+    attributes.push @indicatorDefinition?.period
+
+    @getNewestHeadline()
+  ).then((newestHeadline)=>
+    xAxis = @indicatorDefinition?.xAxis
+
+    if newestHeadline? and xAxis
+      attributes.push newestHeadline[xAxis]
+    else
+      attributes.push ''
+
+    csvData.push attributes
+    deferred.resolve(csvData)
+
+  ).fail((err)->
+    deferred.reject err
+  )
+
+  return deferred.promise
+
+
 # Add currentYValue to a collection of indicators
 indicatorSchema.statics.calculateCurrentValues = (indicators, callback) ->
   currentValueGatherers = []

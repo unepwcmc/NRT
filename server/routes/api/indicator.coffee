@@ -1,6 +1,7 @@
 Indicator = require("../../models/indicator").model
 _ = require('underscore')
 Q = require('q')
+csv = require('csv')
 
 exports.index = (req, res) ->
   Indicator.find( (err, indicators) ->
@@ -67,16 +68,40 @@ exports.dataAsCSV = (req, res) ->
         console.error error
         return res.render(500, "Error fetching the indicator")
 
-      indicator.getIndicatorDataForCSV req.query.filters, (err, indicatorData) ->
-        if err?
-          console.error err
-          return res.send(500, "Can't retrieve indicator data for #{req.params.id}")
+      theIndicatorData = null
 
-        res.set('Content-Disposition',
-          "attachment; filename=NRT #{indicator.short_name} Data.csv"
+      Q.nsend(
+        indicator, 'getIndicatorDataForCSV', req.query.filters
+      ).then( (indicatorData) ->
+        theIndicatorData = indicatorData
+
+        indicator.generateMetadataCSV()
+      ).then( (metadata) ->
+
+        zip = new require('node-zip')()
+
+        csv().from.array(theIndicatorData).to.string( (csvString, count) ->
+          zip.file('data.csv', csvString)
+
+          csv().from.array(metadata).to.string( (csvString, count) ->
+            zip.file('metadata.csv', csvString)
+
+            data = zip.generate({base64:false,compression:'DEFLATE'})
+
+            res.set('Content-Type', 'application/zip')
+            res.set('Content-Disposition',
+              "attachment; filename=NRT #{indicator.short_name} Data.zip"
+            )
+
+            res.end(data, 'binary')
+          )
         )
 
-        res.csv(indicatorData)
+      ).fail( (err) ->
+        console.error err
+        console.error err.stack
+        return res.send(500, "Failed to retrieve indicator data")
+      )
     )
 
 exports.data = (req, res) ->
