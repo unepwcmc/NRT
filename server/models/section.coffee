@@ -64,6 +64,31 @@ sectionSchema.methods.getNarrative = () ->
 
   return deferred.promise
 
+sectionSchema.methods.getFatChildren = ->
+  deferred = Q.defer()
+
+  children = {}
+
+  Q.nsend(
+    Narrative.findOne({section: @_id}), 'exec'
+  ).then( (narrative) =>
+    if narrative?
+      children.narrative = narrative.toObject()
+
+    Q.nsend(
+      Visualisation, 'findFatVisualisation', section: @_id
+    )
+  ).then( (visualisation) ->
+    if visualisation?
+      children.visualisation = visualisation.toObject()
+
+    deferred.resolve(children)
+  ).fail( (err) ->
+    deferred.reject(err)
+  )
+
+  return deferred.promise
+
 sectionSchema.methods.cloneChildrenBySectionId = (originalSectionId) ->
   deferred = Q.defer()
 
