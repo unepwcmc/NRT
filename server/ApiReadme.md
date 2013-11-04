@@ -17,6 +17,10 @@ A complete list of indicators
 
 Show the metadata for a given indicator (IDs can be retrieved from the /api/indicators route)
 
+### GET - /api/indicators/:id/fat
+
+Returns the indicator metadata and also its nested 'page' component, including indicator narratives.
+
 ### GET - /api/indicators/:id/headlines
 
 Lists the headline figures for a given indicator (IDs can be retrieved from the /api/indicators route)
