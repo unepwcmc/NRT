@@ -68,10 +68,10 @@ test("GET /indicators/:id/fat returns the indicator with its nested page ", (don
     helpers.createIndicator
   ).then( (createdIndicator) ->
     indicator = createdIndicator
-    
+
     Q.nfcall(
       request.get, {
-        url: helpers.appurl("api/indicators/#{indicator.id}/fat")
+        url: helpers.appurl("api/indicators/#{indicator._id}/fat")
         json: true
       }
     )
@@ -80,6 +80,9 @@ test("GET /indicators/:id/fat returns the indicator with its nested page ", (don
     try
       assert.equal res.statusCode, 200,
         "Expected the query to succeed"
+
+      assert.match res.headers['content-type'], /.*json.*/,
+        "Expected the response to be JSON"
 
       reloadedIndicator = body
       assert.equal reloadedIndicator._id, indicator.id,

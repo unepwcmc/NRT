@@ -29,6 +29,19 @@ exports.show = (req, res) ->
     res.send(JSON.stringify(indicator))
   )
 
+exports.fatShow = (req, res) ->
+  Indicator.findOne(_id: req.params.id, (err, indicator) ->
+    if err?
+      return res.send(500, "Could not retrieve indicator")
+
+    indicator.toObjectWithNestedPage().then( (fatIndicatorObject) ->
+      res.json(fatIndicatorObject)
+    ).fail( (err) ->
+      console.error err
+      res.send(500, "Failed to retrieve nested indicator attributes")
+    )
+  )
+
 exports.update = (req, res) ->
   params = _.omit(req.body, ['_id'])
   params = Indicator.convertNestedParametersToAssociationIds(params)
