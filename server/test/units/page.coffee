@@ -124,18 +124,21 @@ test('get "fat" page with no related children by page ID', (done) ->
     helpers.createPage({sections: [section]}).then(
       (page) ->
         Page.findFatModel(page._id, (err, fatPage) ->
-          assert.equal fatPage._id, page.id
+          try
+            assert.equal fatPage._id, page.id
 
-          reloadedSection = fatPage.sections[0]
-          assert.equal reloadedSection._id, section.id
+            reloadedSection = fatPage.sections[0]
+            assert.equal reloadedSection._id, section.id
 
-          assert.notProperty reloadedSection, 'indicator'
+            assert.notProperty reloadedSection, 'indicator'
 
-          assert.notProperty reloadedSection, 'visualisation'
+            assert.notProperty reloadedSection, 'visualisation'
 
-          assert.notProperty reloadedSection, 'narrative'
+            assert.notProperty reloadedSection, 'narrative'
 
-          done()
+            done()
+          catch e
+            done(e)
         )
     ).fail((err) ->
       console.error err

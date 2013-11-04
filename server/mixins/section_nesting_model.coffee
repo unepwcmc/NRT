@@ -2,6 +2,7 @@ async = require('async')
 Narrative = require('../models/narrative.coffee').model
 Visualisation = require('../models/visualisation.coffee').model
 Q = require('q')
+_ = require('underscore')
 
 module.exports = {
   findFatModel: (id, callback) ->
@@ -21,16 +22,19 @@ module.exports = {
         section
           .getFatChildren()
           .then( (fatChildren) ->
-            _.extend(section.toObject(), fatChildren)
-            cb(null, section)
+            fatSection = _.extend(section.toObject(), fatChildren)
+            cb(null, fatSection)
           ).fail( (err) ->
             cb(err)
           )
 
       async.map(model.sections, populateChildren, (err, sections) ->
-        model = model.toObject()
-        model.sections = sections
-        callback(null, model)
+        if err?
+          callback(err)
+        else
+          model = model.toObject()
+          model.sections = sections
+          callback(null, model)
       )
 
     ).fail( (err) ->
