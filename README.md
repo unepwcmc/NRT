@@ -22,7 +22,7 @@ Environmental Data Initiative (AGEDI). You can find out more at
 ## Running the application
 
 Before you start, you'll need the
-[NRT-Indicatorator](https://github.com/unepwcmc/NRT-indicatorator)
+[Indicatorator](https://github.com/unepwcmc/Indicatorator)
 running.
 
 ### Development
