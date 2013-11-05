@@ -2,6 +2,7 @@
 
 set NODE_ENV=production
 set AUTH_TOKEN=changeme
+set PORT=80
 
 if %AUTH_TOKEN%==changeme (
   echo *****************************************************
