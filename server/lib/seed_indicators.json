@@ -643,4 +643,44 @@
       }
     ]
   }
+}, {
+  "short_name": "Cereal production (UNEP/EDE)",
+  "title": "Cereal production (UNEP/EDE)",
+  "description": "Cereal production (UNEP/EDE)",
+  "theme": "Biodiversity",
+  "type": "ede",
+  "indicatorDefinition": {
+    "apiUrl": "http://localhost:3002",
+    "apiIndicatorName": "cereal",
+    "unit": "ha",
+    "short_unit": "ha",
+    "period": "annual",
+    "xAxis": "year",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "year",
+          "type": "integer"
+        },
+        "name": "year",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
+  }
 }]

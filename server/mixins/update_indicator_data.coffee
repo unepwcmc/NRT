@@ -38,6 +38,9 @@ CONFIG =
   cartodb:
     defaultQueryParameters: {}
 
+  ede:
+    defaultQueryParameters: {}
+
 CONVERSIONS =
   epoch:
     integer: (value) ->
@@ -45,7 +48,7 @@ CONVERSIONS =
 
     date: (value) ->
       new Date(parseInt(value, 10))
-      
+
   decimalPercentage:
     integer: (value)->
       value * 100
@@ -87,6 +90,19 @@ URL_BUILDERS =
     url = "#{apiUrl}/cdb/#{cartodb_user}/#{cartodb_tablename}/#{query}"
     return url
 
+  ede: ->
+
+    if @indicatorDefinition?
+      apiUrl = @indicatorDefinition.apiUrl
+      apiIndicatorName = @indicatorDefinition.apiIndicatorName
+
+    unless apiUrl? and apiIndicatorName?
+      throw "Cannot generate update URL, indicator has no apiUrl or apiIndicatorName in its indicator definition"
+
+    url = "#{apiUrl}/ede/#{apiIndicatorName}"
+    return url
+
+
 
 SOURCE_DATA_PARSERS =
   esri: (responseBody) ->
@@ -127,6 +143,19 @@ SOURCE_DATA_PARSERS =
       indicator: @_id
       data: responseBody.data
     }
+
+  ede: (responseBody) ->
+    unless responseBody?
+      throw "Can't convert poorly formed indicator data reponse:\n#{
+        JSON.stringify(responseBody)
+      }\n expected response to be a cartodb api response"
+
+    return convertedData = {
+      indicator: @_id
+      data: responseBody
+    }
+
+
 
 module.exports =
   statics: {}
