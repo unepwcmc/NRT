@@ -9,13 +9,14 @@ Environmental Data Initiative (AGEDI). You can find out more at
 
 ## Setup
 
+### Dependecies
+First, grab the dependencies for your platform by running the script for your
+platform in installers/.
 **If you're deploying to Windows, install the
 [dependencies](https://github.com/TooTallNate/node-gyp#installation) for
 `node-gyp` first.**
 
-* Install and setup NodeJS (tested on `0.10.*`)
-* `npm install -g handlebars coffee-script grunt-cli`
-* `npm install` in the `client/` and `server/` dirs to get the libs
+* Setup the application with `cd server/ && npm run-script setup`
 * Install mongodb locally (on Mac with [Homebrew](http://brew.sh/)
   installed, `brew install mongodb`) and start it with `mongod`.
 
