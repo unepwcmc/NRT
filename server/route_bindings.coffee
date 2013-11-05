@@ -37,6 +37,7 @@ module.exports = exports = (app) ->
   app.resource 'api/visualisations', visualisationApi, { format: 'json' }
   app.resource 'api/reports', reportApi, { format: 'json' }
   app.resource 'api/themes', themeApi, { format: 'json' }
+  app.get "/api/themes/:id/fat", themeApi.fatShow
   app.resource 'api/indicators', indicatorApi, { format: 'json' }
   app.resource 'api/pages', pageApi, { format: 'json' }
   app.get "/api/indicators/:id/fat", indicatorApi.fatShow

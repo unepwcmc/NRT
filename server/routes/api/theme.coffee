@@ -27,6 +27,19 @@ exports.show = (req, res) ->
     res.send(JSON.stringify(theme))
   )
 
+exports.fatShow = (req, res) ->
+  Theme.findOne(_id: req.params.id, (err, theme) ->
+    if err?
+      return res.send(500, "Could not retrieve theme")
+
+    theme.toObjectWithNestedPage().then( (fatThemeObject) ->
+      res.json(fatThemeObject)
+    ).fail( (err) ->
+      console.error err
+      res.send(500, "Failed to retrieve nested theme attributes")
+    )
+  )
+
 exports.update = (req, res) ->
   params = _.omit(req.body, '_id')
 

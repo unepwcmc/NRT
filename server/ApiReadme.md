@@ -7,6 +7,10 @@ The National Reporting toolkit includes a JSON api to query the indicator and th
 
 A complete list of themes
 
+### GET - /api/themes/:id/fat
+
+Returns the theme, including its 'page' narrative
+
 ## Indicators
 
 ### GET - /api/indicators
