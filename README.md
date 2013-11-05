@@ -9,7 +9,11 @@ Environmental Data Initiative (AGEDI). You can find out more at
 
 ## Setup
 
-* Install and setup NodeJS (0.10.13)
+**If you're deploying to Windows, install the
+[dependencies](https://github.com/TooTallNate/node-gyp#installation) for
+`node-gyp` first.**
+
+* Install and setup NodeJS (tested on `0.10.*`)
 * `npm install -g handlebars coffee-script grunt-cli`
 * `npm install` in the `client/` and `server/` dirs to get the libs
 * Install mongodb locally (on Mac with [Homebrew](http://brew.sh/)
@@ -17,7 +21,9 @@ Environmental Data Initiative (AGEDI). You can find out more at
 
 ## Running the application
 
-Before you start, you'll need the [NRT-Indicatorator](https://github.com/unepwcmc/NRT-indicatorator) running.
+Before you start, you'll need the
+[Indicatorator](https://github.com/unepwcmc/Indicatorator)
+running.
 
 ### Development
 
@@ -43,7 +49,14 @@ pick a user from `server/lib/users.json`, e.g.
 
 #### Start the server
 
-`cd server/ && npm run-script production`
+**Windows**
+
+* `cd server`
+* `npm run-script win-production`
+
+**Unix**
+
+* `cd server/ && npm run-script production`
 
 #### Compile coffeescripts
 
@@ -69,16 +82,20 @@ for the production details you need.
 ### Server
 
 #### app.coffee
+
 Application entry point. Includes required modules and starts the server
 
 #### route_bindings.coffee
+
 Binds the server paths (e.g. '/indicators/') to the routes in the route folder
 
 #### routes/
+
 Contains the 'actions' in the application, grouped into modules by their
 responsibility. These are mapped to paths by route_bindings.coffee
 
 #### models/
+
 Mongoose schemas, and model instantiation.
 
 ### Client
@@ -110,9 +127,9 @@ done() function from mocha, but part of Q's promises).
 ##### Running 'em
 
 Ensure you've run `grunt` to compile the tests, and fire up the app
-server in the test environment:
+server:
 
-`NODE_ENV=test npm start`
+`npm start`
 
 Then visit [http://localhost:3000/tests](http://localhost:3000/tests)
 
@@ -156,10 +173,10 @@ Writing small (<10 lines), well named functions is preferable to comments, but
 obviously comment when your code isn't intuitive.
 
 #### Documentation
+
 New developers will expected to be able to get the application up and running
 on their development machines purely by reading the README. Doing anything in
 the app workflow which isn't intuitive? Make sure it's in here.
-
 
 ## User Management
 

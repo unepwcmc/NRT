@@ -17,7 +17,6 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
     @render()
 
   render: =>
-    @closeSubViews()
     @$el.html(@template(
       thisView: @
       indicator: @visualisation.get('indicator').toJSON()
@@ -26,7 +25,7 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
       visualisationViewName: @visualisation.get('type') + "View"
       visualisationTypes: Backbone.Models.Visualisation.visualisationTypes
     ))
-    @renderSubViews()
+    @attachSubViews()
     $('body').addClass('stop-scrolling')
 
     return @

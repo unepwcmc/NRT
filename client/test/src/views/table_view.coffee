@@ -21,7 +21,6 @@ test('when initialised with a visualisation with no data, it fetches the data', 
   server = sinon.fakeServer.create()
 
   view = new Backbone.Views.TableView(visualisation: visualisation)
-  Helpers.renderViewToTestContainer(view)
 
   # Check we received a data request
   indicatorId = visualisation.get('indicator').get('_id')
@@ -31,7 +30,7 @@ test('when initialised with a visualisation with no data, it fetches the data', 
   )
 
   # Respond to get data request
-  Helpers.SinonServer.respondWithJson.call(server, [{
+  Helpers.SinonServer.respondWithJson.call(server, results: [{
       year: 1990
       value: 5
   }])
@@ -40,14 +39,20 @@ test('when initialised with a visualisation with no data, it fetches the data', 
   view.close()
 )
 
-test('Should render visualisation data into a table', ->
+test('Should render formatted visualisation data into a table', ->
   visualisation = Factory.visualisation()
   visualisation.set('data', results: [{
       year: 2015
       value: 10
+      formatted:
+        year: 2015
+        value: "10.0"
     },{
       year: 2014
       value: 8
+      formatted:
+        year: 2014
+        value: "8.0"
   }])
 
   indicator = visualisation.get('indicator')
@@ -74,7 +79,8 @@ test('Should render visualisation data into a table', ->
   bodyText = $('#test-container').find('table tbody').text()
 
   assert.match bodyText, /.*2015.*/
-  assert.match bodyText, /.*10.*/
+  assert.match bodyText, /.*10\.0.*/,
+    "Expected the body text to include the formatted values"
 
   view.close()
 )

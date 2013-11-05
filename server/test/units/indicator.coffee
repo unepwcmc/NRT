@@ -800,3 +800,101 @@ test(".parseDateInHeadlines on an indicator where the frequency is 'quarterly'
   assert.strictEqual convertedHeadline.periodEnd, "30 Jun 2013",
     "Expected the periodEnd to be 3 months from the period start"
 )
+
+test(".generateMetadataCSV returns CSV arrays containing the name, theme,
+  period and data date", (done) ->
+  theIndicator = theTheme = newestHeadlineStub = null
+
+  Q.nsend(
+    Theme, 'create', {
+      title: 'Air Quality'
+    }
+  ).then( (theme) ->
+    theTheme = theme
+
+    Q.nsend(
+      Indicator, 'create', {
+        title: "Anne Test Indicator"
+        theme: theme
+        indicatorDefinition:
+          period: 'quarterly'
+          xAxis: 'year'
+      }
+    )
+  ).then( (indicator) ->
+    theIndicator = indicator
+
+    newestHeadlineStub = sinon.stub(theIndicator, 'getNewestHeadline', ->
+      Q.fcall(->
+        year: 2006
+      )
+    )
+
+    theIndicator.generateMetadataCSV()
+  ).then((csvData) ->
+
+    try
+      assert.lengthOf csvData, 2, "Expected data to have 2 rows: header and data"
+      titleRow = csvData[0]
+      dataRow = csvData[1]
+
+      assert.strictEqual titleRow[0], 'Indicator',
+        "Expected the first column to be the indicator title"
+      assert.strictEqual dataRow[0], theIndicator.title,
+        "Expected the indicator title to be the title of the indicator"
+
+      assert.strictEqual titleRow[1], 'Theme', "Expected the second column to be the theme"
+      assert.strictEqual dataRow[1], theTheme.title,
+        "Expected the theme to be the name of the indicator's theme"
+
+      assert.strictEqual titleRow[2], 'Collection Frequency',
+        "Expected the 3rd column to be the collection frequency"
+      assert.strictEqual dataRow[2], theIndicator.indicatorDefinition.period,
+        "Expected the Collection Frequency to be the indicator's period"
+
+      assert.strictEqual titleRow[3], 'Date Updated',
+        "Expected the 4th column to be the date updated"
+      assert.strictEqual dataRow[3], 2006,
+        "Expected the date updated to be 2006"
+
+      done()
+    catch e
+      done(e)
+    finally
+      newestHeadlineStub.restore()
+
+  ).fail( (err) ->
+    done(err)
+  )
+)
+
+test(".generateMetadataCSV on an indicator with no theme or indicator defintion
+returns blank values for those fields", (done) ->
+ indicator = new Indicator()
+
+ indicator.generateMetadataCSV().then( (csvData)->
+    try
+      assert.lengthOf csvData, 2, "Expected data to have 2 rows: header and data"
+      titleRow = csvData[0]
+      dataRow = csvData[1]
+
+      assert.strictEqual titleRow[1], 'Theme', "Expected the second column to be the theme"
+      assert.isUndefined dataRow[1], "Expected the theme to be blank"
+
+      assert.strictEqual titleRow[2], 'Collection Frequency',
+        "Expected the 3rd column to be the collection frequency"
+      assert.isUndefined dataRow[2], "Expected the Collection Frequency to be blank"
+
+      assert.strictEqual titleRow[3], 'Date Updated',
+        "Expected the 4th column to be the date updated"
+      assert.strictEqual dataRow[3], '', "Expected the date updated to be blank"
+
+      done()
+    catch e
+      done(e)
+
+ ).fail( (err) ->
+   done(err)
+ )
+  
+)

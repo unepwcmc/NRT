@@ -98,7 +98,9 @@ test('get "fat" page with all related children by page ID', (done) ->
 )
 
 test('get "fat" page with no related children by page ID', (done) ->
-  helpers.createSection((err, section) ->
+  Page = require('../../models/page.coffee').model
+
+  helpers.createSection(indicator: undefined, (err, section) ->
     helpers.createPage({sections: [section]}).then(
       (page) ->
         Page.findFatModel(page._id, (err, fatPage) ->
@@ -255,8 +257,14 @@ test('.createDraftClone clones a public page,
   and sets is_draft to true', (done) ->
 
   publicPage = null
-  helpers.createPage(
-    title: "Lovely Page"
+  Q.nfcall(
+    helpers.createIndicator
+  ).then( (indicator) ->
+    helpers.createPage(
+      title: "Lovely Page"
+      parent_id: indicator.id
+      parent_type: "Indicator"
+    )
   ).then( (page) ->
     publicPage = page
 
@@ -277,10 +285,17 @@ test('.createDraftClone clones a public page,
   and duplicates child sections with new IDs', (done) ->
   originalSection = null
 
-  helpers.createPage(
-    sections: [
-      title: "Lovely Section"
-    ]
+  Q.nfcall(
+    helpers.createIndicator
+  ).then( (indicator) ->
+    helpers.createPage(
+      title: "Lovely Page"
+      parent_id: indicator.id
+      parent_type: "Indicator"
+      sections: [
+        title: "Lovely Section"
+      ]
+    )
   ).then( (page) ->
     originalSection = page.sections[0]
 
@@ -311,10 +326,17 @@ test('.createDraftClone clones a public page,
   and duplicates child narratives', (done) ->
   publicPage = originalNarrative = null
 
-  helpers.createPage(
-    sections: [
-      title: "Lovely Section"
-    ]
+  Q.nfcall(
+    helpers.createIndicator
+  ).then( (indicator) ->
+    helpers.createPage(
+      title: "Lovely Page"
+      parent_id: indicator.id
+      parent_type: "Indicator"
+      sections: [
+        title: "Lovely Section"
+      ]
+    )
   ).then( (page) ->
     publicPage = page
 
@@ -360,10 +382,17 @@ test('.createDraftClone clones a public page,
   and duplicates child visualisations', (done) ->
   publicPage = originalVisualisation = null
 
-  helpers.createPage(
-    sections: [
-      title: "Lovely Section"
-    ]
+  Q.nfcall(
+    helpers.createIndicator
+  ).then( (indicator) ->
+    helpers.createPage(
+      title: "Lovely Page"
+      parent_id: indicator.id
+      parent_type: "Indicator"
+      sections: [
+        title: "Lovely Section"
+      ]
+    )
   ).then( (page) ->
     publicPage = page
 
@@ -409,10 +438,18 @@ test(".giveSectionsNewIds on a page with one section
   gives that section a new ID
   and returns an array containing the section and it's original ID", (done) ->
   originalSectionId = null
-  helpers.createPage(
-    sections: [
-      title: "Lovely Section"
-    ]
+
+  Q.nfcall(
+    helpers.createIndicator
+  ).then( (indicator) ->
+    helpers.createPage(
+      title: "Lovely Page"
+      parent_id: indicator.id
+      parent_type: "Indicator"
+      sections: [
+        title: "Lovely Section"
+      ]
+    )
   ).then( (page) ->
     originalSectionId = page.sections[0].id
 

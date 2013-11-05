@@ -22,7 +22,6 @@ test('when initialised with a visualisation with no data, it fetches the data', 
   server = sinon.fakeServer.create()
 
   view = new Backbone.Views.MapView(visualisation: visualisation)
-  Helpers.renderViewToTestContainer(view)
 
   # Check we received a data request
   indicatorId = visualisation.get('indicator').get('_id')
@@ -32,7 +31,7 @@ test('when initialised with a visualisation with no data, it fetches the data', 
   )
   
   # Respond to get data request
-  Helpers.SinonServer.respondWithJson.call(server, [{year: 'data', geometry: {}}])
+  Helpers.SinonServer.respondWithJson.call(server, results: [{year: 'data', geometry: {}}])
   server.restore()
 
   view.close()

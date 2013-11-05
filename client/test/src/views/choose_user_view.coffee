@@ -12,7 +12,9 @@ test('.setSelectedUser sets the selected user attribute and hides the results
   assert.property view, 'selectedUser'
   assert.strictEqual view.selectedUser.cid, user.cid
 
-  searchResultsView = view.subViews[0]
+  for subViewKey, subView of view.subViews
+    searchResultsView = subView
+
   assert.notOk(
     searchResultsView.$el.is(':visible'),
     "Expected the search results to be hidden"

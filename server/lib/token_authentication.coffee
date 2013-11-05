@@ -1,3 +1,5 @@
+_ = require('underscore')
+
 authenticateToken = (token) ->
   env_token = process.env.AUTH_TOKEN
 
@@ -6,8 +8,10 @@ authenticateToken = (token) ->
 
   return false
 
+httpVerbWhitelist = ['GET']
+
 module.exports = (req, res, next) ->
-  unless authenticateToken(req.query.token || null)
+  unless authenticateToken(req.query.token || null) or _.contains(httpVerbWhitelist, req.method)
     return res.send(401, 'Unauthorised')
 
   next()

@@ -2,6 +2,7 @@ _ = require('underscore')
 
 passport = require('./initializers/authentication')
 tokenAuthentication = require('./lib/token_authentication')
+sessionAuthentication = require('./lib/session_authentication')
 
 visualisationApi = require('./routes/api/visualisation')
 narrativeApi     = require('./routes/api/narrative')
@@ -23,6 +24,9 @@ themeRoutes     = require('./routes/themes')
 testRoutes      = require('./routes/tests')
 
 module.exports = exports = (app) ->
+  app.use('/', sessionAuthentication)
+  app.use('/api/users', tokenAuthentication)
+
   app.use passport.addCurrentUserToLocals
 
   app.get "/login", sessionRoutes.login
@@ -45,8 +49,8 @@ module.exports = exports = (app) ->
   ## express-resource doesn't support using middlewares
   app.get "/api/users", userApi.index
   app.get "/api/users/:id", userApi.show
-  app.post "/api/users", tokenAuthentication, userApi.create
-  app.delete "/api/users/:id", tokenAuthentication, userApi.destroy
+  app.post "/api/users", userApi.create
+  app.delete "/api/users/:id", userApi.destroy
 
   app.get "/", themeRoutes.index
   app.get "/about", staticRoutes.about
@@ -68,6 +72,7 @@ module.exports = exports = (app) ->
   app.get "/reports/:id/present", reportRoutes.present
 
   app.get "/locale/:locale", localeRoutes.index
+  app.get "/locales/en-:locale.json", localeRoutes.redirect
 
   app.post "/deploy", deployRoutes.index
 

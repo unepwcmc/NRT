@@ -13,13 +13,12 @@ class Backbone.Views.VisualisationFilterView extends Backbone.Diorama.NestingVie
 
   render: ->
     if @visualisation.get('data')?
-      @closeSubViews()
       @$el.html(@template(
         thisView: @
         fields: @getFieldData()
         visualisation: @visualisation
       ))
-      @renderSubViews()
+      @attachSubViews()
       return @
 
   getFieldData: ->
