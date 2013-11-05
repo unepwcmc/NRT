@@ -23,8 +23,8 @@ themeRoutes     = require('./routes/themes')
 testRoutes      = require('./routes/tests')
 
 module.exports = exports = (app) ->
-  app.use('/', sessionAuthentication) if app.get('env') is 'production'
-  app.use('/api', sessionAuthentication)
+  app.use('/', sessionAuthentication)
+  app.use('/api/users', tokenAuthentication)
 
   app.use passport.addCurrentUserToLocals
 
@@ -48,8 +48,8 @@ module.exports = exports = (app) ->
   ## express-resource doesn't support using middlewares
   app.get "/api/users", userApi.index
   app.get "/api/users/:id", userApi.show
-  app.post "/api/users", tokenAuthentication, userApi.create
-  app.delete "/api/users/:id", tokenAuthentication, userApi.destroy
+  app.post "/api/users", userApi.create
+  app.delete "/api/users/:id", userApi.destroy
 
   app.get "/", themeRoutes.index
   app.get "/about", staticRoutes.about
