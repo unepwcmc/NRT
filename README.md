@@ -8,18 +8,20 @@ Environmental Data Initiative (AGEDI). You can find out more at
 [nrt.io](http://nrt.io)
 
 ## Setup
+Grab the dependencies by running the script for your platform in
+installers/. If you're doing this on a development machine, you probably want
+to review the installers first and remove any dependencies you already have
+installed (don't worry, they're short!)
 
-* First, grab the dependencies by running the script for your platform in
-installers/.
-  * on Windows, you will need powershell installed, and to run the batch script
-as Admin
-* Setup the application with `cd server/ && npm run-script setup`
+* **OS X**: Uses [homebrew](http://brew.sh) to install the dependecies. 
+* **Ubuntu**: Uses apt-get
+* **Windows**: 
+  * Ensure powershell is installed, then run install.bat as Admin
+  * After the install has completed, setup the application with:
+
+  `cd server/ && npm run-script setup`
 
 ## Running the application
-
-Before you start, you'll need the
-[Indicatorator](https://github.com/unepwcmc/Indicatorator)
-running.
 
 ### Development
 
@@ -40,6 +42,12 @@ pick a user from `server/lib/users.json`, e.g.
 
     nrt@nrt.com
     password
+
+### Seeding data
+Data is seeded and update from the /admin route.  If you wish to update the
+indicators, you'll also need the
+[Indicatorator](https://github.com/unepwcmc/Indicatorator) running. If backup
+data is ok, just click 'Seed from backup'
 
 ### Production
 
