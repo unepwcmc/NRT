@@ -13,7 +13,7 @@ class Backbone.Collections.IndicatorCollection extends Backbone.Collection
     }
 
     for indicator in @models
-      if indicator.get('type') is 'esri'
+      if indicator.get('type') is 'worldbank'
         grouped.core.push(indicator)
       else
         grouped.external.push(indicator)

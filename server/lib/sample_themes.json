@@ -1,37 +1,8 @@
 [
   {
-    "title": "Air Quality",
-    "image_url": "http://www.environmentalatlas.ae/images/geographicInheritance/montages/3.6.jpg",
-    "sections": [
-      {"title": "Description", "content": "Clean air is a valuable resource for the residents of Abu Dhabi, and one that the government of Abu Dhabi is determined to protect. The quality of Abu Dhabi’s air is naturally poor on occasion due to naturally occurring high levels of particulate matter originating from the desert environment or resulting from the arrival of winds from outside the country, but man-made causes of pollution need to be monitored and controlled. Additionally, sudden increases in global CO2 concentrations, coinciding with the Industrial Revolution, have led scientists to believe with greater than 90% probability that most of the global warming witnessed in the last 50 years is the result of human activities."}
-    ]
-  },
-  {
     "title": "Biodiversity",
-   "image_url": "http://www.environmentalatlas.ae/images/home/carousel3.jpg",    
     "sections": [
-      {"title": "Description", "content": "The ecosystems, habitats and communities of flora and fauna of Abu Dhabi are a fragile, priceless treasure. However, development and growth impose intense pressure on these natural assets. Consequently, there is an urgent need for planned and wide-ranging approaches to ecological management and conservation. In protecting the natural assets of the Emirate, EAD has adopted a variety of measures, requiring effective policies, regulations and actions. These include signing of Memoranda of Understanding (MoUs) with partners to maintain the delicate balance between development and the environment. EAD is also implementing international commitments and treaties for biodiversity conservation. For example, in February 2000 the UAE ratified the Convention on Biological Diversity (CBD). The CBD aims to establish a global network of comprehensive, representative and effectively-managed protected areas, conserving at least ten per cent of each of the world's ecological regions. Abu Dhabi supports this crucial target through its conservation policies, spearheaded by EAD."}
-    ]
-  },
-  {
-    "title": "Water",
-    "image_url": "http://www.environmentalatlas.ae/images/resourceOfLife/montages/4.1.jpg",
-    "sections": [
-      {"title": "Description", "content": "Until about fifty years ago, Abu Dhabi's water requirements were met solely from groundwater using traditional extraction methods. These often involved shallow, hand-dug wells or the falaj system (man-made wells and channels that collect ground, spring and surface water and distribute it by gravity to where it is most needed). Past societies fully appreciated the finite nature and true value of water and evolved ingenious conservation techniques for all stages of water management, especially for its allocation and distribution. Today, Abu Dhabi residents enjoy a level of access to safe and clean water that was unimaginable only decades ago. The construction of the first desalination plant in 1960 marked a milestone in Abu Dhabi's development allowing plentiful salt water to be converted into fresh water, thereby diminishing dependence on limited natural fresh water sources. This capacity not only improved the quality of life of citizens but effectively opened the previously water-deficient islands and surrounding coastline to rapid urban development and population growth, which continues today."}
-    ]
-  },
-  {
-    "title": "Productive Natural Resources",
-    "image_url": "http://www.environmentalatlas.ae/images/seaToSummit/static/5.3.5.jpg",
-    "sections": [
-      {"title": "Description", "content": "Evidence from archaeological sites on the coast and islands of Abu Dhabi suggests that people in the region have depended upon marine resources such as fish and pearls for over 7,000 years. As tools and fishing methods improved over time, a simple subsistence lifestyle gradually grew and flourished as fisheries became the mainstay economic activity of communities along the coast. Fisheries still maintain a significant cultural and socio-economic role in the more isolated coastal and island communities of the Emirate."}
-    ]
-  },
-  {
-    "title": "Environmental Awareness",
-    "image_url": "http://www.environmentalatlas.ae/images/pathways/static/8.5.6.jpg",
-    "sections": [
-      {"title": "Description", "content": "Public education and awareness ensure that residents are able to be effectively sustainable in their daily lives. Abu Dhabi has invested significant effort in creating awareness towards meaningful change to benefit the environment. Campaigns aimed at youth include the Sustainable Schools Initiative, Shaheen’s World, UAE Enviro-Spellathon, Annual Environment Competition, while other initiatives have included Green Your Life, Heroes of the UAE, Choose Wisely Campaign, as well as ADWEA and CWM awareness campaigns."}
+      {"title": "Description", "content": "The ecosystems, habitats and communities of flora and fauna of Tanzania are a fragile, priceless treasure. However, development and growth impose intense pressure on these natural assets. Consequently, there is an urgent need for planned and wide-ranging approaches to ecological management and conservation. In protecting the natural assets of the Emirate, EAD has adopted a variety of measures, requiring effective policies, regulations and actions. These include signing of Memoranda of Understanding (MoUs) with partners to maintain the delicate balance between development and the environment. EAD is also implementing international commitments and treaties for biodiversity conservation. For example, in February 2000 the UAE ratified the Convention on Biological Diversity (CBD). The CBD aims to establish a global network of comprehensive, representative and effectively-managed protected areas, conserving at least ten per cent of each of the world's ecological regions. Tanzania supports this crucial target through its conservation policies, spearheaded by EAD."}
     ]
   }
 ]

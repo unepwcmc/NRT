@@ -30,7 +30,7 @@ CONFIG =
       'returnM':'false'
       'f':'pjson'
 
-  worldBank:
+  worldbank:
     defaultQueryParameters:
       "per_page": 100
       "date": "1960:2013"
@@ -62,7 +62,7 @@ URL_BUILDERS =
     url = "http://#{CONFIG[@type].indicatorServer}/#{serviceName}/#{featureServer}"
     return url
 
-  worldBank: ->
+  worldbank: ->
 
     if @indicatorDefinition?
       apiUrl = @indicatorDefinition.apiUrl
@@ -105,7 +105,7 @@ SOURCE_DATA_PARSERS =
 
     return convertedData
 
-  worldBank: (responseBody) ->
+  worldbank: (responseBody) ->
     unless _.isArray(responseBody) and responseBody.length is 2
       throw "Can't convert poorly formed indicator data reponse:\n#{
         JSON.stringify(responseBody)
