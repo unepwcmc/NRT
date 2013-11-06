@@ -1,0 +1,15 @@
+language: node_js
+services: mongodb
+before_script:
+  - cd server/
+  - npm install
+node_js:
+  - "0.10"
+branches:
+  only:
+    - master
+notifications:
+  email:
+    - adam.mulligan@unep-wcmc.org
+    - jonathan.smith@unep-wcmc.org
+    - james.cox@unep-wcmc.org

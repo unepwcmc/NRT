@@ -12,6 +12,7 @@ suite('API - Indicator')
 Theme = require('../../models/theme').model
 Indicator = require('../../models/indicator').model
 IndicatorData = require('../../models/indicator_data').model
+Page = require('../../models/page').model
 
 test('POST create', (done) ->
   data =
@@ -49,6 +50,62 @@ test("GET show", (done) ->
 
       done()
     )
+  )
+)
+
+test("GET /indicators/:id/fat returns the indicator with its nested page ", (done) ->
+  indicator = null
+  nestedPage = new Page()
+  toObjectWithNestedPageStub = sinon.stub(Indicator::, 'toObjectWithNestedPage', ->
+    Q.fcall(=>
+      object = @toObject()
+      object.page = nestedPage
+      object
+    )
+  )
+
+  Q.nfcall(
+    helpers.createIndicator
+  ).then( (createdIndicator) ->
+    indicator = createdIndicator
+
+    Q.nfcall(
+      request.get, {
+        url: helpers.appurl("api/indicators/#{indicator._id}/fat")
+        json: true
+      }
+    )
+  ).spread( (res, body) ->
+
+    try
+      assert.equal res.statusCode, 200,
+        "Expected the query to succeed"
+
+      assert.match res.headers['content-type'], /.*json.*/,
+        "Expected the response to be JSON"
+
+      reloadedIndicator = body
+      assert.equal reloadedIndicator._id, indicator.id,
+        "Expected the query to return the correct indicator"
+
+      assert.property reloadedIndicator, 'page',
+        "Expected the page attribute to be populated"
+
+      assert.ok toObjectWithNestedPageStub.calledOnce,
+        "Expected indicator.toObjectWithNestedPage to be called"
+
+      assert.equal reloadedIndicator.page._id, nestedPage.id,
+        "Expected the page attribute to be the right page"
+
+      done()
+    catch err
+      done(err)
+    finally
+      toObjectWithNestedPageStub.restore()
+
+  ).fail( (err) ->
+    toObjectWithNestedPageStub.restore()
+    done(err)
   )
 )
 

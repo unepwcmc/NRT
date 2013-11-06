@@ -1,5 +1,6 @@
 Theme = require("../../models/theme").model
 _ = require('underscore')
+Q = require('q')
 
 exports.index = (req, res) ->
   Theme.find( (err, themes) ->
@@ -25,6 +26,28 @@ exports.show = (req, res) ->
       return res.send(500, "Could not retrieve theme")
 
     res.send(JSON.stringify(theme))
+  )
+
+exports.fatShow = (req, res) ->
+  Theme.findOne(_id: req.params.id, (err, theme) ->
+    if err?
+      return res.send(500, "Could not retrieve theme")
+
+    indicators = []
+    Q.nsend(
+      theme, 'getIndicators'
+    ).then( (themeIndicators) ->
+      indicators = themeIndicators
+
+      theme.toObjectWithNestedPage()
+    ).then( (fatThemeObject) ->
+      fatThemeObject.indicators = indicators
+
+      res.json(fatThemeObject)
+    ).fail( (err) ->
+      console.error err
+      res.send(500, "Failed to retrieve nested theme attributes")
+    )
   )
 
 exports.update = (req, res) ->
