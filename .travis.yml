@@ -8,3 +8,8 @@ node_js:
 branches:
   only:
     - master
+notifications:
+  email:
+    - adam.mulligan@unep-wcmc.org
+    - jonathan.smith@unep-wcmc.org
+    - james.cox@unep-wcmc.org
