@@ -8,5 +8,7 @@ sudo apt-get update
 sudo apt-get install mongodb-10gen
 sudo apt-get install nodejs
 
+npm install -g grunt-cli
+
 # Setup the application
 cd server/ && npm run-script setup
