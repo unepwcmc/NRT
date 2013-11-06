@@ -8,7 +8,7 @@
 @powershell -Command cinst mongodb
 
 :: This has to be installed globally
-@powershell -Command npm install -g grunt-cli
+@powershell -Command cmd /c npm install -g grunt-cli
 
 echo **************************************************************
 echo The following `node-gyp` dependencies must first be installed:
