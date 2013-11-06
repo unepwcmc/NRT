@@ -9,7 +9,7 @@ Environmental Data Initiative (AGEDI). You can find out more at
 
 ## Setup
 Grab the dependencies by running the script for your platform in
-installers/. If you're doing this on a development machine, you probably want
+`installers/`. If you're doing this on a development machine, you probably want
 to review the installers first and remove any dependencies you already have
 installed (don't worry, they're short!)
 
