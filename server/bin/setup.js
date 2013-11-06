@@ -1,23 +1,38 @@
-var printProcessMessages = function(process) {
-  process.stdout.on('data', function (data) {
-    console.log('' + data);
+var printProcessMessages = function(theProcess) {
+  theProcess.stdout.on('data', function (data) {
+    console.log(data.toString());
   });
 
-  process.stderr.on('data', function (data) {
+  theProcess.stderr.on('data', function (data) {
     console.log('ERROR: ' + data);
   });
 };
 
-var spawn = require('child_process').spawn
+var usingWindows = function() {
+  return new RegExp("^win").test(process.platform);
+};
+
+var spawn = function(processName, args) {
+  var spawn = require('child_process').spawn;
+  var childProcess;
+
+  if (usingWindows()) {
+    args = ["/c", processName].concat(args || []);
+    processName = 'cmd';
+  }
+
+  childProcess = spawn(processName, args);
+  printProcessMessages(childProcess);
+
+  return childProcess;
+};
 
 var PARENT_DIR = process.cwd() + "/../";
 
 process.chdir(PARENT_DIR + '/client/');
 
 console.log("##### Installing client npm libs #####");
-// install client libs
 npm_install = spawn('npm', ['install']);
-printProcessMessages(npm_install);
 
 npm_install.on('close', function(code) {
   if (code === 0) {
@@ -25,16 +40,13 @@ npm_install.on('close', function(code) {
     // Compile assets
     console.log("#### Compiling assets #####");
     grunt = spawn('grunt');
-    printProcessMessages(grunt);
 
     grunt.on('close', function(code) {
       if (code === 0) {
         process.chdir('../server/');
 
-        // Install server libs
         console.log("##### Installing server npm libs #####");
         npm_install = spawn('npm', ['install']);
-        printProcessMessages(npm_install);
 
         npm_install.on('close', function(code) {
           if (code === 0) {
