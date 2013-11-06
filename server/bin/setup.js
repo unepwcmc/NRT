@@ -17,7 +17,7 @@ var spawn = function(processName, args) {
   var childProcess;
 
   if (usingWindows()) {
-    args = ["/c", processName].concat(args);
+    args = ["/c", processName].concat(args || []);
     processName = 'cmd';
   }
 
