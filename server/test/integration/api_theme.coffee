@@ -11,6 +11,7 @@ suite('API - Theme')
 
 Theme = require('../../models/theme').model
 Page = require('../../models/page').model
+Indicator = require('../../models/indicator').model
 
 test("GET show", (done) ->
   helpers.createTheme().then( (theme) ->
@@ -32,7 +33,8 @@ test("GET show", (done) ->
   )
 )
 
-test("GET /themes/:id/fat returns the theme with its nested page ", (done) ->
+test("GET /themes/:id/fat returns the theme with its nested page and the list
+of child indicators", (done) ->
   theme = null
   nestedPage = new Page()
   toObjectWithNestedPageStub = sinon.stub(Theme::, 'toObjectWithNestedPage', ->
@@ -41,6 +43,13 @@ test("GET /themes/:id/fat returns the theme with its nested page ", (done) ->
       object.page = nestedPage
       object
     )
+  )
+
+  subIndicators = [
+    new Indicator(title: 'Sub indicator, yo')
+  ]
+  getIndicatorsStub = sinon.stub(Theme::, 'getIndicators', (callback)->
+    callback(null, subIndicators)
   )
 
   helpers.createThemesFromAttributes().then( (createdTheme) ->
@@ -74,14 +83,28 @@ test("GET /themes/:id/fat returns the theme with its nested page ", (done) ->
       assert.equal reloadedTheme.page._id, nestedPage.id,
         "Expected the page attribute to be the right page"
 
+      assert.property reloadedTheme, 'indicators',
+        "Expected the indicators attribute to be populated"
+
+      assert.lengthOf reloadedTheme.indicators, 1,
+        "Expected one indicator to be returned"
+
+      assert.equal reloadedTheme.indicators[0].title, subIndicators[0].title,
+        "Expected the returned indicators to be correct"
+
+      assert.ok getIndicatorsStub.calledOnce,
+        "Expected theme.getIndicators to be called"
+
       done()
     catch err
       done(err)
     finally
       toObjectWithNestedPageStub.restore()
+      getIndicatorsStub.restore()
 
   ).fail( (err) ->
     toObjectWithNestedPageStub.restore()
+    getIndicatorsStub.restore()
     done(err)
   )
 )
