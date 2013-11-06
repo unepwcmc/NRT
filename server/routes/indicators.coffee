@@ -2,7 +2,6 @@ Indicator = require('../models/indicator').model
 Theme = require('../models/theme').model
 _ = require('underscore')
 async = require('async')
-csv = require('express-csv')
 Q = require('q')
 
 exports.show = (req, res) ->
