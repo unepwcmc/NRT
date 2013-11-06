@@ -11,7 +11,7 @@ i18n = require('i18n')
 exports.createApp = ->
   app = express()
 
-  mongoose.connect("mongodb://localhost/nrt_#{app.get('env')}")
+  mongoose.connect("mongodb://localhost/tz_nrt_#{app.get('env')}")
 
   bindRoutesForApp = require('./route_bindings.coffee')
 
@@ -36,7 +36,7 @@ exports.createApp = ->
   app.use express.cookieParser("your secret here")
   app.use express.session(
     store: new MongoStore(
-      url: "mongodb://localhost/nrt_#{app.get('env')}"
+      url: "mongodb://localhost/tz_nrt_#{app.get('env')}"
       maxAge: 300000
     )
   )
