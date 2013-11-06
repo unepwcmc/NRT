@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/unepwcmc/NRT.png)](https://travis-ci.org/unepwcmc/NRT)
+
 # National Reporting Toolkit
 
 NRT is an online system to help Governments collect, analyse and publish
