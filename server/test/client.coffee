@@ -2,7 +2,7 @@ page = require('webpage').create()
 
 page.open('http://localhost:3000/tests', (status) ->
   if status == 'fail'
-    return process.exit(1)
+    return phantom.exit(1)
 
   setTimeout( ->
     failureCount = page.evaluate( () ->
