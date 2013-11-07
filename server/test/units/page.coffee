@@ -288,6 +288,7 @@ test('.createDraftClone clones a public page,
   Q.nfcall(
     helpers.createIndicator
   ).then( (indicator) ->
+
     helpers.createPage(
       title: "Lovely Page"
       parent_id: indicator.id
@@ -311,14 +312,29 @@ test('.createDraftClone clones a public page,
       "Expected clonedSection.title (#{clonedSection.title}) to equal
         originalSection.title (#{originalSection.title})"
 
-    assert.notStrictEqual clonedSection.id, originalSection.id,
+    assert.notEqual clonedSection.id.toString(), originalSection.id.toString(),
       "Expected clonedSection (id: #{clonedSection.id}) to be a new record, but had same id
         as originalSection (#{originalSection.id})"
 
-    done()
+    Q.nsend(
+      Page, 'findFatModel', clonedPage.id,
+    )
+  ).then( (reloadedPage) ->
+    reloadedSection = reloadedPage.sections[0]
+
+    try
+      assert.notEqual reloadedSection._id.toString(), originalSection._id.toString(),
+        "Expected reloadedSection (id: #{reloadedSection._id}) to have a different
+        id, but had same id as originalSection (#{originalSection.id})"
+
+      done()
+    catch err
+      console.dir err
+      done(new Error(err.message))
+
   ).fail( (err) ->
     console.error err
-    throw err
+    done err
   )
 )
 
