@@ -37,14 +37,13 @@ pageSchema.methods.createDraftClone = ->
 
     clonedPage.giveSectionsNewIds()
   ).then( (clonedSectionsAndOriginalSectionIds) ->
-
-    async.each(clonedSectionsAndOriginalSectionIds, Section.cloneChildren, (err) ->
-      if err?
-        deferred.reject(err)
-
-      deferred.resolve(clonedPage)
+    Q.nfcall(
+      async.each, clonedSectionsAndOriginalSectionIds, Section.cloneChildren
     )
-
+  ).then( ->
+    Q.nsend(clonedPage, 'save')
+  ).then( ->
+    deferred.resolve(clonedPage)
   ).fail( (err) ->
     deferred.reject(err)
   )
