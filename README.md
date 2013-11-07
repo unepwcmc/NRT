@@ -46,7 +46,7 @@ pick a user from `server/lib/users.json`, e.g.
     password
 
 ### Seeding data
-Data is seeded and update from the /admin route.  If you wish to update the
+Data is seeded and updated from the /admin route. If you wish to update the
 indicators, you'll also need the
 [Indicatorator](https://github.com/unepwcmc/Indicatorator) running. If backup
 data is ok, just click 'Seed from backup'
