@@ -15,6 +15,7 @@ userApi          = require('./routes/api/user')
 dashboardRoutes = require('./routes/dashboard')
 indicatorRoutes = require('./routes/indicators')
 sessionRoutes   = require('./routes/session')
+deployRoutes    = require('./routes/deploy')
 localeRoutes    = require('./routes/locale')
 reportRoutes    = require('./routes/reports')
 staticRoutes    = require('./routes/static')
@@ -74,6 +75,8 @@ module.exports = exports = (app) ->
 
   app.get "/locale/:locale", localeRoutes.index
   app.get "/locales/en-:locale.json", localeRoutes.redirect
+
+  app.post "/deploy", deployRoutes.index
 
   ## Tests
   unless app.settings.env == 'production'

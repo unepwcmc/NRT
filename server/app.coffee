@@ -55,7 +55,7 @@ exports.start = (port, callback) ->
   seedData()
 
   server = http.createServer(app).listen port, (err) ->
-      callback err, server
+    callback err, server
 
   return app
 
