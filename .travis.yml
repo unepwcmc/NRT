@@ -3,6 +3,9 @@ services: mongodb
 before_script:
   - cd server/
   - npm install
+  - npm start
+  - sleep 3
+script: phantomjs test/client.coffee
 node_js:
   - "0.10"
 branches:
