@@ -36,6 +36,15 @@ validateIndicatorData = (data) ->
   unless data.features?
     throw new Error("ESRI data should ahve a features atributes")
 
+addIndicatorTextToData = (rows, indicatorCode, indicatorDefintion) ->
+  outputRows = []
+  for row in rows
+    value = row[indicatorDefinition.valueField]
+    continue unless value?
+    text = calculateIndicatorText(indicatorCode, value)
+    row.text = text
+    outputRows.push(attributes: row)
+
 calculateIndicatorText = (indicatorCode, value) ->
   value = parseFloat(value)
   ranges = indicatorDefinitions[indicatorCode].ranges
@@ -51,25 +60,43 @@ getFeatureAttributesFromData = (data) ->
     row.attributes
   )
 
-averageRows = (rows, indicatorDefinition) ->
+calculateMode = (values) ->
+  counts = {}
+  for value in values
+    counts[value] ||= 0
+    counts[value]++
+
+  mode = null
+  for value, count of counts
+    if !mode? or counts[mode] < count
+      mode = value
+
+  mode
+
+exports.groupRowsByPeriod = (rows) ->
+  groups = {}
+  for row in rows
+    groups[row.periodStart] || = []
+    groups[row.periodStart].push row
+  return groups
+
+exports.averageRows = (rows, indicatorDefinition) ->
   if indicatorDefinition.reduceField?
-    valuesByPeriod = {}
-    for row in rows
-      valuesByPeriod[row.periodStart] || = []
-      valuesByPeriod[row.periodStart].push row.value
+    groupedRows = exports.groupRowsByPeriod(rows)
 
     averagedRows = []
-    for periodStart, values of valuesByPeriod
-      sum = _.reduce(values, (memo, value) ->
-        memo + value
+    for periodStart, values of groupedRows
+      texts = _.map(values, (value) ->
+        value.text
       )
+      modeText = calculateMode(texts)
 
-      average = sum/values.length
-
-      averagedRows.push(
+      averagedRow =
         periodStart: periodStart
-        value: average
-      )
+        text: modeText
+      averagedRow[indicatorDefinition.reduceField] = values
+
+      averagedRows.push(averagedRow)
 
     return averagedRows
 
@@ -84,23 +111,15 @@ exports.indicatorate = (indicatorCode, data) ->
 
   rows = getFeatureAttributesFromData(data)
 
-  outputRows = []
 
   indicatorDefinition = indicatorDefinitions[indicatorCode]
 
-  valueField = indicatorDefinition.valueField
-
   rows = averageRows(rows, indicatorDefinition)
 
-  for row in rows
-    value = row[valueField]
-    continue unless value?
-    text = calculateIndicatorText(indicatorCode, value)
-    row.text = text
-    outputRows.push(attributes: row)
+  rows = addIndicatorTextToData(rows, indicatorCode, indicatorDefinition)
 
   return {
-    features: outputRows
+    features: rows
   }
 
 exports.fetchDataFromService = (serviceName, featureServer, callback) ->
