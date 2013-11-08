@@ -53,11 +53,11 @@ nrtViz.barChart = (conf={}) ->
       .attr("transform", "translate(30," + height + ")")
       .call(xAxis)
       .selectAll("text")
-      .attr("y", 2)
-      .attr("x", 9)
-      .attr("dy", "1em")
-      .attr("transform", "rotate(45)")
-      .style("text-anchor", "start")
+        .attr("y", 2)
+        .attr("x", 9)
+        .attr("dy", "1em")
+        .attr("transform", "rotate(45)")
+        .style("text-anchor", "start")
 
   setGAxisDomElement = (selection, data) ->
     gAxis = selection.selectAll('g.axis').data [data]
