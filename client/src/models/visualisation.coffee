@@ -45,7 +45,7 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
     @get('indicator').get('indicatorDefinition').geometryField
 
   getSubIndicatorField: ->
-    @get('indicator').get('indicatorDefinition').subIndicatorField
+    @get('indicator').get('indicatorDefinition')?.subIndicatorField
 
   getHighestXRow: ->
     xAxis = @getXAxis()

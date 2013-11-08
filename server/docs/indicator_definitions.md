@@ -55,4 +55,3 @@ These fields tell the application how to interpret the indicator data.
       * **text**: A string
       * **decimalPercentage**: A percentage represented as a decimal, where 1 would be 100%
 * **subIndicatorsField**: The name of the field containing sub indicators. If specified, this field should be present on each row of indicator data.
-      
