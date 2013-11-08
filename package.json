@@ -4,7 +4,7 @@
   "description": "Turns environmental parameter data into indicators, kind of like K&A were going to do...",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_ENV=test mocha test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit --reporter spec",
     "start": "coffee app.coffee"
   },
   "repository": {
@@ -18,8 +18,13 @@
   },
   "homepage": "https://github.com/unepwcmc/NRT-indicatorator",
   "dependencies": {
+    "coffee-script": "1.6.x",
     "express": "~3.4.0",
     "request": "~2.27.0",
-    "underscore": "~1.5.2"
+    "underscore": "~1.5.2",
+    "mocha": "~1.14.0",
+    "chai": "1.7.2",
+    "sinon-chai": "2.4.0",
+    "sinon": ">=1.4.0 <2"
   }
 }
