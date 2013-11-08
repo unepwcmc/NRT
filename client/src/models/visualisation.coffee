@@ -44,6 +44,9 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
   getGeometryField: ->
     @get('indicator').get('indicatorDefinition').geometryField
 
+  getSubIndicatorField: ->
+    @get('indicator').get('indicatorDefinition').subIndicatorField
+
   getHighestXRow: ->
     xAxis = @getXAxis()
     _.max(@get('data').results, (row)->
@@ -83,7 +86,16 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
 
     return data
 
-  @visualisationTypes: ['BarChart', 'Map', 'Table']
-  
+  getVisualisationTypes: ->
+    subIndicatorField = @getSubIndicatorField()
+    if subIndicatorField?
+      return Visualisation.types.subIndicatorTypes
+    else
+      return Visualisation.types.nonSubIndicatorTypes
+
+  @types:
+    subIndicatorTypes: ['LineChart']
+    nonSubIndicatorTypes: ['BarChart', 'Map', 'Table']
+
 #For backbone relational
 Backbone.Models.Visualisation.setup()

@@ -220,3 +220,51 @@ row of results in the given data where the type of the field is date', ->
   assert.strictEqual formattedRow.formatted.otherField, 'an value',
     "Expected the otherField to be included in the formatted data, but unmodified"
 )
+
+test('.getVisualisationTypes returns SubIndicatorLineChart type if the
+  Indicator Data has any subIndicators', ->
+  indicator = Factory.indicator(
+    indicatorDefinition:
+      subIndicatorField: "station"
+  )
+
+  data =
+    results: [
+      station: [
+        date: 1357002000000
+        station: "Al Ein"
+        value: 53.6857
+        text: "Great"
+      ]
+    ]
+
+  visualisation = Factory.visualisation(
+    indicator: indicator
+    data: data
+  )
+
+  visualisationTypes = visualisation.getVisualisationTypes()
+
+  assert.lengthOf visualisationTypes, 1
+
+  expectedSubIndicatorTypes = Backbone.Models.Visualisation.types.subIndicatorTypes
+  assert.deepEqual visualisationTypes, expectedSubIndicatorTypes,
+    "Expected the visualisation types available to be sub-indicator types"
+)
+
+test('.getVisualisationTypes returns BarChart, Map and Table types if the
+  Indicator Data does not have any subIndicators', ->
+  indicator = Factory.indicator()
+
+  visualisation = Factory.visualisation(
+    indicator: indicator
+  )
+
+  visualisationTypes = visualisation.getVisualisationTypes()
+
+  assert.lengthOf visualisationTypes, 3
+
+  expectedNonSubIndicatorTypes = Backbone.Models.Visualisation.types.nonSubIndicatorTypes
+  assert.deepEqual visualisationTypes, expectedNonSubIndicatorTypes,
+    "Expected the visualisation types available to be non sub-indicator types"
+)
