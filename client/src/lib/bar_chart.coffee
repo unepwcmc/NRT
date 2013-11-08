@@ -7,8 +7,8 @@ nrtViz.barChart = (conf={}) ->
     # Properties go clockwise from the top, as in CSS.
     margin:
      top: 20
-     right: 20
-     bottom: 40
+     right: 60
+     bottom: 85
      left: 30
     width: 760
     height: 500
@@ -19,7 +19,7 @@ nrtViz.barChart = (conf={}) ->
 
   margin = conf.margin
   width = conf.width - conf.margin.left - conf.margin.right
-  height = nrtViz.utils.calculateHeight(conf.width, 2, .9) - conf.margin.bottom - conf.margin.top
+  height = nrtViz.utils.calculateHeight(conf.width, 2, 1) - conf.margin.bottom - conf.margin.top
 
   xKey = conf.xKey
   yKey = conf.yKey
@@ -43,15 +43,21 @@ nrtViz.barChart = (conf={}) ->
     gAxis.append("g").attr("class", "y axis")
 
     gAxis.select(".y.axis")
+      .attr("transform", "translate(25,0)")
       .call(yAxis)
-    gAxis
 
   setGXAxisDomElement = (gAxis) ->
     gAxis.append("g").attr("class", "x axis")
 
     gAxis.select(".x.axis")
-      .attr("transform", "translate(0," + height + ")")
+      .attr("transform", "translate(30," + height + ")")
       .call(xAxis)
+      .selectAll("text")
+      .attr("y", 2)
+      .attr("x", 9)
+      .attr("dy", "1em")
+      .attr("transform", "rotate(45)")
+      .style("text-anchor", "start")
 
   setGAxisDomElement = (selection, data) ->
     gAxis = selection.selectAll('g.axis').data [data]
