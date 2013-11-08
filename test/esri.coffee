@@ -33,7 +33,8 @@ test('groupRowsByPeriod groups rows with the same periodStart', ->
 )
 
 test('averageRows when the indicator definition includes a reduce field
-  averages the text field and includes the child data under the reduce field attribute', ->
+  it averages the text field and includes the child data under the reduce field
+  attribute', ->
   sampleRows = [{
     station: "station 1"
     periodStart: 2010
@@ -49,6 +50,7 @@ test('averageRows when the indicator definition includes a reduce field
   }]
 
   indicatorDefinition =
+    valueField: 'amount'
     reduceField: 'station'
 
   results = Esri.averageRows(sampleRows, indicatorDefinition)
@@ -56,6 +58,9 @@ test('averageRows when the indicator definition includes a reduce field
   firstResult = results[0]
   assert.strictEqual firstResult.text, "Good",
     "Expected the results to use the mode text"
+
+  assert.strictEqual firstResult.amount, "-",
+    "Expected the amount to be '-', as we can't average the amounts meaningfully"
 
   assert.property firstResult, 'station',
     "Expected the results to include the reduce field as an attribute"

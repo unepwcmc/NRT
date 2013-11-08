@@ -94,6 +94,7 @@ exports.averageRows = (rows, indicatorDefinition) ->
       averagedRow =
         periodStart: periodStart
         text: modeText
+      averagedRow[indicatorDefinition.valueField] = '-'
       averagedRow[indicatorDefinition.reduceField] = values
 
       averagedRows.push(averagedRow)
