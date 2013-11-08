@@ -3,9 +3,6 @@ window.Backbone.Models || = {}
 class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
   idAttribute: '_id'
 
-  defaults:
-    type: 'BarChart'
-
   relations: [
       key: 'indicator'
       type: Backbone.HasOne
@@ -16,6 +13,9 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
   initialize: (options={})->
     unless options.indicator?
       throw "You must initialise Visualisations with an Indicator"
+
+    unless @get('type')?
+      @set('type', @getVisualisationTypes()[0])
 
   urlRoot: '/api/visualisations'
 
