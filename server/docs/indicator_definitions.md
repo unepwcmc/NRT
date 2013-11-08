@@ -1,84 +1,57 @@
-## Indicator definition fields: 
+# Defining indicators
+The indicators the application is seeded with are defined inside
+lib/seed_indicators.json. This document describes the fields indicators are
+expected to have, and how they affect the behavior of the application 
 
-  - `enviroportalId`: EAD enviroportal layer id
-  - `title`: hand-created 'slug'
-  - `operation`: hand-created from [sum, count, average, etc]
-  - `unit`: if 'sum' or 'average', then give indicator measurement unit
-  - `outFields`: array of enviroportal fields to return
-  - `dateField`: response field containing date indicator value relates to
-  - `pollFrequency`: i.e. how often is indicator likely to be updated
+## Fields
 
+* **short_name** - The short title of the indicator.
+* **title** - Full title of the indicator
+* **sections** - A array of sections to seed the page with. Each section should consist of a title and content attribute.
+* **theme** - The title of the theme that the indicators refers to. This is turned into a proper ID association when seeded.
+* **type** - Indicators query data from the indicatorator. The indicatorator has a number of different data sources, which this field chooses between. This field is also used to determine if indicators are 'core' (from Abu Dhabi) or 'external' (From other services, e.g. the world bank).
+  * **esri** (core) - Data is to be queried from an ESRI web service. Currently, all Abu Dhabi data is served by an ESRI service, so indicators with this type are considered to be 'core'
+  * **worldBank** (external) - Data queried from the World Bank APIs
+  * **cartodb** (external) - Data queried from Cartodb. Currently this is only blue carbon data.
+* **indicatorDefinition** - See the Indicator Definition section
 
-## Standard request parameters:
-  - `enviroportalUrl`  = "http://enviroportal.ead.ae/arcgisiis/rest/services"
-  - `f`                = pjson
-  - `returnGeometry`   = false
-  - `outFields`        = 'name,#{outfields}'
-  - `where`            = objectid+>+0  # Returns all records, unless we start doing more complex queries
- 
+### indicatorDefinition
+The indicator definition field serves 2 functions.
 
-## Request URL construction:
-  `#{enviroportalUrl}#{sourceUrl}/query?f=pjson&returnGeometry=false&outFields='#{outFields}'`
+#### Query information
+These attributes are used to build the query that gets sent to the indicatorator. They vary based on the type of the indicator. Below is the list of fields you need for each type:
 
+* **esri**:
+  * **serviceName**: The name of the ESRI service, e.g. for this ESRI URL: `/rest/services/NRT_AD_AirQuality/FeatureServer/2/query` the serviceName is  NRT_AD_AirQuality.
+  * **featureServer**: The feature server of ESRI service, e.g. for this ESRI URL: `/rest/services/NRT_AD_AirQuality/FeatureServer/2/query` the featureServer is 2.
+* **worldBank**:
+  * **apiUrl**: This takes the base URL of the indicatorator service, plus the name of the country, e.g. to proxy the query through the indicatorator
+    * "http://localhost:3002/wb/ARE"
+  * **apiIndicatorName**: The world bank name of the indicator, e.g. "NY.ADJ.DCO2.GN.ZS"
+* **cartodb**:
+  * **cartodb_user**: The cartodb user the table is exists
+  * **cartodb_tablename**: the table to query
+  * **query**: They SQL query to perform on the table
 
-## Post-receive data manipulation types:
+#### Field specifications
+These fields tell the application how to interpret the indicator data.
 
-  - `sum`: sum all given areas
-  - `count`: count all instances of first given outFields
-  
-Cache response, until replaced by more up-to-date version covering same period
-
-## Sample request
-
-`http://enviroportal.ead.ae/arcgisiis/rest/services/MapThemes/TerrestrialHabitat/MapServer/14/query?f=pjson&outFields=shape.area,name&returnGeometry=false&where=objectid+>+0`
-
-## Sample response
-
-```javascript
-{
- "displayFieldName": "Name",
- "fieldAliases": {
-  "Shape.area": "Shape.area",
-  "Name": "Name of Protected Area"
- },
- "fields": [
-  {
-   "name": "Shape.area",
-   "type": "esriFieldTypeDouble",
-   "alias": "Shape.area"
-  },
-  {
-   "name": "Name",
-   "type": "esriFieldTypeString",
-   "alias": "Name of Protected Area",
-   "length": 255
-  }
- ],
- "features": [
-  {
-   "attributes": {
-    "Shape.area": 0.0078117814322679578,
-    "Name": "Jabel Hafit National Park"
-   }
-  },
-  {
-   "attributes": {
-    "Shape.area": 0.0004111909721562731,
-    "Name": "Wathba Wetland Reserve"
-   }
-  },
-  {
-   "attributes": {
-    "Shape.area": 0.69648989049094367,
-    "Name": "Arabian Oryx Protected Area"
-   }
-  },
-  {
-   "attributes": {
-    "Shape.area": 0.068706831837464608,
-    "Name": "Houbara Protected Area"
-   }
-  }
- ]
-}
-```
+* **unit**: The full name of the unit of the yAxis
+* **short_unit**: The short name of above
+* **period**: The frequency at which the indicator is calculated, e.g. 'annual'
+* **xAxis**: The name of the field which acts as the xAxis. This is typically a temporal field
+* **yAxis**: The name of the field which acts as the yAxis. This is typically an amount, e.g. number of exceedances.
+* **fields**: A array containing a definition for each field in the data. Below is the expected attributes for each row
+  * **name**: The name of the a field
+  * **type**: The type of the a field. Possible types:
+    * **integer**: An integer
+    * **date**: A date
+    * **text**: A string
+  * **source**: The data which comes from the indicatorator is transformed from into the fields shown above. This attribute describes the name an type of the field in the source:
+    * **name**: The name of the field in the source
+    * **type**: The type of the data in the source. If this is different from the destination type, it will be converted. The possible types are:
+      * **epoch**: An integer representing the date
+      * **integer**: An integer
+      * **text**: A string
+      * **decimalPercentage**: A percentage represented as a decimal, where 1 would be 100%
+      

@@ -1,16 +1,40 @@
+```
+
 [
   {
     "indicator": "NO2 Concentration",
     "data": [
       {
         "date": 1357002000000,
-        "value": 53.6875,
-        "text": "Great"
+        "value": "-",
+        "text": "Great",
+        "station": [{
+          "date": 1357002000000,
+          "station": "Al Ein",
+          "value": 53.6857,
+          "text": "Great"
+        }, {
+          "date": 1357002000000,
+          "station": "Al Wahda",
+          "value": 43.6857,
+          "text": "Great"
+        }]
       },
       {
         "date": 1364778000000,
-        "value": 52.65625,
-        "text": "Excellent"
+        "value": "-",
+        "text": "Excellent",
+        "station": [{
+          "date": 1357002000000,
+          "station": "Al Ein",
+          "value": 52.6857,
+          "text": "Excellent"
+        }, {
+          "date": 1357002000000,
+          "station": "Al Wahda",
+          "value": 43.6857,
+          "text": "Great"
+        }]
       }
     ]
   }, {
@@ -99,3 +123,5 @@
     ]
   }
 ]
+
+```
