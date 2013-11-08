@@ -3,11 +3,11 @@
   .visualisation {
     border: 1px solid $lightishGrey;
     box-sizing: border-box;
-    height: 455px;
+    height: 484px;
   }
 
   aside.filters {
-    width: 300px;
+    width: 270px;
     float: right;
     border-left: 0;
 
@@ -32,8 +32,10 @@
       padding: 12px 20px;
       border-bottom: 1px solid $lightishGrey;
       position: relative;
+      height: auto;
 
       h3 {
+        border-bottom: 0;
         color: $mediumGrey;
         font-weight: bold;
       }
@@ -51,7 +53,7 @@
 
   .visualisation {
     background-color: white;
-    width: 600px;
+    width: 630px;
     float: left;
     position: relative;
 
@@ -99,7 +101,7 @@
     }
 
     .bar-chart-view {
-      padding: 50px 10px;
+      padding: 10px;
     }
   }
 }
