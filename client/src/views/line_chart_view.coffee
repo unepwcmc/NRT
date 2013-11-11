@@ -84,7 +84,7 @@ class Backbone.Views.LineChartView extends Backbone.View
   renderChart: ->
     context = @$el.find('#line_chart').get(0).getContext('2d')
     lineChart = new Chart(context).Line(@formatData(),
-      {bezierCurve: false, datasetStrokeWidth: 4})
+      {bezierCurve: false, datasetStrokeWidth: 4, animation: false})
 
   onClose: ->
     
