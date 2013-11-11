@@ -1,5 +1,6 @@
 assert = require('chai').assert
 _ = require('underscore')
+sinon = require('sinon')
 Esri = require '../indicatorators/esri'
 
 suite('ESRI indicatorator')
@@ -64,4 +65,25 @@ test('averageRows when the indicator definition includes a reduce field
 
   assert.property firstResult, 'station',
     "Expected the results to include the reduce field as an attribute"
+)
+
+test('addIndicatorTextToData adds the correct indicator text', ->
+  calculateIndicatorTextStub = sinon.stub(Esri, '_calculateIndicatorText', () ->
+    return 'Great'
+  )
+
+  rows = [
+    {"OBJECTID":1,"periodStar":1364774400000,"value":6,"station":"Liwa Oasis","text":"YES"}
+  ]
+  indicatorDefinition =
+    valueField: 'value'
+
+  results = Esri.addIndicatorTextToData(rows, 'CODE', indicatorDefinition)
+
+  assert.lengthOf results, 1, "Expected no rows to be removed"
+
+  result = results[0]
+  assert.strictEqual result.text, 'Great', "Expected the text value to be set to 'great'"
+
+  calculateIndicatorTextStub.restore()
 )
