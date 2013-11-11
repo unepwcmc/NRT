@@ -63,7 +63,6 @@ test('.formatData converts sub indicator data in to datasets suitable
       yAxis: 'value'
   )
 
-  console.log '# creating  # vis # for # formatData'
   visualisation = Factory.visualisation(
     indicator: indicator
   )
