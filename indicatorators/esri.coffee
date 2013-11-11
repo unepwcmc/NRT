@@ -126,6 +126,8 @@ exports.indicatorate = (indicatorCode, data) ->
   }
 
 exports.fetchDataFromService = (serviceName, featureServer, callback) ->
+  console.log exports.makeGetUrl(serviceName, featureServer)
+
   request.get(
     url: exports.makeGetUrl(serviceName, featureServer)
     qs: ESRI_QUERY_SUFFIX
