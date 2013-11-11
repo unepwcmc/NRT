@@ -45,8 +45,8 @@ class Backbone.Views.LineChartView extends Backbone.View
     subIndicatorField = @visualisation.get('indicator')
       .get('indicatorDefinition').subIndicatorField
 
-    labels = _.map(data, (row) ->
-      row[xAxis]
+    labels = _.map(data, (row) =>
+      row.formatted[xAxis]
     )
 
     datasets = []
