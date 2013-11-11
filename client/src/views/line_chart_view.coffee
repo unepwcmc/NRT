@@ -69,14 +69,13 @@ class Backbone.Views.LineChartView extends Backbone.View
 
   renderLegend: (datasets) ->
     $legend = @$el.find('.legend')
+    legendTemplate = Handlebars.templates['line_chart_legend.hbs']
 
     datasets.forEach( (dataset) ->
-      $title = $("
-        <li>
-          <span style=\"background-color: #{dataset.strokeColor}\"></span>
-          #{dataset.title}
-        </li>
-      ")
+      $title = legendTemplate(
+        title: dataset.title
+        backgroundColor: dataset.strokeColor
+      )
 
       $legend.append($title)
     )
