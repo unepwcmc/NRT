@@ -2,6 +2,16 @@
 
 {{#contentFor 'header'}}
   <link rel="stylesheet" href="/css/dashboard.css">
+  <script type="text/javascript">
+    var scrollToIndicator = function(event) {
+      var selectorToScrollTo = $(event.currentTarget).attr('data-indicator-name');
+      $('html, body').animate({scrollTop: $(selectorToScrollTo).offset().top -90 }, 'slow');
+    };
+
+    $(document).ready(function() {
+      $('.indicator-recency-list li').click(scrollToIndicator)
+    });
+  </script>
 {{/contentFor}}
 
 {{#contentFor 'extra-body'}}
@@ -33,7 +43,7 @@
             <h4>{{title}}</h4>
             <ul class="indicator-recency-list">
               {{#indicators}}
-                <li>
+                <li data-indicator-name="#indicator-{{css-classify title}}">
                   <span class="status {{css-classify narrativeRecency}}"></span>
                   <span>{{title}}</span>
                 </li>
