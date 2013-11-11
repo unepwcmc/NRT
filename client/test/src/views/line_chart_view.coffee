@@ -82,28 +82,3 @@ test('.formatData converts sub indicator data in to datasets suitable
   lineChartView.close()
   colourRangeStub.restore()
 )
-
-test(".generateColourRange generates n shades of a given RGB set in a ChartJS format", ->
-  expectedRange = [
-    {
-      fillColor: "rgba(78,73,255, 0)"
-      pointColor: "rgba(78,73,255, 1)"
-      pointStrokeColor: "#fff"
-      strokeColor: "rgba(78,73,255, 1)"
-    }, {
-      fillColor: "rgba(141,136,255, 0)"
-      pointColor: "rgba(141,136,255, 1)"
-      pointStrokeColor: "#fff"
-      strokeColor: "rgba(141,136,255, 1)"
-    }
-  ]
-
-  visualisation = Factory.visualisation(
-    indicator: Factory.indicator()
-  )
-
-  lineChartView = new Backbone.Views.LineChartView(visualisation: visualisation)
-  actualRange = lineChartView.generateColourRange(15, 10, 255, 2)
-
-  assert.deepEqual actualRange, expectedRange
-)

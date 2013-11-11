@@ -1,6 +1,25 @@
 window.Backbone ||= {}
 window.Backbone.Views ||= {}
 
+COLOR_RANGE = [
+  "#4d839a"
+  "#406c80"
+  "#cfdfe6"
+  "#3094bf"
+  "#5c70b5"
+  "#414f80"
+  "#cfd4e6"
+  "#3252bf"
+  "#4e9c81"
+  "#408069"
+  "#cfe6dd"
+  "#30bf8d"
+  "#e6a873"
+  "#805e40"
+  "#e6d9cf"
+  "#bf7330"
+]
+
 class Backbone.Views.LineChartView extends Backbone.View
   template: Handlebars.templates['line_chart.hbs']
 
@@ -19,20 +38,14 @@ class Backbone.Views.LineChartView extends Backbone.View
 
     return @
 
-  generateColourRange: (r, g, b, limit) ->
+  generateColourRange: ->
     colours = []
 
-    for index in [1..limit]
-      step = Math.floor(255/Math.max(limit, 4))
-      r = Math.min(r+step, 255)
-      g = Math.min(g+step, 255)
-      b = Math.min(b+step, 255)
-
-      rgbString = "#{r},#{g},#{b}"
+    for hex in COLOR_RANGE
       colours.push {
-        fillColor: "rgba(#{rgbString}, 0)"
-        strokeColor: "rgba(#{rgbString}, 1)"
-        pointColor: "rgba(#{rgbString}, 1)"
+        fillColor: "rgba(0,0,0,0)"
+        strokeColor: hex
+        pointColor: hex
         pointStrokeColor: "#fff"
       }
 
@@ -54,7 +67,7 @@ class Backbone.Views.LineChartView extends Backbone.View
       for subIndicatorRecord, subIndicatorIndex in row[subIndicatorField]
         datasets[subIndicatorIndex] ||= {data: []}
 
-        colourRange = @generateColourRange(15, 10, 255, row[subIndicatorField].length)
+        colourRange = @generateColourRange()
         _.extend(datasets[subIndicatorIndex], colourRange[subIndicatorIndex])
 
         datasets[subIndicatorIndex].title = subIndicatorRecord.station
@@ -83,7 +96,7 @@ class Backbone.Views.LineChartView extends Backbone.View
   renderChart: ->
     context = @$el.find('#line_chart').get(0).getContext('2d')
     lineChart = new Chart(context).Line(@formatData(),
-      {bezierCurve: false, datasetStrokeWidth: 4, animation: false})
+      {bezierCurve: false, animation: false})
 
   onClose: ->
     @stopListening()
