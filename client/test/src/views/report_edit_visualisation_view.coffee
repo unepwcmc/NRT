@@ -50,7 +50,7 @@ test("When given a visualisation with type BarChart,
       type: "BarChart"
     )
   )
-     
+
   assert.ok Helpers.viewHasSubViewOfClass(view, "BarChartView")
 
   view.close()
