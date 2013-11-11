@@ -126,7 +126,6 @@ boundAggregators.integer = (data, fieldName) ->
   return bounds
 
 boundAggregators.date = boundAggregators.integer
-boundAggregators.text = -> null
 
 indicatorSchema.statics.calculateBoundsForType = (fieldType, data, fieldName) ->
   if boundAggregators[fieldType]?
