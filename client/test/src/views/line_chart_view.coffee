@@ -20,7 +20,7 @@ test('when initialised with a visualisation with no data, it fetches the data', 
 
 test('.formatData converts sub indicator data in to datasets suitable
   for the LineChart View', ->
-  indicatorData = 
+  indicatorData =
     results: [
       {
         date: "2013-01-01T01:00:00.000Z",
@@ -63,10 +63,12 @@ test('.formatData converts sub indicator data in to datasets suitable
       yAxis: 'value'
   )
 
+  console.log '# creating  # vis # for # formatData'
   visualisation = Factory.visualisation(
     indicator: indicator
-    data: indicatorData
   )
+
+  visualisation.set('data', visualisation.formatData(indicatorData))
 
   lineChartView = new Backbone.Views.LineChartView(visualisation: visualisation)
 
