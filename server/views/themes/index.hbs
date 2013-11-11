@@ -5,7 +5,8 @@
   <script type="text/javascript">
     var scrollToElementWithOffset = function(element, offset) {
       $('html, body').animate({scrollTop: $(element).offset().top + offset }, 'slow');
-    }
+    };
+
     var scrollToIndicator = function(event) {
       var selectorToScrollTo = $(event.currentTarget).attr('data-indicator-name');
       scrollToElementWithOffset(selectorToScrollTo, -95);
