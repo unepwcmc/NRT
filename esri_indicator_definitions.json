@@ -1,6 +1,6 @@
 {
   "NRT_AD_ProtectedArea:2": {
-    "valueField": "ProtectedAreasPercentage",
+    "valueField": "value",
     "ranges":[
       {"minValue": 0.25, "message": "Excellent"},
       {"minValue": 0, "message": "Moderate"}
