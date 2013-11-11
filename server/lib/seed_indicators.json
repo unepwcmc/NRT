@@ -25,6 +25,7 @@
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
       "fields": [
         {
           "source": {

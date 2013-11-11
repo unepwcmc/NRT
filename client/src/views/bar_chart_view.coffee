@@ -4,7 +4,6 @@ window.Backbone.Views ||= {}
 window.nrtViz ||= {}
 
 class Backbone.Views.BarChartView extends Backbone.View
-  #template: Handlebars.templates['bar_chart.hbs']
   className: 'bar-chart-view'
 
   initialize: (options) ->

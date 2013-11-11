@@ -1223,3 +1223,23 @@ footer{
     }
   }
 }
+
+
+.visualisation {
+  .legend {
+    margin: 5px 0;
+    text-align: center;
+
+    li {
+      display: inline;
+      margin-left: 5px;
+      font-size: 0.7em;
+
+      span {
+        display: inline-block;
+        height: 10px;
+        width: 10px;
+      }
+    }
+  }
+}
