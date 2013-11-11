@@ -4,7 +4,7 @@ window.Backbone.Views ||= {}
 class Backbone.Views.LineChartView extends Backbone.View
   template: Handlebars.templates['line_chart.hbs']
 
-  initialize: (options) ->
+  initialize: (options={}) ->
     @visualisation = options.visualisation
     @listenTo(@visualisation, 'change:data', @render)
 
@@ -30,7 +30,7 @@ class Backbone.Views.LineChartView extends Backbone.View
 
       rgbString = "#{r},#{g},#{b}"
       colours.push {
-        fillColor: "rgba(#{rgbString}, 0.8)"
+        fillColor: "rgba(#{rgbString}, 0)"
         strokeColor: "rgba(#{rgbString}, 1)"
         pointColor: "rgba(#{rgbString}, 1)"
         pointStrokeColor: "#fff"
@@ -83,7 +83,8 @@ class Backbone.Views.LineChartView extends Backbone.View
 
   renderChart: ->
     context = @$el.find('#line_chart').get(0).getContext('2d')
-    lineChart = new Chart(context).Line(@formatData())
+    lineChart = new Chart(context).Line(@formatData(),
+      {bezierCurve: false, datasetStrokeWidth: 4})
 
   onClose: ->
     

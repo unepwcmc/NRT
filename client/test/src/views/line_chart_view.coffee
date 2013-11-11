@@ -13,6 +13,8 @@ test('when initialised with a visualisation with no data, it fetches the data', 
 
   Helpers.assertCalledOnce(getIndicatorDataStub)
 
+  getIndicatorDataStub.restore()
+
   view.close()
 )
 
@@ -46,9 +48,11 @@ test('.formatData converts sub indicator data in to datasets suitable
     datasets : [
       {
         data : [53.6857, 52.6857]
+        title: 'Al Ein'
       },
       {
         data : [43.6857, 41.6857]
+        title: 'Al Wahda'
       }
     ]
 
@@ -66,8 +70,41 @@ test('.formatData converts sub indicator data in to datasets suitable
 
   lineChartView = new Backbone.Views.LineChartView(visualisation: visualisation)
 
+  colourRangeStub = sinon.stub(lineChartView, 'generateColourRange', -> {})
+
   formattedData = lineChartView.formatData(indicatorData)
+
+  console.log formattedData
+  console.log expectedFormattedData
 
   assert.deepEqual formattedData, expectedFormattedData,
     "Expected formatData to convert indicator data in to Chart.js standard"
+
+  lineChartView.close()
+  colourRangeStub.restore()
+)
+
+test(".generateColourRange generates n shades of a given RGB set in a ChartJS format", ->
+  expectedRange = [
+    {
+      fillColor: "rgba(78,73,255, 0)"
+      pointColor: "rgba(78,73,255, 1)"
+      pointStrokeColor: "#fff"
+      strokeColor: "rgba(78,73,255, 1)"
+    }, {
+      fillColor: "rgba(141,136,255, 0)"
+      pointColor: "rgba(141,136,255, 1)"
+      pointStrokeColor: "#fff"
+      strokeColor: "rgba(141,136,255, 1)"
+    }
+  ]
+
+  visualisation = Factory.visualisation(
+    indicator: Factory.indicator()
+  )
+
+  lineChartView = new Backbone.Views.LineChartView(visualisation: visualisation)
+  actualRange = lineChartView.generateColourRange(15, 10, 255, 2)
+
+  assert.deepEqual actualRange, expectedRange
 )
