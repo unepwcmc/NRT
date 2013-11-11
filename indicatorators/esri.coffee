@@ -115,10 +115,9 @@ exports.indicatorate = (indicatorCode, data) ->
 
   rows = getFeatureAttributesFromData(data)
 
-
   indicatorDefinition = indicatorDefinitions[indicatorCode]
 
-  rows = averageRows(rows, indicatorDefinition)
+  rows = exports.averageRows(rows, indicatorDefinition)
 
   rows = addIndicatorTextToData(rows, indicatorCode, indicatorDefinition)
 
