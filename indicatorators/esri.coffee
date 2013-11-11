@@ -4,7 +4,8 @@ fs = require('fs')
 
 indicatorDefinitions = JSON.parse(fs.readFileSync('./esri_indicator_definitions.json', 'UTF8'))
 
-ESRI_URL = "http://196.218.36.14/ka/rest/services"
+ESRI_URL = "http://196.218.36.14/ka/rest/services" # K&A Egypt
+# ESRI_URL = "https://nrtstest.ead.ae/ka/rest/services" # EAD Server
 ESRI_QUERY_SUFFIX =
   'where': 'objectid > 0'
   'objectIds': ''
@@ -36,7 +37,19 @@ validateIndicatorData = (data) ->
   unless data.features?
     throw new Error("ESRI data should ahve a features atributes")
 
-calculateIndicatorText = (indicatorCode, value) ->
+exports.addIndicatorTextToData = (rows, indicatorCode, indicatorDefinition) ->
+  outputRows = []
+  for row in rows
+    value = row[indicatorDefinition.valueField]
+    unless value?
+      console.log "Row is missing value field '#{indicatorDefinition.valueField}'"
+      continue
+    row.text = exports._calculateIndicatorText(indicatorCode, value)
+    outputRows.push(row)
+
+  return outputRows
+
+exports._calculateIndicatorText = (indicatorCode, value) ->
   value = parseFloat(value)
   ranges = indicatorDefinitions[indicatorCode].ranges
 
@@ -51,31 +64,58 @@ getFeatureAttributesFromData = (data) ->
     row.attributes
   )
 
-averageRows = (rows, indicatorDefinition) ->
+calculateMode = (values) ->
+  counts = {}
+  for value in values
+    counts[value] ||= 0
+    counts[value]++
+
+  mode = null
+  for value, count of counts
+    if !mode? or counts[mode] < count
+      mode = value
+
+  mode
+
+exports.groupRowsByPeriod = (rows) ->
+  groups = {}
+  for row in rows
+    groups[row.periodStart] || = []
+    groups[row.periodStart].push row
+  return groups
+
+exports.averageRows = (rows, indicatorDefinition) ->
   if indicatorDefinition.reduceField?
-    valuesByPeriod = {}
-    for row in rows
-      valuesByPeriod[row.periodStart] || = []
-      valuesByPeriod[row.periodStart].push row.value
+    groupedRows = exports.groupRowsByPeriod(rows)
 
     averagedRows = []
-    for periodStart, values of valuesByPeriod
-      sum = _.reduce(values, (memo, value) ->
-        memo + value
+    for periodStart, values of groupedRows
+      texts = _.map(values, (value) ->
+        value.text
       )
+      modeText = calculateMode(texts)
 
-      average = sum/values.length
-
-      averagedRows.push(
+      averagedRow =
         periodStart: periodStart
-        value: average
-      )
+        text: modeText
+      averagedRow[indicatorDefinition.valueField] = '-'
+      averagedRow[indicatorDefinition.reduceField] = values
+
+      averagedRows.push(averagedRow)
 
     return averagedRows
 
   else
     return rows
   
+# ESRI responses put their attribute data inside an object under an 'attribute'
+# key
+nestRowsInsideAttributesObject = (rows)->
+  nestedRows = []
+  for row in rows
+    nestedRows.push(attributes: row)
+
+  return nestedRows
 
 exports.indicatorate = (indicatorCode, data) ->
   data = JSON.parse(data)
@@ -84,26 +124,21 @@ exports.indicatorate = (indicatorCode, data) ->
 
   rows = getFeatureAttributesFromData(data)
 
-  outputRows = []
-
   indicatorDefinition = indicatorDefinitions[indicatorCode]
 
-  valueField = indicatorDefinition.valueField
+  rows = exports.addIndicatorTextToData(rows, indicatorCode, indicatorDefinition)
 
-  rows = averageRows(rows, indicatorDefinition)
+  rows = exports.averageRows(rows, indicatorDefinition)
 
-  for row in rows
-    value = row[valueField]
-    continue unless value?
-    text = calculateIndicatorText(indicatorCode, value)
-    row.text = text
-    outputRows.push(attributes: row)
+  rows = nestRowsInsideAttributesObject(rows)
 
   return {
-    features: outputRows
+    features: rows
   }
 
 exports.fetchDataFromService = (serviceName, featureServer, callback) ->
+  console.log exports.makeGetUrl(serviceName, featureServer)
+
   request.get(
     url: exports.makeGetUrl(serviceName, featureServer)
     qs: ESRI_QUERY_SUFFIX
