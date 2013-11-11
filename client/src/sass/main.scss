@@ -1229,11 +1229,13 @@ footer{
   .legend {
     margin: 5px 0;
     text-align: center;
+    padding: 0 10px;
 
     li {
-      display: inline;
+      display: inline-block;
       margin-left: 5px;
       font-size: 0.7em;
+      padding: 0;
 
       span {
         display: inline-block;

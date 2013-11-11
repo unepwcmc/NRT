@@ -126,13 +126,12 @@ boundAggregators.integer = (data, fieldName) ->
   return bounds
 
 boundAggregators.date = boundAggregators.integer
-boundAggregators.text = -> null
 
 indicatorSchema.statics.calculateBoundsForType = (fieldType, data, fieldName) ->
   if boundAggregators[fieldType]?
     return boundAggregators[fieldType](data, fieldName)
   else
-    throw new Error("Don't know how to calculate the bounds of type '#{fieldType}'")
+    return null
 
 indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
   if arguments.length == 1
@@ -199,7 +198,9 @@ indicatorSchema.methods.calculateIndicatorDataBounds = (callback) ->
       callback(errorMsg)
 
     for field in @indicatorDefinition.fields
-      bounds[field.name] = Indicator.calculateBoundsForType(field.type, data, field.name)
+      calculatedBounds = Indicator.calculateBoundsForType(field.type, data, field.name)
+      if calculatedBounds?
+        bounds[field.name] = calculatedBounds
 
     callback(null, bounds)
   )
