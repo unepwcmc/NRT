@@ -87,4 +87,4 @@ class Backbone.Views.LineChartView extends Backbone.View
       {bezierCurve: false, datasetStrokeWidth: 4, animation: false})
 
   onClose: ->
-    
+    @stopListening()
