@@ -44,8 +44,7 @@ exports.addIndicatorTextToData = (rows, indicatorCode, indicatorDefinition) ->
     unless value?
       console.log "Row is missing value field '#{indicatorDefinition.valueField}'"
       continue
-    text = exports._calculateIndicatorText(indicatorCode, value)
-    row.text = text
+    row.text = exports._calculateIndicatorText(indicatorCode, value)
     outputRows.push(row)
 
   return outputRows
