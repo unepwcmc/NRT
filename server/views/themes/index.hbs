@@ -10,7 +10,7 @@
 
 <div class="content">
   <div class="indicators-container">
-    <div class="report-content">
+    <div class="theme-list">
       {{#themes}}
       <div class="theme-block">
         <a href="/themes/{{_id}}">
@@ -26,5 +26,22 @@
       </div>
       {{/themes}}
     </div>
+    <aside class="content-sidebar theme-recency">
+      <ul>
+        {{#themes}}
+          <li>
+            <h4>{{title}}</h4>
+            <ul>
+              {{#indicators}}
+                <li>
+                  <span class="status {{css-classify narrativeRecency}}"></span>
+                  {{title}}
+                </li>
+              {{/indicators}}
+            </ul>
+          </li>
+        {{/themes}}
+      </ul>
+    </aside>
   </div>
 </div>

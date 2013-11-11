@@ -200,7 +200,11 @@ div.row.row-2 {
 
 .reports-container,
 .indicators-container {
-  .report-content {
+   .theme-list {
+     width: 709px;
+   }
+
+  .report-content, .theme-list {
     float: left;
     padding-left: 0;
     margin-top: 30px;
@@ -473,22 +477,23 @@ div.row.row-2 {
     position: relative;
     border-top: 1px solid $lightGrey;
     top: -2px;
-    .status {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      margin-right: 8px;
-      border-radius: 2px;
-      &.up-to-date {
-        background-color: #66bd63;
-      }
-      &.out-of-date {
-        background-color: #fdb24c;
-      }
-      &.overdue {
-        background-color: #fc4e2a;
-      }
-    }
+  }
+}
+
+.status {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 8px;
+  border-radius: 2px;
+  &.up-to-date {
+    background-color: #66bd63;
+  }
+  &.out-of-date {
+    background-color: #fdb24c;
+  }
+  &.overdue {
+    background-color: #fc4e2a;
   }
 }
 
@@ -532,4 +537,9 @@ div.row.row-2 {
 }
 .indicator-info {
   width: 353px;
+}
+
+aside.theme-recency {
+  width: 200px;
+  margin-top: 150px;
 }
