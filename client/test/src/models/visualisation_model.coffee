@@ -221,7 +221,7 @@ row of results in the given data where the type of the field is date', ->
     "Expected the otherField to be included in the formatted data, but unmodified"
 )
 
-test('.getVisualisationTypes returns SubIndicatorLineChart type if the
+test('.getVisualisationTypes returns LineChart, Map types if the
   Indicator Data has any subIndicators', ->
   indicator = Factory.indicator(
     indicatorDefinition:
@@ -245,7 +245,7 @@ test('.getVisualisationTypes returns SubIndicatorLineChart type if the
 
   visualisationTypes = visualisation.getVisualisationTypes()
 
-  assert.lengthOf visualisationTypes, 1
+  assert.lengthOf visualisationTypes, 2
 
   expectedSubIndicatorTypes = Backbone.Models.Visualisation.types.subIndicatorTypes
   assert.deepEqual visualisationTypes, expectedSubIndicatorTypes,
