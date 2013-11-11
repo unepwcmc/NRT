@@ -543,5 +543,32 @@ div.row.row-2 {
 
 aside.theme-recency {
   width: 200px;
-  margin-top: 150px;
+  margin-top: 96px;
+
+  ul.side-theme-list {
+    li {
+      h4 {
+        border-bottom: 1px solid #dddddd;
+        font-size: 15px;
+        color: #008ed6;
+      }
+
+      ul.indicator-recency-list {
+        li {
+          overflow: hidden;
+          font-size: 12px;
+          line-height: 18px;
+          span {
+            float:left;
+            width: 180px;
+
+            &.status {
+              margin-top: 3px;
+              width: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
 }

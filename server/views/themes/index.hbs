@@ -27,15 +27,15 @@
       {{/themes}}
     </div>
     <aside class="content-sidebar theme-recency">
-      <ul>
+      <ul class="side-theme-list">
         {{#themes}}
           <li>
             <h4>{{title}}</h4>
-            <ul>
+            <ul class="indicator-recency-list">
               {{#indicators}}
                 <li>
                   <span class="status {{css-classify narrativeRecency}}"></span>
-                  {{title}}
+                  <span>{{title}}</span>
                 </li>
               {{/indicators}}
             </ul>
