@@ -94,7 +94,7 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
       return Visualisation.types.nonSubIndicatorTypes
 
   @types:
-    subIndicatorTypes: ['LineChart']
+    subIndicatorTypes: ['LineChart', 'Map']
     nonSubIndicatorTypes: ['BarChart', 'Map', 'Table']
 
 #For backbone relational
