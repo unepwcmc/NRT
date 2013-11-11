@@ -37,11 +37,13 @@ validateIndicatorData = (data) ->
   unless data.features?
     throw new Error("ESRI data should ahve a features atributes")
 
-addIndicatorTextToData = (rows, indicatorCode, indicatorDefintion) ->
+addIndicatorTextToData = (rows, indicatorCode, indicatorDefinition) ->
   outputRows = []
   for row in rows
     value = row[indicatorDefinition.valueField]
-    continue unless value?
+    unless value?
+      console.log "Row is missing value field '#{indicatorDefinition.valueField}'"
+      continue
     text = calculateIndicatorText(indicatorCode, value)
     row.text = text
     outputRows.push(attributes: row)
