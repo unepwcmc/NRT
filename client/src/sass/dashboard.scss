@@ -332,8 +332,10 @@ div.row.row-2 {
   }
 }
 
-.indicators-container .report-content {
-  width: 735px;
+.indicators-container {
+  .report-content, .theme-list {
+    width: 735px;
+  }
 }
 
 .full-name,
