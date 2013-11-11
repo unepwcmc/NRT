@@ -4,8 +4,6 @@ window.Backbone.Views ||= {}
 class Backbone.Views.LineChartView extends Backbone.View
   template: Handlebars.templates['line_chart.hbs']
 
-  tagName: 'canvas'
-
   initialize: (options) ->
     @visualisation = options.visualisation
     @listenTo(@visualisation, 'change:data', @render)
@@ -35,15 +33,33 @@ class Backbone.Views.LineChartView extends Backbone.View
     for row in data
       for subIndicatorRecord, subIndicatorIndex in row[subIndicatorField]
         datasets[subIndicatorIndex] ||= {data: []}
+
+        datasets[subIndicatorIndex].title = subIndicatorRecord.station
         datasets[subIndicatorIndex].data.push subIndicatorRecord[yAxis]
+
+    @renderLegend(datasets)
 
     return {
       labels: labels
       datasets: datasets
     }
 
+  renderLegend: (datasets) ->
+    $legend = @$el.find('.legend')
+
+    datasets.forEach( (dataset) ->
+      $title = $("
+        <li>
+          <span style=\"background-color: #{dataset.strokeColor}\"></span>
+          #{dataset.title}
+        </li>
+      ")
+
+      $legend.append($title)
+    )
+
   renderChart: ->
-    context = @$el.get(0).getContext('2d')
+    context = @$el.find('#line_chart').get(0).getContext('2d')
     lineChart = new Chart(context).Line(@formatData())
 
   onClose: ->
