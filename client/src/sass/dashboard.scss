@@ -547,6 +547,8 @@ aside.theme-recency {
 
   ul.side-theme-list {
     li {
+      cursor: pointer;
+
       h4 {
         border-bottom: 1px solid #dddddd;
         font-size: 15px;
