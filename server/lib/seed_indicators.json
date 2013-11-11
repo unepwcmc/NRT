@@ -38,10 +38,10 @@
         {
           "source": {
             "name": "value",
-            "type": "integer"
+            "type": "text"
           },
           "name": "value",
-          "type": "integer"
+          "type": "text"
         },
         {
           "source": {
