@@ -109,6 +109,14 @@ exports.averageRows = (rows, indicatorDefinition) ->
   else
     return rows
   
+# ESRI responses put their attribute data inside an object under an 'attribute'
+# key
+nestRowsInsideAttributesObject = (rows)->
+  nestedRows = []
+  for row in rows
+    nestedRows.push(attributes: row)
+
+  return nestedRows
 
 exports.indicatorate = (indicatorCode, data) ->
   data = JSON.parse(data)
@@ -119,9 +127,11 @@ exports.indicatorate = (indicatorCode, data) ->
 
   indicatorDefinition = indicatorDefinitions[indicatorCode]
 
+  rows = exports.addIndicatorTextToData(rows, indicatorCode, indicatorDefinition)
+
   rows = exports.averageRows(rows, indicatorDefinition)
 
-  rows = addIndicatorTextToData(rows, indicatorCode, indicatorDefinition)
+  rows = nestRowsInsideAttributesObject(rows)
 
   return {
     features: rows
