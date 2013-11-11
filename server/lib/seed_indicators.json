@@ -50,6 +50,13 @@
           },
           "name": "text",
           "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
   }

@@ -683,11 +683,10 @@ test('#calculateNarrativeRecency given an array of indicators,
   )
 )
 
-test("#calculateBoundsForType when given an unkown type throws an appropriate error", ->
-  assert.throws((->
-    Indicator.calculateBoundsForType("party", [], 'fieldName'))
-    ,"Don't know how to calculate the bounds of type 'party'"
-  )
+test("#calculateBoundsForType when given an unkown type returns null", ->
+  bounds = Indicator.calculateBoundsForType("party", [], 'fieldName')
+
+  assert.isNull bounds, "Expected returned bounds to be null"
 )
 
 test("#calculateBoundsForType given an array of dates returns the correct bounds", ->
