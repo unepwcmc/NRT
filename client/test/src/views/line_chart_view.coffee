@@ -74,9 +74,6 @@ test('.formatData converts sub indicator data in to datasets suitable
 
   formattedData = lineChartView.formatData(indicatorData)
 
-  console.log formattedData
-  console.log expectedFormattedData
-
   assert.deepEqual formattedData, expectedFormattedData,
     "Expected formatData to convert indicator data in to Chart.js standard"
 
