@@ -1245,3 +1245,25 @@ footer{
     }
   }
 }
+
+span.recency-tag {
+  display: inline-block;
+  line-height: 1.8em;
+  font-size: 0.85em;
+  border: 1px solid $orange;
+  color: $orange;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 0 5px;
+  margin-left: 5px;
+  opacity: 0.8;
+  i {
+    padding-right: 5px;
+    color: $orange;
+  }
+}
+
+span.source {
+  cursor: pointer;
+}

@@ -73,11 +73,16 @@
           </li>
           <li>
             <h4>{{{t "indicator/metadata/oldest_data"}}}</h4>
-            <span>{{indicator.headlines.oldest}}</span>
+            <span>{{indicator.headlines.oldest}}</span><span></span>
           </li>
           <li>
             <h4>{{{t "indicator/metadata/frequency"}}}</h4>
             <span>{{indicator.indicatorDefinition.period}}</span>
+            <span class="recency-tag"><i class="icon-warning-sign append"></i>Outdated</span>
+          </li>
+          <li>
+            <h4>Source</h4>
+            <span><a class="source" href="">World Bank Database</a></span>
           </li>
         </ul>
       </section>
