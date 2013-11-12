@@ -87,3 +87,24 @@ test('addIndicatorTextToData adds the correct indicator text', ->
 
   calculateIndicatorTextStub.restore()
 )
+
+test('#getFeatureAttributesFromData maps merged attributes and geometry into a single object', ->
+  data =
+    features: [{
+      geometry: {x: 5, y: 3}
+      attributes:
+        name: 'boat'
+    }]
+
+  mappedAttributesFromData = Esri.getFeatureAttributesFromData(data)
+
+  assert.lengthOf mappedAttributesFromData, 1,
+    "Expected the number of rows not to be changed"
+
+  row = mappedAttributesFromData[0]
+  assert.property row, 'geometry',
+    "Expected the geometry attribute to be at the top level"
+
+  assert.property row, 'name',
+    "Expected the name attribute to be at the top level"
+)
