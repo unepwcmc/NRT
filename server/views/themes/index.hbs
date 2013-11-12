@@ -56,12 +56,18 @@
           <li data-theme-name="#theme-{{css-classify title}}">
             <h4>{{title}}</h4>
             <ul class="indicator-recency-list">
-              {{#indicators}}
-                <li data-indicator-name="#indicator-{{css-classify title}}">
-                  <span class="status {{css-classify narrativeRecency}}"></span>
-                  <span>{{title}}</span>
+              {{#each indicators}}
+                  <a href="/indicators/{{id}}">
+                    <li>
+                        <span class="status {{css-classify narrativeRecency}}"></span>
+                        <span>{{title}}</span>
+                    </li>
+                  </a>
+                {{else}}
+                <li>
+                  <span>All indicators up to date.</spam>
                 </li>
-              {{/indicators}}
+              {{/each}}
             </ul>
           </li>
         {{/themes}}

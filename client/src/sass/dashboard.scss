@@ -553,9 +553,16 @@ aside.theme-recency {
         border-bottom: 1px solid #dddddd;
         font-size: 15px;
         color: #008ed6;
+        cursor: pointer;
+        &:hover{
+          color: #0aadff;
+         }
       }
 
       ul.indicator-recency-list {
+        a:hover{
+          color: #008ed6;
+        }
         li {
           overflow: hidden;
           font-size: 12px;
