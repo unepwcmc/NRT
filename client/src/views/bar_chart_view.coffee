@@ -4,7 +4,7 @@ window.Backbone.Views ||= {}
 window.nrtViz ||= {}
 
 class Backbone.Views.BarChartView extends Backbone.View
-  className: 'bar-chart-view'
+  className: 'editable-visualisation bar-chart-view'
 
   initialize: (options) ->
     @visualisation = options.visualisation

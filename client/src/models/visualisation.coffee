@@ -49,9 +49,16 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
 
   getHighestXRow: ->
     xAxis = @getXAxis()
-    _.max(@get('data').results, (row)->
+    maximum = _.max(@get('data').results, (row)->
       row[xAxis]
     )
+    if isFinite(maximum[xAxis])
+      return maximum
+    else
+      sortedData = _.sortBy(@get('data').results, (row) ->
+        row[xAxis]
+      )
+      return sortedData[sortedData.length - 1]
 
   mapDataToXAndY: ->
     xAxis = @getXAxis()
@@ -94,7 +101,7 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
       return Visualisation.types.nonSubIndicatorTypes
 
   @types:
-    subIndicatorTypes: ['LineChart', 'Map']
+    subIndicatorTypes: ['LineChart', 'SubIndicatorMap']
     nonSubIndicatorTypes: ['BarChart', 'Map', 'Table']
 
 #For backbone relational

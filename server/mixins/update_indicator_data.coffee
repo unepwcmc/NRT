@@ -101,7 +101,11 @@ SOURCE_DATA_PARSERS =
     }
 
     for feature in responseBody.features
-      convertedData.data.push _.omit(feature.attributes, 'OBJECTID')
+      featureObject = {geometry: feature.geometry}
+      attributes = _.omit(feature.attributes, 'OBJECTID')
+      _.extend(featureObject, attributes)
+
+      convertedData.data.push featureObject
 
     return convertedData
 

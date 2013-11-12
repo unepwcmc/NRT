@@ -1225,7 +1225,7 @@ footer{
 }
 
 
-.visualisation {
+.editable-visualisation {
   .legend {
     margin: 5px 0;
     text-align: center;
@@ -1242,6 +1242,27 @@ footer{
         height: 10px;
         width: 10px;
       }
+    }
+  }
+}
+
+.map-visualisation {
+  .leaflet-marker-icon {
+    border: 1px solid #000;
+    border-radius: 5px;
+    background-color: red;
+    padding: 0;
+
+    &.excellent {
+      background-color: green;
+    }
+    &.moderate {
+      background-color: yellow;
+    }
+  }
+  .leaflet-popup-content {
+    table {
+      width: 100%;
     }
   }
 }

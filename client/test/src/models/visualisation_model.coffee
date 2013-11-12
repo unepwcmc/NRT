@@ -140,6 +140,25 @@ test(".getHighestXRow should retrieve the row with the highest value of X in the
   assert.strictEqual visualisation.getHighestXRow().year, 2010
 )
 
+test(".getHighestXRow the x axis is stringified dates behaves returns the
+highest sorted value", ->
+  indicator = Factory.indicator(
+    indicatorDefinition:
+      xAxis: 'date'
+  )
+  visualisation = new Backbone.Models.Visualisation(
+    indicator: indicator
+    data:
+      results: [{
+        date: "2013-04-01T01:00:00.000Z"
+      },{
+        date: "2013-01-01T01:00:00.000Z"
+      }]
+  )
+
+  assert.strictEqual visualisation.getHighestXRow().date, "2013-04-01T01:00:00.000Z"
+)
+
 test(".mapDataToXAndY should return data as an array of X and Y objects, with
   formatted and non-formatted attributes", ->
   indicator = Factory.indicator(

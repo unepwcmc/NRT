@@ -39,6 +39,7 @@
   "src/views/report_edit_visualisation_view.coffee",
   "src/views/save_status_view.coffee",
   "src/views/map_view.coffee",
+  "src/views/sub_indicator_map_view.coffee",
   "src/views/table_view.coffee",
   "src/views/select_headline_date_view.coffee",
   "src/lib/utils.coffee",
