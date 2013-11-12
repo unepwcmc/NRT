@@ -59,14 +59,24 @@ class Backbone.Views.SubIndicatorMapView extends Backbone.View
     mostRecentData = @visualisation.getHighestXRow()
     subIndicatorData = mostRecentData[@visualisation.getSubIndicatorField()]
     markers = @subIndicatorDataToLeafletMarkers(subIndicatorData)
-    debugger
     for marker in markers
       marker.addTo(@map)
 
   subIndicatorDataToLeafletMarkers: (subIndicators)->
     _.map(subIndicators, (subIndicator) ->
-      new L.marker([subIndicator.geometry.x, subIndicator.geometry.y])
+      iconOptions = {className: Utilities.cssClassify(subIndicator.text)}
+      _.extend(iconOptions, SubIndicatorMapView.defaultIconOptions)
+
+      new L.marker(
+        [subIndicator.geometry.y, subIndicator.geometry.x],
+        icon: L.icon(iconOptions)
+      )
     )
+
+  @defaultIconOptions:
+    iconUrl: '/images/map-marker.png'
+    iconSize:     [10, 10]
+    iconAnchor:   [0, 0]
 
   onClose: ->
     @map.off('moveend') if @map?

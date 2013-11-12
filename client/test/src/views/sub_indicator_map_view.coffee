@@ -52,8 +52,27 @@ leaflet markers', ->
 
   marker = markers[0]
   latLng = marker.getLatLng()
-  assert.strictEqual latLng.lat, 5,
+  assert.strictEqual latLng.lat, 10,
     "Expected the marker to have the right x value"
-  assert.strictEqual latLng.lng, 10,
+  assert.strictEqual latLng.lng, 5,
     "Expected the marker to have the right y value"
+)
+
+test('.subIndicatorDataToLeafletMarkers sets leaflet marker icon className based on the subIndicator status', ->
+  subIndicatorData = [
+    text: 'Excellent'
+    geometry:
+      x: 5
+      y: 10
+  ]
+
+  markers = Backbone.Views.SubIndicatorMapView::subIndicatorDataToLeafletMarkers(subIndicatorData)
+
+  assert.lengthOf markers, 1,
+    "Only expected one leaflet marker"
+
+  marker = markers[0]
+  icon = marker.options.icon
+  assert.strictEqual icon.options.className, 'excellent',
+    "Expected the marker to have the right classname set"
 )
