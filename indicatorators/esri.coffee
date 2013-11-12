@@ -58,10 +58,12 @@ exports._calculateIndicatorText = (indicatorCode, value) ->
 
   return "Error: Value #{value} outside expected range"
 
-getFeatureAttributesFromData = (data) ->
+exports.getFeatureAttributesFromData = (data) ->
   data = data.features
   return _.map(data, (row) ->
-    row.attributes
+    attributes = {geometry: row.geometry}
+    _.extend(attributes, row.attributes)
+    attributes
   )
 
 calculateMode = (values) ->
@@ -122,7 +124,7 @@ exports.indicatorate = (indicatorCode, data) ->
 
   validateIndicatorData(data)
 
-  rows = getFeatureAttributesFromData(data)
+  rows = exports.getFeatureAttributesFromData(data)
 
   indicatorDefinition = indicatorDefinitions[indicatorCode]
 
