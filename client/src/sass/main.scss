@@ -1260,4 +1260,9 @@ footer{
       background-color: yellow;
     }
   }
+  .leaflet-popup-content {
+    table {
+      width: 100%;
+    }
+  }
 }

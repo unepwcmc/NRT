@@ -44,8 +44,12 @@ leaflet markers', ->
       x: 5
       y: 10
   ]
+  indicatorDefinition =
+    fields: []
 
-  markers = Backbone.Views.SubIndicatorMapView::subIndicatorDataToLeafletMarkers(subIndicatorData)
+  markers = Backbone.Views.SubIndicatorMapView::subIndicatorDataToLeafletMarkers(
+    subIndicatorData, indicatorDefinition
+  )
 
   assert.lengthOf markers, 1,
     "Only expected one leaflet marker"
@@ -65,8 +69,12 @@ test('.subIndicatorDataToLeafletMarkers sets leaflet marker icon className based
       x: 5
       y: 10
   ]
+  indicatorDefinition =
+    fields: []
 
-  markers = Backbone.Views.SubIndicatorMapView::subIndicatorDataToLeafletMarkers(subIndicatorData)
+  markers = Backbone.Views.SubIndicatorMapView::subIndicatorDataToLeafletMarkers(
+    subIndicatorData, indicatorDefinition
+  )
 
   assert.lengthOf markers, 1,
     "Only expected one leaflet marker"
