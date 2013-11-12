@@ -22,6 +22,7 @@ COLOR_RANGE = [
 
 class Backbone.Views.LineChartView extends Backbone.View
   template: Handlebars.templates['line_chart.hbs']
+  className: 'editable-visualisation'
 
   initialize: (options={}) ->
     @visualisation = options.visualisation
