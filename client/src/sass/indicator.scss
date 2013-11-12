@@ -44,7 +44,7 @@ section.introduction {
         }
         .score {
           margin-right: 15px;
-          border: 1px solid #0a519c;
+          border: 1px solid #7BAB3C;
           display: inline-block;
           float: left;
           height: 35px;
@@ -61,10 +61,10 @@ section.introduction {
             &.number {
               font-size: 1.2em;
               font-weight: bold;
-              color: #0a519c;
+              color: #7BAB3C;
             }
             &.keyword {
-              background-color: #0a519c;
+              background-color: #7BAB3C;
               color: rgba(255,255,255, 0.85);
               font-size: 0.85em;
               font-weight: normal;
@@ -146,6 +146,28 @@ section.introduction {
       padding-bottom: 15px;
     }
   }
+}
+
+span.recency-tag {
+  display: inline-block;
+  line-height: 1.8em;
+  font-size: 0.85em;
+  border: 1px solid $orange;
+  color: $orange;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 0 5px;
+  margin-left: 5px;
+  opacity: 0.8;
+  i {
+    padding-right: 5px;
+    color: $orange;
+  }
+}
+
+span.source {
+  cursor: pointer;
 }
 
 @import "indicator_selector";
