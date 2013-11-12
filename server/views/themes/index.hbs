@@ -3,26 +3,28 @@
 {{#contentFor 'header'}}
   <link rel="stylesheet" href="/css/dashboard.css">
   <script type="text/javascript">
-    var scrollToElementWithOffset = function(element, offset) {
-      $('html, body').animate({scrollTop: $(element).offset().top + offset }, 'slow');
-    };
+    (function() {
+      var scrollToElementWithOffset = function(element, offset) {
+        $('html, body').animate({scrollTop: $(element).offset().top + offset }, 'slow');
+      };
 
-    var scrollToIndicator = function(event) {
-      var selectorToScrollTo = $(event.currentTarget).attr('data-indicator-name');
-      scrollToElementWithOffset(selectorToScrollTo, -95);
-      event.stopPropagation();
-    };
+      var scrollToIndicator = function(event) {
+        var selectorToScrollTo = $(event.currentTarget).attr('data-indicator-name');
+        scrollToElementWithOffset(selectorToScrollTo, -95);
+        event.stopPropagation();
+      };
 
-    var scrollToTheme = function(event) {
-      var selectorToScrollTo = $(event.currentTarget).attr('data-theme-name');
-      scrollToElementWithOffset(selectorToScrollTo, -50);
-      event.stopPropagation();
-    };
+      var scrollToTheme = function(event) {
+        var selectorToScrollTo = $(event.currentTarget).attr('data-theme-name');
+        scrollToElementWithOffset(selectorToScrollTo, -50);
+        event.stopPropagation();
+      };
 
-    $(document).ready(function() {
-      $('.side-theme-list > li').click(scrollToTheme);
-      $('.indicator-recency-list li').click(scrollToIndicator);
-    });
+      $(document).ready(function() {
+        $('.side-theme-list > li').click(scrollToTheme);
+        $('.indicator-recency-list li').click(scrollToIndicator);
+      });
+    })();
   </script>
 {{/contentFor}}
 
