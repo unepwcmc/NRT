@@ -1250,14 +1250,28 @@ footer{
   .leaflet-marker-icon {
     border: 1px solid #000;
     border-radius: 5px;
-    background-color: red;
+    background-color: #AAA;
     padding: 0;
 
     &.excellent {
-      background-color: green;
+      color: #fff;
+      background-color: #7BAB3C;
     }
-    &.moderate {
-      background-color: yellow;
+    &.good {
+      color: #fff;
+      background-color: #9BD84C;
+    }
+    &.concerning {
+      color: #fff;
+      background-color: #FEC060;
+    }
+    &.bad {
+      color: #fff;
+      background-color: #FD8C2F;
+    }
+    &.catastrophic {
+      color: #fff;
+      background-color: #E37100;
     }
   }
   .leaflet-popup-content {
