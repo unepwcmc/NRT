@@ -135,56 +135,79 @@ test('.convertResponseToIndicatorData on indicator with no type throws an approp
 )
 
 test('.convertResponseToIndicatorData for an esri indicator
-  takes data from remote server and prepares for writing to database', (done)->
+  takes data from remote server and prepares for writing to database', ->
   responseData = {
-    features: [
+    features: [{
+      geometry:
+        x: 53.745
+        y: 23.750
       attributes:
         OBJECTID: 1
         periodStart: 1325376000000
         value: "0.29390622"
         text: "Test"
-    ,
+    }, {
+      geometry:
+        x: 54.745
+        y: 33.750
       attributes:
         OBJECTID: 2
+        periodStart: 1356998400000
+        value: "0.2278165"
+        text: "Test"
+    }]
+  }
+
+  indicator = new Indicator(type: 'esri')
+
+  expectedIndicatorData = {
+    indicator: indicator._id
+    data: [
+        geometry:
+          x: 53.745
+          y: 23.750
+        periodStart: 1325376000000
+        value: "0.29390622"
+        text: "Test"
+      ,
+        geometry:
+          x: 54.745
+          y: 33.750
         periodStart: 1356998400000
         value: "0.2278165"
         text: "Test"
     ]
   }
 
-  helpers.createIndicatorModels([{
-    type: 'esri'
-  }]).then( (indicators) ->
-    indicator = indicators[0]
+  convertedData = indicator.convertResponseToIndicatorData(responseData)
 
-    expectedIndicatorData = {
-      indicator: indicator._id
-      data: [
-          periodStart: 1325376000000
-          value: "0.29390622"
-          text: "Test"
-        ,
-          periodStart: 1356998400000
-          value: "0.2278165"
-          text: "Test"
-      ]
-    }
+  assert.ok(
+    _.isEqual(convertedData, expectedIndicatorData),
+    "Expected converted data:\n
+    #{JSON.stringify(convertedData)}\n
+      to look like expected indicator data:\n
+    #{JSON.stringify(expectedIndicatorData)}"
+  )
+)
 
-    convertedData = indicator.convertResponseToIndicatorData(responseData)
+test('.convertResponseToIndicatorData for an esri indicator
+  with no geometry does not throw an error', ->
+  responseData = {
+    features: [{
+      attributes:
+        OBJECTID: 1
+        periodStart: 1325376000000
+    }, {
+      attributes:
+        OBJECTID: 2
+        periodStart: 1356998400000
+    }]
+  }
 
-    assert.ok(
-      _.isEqual(convertedData, expectedIndicatorData),
-      "Expected converted data:\n
-      #{JSON.stringify(convertedData)}\n
-        to look like expected indicator data:\n
-      #{JSON.stringify(expectedIndicatorData)}"
-    )
+  indicator = new Indicator(type: 'esri')
 
-    done()
-
-  ).fail((err) ->
-    console.error err
-    throw err
+  assert.doesNotThrow(->
+    indicator.convertResponseToIndicatorData(responseData)
   )
 )
 

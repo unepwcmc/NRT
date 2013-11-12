@@ -77,6 +77,7 @@
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
       "fields": [
         {
           "source": {
@@ -101,6 +102,13 @@
           },
           "name": "text",
           "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
   }
@@ -121,6 +129,7 @@
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
       "fields": [
         {
           "source": {
@@ -145,6 +154,13 @@
           },
           "name": "text",
           "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
   }
@@ -209,6 +225,7 @@
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
       "fields": [
         {
           "source": {
@@ -233,6 +250,13 @@
           },
           "name": "text",
           "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
   }
@@ -354,6 +378,7 @@
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
       "fields": [
         {
           "source": {
@@ -378,6 +403,13 @@
           },
           "name": "text",
           "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
   }
@@ -398,6 +430,7 @@
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
       "fields": [
         {
           "source": {
@@ -422,6 +455,13 @@
           },
           "name": "text",
           "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
   }
