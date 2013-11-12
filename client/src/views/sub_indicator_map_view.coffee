@@ -75,8 +75,11 @@ class Backbone.Views.SubIndicatorMapView extends Backbone.View
 
   @defaultIconOptions:
     iconUrl: '/images/map-marker.png'
+    iconRetinaUrl: '/images/map-markerX2.png'
     iconSize:     [10, 10]
     iconAnchor:   [0, 0]
+    popupSize:   [0, 0]
+    shadowSize:   [0, 0]
 
   onClose: ->
     @map.off('moveend') if @map?
