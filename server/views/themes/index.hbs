@@ -2,6 +2,30 @@
 
 {{#contentFor 'header'}}
   <link rel="stylesheet" href="/css/dashboard.css">
+  <script type="text/javascript">
+    (function() {
+      var scrollToElementWithOffset = function(element, offset) {
+        $('html, body').animate({scrollTop: $(element).offset().top + offset }, 'slow');
+      };
+
+      var scrollToIndicator = function(event) {
+        var selectorToScrollTo = $(event.currentTarget).attr('data-indicator-name');
+        scrollToElementWithOffset(selectorToScrollTo, -95);
+        event.stopPropagation();
+      };
+
+      var scrollToTheme = function(event) {
+        var selectorToScrollTo = $(event.currentTarget).attr('data-theme-name');
+        scrollToElementWithOffset(selectorToScrollTo, -50);
+        event.stopPropagation();
+      };
+
+      $(document).ready(function() {
+        $('.side-theme-list > li').click(scrollToTheme);
+        $('.indicator-recency-list li').click(scrollToIndicator);
+      });
+    })();
+  </script>
 {{/contentFor}}
 
 {{#contentFor 'extra-body'}}
@@ -10,9 +34,9 @@
 
 <div class="content">
   <div class="indicators-container">
-    <div class="report-content">
+    <div class="theme-list">
       {{#themes}}
-      <div class="theme-block">
+      <div class="theme-block" id="theme-{{css-classify title}}">
         <a href="/themes/{{_id}}">
           <h2>{{title}}<span>›</span></h2>
         </a>
@@ -26,5 +50,22 @@
       </div>
       {{/themes}}
     </div>
+    <aside class="content-sidebar theme-recency">
+      <ul class="side-theme-list">
+        {{#themes}}
+          <li data-theme-name="#theme-{{css-classify title}}">
+            <h4>{{title}}</h4>
+            <ul class="indicator-recency-list">
+              {{#indicators}}
+                <li data-indicator-name="#indicator-{{css-classify title}}">
+                  <span class="status {{css-classify narrativeRecency}}"></span>
+                  <span>{{title}}</span>
+                </li>
+              {{/indicators}}
+            </ul>
+          </li>
+        {{/themes}}
+      </ul>
+    </aside>
   </div>
 </div>
