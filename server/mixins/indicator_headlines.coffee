@@ -27,101 +27,102 @@ getPeriodEnd = (date, period) ->
     .subtract('days', 1)
     .format("D MMM YYYY")
 
-module.exports = {
-  statics:
-    calculateNarrativeRecency: (indicators) ->
-      deferred = Q.defer()
+class HeadlineService
+  constructor: (@indicator) ->
 
-      async.each indicators, calculateRecency, (err) ->
-        if err?
-          deferred.reject(err)
-        else
-          deferred.resolve()
+  @calculateNarrativeRecency: (indicators) ->
+    deferred = Q.defer()
 
-      return deferred.promise
+    async.each indicators, calculateRecency, (err) ->
+      if err?
+        deferred.reject(err)
+      else
+        deferred.resolve()
 
-    roundHeadlineValues: (headlines) ->
+    return deferred.promise
+
+  @roundHeadlineValues: (headlines) ->
+    for headline in headlines
+      unless isNaN(headline.value)
+        headline.value = Math.round(headline.value*10)/10
+
+    return headlines
+
+  convertDataToHeadline: (data) ->
+    Indicator = require('../models/indicator.coffee').model
+
+    data = @parseDateInHeadlines(data)
+    data = Indicator.roundHeadlineValues(data)
+    return data
+
+  parseDateInHeadlines: (headlines) ->
+    xAxis = @indicatorDefinition?.xAxis
+
+    if xAxis?
       for headline in headlines
-        unless isNaN(headline.value)
-          headline.value = Math.round(headline.value*10)/10
+        headline.periodEnd = getPeriodEnd(
+          headline[xAxis],
+          @indicatorDefinition.period
+        )
 
-      return headlines
+    return headlines
 
-  methods:
-    convertDataToHeadline: (data) ->
-      Indicator = require('../models/indicator.coffee').model
+  calculateRecencyOfHeadline: ->
+    deferred = Q.defer()
 
-      data = @parseDateInHeadlines(data)
-      data = Indicator.roundHeadlineValues(data)
-      return data
+    @populatePage().then( =>
+      @getNewestHeadline()
+    ).then( (dataHeadline) =>
 
-    parseDateInHeadlines: (headlines) ->
-      xAxis = @indicatorDefinition?.xAxis
+      unless dataHeadline?
+        return deferred.resolve("No Data")
 
-      if xAxis?
-        for headline in headlines
-          headline.periodEnd = getPeriodEnd(
-            headline[xAxis],
-            @indicatorDefinition.period
-          )
+      pageHeadline = @page.headline
 
-      return headlines
+      unless pageHeadline? && pageHeadline.periodEnd?
+        return deferred.resolve("Out of date")
 
-    calculateRecencyOfHeadline: ->
-      deferred = Q.defer()
+      if moment(pageHeadline.periodEnd).isBefore(dataHeadline.periodEnd)
+        deferred.resolve("Out of date")
+      else
+        deferred.resolve("Up to date")
 
-      @populatePage().then( =>
-        @getNewestHeadline()
-      ).then( (dataHeadline) =>
+    ).fail( (err) ->
+      deferred.reject(err)
+    )
 
-        unless dataHeadline?
-          return deferred.resolve("No Data")
+    return deferred.promise
 
-        pageHeadline = @page.headline
+  getRecentHeadlines: (amount) ->
+    Indicator = require('../models/indicator.coffee').model
 
-        unless pageHeadline? && pageHeadline.periodEnd?
-          return deferred.resolve("Out of date")
+    deferred = Q.defer()
 
-        if moment(pageHeadline.periodEnd).isBefore(dataHeadline.periodEnd)
-          deferred.resolve("Out of date")
-        else
-          deferred.resolve("Up to date")
+    Q.nsend(
+      @, 'getIndicatorData'
+    ).then( (data) =>
 
-      ).fail( (err) ->
-        deferred.reject(err)
-      )
+      headlineData = data
+      headlineData = _.last(data, amount) if amount?
+      headlines = @convertDataToHeadline(headlineData)
 
-      return deferred.promise
+      deferred.resolve(headlines.reverse())
 
-    getRecentHeadlines: (amount) ->
-      Indicator = require('../models/indicator.coffee').model
+    ).fail( (err) ->
+      deferred.reject(err)
+    )
 
-      deferred = Q.defer()
+    return deferred.promise
 
-      Q.nsend(
-        @, 'getIndicatorData'
-      ).then( (data) =>
+  getNewestHeadline: ->
+    deferred = Q.defer()
 
-        headlineData = data
-        headlineData = _.last(data, amount) if amount?
-        headlines = @convertDataToHeadline(headlineData)
+    @getRecentHeadlines(1).then((headlines) ->
+      deferred.resolve headlines[0]
+    ).fail( (err) ->
+      deferred.reject err
+    )
 
-        deferred.resolve(headlines.reverse())
+    return deferred.promise
 
-      ).fail( (err) ->
-        deferred.reject(err)
-      )
-
-      return deferred.promise
-
-    getNewestHeadline: ->
-      deferred = Q.defer()
-
-      @getRecentHeadlines(1).then((headlines) ->
-        deferred.resolve headlines[0]
-      ).fail( (err) ->
-        deferred.reject err
-      )
-
-      return deferred.promise
-}
+module.exports = HeadlineService
