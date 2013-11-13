@@ -78,11 +78,7 @@ test('.getFatThemes returns all the themes
       "Expected indicators to have their narrative recency attribute calculated"
 
     done()
-  ).fail((err)->
-    console.error err
-    console.error err.stack
-    throw new Error(err)
-  )
+  ).fail(done)
 )
 
 test('#getFetThemes only returns themes with indicators of type ESRI', (done) ->
@@ -135,11 +131,7 @@ test('#getFetThemes only returns themes with indicators of type ESRI', (done) ->
       "Expected the returned indicator to be an ESRI indicator"
 
     done()
-  ).fail((err) ->
-    console.error err
-    console.error err.stack
-    throw err
-  )
+  ).fail(done)
 )
 
 test('.getIndicatorsByTheme returns all Indicators for given Theme', (done) ->

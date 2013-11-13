@@ -21,10 +21,13 @@ test("When given a valid indicator, I should get a 200 and see the title", (done
     request.get {
       url: helpers.appurl("/indicators/#{indicator.id}")
     }, (err, res, body) ->
-      assert.equal res.statusCode, 200
+      try
+        assert.equal res.statusCode, 200
 
-      assert.match body, new RegExp(".*#{indicatorTitle}.*")
-      done()
+        assert.match body, new RegExp(".*#{indicatorTitle}.*")
+        done()
+      catch e
+        done(e)
   )
 )
 
@@ -35,11 +38,12 @@ test("When given an indicator that doesn't exist, I should get a 404 response", 
     url: helpers.appurl("/indicators/#{indicatorId}")
   }, (err, res, body) ->
     if err?
-      console.error err
-      throw new Error(err)
-    assert.equal res.statusCode, 404
-
-    done()
+      done(err)
+    try
+      assert.equal res.statusCode, 404
+      done()
+    catch e
+      done(e)
 )
 
 test("GET /:id/draft clones the Indicator's Page and renders the indicator", (done) ->
@@ -72,6 +76,7 @@ test("GET /:id/draft clones the Indicator's Page and renders the indicator", (do
 
   ).spread( (res, body) ->
 
+    try
     assert.equal res.statusCode, 200
 
     assert.match body, new RegExp(".*An indicator.*")
@@ -93,8 +98,7 @@ test("GET /:id/draft clones the Indicator's Page and renders the indicator", (do
     done()
 
   ).fail( (err) ->
-    console.error err
-    throw err
+    done(err)
   )
 )
 
@@ -131,10 +135,7 @@ test("GET /:id/draft redirects back if the user is not logged in", (done) ->
 
     done()
 
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test("GET /:id/discard_draft discards all drafts and renders the published version", (done) ->
@@ -185,10 +186,7 @@ test("GET /:id/discard_draft discards all drafts and renders the published versi
 
     done()
 
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test("GET /:id/discard_draft redirects back if the user is not logged in", (done) ->
@@ -227,10 +225,7 @@ test("GET /:id/discard_draft redirects back if the user is not logged in", (done
 
     done()
 
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 test('GET /:id/publish publishes the current draft and makes it publicly
   viewable', (done) ->
@@ -293,10 +288,7 @@ test('GET /:id/publish publishes the current draft and makes it publicly
 
     done()
 
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test('GET /:id/publish redirects back if the user is not logged in', (done) ->
@@ -334,8 +326,5 @@ test('GET /:id/publish redirects back if the user is not logged in', (done) ->
 
     done()
 
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
