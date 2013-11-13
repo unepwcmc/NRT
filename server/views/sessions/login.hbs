@@ -9,6 +9,14 @@
 {{/contentFor}}
 
 <div class="content login">
+  <section class="errors" {{#if errors}}style="display:block"{{/if}}>
+    <ul>
+      {{#each errors}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  </section>
+
   <section>
     <form method="post" action="/login">
       <fieldset>
