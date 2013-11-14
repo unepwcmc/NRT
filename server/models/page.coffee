@@ -1,6 +1,7 @@
 mongoose = require('mongoose')
 async = require('async')
 _ = require('underscore')
+HeadlineService = require('../services/headline.coffee')
 sectionNestingModel = require('../mixins/section_nesting_model.coffee')
 SectionSchema = require('./section.coffee').schema
 Q = require('q')
@@ -111,7 +112,8 @@ pageSchema.methods.setHeadlineToMostRecentFromParent = ->
 
   if @parent_type is 'Indicator'
     @getParent().then( (parent) ->
-      parent.getNewestHeadline()
+      headlineService = new HeadlineService(parent)
+      headlineService.getNewestHeadline()
     ).then( (headline) =>
       if headline?
         @headline = headline
