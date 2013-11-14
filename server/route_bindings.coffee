@@ -31,7 +31,10 @@ module.exports = exports = (app) ->
 
   app.get "/login", sessionRoutes.login
   app.get "/logout", sessionRoutes.logout
-  app.post '/login', passport.authenticate('local', { failureRedirect: '/login' }), sessionRoutes.loginSuccess
+  app.post '/login', passport.authenticate('local', {
+    failureRedirect: '/login',
+    failureFlash: true
+  }), sessionRoutes.loginSuccess
 
   # REST API
   app.resource 'api/narratives', narrativeApi, { format: 'json' }
