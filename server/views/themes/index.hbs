@@ -50,12 +50,14 @@
             <h4>{{title}}</h4>
             <ul class="indicator-recency-list">
               {{#each indicators}}
+                {{#ifIndicatorRecencyTextOutOfDate this.narrativeRecency}}
                   <a href="/indicators/{{id}}">
                     <li>
                         <span class="status {{css-classify narrativeRecency}}"></span>
                         <span>{{title}}</span>
                     </li>
                   </a>
+                {{/ifIndicatorRecencyTextOutOfDate}}
               {{else}}
                 <li>
                   <span>All indicators up to date.</spam>

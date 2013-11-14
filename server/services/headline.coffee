@@ -61,7 +61,6 @@ class HeadlineService
       value
     )
     _.contains(upToDateStates, text)
-    
 
   convertDataToHeadline: (data) ->
     Indicator = require('../models/indicator.coffee').model
