@@ -1,5 +1,7 @@
 Indicator = require('../models/indicator').model
 Theme = require('../models/theme').model
+HeadlineService = require('../services/headline')
+
 _ = require('underscore')
 async = require('async')
 Q = require('q')
@@ -23,7 +25,7 @@ exports.show = (req, res) ->
       console.error error
       return res.send(404, error)
 
-    indicator.getRecentHeadlines()
+    new HeadlineService(indicator).getRecentHeadlines()
   ).then( (headlines) ->
     theHeadlines = headlines
 

@@ -227,6 +227,7 @@ test("GET /:id/discard_draft redirects back if the user is not logged in", (done
 
   ).fail(done)
 )
+
 test('GET /:id/publish publishes the current draft and makes it publicly
   viewable', (done) ->
   theIndicator = originalPage = draftPage = null

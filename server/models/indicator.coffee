@@ -9,6 +9,8 @@ moment = require('moment')
 IndicatorData = require('./indicator_data').model
 Page = require('./page').model
 
+HeadlineService = require '../services/headline'
+
 indicatorSchema = mongoose.Schema(
   title: String
   short_name: String
@@ -231,7 +233,7 @@ indicatorSchema.methods.generateMetadataCSV = ->
     attributes.push @theme?.title
     attributes.push @indicatorDefinition?.period
 
-    headlineService = new HeadlineService(indicator)
+    headlineService = new HeadlineService(@)
     headlineService.getNewestHeadline()
   ).then((newestHeadline)=>
     xAxis = @indicatorDefinition?.xAxis

@@ -3,7 +3,7 @@ _ = require('underscore')
 async = require('async')
 
 calculateRecency = (indicator, callback) ->
-  indicator.calculateRecencyOfHeadline().then((recency)->
+  new HeadlineService(indicator).calculateRecencyOfHeadline().then((recency)->
     indicator.narrativeRecency = recency
     callback()
   ).fail((err) ->
@@ -30,7 +30,7 @@ getPeriodEnd = (date, period) ->
 class HeadlineService
   constructor: (@indicator) ->
 
-  @calculateNarrativeRecency: (indicators) ->
+  @populateNarrativeRecencyOfIndicators: (indicators) ->
     deferred = Q.defer()
 
     async.each indicators, calculateRecency, (err) ->

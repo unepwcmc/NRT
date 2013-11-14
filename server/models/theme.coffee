@@ -3,6 +3,7 @@ fs = require('fs')
 _ = require('underscore')
 async = require('async')
 Indicator = require('./indicator').model
+HeadlineService = require('../services/headline')
 Q = require('q')
 
 pageModelMixin = require('../mixins/page_model.coffee')
@@ -121,7 +122,7 @@ themeSchema.methods.populateIndicators = ->
   ).then(->
     Indicator.populateDescriptionsFromPages(theIndicators)
   ).then(->
-    Indicator.calculateNarrativeRecency(theIndicators)
+    HeadlineService.populateNarrativeRecencyOfIndicators(theIndicators)
   ).then(=>
     @indicators = theIndicators.sort(_id: 1)
     Q.fcall(=> @)

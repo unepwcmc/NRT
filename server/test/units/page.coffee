@@ -11,6 +11,7 @@ Visualisation = require('../../models/visualisation.coffee').model
 Indicator = require('../../models/indicator.coffee').model
 Section = require('../../models/section.coffee').model
 Page = require('../../models/page').model
+HeadlineService = require('../../services/headline')
 
 suite('Page')
 test('.create', (done) ->
@@ -468,8 +469,9 @@ test(".giveSectionsNewIds on a page with one section
 test(".setHeadlineToMostRecentFromParent when the parent is an indicator
   sets the headline to the indicator's most recent headline", (done) ->
   indicator = new Indicator()
+
   headlineTitle = 'Good'
-  sinon.stub(indicator, 'getNewestHeadline', ->
+  newestHeadlineStub = sinon.stub(HeadlineService::, 'getNewestHeadline', ->
     deferred = Q.defer()
     deferred.resolve {text: headlineTitle}
     return deferred.promise
@@ -484,8 +486,12 @@ test(".setHeadlineToMostRecentFromParent when the parent is an indicator
 
   page.setHeadlineToMostRecentFromParent().then(->
     assert.strictEqual page.headline.text, headlineTitle
+    newestHeadlineStub.restore()
     done()
-  ).fail(done)
+  ).fail(->
+    newestHeadlineStub.restore()
+    done()
+  )
 )
 
 test(".setHeadlineToMostRecentFromParent when the parent is not an indicator

@@ -349,3 +349,30 @@ test(".parseDateInHeadlines on an indicator where the frequency is 'quarterly'
   assert.strictEqual convertedHeadline.periodEnd, "30 Jun 2013",
     "Expected the periodEnd to be 3 months from the period start"
 )
+
+test("#populateNarrativeRecencyOfIndicators populates the narrative recency attribute for 
+the given indicators", (done)->
+  indicator = new Indicator()
+  indicators = [indicator]
+
+  calculateRecencyStub = sinon.stub(HeadlineService::, 'calculateRecencyOfHeadline', ->
+    Q.fcall(->
+      'Up-to-date'
+    )
+  )
+    
+  HeadlineService.populateNarrativeRecencyOfIndicators(indicators).then(->
+
+    assert.property indicator, 'narrativeRecency',
+      "Expected the narrativeRecency to be populated"
+    assert.strictEqual indicator.narrativeRecency, "Up-to-date",
+      "Expected the narrativeRecency to be 'Up-to-date'"
+
+    calculateRecencyStub.restore()
+    done()
+
+  ).fail((err)->
+    calculateRecencyStub.restore()
+    done(err)
+  )
+)

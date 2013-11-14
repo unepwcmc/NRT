@@ -10,6 +10,8 @@ Indicator = require('../../models/indicator').model
 IndicatorData = require('../../models/indicator_data').model
 Page = require('../../models/page').model
 
+HeadlineService = require '../../services/headline'
+
 suite('Indicator')
 
 test('.getIndicatorDataForCSV with no filters returns all indicator data in a 2D array', (done) ->
@@ -392,26 +394,6 @@ test('#populatePages given an array of indicators, populates their page attribut
   )
 )
 
-test('#calculateNarrativeRecency given an array of indicators,
-  calculates their narrative recency', (done) ->
-  indicator = new Indicator()
-  narrativeRecency = "Up to date"
-  sinon.stub(indicator, 'calculateRecencyOfHeadline', ->
-    deferred = Q.defer()
-    deferred.resolve narrativeRecency
-    return deferred.promise
-  )
-
-  Indicator.calculateNarrativeRecency([indicator]).then( ->
-    assert.strictEqual indicator.narrativeRecency, narrativeRecency,
-      "Expected the narrativeRecency attribute to be populated with the narrative recency"
-    done()
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
-)
-
 test("#calculateBoundsForType when given an unkown type returns null", ->
   bounds = Indicator.calculateBoundsForType("party", [], 'fieldName')
 
@@ -479,7 +461,7 @@ test(".generateMetadataCSV returns CSV arrays containing the name, theme,
   ).then( (indicator) ->
     theIndicator = indicator
 
-    newestHeadlineStub = sinon.stub(theIndicator, 'getNewestHeadline', ->
+    newestHeadlineStub = sinon.stub(HeadlineService::, 'getNewestHeadline', ->
       Q.fcall(->
         year: 2006
       )
@@ -520,6 +502,7 @@ test(".generateMetadataCSV returns CSV arrays containing the name, theme,
 
   ).fail( (err) ->
     done(err)
+    newestHeadlineStub.restore()
   )
 )
 

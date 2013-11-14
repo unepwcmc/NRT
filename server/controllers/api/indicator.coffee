@@ -1,4 +1,5 @@
 Indicator = require("../../models/indicator").model
+HeadlineService = require('../../services/headline')
 _ = require('underscore')
 Q = require('q')
 csv = require('csv')
@@ -152,7 +153,7 @@ exports.headlines = (req, res) ->
       console.error error
       return res.send(404, {error_message: error})
 
-    indicator.getRecentHeadlines(req.params.count || 5)
+    new HeadlineService(indicator).getRecentHeadlines(req.params.count || 5)
   ).then( (headlines) ->
 
     res.send(200, headlines)
