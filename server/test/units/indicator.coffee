@@ -295,10 +295,7 @@ test('.getRecentHeadlines returns the given number of most recent headlines
 
     done()
 
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test('.getRecentHeadlines successfully returns all headline when the
@@ -337,10 +334,7 @@ test('.getRecentHeadlines successfully returns all headline when the
 
     done()
 
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test('.getNewestHeadline returns the most recent headline', (done)->
@@ -397,10 +391,7 @@ test('.getNewestHeadline returns the most recent headline', (done)->
 
     done()
 
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test('#calculateIndicatorDataBounds should return the upper and lower bounds of data', (done) ->

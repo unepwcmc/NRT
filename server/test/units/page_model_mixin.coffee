@@ -20,10 +20,7 @@ test(".getPage returns a mongoose instance", (done) ->
   ).then( (page) ->
     assert.strictEqual page.constructor.modelName, "Page", "Expected page to be a mongoose object"
     done()
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test(".getPage when no public page is associated creates a new page with is_draft false", (done) ->
@@ -189,10 +186,7 @@ test(".getDraftPage
     )
     done()
 
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test(".publishDraftPage sets the page's draft status to false and
@@ -248,10 +242,7 @@ test(".publishDraftPage sets the page's draft status to false and
 
     done()
 
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test(".deleteAllPagesExcept deletes all pages except the one passed in", (done) ->
@@ -294,10 +285,7 @@ test(".deleteAllPagesExcept deletes all pages except the one passed in", (done) 
 
     done()
 
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test(".discardDraft discards the draft version of a page", (done) ->
@@ -346,10 +334,7 @@ test(".discardDraft discards the draft version of a page", (done) ->
 
     done()
 
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test('.populatePage should add a (shallow) page attribute to an indicator', (done)->

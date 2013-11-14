@@ -239,21 +239,24 @@ test('POST create - nesting a section in a page when authenticated', (done) ->
     # Assert expected outcomes
     id = body._id
 
-    assert.equal res.statusCode, 201
+    try
+      assert.equal res.statusCode, 201
 
-    assert.property body, 'sections'
-    assert.lengthOf body.sections, 1
-    assert.isDefined body.sections[0]._id, "New page Section not assigned an ID"
-    assert.equal body.sections[0].title, data.sections[0].title
+      assert.property body, 'sections'
+      assert.lengthOf body.sections, 1
+      assert.isDefined body.sections[0]._id, "New page Section not assigned an ID"
+      assert.equal body.sections[0].title, data.sections[0].title
 
-    assert.equal body.sections[0].indicator.title, theIndicator.title
+      assert.equal body.sections[0].indicator.title, theIndicator.title
 
-    Page
-      .findOne(_id: id)
-      .exec( (err, page) ->
-        assert.equal page.title, data.title
-        done()
-      )
+      Page
+        .findOne(_id: id)
+        .exec( (err, page) ->
+          assert.equal page.title, data.title
+          done()
+        )
+    catch e
+      done(e)
 
   ).fail((err) ->
     console.error err
