@@ -202,6 +202,7 @@ div.row.row-2 {
 .indicators-container {
    .theme-list {
      width: 709px;
+     margin-left: 260px;
    }
 
   .report-content, .theme-list {
@@ -544,7 +545,8 @@ div.row.row-2 {
 aside.theme-recency {
   width: 200px;
   margin: 71px 20px 0 0;
-  float:left;
+  position: fixed;
+  top: 49px;
 
   h2 {
     color: #008ed6;
