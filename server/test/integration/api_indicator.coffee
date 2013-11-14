@@ -494,13 +494,16 @@ test('GET /:id/headlines returns the 5 most recent headlines', (done) ->
       }
     )
   ).spread( (res, body) ->
-    headlines = JSON.parse(body)
+    try
+      headlines = JSON.parse(body)
 
-    assert.equal res.statusCode, 200
+      assert.equal res.statusCode, 200
 
-    assert.lengthOf headlines, 5, "Expected 5 headlines to be returned"
+      assert.lengthOf headlines, 5, "Expected 5 headlines to be returned"
 
-    done()
+      done()
+    catch e
+      done(e)
 
   ).fail((err) ->
     console.error err
@@ -568,13 +571,16 @@ test('GET /:id/headlines/:number returns the n most recent headlines', (done) ->
       }
     )
   ).spread( (res, body) ->
-    headlines = JSON.parse(body)
+    try
+      headlines = JSON.parse(body)
 
-    assert.equal res.statusCode, 200
+      assert.equal res.statusCode, 200
 
-    assert.lengthOf headlines, 3, "Expected 3 headlines to be returned"
+      assert.lengthOf headlines, 3, "Expected 3 headlines to be returned"
 
-    done()
+      done()
+    catch e
+      done(e)
 
   ).fail((err) ->
     console.error err

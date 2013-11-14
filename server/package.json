@@ -38,7 +38,8 @@
     "node-zip": "1.0.1",
     "csv": "0.3.6",
     "ldapjs": "~0.6.3",
-    "connect-mongo": "~0.3.3"
+    "connect-mongo": "~0.3.3",
+    "connect-flash": "~0.1.1"
   },
   "devDependencies": {
     "Faker": "0.5.11",

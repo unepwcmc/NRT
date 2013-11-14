@@ -7,6 +7,7 @@ passport = require('passport')
 mongoose = require('mongoose')
 MongoStore = require('connect-mongo')(express)
 i18n = require('i18n')
+flash = require('connect-flash')
 
 exports.createApp = ->
   app = express()
@@ -39,6 +40,7 @@ exports.createApp = ->
       maxAge: 300000
     )
   )
+  app.use(flash())
 
   require('./initializers/i18n')(app)
 

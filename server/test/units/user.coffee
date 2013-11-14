@@ -41,19 +41,11 @@ test('.canEdit resolves when given a page whose parent is owned by the user', (d
     )
 
   ).then((page) ->
-
     thePage = page
-    theOwner.canEdit(page).then(->
-      done()
-    ).fail( (err) ->
-      console.error err
-      throw new Error("Expected user to be able to edit page")
-    )
-
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
+    theOwner.canEdit(page)
+  ).then(->
+    done()
+  ).fail(done)
 )
 
 test(".isValidPassword checks if bcrypt(password)
