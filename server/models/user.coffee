@@ -120,7 +120,9 @@ getLDAPConfig = _.memoize( ->
   )
 )
 
-KNOWN_LDAP_ERRORS = ['InvalidCredentialsError']
+KNOWN_LDAP_ERRORS = {
+  'InvalidCredentialsError': "Incorrect username or password"
+}
 
 userSchema.methods.loginFromLDAP = (password, done) ->
   ldap = require('ldapjs')
@@ -132,8 +134,8 @@ userSchema.methods.loginFromLDAP = (password, done) ->
 
   client.bind(@distinguishedName, password, (err) =>
     if err?
-      if err.name in KNOWN_LDAP_ERRORS
-        done(null, false, {message: "Incorrect username or password"})
+      if KNOWN_LDAP_ERRORS[err.name]?
+        done(null, false, message: KNOWN_LDAP_ERRORS[err.name])
       else
         done(err, false)
     else
