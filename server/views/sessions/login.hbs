@@ -8,7 +8,23 @@
   <link rel="stylesheet" href="/css/login.css">
 {{/contentFor}}
 
+{{#if errors}}
+  <style type="text/css">
+    section.errors {
+      display: block;
+    }
+  </style>
+{{/if}}
+
 <div class="content login">
+  <section class="errors">
+    <ul>
+      {{#each errors}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  </section>
+
   <section>
     <form method="post" action="/login">
       <fieldset>
