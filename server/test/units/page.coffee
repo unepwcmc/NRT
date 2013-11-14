@@ -11,7 +11,7 @@ Visualisation = require('../../models/visualisation.coffee').model
 Indicator = require('../../models/indicator.coffee').model
 Section = require('../../models/section.coffee').model
 Page = require('../../models/page').model
-HeadlineService = require('../../services/headline')
+HeadlineService = require('../../lib/services/headline')
 
 suite('Page')
 test('.create', (done) ->

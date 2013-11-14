@@ -5,7 +5,7 @@ _ = require('underscore')
 Q = require 'q'
 sinon = require 'sinon'
 
-HeadlineService = require('../../services/headline')
+HeadlineService = require('../../lib/services/headline')
 Indicator = require('../../models/indicator').model
 IndicatorData = require('../../models/indicator_data').model
 Page = require('../../models/page').model

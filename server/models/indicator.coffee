@@ -9,7 +9,7 @@ moment = require('moment')
 IndicatorData = require('./indicator_data').model
 Page = require('./page').model
 
-HeadlineService = require '../services/headline'
+HeadlineService = require '../lib/services/headline'
 
 indicatorSchema = mongoose.Schema(
   title: String

@@ -1,5 +1,5 @@
 hbs = require('express-hbs')
-HeadlineService = require ('../services/headline')
+HeadlineService = require ('../lib/services/headline')
 
 hbs.registerHelper('css-classify', (text) ->
   if text?

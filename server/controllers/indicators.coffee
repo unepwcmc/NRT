@@ -1,6 +1,6 @@
 Indicator = require('../models/indicator').model
 Theme = require('../models/theme').model
-HeadlineService = require('../services/headline')
+HeadlineService = require('../lib/services/headline')
 
 _ = require('underscore')
 async = require('async')

@@ -1,5 +1,5 @@
 Indicator = require("../../models/indicator").model
-HeadlineService = require('../../services/headline')
+HeadlineService = require('../../lib/services/headline')
 _ = require('underscore')
 Q = require('q')
 csv = require('csv')
