@@ -376,3 +376,13 @@ the given indicators", (done)->
     done(err)
   )
 )
+
+test("#narrativeRecencyTextIsUpToDate given text which is in the list of up to
+date statuses returns true", ->
+  assert.isTrue HeadlineService.narrativeRecencyTextIsUpToDate('Up to date')
+)
+
+test("#narrativeRecencyTextIsUpToDate given text which is not in the list of up to
+date statuses returns false", ->
+  assert.isFalse HeadlineService.narrativeRecencyTextIsUpToDate('Out of date')
+)
