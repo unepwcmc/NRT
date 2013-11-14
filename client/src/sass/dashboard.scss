@@ -569,6 +569,8 @@ aside.theme-recency {
       }
 
       ul.indicator-recency-list {
+        display:none;
+
         a:hover{
           color: #008ed6;
         }

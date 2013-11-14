@@ -14,8 +14,14 @@
         event.stopPropagation();
       };
 
+      var toggleIndicatorList = function(event) {
+        var indicatorList = $(event.currentTarget).next('.indicator-recency-list');
+        indicatorList.toggle(400);
+      }
+
       $(document).ready(function() {
         $('.side-theme-list > li').click(scrollToTheme);
+        $('.side-theme-list .out-of-date-indicator-count').click(toggleIndicatorList);
       });
     })();
   </script>
@@ -34,7 +40,9 @@
           <li data-theme-name="#theme-{{css-classify title}}">
             <h4>{{title}}</h4>
             {{#if outOfDateIndicatorCount}}
-              <p>{{outOfDateIndicatorCount}} indicators are out of date </p>
+              <span class="out-of-date-indicator-count">
+                {{outOfDateIndicatorCount}} indicators are out of date
+              </span>
             {{/if}}
             <ul class="indicator-recency-list">
               {{#each indicators}}
