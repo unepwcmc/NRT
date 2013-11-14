@@ -52,17 +52,17 @@ class HeadlineService
     Indicator = require('../models/indicator.coffee').model
 
     data = @parseDateInHeadlines(data)
-    data = Indicator.roundHeadlineValues(data)
+    data = HeadlineService.roundHeadlineValues(data)
     return data
 
   parseDateInHeadlines: (headlines) ->
-    xAxis = @indicatorDefinition?.xAxis
+    xAxis = @indicator.indicatorDefinition?.xAxis
 
     if xAxis?
       for headline in headlines
         headline.periodEnd = getPeriodEnd(
           headline[xAxis],
-          @indicatorDefinition.period
+          @indicator.indicatorDefinition.period
         )
 
     return headlines
@@ -70,14 +70,14 @@ class HeadlineService
   calculateRecencyOfHeadline: ->
     deferred = Q.defer()
 
-    @populatePage().then( =>
+    @indicator.populatePage().then( =>
       @getNewestHeadline()
     ).then( (dataHeadline) =>
 
       unless dataHeadline?
         return deferred.resolve("No Data")
 
-      pageHeadline = @page.headline
+      pageHeadline = @indicator.page.headline
 
       unless pageHeadline? && pageHeadline.periodEnd?
         return deferred.resolve("Out of date")
@@ -99,7 +99,7 @@ class HeadlineService
     deferred = Q.defer()
 
     Q.nsend(
-      @, 'getIndicatorData'
+      @indicator, 'getIndicatorData'
     ).then( (data) =>
 
       headlineData = data

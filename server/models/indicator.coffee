@@ -22,14 +22,11 @@ indicatorSchema = mongoose.Schema(
 # Mixins
 pageModelMixin = require('../mixins/page_model.coffee')
 updateIndicatorMixin = require('../mixins/update_indicator_data.coffee')
-indicatorHeadlinesMixin = require('../mixins/indicator_headlines.coffee')
 
 _.extend(indicatorSchema.methods, pageModelMixin.methods)
 _.extend(indicatorSchema.statics, pageModelMixin.statics)
 _.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
 _.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
-_.extend(indicatorSchema.methods, indicatorHeadlinesMixin.methods)
-_.extend(indicatorSchema.statics, indicatorHeadlinesMixin.statics)
 
 replaceThemeNameWithId = (indicators) ->
   Theme = require('./theme').model
@@ -234,7 +231,8 @@ indicatorSchema.methods.generateMetadataCSV = ->
     attributes.push @theme?.title
     attributes.push @indicatorDefinition?.period
 
-    @getNewestHeadline()
+    headlineService = new HeadlineService(indicator)
+    headlineService.getNewestHeadline()
   ).then((newestHeadline)=>
     xAxis = @indicatorDefinition?.xAxis
 
