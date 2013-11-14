@@ -17,15 +17,18 @@ test("#populateIndicatorRecencyStats given themes populated
   outOfDateIndicator = new Indicator()
   outOfDateIndicator.narrativeRecency = 'Out of date'
 
-  theme.indicators = [upToDateIndicator, outOfDateIndicator]
+  anotherOutOfDateIndicator = new Indicator()
+  anotherOutOfDateIndicator.narrativeRecency = 'Out of date'
+
+  theme.indicators = [upToDateIndicator, outOfDateIndicator, anotherOutOfDateIndicator]
 
   ThemePresenter.populateIndicatorRecencyStats([theme])
 
   assert.property theme, 'outOfDateIndicatorCount',
     "Expected the outOfDateIndicatorCount to be populated"
 
-  assert.strictEqual theme.outOfDateIndicatorCount, 1,
-    "Expected the outOfDateIndicatorCount to be 1"
+  assert.strictEqual theme.outOfDateIndicatorCount, 2,
+    "Expected the outOfDateIndicatorCount to be 2"
 
   assert.property upToDateIndicator, 'isUpToDate',
     "Expected the indicators to have an 'isUpToDate' attribute"

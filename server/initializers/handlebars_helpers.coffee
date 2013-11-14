@@ -26,9 +26,6 @@ hbs.registerHelper('themeIconClass', (title) ->
   return themeIconMap[title]
 )
 
-hbs.registerHelper('ifIndicatorRecencyTextOutOfDate', (text, options) ->
-  if HeadlineService.narrativeRecencyTextIsUpToDate(text)
-    options.inverse(@)
-  else
-    options.fn(@)
+hbs.registerHelper('consoleLog', (thing) ->
+  console.log thing
 )

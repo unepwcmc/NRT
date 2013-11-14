@@ -9,6 +9,6 @@ module.exports = class ThemePresenter
         indicator.isUpToDate = HeadlineService.narrativeRecencyTextIsUpToDate(
           indicator.narrativeRecency
         )
-        if indicator.isUpToDate
+        unless indicator.isUpToDate
           theme.outOfDateIndicatorCount++
 

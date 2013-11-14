@@ -48,16 +48,19 @@
         {{#themes}}
           <li data-theme-name="#theme-{{css-classify title}}">
             <h4>{{title}}</h4>
+            {{#if outOfDateIndicatorCount}}
+              {{outOfDateIndicatorCount}} indicators are out of date >
+            {{/if}}
             <ul class="indicator-recency-list">
               {{#each indicators}}
-                {{#ifIndicatorRecencyTextOutOfDate this.narrativeRecency}}
+                {{#unless isUpToDate}}
                   <a href="/indicators/{{id}}">
                     <li>
                         <span class="status {{css-classify narrativeRecency}}"></span>
                         <span>{{title}}</span>
                     </li>
                   </a>
-                {{/ifIndicatorRecencyTextOutOfDate}}
+                {{/unless}}
               {{else}}
                 <li>
                   <span>All indicators up to date.</spam>

@@ -1,5 +1,6 @@
 Indicator = require('../models/indicator').model
 Theme = require('../models/theme').model
+ThemePresenter = require('../lib/presenters/theme')
 _ = require('underscore')
 async = require('async')
 Q = require('q')
@@ -12,7 +13,11 @@ exports.index = (req, res) ->
       return res.send(500, "Error fetching the themes")
 
     Theme.populateDescriptionsFromPages(themes).then(->
+
+      ThemePresenter.populateIndicatorRecencyStats(themes)
+
       res.render "themes/index", themes: themes
+
     ).fail((err)->
       console.error err
       console.error err.stack
