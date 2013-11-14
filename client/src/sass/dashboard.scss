@@ -543,14 +543,21 @@ div.row.row-2 {
 
 aside.theme-recency {
   width: 200px;
-  margin-top: 96px;
+  margin: 71px 20px 0 0;
+  float:left;
+
+  h2 {
+    color: #008ed6;
+    border-bottom: 1px solid #dddddd;
+    font-size: 2.45em;
+    padding-bottom: 10px;
+  }
 
   ul.side-theme-list {
     li {
       cursor: pointer;
 
       h4 {
-        border-bottom: 1px solid #dddddd;
         font-size: 15px;
         color: #008ed6;
         cursor: pointer;

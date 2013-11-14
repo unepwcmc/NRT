@@ -27,6 +27,31 @@
 
 <div class="content">
   <div class="indicators-container">
+    <aside class="content-sidebar theme-recency">
+      <h2>Themes</h2>
+      <ul class="side-theme-list">
+        {{#themes}}
+          <li data-theme-name="#theme-{{css-classify title}}">
+            <h4>{{title}}</h4>
+            {{#if outOfDateIndicatorCount}}
+              <p>{{outOfDateIndicatorCount}} indicators are out of date </p>
+            {{/if}}
+            <ul class="indicator-recency-list">
+              {{#each indicators}}
+                {{#unless isUpToDate}}
+                  <a href="/indicators/{{id}}">
+                    <li>
+                        <span class="status {{css-classify narrativeRecency}}"></span>
+                        <span>{{title}}</span>
+                    </li>
+                  </a>
+                {{/unless}}
+              {{/each}}
+            </ul>
+          </li>
+        {{/themes}}
+      </ul>
+    </aside>
     <div class="theme-list">
       {{#themes}}
       <div class="theme-block" id="theme-{{css-classify title}}">
@@ -43,33 +68,5 @@
       </div>
       {{/themes}}
     </div>
-    <aside class="content-sidebar theme-recency">
-      <ul class="side-theme-list">
-        {{#themes}}
-          <li data-theme-name="#theme-{{css-classify title}}">
-            <h4>{{title}}</h4>
-            {{#if outOfDateIndicatorCount}}
-              {{outOfDateIndicatorCount}} indicators are out of date >
-            {{/if}}
-            <ul class="indicator-recency-list">
-              {{#each indicators}}
-                {{#unless isUpToDate}}
-                  <a href="/indicators/{{id}}">
-                    <li>
-                        <span class="status {{css-classify narrativeRecency}}"></span>
-                        <span>{{title}}</span>
-                    </li>
-                  </a>
-                {{/unless}}
-              {{else}}
-                <li>
-                  <span>All indicators up to date.</spam>
-                </li>
-              {{/each}}
-            </ul>
-          </li>
-        {{/themes}}
-      </ul>
-    </aside>
   </div>
 </div>
