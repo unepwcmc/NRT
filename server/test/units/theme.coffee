@@ -2,7 +2,6 @@ assert = require('chai').assert
 helpers = require '../helpers'
 Theme = require('../../models/theme').model
 Indicator = require('../../models/indicator').model
-helpers = require '../helpers'
 async = require('async')
 Q = require('q')
 _ = require('underscore')

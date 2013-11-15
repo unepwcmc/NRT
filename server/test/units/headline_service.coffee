@@ -5,7 +5,7 @@ _ = require('underscore')
 Q = require 'q'
 sinon = require 'sinon'
 
-HeadlineService = require('../../services/headline')
+HeadlineService = require('../../lib/services/headline')
 Indicator = require('../../models/indicator').model
 IndicatorData = require('../../models/indicator_data').model
 Page = require('../../models/page').model
@@ -375,4 +375,14 @@ the given indicators", (done)->
     calculateRecencyStub.restore()
     done(err)
   )
+)
+
+test("#narrativeRecencyTextIsUpToDate given text which is in the list of up to
+date statuses returns true", ->
+  assert.isTrue HeadlineService.narrativeRecencyTextIsUpToDate('Up to date')
+)
+
+test("#narrativeRecencyTextIsUpToDate given text which is not in the list of up to
+date statuses returns false", ->
+  assert.isFalse HeadlineService.narrativeRecencyTextIsUpToDate('Out of date')
 )

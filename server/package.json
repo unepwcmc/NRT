@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit --reporter spec",
+    "test": "NODE_ENV=test mocha test/**/*.coffee test/**/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit --reporter spec",
     "test-debug": "NODE_ENV=test mocha test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit --reporter spec --debug",
     "start": "supervisor -e 'node|js|json|coffee|hbs' ./bin/server.coffee",
     "debug": "coffee --nodejs --debug ./bin/server.coffee",

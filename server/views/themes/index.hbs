@@ -10,12 +10,28 @@
 
       var scrollToTheme = function(event) {
         var selectorToScrollTo = $(event.currentTarget).attr('data-theme-name');
-        scrollToElementWithOffset(selectorToScrollTo, -50);
+        scrollToElementWithOffset(selectorToScrollTo, -79);
         event.stopPropagation();
       };
 
+      var toggleIndicatorList = function(event) {
+        var trayOpenIndicator = $(event.currentTarget).find('.tray-open-indicator');
+        var indicatorList = $(event.currentTarget).next('.indicator-recency-list');
+
+        if (trayOpenIndicator.hasClass('icon-angle-down')) {
+          trayOpenIndicator.removeClass('icon-angle-down');
+          trayOpenIndicator.addClass('icon-angle-up');
+        } else {
+          trayOpenIndicator.removeClass('icon-angle-up');
+          trayOpenIndicator.addClass('icon-angle-down');
+        }
+
+        indicatorList.toggle(400);
+      }
+
       $(document).ready(function() {
         $('.side-theme-list > li').click(scrollToTheme);
+        $('.side-theme-list .out-of-date-indicator-count').click(toggleIndicatorList);
       });
     })();
   </script>
@@ -27,6 +43,35 @@
 
 <div class="content">
   <div class="indicators-container">
+    <aside class="content-sidebar theme-recency">
+      <h2>Themes</h2>
+      <ul class="side-theme-list">
+        {{#themes}}
+          <li data-theme-name="#theme-{{css-classify title}}">
+            <h4>{{title}}</h4>
+            {{#if outOfDateIndicatorCount}}
+              <span class="out-of-date-indicator-count">
+                {{outOfDateIndicatorCount}} indicators are out of date
+                <i class="icon-angle-down tray-open-indicator"></i>
+              </span>
+            {{/if}}
+            <ul class="indicator-recency-list">
+              {{#each indicators}}
+                {{#unless isUpToDate}}
+                  <a href="/indicators/{{id}}">
+                    <li>
+                        <span class="status {{css-classify narrativeRecency}}"></span>
+                        <span>{{title}}</span>
+                    </li>
+                  </a>
+                {{/unless}}
+              {{/each}}
+              <hr/>
+            </ul>
+          </li>
+        {{/themes}}
+      </ul>
+    </aside>
     <div class="theme-list">
       {{#themes}}
       <div class="theme-block" id="theme-{{css-classify title}}">
@@ -43,28 +88,5 @@
       </div>
       {{/themes}}
     </div>
-    <aside class="content-sidebar theme-recency">
-      <ul class="side-theme-list">
-        {{#themes}}
-          <li data-theme-name="#theme-{{css-classify title}}">
-            <h4>{{title}}</h4>
-            <ul class="indicator-recency-list">
-              {{#each indicators}}
-                  <a href="/indicators/{{id}}">
-                    <li>
-                        <span class="status {{css-classify narrativeRecency}}"></span>
-                        <span>{{title}}</span>
-                    </li>
-                  </a>
-              {{else}}
-                <li>
-                  <span>All indicators up to date.</spam>
-                </li>
-              {{/each}}
-            </ul>
-          </li>
-        {{/themes}}
-      </ul>
-    </aside>
   </div>
 </div>

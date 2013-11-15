@@ -10,7 +10,7 @@ Indicator = require('../../models/indicator').model
 IndicatorData = require('../../models/indicator_data').model
 Page = require('../../models/page').model
 
-HeadlineService = require '../../services/headline'
+HeadlineService = require '../../lib/services/headline'
 
 suite('Indicator')
 

@@ -1,7 +1,7 @@
 mongoose = require('mongoose')
 async = require('async')
 _ = require('underscore')
-HeadlineService = require('../services/headline.coffee')
+HeadlineService = require('../lib/services/headline.coffee')
 sectionNestingModel = require('../mixins/section_nesting_model.coffee')
 SectionSchema = require('./section.coffee').schema
 Q = require('q')

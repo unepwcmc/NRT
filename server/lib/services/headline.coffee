@@ -27,6 +27,14 @@ getPeriodEnd = (date, period) ->
     .subtract('days', 1)
     .format("D MMM YYYY")
 
+NARRATIVE_RECENCY_STATES =
+  inDate:
+    upToDate: "Up to date"
+    noData: "No Data"
+  outOfDate:
+    outOfDate: "Out of date"
+
+
 class HeadlineService
   constructor: (@indicator) ->
 
@@ -48,8 +56,14 @@ class HeadlineService
 
     return headlines
 
+  @narrativeRecencyTextIsUpToDate: (text) ->
+    upToDateStates = _.map(NARRATIVE_RECENCY_STATES.inDate, (value) ->
+      value
+    )
+    _.contains(upToDateStates, text)
+
   convertDataToHeadline: (data) ->
-    Indicator = require('../models/indicator.coffee').model
+    Indicator = require('../../models/indicator.coffee').model
 
     data = @parseDateInHeadlines(data)
     data = HeadlineService.roundHeadlineValues(data)
@@ -75,17 +89,17 @@ class HeadlineService
     ).then( (dataHeadline) =>
 
       unless dataHeadline?
-        return deferred.resolve("No Data")
+        return deferred.resolve(NARRATIVE_RECENCY_STATES.inDate.noData)
 
       pageHeadline = @indicator.page.headline
 
       unless pageHeadline? && pageHeadline.periodEnd?
-        return deferred.resolve("Out of date")
+        return deferred.resolve(NARRATIVE_RECENCY_STATES.outOfDate.outOfDate)
 
       if moment(pageHeadline.periodEnd).isBefore(dataHeadline.periodEnd)
-        deferred.resolve("Out of date")
+        deferred.resolve(NARRATIVE_RECENCY_STATES.outOfDate.outOfDate)
       else
-        deferred.resolve("Up to date")
+        deferred.resolve(NARRATIVE_RECENCY_STATES.inDate.upToDate)
 
     ).fail( (err) ->
       deferred.reject(err)
@@ -94,7 +108,7 @@ class HeadlineService
     return deferred.promise
 
   getRecentHeadlines: (amount) ->
-    Indicator = require('../models/indicator.coffee').model
+    Indicator = require('../../models/indicator.coffee').model
 
     deferred = Q.defer()
 

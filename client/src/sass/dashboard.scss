@@ -202,6 +202,7 @@ div.row.row-2 {
 .indicators-container {
    .theme-list {
      width: 709px;
+     margin-left: 260px;
    }
 
   .report-content, .theme-list {
@@ -543,23 +544,64 @@ div.row.row-2 {
 
 aside.theme-recency {
   width: 200px;
-  margin-top: 96px;
+  margin: 71px 20px 0 0;
+  position: fixed;
+  top: 49px;
+
+  h2 {
+    color: #008ed6;
+    border-bottom: 1px solid #dddddd;
+    font-size: 2.45em;
+    padding-bottom: 10px;
+  }
 
   ul.side-theme-list {
+    margin-top: 6px;
+
     li {
       cursor: pointer;
+      margin-bottom: 2px;
 
       h4 {
-        border-bottom: 1px solid #dddddd;
-        font-size: 15px;
+        font-size: 19px;
         color: #008ed6;
         cursor: pointer;
+        margin-bottom: -3px;
+
         &:hover{
           color: #0aadff;
          }
       }
 
+      .out-of-date-indicator-count {
+
+        .tray-open-indicator {
+          margin: 7px 18px 0 0;
+          border-radius: 10px;
+          padding: 1px 3px;
+          background-color: #949494;
+          color: #EEE;
+          display: block;
+          float:right;
+
+          &.icon-angle-up {
+            padding: 0 3px 2px;
+          }
+        }
+
+        &:hover {
+          color: #0AADFF;
+
+          .tray-open-indicator {
+            background-color: #0AADFF;
+          }
+        }
+      }
+
       ul.indicator-recency-list {
+        display:none;
+        margin-top: 7px;
+
         a:hover{
           color: #008ed6;
         }
@@ -576,6 +618,13 @@ aside.theme-recency {
               width: 10px;
             }
           }
+        }
+
+        hr {
+          width: 80px;
+          width: 80px;
+          border: 1px solid #e4e4e4;
+          border-bottom: 0;
         }
       }
     }
