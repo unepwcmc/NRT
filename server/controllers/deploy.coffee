@@ -13,7 +13,15 @@ exports.index = (req, res) ->
     return res.send 500, "Only commits from deploy branch are accepted"
 
   console.log "Forking #{process.cwd()}/bin/deploy.coffee"
-  cp.fork("#{process.cwd()}/bin/deploy.coffee")
+
+  deployProcess = cp.fork("#{process.cwd()}/bin/deploy.coffee")
+  theProcess.stdout.on('data', (data) ->
+    console.log(data.toString())
+  )
+  theProcess.stderr.on('data', (data) ->
+    console.log("Error: #{data.toString()}")
+  )
+
   console.log "Forked!"
 
   res.send 200
