@@ -1,5 +1,4 @@
-
-exports.printProcessMessages = function(theProcess) {
+printProcessMessages = function(theProcess) {
   theProcess.stdout.on('data', function (data) {
     console.log(data.toString());
   });
@@ -9,7 +8,7 @@ exports.printProcessMessages = function(theProcess) {
   });
 };
 
-exports.usingWindows = function() {
+usingWindows = function() {
   return new RegExp("^win").test(process.platform);
 };
 
