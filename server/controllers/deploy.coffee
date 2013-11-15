@@ -13,7 +13,7 @@ exports.index = (req, res) ->
     return res.send 500, "Only commits from deploy branch are accepted"
 
   console.log "Forking deploy.coffee"
-  cp.fork('bin/deploy.coffee')
+  cp.fork("#{process.cwd()}/bin/deploy.coffee")
   console.log "Forked!"
 
   res.send 200
