@@ -15,7 +15,17 @@
       };
 
       var toggleIndicatorList = function(event) {
+        var trayOpenIndicator = $(event.currentTarget).find('.tray-open-indicator');
         var indicatorList = $(event.currentTarget).next('.indicator-recency-list');
+
+        if (trayOpenIndicator.hasClass('icon-angle-down')) {
+          trayOpenIndicator.removeClass('icon-angle-down');
+          trayOpenIndicator.addClass('icon-angle-up');
+        } else {
+          trayOpenIndicator.removeClass('icon-angle-up');
+          trayOpenIndicator.addClass('icon-angle-down');
+        }
+
         indicatorList.toggle(400);
       }
 
@@ -42,6 +52,7 @@
             {{#if outOfDateIndicatorCount}}
               <span class="out-of-date-indicator-count">
                 {{outOfDateIndicatorCount}} indicators are out of date
+                <i class="icon-angle-down tray-open-indicator"></i>
               </span>
             {{/if}}
             <ul class="indicator-recency-list">

@@ -568,6 +568,22 @@ aside.theme-recency {
          }
       }
 
+      .out-of-date-indicator-count {
+        .tray-open-indicator {
+          margin: 7px 18px 0 0;
+          border-radius: 10px;
+          padding: 1px 3px;
+          background-color: #949494;
+          color: #EEE;
+          display: block;
+          float:right;
+
+          &.icon-angle-up {
+            padding: 0 3px 2px;
+          }
+        }
+      }
+
       ul.indicator-recency-list {
         display:none;
 
