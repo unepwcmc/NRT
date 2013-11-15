@@ -7,7 +7,7 @@ getBranchFromRef = (ref) ->
 exports.index = (req, res) ->
   parsedPayload = JSON.parse(req.body.payload)
 
-  console.log "Got deploy message from #{parsePayload.ref}"
+  console.log "Got deploy message from #{parsedPayload.ref}"
   unless getBranchFromRef(parsedPayload.ref) is "deploy"
     console.log "Ignoring, only deploys on pushes from deploy"
     return res.send 500, "Only commits from deploy branch are accepted"
