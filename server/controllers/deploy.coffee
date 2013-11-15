@@ -15,10 +15,10 @@ exports.index = (req, res) ->
   console.log "Forking #{process.cwd()}/bin/deploy.coffee"
 
   deployProcess = cp.fork("#{process.cwd()}/bin/deploy.coffee")
-  theProcess.stdout.on('data', (data) ->
+  deployProcess.stdout.on('data', (data) ->
     console.log(data.toString())
   )
-  theProcess.stderr.on('data', (data) ->
+  deployProcess.stderr.on('data', (data) ->
     console.log("Error: #{data.toString()}")
   )
 
