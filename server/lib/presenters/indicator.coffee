@@ -8,3 +8,12 @@ module.exports = class IndicatorPresenter
 
   populateSourceFromType: ->
     @indicator.source = TYPE_SOURCE_MAP[@indicator.type]
+
+  populateHeadlineRangesFromHeadlines: (headlines) ->
+    @indicator.headlineRanges = {}
+    xAxis = @indicator.indicatorDefinition?.xAxis
+
+    if xAxis?
+      @indicator.headlineRanges =
+        oldest: headlines[0][xAxis]
+        newest: headlines[headlines.length - 1][xAxis]
