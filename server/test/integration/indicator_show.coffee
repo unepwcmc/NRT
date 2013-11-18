@@ -5,6 +5,7 @@ url = require('url')
 _ = require('underscore')
 async = require('async')
 Q = require('q')
+sinon = require('sinon')
 passportStub = require 'passport-stub'
 
 Indicator = require('../../models/indicator').model
@@ -28,6 +29,34 @@ test("When given a valid indicator, I should get a 200 and see the title", (done
         done()
       catch e
         done(e)
+  )
+)
+
+test("When given a valid indicator, I should get a 200 and see the source", (done)->
+  indicator = new Indicator()
+
+  theSource = 'The indicator data source'
+  IndicatorPresenter = require('../../lib/presenters/indicator')
+  populateSourceStub = sinon.stub(IndicatorPresenter::, 'populateSourceFromType', ->
+    @indicator.source = theSource
+  )
+
+  indicator.save( (err, indicator) ->
+    request.get {
+      url: helpers.appurl("/indicators/#{indicator.id}")
+    }, (err, res, body) ->
+      try
+        assert.equal res.statusCode, 200
+
+        assert.strictEqual populateSourceStub.callCount, 1,
+          "Expected IndicatorPresenter::populateSourceFromType to be called"
+
+        assert.match body, new RegExp(".*#{theSource}.*")
+        done()
+      catch e
+        done(e)
+      finally
+        populateSourceStub.restore()
   )
 )
 

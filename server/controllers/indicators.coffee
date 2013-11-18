@@ -1,6 +1,7 @@
 Indicator = require('../models/indicator').model
 Theme = require('../models/theme').model
 HeadlineService = require('../lib/services/headline')
+IndicatorPresenter = require('../lib/presenters/indicator')
 
 _ = require('underscore')
 async = require('async')
@@ -33,6 +34,8 @@ exports.show = (req, res) ->
   ).then( (indicatorObject) ->
     indicatorObject.headlines = {}
     xAxis = theIndicator.indicatorDefinition?.xAxis
+
+    new IndicatorPresenter(indicatorObject).populateSourceFromType()
 
     if xAxis?
       indicatorObject.headlines =
