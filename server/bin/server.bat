@@ -12,4 +12,4 @@ if %AUTH_TOKEN%==changeme (
   EXIT
 )
 
-forever ./bin/server.coffee
+forever -c coffee ./bin/server.coffee
