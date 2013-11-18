@@ -1,6 +1,9 @@
 assert = require('chai').assert
+sinon = require('sinon')
+Q = require('q')
 IndicatorPresenter = require('../../../lib/presenters/indicator')
 Indicator = require('../../../models/indicator').model
+HeadlineService = require('../../../lib/services/headline')
 
 suite('IndicatorPresentor')
 
@@ -44,4 +47,83 @@ populates a 'headlineRanges' attribute with the oldest and newest xAxis values",
 
   assert.strictEqual indicator.headlineRanges.newest, 2008,
     "Expected the newest a headline value to be 2008"
+)
+
+test(".populateIsUpToDate when narrativeRecency is already present populates 'isUpToDate'
+using HeadlineService.narrativeRecencyTextIsUpToDate", (done) ->
+  indicator = new Indicator()
+  indicator.narrativeRecency = 'Out of date'
+
+  calculateNarrativeRecencySpy = sinon.spy(
+    HeadlineService::, 'calculateRecencyOfHeadline'
+  )
+
+  isUpToDateStub = sinon.stub(HeadlineService, 'narrativeRecencyTextIsUpToDate', ->
+    return true
+  )
+
+  new IndicatorPresenter(indicator).populateIsUpToDate().then(->
+    try
+
+      assert.strictEqual calculateNarrativeRecencySpy.callCount, 0,
+        "Expected HeadlineServices.calculateRecencyOfHeadline not to be called once"
+      assert.strictEqual isUpToDateStub.callCount, 1,
+        "Expected HeadlineServices.narrativeRecencyTextIsUpToDate to be called once"
+
+      assert.property indicator, 'isUpToDate',
+        "Expected the isUpToDate attribute to be populated"
+      assert.isTrue indicator.isUpToDate,
+        "Expected the isUpToDate attribute to be populated"
+
+      done()
+    catch e
+      done(e)
+    finally
+      calculateNarrativeRecencySpy.restore()
+      isUpToDateStub.restore()
+  ).fail((e)->
+    calculateNarrativeRecencySpy.restore()
+    isUpToDateStub.restore()
+    done(e)
+  )
+)
+
+test(".populateIsUpToDate when narrativeRecency isn't already present
+calls HeadlineService.calculateRecencyOfHeadline then populates 'isUpToDate'
+using HeadlineService.narrativeRecencyTextIsUpToDate", (done)->
+  indicator = new Indicator()
+
+  calculateNarrativeRecencyStub = sinon.stub(
+    HeadlineService::, 'calculateRecencyOfHeadline', ->
+      Q.fcall(-> 'Out of date')
+  )
+
+  isUpToDateStub = sinon.stub(HeadlineService, 'narrativeRecencyTextIsUpToDate', ->
+    return true
+  )
+
+  new IndicatorPresenter(indicator).populateIsUpToDate().then(->
+    try
+
+      assert.strictEqual calculateNarrativeRecencyStub.callCount, 1,
+        "Expected HeadlineServices.calculateNarrativeRecencyStub to be called once"
+      assert.strictEqual isUpToDateStub.callCount, 1,
+        "Expected HeadlineServices.narrativeRecencyTextIsUpToDate to be called once"
+
+      assert.property indicator, 'isUpToDate',
+        "Expected the isUpToDate attribute to be populated"
+      assert.isTrue indicator.isUpToDate,
+        "Expected the isUpToDate attribute to be populated"
+
+      done()
+    catch e
+      done(e)
+    finally
+      calculateNarrativeRecencyStub.restore()
+      isUpToDateStub.restore()
+  ).fail((e)->
+    calculateNarrativeRecencyStub.restore()
+    isUpToDateStub.restore()
+    done(e)
+  )
 )
