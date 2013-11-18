@@ -11,7 +11,7 @@ Libs.LeafletHelpers =
       data, indicatorDefinition
     )
 
-    text = "<h4>#{subIndicatorValue}</h4>"
+    text = "<h3>#{subIndicatorValue}</h3>"
     text += "#{headline.text}: #{headline.value} #{headline.unit}"
 
   defaultIconOptions:

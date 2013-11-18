@@ -18,7 +18,7 @@ returns the headline values', ->
     "Expected the headline to include the indicator data text"
   assert.strictEqual headline.value, indicatorData.theValue,
     "Expected the headline to include the indicator data value"
-  assert.strictEqual headline.unit, indicatorData.short_unit,
+  assert.strictEqual headline.unit, indicatorDefinition.short_unit,
     "Expected the headline to include the indicator data unit"
 )
 
