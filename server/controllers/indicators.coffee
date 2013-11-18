@@ -32,15 +32,10 @@ exports.show = (req, res) ->
 
     theIndicator.toObjectWithNestedPage(draft: draftMode)
   ).then( (indicatorObject) ->
-    indicatorObject.headlines = {}
-    xAxis = theIndicator.indicatorDefinition?.xAxis
+    presenter = new IndicatorPresenter(indicatorObject)
 
-    new IndicatorPresenter(indicatorObject).populateSourceFromType()
-
-    if xAxis?
-      indicatorObject.headlines =
-        oldest: theHeadlines[0][xAxis]
-        newest: theHeadlines[theHeadlines.length - 1][xAxis]
+    presenter.populateHeadlineRangesFromHeadlines(theHeadlines)
+    presenter.populateSourceFromType()
 
     res.render("indicators/show",
       indicator: indicatorObject,

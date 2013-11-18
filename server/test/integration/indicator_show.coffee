@@ -60,6 +60,38 @@ test("When given a valid indicator, I should get a 200 and see the source", (don
   )
 )
 
+test("When given a valid indicator with headlines,
+  it returns 200 and shows the headline ranges", (done)->
+  indicator = new Indicator()
+
+  headlines =
+    oldest: '13-11-2011'
+    newest: '13-11-2013'
+  IndicatorPresenter = require('../../lib/presenters/indicator')
+  populateHeadlineRangeStub = sinon.stub(IndicatorPresenter::, 'populateHeadlineRangesFromHeadlines', ->
+    @indicator.headlineRanges = headlines
+  )
+
+  indicator.save( (err, indicator) ->
+    request.get {
+      url: helpers.appurl("/indicators/#{indicator.id}")
+    }, (err, res, body) ->
+      try
+        assert.equal res.statusCode, 200
+
+        assert.strictEqual populateHeadlineRangeStub.callCount, 1,
+          "Expected IndicatorPresenter::populateHeadlineRangesFromHeadlines to be called"
+
+        assert.match body, new RegExp(".*#{headlines.oldest}.*")
+        assert.match body, new RegExp(".*#{headlines.newest}.*")
+        done()
+      catch e
+        done(e)
+      finally
+        populateHeadlineRangeStub.restore()
+  )
+)
+
 test("When given an indicator that doesn't exist, I should get a 404 response", (done)->
   indicatorId = new Indicator().id
 
