@@ -1,5 +1,4 @@
-CommandRunner = require('./command-runner')
-cp = require('child_process')
+CommandRunner = require('../bin/command-runner')
 
 getBranchFromRef = (ref) ->
   refParts = ref.split("/")
@@ -15,8 +14,13 @@ exports.index = (req, res) ->
 
   console.log "Forking #{process.cwd()}/bin/deploy.coffee"
 
-  deployProcess = CommandRunner "coffee #{process.cwd()}/bin/deploy.coffee"
+  deployProcess = CommandRunner.spawn "coffee #{process.cwd()}/bin/deploy.coffee"
 
   console.log "Forked!"
+
+  deployProcess.on('close', ->
+    console.log "deploy finished, restarting server"
+    process.exit()
+  )
 
   res.send 200
