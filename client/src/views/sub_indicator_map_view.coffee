@@ -4,12 +4,15 @@ window.Libs ||= {}
 
 Libs.LeafletHelpers =
   generatePopupText: (data, indicatorDefinition) ->
-    text = "<table>"
-    for fieldDefinition in indicatorDefinition.fields
-      value = data[fieldDefinition.name]
-      if typeof value is 'string' or typeof value is 'number'
-        text += "<tr><th>#{fieldDefinition.name}</th><td>#{value}</td></tr>"
-    text += "</table>"
+    headline = Nrt.Presenters.IndicatorDataPresenter.getHeadlineFromData(
+      data, indicatorDefinition
+    )
+    subIndicatorValue = Nrt.Presenters.IndicatorDataPresenter.getSubIndicatorValueFromData(
+      data, indicatorDefinition
+    )
+
+    text = "<h3>#{subIndicatorValue}</h3>"
+    text += "#{headline.text}: #{headline.value} #{headline.unit}"
 
   defaultIconOptions:
     iconUrl: '/images/map-marker.png'
