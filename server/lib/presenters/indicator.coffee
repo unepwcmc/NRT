@@ -40,3 +40,13 @@ module.exports = class IndicatorPresenter
       ).fail(deferred.reject)
 
     return deferred.promise
+
+  populateNarrativeRecency: ->
+    deferred = Q.defer()
+
+    new HeadlineService(@indicator).calculateRecencyOfHeadline().then((recency)=>
+      @indicator.narrativeRecency = recency
+      deferred.resolve()
+    ).fail(deferred.reject)
+
+    return deferred.promise

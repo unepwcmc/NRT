@@ -127,3 +127,33 @@ using HeadlineService.narrativeRecencyTextIsUpToDate", (done)->
     done(e)
   )
 )
+
+test(".populateNarrativeRecency populates a 'narrativeRecency' attribute with a
+call to headlineService::calculateRecencyOfHeadline", (done) ->
+  headlineRecency = 'Out of date'
+  calculateRecencyStub = sinon.stub(HeadlineService::, 'calculateRecencyOfHeadline', ->
+    Q.fcall(-> headlineRecency)
+  )
+
+  indicator = {}
+  presenter = new IndicatorPresenter(indicator)
+
+  presenter.populateNarrativeRecency().then(->
+    try
+      assert.strictEqual calculateRecencyStub.callCount, 1,
+        "Expected HeadlineService::calculateRecencyOfHeadline to be called once"
+
+      assert.strictEqual indicator.narrativeRecency, headlineRecency,
+        "Expected the narrative recency to be set to the headline recency"
+
+      done()
+    catch e
+      done(e)
+    finally
+      calculateRecencyStub.restore()
+  ).fail((e)->
+    calculateRecencyStub.restore()
+    done(e)
+  )
+
+)
