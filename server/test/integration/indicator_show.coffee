@@ -84,11 +84,55 @@ test("When given a valid indicator with headlines,
 
         assert.match body, new RegExp(".*#{headlines.oldest}.*")
         assert.match body, new RegExp(".*#{headlines.newest}.*")
+
         done()
       catch e
         done(e)
       finally
         populateHeadlineRangeStub.restore()
+  )
+)
+
+test("When given a valid indicator it returns 200 and
+  shows the narrative recency and if it is up to date", (done)->
+  IndicatorPresenter = require('../../lib/presenters/indicator')
+  indicator = new Indicator()
+
+  narrativeRecency = 'Out-of-date'
+  populateNarrativeRecencyStub = sinon.stub(IndicatorPresenter::, 'populateNarrativeRecency', ->
+    Q.fcall(=> @indicator.narrativeRecency = narrativeRecency)
+  )
+
+  populateIsUpToDateStub = sinon.stub(IndicatorPresenter::, 'populateIsUpToDate', ->
+    Q.fcall(=> @indicator.isUpToDate = false)
+  )
+
+  indicator.save( (err, indicator) ->
+    request.get {
+      url: helpers.appurl("/indicators/#{indicator.id}")
+    }, (err, res, body) ->
+
+      try
+        assert.equal res.statusCode, 200
+
+        assert.strictEqual populateNarrativeRecencyStub.callCount, 1,
+          "Expected IndicatorPresenter::populateNarrativeRecency to be called"
+
+        assert.strictEqual populateIsUpToDateStub.callCount, 1,
+          "Expected IndicatorPresenter::populateIsUpToDate to be called"
+
+        assert.match body, new RegExp(".*#{narrativeRecency}.*"),
+          "Expected the page to include the narrative recency state"
+
+        assert.match body, new RegExp(".*\.icon-warning-sign"),
+          "Expected the warnign sign to show, as the indicator is out of date"
+
+        done()
+      catch e
+        done(e)
+      finally
+        populateNarrativeRecencyStub.restore()
+        populateIsUpToDateStub.restore()
   )
 )
 

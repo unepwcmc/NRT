@@ -8,7 +8,7 @@ async = require('async')
 Q = require('q')
 
 exports.show = (req, res) ->
-  theIndicator = theHeadlines = null
+  theIndicator = theHeadlines = theNarrativeRecency = null
 
   draftMode = req.path.match(/.*\/draft\/?$/)?
   return res.redirect('back') unless req.isAuthenticated() || !draftMode
@@ -30,10 +30,19 @@ exports.show = (req, res) ->
   ).then( (headlines) ->
     theHeadlines = headlines
 
+    new IndicatorPresenter(theIndicator).populateNarrativeRecency()
+  ).then(->
+    # Have to store this has it gets removed in the toObject call below
+    theNarrativeRecency = theIndicator.narrativeRecency
+
     theIndicator.toObjectWithNestedPage(draft: draftMode)
   ).then( (indicatorObject) ->
-    presenter = new IndicatorPresenter(indicatorObject)
 
+    # Have to restore this because mongoose squishes it on toObject
+    indicatorObject.narrativeRecency = theNarrativeRecency
+
+    presenter = new IndicatorPresenter(indicatorObject)
+    presenter.populateIsUpToDate()
     presenter.populateHeadlineRangesFromHeadlines(theHeadlines)
     presenter.populateSourceFromType()
 
