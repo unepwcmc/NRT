@@ -78,7 +78,7 @@
           <li>
             <h4>{{{t "indicator/metadata/frequency"}}}</h4>
             <span>{{indicator.indicatorDefinition.period}}</span>
-            <span class="recency-tag">
+            <span class="recency-tag {{#unless indicator.isUpToDate}}warning{{/unless}}">
               {{#unless indicator.isUpToDate}}
                 <i class="icon-warning-sign append"></i>
               {{/unless}}
