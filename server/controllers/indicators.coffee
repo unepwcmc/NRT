@@ -8,7 +8,7 @@ async = require('async')
 Q = require('q')
 
 exports.show = (req, res) ->
-  theIndicator = theHeadlines = theNarrativeRecency = null
+  theIndicator = theHeadlines = theNarrativeRecency = theIndicatorObject = null
 
   draftMode = req.path.match(/.*\/draft\/?$/)?
   return res.redirect('back') unless req.isAuthenticated() || !draftMode
@@ -37,18 +37,20 @@ exports.show = (req, res) ->
 
     theIndicator.toObjectWithNestedPage(draft: draftMode)
   ).then( (indicatorObject) ->
+    theIndicatorObject = indicatorObject
 
     # Have to restore this because mongoose squishes it on toObject
-    indicatorObject.narrativeRecency = theNarrativeRecency
+    theIndicatorObject.narrativeRecency = theNarrativeRecency
 
-    presenter = new IndicatorPresenter(indicatorObject)
-    presenter.populateIsUpToDate()
+    presenter = new IndicatorPresenter(theIndicatorObject)
     presenter.populateHeadlineRangesFromHeadlines(theHeadlines)
     presenter.populateSourceFromType()
+    presenter.populateIsUpToDate()
+  ).then(->
 
     res.render("indicators/show",
-      indicator: indicatorObject,
-      indicatorJSON: JSON.stringify(indicatorObject)
+      indicator: theIndicatorObject,
+      indicatorJSON: JSON.stringify(theIndicatorObject)
     )
   ).fail((err) ->
     console.error err
