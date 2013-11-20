@@ -32,7 +32,7 @@ exports.show = (req, res) ->
 
     new IndicatorPresenter(theIndicator).populateNarrativeRecency()
   ).then(->
-    # Have to store this has it gets removed in the toObject call below
+    # Have to store this as it gets removed in the toObject call below
     theNarrativeRecency = theIndicator.narrativeRecency
 
     theIndicator.toObjectWithNestedPage(draft: draftMode)
