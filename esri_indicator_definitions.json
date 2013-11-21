@@ -11,7 +11,8 @@
     "reduceField": "station",
     "ranges":[
       {"minValue": 70, "message": "Moderate"},
-      {"minValue": 42, "message": "Excellent"}
+      {"minValue": 42, "message": "Good"},
+      {"minValue": 0, "message": "Excellent"}
     ]
   },
   "NRT_AD_AirQuality:3": {
@@ -19,7 +20,8 @@
     "reduceField": "station",
     "ranges":[
       {"minValue": 148, "message": "Moderate"},
-      {"minValue": 120, "message": "Excellent"}
+      {"minValue": 110, "message": "Good"},
+      {"minValue": 0, "message": "Excellent"}
     ]
   },
   "NRT_AD_AirQuality:4": {
@@ -27,15 +29,17 @@
     "reduceField": "station",
     "ranges":[
       {"minValue": 830, "message": "Moderate"},
-      {"minValue": 440, "message": "Excellent"}
+      {"minValue": 440, "message": "Good"},
+      {"minValue": 0, "message": "Excellent"}
     ]
   },
   "NRT_AD_AirQuality:5": {
     "valueField": "value",
     "reduceField": "station",
     "ranges":[
-      {"minValue": 50, "message": "Moderate"},
-      {"minValue": 25, "message": "Excellent"}
+      {"minValue": 100, "message": "Moderate"},
+      {"minValue": 50, "message": "Good"},
+      {"minValue": 0, "message": "Excellent"}
     ]
   },
   "NRT_AD_MarineWQ:3": {
@@ -43,7 +47,8 @@
     "reduceField": "station",
     "ranges":[
       {"minValue": 260, "message": "Moderate"},
-      {"minValue": 90, "message": "Excellent"}
+      {"minValue": 90, "message": "Good"},
+      {"minValue": 0, "message": "Excellent"}
     ]
   },
   "NRT_AD_MarineWQ:4": {
@@ -51,7 +56,8 @@
     "reduceField": "station",
     "ranges":[
       {"minValue": 2000, "message": "Moderate"},
-      {"minValue": 200, "message": "Excellent"}
+      {"minValue": 150, "message": "Good"},
+      {"minValue": 0, "message": "Excellent"}
     ]
   }
 }
