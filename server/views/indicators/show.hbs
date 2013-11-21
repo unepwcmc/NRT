@@ -69,20 +69,25 @@
           </li>
           <li>
             <h4>{{{t "indicator/metadata/most_recent"}}}</h4>
-            <span>{{indicator.headlines.newest}}</span>
+            <span>{{indicator.headlineRanges.newest}}</span>
           </li>
           <li>
             <h4>{{{t "indicator/metadata/oldest_data"}}}</h4>
-            <span>{{indicator.headlines.oldest}}</span>
+            <span>{{indicator.headlineRanges.oldest}}</span>
           </li>
           <li>
             <h4>{{{t "indicator/metadata/frequency"}}}</h4>
             <span>{{indicator.indicatorDefinition.period}}</span>
-            <span class="recency-tag"><i class="icon-warning-sign append"></i>Outdated</span>
+            <span class="recency-tag {{#unless indicator.isUpToDate}}warning{{/unless}}">
+              {{#unless indicator.isUpToDate}}
+                <i class="icon-warning-sign append"></i>
+              {{/unless}}
+              {{indicator.narrativeRecency}}
+            </span>
           </li>
           <li>
             <h4>Source</h4>
-            <span><a class="source" href="">World Bank Database</a></span>
+            <span><a class="source" href="">{{indicator.source}}</a></span>
           </li>
         </ul>
       </section>
