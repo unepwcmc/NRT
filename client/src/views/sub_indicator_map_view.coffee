@@ -23,7 +23,7 @@ Libs.LeafletHelpers =
     shadowSize:   [0, 0]
 
 class Backbone.Views.SubIndicatorMapView extends Backbone.View
-  className: 'editable-visualisation map-visualisation'
+  className: 'section-visualisation map-visualisation'
 
   initialize: (options) ->
     @visualisation = options.visualisation

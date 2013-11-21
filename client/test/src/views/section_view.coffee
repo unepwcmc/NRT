@@ -181,3 +181,24 @@ test(".destroySection calls destroy on the section, save on the parent page,
   Helpers.assertCalledOnce(pageSaveStub)
   Helpers.assertCalledOnce(viewCloseSpy)
 )
+
+test(".editVisualisation does not open a report edit visualisation view 
+if section.isEditable returns false", ->
+  section = Factory.section()
+  section.isEditable = ->
+    return false
+
+  sinon.spy(Backbone.Views, "ReportEditVisualisationView")
+
+  view = new Backbone.Views.SectionView(section: section)
+
+  view.editVisualisation()
+
+  try
+    assert.strictEqual Backbone.Views.ReportEditVisualisationView.callCount, 0,
+      "Expected a ReportEditVisualisationView not to be created"
+  finally
+    view.close()
+    Backbone.Views.ReportEditVisualisationView.restore()
+
+)

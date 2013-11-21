@@ -2,7 +2,7 @@ window.Backbone ||= {}
 window.Backbone.Views ||= {}
 
 class Backbone.Views.MapView extends Backbone.View
-  className: 'editable-visualisation map-visualisation'
+  className: 'section-visualisation map-visualisation'
 
   initialize: (options) ->
     @visualisation = options.visualisation

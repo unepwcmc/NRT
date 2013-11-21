@@ -4,7 +4,7 @@ window.Backbone.Views ||= {}
 class Backbone.Views.TableView extends Backbone.View
   template: Handlebars.templates['table.hbs']
 
-  className: 'editable-visualisation visualisation-table-view'
+  className: 'section-visualisation visualisation-table-view'
 
   initialize: (options) ->
     @visualisation = options.visualisation

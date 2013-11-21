@@ -9,7 +9,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
   events:
     "click .add-narrative": "addNarrative"
     "click .add-visualisation": "chooseIndicatorForVisualisation"
-    "click .editable-visualisation": "editVisualisation"
+    "click .section-visualisation": "editVisualisation"
     "click .delete": "confirmDestroy"
 
   initialize: (options) ->
@@ -66,13 +66,14 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     @editVisualisation()
 
   editVisualisation: =>
-    @editVisualisationView = new Backbone.Views.ReportEditVisualisationView(
-      visualisation: @section.get('visualisation')
-    )
+    if @section.isEditable()
+      @editVisualisationView = new Backbone.Views.ReportEditVisualisationView(
+        visualisation: @section.get('visualisation')
+      )
 
-    @listenToOnce(@editVisualisationView, 'close', @render)
+      @listenToOnce(@editVisualisationView, 'close', @render)
 
-    $('body').append(@editVisualisationView.el)
+      $('body').append(@editVisualisationView.el)
 
   confirmDestroy: =>
     if confirm("Are you sure you want to delete this section?")
