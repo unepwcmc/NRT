@@ -48,7 +48,7 @@ The data feed for an indicator. `:id` is populated from the IDs listed in the ab
     },
     "periodStart": 1364778000000,
     "value": 50,
-    "text": "Poor"
+    "indicatorText": "Poor"
   }
 ]
 ```
