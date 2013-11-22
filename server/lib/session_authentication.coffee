@@ -16,6 +16,7 @@ module.exports = (req, res, next) ->
     return res.redirect('/login')
 
   return next() if /^\/login/.test(req.path)
+  return next() if /^\/deploy/.test(req.path)
   return next() if req.isAuthenticated() or _.contains(httpVerbWhitelist, req.method)
 
   return res.redirect('/login')
