@@ -57,6 +57,12 @@ exports.start = (port, callback) ->
   seedData()
 
   server = http.createServer(app).listen port, (err) ->
+    process.send('online') if process.send?
+    process.on('message', (message) ->
+      if message is 'shutdown'
+        process.exit(0)
+    )
+
     callback err, server
 
   return app
