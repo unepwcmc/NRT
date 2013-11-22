@@ -12,4 +12,4 @@ if %AUTH_TOKEN%==changeme (
   EXIT
 )
 
-naught start ./bin/server.js
+coffee server.coffee
