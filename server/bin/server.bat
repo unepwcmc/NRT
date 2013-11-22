@@ -12,4 +12,4 @@ if %AUTH_TOKEN%==changeme (
   EXIT
 )
 
-coffee server.coffee
+forever -c node .\bin\server.js
