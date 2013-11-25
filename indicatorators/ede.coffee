@@ -1,5 +1,6 @@
 request = require('request')
 fs      = require('fs')
+_       = require('underscore')
 
 EDE_API_URL = "http://geodev.grid.unep.ch/api"
 
@@ -14,7 +15,26 @@ class Ede
     unless @data?
       throw "You must call fetchDataFromService before indicatorating"
 
-    console.log @data
+    valueField = @indicatorDefinition.valueField
+
+    outputRows = []
+
+    for row in @data
+      value = row[valueField]
+      continue unless value?
+      text = @calculateIndicatorText(value)
+      outputRows.push(_.extend(row, text: text))
+
+    return @data
+
+  calculateIndicatorText: (value) ->
+    value = parseFloat(value)
+    ranges = @indicatorDefinition.ranges
+
+    for range in ranges
+      return range.message if value > range.minValue
+
+    return "Error: Value #{value} outside expected range"
 
   makeGetUrl: ->
     "#{EDE_API_URL}/countries/#{@countryCode}/variables/#{@variableId}"
