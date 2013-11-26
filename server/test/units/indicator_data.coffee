@@ -95,23 +95,17 @@ denormalised to the indicator name", (done) ->
     ]
   )
 
-  Q.nsend(
-    indicator, 'save'
-  ).then(->
-    indicatorData.indicator = indicator
+  saveIndicator = (indicator, cb) ->
+    indicator.save(cb)
 
-    Q.nsend(
-      indicatorData, 'save'
-    )
-  ).then(->
-    Q.nsend(
-      indicator2, 'save'
-    )
-  ).then(->
+  Q.nfcall(
+    async.map, [indicator, indicator2], saveIndicator
+  ).then((indicators)->
+    indicatorData.indicator = indicator
     indicatorData2.indicator = indicator2
 
-    Q.nsend(
-      indicatorData2, 'save'
+    Q.nfcall(
+      async.each, [indicatorData, indicatorData2], saveIndicator
     )
   ).then(->
     IndicatorData.dataToSeedJSON()
@@ -122,8 +116,6 @@ denormalised to the indicator name", (done) ->
 
       assert.lengthOf seedData, 2,
         "Expected the seed data to have only 1 entry"
-
-      console.log seedData
 
       indicator1Data = seedData[0]
       assert.strictEqual indicator1Data.indicator, indicator.short_name,
