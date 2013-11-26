@@ -71,3 +71,53 @@ test("#seedData if the seed includes a 'date' field, convert it to an actual dat
   )
   
 )
+
+test("#dataToSeedJSON returns indicator data as JSON with the indicator field
+denormalised to the indicator name", (done) ->
+  indicator = new Indicator(
+    short_name: 'The indicator'
+  )
+  indicatorData = new IndicatorData(
+    data: [
+      date: 1357002000000,
+      value: "-",
+      text: "Great",
+    ]
+  )
+
+  expectedData = [{
+    indicator: indicator.short_name
+    data: indicatorData.data
+  }]
+
+  Q.nsend(
+    indicator, 'save'
+  ).then(->
+    indicatorData.indicator = indicator
+
+    Q.nsend(
+      indicatorData, 'save'
+    )
+  ).then(->
+    IndicatorData.dataToSeedJSON()
+  ).then((json)->
+
+    try
+      seedData = JSON.parse(json)
+
+      assert.lengthOf seedData, 1,
+        "Expected the seed data to have only 1 entry"
+
+      seedDataRow = seedData[0]
+      assert.strictEqual seedDataRow.indicator, indicator.short_name,
+        "Expected the seed data 'indicator' attribute to be the indicator short name"
+
+      assert.deepEqual seedDataRow.data, indicatorData.data,
+        "Expected the seed data 'data' to be the same as the indicator"
+
+      done()
+    catch e
+      done(e)
+    
+  ).fail(done)
+)
