@@ -84,3 +84,55 @@ test('POST deploy after commit to GitHub fails if branch is not deploy', (done) 
     done(err)
   )
 )
+
+test("POST deploy fails if the IP is not of GitHub's servers", (done) ->
+  rangeCheckStub = sinon.stub(range_check, 'in_range', -> false)
+
+  Q.nfcall(
+    request.post, {
+      url: helpers.appurl('/deploy')
+      json: true
+      body: {}
+    }
+  ).spread( (res, body) ->
+
+    try
+      assert.equal res.statusCode, 401
+
+      done()
+    catch e
+      done(e)
+    finally
+      rangeCheckStub.restore()
+
+  ).fail( (err) ->
+    rangeCheckStub.restore()
+    done(err)
+  )
+)
+
+test("POST deploy succeeds if the IP matches one of GitHub's servers", (done) ->
+  rangeCheckStub = sinon.stub(range_check, 'in_range', -> true)
+
+  Q.nfcall(
+    request.post, {
+      url: helpers.appurl('/deploy')
+      json: true
+      body: {}
+    }
+  ).spread( (res, body) ->
+
+    try
+      assert.notEqual res.statusCode, 401
+
+      done()
+    catch e
+      done(e)
+    finally
+      rangeCheckStub.restore()
+
+  ).fail( (err) ->
+    rangeCheckStub.restore()
+    done(err)
+  )
+)
