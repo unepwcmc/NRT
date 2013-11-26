@@ -81,14 +81,19 @@ denormalised to the indicator name", (done) ->
     data: [
       date: 1357002000000,
       value: "-",
-      text: "Great",
+      text: "Great"
     ]
   )
-
-  expectedData = [{
-    indicator: indicator.short_name
-    data: indicatorData.data
-  }]
+  indicator2 = new Indicator(
+    short_name: 'second Indicator'
+  )
+  indicatorData2 = new IndicatorData(
+    data: [
+      date: 1364778000000,
+      value: "10",
+      text: "Fair"
+    ]
+  )
 
   Q.nsend(
     indicator, 'save'
@@ -99,23 +104,45 @@ denormalised to the indicator name", (done) ->
       indicatorData, 'save'
     )
   ).then(->
+    Q.nsend(
+      indicator2, 'save'
+    )
+  ).then(->
+    indicatorData2.indicator = indicator2
+
+    Q.nsend(
+      indicatorData2, 'save'
+    )
+  ).then(->
     IndicatorData.dataToSeedJSON()
   ).then((json)->
 
     try
       seedData = JSON.parse(json)
 
-      assert.lengthOf seedData, 1,
+      assert.lengthOf seedData, 2,
         "Expected the seed data to have only 1 entry"
 
-      seedDataRow = seedData[0]
-      assert.strictEqual seedDataRow.indicator, indicator.short_name,
+      console.log seedData
+
+      indicator1Data = seedData[0]
+      assert.strictEqual indicator1Data.indicator, indicator.short_name,
         "Expected the seed data 'indicator' attribute to be the indicator short name"
 
-      assert.deepEqual seedDataRow.data, indicatorData.data,
+      assert.deepEqual indicator1Data.data, indicatorData.data,
         "Expected the seed data 'data' to be the same as the indicator"
 
-      assert.notProperty seedDataRow, '_id',
+      assert.notProperty indicator1Data, '_id',
+        "Expected the _id attribute to be removed"
+
+      indicator2Data = seedData[1]
+      assert.strictEqual indicator2Data.indicator, indicator2.short_name,
+        "Expected the seed data 'indicator' attribute to be the indicator short name"
+
+      assert.deepEqual indicator2Data.data, indicatorData2.data,
+        "Expected the seed data 'data' to be the same as the indicator"
+
+      assert.notProperty indicator2Data, '_id',
         "Expected the _id attribute to be removed"
 
       done()

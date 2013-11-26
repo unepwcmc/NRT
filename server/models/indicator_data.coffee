@@ -56,7 +56,7 @@ convertIndicatorDataToJSONBackup = (indicatorData, cb) ->
   indicatorData = indicatorData.toObject()
   delete indicatorData._id
   Q.nsend(
-    Indicator, 'findOne', indicatorData.indicator
+    Indicator, 'findOne', _id: indicatorData.indicator
   ).then( (indicator)->
     indicatorData.indicator = indicator.short_name
     cb(null, indicatorData)
