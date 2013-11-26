@@ -51,9 +51,10 @@ indicatorDataSchema.statics.seedData = (indicators) ->
 
   return deferred.promise
 
-replaceIndicatorReferenceWithName = (indicatorData, cb) ->
+convertIndicatorDataToJSONBackup = (indicatorData, cb) ->
   Indicator = require('./indicator').model
   indicatorData = indicatorData.toObject()
+  delete indicatorData._id
   Q.nsend(
     Indicator, 'findOne', indicatorData.indicator
   ).then( (indicator)->
@@ -68,7 +69,7 @@ indicatorDataSchema.statics.dataToSeedJSON = (indicators) ->
     IndicatorData, 'find', {}
   ).then((indicatorDatas)->
     Q.nfcall(
-      async.map, indicatorDatas, replaceIndicatorReferenceWithName
+      async.map, indicatorDatas, convertIndicatorDataToJSONBackup
     )
   ).then((indicatorDatas)->
     deferred.resolve(JSON.stringify(indicatorDatas))

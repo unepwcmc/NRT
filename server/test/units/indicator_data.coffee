@@ -115,6 +115,9 @@ denormalised to the indicator name", (done) ->
       assert.deepEqual seedDataRow.data, indicatorData.data,
         "Expected the seed data 'data' to be the same as the indicator"
 
+      assert.notProperty seedDataRow, '_id',
+        "Expected the _id attribute to be removed"
+
       done()
     catch e
       done(e)
