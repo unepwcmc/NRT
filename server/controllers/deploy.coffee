@@ -1,10 +1,22 @@
 CommandRunner = require('../bin/command-runner')
+range_check = require('range_check')
 
 getBranchFromRef = (ref) ->
   refParts = ref.split("/")
   return refParts[refParts.length-1]
 
+getIpFromRequest = (req) ->
+  req.connection.remoteAddress
+
+GITHUB_IP_RANGE = "192.30.252.0/22"
+
+ipIsFromGithub = (ip) ->
+  range_check.in_range(ip, GITHUB_IP_RANGE)
+
 exports.index = (req, res) ->
+  remoteIp = getIpFromRequest(req)
+  return res.send 401 unless ipIsFromGithub(remoteIp)
+
   parsedPayload = JSON.parse(req.body.payload)
 
   console.log "Got deploy message from #{parsedPayload.ref}"
