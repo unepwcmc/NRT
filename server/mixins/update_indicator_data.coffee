@@ -129,7 +129,7 @@ SOURCE_DATA_PARSERS =
       }\n expected response to be a world bank api response;#{
       } an array with a data array as the second element"
 
-    return convertedData = {
+    return {
       indicator: @_id
       data: responseBody[1]
     }
@@ -140,7 +140,7 @@ SOURCE_DATA_PARSERS =
         JSON.stringify(responseBody)
       }\n expected response to be a cartodb api response"
 
-    return convertedData = {
+    return {
       indicator: @_id
       data: responseBody.data
     }
@@ -151,7 +151,7 @@ SOURCE_DATA_PARSERS =
         JSON.stringify(responseBody)
       }\n expected response to be an array"
 
-    return convertedData = {
+    return {
       indicator: @_id
       data: responseBody
     }
