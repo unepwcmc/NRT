@@ -650,6 +650,45 @@
       ]
     }
 }, {
+  "short_name": "Cereals Production",
+  "title": "Cereals Production (UNEP EDE)",
+  "description": "Production of Cereals",
+  "theme": "Environmental Awareness",
+  "type": "ede",
+  "indicatorDefinition": {
+      "unit": "Metric tons",
+      "short_unit": "T",
+      "apiUrl": "http://localhost:3002/ede/AE",
+      "apiVariableId": "1",
+      "period": "annual",
+      "xAxis": "year",
+      "yAxis": "value",
+      "fields": [
+        {
+          "source": {
+            "name": "year",
+            "type": "integer"
+          },
+          "name": "year",
+          "type": "integer"
+        }, {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        }, {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }
+      ]
+    }
+}, {
   "short_name": "Seagrass area (Blue carbon)",
   "title": "Seagrass area (Blue Carbon)",
   "description": "Seagrass area (Blue carbon)",
