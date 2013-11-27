@@ -1290,6 +1290,10 @@ footer{
     background-color: #AAA;
     padding: 0;
 
+    &.not-reported-on {
+      color: #fff;
+      background-color: #FEC060;
+    }
     &.excellent {
       color: #fff;
       background-color: #7BAB3C;
