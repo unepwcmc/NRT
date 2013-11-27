@@ -35,7 +35,11 @@ CONFIG =
       "per_page": 100
       "date": "1960:2013"
       "format": "json"
+
   cartodb:
+    defaultQueryParameters: {}
+
+  ede:
     defaultQueryParameters: {}
 
 CONVERSIONS =
@@ -45,7 +49,7 @@ CONVERSIONS =
 
     date: (value) ->
       new Date(parseInt(value, 10))
-      
+
   decimalPercentage:
     integer: (value)->
       value * 100
@@ -63,7 +67,6 @@ URL_BUILDERS =
     return url
 
   worldBank: ->
-
     if @indicatorDefinition?
       apiUrl = @indicatorDefinition.apiUrl
       apiIndicatorName = @indicatorDefinition.apiIndicatorName
@@ -87,6 +90,16 @@ URL_BUILDERS =
     url = "#{apiUrl}/cdb/#{cartodb_user}/#{cartodb_tablename}/#{query}"
     return url
 
+  ede: ->
+    if @indicatorDefinition?
+      apiUrl = @indicatorDefinition.apiUrl
+      apiVariableId = @indicatorDefinition.apiVariableId
+
+    unless apiUrl? and apiVariableId?
+      throw "Cannot generate update URL, indicator has no apiUrl or apiVariableId in its definition"
+
+    url = "#{apiUrl}/#{apiVariableId}"
+    return url
 
 SOURCE_DATA_PARSERS =
   esri: (responseBody) ->
@@ -116,7 +129,7 @@ SOURCE_DATA_PARSERS =
       }\n expected response to be a world bank api response;#{
       } an array with a data array as the second element"
 
-    return convertedData = {
+    return {
       indicator: @_id
       data: responseBody[1]
     }
@@ -127,9 +140,20 @@ SOURCE_DATA_PARSERS =
         JSON.stringify(responseBody)
       }\n expected response to be a cartodb api response"
 
-    return convertedData = {
+    return {
       indicator: @_id
       data: responseBody.data
+    }
+
+  ede: (responseBody) ->
+    unless _.isArray(responseBody)
+      throw "Can't convert poorly formed indicator data reponse:\n#{
+        JSON.stringify(responseBody)
+      }\n expected response to be an array"
+
+    return {
+      indicator: @_id
+      data: responseBody
     }
 
 module.exports =
