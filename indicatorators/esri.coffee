@@ -2,7 +2,7 @@ request = require('request')
 _ = require('underscore')
 fs = require('fs')
 
-indicatorDefinitions = JSON.parse(fs.readFileSync('./esri_indicator_definitions.json', 'UTF8'))
+indicatorDefinitions = JSON.parse(fs.readFileSync('./definitions/esri_indicator_definitions.json', 'UTF8'))
 
 #ESRI_URL = "http://196.218.36.14/ka/rest/services" # K&A Egypt
 ESRI_URL = "https://nrtstest.ead.ae/ka/rest/services" # EAD Server

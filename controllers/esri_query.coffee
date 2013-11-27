@@ -1,7 +1,7 @@
 request = require('request')
 _ = require('underscore')
 fs = require('fs')
-Esri = require('./indicatorators/esri')
+Esri = require('../indicatorators/esri')
 
 module.exports = (req, res) ->
   serviceName = req.params.serviceName

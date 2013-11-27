@@ -1,4 +1,4 @@
-WorldBank = require('./indicatorators/world_bank')
+WorldBank = require('../indicatorators/world_bank')
 
 module.exports = (req, res) ->
   countryCode = req.params.countryCode

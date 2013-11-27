@@ -1,8 +1,8 @@
 express = require('express')
 http = require('http')
-worldBankQuery = require('./worldbank_query')
-esriQuery = require('./esri_query')
-cartodbQuery = require('./cartodb_query')
+worldBankQuery = require('./controllers/worldbank_query')
+esriQuery = require('./controllers/esri_query')
+cartodbQuery = require('./controllers/cartodb_query')
 
 PORT = 3002
 

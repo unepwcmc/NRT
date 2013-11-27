@@ -67,6 +67,39 @@ test('averageRows when the indicator definition includes a reduce field
     "Expected the results to include the reduce field as an attribute"
 )
 
+test('averageRows when the indicator definition includes a reduce field
+sets the value field to the count of the mode text', ->
+  sampleRows = [{
+    station: "station 1"
+    periodStart: 2010
+    text: "Good"
+  }, {
+    station: "station 2"
+    periodStart: 2010
+    text: "Good"
+  }, {
+    station: "station 3"
+    periodStart: 2010
+    text: "Poor"
+  }]
+
+  indicatorDefinition =
+    valueField: 'amount'
+    reduceField: 'station'
+
+  results = Esri.averageRows(sampleRows, indicatorDefinition)
+
+  firstResult = results[0]
+  assert.strictEqual firstResult.text, "Good",
+    "Expected the results to use the mode text"
+
+  assert.strictEqual firstResult.amount, "-",
+    "Expected the amount to be '-', as we can't average the amounts meaningfully"
+
+  assert.property firstResult, 'station',
+    "Expected the results to include the reduce field as an attribute"
+)
+
 test('addIndicatorTextToData adds the correct indicator text', ->
   calculateIndicatorTextStub = sinon.stub(Esri, '_calculateIndicatorText', () ->
     return 'Great'
