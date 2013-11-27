@@ -8,15 +8,13 @@
   <link rel="stylesheet" href="/css/login.css">
 {{/contentFor}}
 
-{{#if errors}}
-  <style type="text/css">
-    section.errors {
-      display: block;
-    }
-  </style>
-{{/if}}
+<script>
+  $(document).ready(function() {
+    $('[name="username"]').focus();
+  });
+</script>
 
-<div class="content login">
+<div class="content login {{#if errors}}show{{/if}}">
   <section class="errors">
     <ul>
       {{#each errors}}
