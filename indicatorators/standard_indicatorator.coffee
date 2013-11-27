@@ -11,7 +11,7 @@ class StandardIndicatorator
 
   indicatorate: (data) ->
     unless data?
-      throw "No data to indicatorate"
+      throw new Error("No data to indicatorate")
 
     valueField = @indicatorDefinition.valueField
 
