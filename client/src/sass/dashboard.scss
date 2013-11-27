@@ -449,6 +449,11 @@ div.row.row-2 {
     text-align: center;
     font-size: 0.8em;
     color: #fff;
+
+    &.not-reported-on {
+      color: #fff;
+      background-color: #FEC060;
+    }
     &.excellent {
       color: #fff;
       background-color: #7BAB3C;
