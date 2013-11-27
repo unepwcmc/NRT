@@ -96,8 +96,7 @@ URL_BUILDERS =
       apiVariableId = @indicatorDefinition.apiVariableId
 
     unless apiUrl? and apiVariableId?
-      throw "Cannot generate update URL, indicator has no apiUrl or
-        apiVariableId in its definition"
+      throw "Cannot generate update URL, indicator has no apiUrl or apiVariableId in its definition"
 
     url = "#{apiUrl}/#{apiVariableId}"
     return url

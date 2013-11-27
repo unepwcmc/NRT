@@ -80,6 +80,26 @@ test('.getUpdateUrl on a cartodb indicator with missing cartodb_user and query
   assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, indicator of type 'cartodb' has no cartodb_user or query in its indicator definition"
 )
 
+test('.getUpdateUrl on an EDE indicator with a valid URL and Variable ID', ->
+  indicator = new Indicator
+    type: 'ede'
+    indicatorDefinition:
+      "apiUrl": "http://localhost:3002/AE"
+      "apiVariableId": 1
+
+  expectedUrl = "http://localhost:3002/AE/1"
+  url = indicator.getUpdateUrl()
+
+  assert.strictEqual url, expectedUrl
+)
+
+test('.getUpdateUrl on an EDE indicator with missing API URL and Variable ID
+ it throws an error', ->
+  indicator = new Indicator(type: 'ede')
+
+  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, indicator has no apiUrl or apiVariableId in its definition"
+)
+
 test('.queryIndicatorData queries the remote server for indicator data', (done) ->
   indicator = new Indicator
     type: 'esri'
@@ -352,6 +372,59 @@ test('.convertResponseToIndicatorData on a cartodb indicator
     ), "Can't convert poorly formed indicator data reponse:\n#{
           JSON.stringify(garbageData)
         }\n expected response to be a cartodb api response"
+  )
+)
+
+test('.convertResponseToIndicatorData for an EDE indicator
+  takes data from remote server and prepares for writing to database', (done)->
+  responseData = [{"year": 1998, "value": 400}]
+
+  helpers.createIndicatorModels([{
+    type: 'ede'
+  }]).then( (indicators) ->
+    indicator = indicators[0]
+
+    expectedIndicatorData = {
+      indicator: indicator._id
+      data: [
+        {
+          "value": 400,
+          "year": 1998
+        }
+      ]
+    }
+
+    convertedData = indicator.convertResponseToIndicatorData(responseData)
+
+    assert.ok(
+      _.isEqual(convertedData, expectedIndicatorData),
+      "Expected converted data:\n
+      #{JSON.stringify(convertedData)}\n
+        to look like expected indicator data:\n
+      #{JSON.stringify(expectedIndicatorData)}"
+    )
+
+    done()
+
+  ).fail((err) ->
+    console.error err
+    throw err
+  )
+)
+
+test('.convertResponseToIndicatorData on an EDE indicator
+  when given a garbage response it throws an error', ->
+  indicator = new Indicator(
+    type: 'ede'
+  )
+
+  garbageData = {hats: 'boats'}
+  assert.throws(
+    (->
+      indicator.convertResponseToIndicatorData(garbageData)
+    ), "Can't convert poorly formed indicator data reponse:\n#{
+          JSON.stringify(garbageData)
+        }\n expected response to be an array"
   )
 )
 
