@@ -71,3 +71,75 @@ test("#seedData if the seed includes a 'date' field, convert it to an actual dat
   )
   
 )
+
+test("#dataToSeedJSON returns indicator data as JSON with the indicator field
+denormalised to the indicator name", (done) ->
+  indicator = new Indicator(
+    short_name: 'The indicator'
+  )
+  indicatorData = new IndicatorData(
+    data: [
+      date: 1357002000000,
+      value: "-",
+      text: "Great"
+    ]
+  )
+  indicator2 = new Indicator(
+    short_name: 'second Indicator'
+  )
+  indicatorData2 = new IndicatorData(
+    data: [
+      date: 1364778000000,
+      value: "10",
+      text: "Fair"
+    ]
+  )
+
+  saveIndicator = (indicator, cb) ->
+    indicator.save(cb)
+
+  Q.nfcall(
+    async.map, [indicator, indicator2], saveIndicator
+  ).then((indicators)->
+    indicatorData.indicator = indicator
+    indicatorData2.indicator = indicator2
+
+    Q.nfcall(
+      async.each, [indicatorData, indicatorData2], saveIndicator
+    )
+  ).then(->
+    IndicatorData.dataToSeedJSON()
+  ).then((json)->
+
+    try
+      seedData = JSON.parse(json)
+
+      assert.lengthOf seedData, 2,
+        "Expected the seed data to have only 1 entry"
+
+      indicator1Data = seedData[0]
+      assert.strictEqual indicator1Data.indicator, indicator.short_name,
+        "Expected the seed data 'indicator' attribute to be the indicator short name"
+
+      assert.deepEqual indicator1Data.data, indicatorData.data,
+        "Expected the seed data 'data' to be the same as the indicator"
+
+      assert.notProperty indicator1Data, '_id',
+        "Expected the _id attribute to be removed"
+
+      indicator2Data = seedData[1]
+      assert.strictEqual indicator2Data.indicator, indicator2.short_name,
+        "Expected the seed data 'indicator' attribute to be the indicator short name"
+
+      assert.deepEqual indicator2Data.data, indicatorData2.data,
+        "Expected the seed data 'data' to be the same as the indicator"
+
+      assert.notProperty indicator2Data, '_id',
+        "Expected the _id attribute to be removed"
+
+      done()
+    catch e
+      done(e)
+    
+  ).fail(done)
+)
