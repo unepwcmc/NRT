@@ -33,9 +33,9 @@ test('groupSubIndicatorsByPeriod groups rows with the same periodStart', ->
     "Expected groupedRows[2010] to not contain the station 2 record"
 )
 
-test('groupSubIndicatorsUnderAverageIndicators when the indicator definition includes a reduce field
-  it averages the text field and includes the child data under the reduce field
-  attribute', ->
+test('groupSubIndicatorsUnderAverageIndicators when the indicator definition includes 
+a reduce field it averages the text field and includes the child data
+under the reduce field attribute', ->
   sampleRows = [{
     station: "station 1"
     periodStart: 2010
@@ -81,6 +81,9 @@ test('groupSubIndicatorsUnderAverageIndicators when the indicator definition inc
 
     assert.deepEqual firstResult.station, sampleRows,
       "Expected the results to include the reduce field as an attribute"
+
+    assert.equal firstResult.periodStart, 2010,
+      "Expected the results to include period start of the sub indicators"
   finally
     calculateAverageStub.restore()
 )
@@ -91,13 +94,10 @@ test("#calculateAverageIndicator given an array of subIndicators returns an obje
     valueField: 'amount'
 
   subIndicators = [{
-    station: "station 1"
     text: "Good"
   }, {
-    station: "station 2"
     text: "Good"
   }, {
-    station: "station 3"
     text: "Poor"
   }]
 
@@ -115,13 +115,10 @@ test("#calculateAverageIndicator given an array of subIndicators returns an obje
     valueField: 'amount'
 
   subIndicators = [{
-    station: "station 1"
     text: "Good"
   }, {
-    station: "station 2"
     text: "Good"
   }, {
-    station: "station 3"
     text: "Poor"
   }]
 
