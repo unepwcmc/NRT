@@ -19,13 +19,14 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
-      "unit": "µg per m3",
-      "short_unit": "µg/m3",
+      "unit": "stations",
+      "short_unit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
       "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/m3",
       "fields": [
         {
           "source": {
@@ -71,13 +72,14 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 5,
-      "unit": "µg per m3",
-      "short_unit": "µg/m3",
+      "unit": "stations",
+      "short_unit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
       "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/m3",
       "fields": [
         {
           "source": {
@@ -123,13 +125,14 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 4,
-      "unit": "µg per m3",
-      "short_unit": "µg/m3",
+      "unit": "stations",
+      "short_unit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
       "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/m3",
       "fields": [
         {
           "source": {
@@ -219,13 +222,14 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 3,
-      "unit": "µg per m3",
-      "short_unit": "µg/m3",
+      "unit": "stations",
+      "short_unit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
       "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/m3",
       "fields": [
         {
           "source": {
@@ -372,13 +376,14 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": 4,
-      "unit": "µg per litre",
-      "short_unit": "µg/L",
+      "unit": "stations",
+      "short_unit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
       "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/L",
       "fields": [
         {
           "source": {
@@ -424,13 +429,14 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": 3,
-      "unit": "µg per litre",
-      "short_unit": "µg/L",
+      "unit": "stations",
+      "short_unit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
       "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/L",
       "fields": [
         {
           "source": {
