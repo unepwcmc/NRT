@@ -47,11 +47,4 @@ exports.groupSubIndicatorsUnderAverageIndicators = (subIndicators, indicatorDefi
 
     averagedRows.push(averageIndicator)
 
-    #averagedRow =
-    #  periodStart: periodStart
-    #  text: modeText
-    #averagedRow[indicatorDefinition.valueField] = '-'
-    #averagedRow[indicatorDefinition.reduceField] = subIndicators
-
-
   return averagedRows
