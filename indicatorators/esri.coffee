@@ -1,6 +1,7 @@
 request = require('request')
 _ = require('underscore')
 fs = require('fs')
+SubIndicatorator = require('../lib/subindicatorator')
 
 indicatorDefinitions = JSON.parse(fs.readFileSync('./definitions/esri_indicator_definitions.json', 'UTF8'))
 
@@ -65,50 +66,6 @@ exports.getFeatureAttributesFromData = (data) ->
     _.extend(attributes, row.attributes)
     attributes
   )
-
-calculateMode = (values) ->
-  counts = {}
-  for value in values
-    counts[value] ||= 0
-    counts[value]++
-
-  mode = null
-  for value, count of counts
-    if !mode? or counts[mode] < count
-      mode = value
-
-  mode
-
-exports.groupRowsByPeriod = (rows) ->
-  groups = {}
-  for row in rows
-    groups[row.periodStart] || = []
-    groups[row.periodStart].push row
-  return groups
-
-exports.averageRows = (rows, indicatorDefinition) ->
-  if indicatorDefinition.reduceField?
-    groupedRows = exports.groupRowsByPeriod(rows)
-
-    averagedRows = []
-    for periodStart, values of groupedRows
-      texts = _.map(values, (value) ->
-        value.text
-      )
-      modeText = calculateMode(texts)
-
-      averagedRow =
-        periodStart: periodStart
-        text: modeText
-      averagedRow[indicatorDefinition.valueField] = '-'
-      averagedRow[indicatorDefinition.reduceField] = values
-
-      averagedRows.push(averagedRow)
-
-    return averagedRows
-
-  else
-    return rows
   
 # ESRI responses put their attribute data inside an object under an 'attribute'
 # key
@@ -130,7 +87,11 @@ exports.indicatorate = (indicatorCode, data) ->
 
   #rows = exports.addIndicatorTextToData(rows, indicatorCode, indicatorDefinition)
 
-  rows = exports.averageRows(rows, indicatorDefinition)
+  if indicatorDefinition.reduceField?
+    rows = SubIndicatorator.groupSubIndicatorsUnderAverageIndicators(
+      rows,
+      indicatorDefinition
+    )
 
   rows = nestRowsInsideAttributesObject(rows)
 
