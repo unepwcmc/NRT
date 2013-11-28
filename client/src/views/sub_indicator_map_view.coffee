@@ -4,12 +4,10 @@ window.Libs ||= {}
 
 Libs.LeafletHelpers =
   generatePopupText: (data, indicatorDefinition) ->
-    headline = Nrt.Presenters.IndicatorDataPresenter.getHeadlineFromData(
-      data, indicatorDefinition
-    )
-    subIndicatorValue = Nrt.Presenters.IndicatorDataPresenter.getSubIndicatorValueFromData(
-      data, indicatorDefinition
-    )
+    presenter = new Nrt.Presenters.SubIndicatorDataPresenter(indicatorDefinition)
+
+    headline = presenter.getHeadlineFromData(data)
+    subIndicatorValue = presenter.getSubIndicatorIdentifier(data)
 
     text = "<h3>#{subIndicatorValue}</h3>"
     text += "#{headline.text}: #{headline.value} #{headline.unit}"

@@ -5,8 +5,10 @@ test('generatePopupText builds a table with the headline values', ->
     value: 10
     text: 'Excellent'
     unit: 'Boats'
-  getHeadlineStub = sinon.stub(Nrt.Presenters.IndicatorDataPresenter, 'getHeadlineFromData', ->
-    headline
+
+  getHeadlineStub = sinon.stub(Nrt.Presenters.SubIndicatorDataPresenter::,
+    'getHeadlineFromData', ->
+      headline
   )
 
   indicatorDefinition =
