@@ -10,7 +10,7 @@ calculateMode = (values) ->
 
   mode = null
   for value, count of counts
-    if !mode? or counts[mode] < count
+    if !mode? or counts[mode.value] < count
       mode =
         value: value
         count: count

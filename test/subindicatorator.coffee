@@ -115,11 +115,11 @@ test("#calculateAverageIndicator given an array of subIndicators returns an obje
     valueField: 'amount'
 
   subIndicators = [{
-    text: "Good"
-  }, {
-    text: "Good"
-  }, {
     text: "Poor"
+  }, {
+    text: "Good"
+  }, {
+    text: "Good"
   }]
 
   averageIndicator = SubIndicatorator.calculateAverageIndicator(
