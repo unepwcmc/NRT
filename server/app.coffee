@@ -12,7 +12,7 @@ flash = require('connect-flash')
 exports.createApp = ->
   app = express()
 
-  mongoose.connect("mongodb://localhost/nrt_#{app.get('env')}")
+  require('./initializers/mongo')(app.get('env'))
 
   bindRoutesForApp = require('./route_bindings.coffee')
 
