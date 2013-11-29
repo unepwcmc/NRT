@@ -12,7 +12,8 @@
     "production": "NODE_ENV=production coffee ./bin/server.coffee",
     "win-production": "start cmd.exe /K bin\\server.bat",
     "setup": "node bin/setup.js",
-    "backup-data": "coffee lib/tasks/backupIndicatorData.coffee"
+    "backup-data": "coffee lib/tasks/backupIndicatorData.coffee",
+    "create-user": "coffee lib/tasks/create-user.coffee"
   },
   "repository": {
     "type": "git",
