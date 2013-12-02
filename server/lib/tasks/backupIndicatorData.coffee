@@ -1,5 +1,5 @@
-mongoose = require('mongoose')
-mongoose.connect("mongodb://localhost/nrt_development")
+require('../../initializers/mongo')()
+
 IndicatorData = require('../../models/indicator_data').model
 fs = require('fs')
 
