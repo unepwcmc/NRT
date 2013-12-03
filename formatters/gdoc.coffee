@@ -6,10 +6,13 @@ module.exports = (data) ->
     if index >= 3
       records.push(
         periodStart: dateToEpoch(value.value)
-        value: data.data[key].value
+        value: percentageToDecimal(data.data[key].value)
       )
 
   records
+
+percentageToDecimal = (percentage) ->
+  parseInt(percentage, 10) / 100
 
 dateToEpoch = (date) ->
   new Date(date).getTime()

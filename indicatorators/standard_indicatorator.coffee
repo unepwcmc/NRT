@@ -19,6 +19,6 @@ exports.calculateIndicatorText = (value, ranges) ->
   value = parseFloat(value)
 
   for range in ranges
-    return range.message if value > range.minValue
+    return range.message if value >= range.minValue
 
   return "Error: Value #{value} outside expected range"

@@ -22,8 +22,8 @@ test('Given a GoogleSpreadsheets query result, it formats it correctly', ->
   }
 
   expectedResult = [
-    {periodStart: 1356998400000, value: '0%'},
-    {periodStart: 1357257600000, value: '80%'}
+    {periodStart: 1356998400000, value: 0},
+    {periodStart: 1357257600000, value: 0.80}
   ]
 
   actualResult = GDocFormatter(expectedData)
