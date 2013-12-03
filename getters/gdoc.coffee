@@ -10,11 +10,15 @@ module.exports = class GDoc
     ).then( (spreadsheet) ->
 
       spreadsheet.worksheets[0].cells({}, (err, cells) ->
-        row = _.filter(cells.cells, (row) ->
+        headers = cells.cells['1']
+        indicatorData = _.filter(cells.cells, (row) ->
           row['2'].value is indicator.name
         )[0]
 
-        deferred.resolve row
+        deferred.resolve {
+          headers: headers
+          data: indicatorData
+        }
       )
 
     ).fail( (err) ->

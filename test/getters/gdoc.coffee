@@ -17,19 +17,25 @@ test("GDoc getter takes an Indicator and queries Google Spreadsheets
   )
 
   expectedData = {
-    '1': { value: 'Stakeholders' },
-    '2': { value: 'Key stakeholders identified' },
-    '3': { value: '0%' }
+    headers:
+      '1': { value: 'Theme' },
+      '2': { value: 'Indicator' },
+      '3': { value: 'ProgressPercent' }
+    data:
+      '1': { value: 'Stakeholders' },
+      '2': { value: 'Key stakeholders identified' },
+      '3': { value: '0%' }
   }
 
   googleData = {
     cells: {
-      '1': {
-        '1': { value: 'Theme' },
-        '2': { value: 'Indicator' },
-        '3': { value: 'ProgressPercent' }
+      '1': expectedData.headers,
+      '2': {
+        '1': { value: 'Stakeholders' },
+        '2': { value: 'Dat indicator' },
+        '3': { value: '5%' }
       },
-      '2': expectedData
+      '3': expectedData.data
     }
   }
 
