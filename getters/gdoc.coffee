@@ -1,3 +1,4 @@
+_ = require('underscore')
 Q = require('q')
 
 module.exports = class GDoc
@@ -9,7 +10,11 @@ module.exports = class GDoc
     ).then( (spreadsheet) ->
 
       spreadsheet.worksheets[0].cells({}, (err, cells) ->
-        deferred.resolve cells.cells
+        row = _.filter(cells.cells, (row) ->
+          row['2'].value is indicator.name
+        )[0]
+
+        deferred.resolve row
       )
 
     ).fail( (err) ->

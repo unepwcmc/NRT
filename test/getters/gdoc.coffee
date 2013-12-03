@@ -11,10 +11,26 @@ suite('Google Docs getter')
 
 test("GDoc getter takes an Indicator and queries Google Spreadsheets
   with the indicator's spreadsheet id", (done) ->
-  indicator = new Indicator(spreadsheet_key: '123')
+  indicator = new Indicator(
+    spreadsheet_key: '123'
+    name: 'Key stakeholders identified'
+  )
+
+  expectedData = {
+    '1': { value: 'Stakeholders' },
+    '2': { value: 'Key stakeholders identified' },
+    '3': { value: '0%' }
+  }
 
   googleData = {
-    cells: {}
+    cells: {
+      '1': {
+        '1': { value: 'Theme' },
+        '2': { value: 'Indicator' },
+        '3': { value: 'ProgressPercent' }
+      },
+      '2': expectedData
+    }
   }
 
   cellsSpy = sinon.spy( (opts, callback) ->
@@ -40,7 +56,7 @@ test("GDoc getter takes an Indicator and queries Google Spreadsheets
     assert.isTrue cellsSpy.calledOnce,
       "Expected GoogleSpreadsheets cells getter to be called"
 
-    assert.deepEqual data, googleData.cells,
+    assert.deepEqual data, expectedData,
       "Expected Getter to return data from GoogleSpreadsheets request"
 
     done()
