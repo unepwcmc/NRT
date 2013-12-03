@@ -1,4 +1,11 @@
 Indicator = require('../models/indicator')
 
 exports.query = (req, res) ->
-  new Indicator(req.params.id)
+  Indicator
+    .find(req.params.id)
+    .then( ->
+      res.send(200, 'sucess')
+    ).fail( (err) ->
+      console.error err
+      res.send(500, err)
+    )
