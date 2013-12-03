@@ -4,7 +4,7 @@
   "description": "Turns environmental parameter data into indicators, kind of like K&A were going to do...",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit --reporter spec",
+    "test": "NODE_ENV=test mocha test/*.coffee test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit --reporter spec",
     "start": "supervisor app.coffee"
   },
   "repository": {
@@ -27,6 +27,7 @@
     "sinon-chai": "2.4.0",
     "sinon": ">=1.4.0 <2",
     "supervisor": "~0.5.6",
-    "q": "~0.9.7"
+    "q": "~0.9.7",
+    "google-spreadsheets": "~0.3.0"
   }
 }
