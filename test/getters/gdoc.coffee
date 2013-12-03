@@ -18,8 +18,6 @@ test("GDoc getter takes an Indicator and queries Google Spreadsheets
   }
 
   cellsSpy = sinon.spy( (opts, callback) ->
-    console.log 'returning'
-    console.log googleData
     callback(null, googleData)
   )
 
