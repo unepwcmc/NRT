@@ -1,6 +1,13 @@
-[{
-  "id": "1",
-  "type": "standard",
-  "name": "Key stakeholders identified",
-  "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE"
-}]
+[
+  {
+    "id": "1",
+    "type": "standard",
+    "name": "Key stakeholders identified",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE"
+  }, {
+    "id": "2",
+    "type": "standard",
+    "name": "Source code available and accessible",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE"
+  }
+]
