@@ -18,7 +18,7 @@ and returns an indicator with the correct attributes for that ID", (done)->
 
   Indicator.find(5).then((indicator) ->
     try
-      assert.isTrue readFileStub.calledWith('../definitions/indicators.json'),
+      assert.isTrue readFileStub.calledWith('./definitions/indicators.json'),
         "Expected find to read the definitions file"
 
       assert.property indicator, 'type',

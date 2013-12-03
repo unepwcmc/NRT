@@ -10,7 +10,7 @@ module.exports = class Indicator
     deferred = Q.defer()
 
     Q.nsend(
-      fs, 'readFile', '../definitions/indicators.json'
+      fs, 'readFile', './definitions/indicators.json'
     ).then( (definitionsJSON) ->
 
       definitions = JSON.parse(definitionsJSON)
