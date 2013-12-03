@@ -5,59 +5,30 @@ StandardIndicatorator = require '../indicatorators/standard_indicatorator'
 
 suite('Standard indicatorator')
 
-test('.indicatorate throws an error when no data is passed in', ->
-  indicatorator = new StandardIndicatorator('ede')
-
-  assert.throws(
-    (-> indicatorator.indicatorate()),
-    "No data to indicatorate"
-  )
-)
-
-test('.indicatorate adds the correct indicator text to each data point', ->
-  indicatorator = new StandardIndicatorator('ede')
-
-  calculateTextStub = sinon.stub(indicatorator, 'calculateIndicatorText', -> 'Super Awesome')
-
-  indicatorator.indicatorDefinition =
-    valueField: 'value'
-    ranges: [
-      {"minValue": 0, "message": "Super Awesome"}
-    ]
-
-  rows = [
-    {"value":6,"year":1981}
+test(".applyRanges given standard data and a range
+adds a 'text' attribute with the correct values based on the range", ->
+  data = [
+    {periodStart: 2012, value: 501},
+    {periodStart: 2013, value: 400}
   ]
 
-  results = indicatorator.indicatorate(rows)
+  ranges = [
+    {"minValue": 1000, "message": "Excellent"},
+    {"minValue": 500, "message": "Moderate"},
+    {"minValue": 0, "message": "Poor"}
+  ]
 
-  assert.lengthOf results, 1, "Expected no rows to be removed"
+  rangedData = StandardIndicatorator.applyRanges(data, ranges)
 
-  result = results[0]
-  assert.strictEqual result.text, 'Super Awesome',
-    "Expected the text value to be set to 'Super Awesome'"
+  firstRow = rangedData[0]
+  assert.property firstRow, 'text',
+    "Expected a text property to be added"
+  assert.strictEqual firstRow.text, 'Moderate',
+    "Expected the text property the correct value from the range"
 
-  calculateTextStub.restore()
-)
-
-test(".calculateIndicatorText returns 'Value outside expected range' if
-  no range exists for the value specified", ->
-  indicatorator = new StandardIndicatorator('ede')
-  indicatorator.indicatorDefinition =
-    ranges: [
-      {"minValue": 10, "message": "Hey, cool!"}
-    ]
-
-  assert.strictEqual indicatorator.calculateIndicatorText(9),
-    "Error: Value 9 outside expected range"
-)
-
-test('.calculateIndicatorText calculates correct text value from ranges', ->
-  indicatorator = new StandardIndicatorator('ede')
-  indicatorator.indicatorDefinition =
-    ranges: [
-      {"minValue": 10, "message": "Hey, cool!"}
-    ]
-
-  assert.strictEqual indicatorator.calculateIndicatorText(11), "Hey, cool!"
+  lastRow = rangedData[1]
+  assert.property lastRow, 'text',
+    "Expected a text property to be added"
+  assert.strictEqual lastRow.text, 'Poor',
+    "Expected the text property the correct value from the range"
 )
