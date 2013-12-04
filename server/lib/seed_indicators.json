@@ -147,7 +147,7 @@
     "xAxis": "date",
     "yAxis": "value",
     "geometryField": "geometry",
-    "subIndicatorField": "country",
+    "subIndicatorField": "subIndicator",
     "subIndicatorUnit": "%",
     "fields": [
       {
@@ -173,10 +173,10 @@
         "type": "text"
       }, {
         "source": {
-          "name": "country",
+          "name": "subIndicator",
           "type": "object"
         },
-        "name": "country",
+        "name": "subIndicator",
         "type": "object"
       }
     ]
@@ -197,7 +197,7 @@
     "xAxis": "date",
     "yAxis": "value",
     "geometryField": "geometry",
-    "subIndicatorField": "country",
+    "subIndicatorField": "subIndicator",
     "subIndicatorUnit": "%",
     "fields": [
       {
@@ -223,10 +223,10 @@
         "type": "text"
       }, {
         "source": {
-          "name": "country",
+          "name": "subIndicator",
           "type": "object"
         },
-        "name": "country",
+        "name": "subIndicator",
         "type": "object"
       }
     ]
@@ -247,7 +247,7 @@
     "xAxis": "date",
     "yAxis": "value",
     "geometryField": "geometry",
-    "subIndicatorField": "country",
+    "subIndicatorField": "subIndicator",
     "subIndicatorUnit": "%",
     "fields": [
       {
@@ -273,10 +273,10 @@
         "type": "text"
       }, {
         "source": {
-          "name": "country",
+          "name": "subIndicator",
           "type": "object"
         },
-        "name": "country",
+        "name": "subIndicator",
         "type": "object"
       }
     ]
@@ -587,7 +587,7 @@
     "xAxis": "date",
     "yAxis": "value",
     "geometryField": "geometry",
-    "subIndicatorField": "country",
+    "subIndicatorField": "subIndicator",
     "subIndicatorUnit": "%",
     "fields": [
       {
@@ -613,10 +613,10 @@
         "type": "text"
       }, {
         "source": {
-          "name": "country",
+          "name": "subIndicator",
           "type": "object"
         },
-        "name": "country",
+        "name": "subIndicator",
         "type": "object"
       }
     ]
@@ -637,7 +637,7 @@
     "xAxis": "date",
     "yAxis": "value",
     "geometryField": "geometry",
-    "subIndicatorField": "country",
+    "subIndicatorField": "subIndicator",
     "subIndicatorUnit": "%",
     "fields": [
       {
@@ -663,10 +663,10 @@
         "type": "text"
       }, {
         "source": {
-          "name": "country",
+          "name": "subIndicator",
           "type": "object"
         },
-        "name": "country",
+        "name": "subIndicator",
         "type": "object"
       }
     ]
