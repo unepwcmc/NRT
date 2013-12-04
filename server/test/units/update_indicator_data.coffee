@@ -157,12 +157,32 @@ test('.queryIndicatorData queries the remote server for indicator data', (done) 
       #{serverResponseData}"
     )
 
+    requestStub.restore()
     done()
   ).fail( (err) ->
-    console.error err
-    throw err
+    requestStub.restore()
+    done(err)
+  )
+)
+
+test(".queryIndicatorData sends no parameters when there is no 'defaultQueryParameters'
+for the indicator type", (done) ->
+  indicator = new Indicator(type: 'made-up')
+  sinon.stub(indicator, 'getUpdateUrl', ->)
+
+  requestStub = sinon.stub(request, 'get', (options, callback)->
+    assert.isDefined options.qs, "Expected query string parameters to be defined"
+
+    callback(null, {})
   )
 
+  indicator.queryIndicatorData().then( (response) ->
+    requestStub.restore()
+    done()
+  ).fail((err) ->
+    requestStub.restore()
+    done(err)
+  )
 )
 
 test('.convertResponseToIndicatorData for an esri indicator
