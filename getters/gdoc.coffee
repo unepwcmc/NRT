@@ -13,7 +13,7 @@ module.exports = class GDoc
         headers = cells.cells['1']
         indicatorData = _.filter(cells.cells, (row) ->
           row['2'].value is indicator.name
-        )[0]
+        )
 
         deferred.resolve {
           headers: headers

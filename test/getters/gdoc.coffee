@@ -21,10 +21,11 @@ test("GDoc getter takes an Indicator and queries Google Spreadsheets
       '1': { value: 'Theme' },
       '2': { value: 'Indicator' },
       '3': { value: 'ProgressPercent' }
-    data:
+    data: [
       '1': { value: 'Stakeholders' },
       '2': { value: 'Key stakeholders identified' },
       '3': { value: '0%' }
+    ]
   }
 
   googleData = {
@@ -35,7 +36,7 @@ test("GDoc getter takes an Indicator and queries Google Spreadsheets
         '2': { value: 'Dat indicator' },
         '3': { value: '5%' }
       },
-      '3': expectedData.data
+      '3': expectedData.data[0]
     }
   }
 
@@ -65,9 +66,89 @@ test("GDoc getter takes an Indicator and queries Google Spreadsheets
     assert.deepEqual data, expectedData,
       "Expected Getter to return data from GoogleSpreadsheets request"
 
+    googleSpreadsheetStub.restore()
     done()
   ).fail( (err) ->
     console.error err
+    googleSpreadsheetStub.restore()
+    done(err)
+  )
+)
+
+test("GDoc getter returns all rows of a sub indicator", (done) ->
+  indicator = new Indicator(
+    spreadsheet_key: '123'
+    name: 'Key stakeholders identified'
+  )
+
+  expectedData = {
+    headers:
+      '1': { value: 'Theme' },
+      '2': { value: 'Indicator' },
+      '3': { value: 'SubIndicator' },
+      '4': { value: 'ProgressPercent' }
+    data: [{
+      '1': { value: 'Stakeholders' },
+      '2': { value: 'Key stakeholders identified' },
+      '3': { value: '' },
+      '4': { value: '0%' }
+    }, {
+      '1': { value: 'Stakeholders' },
+      '2': { value: 'Key stakeholders identified' },
+      '3': { value: 'Kuwait' },
+      '4': { value: '0%' }
+    }]
+  }
+
+  googleData = {
+    cells: {
+      '1': expectedData.headers,
+      '2': {
+        '1': { value: 'Stakeholders' },
+        '2': { value: 'Dat indicator' },
+        '3': { value: '5%' }
+      },
+      '3': expectedData.data[0],
+      '4': expectedData.data[1],
+      '5': {
+        '1': { value: 'Stakeholders' },
+        '2': { value: 'Dat indicator' },
+        '3': { value: '5%' }
+      },
+    }
+  }
+
+  cellsSpy = sinon.spy( (opts, callback) ->
+    callback(null, googleData)
+  )
+
+  googleSpreadsheetStub = sinon.stub(GDocGetter::, 'queryGoogleSpreadsheet', (opts) ->
+    Q.fcall( ->
+      {
+        worksheets: [
+          cells: cellsSpy
+        ]
+      }
+    )
+  )
+
+  new GDocGetter(
+    indicator
+  ).then( (data) ->
+    assert.isTrue googleSpreadsheetStub.calledWith(key: '123'),
+      "Expected GoogleSpreadsheets to be called with spreadsheet key '123'"
+
+    assert.isTrue cellsSpy.calledOnce,
+      "Expected GoogleSpreadsheets cells getter to be called"
+
+    assert.deepEqual data, expectedData,
+      "Expected Getter to return data from GoogleSpreadsheets request"
+
+    googleSpreadsheetStub.restore()
+    done()
+  ).fail( (err) ->
+    console.error err
+    googleSpreadsheetStub.restore()
     done(err)
   )
 )
