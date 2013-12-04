@@ -10,15 +10,28 @@ exports.applyRanges = (data, ranges) ->
   for row in data
     value = row.value
     continue unless value?
-    text = exports.calculateIndicatorText(value, ranges)
+    text = calculateIndicatorText(value, ranges)
     outputRows.push(_.extend(row, text: text))
+
+    if row.subIndicator?
+      applyRangeToSubIndicators(row.subIndicator, ranges)
 
   return outputRows
 
-exports.calculateIndicatorText = (value, ranges) ->
+calculateIndicatorText = (value, ranges) ->
   value = parseFloat(value)
 
   for range in ranges
     return range.message if value >= range.minValue
 
   return "Error: Value #{value} outside expected range"
+
+applyRangeToSubIndicators = (subIndicators, ranges) ->
+  indicatoratedSubIndicators = []
+  for row in subIndicators
+    value = row.value
+    continue unless value?
+    text = calculateIndicatorText(value, ranges)
+    indicatoratedSubIndicators.push(_.extend(row, text: text))
+
+  return indicatoratedSubIndicators
