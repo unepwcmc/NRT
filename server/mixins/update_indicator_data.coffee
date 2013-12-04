@@ -181,7 +181,7 @@ module.exports =
 
       request.get
         url: @getUpdateUrl()
-        qs: CONFIG[@type].defaultQueryParameters
+        qs: CONFIG[@type]?.defaultQueryParameters || {}
         json: true
       , (err, response) ->
         if err?
