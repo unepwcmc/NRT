@@ -5,86 +5,38 @@
   "sections": [],
   "type": "standard",
   "indicatorDefinition": {
-      "indicatoratorId": 1,
-      "name": "Key stakeholders identified",
-      "unit": "% of countries with named key stakeholders",
-      "short_unit": "%",
-      "period": "quarterly",
-      "xAxis": "date",
-      "yAxis": "value",
-      "geometryField": "geometry",
-      "fields": [
-        {
-          "source": {
-            "name": "periodStart",
-            "type": "epoch"
-          },
-          "name": "date",
-          "type": "date"
-        }, {
-          "source": {
-            "name": "value",
-            "type": "decimalPercentage"
-          },
+    "indicatoratorId": 1,
+    "name": "Key stakeholders identified",
+    "unit": "% of countries with named key stakeholders",
+    "short_unit": "%",
+    "period": "quarterly",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
           "name": "value",
-          "type": "integer"
-        }, {
-          "source": {
-            "name": "text",
-            "type": "text"
-          },
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
           "name": "text",
           "type": "text"
-        }
-      ]
-  }
-}, {
-  "short_name": "Indicator objectives identified",
-  "title": "Indicator objectives identified",
-  "theme": "Data and indicators",
-  "sections": [],
-  "type": "standard",
-  "indicatorDefinition": {
-      "name": "Indicator objectives identified",
-      "unit": "% of indicators for all countries with raw data flowing",
-      "short_unit": "%",
-      "period": "quarterly",
-      "xAxis": "date",
-      "yAxis": "value",
-      "geometryField": "geometry",
-      "subIndicatorField": "country",
-      "subIndicatorUnit": "%",
-      "fields": [
-        {
-          "source": {
-            "name": "periodStart",
-            "type": "epoch"
-          },
-          "name": "date",
-          "type": "date"
-        }, {
-          "source": {
-            "name": "value",
-            "type": "text"
-          },
-          "name": "value",
-          "type": "text"
-        }, {
-          "source": {
-            "name": "text",
-            "type": "text"
-          },
-          "name": "text",
-          "type": "text"
-        }, {
-          "source": {
-            "name": "country",
-            "type": "object"
-          },
-          "name": "country",
-          "type": "object"
-        }
-      ]
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
   }
 }, {
   "title":"Key stakeholders on-board",
@@ -95,10 +47,90 @@
     {"title": "Description", "content": "More than 50% of countries have endorsement from government"}
   ],
   "indicatorDefinition": {
+    "indicatoratorId": 2,
     "unit":"% of countries with written endorsement for project",
-    "short_unit":"%"
-  },
-  "HasSubindicator":""
+    "short_unit":"%",
+    "name": "Key stakeholders identified",
+    "unit": "% of countries with named key stakeholders",
+    "short_unit": "%",
+    "period": "quarterly",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
+  }
+}, {
+  "short_name": "Indicator objectives identified",
+  "title": "Indicator objectives identified",
+  "theme": "Data and indicators",
+  "sections": [],
+  "type": "standard",
+  "indicatorDefinition": {
+    "indicatoratorId": 3,
+    "name": "Indicator objectives identified",
+    "unit": "% of countries with completed indicator objectives",
+    "short_unit": "%",
+    "period": "quarterly",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "subIndicatorField": "country",
+    "subIndicatorUnit": "%",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }, {
+        "source": {
+          "name": "country",
+          "type": "object"
+        },
+        "name": "country",
+        "type": "object"
+      }
+    ]
+  }
 }, {
   "title":"Indicators described and documented",
   "short_name":"Indicators described and documented",
@@ -108,10 +140,47 @@
     {"title": "Description", "content": "More than 50% of countries have indicators defined"}
   ],
   "indicatorDefinition": {
+    "indicatoratorId": 4,
     "unit":"% of countries with completed indicator descriptions",
-    "short_unit":"%"
-  },
-  "HasSubindicator":"x"
+    "short_unit":"%",
+    "period": "quarterly",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "subIndicatorField": "country",
+    "subIndicatorUnit": "%",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }, {
+        "source": {
+          "name": "country",
+          "type": "object"
+        },
+        "name": "country",
+        "type": "object"
+      }
+    ]
+  }
 }, {
   "title":"Raw data collected and flowing",
   "short_name":"Raw data collected and flowing",
@@ -122,9 +191,46 @@
   ],
   "indicatorDefinition": {
     "unit":"% of indicators for all countries with raw data flowing",
-    "short_unit":"%"
-  },
-  "HasSubindicator":"x"
+    "short_unit":"%",
+    "indicatoratorId": 5,
+    "period": "quarterly",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "subIndicatorField": "country",
+    "subIndicatorUnit": "%",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }, {
+        "source": {
+          "name": "country",
+          "type": "object"
+        },
+        "name": "country",
+        "type": "object"
+      }
+    ]
+  }
 }, {
   "title":"Indicators data feeds",
   "short_name":"Indicators data feeds",
@@ -135,9 +241,46 @@
   ],
   "indicatorDefinition": {
     "unit":"% of indicators for all countries with live indicators feeds",
-    "short_unit":"%"
-  },
-  "HasSubindicator":"x"
+    "short_unit":"%",
+    "indicatoratorId": 6,
+    "period": "quarterly",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "subIndicatorField": "country",
+    "subIndicatorUnit": "%",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "text"
+        },
+        "name": "value",
+        "type": "text"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }, {
+        "source": {
+          "name": "country",
+          "type": "object"
+        },
+        "name": "country",
+        "type": "object"
+      }
+    ]
+  }
 }, {
   "title":"Source code available and accessible",
   "short_name":"Source code available and accessible",
@@ -148,9 +291,37 @@
   ],
   "indicatorDefinition": {
     "unit":"code available = 1",
-    "short_unit":"YES/NO"
-  },
-  "HasSubindicator":""
+    "short_unit":"YES/NO",
+    "indicatoratorId": 7,
+    "period": "quarterly",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
+  }
 }, {
   "title":"SaaS system deployed",
   "short_name":"SaaS system deployed",
@@ -161,9 +332,37 @@
   ],
   "indicatorDefinition": {
     "unit":"% progress on development of SaaS",
-    "short_unit":"%"
-  },
-  "HasSubindicator":""
+    "short_unit":"%",
+    "indicatoratorId": 8,
+    "period": "quarterly",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
+  }
 }, {
   "title":"SaaS system is used",
   "short_name":"SaaS system is used",
@@ -174,9 +373,37 @@
   ],
   "indicatorDefinition": {
     "unit":"# of live instances",
-    "short_unit":"instances"
-  },
-  "HasSubindicator":""
+    "short_unit":"instances",
+    "indicatoratorId": 9,
+    "period": "quarterly",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
+  }
 }, {
   "title":"NRT network instances are up to date",
   "short_name":"NRT network instances are up to date",
@@ -187,9 +414,37 @@
   ],
   "indicatorDefinition": {
     "unit":"% of instances running latest release",
-    "short_unit":"%"
-  },
-  "HasSubindicator":""
+    "short_unit":"%",
+    "indicatoratorId": 10,
+    "period": "quarterly",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
+  }
 }, {
   "title":"Reporting GUI complete",
   "short_name":"Reporting GUI complete",
@@ -200,7 +455,36 @@
   ],
   "indicatorDefinition": {
     "unit":"% progress on development",
-    "short_unit":"%"
+    "short_unit":"%",
+    "indicatoratorId": 11,
+    "period": "quarterly",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
   },
   "HasSubindicator":""
 }, {
@@ -213,7 +497,36 @@
   ],
   "indicatorDefinition": {
     "unit":"% progress on development",
-    "short_unit":"%"
+    "short_unit":"%",
+    "indicatoratorId": 12,
+    "period": "quarterly",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
   },
   "HasSubindicator":""
 }, {
@@ -226,7 +539,36 @@
   ],
   "indicatorDefinition": {
     "unit":"% progress on development",
-    "short_unit":"%"
+    "short_unit":"%",
+    "indicatoratorId": 13,
+    "period": "quarterly",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
   },
   "HasSubindicator":""
 }, {
@@ -239,9 +581,46 @@
   ],
   "indicatorDefinition": {
     "unit":"# of feeds/country",
-    "short_unit":"feeds/country"
-  },
-  "HasSubindicator":"x"
+    "short_unit":"feeds/country",
+    "indicatoratorId": 14,
+    "period": "quarterly",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "subIndicatorField": "country",
+    "subIndicatorUnit": "%",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }, {
+        "source": {
+          "name": "country",
+          "type": "object"
+        },
+        "name": "country",
+        "type": "object"
+      }
+    ]
+  }
 }, {
   "title":"Local NRTs consuming data",
   "short_name":"Local NRTs consuming data",
@@ -252,7 +631,44 @@
   ],
   "indicatorDefinition": {
     "unit":"# of feeds/country",
-    "short_unit":"feeds/country"
-  },
-  "HasSubindicator":"x"
+    "short_unit":"feeds/country",
+    "indicatoratorId": 15,
+    "period": "quarterly",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "subIndicatorField": "country",
+    "subIndicatorUnit": "%",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }, {
+        "source": {
+          "name": "country",
+          "type": "object"
+        },
+        "name": "country",
+        "type": "object"
+      }
+    ]
+  }
 }]
