@@ -11,14 +11,9 @@ module.exports = class Indicator
     _.extend(@, attributes)
 
   query: ->
-    new GDocGetter(@).then( (data) ->
+    new GDocGetter(@).then( (data) =>
       formattedData = GDocFormatter(data)
-      StandardIndicatorator.applyRanges(formattedData, [
-        {"minValue": 1, "message": "Excellent"},
-        {"minValue": 0.5, "message": "Moderate"},
-        {"minValue": 0.1, "message": "Poor"},
-        {"minValue": 0, "message": "Not Started"}
-      ])
+      StandardIndicatorator.applyRanges(formattedData, @range)
     )
 
   @find: (id) ->

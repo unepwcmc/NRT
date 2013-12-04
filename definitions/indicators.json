@@ -3,11 +3,19 @@
     "id": "1",
     "type": "standard",
     "name": "Key stakeholders identified",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE"
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
   }, {
     "id": "2",
     "type": "standard",
     "name": "Source code available and accessible",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE"
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
   }
 ]
