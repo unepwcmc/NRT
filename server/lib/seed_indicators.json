@@ -5,6 +5,7 @@
   "sections": [],
   "type": "standard",
   "indicatorDefinition": {
+      "indicatoratorId": 1,
       "name": "Key stakeholders identified",
       "unit": "% of countries with named key stakeholders",
       "short_unit": "%",
@@ -23,10 +24,10 @@
         }, {
           "source": {
             "name": "value",
-            "type": "text"
+            "type": "decimalPercentage"
           },
           "name": "value",
-          "type": "text"
+          "type": "integer"
         }, {
           "source": {
             "name": "text",
