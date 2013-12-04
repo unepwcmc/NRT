@@ -24,11 +24,11 @@ test('.getFatThemes returns all the themes
     indicatorAttributes = [{
       title: "I'm an indicator of theme 1"
       theme: themes[0]._id
-      type: "esri"
+      type: "standard"
     },{
       title: "theme 2 indicator"
       theme: themes[1]._id
-      type: "esri"
+      type: "standard"
     }]
 
     helpers.createIndicatorModels(
@@ -80,14 +80,14 @@ test('.getFatThemes returns all the themes
   ).fail(done)
 )
 
-test('#getFetThemes only returns themes with indicators of type ESRI', (done) ->
+test('#getFetThemes only returns themes with indicators of type standard', (done) ->
   helpers.createThemesFromAttributes(
     [{title: 'a theme'}]
   ).then((themes) ->
     indicatorAttributes = [{
-      title: "ESRI indicator"
+      title: "Standard indicator"
       theme: themes[0]._id
-      type: "esri"
+      type: "standard"
     },{
       title: "world bank indicator"
       theme: themes[0]._id
@@ -126,8 +126,8 @@ test('#getFetThemes only returns themes with indicators of type ESRI', (done) ->
     fatTheme = fatThemes[0]
     assert.lengthOf fatTheme.indicators, 1, "Only expected one indicator to be returned"
 
-    assert.strictEqual fatTheme.indicators[0].type, "esri",
-      "Expected the returned indicator to be an ESRI indicator"
+    assert.strictEqual fatTheme.indicators[0].type, "standard",
+      "Expected the returned indicator to be an Standard indicator"
 
     done()
   ).fail(done)

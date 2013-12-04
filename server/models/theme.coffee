@@ -114,7 +114,7 @@ themeSchema.methods.populateIndicators = ->
   theIndicators = null
   Indicator.findWhereIndicatorHasData(
     theme: @_id
-    type: "esri"
+    type: "standard"
   ).then( (indicators) ->
     theIndicators = indicators
 
