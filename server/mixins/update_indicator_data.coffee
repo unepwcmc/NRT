@@ -101,6 +101,16 @@ URL_BUILDERS =
     url = "#{apiUrl}/#{apiVariableId}"
     return url
 
+  standard: ->
+    if @indicatorDefinition?
+      indicatoratorId = @indicatorDefinition.indicatoratorId
+
+    unless indicatoratorId?
+      throw "Cannot generate update URL, indicator has no indicatorator ID in its definition"
+
+    url = "http://localhost:3002/indicator/#{indicatoratorId}/data"
+    return url
+
 SOURCE_DATA_PARSERS =
   esri: (responseBody) ->
     unless _.isArray(responseBody.features)
@@ -145,7 +155,7 @@ SOURCE_DATA_PARSERS =
       data: responseBody.data
     }
 
-  ede: (responseBody) ->
+  standard: (responseBody) ->
     unless _.isArray(responseBody)
       throw "Can't convert poorly formed indicator data reponse:\n#{
         JSON.stringify(responseBody)
@@ -171,7 +181,7 @@ module.exports =
 
       request.get
         url: @getUpdateUrl()
-        qs: CONFIG[@type].defaultQueryParameters
+        qs: CONFIG[@type]?.defaultQueryParameters || {}
         json: true
       , (err, response) ->
         if err?
@@ -182,11 +192,8 @@ module.exports =
       return deferred.promise
 
     convertResponseToIndicatorData: (responseBody) ->
-      sourceDataParser = SOURCE_DATA_PARSERS[@type]
-      if sourceDataParser?
-        return sourceDataParser.call(@, responseBody)
-      else
-        throw new Error("Couldn't find a data parser for indicator.type: '#{@type}'")
+      sourceDataParser = SOURCE_DATA_PARSERS[@type] || SOURCE_DATA_PARSERS['standard']
+      return sourceDataParser.call(@, responseBody)
 
     validateIndicatorDataFields: (indicatorData) ->
       firstRow = indicatorData.data[0]
