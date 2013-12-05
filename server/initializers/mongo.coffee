@@ -10,4 +10,4 @@ module.exports = (env) ->
   env ||= getEnv()
 
   console.log "Connecting to DB mongodb://localhost/nrt_#{env}"
-  mongoose.connect("mongodb://localhost/nrt_#{env}")
+  mongoose.connect("mongodb://localhost/unep-live_nrt_#{env}")
