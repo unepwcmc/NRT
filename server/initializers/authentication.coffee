@@ -30,17 +30,9 @@ passport.use(
       ).then( (user) ->
 
         if user?
-          if user.isLDAPAccount()
-            user.loginFromLDAP(password, done)
-          else
-            user.loginFromLocalDb(password, done)
+          user.loginFromLocalDb(password, done)
         else
-          User.createFromLDAPUsername(username)
-            .then( (user) ->
-              user.loginFromLDAP(password, done)
-            ).fail( (err) ->
-              done(null, false, {message: "Incorrect username or password"})
-            )
+          done(null, false, {message: "Incorrect username or password"})
 
       ).fail( (err) ->
         console.error err
