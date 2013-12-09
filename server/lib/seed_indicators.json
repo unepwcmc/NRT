@@ -178,12 +178,16 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": -1,
+      "unit": "stations",
+      "short_unit": "stations",
       "unit": "µg per m3",
       "short_unit": "µg/m3",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/m3",
       "fields": [
         {
           "source": {
@@ -196,10 +200,10 @@
         {
           "source": {
             "name": "value",
-            "type": "integer"
+            "type": "text"
           },
           "name": "value",
-          "type": "integer"
+          "type": "text"
         },
         {
           "source": {
@@ -208,6 +212,13 @@
           },
           "name": "text",
           "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
   }
