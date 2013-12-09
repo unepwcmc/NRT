@@ -9,7 +9,7 @@ getEnv = ->
 module.exports = (env) ->
   env ||= getEnv()
 
-  dbName = "unep-live_nrt_#{env}"
+  dbName = "demo_nrt_#{env}"
 
   console.log "Connecting to DB mongodb://localhost/#{dbName}"
   mongoose.connect("mongodb://localhost/#{dbName}")
