@@ -21,7 +21,7 @@
       "featureServer": 2,
       "unit": "stations",
       "short_unit": "stations",
-      "period": "quarterly",
+      "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
@@ -74,7 +74,7 @@
       "featureServer": 5,
       "unit": "stations",
       "short_unit": "stations",
-      "period": "quarterly",
+      "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
@@ -127,7 +127,7 @@
       "featureServer": 4,
       "unit": "stations",
       "short_unit": "stations",
-      "period": "quarterly",
+      "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
@@ -180,9 +180,7 @@
       "featureServer": -1,
       "unit": "stations",
       "short_unit": "stations",
-      "unit": "µg per m3",
-      "short_unit": "µg/m3",
-      "period": "quarterly",
+      "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
@@ -235,7 +233,7 @@
       "featureServer": 3,
       "unit": "stations",
       "short_unit": "stations",
-      "period": "quarterly",
+      "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
@@ -285,14 +283,16 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_ProtectedArea",
+      "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
-      "unit": "%",
-      "short_unit": "%",
+      "unit": "protected areas",
+      "short_unit": "protected areas",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "%",
       "fields": [
         {
           "source": {
@@ -300,15 +300,15 @@
             "type": "epoch"
           },
           "name": "date",
-          "type": "integer"
+          "type": "date"
         },
         {
           "source": {
             "name": "value",
-            "type": "decimalPercentage"
+            "type": "text"
           },
           "name": "value",
-          "type": "integer"
+          "type": "text"
         },
         {
           "source": {
@@ -317,9 +317,16 @@
           },
           "name": "text",
           "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
-    }
+  }
 }, {
   "short_name": "Area of Key Ecosystems",
   "title": "Area of Selected Key Ecosystems as a Percent of Total Area",
@@ -329,33 +336,101 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 2,
+      "unit": "areas",
+      "short_unit": "areas",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "%",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "text"
+          },
+          "name": "value",
+          "type": "text"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
+        }
+      ]
   }
 },{
   "short_name": "Threatened species",
   "title": "Percentage of Threatened Species",
   "description": "Number of species at risk of extinction in proportion to the total number of native species.",
   "theme": "Biodiversity",
+  "type": "esri",
   "indicatorDefinition": {
-      "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
-      "operation": "sum",
-      "unit": "%",
-      "outFields": "shape.area",
-      "dateField": "datedes",
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 2,
+      "unit": "species",
+      "short_unit": "species",
       "period": "annual",
-      "xAxis": "year",
+      "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "%",
       "fields": [
         {
-          "name": "year",
-          "type": "integer"
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
         },
         {
+          "source": {
+            "name": "value",
+            "type": "text"
+          },
           "name": "value",
-          "type": "integer"
+          "type": "text"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
-    }
+  }
 }, {
   "short_name": "Abundance of Key Species",
   "title": "Abundance of Selected Key Species",
@@ -365,6 +440,49 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 2,
+      "unit": "species",
+      "short_unit": "species",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "%",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "text"
+          },
+          "name": "value",
+          "type": "text"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
+        }
+      ]
   }
 },{
   "short_name": "Fish Resource Status",
@@ -375,6 +493,49 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 2,
+      "unit": "stations",
+      "short_unit": "stations",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "catch",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "text"
+          },
+          "name": "value",
+          "type": "text"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
+        }
+      ]
   }
 }, {
   "short_name": "Nitrate-N Concentrations",
@@ -389,7 +550,7 @@
       "featureServer": 4,
       "unit": "stations",
       "short_unit": "stations",
-      "period": "quarterly",
+      "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
@@ -438,16 +599,16 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_MarineWQ",
-      "featureServer": 3,
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 2,
       "unit": "stations",
       "short_unit": "stations",
-      "period": "quarterly",
+      "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
       "subIndicatorField": "station",
-      "subIndicatorUnit": "µg/L",
+      "subIndicatorUnit": "µl/m3",
       "fields": [
         {
           "source": {
@@ -460,10 +621,10 @@
         {
           "source": {
             "name": "value",
-            "type": "integer"
+            "type": "text"
           },
           "name": "value",
-          "type": "integer"
+          "type": "text"
         },
         {
           "source": {
@@ -491,6 +652,49 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 2,
+      "unit": "stations",
+      "short_unit": "stations",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µl/m3",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "text"
+          },
+          "name": "value",
+          "type": "text"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
+        }
+      ]
   }
 }, {
   "short_name": "Salinity",
@@ -501,6 +705,49 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 2,
+      "unit": "stations",
+      "short_unit": "stations",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "km2",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "text"
+          },
+          "name": "value",
+          "type": "text"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
+        }
+      ]
   }
 },{
   "short_name": "Awareness of Water",
@@ -511,6 +758,49 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 2,
+      "unit": "stations",
+      "short_unit": "stations",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µl/m3",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "text"
+          },
+          "name": "value",
+          "type": "text"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
+        }
+      ]
   }
 },{
   "short_name": "Awareness of Fish Stocks",
@@ -521,6 +811,49 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 2,
+      "unit": "stations",
+      "short_unit": "stations",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µl/m3",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "text"
+          },
+          "name": "value",
+          "type": "text"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
+        }
+      ]
   }
 },{
   "short_name": "Awareness of air quality",
@@ -531,6 +864,49 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 2,
+      "unit": "stations",
+      "short_unit": "stations",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/m3",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "text"
+          },
+          "name": "value",
+          "type": "text"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
+        }
+      ]
   }
 },{
   "short_name": "Awareness of biodiversity",
@@ -541,6 +917,49 @@
   ],
   "type": "esri",
   "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 2,
+      "unit": "stations",
+      "short_unit": "stations",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "%",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "text"
+          },
+          "name": "value",
+          "type": "text"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
+        }
+      ]
   }
 },
 
@@ -551,81 +970,150 @@
   "description": "Ambient air pollution concentrations of ozone, particulate matter (PM10, and PM2,5, if those are not available: SPM, black smoke), sulfur dioxide, nitrogen dioxide, lead. Additional:  carbon monoxide, volatile organic compounds including benzene (VOCs). The priority is collection of the indicator in large cities (over 1 million population).",
   "theme": "Air Quality",
   "indicatorDefinition": {
-      "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
-      "operation": "sum",
-      "short_unit": "µg/m3",
-      "unit": "µg/m3, ppm or ppb, as appropriate",
-      "outFields": "shape.area",
-      "dateField": "datedes",
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 2,
+      "unit": "stations",
+      "short_unit": "stations",
       "period": "annual",
-      "xAxis": "year",
+      "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/m3",
       "fields": [
         {
-          "name": "year",
-          "type": "integer"
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
         },
         {
+          "source": {
+            "name": "value",
+            "type": "text"
+          },
           "name": "value",
-          "type": "integer"
+          "type": "text"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
-    }
+  }
 }, {
   "short_name": "Red List species",
   "title": "Abu Dhabi Red List Indices For All Species Groups",
   "description": "",
   "theme": "Biodiversity",
   "indicatorDefinition": {
-      "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
-      "operation": "sum",
-      "short_unit": "",
-      "unit": "",
-      "outFields": "shape.area",
-      "dateField": "datedes",
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 2,
+      "unit": "species",
+      "short_unit": "species",
       "period": "annual",
-      "xAxis": "year",
+      "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "%",
       "fields": [
         {
-          "name": "year",
-          "type": "integer"
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
         },
         {
+          "source": {
+            "name": "value",
+            "type": "text"
+          },
           "name": "value",
-          "type": "integer"
+          "type": "text"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
-    }
+  }
 }, {
   "short_name": "Annual Fish Catch",
   "title": "Abu Dhabi Red List Indices For All Species Groups",
   "description": "Annual catch of major species in relation to spawning biomass if available or in relation to the year of maximum catches in the time series.",
   "theme": "Productive Natural Resources",
   "indicatorDefinition": {
-      "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
-      "operation": "sum",
-      "short_unit": "t",
-      "unit": "metric tons",
-      "outFields": "shape.area",
-      "dateField": "datedes",
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 2,
+      "unit": "stations",
+      "short_unit": "stations",
       "period": "annual",
-      "xAxis": "year",
+      "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "tonnes",
       "fields": [
         {
-          "name": "year",
-          "type": "integer"
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
         },
         {
+          "source": {
+            "name": "value",
+            "type": "text"
+          },
           "name": "value",
-          "type": "integer"
+          "type": "text"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
-    }
+  }
 }, {
   "short_name": "World Bank PA cover",
   "title": "Protected Area coverage (World Bank)",
