@@ -51,6 +51,17 @@ indicators, you'll also need the
 [Indicatorator](https://github.com/unepwcmc/Indicatorator) running. If backup
 data is ok, just click 'Seed from backup'
 
+#### Faking Indicator Data Backups
+There is a [JSON Generator](http://json-generator.com) script which
+generates data in the same format as the indicator data backup in
+`server/lib/indicator_data.json`. To generate fake data backups:
+
+  1. Grab the contents of the file and enter it into the JSON generator
+  2. Save the generated output to the backup file at
+     `server/lib/indicator_data.json`
+  3. Seed from backup by visiting `/admin` and clicking 'seed from
+     backup'
+
 ### Production
 
 #### Start the server
