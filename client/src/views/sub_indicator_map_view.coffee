@@ -68,8 +68,8 @@ class Backbone.Views.SubIndicatorMapView extends Backbone.View
       bounds = @visualisation.get('map_bounds')
     else
       bounds = [
-        [26.204734267107604, 57.44750976562499],
-        [22.19757745335104, 50.877685546875]
+        [52.802761415419674, 27.9052734375],
+        [40.84706035607122, 0.3076171875]
       ]
 
     @map.fitBounds(bounds)
