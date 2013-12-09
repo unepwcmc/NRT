@@ -83,6 +83,23 @@ for the production details you need.
 
 **In development, LDAP is disabled.**
 
+#### Automatic deployments
+
+Once the application has been setup manually for the first time on a
+server, you can automatically deploy new code pushed to the `deploy`
+branch on Github.
+
+Only one step of setup is required:
+
+  1. Add a WebHook [service hook](https://github.com/unepwcmc/NRT/settings/hooks)
+     that points at your server's deploy route
+     (`http://youdomain.com/deploy`).
+
+Github will notify the server of any changes, and the application should
+automatically pull the new code and update the server's local
+repository. **Make sure you are running your application with `forever`
+or it will not restart after a deploy**.
+
 ## Application structure
 
 ### Server
@@ -124,9 +141,19 @@ Run them with
 ##### Using Q for deferreds in tests
 
 Q.js is used through-out the application to prevent callback pyramids. One
-thing to note when using it, particularly in tests, is that for errors to
-bubble up to mocha, you must call .done() on promises (note this is not the
-done() function from mocha, but part of Q's promises).
+thing to note when using it, particularly in tests, is that you must specify a
+fail callback as well as success for every deferred, or your application will
+silently fail. In tests, you can usually just handle do this by passing mocha's
+`done` function to fail, e.g:
+
+```coffeescript
+test('somePromiseFunction', (done) ->
+  somePromiseFunction.then(->
+    # some assertions
+    done()
+  ).fail(done) # This will call done with an error as first argument, which triggers mocha's error state
+)
+```
 
 #### Client
 

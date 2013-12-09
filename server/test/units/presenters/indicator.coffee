@@ -23,7 +23,8 @@ with the correct human readable value", ->
 )
 
 test(".populateHeadlineRangesFromHeadlines when given headlines
-populates a 'headlineRanges' attribute with the oldest and newest xAxis values", ->
+populates a 'headlineRanges' attribute with the oldest and newest xAxis values
+formatted as D MM YYYY", ->
   indicator = Indicator(
     indicatorDefinition:
       xAxis: 'year'
@@ -42,10 +43,10 @@ populates a 'headlineRanges' attribute with the oldest and newest xAxis values",
   assert.property indicator, 'headlineRanges',
     "Expected the indicator to have a 'headlineRanges' attribute populated"
 
-  assert.strictEqual indicator.headlineRanges.oldest, 2006,
+  assert.strictEqual indicator.headlineRanges.oldest, '1 Jan 2006',
     "Expected the oldest a headline value to be 2006"
 
-  assert.strictEqual indicator.headlineRanges.newest, 2008,
+  assert.strictEqual indicator.headlineRanges.newest, '1 Jan 2008',
     "Expected the newest a headline value to be 2008"
 )
 
