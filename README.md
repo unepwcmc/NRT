@@ -91,9 +91,9 @@ branch on Github.
 
 Only one step of setup is required:
 
-    1. Add a WebHook [service hook](https://github.com/unepwcmc/NRT/settings/hooks)
-       that points at your server's deploy route
-       (`http://youdomain.com/deploy).
+  1. Add a WebHook [service hook](https://github.com/unepwcmc/NRT/settings/hooks)
+     that points at your server's deploy route
+     (`http://youdomain.com/deploy`).
 
 Github will notify the server of any changes, and the application should
 automatically pull the new code and update the server's local
