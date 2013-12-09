@@ -7,109 +7,109 @@
                 "station": [
                     {
                         "text": "GOOD",
-                        "station": "eu",
-                        "value": 59,
+                        "station": "aute",
+                        "value": 95,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.968883,
-                            "y": 50.494617
+                            "x": 0.380718,
+                            "y": 50.945339
                         }
                     },
                     {
                         "text": "BAD",
-                        "station": "pariatur",
-                        "value": 26,
+                        "station": "nisi",
+                        "value": 40,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.375309,
-                            "y": 50.432751
-                        }
-                    },
-                    {
-                        "text": "BAD",
-                        "station": "eiusmod",
-                        "value": 46,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.086454,
-                            "y": 50.720759
+                            "x": 0.893367,
+                            "y": 50.601381
                         }
                     },
                     {
                         "text": "GOOD",
-                        "station": "adipisicing",
-                        "value": 94,
+                        "station": "dolor",
+                        "value": 92,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.835318,
-                            "y": 50.703624
+                            "x": 0.427456,
+                            "y": 50.232442
                         }
                     },
                     {
-                        "text": "BAD",
-                        "station": "velit",
-                        "value": 37,
+                        "text": "GOOD",
+                        "station": "tempor",
+                        "value": 89,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.648221,
-                            "y": 50.575617
+                            "x": 0.42224,
+                            "y": 50.338006
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "non",
+                        "value": 75,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.131594,
+                            "y": 50.146273
                         }
                     }
                 ],
-                "value": "3 of 5",
-                "text": "BAD"
+                "value": "4 of 5",
+                "text": "GOOD"
             },
             {
                 "date": "2001-01-01T00:00:00.000Z",
                 "station": [
                     {
-                        "text": "BAD",
-                        "station": "minim",
-                        "value": 5,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.667733,
-                            "y": 50.317587
-                        }
-                    },
-                    {
                         "text": "GOOD",
-                        "station": "ad",
-                        "value": 82,
+                        "station": "incididunt",
+                        "value": 80,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.322243,
-                            "y": 50.816313
-                        }
-                    },
-                    {
-                        "text": "GOOD",
-                        "station": "sit",
-                        "value": 72,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.333349,
-                            "y": 50.625324
+                            "x": 0.382886,
+                            "y": 50.14401
                         }
                     },
                     {
                         "text": "BAD",
-                        "station": "excepteur",
+                        "station": "voluptate",
+                        "value": 23,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.869646,
+                            "y": 50.628551
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "eu",
+                        "value": 7,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.773455,
+                            "y": 50.599239
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "laboris",
+                        "value": 85,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.23785,
+                            "y": 50.63332
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "veniam",
                         "value": 45,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.357104,
-                            "y": 50.837729
-                        }
-                    },
-                    {
-                        "text": "BAD",
-                        "station": "id",
-                        "value": 50,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.737443,
-                            "y": 50.216371
+                            "x": 0.101692,
+                            "y": 50.307325
                         }
                     }
                 ],
@@ -120,58 +120,58 @@
                 "date": "2002-01-01T00:00:00.000Z",
                 "station": [
                     {
-                        "text": "GOOD",
-                        "station": "elit",
-                        "value": 75,
+                        "text": "BAD",
+                        "station": "ex",
+                        "value": 45,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.175085,
-                            "y": 50.690349
+                            "x": 0.637704,
+                            "y": 50.248184
                         }
                     },
                     {
                         "text": "GOOD",
-                        "station": "nulla",
-                        "value": 82,
+                        "station": "aliquip",
+                        "value": 62,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.676265,
-                            "y": 50.132889
+                            "x": 0.848686,
+                            "y": 50.543029
                         }
                     },
                     {
-                        "text": "GOOD",
-                        "station": "Lorem",
-                        "value": 56,
+                        "text": "BAD",
+                        "station": "aute",
+                        "value": 33,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.026986,
-                            "y": 50.226248
+                            "x": 0.126319,
+                            "y": 50.367507
                         }
                     },
                     {
-                        "text": "GOOD",
-                        "station": "et",
-                        "value": 64,
+                        "text": "BAD",
+                        "station": "mollit",
+                        "value": 4,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.512729,
-                            "y": 50.022745
+                            "x": 0.925945,
+                            "y": 50.886023
                         }
                     },
                     {
-                        "text": "GOOD",
-                        "station": "labore",
-                        "value": 59,
+                        "text": "BAD",
+                        "station": "fugiat",
+                        "value": 13,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.017329,
-                            "y": 50.624346
+                            "x": 0.819729,
+                            "y": 50.658567
                         }
                     }
                 ],
-                "value": "5 of 5",
-                "text": "GOOD"
+                "value": "4 of 5",
+                "text": "BAD"
             }
         ]
     },
@@ -183,109 +183,52 @@
                 "station": [
                     {
                         "text": "BAD",
-                        "station": "cillum",
-                        "value": 15,
+                        "station": "non",
+                        "value": 42,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.544447,
-                            "y": 50.412235
+                            "x": 0.391116,
+                            "y": 50.268451
                         }
                     },
                     {
                         "text": "BAD",
-                        "station": "nisi",
-                        "value": 4,
+                        "station": "elit",
+                        "value": 13,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.875218,
-                            "y": 50.315311
-                        }
-                    },
-                    {
-                        "text": "GOOD",
-                        "station": "velit",
-                        "value": 57,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.735035,
-                            "y": 50.80516
+                            "x": 0.650827,
+                            "y": 50.497947
                         }
                     },
                     {
                         "text": "BAD",
-                        "station": "eiusmod",
-                        "value": 17,
+                        "station": "magna",
+                        "value": 9,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.693033,
-                            "y": 50.583954
+                            "x": 0.395065,
+                            "y": 50.746972
                         }
                     },
                     {
-                        "text": "GOOD",
-                        "station": "nisi",
-                        "value": 73,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.161264,
-                            "y": 50.825866
-                        }
-                    }
-                ],
-                "value": "3 of 5",
-                "text": "BAD"
-            },
-            {
-                "date": "2001-01-01T00:00:00.000Z",
-                "station": [
-                    {
                         "text": "BAD",
-                        "station": "eiusmod",
+                        "station": "nulla",
                         "value": 24,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.131931,
-                            "y": 50.727673
+                            "x": 0.056924,
+                            "y": 50.522778
                         }
                     },
                     {
                         "text": "BAD",
-                        "station": "amet",
-                        "value": 25,
+                        "station": "proident",
+                        "value": 18,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.773706,
-                            "y": 50.406968
-                        }
-                    },
-                    {
-                        "text": "BAD",
-                        "station": "nostrud",
-                        "value": 29,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.871595,
-                            "y": 50.869468
-                        }
-                    },
-                    {
-                        "text": "BAD",
-                        "station": "ad",
-                        "value": 46,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.529036,
-                            "y": 50.395026
-                        }
-                    },
-                    {
-                        "text": "BAD",
-                        "station": "dolor",
-                        "value": 32,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.399791,
-                            "y": 50.072128
+                            "x": 0.609575,
+                            "y": 50.038649
                         }
                     }
                 ],
@@ -293,61 +236,118 @@
                 "text": "BAD"
             },
             {
-                "date": "2002-01-01T00:00:00.000Z",
+                "date": "2001-01-01T00:00:00.000Z",
                 "station": [
                     {
+                        "text": "BAD",
+                        "station": "eu",
+                        "value": 22,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.260342,
+                            "y": 50.252181
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "nisi",
+                        "value": 39,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.291067,
+                            "y": 50.435086
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "duis",
+                        "value": 17,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.025206,
+                            "y": 50.510952
+                        }
+                    },
+                    {
                         "text": "GOOD",
-                        "station": "minim",
-                        "value": 63,
+                        "station": "dolore",
+                        "value": 93,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.313076,
-                            "y": 50.003013
+                            "x": 0.930405,
+                            "y": 50.401464
                         }
                     },
                     {
                         "text": "GOOD",
-                        "station": "incididunt",
-                        "value": 88,
+                        "station": "occaecat",
+                        "value": 73,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.204595,
-                            "y": 50.640882
-                        }
-                    },
-                    {
-                        "text": "BAD",
-                        "station": "exercitation",
-                        "value": 16,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.372773,
-                            "y": 50.404522
-                        }
-                    },
-                    {
-                        "text": "BAD",
-                        "station": "Lorem",
-                        "value": 12,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.033263,
-                            "y": 50.963676
-                        }
-                    },
-                    {
-                        "text": "BAD",
-                        "station": "voluptate",
-                        "value": 3,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.706319,
-                            "y": 50.116631
+                            "x": 0.573633,
+                            "y": 50.978206
                         }
                     }
                 ],
                 "value": "3 of 5",
                 "text": "BAD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "id",
+                        "value": 62,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.244473,
+                            "y": 50.755607
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "officia",
+                        "value": 4,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.498974,
+                            "y": 50.084552
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "officia",
+                        "value": 62,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.365097,
+                            "y": 50.102959
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "culpa",
+                        "value": 42,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.324787,
+                            "y": 50.360551
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "consequat",
+                        "value": 68,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.179334,
+                            "y": 50.856912
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
             }
         ]
     },
@@ -359,52 +359,109 @@
                 "station": [
                     {
                         "text": "BAD",
+                        "station": "non",
+                        "value": 28,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.704846,
+                            "y": 50.358799
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "labore",
+                        "value": 87,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.291935,
+                            "y": 50.879887
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "exercitation",
+                        "value": 81,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.991673,
+                            "y": 50.16638
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "veniam",
+                        "value": 67,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.745207,
+                            "y": 50.694364
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "incididunt",
+                        "value": 52,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.713786,
+                            "y": 50.978316
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "id",
+                        "value": 33,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.509061,
+                            "y": 50.714765
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "ad",
+                        "value": 89,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.844321,
+                            "y": 50.644456
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "labore",
+                        "value": 9,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.927151,
+                            "y": 50.885942
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "esse",
+                        "value": 75,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.251218,
+                            "y": 50.291377
+                        }
+                    },
+                    {
+                        "text": "BAD",
                         "station": "voluptate",
-                        "value": 3,
+                        "value": 47,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.047396,
-                            "y": 50.397609
-                        }
-                    },
-                    {
-                        "text": "GOOD",
-                        "station": "irure",
-                        "value": 94,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.88703,
-                            "y": 50.298313
-                        }
-                    },
-                    {
-                        "text": "BAD",
-                        "station": "do",
-                        "value": 45,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.46565,
-                            "y": 50.192878
-                        }
-                    },
-                    {
-                        "text": "BAD",
-                        "station": "sint",
-                        "value": 25,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.141092,
-                            "y": 50.620533
-                        }
-                    },
-                    {
-                        "text": "GOOD",
-                        "station": "sint",
-                        "value": 77,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.9577,
-                            "y": 50.243491
+                            "x": 0.076882,
+                            "y": 50.875373
                         }
                     }
                 ],
@@ -412,56 +469,879 @@
                 "text": "BAD"
             },
             {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "nisi",
+                        "value": 21,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.612723,
+                            "y": 50.886516
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "exercitation",
+                        "value": 25,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.322643,
+                            "y": 50.630983
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "pariatur",
+                        "value": 16,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.261701,
+                            "y": 50.102332
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "aliquip",
+                        "value": 9,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.124785,
+                            "y": 50.099339
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "laboris",
+                        "value": 20,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.228173,
+                            "y": 50.718624
+                        }
+                    }
+                ],
+                "value": "5 of 5",
+                "text": "BAD"
+            }
+        ]
+    },
+    {
+        "indicator": "PM25 Concentration",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "quis",
+                        "value": 49,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.707013,
+                            "y": 50.405749
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "magna",
+                        "value": 17,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.706643,
+                            "y": 50.52425
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "commodo",
+                        "value": 34,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.797835,
+                            "y": 50.312459
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "duis",
+                        "value": 89,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.325551,
+                            "y": 50.466073
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "sit",
+                        "value": 40,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.568917,
+                            "y": 50.78506
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "BAD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "fugiat",
+                        "value": 92,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.129359,
+                            "y": 50.026625
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "sunt",
+                        "value": 23,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.682449,
+                            "y": 50.960596
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "cillum",
+                        "value": 26,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.008273,
+                            "y": 50.597025
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "cillum",
+                        "value": 20,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.703031,
+                            "y": 50.36504
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "pariatur",
+                        "value": 55,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.714795,
+                            "y": 50.034701
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "BAD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "occaecat",
+                        "value": 83,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.590532,
+                            "y": 50.123576
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "enim",
+                        "value": 10,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.320728,
+                            "y": 50.61058
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "aliqua",
+                        "value": 96,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.132883,
+                            "y": 50.101137
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "sunt",
+                        "value": 45,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.260153,
+                            "y": 50.83247
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "consequat",
+                        "value": 77,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.003059,
+                            "y": 50.836012
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
+            }
+        ]
+    },
+    {
+        "indicator": "O3 Concentration",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "ut",
+                        "value": 31,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.651644,
+                            "y": 50.960091
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "occaecat",
+                        "value": 54,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.57257,
+                            "y": 50.017729
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "id",
+                        "value": 24,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.78369,
+                            "y": 50.013714
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "in",
+                        "value": 46,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.108286,
+                            "y": 50.977225
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "consequat",
+                        "value": 16,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.167759,
+                            "y": 50.529039
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "BAD"
+            },
+            {
                 "date": "2001-01-01T00:00:00.000Z",
                 "station": [
                     {
                         "text": "BAD",
-                        "station": "aliqua",
-                        "value": 32,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.539689,
-                            "y": 50.254876
-                        }
-                    },
-                    {
-                        "text": "GOOD",
-                        "station": "nisi",
-                        "value": 96,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.981314,
-                            "y": 50.323787
-                        }
-                    },
-                    {
-                        "text": "GOOD",
-                        "station": "labore",
-                        "value": 69,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.909674,
-                            "y": 50.655114
-                        }
-                    },
-                    {
-                        "text": "GOOD",
                         "station": "esse",
-                        "value": 80,
+                        "value": 2,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.117164,
-                            "y": 50.770649
+                            "x": 0.399258,
+                            "y": 50.510875
                         }
                     },
                     {
                         "text": "BAD",
-                        "station": "consectetur",
+                        "station": "et",
+                        "value": 49,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.812887,
+                            "y": 50.723242
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "veniam",
+                        "value": 23,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.817366,
+                            "y": 50.164979
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "laboris",
+                        "value": 52,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.036448,
+                            "y": 50.15798
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "velit",
+                        "value": 70,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.259429,
+                            "y": 50.463408
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "BAD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "do",
+                        "value": 7,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.335848,
+                            "y": 50.963216
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "velit",
+                        "value": 89,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.843647,
+                            "y": 50.295149
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "commodo",
+                        "value": 37,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.197401,
+                            "y": 50.347924
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "dolor",
+                        "value": 27,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.407994,
+                            "y": 50.315941
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "enim",
+                        "value": 0,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.772158,
+                            "y": 50.740578
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "BAD"
+            }
+        ]
+    },
+    {
+        "indicator": "Protected areas",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "veniam",
+                        "value": 17,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.262939,
+                            "y": 50.364754
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "fugiat",
+                        "value": 86,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.534213,
+                            "y": 50.347485
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "elit",
+                        "value": 100,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.402857,
+                            "y": 50.651608
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "sunt",
+                        "value": 88,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.428745,
+                            "y": 50.904904
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "exercitation",
+                        "value": 91,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.59274,
+                            "y": 50.472266
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "laborum",
+                        "value": 96,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.995547,
+                            "y": 50.026255
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "nulla",
+                        "value": 74,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.768459,
+                            "y": 50.256587
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "veniam",
+                        "value": 3,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.401345,
+                            "y": 50.742394
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "in",
+                        "value": 81,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.780677,
+                            "y": 50.741793
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "dolor",
+                        "value": 77,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.714311,
+                            "y": 50.174126
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "ad",
+                        "value": 44,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.125308,
+                            "y": 50.659122
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "ad",
+                        "value": 57,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.070173,
+                            "y": 50.82447
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "commodo",
+                        "value": 75,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.797812,
+                            "y": 50.45384
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "sunt",
+                        "value": 33,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.953235,
+                            "y": 50.721268
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "mollit",
+                        "value": 7,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.170415,
+                            "y": 50.741786
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "BAD"
+            }
+        ]
+    },
+    {
+        "indicator": "Area of Key Ecosystems",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "mollit",
+                        "value": 52,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.738643,
+                            "y": 50.666157
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "id",
+                        "value": 69,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.015354,
+                            "y": 50.425692
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "sint",
+                        "value": 41,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.579949,
+                            "y": 50.718251
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "reprehenderit",
+                        "value": 27,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.973318,
+                            "y": 50.266918
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "ex",
+                        "value": 58,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.868888,
+                            "y": 50.667715
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "enim",
+                        "value": 38,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.832845,
+                            "y": 50.99558
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "sint",
+                        "value": 41,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.012927,
+                            "y": 50.847234
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "qui",
+                        "value": 60,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.772785,
+                            "y": 50.397192
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "sunt",
+                        "value": 57,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.587512,
+                            "y": 50.258808
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "eu",
                         "value": 21,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.03227,
-                            "y": 50.336977
+                            "x": 0.000075,
+                            "y": 50.60133
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "BAD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "minim",
+                        "value": 11,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.818424,
+                            "y": 50.451231
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "eu",
+                        "value": 24,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.654483,
+                            "y": 50.091693
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "velit",
+                        "value": 43,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.225233,
+                            "y": 50.428469
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "irure",
+                        "value": 11,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.480991,
+                            "y": 50.155641
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "adipisicing",
+                        "value": 44,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.645328,
+                            "y": 50.245827
+                        }
+                    }
+                ],
+                "value": "5 of 5",
+                "text": "BAD"
+            }
+        ]
+    },
+    {
+        "indicator": "Threatened species",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "aute",
+                        "value": 47,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.412746,
+                            "y": 50.778367
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "occaecat",
+                        "value": 10,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.842217,
+                            "y": 50.512592
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "voluptate",
+                        "value": 5,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.095341,
+                            "y": 50.950564
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "culpa",
+                        "value": 40,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.265848,
+                            "y": 50.261291
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "sunt",
+                        "value": 19,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.925194,
+                            "y": 50.797298
+                        }
+                    }
+                ],
+                "value": "5 of 5",
+                "text": "BAD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "excepteur",
+                        "value": 64,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.319229,
+                            "y": 50.451988
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "id",
+                        "value": 25,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.327843,
+                            "y": 50.000744
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "aliquip",
+                        "value": 12,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.972938,
+                            "y": 50.074457
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "commodo",
+                        "value": 54,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.99603,
+                            "y": 50.305956
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "ad",
+                        "value": 96,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.328894,
+                            "y": 50.686208
                         }
                     }
                 ],
@@ -472,58 +1352,2346 @@
                 "date": "2002-01-01T00:00:00.000Z",
                 "station": [
                     {
-                        "text": "BAD",
-                        "station": "qui",
-                        "value": 33,
+                        "text": "GOOD",
+                        "station": "incididunt",
+                        "value": 58,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.247106,
-                            "y": 50.386768
+                            "x": 0.042826,
+                            "y": 50.036938
                         }
                     },
                     {
                         "text": "GOOD",
-                        "station": "qui",
-                        "value": 54,
+                        "station": "in",
+                        "value": 86,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.216648,
-                            "y": 50.99289
-                        }
-                    },
-                    {
-                        "text": "GOOD",
-                        "station": "aliqua",
-                        "value": 89,
-                        "periodStart": 1357005600000,
-                        "geometry": {
-                            "x": 0.840856,
-                            "y": 50.499791
+                            "x": 0.39826,
+                            "y": 50.216587
                         }
                     },
                     {
                         "text": "BAD",
-                        "station": "cillum",
-                        "value": 39,
+                        "station": "incididunt",
+                        "value": 18,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.884309,
-                            "y": 50.4028
+                            "x": 0.135438,
+                            "y": 50.498162
                         }
                     },
                     {
                         "text": "BAD",
-                        "station": "anim",
-                        "value": 27,
+                        "station": "fugiat",
+                        "value": 48,
                         "periodStart": 1357005600000,
                         "geometry": {
-                            "x": 0.210987,
-                            "y": 50.833313
+                            "x": 0.913958,
+                            "y": 50.88508
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "ut",
+                        "value": 43,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.685656,
+                            "y": 50.50321
                         }
                     }
                 ],
                 "value": "3 of 5",
                 "text": "BAD"
+            }
+        ]
+    },
+    {
+        "indicator": "Abundance of Key Species",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "Lorem",
+                        "value": 18,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.171099,
+                            "y": 50.067809
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "aliquip",
+                        "value": 44,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.496164,
+                            "y": 50.932801
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "laborum",
+                        "value": 82,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.106147,
+                            "y": 50.529048
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "ex",
+                        "value": 7,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.001341,
+                            "y": 50.957766
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "consequat",
+                        "value": 40,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.151091,
+                            "y": 50.332843
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "BAD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "aute",
+                        "value": 15,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.083868,
+                            "y": 50.165732
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "duis",
+                        "value": 5,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.085346,
+                            "y": 50.424677
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "amet",
+                        "value": 23,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.968094,
+                            "y": 50.551687
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "cillum",
+                        "value": 67,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.468191,
+                            "y": 50.728972
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "quis",
+                        "value": 11,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.342162,
+                            "y": 50.490356
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "BAD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "in",
+                        "value": 22,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.001298,
+                            "y": 50.794946
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "reprehenderit",
+                        "value": 51,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.19744,
+                            "y": 50.657366
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "cupidatat",
+                        "value": 66,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.223612,
+                            "y": 50.870321
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "consequat",
+                        "value": 68,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.279056,
+                            "y": 50.648173
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "Lorem",
+                        "value": 90,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.65805,
+                            "y": 50.977823
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "GOOD"
+            }
+        ]
+    },
+    {
+        "indicator": "Fish Resource Status",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "amet",
+                        "value": 18,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.786959,
+                            "y": 50.564533
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "consequat",
+                        "value": 32,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.036963,
+                            "y": 50.731649
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "ea",
+                        "value": 93,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.4062,
+                            "y": 50.844617
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "dolor",
+                        "value": 33,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.537217,
+                            "y": 50.422303
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "in",
+                        "value": 94,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.960455,
+                            "y": 50.567107
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "BAD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "pariatur",
+                        "value": 56,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.46702,
+                            "y": 50.606301
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "amet",
+                        "value": 86,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.343421,
+                            "y": 50.28454
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "fugiat",
+                        "value": 66,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.989992,
+                            "y": 50.055523
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "non",
+                        "value": 29,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.666426,
+                            "y": 50.140426
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "ea",
+                        "value": 72,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.481981,
+                            "y": 50.552453
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "commodo",
+                        "value": 48,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.086557,
+                            "y": 50.666982
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "fugiat",
+                        "value": 21,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.115917,
+                            "y": 50.076698
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "voluptate",
+                        "value": 47,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.346247,
+                            "y": 50.402439
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "minim",
+                        "value": 34,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.965348,
+                            "y": 50.665266
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "non",
+                        "value": 80,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.098803,
+                            "y": 50.880814
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "BAD"
+            }
+        ]
+    },
+    {
+        "indicator": "Nitrate-N Concentrations",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "eu",
+                        "value": 38,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.657246,
+                            "y": 50.113903
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "excepteur",
+                        "value": 84,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.716031,
+                            "y": 50.574431
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "eiusmod",
+                        "value": 96,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.868259,
+                            "y": 50.833754
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "minim",
+                        "value": 52,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.781914,
+                            "y": 50.134523
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "aliqua",
+                        "value": 56,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.858714,
+                            "y": 50.653257
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "id",
+                        "value": 33,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.458475,
+                            "y": 50.147658
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "id",
+                        "value": 54,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.504494,
+                            "y": 50.113095
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "laborum",
+                        "value": 46,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.134415,
+                            "y": 50.768736
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "exercitation",
+                        "value": 29,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.580823,
+                            "y": 50.91964
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "eu",
+                        "value": 22,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.035336,
+                            "y": 50.594053
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "BAD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "laborum",
+                        "value": 47,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.629716,
+                            "y": 50.171371
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "proident",
+                        "value": 23,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.070382,
+                            "y": 50.319819
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "eu",
+                        "value": 57,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.325796,
+                            "y": 50.337772
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "officia",
+                        "value": 98,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.883237,
+                            "y": 50.78889
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "magna",
+                        "value": 79,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.394595,
+                            "y": 50.197365
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
+            }
+        ]
+    },
+    {
+        "indicator": "Enterococci Concentrations",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "occaecat",
+                        "value": 100,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.960858,
+                            "y": 50.859187
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "aliquip",
+                        "value": 4,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.165866,
+                            "y": 50.480992
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "cupidatat",
+                        "value": 82,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.581366,
+                            "y": 50.118464
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "ullamco",
+                        "value": 60,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.837719,
+                            "y": 50.867714
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "esse",
+                        "value": 38,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.908284,
+                            "y": 50.132831
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "ad",
+                        "value": 100,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.075033,
+                            "y": 50.144776
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "occaecat",
+                        "value": 67,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.636127,
+                            "y": 50.3423
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "culpa",
+                        "value": 74,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.530582,
+                            "y": 50.83708
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "excepteur",
+                        "value": 14,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.436191,
+                            "y": 50.264594
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "eiusmod",
+                        "value": 84,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.633929,
+                            "y": 50.835191
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "officia",
+                        "value": 88,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.367367,
+                            "y": 50.671008
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "consectetur",
+                        "value": 39,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.930674,
+                            "y": 50.551039
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "sunt",
+                        "value": 60,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.510152,
+                            "y": 50.111329
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "id",
+                        "value": 54,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.201675,
+                            "y": 50.167096
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "dolor",
+                        "value": 62,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.817674,
+                            "y": 50.95819
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "GOOD"
+            }
+        ]
+    },
+    {
+        "indicator": "Groundwater Reserves",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "officia",
+                        "value": 60,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.285262,
+                            "y": 50.227735
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "duis",
+                        "value": 55,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.703155,
+                            "y": 50.131573
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "tempor",
+                        "value": 7,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.196258,
+                            "y": 50.927537
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "nisi",
+                        "value": 54,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.954683,
+                            "y": 50.055084
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "fugiat",
+                        "value": 57,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.473278,
+                            "y": 50.254325
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "enim",
+                        "value": 48,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.275628,
+                            "y": 50.334099
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "et",
+                        "value": 68,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.991734,
+                            "y": 50.235606
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "adipisicing",
+                        "value": 83,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.883477,
+                            "y": 50.531377
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "mollit",
+                        "value": 60,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.30788,
+                            "y": 50.346748
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "esse",
+                        "value": 27,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.386754,
+                            "y": 50.848994
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "amet",
+                        "value": 84,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.378791,
+                            "y": 50.666001
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "cillum",
+                        "value": 8,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.933111,
+                            "y": 50.22375
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "cillum",
+                        "value": 96,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.789732,
+                            "y": 50.253645
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "Lorem",
+                        "value": 58,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.898375,
+                            "y": 50.478621
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "reprehenderit",
+                        "value": 3,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.126389,
+                            "y": 50.899613
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
+            }
+        ]
+    },
+    {
+        "indicator": "Salinity",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "aute",
+                        "value": 100,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.200908,
+                            "y": 50.258425
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "nisi",
+                        "value": 20,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.500336,
+                            "y": 50.349565
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "ea",
+                        "value": 35,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.460767,
+                            "y": 50.362955
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "sunt",
+                        "value": 49,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.172653,
+                            "y": 50.307012
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "dolor",
+                        "value": 38,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.587512,
+                            "y": 50.915581
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "BAD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "ad",
+                        "value": 71,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.599057,
+                            "y": 50.918867
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "est",
+                        "value": 14,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.710531,
+                            "y": 50.620501
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "aute",
+                        "value": 89,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.897103,
+                            "y": 50.032811
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "ullamco",
+                        "value": 47,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.006142,
+                            "y": 50.650941
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "do",
+                        "value": 8,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.076934,
+                            "y": 50.547601
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "BAD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "duis",
+                        "value": 60,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.552671,
+                            "y": 50.950148
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "elit",
+                        "value": 93,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.444634,
+                            "y": 50.491713
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "eiusmod",
+                        "value": 48,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.633782,
+                            "y": 50.698287
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "nisi",
+                        "value": 28,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.290818,
+                            "y": 50.903675
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "deserunt",
+                        "value": 56,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.588552,
+                            "y": 50.935946
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
+            }
+        ]
+    },
+    {
+        "indicator": "Awareness of Water",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "nisi",
+                        "value": 21,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.590553,
+                            "y": 50.662873
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "do",
+                        "value": 28,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.085738,
+                            "y": 50.356455
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "dolor",
+                        "value": 24,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.604,
+                            "y": 50.907309
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "laborum",
+                        "value": 28,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.097123,
+                            "y": 50.463289
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "sint",
+                        "value": 87,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.210885,
+                            "y": 50.748614
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "BAD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "nostrud",
+                        "value": 87,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.187455,
+                            "y": 50.433654
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "ex",
+                        "value": 28,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.923471,
+                            "y": 50.786627
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "do",
+                        "value": 67,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.121524,
+                            "y": 50.851527
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "aliqua",
+                        "value": 56,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.177398,
+                            "y": 50.200411
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "deserunt",
+                        "value": 71,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.733109,
+                            "y": 50.651912
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "eiusmod",
+                        "value": 90,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.128964,
+                            "y": 50.523348
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "ad",
+                        "value": 80,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.792232,
+                            "y": 50.021928
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "nulla",
+                        "value": 12,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.604163,
+                            "y": 50.618375
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "veniam",
+                        "value": 31,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.953742,
+                            "y": 50.781355
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "eiusmod",
+                        "value": 27,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.130432,
+                            "y": 50.427632
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "BAD"
+            }
+        ]
+    },
+    {
+        "indicator": "Awareness of Fish Stocks",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "sit",
+                        "value": 85,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.755506,
+                            "y": 50.480789
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "nostrud",
+                        "value": 94,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.866255,
+                            "y": 50.999845
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "quis",
+                        "value": 0,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.971705,
+                            "y": 50.42667
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "aute",
+                        "value": 87,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.456454,
+                            "y": 50.098584
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "occaecat",
+                        "value": 19,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.636399,
+                            "y": 50.432545
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "pariatur",
+                        "value": 5,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.956083,
+                            "y": 50.966329
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "nostrud",
+                        "value": 88,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.377065,
+                            "y": 50.758217
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "est",
+                        "value": 48,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.754132,
+                            "y": 50.108914
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "cupidatat",
+                        "value": 69,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.735121,
+                            "y": 50.757516
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "tempor",
+                        "value": 69,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.914008,
+                            "y": 50.842209
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "ex",
+                        "value": 91,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.359992,
+                            "y": 50.113733
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "qui",
+                        "value": 3,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.807341,
+                            "y": 50.698625
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "commodo",
+                        "value": 25,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.591783,
+                            "y": 50.325094
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "reprehenderit",
+                        "value": 70,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.389882,
+                            "y": 50.449063
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "magna",
+                        "value": 81,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.656939,
+                            "y": 50.111977
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
+            }
+        ]
+    },
+    {
+        "indicator": "Awareness of air quality",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "officia",
+                        "value": 85,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.476128,
+                            "y": 50.269215
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "occaecat",
+                        "value": 10,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.104166,
+                            "y": 50.252369
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "irure",
+                        "value": 41,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.610076,
+                            "y": 50.335949
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "anim",
+                        "value": 51,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.719181,
+                            "y": 50.841751
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "excepteur",
+                        "value": 73,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.117833,
+                            "y": 50.641609
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "labore",
+                        "value": 31,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.819257,
+                            "y": 50.463229
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "id",
+                        "value": 26,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.425842,
+                            "y": 50.395142
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "consectetur",
+                        "value": 45,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.533114,
+                            "y": 50.022578
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "irure",
+                        "value": 62,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.117633,
+                            "y": 50.981823
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "eu",
+                        "value": 72,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.542796,
+                            "y": 50.79515
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "BAD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "deserunt",
+                        "value": 56,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.675926,
+                            "y": 50.481424
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "aliqua",
+                        "value": 69,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.117677,
+                            "y": 50.675187
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "sunt",
+                        "value": 86,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.346834,
+                            "y": 50.106447
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "Lorem",
+                        "value": 83,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.984971,
+                            "y": 50.152589
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "deserunt",
+                        "value": 75,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.80317,
+                            "y": 50.620661
+                        }
+                    }
+                ],
+                "value": "5 of 5",
+                "text": "GOOD"
+            }
+        ]
+    },
+    {
+        "indicator": "Awareness of biodiversity",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "Lorem",
+                        "value": 18,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.927442,
+                            "y": 50.988991
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "proident",
+                        "value": 99,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.880042,
+                            "y": 50.384632
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "et",
+                        "value": 54,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.73312,
+                            "y": 50.631851
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "non",
+                        "value": 69,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.28952,
+                            "y": 50.654394
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "nostrud",
+                        "value": 95,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.474051,
+                            "y": 50.474921
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "velit",
+                        "value": 72,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.039095,
+                            "y": 50.336119
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "sunt",
+                        "value": 62,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.865165,
+                            "y": 50.39571
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "adipisicing",
+                        "value": 97,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.232906,
+                            "y": 50.136273
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "Lorem",
+                        "value": 97,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.108485,
+                            "y": 50.704995
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "nulla",
+                        "value": 54,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.904713,
+                            "y": 50.430724
+                        }
+                    }
+                ],
+                "value": "5 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "esse",
+                        "value": 74,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.089701,
+                            "y": 50.819814
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "aute",
+                        "value": 95,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.967658,
+                            "y": 50.892322
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "consequat",
+                        "value": 75,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.01531,
+                            "y": 50.149467
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "ad",
+                        "value": 8,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.010813,
+                            "y": 50.85394
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "Lorem",
+                        "value": 23,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.458708,
+                            "y": 50.020588
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
+            }
+        ]
+    },
+    {
+        "indicator": "Urban air pollution",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "aliqua",
+                        "value": 21,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.764005,
+                            "y": 50.995992
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "dolor",
+                        "value": 72,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.233763,
+                            "y": 50.952988
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "enim",
+                        "value": 84,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.249588,
+                            "y": 50.701254
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "consectetur",
+                        "value": 55,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.025047,
+                            "y": 50.827247
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "dolor",
+                        "value": 20,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.058569,
+                            "y": 50.635912
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "adipisicing",
+                        "value": 67,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.933302,
+                            "y": 50.960067
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "culpa",
+                        "value": 55,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.366109,
+                            "y": 50.345733
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "magna",
+                        "value": 16,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.243419,
+                            "y": 50.278906
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "laborum",
+                        "value": 60,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.480103,
+                            "y": 50.927796
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "culpa",
+                        "value": 95,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.210869,
+                            "y": 50.559967
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "anim",
+                        "value": 84,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.639237,
+                            "y": 50.80412
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "consectetur",
+                        "value": 12,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.23653,
+                            "y": 50.675131
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "qui",
+                        "value": 15,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.808394,
+                            "y": 50.450474
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "anim",
+                        "value": 6,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.431295,
+                            "y": 50.381124
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "proident",
+                        "value": 43,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.21084,
+                            "y": 50.035379
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "BAD"
+            }
+        ]
+    },
+    {
+        "indicator": "Red List species",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "id",
+                        "value": 61,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.07672,
+                            "y": 50.878624
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "exercitation",
+                        "value": 22,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.417096,
+                            "y": 50.343422
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "culpa",
+                        "value": 24,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.321986,
+                            "y": 50.12586
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "duis",
+                        "value": 13,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.958336,
+                            "y": 50.791088
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "cupidatat",
+                        "value": 30,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.732926,
+                            "y": 50.673983
+                        }
+                    }
+                ],
+                "value": "4 of 5",
+                "text": "BAD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "irure",
+                        "value": 17,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.122191,
+                            "y": 50.349883
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "in",
+                        "value": 0,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.908448,
+                            "y": 50.753267
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "qui",
+                        "value": 64,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.250683,
+                            "y": 50.380591
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "velit",
+                        "value": 62,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.23692,
+                            "y": 50.381764
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "do",
+                        "value": 74,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.380113,
+                            "y": 50.831213
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "cillum",
+                        "value": 80,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.742854,
+                            "y": 50.678404
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "consectetur",
+                        "value": 66,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.283263,
+                            "y": 50.903477
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "aute",
+                        "value": 7,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.454474,
+                            "y": 50.572463
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "aute",
+                        "value": 12,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.02825,
+                            "y": 50.644119
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "exercitation",
+                        "value": 73,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.042488,
+                            "y": 50.327705
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
+            }
+        ]
+    },
+    {
+        "indicator": "Annual Fish Catch",
+        "data": [
+            {
+                "date": "2000-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "magna",
+                        "value": 81,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.050016,
+                            "y": 50.465412
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "reprehenderit",
+                        "value": 61,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.469708,
+                            "y": 50.394248
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "ut",
+                        "value": 72,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.426695,
+                            "y": 50.347938
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "do",
+                        "value": 57,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.999902,
+                            "y": 50.155456
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "eu",
+                        "value": 89,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.771646,
+                            "y": 50.857858
+                        }
+                    }
+                ],
+                "value": "5 of 5",
+                "text": "GOOD"
+            },
+            {
+                "date": "2001-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "BAD",
+                        "station": "excepteur",
+                        "value": 38,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.607205,
+                            "y": 50.791725
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "quis",
+                        "value": 64,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.977211,
+                            "y": 50.010516
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "et",
+                        "value": 41,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.167184,
+                            "y": 50.485351
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "in",
+                        "value": 72,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.944256,
+                            "y": 50.428915
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "consectetur",
+                        "value": 36,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.252378,
+                            "y": 50.051021
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "BAD"
+            },
+            {
+                "date": "2002-01-01T00:00:00.000Z",
+                "station": [
+                    {
+                        "text": "GOOD",
+                        "station": "proident",
+                        "value": 97,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.676728,
+                            "y": 50.352977
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "ipsum",
+                        "value": 41,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.855746,
+                            "y": 50.841601
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "eiusmod",
+                        "value": 60,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.475861,
+                            "y": 50.100983
+                        }
+                    },
+                    {
+                        "text": "BAD",
+                        "station": "enim",
+                        "value": 4,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.177028,
+                            "y": 50.176497
+                        }
+                    },
+                    {
+                        "text": "GOOD",
+                        "station": "ea",
+                        "value": 100,
+                        "periodStart": 1357005600000,
+                        "geometry": {
+                            "x": 0.430743,
+                            "y": 50.194077
+                        }
+                    }
+                ],
+                "value": "3 of 5",
+                "text": "GOOD"
             }
         ]
     }
