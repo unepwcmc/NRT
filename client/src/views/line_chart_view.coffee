@@ -71,7 +71,7 @@ class Backbone.Views.LineChartView extends Backbone.View
         colourRange = @generateColourRange()
         _.extend(datasets[subIndicatorIndex], colourRange[subIndicatorIndex])
 
-        datasets[subIndicatorIndex].title = subIndicatorRecord.station
+        datasets[subIndicatorIndex].title = subIndicatorRecord[subIndicatorField]
         datasets[subIndicatorIndex].data.push subIndicatorRecord[yAxis]
 
     @renderLegend(datasets)
