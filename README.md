@@ -141,9 +141,19 @@ Run them with
 ##### Using Q for deferreds in tests
 
 Q.js is used through-out the application to prevent callback pyramids. One
-thing to note when using it, particularly in tests, is that for errors to
-bubble up to mocha, you must call .done() on promises (note this is not the
-done() function from mocha, but part of Q's promises).
+thing to note when using it, particularly in tests, is that you must specify a
+fail callback as well as success for every deferred, or your application will
+silently fail. In tests, you can usually just handle do this by passing mocha's
+`done` function to fail, e.g:
+
+```coffeescript
+test('somePromiseFunction', (done) ->
+  somePromiseFunction.then(->
+    # some assertions
+    done()
+  ).fail(done) # This will call done with an error as first argument, which triggers mocha's error state
+)
+```
 
 #### Client
 
