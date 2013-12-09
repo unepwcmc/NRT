@@ -1,0 +1,67 @@
+[
+  '{{repeat(3)}}',
+  {
+    "indicator": function(idx) {
+      var names = [
+        'SO2 Concentration', 'NO2 Concentration', 'PM10 Count'
+      ];
+
+      return names[this.numeric(0, names.length - 1)];
+    },
+    "data": [
+        '{{repeat(3)}}',
+        {
+            "date": function(idx) {
+              window.indicatorTexts = {
+                GOOD: 0,
+                BAD: 0
+              };
+
+              return "200" + idx + "-01-01T00:00:00.000Z";
+            },
+            "station": [
+                '{{repeat(5)}}',
+                {
+                  "text": function(idx) {
+                    window.window.window.value = this.numeric(0, 100);
+                    
+                    if (value > 50) {
+                      choice = 'GOOD';
+                    } else {
+                      choice = 'BAD';
+                    }
+                    window.indicatorTexts[choice] += 1;
+                    return choice;
+                  },
+                  "station": "{{lorem(1)}}",
+                  "value": function(idx) {
+                    return window.value;
+                  },
+                  "periodStart": 1357005600000,
+                  "geometry": {
+                    "x": '{{numeric(50.000001,51)}}',
+                    "y": '{{numeric(0.000001,1)}}',
+                  }
+                }
+            ],
+            "value": function(idx) {
+              var stationCount = indicatorTexts.GOOD + indicatorTexts.BAD;
+              var value;
+
+              if (indicatorTexts.GOOD > indicatorTexts.BAD) {
+                 value = indicatorTexts.GOOD;
+                 window.text = 'GOOD';
+              } else {
+                 value = indicatorTexts.BAD;
+                 window.text = 'BAD';
+              }
+
+              return value + " of " + stationCount;
+            },
+            "text": function(idx) {
+              return window.text;
+            }
+        }
+    ]
+  }
+]
