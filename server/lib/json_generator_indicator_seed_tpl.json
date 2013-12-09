@@ -3,10 +3,10 @@
   {
     "indicator": function(idx) {
       var names = [
-        'SO2 Concentration', 'NO2 Concentration', 'PM10 Count'
+        'SO2 Concentration', 'NO2 Concentration', 'PM10 Concentration'
       ];
 
-      return names[this.numeric(0, names.length - 1)];
+      return names[idx];
     },
     "data": [
         '{{repeat(3)}}',
@@ -24,7 +24,7 @@
                 {
                   "text": function(idx) {
                     window.window.window.value = this.numeric(0, 100);
-                    
+
                     if (value > 50) {
                       choice = 'GOOD';
                     } else {
@@ -39,8 +39,8 @@
                   },
                   "periodStart": 1357005600000,
                   "geometry": {
-                    "x": '{{numeric(50.000001,51)}}',
-                    "y": '{{numeric(0.000001,1)}}',
+                    "x": '{{numeric(0.000001,1)}}',
+                    "y": '{{numeric(50.000001,51)}}'
                   }
                 }
             ],
