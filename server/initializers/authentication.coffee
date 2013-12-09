@@ -1,4 +1,5 @@
 passport = require('passport')
+_ = require('underscore')
 LocalStrategy = require('passport-local').Strategy
 Q = require('q')
 User = require('../models/user').model
@@ -48,10 +49,17 @@ passport.use(
   )
 )
 
+userValueBlacklist = ['password', 'salt']
+stripSensitiveDataFromUser = (user) ->
+  _.omit(user.toJSON(), userValueBlacklist)
+
 passport.addCurrentUserToLocals = (req, res, next) ->
   if req.user?
-    res.locals.currentUser= req.user
-    res.locals.currentUserJSON = JSON.stringify(req.user)
+    user = stripSensitiveDataFromUser(req.user)
+
+    res.locals.currentUser = user
+    res.locals.currentUserJSON = JSON.stringify(user)
+
   next()
 
 module.exports = passport
