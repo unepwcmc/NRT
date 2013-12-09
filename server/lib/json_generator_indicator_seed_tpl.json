@@ -1,9 +1,9 @@
 [
-  '{{repeat(3)}}',
+  '{{repeat(21)}}',
   {
     "indicator": function(idx) {
       var names = [
-        'SO2 Concentration', 'NO2 Concentration', 'PM10 Concentration'
+        'SO2 Concentration', 'NO2 Concentration', 'PM10 Concentration', "PM25 Concentration", "O3 Concentration", "Protected areas", "Area of Key Ecosystems", "Threatened species", "Abundance of Key Species", "Fish Resource Status", "Nitrate-N Concentrations", "Enterococci Concentrations", "Groundwater Reserves", "Salinity", "Awareness of Water", "Awareness of Fish Stocks", "Awareness of air quality", "Awareness of biodiversity", "Urban air pollution", "Red List species", "Annual Fish Catch"
       ];
 
       return names[idx];
