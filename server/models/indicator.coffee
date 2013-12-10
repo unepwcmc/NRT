@@ -15,6 +15,7 @@ indicatorSchema = mongoose.Schema(
   title: String
   short_name: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
+  dpsir: mongoose.Schema.Types.Mixed
   theme: {type: mongoose.Schema.Types.ObjectId, ref: 'Theme'}
   type: String
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}

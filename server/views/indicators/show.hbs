@@ -46,6 +46,14 @@
           </span>
         </div>
         <p>Refers to data collected up to {{indicator.page.headline.periodEnd}}</p>
+
+        <ul class="dpsir">
+          <li class='{{#if indicator.dpsir.driver}}active{{/if}}'>D</li>
+          <li class='{{#if indicator.dpsir.pressure}}active{{/if}}'>P</li>
+          <li class='{{#if indicator.dpsir.state}}active{{/if}}'>S</li>
+          <li class='{{#if indicator.dpsir.impact}}active{{/if}}'>I</li>
+          <li class='{{#if indicator.dpsir.response}}active{{/if}}'>R</li>
+        </ul>
       </div>
       <h1>{{indicator.title}}</h1>
     </header>
