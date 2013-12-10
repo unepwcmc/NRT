@@ -98,7 +98,7 @@ test('.getIndicatorDataForCSV converts all fields to String', (done) ->
       assert.typeOf date, 'string'
       assert.typeOf value, 'string'
 
-      assert.strictEqual date, "Mon Jan 01 2001 00:00:00 GMT+0000 (GMT)"
+      assert.match date, /Mon Jan 01 2001 00:00:00 GMT\+0000/
       assert.strictEqual value, "4"
 
       done()
