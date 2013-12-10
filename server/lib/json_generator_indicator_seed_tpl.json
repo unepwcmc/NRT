@@ -1,12 +1,33 @@
 [
-  '{{repeat(20)}}',
+  '{{repeat(21)}}',
   {
     "indicator": function(idx) {
-      var names = [
-        'SO2 Concentration', 'NO2 Concentration', 'PM10 Concentration', "PM25 Concentration", "O3 Concentration", "Area of Key Ecosystems", "Threatened species", "Abundance of Key Species", "Fish Resource Status", "Nitrate-N Concentrations", "Enterococci Concentrations", "Groundwater Reserves", "Salinity", "Awareness of Water", "Awareness of Fish Stocks", "Awareness of air quality", "Awareness of biodiversity", "Urban air pollution", "Red List species", "Annual Fish Catch"
+      var indicators = [
+        {name: "SO2 Concentration", type: 'sub'},
+        {name: "NO2 Concentration", type: 'sub'},
+        {name: "PM10 Concentration", type: 'sub'},
+        {name: "PM25 Concentration", type: 'sub'},
+        {name: "O3 Concentration", type: 'sub'},
+        {name: "Area of Key Ecosystems", type: 'sub'},
+        {name: "Threatened species", type: 'sub'},
+        {name: "Abundance of Key Species", type: 'sub'},
+        {name: "Fish Resource Status", type: 'sub'},
+        {name: "Nitrate-N Concentrations", type: 'sub'},
+        {name: "Enterococci Concentrations", type: 'sub'},
+        {name: "Groundwater Reserves", type: 'sub'},
+        {name: "Salinity", type: 'sub'},
+        {name: "Awareness of Water", type: 'sub'},
+        {name: "Awareness of Fish Stocks", type: 'sub'},
+        {name: "Awareness of air quality", type: 'sub'},
+        {name: "Awareness of biodiversity", type: 'sub'},
+        {name: "Urban air pollution", type: 'sub'},
+        {name: "Red List species", type: 'sub'},
+        {name: "Annual Fish Catch", type: 'sub'},
+        {name: "Protected areas", type: null}
       ];
 
-      return names[idx];
+      window.window.window.window.window.window.indicator = indicators[idx];
+      return window.indicator.name;
     },
     "data": [
         '{{repeat(3)}}',
@@ -45,49 +66,33 @@
                 }
             ],
             "value": function(idx) {
-              var stationCount = indicatorTexts.GOOD + indicatorTexts.BAD;
-              var value;
+              if (window.indicator.type === 'sub') {
+                var stationCount = indicatorTexts.GOOD + indicatorTexts.BAD;
+                var value;
 
-              if (indicatorTexts.GOOD > indicatorTexts.BAD) {
-                 value = indicatorTexts.GOOD;
-                 window.text = 'GOOD';
+                if (indicatorTexts.GOOD > indicatorTexts.BAD) {
+                   value = indicatorTexts.GOOD;
+                   window.text = 'GOOD';
+                } else {
+                   value = indicatorTexts.BAD;
+                   window.text = 'BAD';
+                }
+
+                return value + " of " + stationCount;
               } else {
-                 value = indicatorTexts.BAD;
-                 window.text = 'BAD';
-              }
+                window.window.window.value = this.numeric(0, 100);
 
-              return value + " of " + stationCount;
+                if (window.window.window.window.window.value > 50) {
+                   window.text = 'GOOD';
+                } else {
+                   window.text = 'BAD';
+                }
+
+                return window.value;
+              }
             },
             "text": function(idx) {
               return window.text;
-            }
-        }
-    ]
-  },
-  '{{repeat(1)}}',
-  {
-    "indicator": function(idx) {
-      var names = [
-        "Protected areas"
-      ];
-
-      return names[idx];
-    },
-    "data": [
-        '{{repeat(3)}}',
-        {
-            "date": "200{{index}}-01-01T00:00:00.000Z",
-            "value": function(idx) {
-              window.window.window.value = this.numeric(0, 100);
-
-              return value;
-            },
-            "text": function(idx) {
-              if (window.window.window.window.window.value > 50) {
-                 return 'GOOD';
-              } else {
-                 return 'BAD';
-              }
             }
         }
     ]
