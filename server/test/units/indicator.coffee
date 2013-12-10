@@ -93,10 +93,13 @@ test('.getIndicatorDataForCSV converts all fields to String', (done) ->
         return done(err)
 
       date = indicatorData[1][0]
+      value = indicatorData[1][1]
 
       assert.typeOf date, 'string'
+      assert.typeOf value, 'string'
 
       assert.strictEqual date, "Mon Jan 01 2001 00:00:00 GMT+0000 (GMT)"
+      assert.strictEqual value, "4"
 
       done()
     )
