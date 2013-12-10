@@ -285,14 +285,12 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
-      "unit": "protected areas",
-      "short_unit": "protected areas",
+      "unit": "%",
+      "short_unit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
-      "subIndicatorField": "station",
-      "subIndicatorUnit": "%",
       "fields": [
         {
           "source": {
@@ -317,13 +315,6 @@
           },
           "name": "text",
           "type": "text"
-        }, {
-          "source": {
-            "name": "station",
-            "type": "object"
-          },
-          "name": "station",
-          "type": "object"
         }
       ]
   }
@@ -338,14 +329,12 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
-      "unit": "areas",
-      "short_unit": "areas",
+      "unit": "%",
+      "short_unit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
-      "subIndicatorField": "station",
-      "subIndicatorUnit": "%",
       "fields": [
         {
           "source": {
@@ -389,14 +378,12 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
-      "unit": "species",
-      "short_unit": "species",
+      "unit": "%",
+      "short_unit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
-      "subIndicatorField": "station",
-      "subIndicatorUnit": "%",
       "fields": [
         {
           "source": {
@@ -448,8 +435,6 @@
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
-      "subIndicatorField": "station",
-      "subIndicatorUnit": "%",
       "fields": [
         {
           "source": {
@@ -495,14 +480,12 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
-      "unit": "stations",
-      "short_unit": "stations",
+      "unit": "tonnes",
+      "short_unit": "t",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
-      "subIndicatorField": "station",
-      "subIndicatorUnit": "catch",
       "fields": [
         {
           "source": {
@@ -654,14 +637,12 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
-      "unit": "stations",
-      "short_unit": "stations",
+      "unit": "years",
+      "short_unit": "years",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
-      "subIndicatorField": "station",
-      "subIndicatorUnit": "µl/m3",
       "fields": [
         {
           "source": {
@@ -707,14 +688,12 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
-      "unit": "stations",
-      "short_unit": "stations",
+      "unit": "km2",
+      "short_unit": "km2",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
-      "subIndicatorField": "station",
-      "subIndicatorUnit": "km2",
       "fields": [
         {
           "source": {
@@ -760,14 +739,12 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
-      "unit": "stations",
-      "short_unit": "stations",
+      "unit": "%",
+      "short_unit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
-      "subIndicatorField": "station",
-      "subIndicatorUnit": "µl/m3",
       "fields": [
         {
           "source": {
@@ -813,14 +790,12 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
-      "unit": "stations",
-      "short_unit": "stations",
+      "unit": "%",
+      "short_unit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
-      "subIndicatorField": "station",
-      "subIndicatorUnit": "µl/m3",
       "fields": [
         {
           "source": {
@@ -866,14 +841,12 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
-      "unit": "stations",
-      "short_unit": "stations",
+      "unit": "%",
+      "short_unit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
-      "subIndicatorField": "station",
-      "subIndicatorUnit": "µg/m3",
       "fields": [
         {
           "source": {
@@ -919,14 +892,12 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
-      "unit": "stations",
-      "short_unit": "stations",
+      "unit": "%",
+      "short_unit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
-      "subIndicatorField": "station",
-      "subIndicatorUnit": "%",
       "fields": [
         {
           "source": {
@@ -972,14 +943,12 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
-      "unit": "stations",
-      "short_unit": "stations",
+      "unit": "ug/m3",
+      "short_unit": "ug/m3",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
-      "subIndicatorField": "station",
-      "subIndicatorUnit": "µg/m3",
       "fields": [
         {
           "source": {
@@ -1022,14 +991,12 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
-      "unit": "species",
-      "short_unit": "species",
+      "unit": "%",
+      "short_unit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
-      "subIndicatorField": "station",
-      "subIndicatorUnit": "%",
       "fields": [
         {
           "source": {
@@ -1072,14 +1039,12 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
-      "unit": "stations",
-      "short_unit": "stations",
+      "unit": "tonnes",
+      "short_unit": "t",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
-      "subIndicatorField": "station",
-      "subIndicatorUnit": "tonnes",
       "fields": [
         {
           "source": {
