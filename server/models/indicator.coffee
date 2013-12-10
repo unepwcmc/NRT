@@ -144,7 +144,10 @@ indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
     rows = [[xAxis, yAxis]]
 
     for row in indicatorData
-      rows.push [row[xAxis], row[yAxis]]
+      rows.push [
+        row[xAxis].toString(),
+        row[yAxis].toString()
+      ]
 
     callback(err, rows)
   )

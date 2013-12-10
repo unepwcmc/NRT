@@ -30,9 +30,9 @@ test('.getIndicatorDataForCSV with no filters returns all indicator data in a 2D
 
   expectedData = [
     ['year', 'value'],
-    [2000,4],
-    [2001,4],
-    [2002,4]
+    ["2000","4"],
+    ["2001","4"],
+    ["2002","4"]
   ]
 
   indicator = new Indicator(
@@ -68,6 +68,46 @@ test('.getIndicatorDataForCSV with no filters returns all indicator data in a 2D
   )
 )
 
+test('.getIndicatorDataForCSV converts all fields to String', (done) ->
+  data = [
+    {
+      "date": new Date(2000, 12),
+      "value": 4
+    }
+  ]
+
+  indicator = new Indicator(
+    indicatorDefinition:
+      xAxis: 'date'
+      yAxis: 'value'
+  )
+
+  getIndicatorDataStub = sinon.stub(indicator, 'getIndicatorData', (filters, callback) ->
+    callback(null, data)
+  )
+
+  try
+    indicator.getIndicatorDataForCSV( (err, indicatorData) ->
+      if err?
+        getIndicatorDataStub.restore()
+        return done(err)
+
+      date = indicatorData[1][0]
+      value = indicatorData[1][1]
+
+      assert.typeOf date, 'string'
+      assert.typeOf value, 'string'
+
+      assert.match date, /Mon Jan 01 2001 00:00:00 GMT\+0000/
+      assert.strictEqual value, "4"
+
+      done()
+    )
+  catch err
+    getIndicatorDataStub.restore()
+    done(err)
+)
+
 test('.getIndicatorDataForCSV with filters returns data matching filters in a 2D array', (done) ->
   data = [
     {
@@ -84,8 +124,8 @@ test('.getIndicatorDataForCSV with filters returns data matching filters in a 2D
 
   expectedData = [
     ['year', 'value'],
-    [2001,4],
-    [2002,4]
+    ["2001","4"],
+    ["2002","4"]
   ]
 
   indicator = new Indicator(
