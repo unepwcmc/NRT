@@ -16,7 +16,7 @@ test('GET /login renders a log in form', (done) ->
     assert.equal res.statusCode, 200
 
     assert.match body, new RegExp(".*form.*")
-    assert.match body, new RegExp(".*Username.*")
+    assert.match body, new RegExp(".*Email.*")
     assert.match body, new RegExp(".*Password.*")
 
     done()
