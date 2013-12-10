@@ -1321,3 +1321,17 @@ footer{
     }
   }
 }
+
+ul.dpsir {
+  overflow: hidden;
+  li {
+    font-weight: bold;
+    float: left;
+    list-style-type: none;
+    padding: 0 5px 0 0;
+    opacity: 0.2;
+  }
+  li.active {
+    opacity: 1;
+  }
+}

@@ -36,7 +36,7 @@
 <div class="content indicator">
   <article>
     <header>
-      <div {{#if indicator.page.is_draft}}class="parameter p-select"{{else}}class="parameter"{{/if}}>
+      <div class="parameter {{#if indicator.page.is_draft}}p-select{{/if}}">
         <div class="score">
           <span class="number">
             {{indicator.page.headline.value}} {{indicator.indicatorDefinition.short_unit}}
@@ -47,14 +47,14 @@
         </div>
         <p>Refers to data collected up to {{indicator.page.headline.periodEnd}}</p>
 
-        <ul class="dpsir">
-          <li class='{{#if indicator.dpsir.driver}}active{{/if}}'>D</li>
-          <li class='{{#if indicator.dpsir.pressure}}active{{/if}}'>P</li>
-          <li class='{{#if indicator.dpsir.state}}active{{/if}}'>S</li>
-          <li class='{{#if indicator.dpsir.impact}}active{{/if}}'>I</li>
-          <li class='{{#if indicator.dpsir.response}}active{{/if}}'>R</li>
-        </ul>
       </div>
+      <ul class="dpsir">
+        <li class='{{#if indicator.dpsir.driver}}active{{/if}}'>D</li>
+        <li class='{{#if indicator.dpsir.pressure}}active{{/if}}'>P</li>
+        <li class='{{#if indicator.dpsir.state}}active{{/if}}'>S</li>
+        <li class='{{#if indicator.dpsir.impact}}active{{/if}}'>I</li>
+        <li class='{{#if indicator.dpsir.response}}active{{/if}}'>R</li>
+      </ul>
       <h1>{{indicator.title}}</h1>
     </header>
 
