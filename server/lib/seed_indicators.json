@@ -16,6 +16,13 @@
     {"title": "Description", "content": "Average annual NO2 concentration in µg per m3"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": true,
+    "pressure": true,
+    "state": false,
+    "impact": false,
+    "response": false
+  },
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
