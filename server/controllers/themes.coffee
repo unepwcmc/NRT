@@ -1,29 +1,53 @@
 Indicator = require('../models/indicator').model
 Theme = require('../models/theme').model
 ThemePresenter = require('../lib/presenters/theme')
+IndicatorPresenter = require('../lib/presenters/theme')
+HeadlineService = require('../lib/services/headline')
+
 _ = require('underscore')
 async = require('async')
 Q = require('q')
 
 exports.index = (req, res) ->
-  Theme.getFatThemes( (err, themes) ->
-    if err?
-      console.error err
-      console.error err.stack
-      return res.send(500, "Error fetching the themes")
+  theThemes = null
+  Q.nsend(
+    Theme, 'find'
+  ).then((themes) ->
+    theThemes = themes
 
-    Theme.populateDescriptionsFromPages(themes).then(->
+    ThemePresenter.populateIndicators(theThemes, {})
+  ).then(->
 
-      ThemePresenter.populateIndicatorRecencyStats(themes)
+    # For each theme
+    Q.nfcall(
+      async.each, theThemes, (theme, callback) ->
 
-      res.render "themes/index", themes: themes
-
-    ).fail((err)->
-      console.error err
-      console.error err.stack
-      return res.send(500, "Error populating descriptions")
+        # For each indicator of said theme
+        Q.nfcall(
+          async.each, theme.indicators, (indicator, cb) ->
+            indicator.populatePage().then(->
+              indicator.populateDescriptionFromPage()
+            ).then(->
+              cb(null)
+            ).fail(cb)
+        ).then(->
+          HeadlineService.populateNarrativeRecencyOfIndicators(theme.indicators)
+        ).then(->
+          callback()
+        ).fail(callback)
     )
+  ).then( ->
 
+    Theme.populateDescriptionsFromPages(theThemes)
+  ).then(->
+
+    ThemePresenter.populateIndicatorRecencyStats(theThemes)
+    res.render "themes/index", themes: theThemes
+
+  ).fail((err)->
+    console.error err
+    console.error err.stack
+    return res.send(500, "Error populating descriptions")
   )
 
 exports.show = (req, res) ->
