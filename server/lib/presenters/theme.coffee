@@ -25,8 +25,4 @@ module.exports = class ThemePresenter
           theme.indicators = indicators
           callback()
         ).fail(callback)
-    ).then( ->
-      callback null, themes
-    ).fail( (err) ->
-      callback err
     )
