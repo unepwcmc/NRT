@@ -15,21 +15,25 @@ exports.index = (req, res) ->
   ).then((themes) ->
     theThemes = themes
 
-    ThemePresenter.populateIndicators(theThemes, {})
+    filters = {}
+    filters = _.extend(filters, Indicator.CONDITIONS.IS_PRIMARY)
+    ThemePresenter.populateIndicators(theThemes, filters)
   ).then(->
 
     # For each theme
     Q.nfcall(
       async.each, theThemes, (theme, callback) ->
 
-        # For each indicator of said theme
-        Q.nfcall(
-          async.each, theme.indicators, (indicator, cb) ->
-            indicator.populatePage().then(->
-              indicator.populateDescriptionFromPage()
-            ).then(->
-              cb(null)
-            ).fail(cb)
+        new ThemePresenter(theme).filterIndicatorsWithData().then(->
+          # For each indicator of said theme
+          Q.nfcall(
+            async.each, theme.indicators, (indicator, cb) ->
+              indicator.populatePage().then(->
+                indicator.populateDescriptionFromPage()
+              ).then(->
+                cb(null)
+              ).fail(cb)
+          )
         ).then(->
           HeadlineService.populateNarrativeRecencyOfIndicators(theme.indicators)
         ).then(->

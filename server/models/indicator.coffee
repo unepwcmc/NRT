@@ -30,6 +30,10 @@ _.extend(indicatorSchema.statics, pageModelMixin.statics)
 _.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
 _.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
 
+indicatorSchema.statics.CONDITIONS = {
+  IS_PRIMARY: {type: 'esri'}
+}
+
 replaceThemeNameWithId = (indicators) ->
   Theme = require('./theme').model
 

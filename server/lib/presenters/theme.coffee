@@ -5,6 +5,7 @@ Theme = require('../../models/theme').model
 HeadlineService = require('../services/headline')
 
 module.exports = class ThemePresenter
+  constructor: (@theme) ->
 
   @populateIndicatorRecencyStats: (themes) ->
     for theme in themes
@@ -15,6 +16,8 @@ module.exports = class ThemePresenter
         )
         unless indicator.isUpToDate
           theme.outOfDateIndicatorCount++
+
+  filterIndicatorsWithData: ->
 
   @populateIndicators: (themes) ->
     Q.nfcall(
