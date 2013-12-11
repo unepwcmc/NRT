@@ -81,6 +81,8 @@ test(".index only returns primary indicators", (done) ->
   ).then(->
     Q.nsend(externalIndicator, 'save')
   ).then(->
+    hasDataStub = sinon.stub(Indicator::, 'hasData', -> Q.fcall(->true))
+
     stubReq = {}
 
     stubRes = {
@@ -98,8 +100,10 @@ test(".index only returns primary indicators", (done) ->
           assert.strictEqual indicator._id.toString(), primaryIndicator.id,
             "Expected the returned indicator to be the primary indicator"
 
+          hasDataStub.restore()
           done()
         catch err
+          hasDataStub.restore()
           done(err)
     }
 
