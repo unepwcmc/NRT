@@ -54,7 +54,7 @@ exports.createApp = ->
 exports.start = (port, callback) ->
   app = exports.createApp()
 
-  seedData()
+  seedData() unless app.get('env') is "test"
 
   server = http.createServer(app).listen port, (err) ->
     callback err, server
