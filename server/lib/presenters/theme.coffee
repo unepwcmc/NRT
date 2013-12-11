@@ -18,6 +18,26 @@ module.exports = class ThemePresenter
           theme.outOfDateIndicatorCount++
 
   filterIndicatorsWithData: ->
+    deferred = Q.defer()
+
+    indicatorsWithData = []
+
+    indicatorHasData = (indicator, callback) ->
+      indicator.hasData().then( (hasData) ->
+        if hasData
+          indicatorsWithData.push(indicator)
+
+        callback(null)
+      ).fail(callback)
+
+    async.each @theme.indicators, indicatorHasData, (err) =>
+      if err?
+        deferred.reject(err)
+      else
+        @theme.indicators = indicatorsWithData
+        deferred.resolve()
+
+    deferred.promise
 
   @populateIndicators: (themes) ->
     Q.nfcall(
