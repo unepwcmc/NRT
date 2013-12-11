@@ -8,6 +8,13 @@ _ = require('underscore')
 async = require('async')
 Q = require('q')
 
+dpsirParamsToQuery = (params) ->
+  query = {}
+  for param, value of params.dpsir
+    query["dpsir.#{param}"] = !!value
+
+  return query
+
 exports.index = (req, res) ->
   theThemes = null
   Q.nsend(
@@ -15,7 +22,8 @@ exports.index = (req, res) ->
   ).then((themes) ->
     theThemes = themes
 
-    ThemePresenter.populateIndicators(theThemes, {})
+    filter = dpsirParamsToQuery(req.params)
+    ThemePresenter.populateIndicators(theThemes, filter)
   ).then(->
 
     # For each theme

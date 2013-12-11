@@ -46,8 +46,10 @@ test(".index given DPSIR parameters excluding everything except drivers, I shoul
             "Only expected one indicator (the driver) to be returned"
 
           indicator = data.themes[0].indicators[0]
-          assert.deepEqual indicator, driverIndicator,
-            "Expected the returned indicator to the the driver"
+          assert.strictEqual indicator._id.toString(), driverIndicator.id,
+            "Expected the returned indicator to be the driver"
+
+          done()
         catch err
           done(err)
     }
