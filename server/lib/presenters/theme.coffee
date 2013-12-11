@@ -16,11 +16,11 @@ module.exports = class ThemePresenter
         unless indicator.isUpToDate
           theme.outOfDateIndicatorCount++
 
-  @populateIndicators: (themes) ->
+  @populateIndicators: (themes, filter) ->
     Q.nfcall(
       async.each, themes, (theme, callback) ->
         Q.nfcall(
-          Theme.getIndicatorsByTheme, theme.id
+          Theme.getIndicatorsByTheme, theme.id, filter
         ).then( (indicators) ->
           theme.indicators = indicators
           callback()
