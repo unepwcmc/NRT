@@ -11,7 +11,7 @@ Q = require('q')
 dpsirParamsToQuery = (params) ->
   query = {}
   for param, value of params.dpsir
-    query["dpsir.#{param}"] = !!value
+    query["dpsir.#{param}"] = new RegExp("^true$", "i").test(value)
 
   return query
 
@@ -22,7 +22,7 @@ exports.index = (req, res) ->
   ).then((themes) ->
     theThemes = themes
 
-    filter = dpsirParamsToQuery(req.params)
+    filter = dpsirParamsToQuery(req.query)
     ThemePresenter.populateIndicators(theThemes, filter)
   ).then(->
 

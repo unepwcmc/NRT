@@ -29,7 +29,7 @@ test(".index given DPSIR parameters excluding everything except drivers, I shoul
     Q.nsend(pressureIndicator, 'save')
   ).then(->
     stubReq =
-      params:
+      query:
         dpsir:
           driver: true
 
