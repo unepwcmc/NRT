@@ -1,4 +1,6 @@
 assert = require('chai').assert
+sinon = require('sinon')
+
 ThemePresenter = require('../../../lib/presenters/theme')
 Theme = require('../../../models/theme').model
 Indicator = require('../../../models/theme').model
@@ -38,4 +40,43 @@ test("#populateIndicatorRecencyStats given themes populated
 
   assert.isFalse outOfDateIndicator.isUpToDate,
     "Expected the outOfDateIndicator.isUpToDate to be fals"
+)
+
+test("#populateIndicators populates the indicators for the given array of themes", ->
+  theme1 = new Theme()
+  theme1Indicator = new Indicator()
+  theme2 = new Theme()
+  theme2Indicator = new Indicator()
+
+  getIndicatorsByThemeStub = sinon.stub(Theme, 'getIndicatorsByTheme',  (themeId, callback) ->
+    if theme1.id is themeId
+      callback(null, theme1Indicator)
+    else
+      callback(null, theme2Indicator)
+  )
+
+  ThemePresenter.populateIndicators([theme1, theme2]).then(->
+    try
+      assert.property theme1, 'indicators',
+        "Expected the theme indicators property to be populated"
+      assert.lengthOf theme1.indicators, 1,
+        "Expected theme 1 to have one indicator populated"
+      assert.strictEqual theme1.indicators[0]._id, theme1Indicator._id,
+        "Expected the correct theme indicator to be populated"
+
+      assert.property theme2, 'indicators',
+        "Expected the theme indicators property to be populated"
+      assert.lengthOf theme2.indicators, 1,
+        "Expected theme 2 to have one indicator populated"
+      assert.strictEqual theme2.indicators[0]._id, theme2Indicator._id,
+        "Expected the correct theme indicator to be populated"
+    catch err
+      done(err)
+    finally
+      getIndicatorsByThemeStub.restore()
+
+  ).fail((err) ->
+    done(err)
+    getIndicatorsByThemeStub.restore()
+  )
 )
