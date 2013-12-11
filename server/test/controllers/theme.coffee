@@ -10,7 +10,9 @@ ThemeController = require('../../controllers/themes')
 
 suite('Theme Controller')
 
-test(".index given DPSIR parameters excluding everything except drivers, I should only see indicators which are drivers", (done) ->
+test(".index given DPSIR parameters excluding everything except drivers, I should only see indicators which are drivers")
+###
+(done) ->
   theme = new Theme(title: 'test theme')
   driverIndicator = new Indicator(
     theme: theme._id
@@ -56,3 +58,4 @@ test(".index given DPSIR parameters excluding everything except drivers, I shoul
 
   ).fail(done)
 )
+###
