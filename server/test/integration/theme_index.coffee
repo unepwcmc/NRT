@@ -25,9 +25,9 @@ test("With a series of themes and indicators, I should see their titles", (done)
     title: "theme 2 indicator"
     narrativeRecency: "Out of date"
   }]
-  themes = [ theme1, theme2]
+  themes = [theme1, theme2]
 
-  getFatThemesStub = sinon.stub(Theme, 'getFatThemes', (callback) ->
+  getFatThemesStub = sinon.stub(Theme, 'find', (callback) ->
     callback(null, themes)
   )
 

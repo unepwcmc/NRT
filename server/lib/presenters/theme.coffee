@@ -1,7 +1,7 @@
 Q = require('q')
 async = require('async')
 
-Theme = require('../../models/theme')
+Theme = require('../../models/theme').model
 HeadlineService = require('../services/headline')
 
 module.exports = class ThemePresenter
@@ -19,8 +19,8 @@ module.exports = class ThemePresenter
   @populateIndicators: (themes) ->
     Q.nfcall(
       async.each, themes, (theme, callback) ->
-        Q.nsend(
-          Theme, 'getIndicatorsByTheme', theme.id
+        Q.nfcall(
+          Theme.getIndicatorsByTheme, theme.id
         ).then( (indicators) ->
           theme.indicators = indicators
           callback()
