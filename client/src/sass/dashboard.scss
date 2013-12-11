@@ -485,6 +485,11 @@ div.row.row-2 {
     position: relative;
     border-top: 1px solid $lightGrey;
     top: -2px;
+
+    .dpsir {
+      float: right;
+      margin-right: 25px;
+    }
   }
 }
 
