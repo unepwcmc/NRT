@@ -114,8 +114,8 @@ test(".index only returns primary indicators", (done) ->
 
 test(".index only indicators with data", (done) ->
   theme = new Theme(title: 'test theme')
-  indicator1 = new Indicator(theme: theme._id)
-  indicator2 = new Indicator(theme: theme._id)
+  indicator1 = new Indicator(theme: theme._id, type: 'esri')
+  indicator2 = new Indicator(theme: theme._id, type: 'esri')
 
   filterIndicatorsWithDataStub = sinon.stub(ThemePresenter::, 'filterIndicatorsWithData', ->
     @theme.indicators = [@theme.indicators[0]]
