@@ -5,6 +5,7 @@ Theme = require('../../models/theme').model
 HeadlineService = require('../services/headline')
 
 module.exports = class ThemePresenter
+  constructor: (@theme) ->
 
   @populateIndicatorRecencyStats: (themes) ->
     for theme in themes
@@ -16,11 +17,33 @@ module.exports = class ThemePresenter
         unless indicator.isUpToDate
           theme.outOfDateIndicatorCount++
 
-  @populateIndicators: (themes) ->
+  filterIndicatorsWithData: ->
+    deferred = Q.defer()
+
+    indicatorsWithData = []
+
+    indicatorHasData = (indicator, callback) ->
+      indicator.hasData().then( (hasData) ->
+        if hasData
+          indicatorsWithData.push(indicator)
+
+        callback(null)
+      ).fail(callback)
+
+    async.each @theme.indicators, indicatorHasData, (err) =>
+      if err?
+        deferred.reject(err)
+      else
+        @theme.indicators = indicatorsWithData
+        deferred.resolve()
+
+    deferred.promise
+
+  @populateIndicators: (themes, filter) ->
     Q.nfcall(
       async.each, themes, (theme, callback) ->
         Q.nfcall(
-          Theme.getIndicatorsByTheme, theme.id
+          Theme.getIndicatorsByTheme, theme.id, filter
         ).then( (indicators) ->
           theme.indicators = indicators
           callback()

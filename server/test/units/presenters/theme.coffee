@@ -1,9 +1,10 @@
 assert = require('chai').assert
 sinon = require('sinon')
+Q = require('q')
 
 ThemePresenter = require('../../../lib/presenters/theme')
 Theme = require('../../../models/theme').model
-Indicator = require('../../../models/theme').model
+Indicator = require('../../../models/indicator').model
 
 suite('ThemePresenter')
 
@@ -70,13 +71,63 @@ test("#populateIndicators populates the indicators for the given array of themes
         "Expected theme 2 to have one indicator populated"
       assert.strictEqual theme2.indicators[0]._id, theme2Indicator._id,
         "Expected the correct theme indicator to be populated"
+
+      getIndicatorsByThemeStub.restore()
+      done()
+    catch err
+      getIndicatorsByThemeStub.restore()
+      done(err)
+
+  ).fail((err) ->
+    getIndicatorsByThemeStub.restore()
+    done(err)
+  )
+)
+
+test("#populateIndicators passes filters to Theme.getIndicatorsByTheme", (done) ->
+  filter = {"dpsir.driver": true}
+  theme = new Theme()
+  getIndicatorsByThemeSpy = sinon.spy(Theme, 'getIndicatorsByTheme')
+  ThemePresenter.populateIndicators([theme], filter).then(->
+    try
+      assert.strictEqual getIndicatorsByThemeSpy.callCount, 1,
+        "Expected Theme.getIndicatorsByTheme to be called once"
+
+      assert.deepEqual getIndicatorsByThemeSpy.firstCall.args[1], filter,
+        "Expected the filter to be passed to Theme.getIndicatorsByTheme as the second argument"
+
+      done()
     catch err
       done(err)
     finally
-      getIndicatorsByThemeStub.restore()
-
+      getIndicatorsByThemeSpy.restore()
   ).fail((err) ->
+    getIndicatorsByThemeSpy.restore()
     done(err)
-    getIndicatorsByThemeStub.restore()
   )
+)
+
+test(".filterIndicatorsWithData filters out populated indicators without data", (done)->
+  indicatorWithData = new Indicator()
+  indicatorHasDataStub = sinon.stub(indicatorWithData, 'hasData', ->
+    Q.fcall(-> true)
+  )
+  indicatorWithoutData = new Indicator()
+  indicatorHasDataStub = sinon.stub(indicatorWithoutData, 'hasData', ->
+    Q.fcall(-> false)
+  )
+  theme = new Theme()
+  theme.indicators = [indicatorWithData, indicatorWithoutData]
+
+  presenter = new ThemePresenter(theme)
+  presenter.filterIndicatorsWithData().then(->
+    try
+      assert.lengthOf theme.indicators, 1, "Expected only one indicator to remain"
+      assert.strictEqual theme.indicators[0]._id.toString(), indicatorWithData._id.toString(),
+        "Expected only one indicator to remain"
+
+      done()
+    catch err
+      done(err)
+  ).fail(done)
 )
