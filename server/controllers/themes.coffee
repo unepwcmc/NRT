@@ -8,12 +8,18 @@ _ = require('underscore')
 async = require('async')
 Q = require('q')
 
+paramsToBoolean = (params) ->
+  for filter, value of params
+    params[filter] = new RegExp("^true$", "i").test(value)
+
+  params
+
 dpsirParamsToQuery = (params) ->
   queries = []
 
   for param, value of params
     object = {}
-    object["dpsir.#{param}"] = new RegExp("^true$", "i").test(value)
+    object["dpsir.#{param}"] = value
     queries.push(object)
 
   return {$or: queries}
@@ -26,7 +32,7 @@ defaultDpsir =
   response: true
 
 exports.index = (req, res) ->
-  dpsirFilter = req.query?.dpsir || defaultDpsir
+  dpsirFilter = paramsToBoolean(req.query?.dpsir) || defaultDpsir
 
   theThemes = null
   Q.nsend(

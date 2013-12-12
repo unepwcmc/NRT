@@ -81,11 +81,13 @@ test('when given no parameters it shows all DPSIR enabled', (done) ->
   ).fail(done)
 )
 
-test('when given the driver parameter it only shows that DPSIR enabled', (done) ->
+test('when given DPSIR parameters it only shows the correct DPSIRs enabled', (done) ->
   Q.nsend(
     request, 'get', {
       url: helpers.appurl('/themes')
-      qs: dpsir: driver: true
+      qs: dpsir:
+        driver: true
+        pressure: false
     }
   ).spread((res, body) ->
 
