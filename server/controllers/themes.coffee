@@ -9,20 +9,35 @@ async = require('async')
 Q = require('q')
 
 dpsirParamsToQuery = (params) ->
-  query = {}
-  for param, value of params?.dpsir
-    query["dpsir.#{param}"] = new RegExp("^true$", "i").test(value)
+  queries = []
 
-  return query
+  for param, value of params
+    object = {}
+    object["dpsir.#{param}"] = new RegExp("^true$", "i").test(value)
+    queries.push(object)
+
+  return {$or: queries}
+
+defaultDpsir =
+  driver: true
+  pressure: true
+  state: true
+  impact: true
+  response: true
 
 exports.index = (req, res) ->
+  dpsirFilter = req.query?.dpsir || defaultDpsir
+
   theThemes = null
   Q.nsend(
     Theme, 'find'
   ).then((themes) ->
     theThemes = themes
 
-    filters = dpsirParamsToQuery(req.query)
+    if req.query?.dpsir
+      filters = dpsirParamsToQuery(dpsirFilter)
+    else
+      filters = {}
     filters = _.extend(filters, Indicator.CONDITIONS.IS_PRIMARY)
     ThemePresenter.populateIndicators(theThemes, filters)
   ).then(->
@@ -53,7 +68,7 @@ exports.index = (req, res) ->
   ).then(->
 
     ThemePresenter.populateIndicatorRecencyStats(theThemes)
-    res.render "themes/index", themes: theThemes
+    res.render "themes/index", themes: theThemes, dpsir: dpsirFilter
 
   ).fail((err)->
     console.error err

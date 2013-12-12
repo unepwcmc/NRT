@@ -11,8 +11,75 @@ ThemePresenter = require('../../lib/presenters/theme')
 
 suite('Theme Controller')
 
+test(".index given no DPSIR parameters it only returns all indicators
+ and an DPSIR object with everything enabled", (done) ->
+  theme = new Theme(title: 'test theme')
+  driverIndicator = new Indicator(
+    theme: theme._id
+    dpsir: driver: true
+    type: 'esri'
+  )
+  pressureIndicator = new Indicator(
+    theme: theme._id
+    dpsir: pressure: true
+    type: 'esri'
+  )
+
+  # Don't filter indicators
+  filterIndicatorsWithDataStub = sinon.stub(ThemePresenter::, 'filterIndicatorsWithData', ->
+    Q.fcall(->)
+  )
+
+  Q.nsend(
+    theme, 'save'
+  ).then(->
+    Q.nsend(driverIndicator, 'save')
+  ).then(->
+    Q.nsend(pressureIndicator, 'save')
+  ).then(->
+    stubReq = {}
+    stubRes = {
+      send: (code, body) ->
+        filterIndicatorsWithDataStub.restore()
+        done(new Error("Expected res.send not to be called, but called with #{code}: #{body}"))
+      render: (templateName, data) ->
+        try
+          assert.lengthOf data.themes, 1,
+            "Only expected our one theme to be returned"
+
+          assert.lengthOf data.themes[0].indicators, 2,
+            "Only expected all indicators to be returned"
+
+          expectedDPSIR =
+            driver: true
+            pressure: true
+            state: true
+            impact: true
+            response: true
+          assert.deepEqual data.dpsir, expectedDPSIR,
+            "Expected the controller to return a DPSIR object with everything enabled"
+
+          filterIndicatorsWithDataStub.restore()
+          done()
+        catch err
+          filterIndicatorsWithDataStub.restore()
+          done(err)
+    }
+
+    try
+      ThemeController.index(stubReq, stubRes)
+    catch err
+      filterIndicatorsWithDataStub.restore()
+      done(err)
+
+  ).fail( (err) ->
+    filterIndicatorsWithDataStub.restore()
+    done(err)
+  )
+)
+
 test(".index given DPSIR parameters excluding everything except drivers,
-  I should only see indicators which are drivers", (done) ->
+  it only returns  indicators which are drivers", (done) ->
   theme = new Theme(title: 'test theme')
   driverIndicator = new Indicator(
     theme: theme._id
@@ -48,7 +115,6 @@ test(".index given DPSIR parameters excluding everything except drivers,
         done(new Error("Expected res.send not to be called, but called with #{code}: #{body}"))
       render: (templateName, data) ->
         try
-          console.log data
           assert.lengthOf data.themes, 1,
             "Only expected our one theme to be returned"
 
