@@ -6,6 +6,8 @@ Q = require('q')
 url = require('url')
 _ = require('underscore')
 sinon = require('sinon')
+libxmljs = require("libxmljs")
+
 Theme = require('../../models/theme').model
 
 suite('Theme index')
@@ -56,4 +58,50 @@ test("With a series of themes and indicators, I should see their titles", (done)
   ).finally(->
     getFatThemesStub.restore()
   )
+)
+
+test('when given no parameters it shows all DPSIR enabled', (done) ->
+  Q.nsend(
+    request, 'get', {
+      url: helpers.appurl('/themes')
+    }
+  ).spread((res, body) ->
+
+    assert.equal res.statusCode, 200
+
+    html = libxmljs.parseHtml(body)
+
+    dpsirListEl = html.get("//aside//ul[@class='dpsir']")
+
+    activeDPSIRs = dpsirListEl.find("li[@class='active']")
+    assert.lengthOf activeDPSIRs, 5,
+      "Expected all of DPSIR to be enabled"
+
+    done()
+  ).fail(done)
+)
+
+test('when given the driver parameter it only shows that DPSIR enabled', (done) ->
+  Q.nsend(
+    request, 'get', {
+      url: helpers.appurl('/themes')
+      qs: dpsir: driver: true
+    }
+  ).spread((res, body) ->
+
+    assert.equal res.statusCode, 200
+
+    html = libxmljs.parseHtml(body)
+
+    dpsirListEl = html.get("//aside//ul[@class='dpsir']")
+
+    activeDPSIRs = dpsirListEl.find("li[@class='active']")
+    assert.lengthOf activeDPSIRs, 1,
+      "Expected only one DPSIR filter to be enabled"
+
+    assert.strictEqual activeDPSIRs[0].text(), "D",
+      "Expected the active DPSIR to be Driver"
+
+    done()
+  ).fail(done)
 )
