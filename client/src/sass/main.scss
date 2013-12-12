@@ -1321,3 +1321,38 @@ footer{
     }
   }
 }
+
+.filters {
+  margin: 10px 0 20px;
+}
+
+aside {
+  .dpsir{
+    float: right;
+
+    li {
+      font-size: 2em;
+    }
+
+    li:hover {
+      color: $linkBlueHover;
+      cursor: pointer;
+    }
+  }
+}
+
+ul.dpsir {
+  overflow: hidden;
+
+  li {
+    font-weight: bold;
+    float: left;
+    list-style-type: none;
+    padding: 0 5px 0 0;
+    opacity: 0.2;
+  }
+
+  li.active {
+    opacity: 1;
+  }
+}

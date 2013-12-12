@@ -36,7 +36,7 @@
 <div class="content indicator">
   <article>
     <header>
-      <div {{#if indicator.page.is_draft}}class="parameter p-select"{{else}}class="parameter"{{/if}}>
+      <div class="parameter {{#if indicator.page.is_draft}}p-select{{/if}}">
         <div class="score">
           <span class="number">
             {{indicator.page.headline.value}} {{indicator.indicatorDefinition.short_unit}}
@@ -46,7 +46,9 @@
           </span>
         </div>
         <p>Refers to data collected up to {{indicator.page.headline.periodEnd}}</p>
+
       </div>
+      {{> dpsir indicator.dpsir }}
       <h1>{{indicator.title}}</h1>
     </header>
 

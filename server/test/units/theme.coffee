@@ -183,13 +183,11 @@ test('.getIndicatorsByTheme supports an optional filter object', (done) ->
     indicatorAttributes = [{
       title: "I'm an indicator of theme 1"
       theme: themes[0]._id
-      indicatorDefinition:
-        unit: "$"
+      dpsir: pressure: true
     }, {
       title: "I'm also an indicator of theme 1"
       theme: themes[0]._id
-      indicatorDefinition:
-        unit: "#"
+      dpsir: state: true
     }]
 
     helpers.createIndicatorModels(
@@ -197,7 +195,7 @@ test('.getIndicatorsByTheme supports an optional filter object', (done) ->
     )
   ).then( (indicators)->
     Q.nfcall(
-      Theme.getIndicatorsByTheme, theThemes[0]._id, {"indicatorDefinition.unit": "#"}
+      Theme.getIndicatorsByTheme, theThemes[0]._id, {"dpsir.state": true}
     )
   ).then( (indicators) ->
     try

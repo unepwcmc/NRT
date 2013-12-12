@@ -30,12 +30,15 @@ module.exports = class ThemePresenter
         callback(null)
       ).fail(callback)
 
-    async.each @theme.indicators, indicatorHasData, (err) =>
-      if err?
-        deferred.reject(err)
-      else
-        @theme.indicators = indicatorsWithData
-        deferred.resolve()
+    if @theme.indicators?
+      async.each @theme.indicators, indicatorHasData, (err) =>
+        if err?
+          deferred.reject(err)
+        else
+          @theme.indicators = indicatorsWithData
+          deferred.resolve()
+    else
+      deferred.reject(new Error('filterIndicatorsWithData called on a theme without an indicator attribute'))
 
     deferred.promise
 
