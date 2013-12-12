@@ -7,18 +7,27 @@ sinon = require('sinon')
 Theme = require('../../models/theme').model
 Indicator = require('../../models/indicator').model
 ThemeController = require('../../controllers/themes')
+ThemePresenter = require('../../lib/presenters/theme')
 
 suite('Theme Controller')
 
-test(".index given DPSIR parameters excluding everything except drivers, I should only see indicators which are drivers", (done) ->
+test(".index given DPSIR parameters excluding everything except drivers,
+  I should only see indicators which are drivers", (done) ->
   theme = new Theme(title: 'test theme')
   driverIndicator = new Indicator(
     theme: theme._id
     dpsir: driver: true
+    type: 'esri'
   )
   pressureIndicator = new Indicator(
     theme: theme._id
     dpsir: pressure: true
+    type: 'esri'
+  )
+
+  # Don't filter indicators
+  filterIndicatorsWithDataStub = sinon.stub(ThemePresenter::, 'filterIndicatorsWithData', ->
+    Q.fcall(->)
   )
 
   Q.nsend(
@@ -35,6 +44,7 @@ test(".index given DPSIR parameters excluding everything except drivers, I shoul
 
     stubRes = {
       send: (code, body) ->
+        filterIndicatorsWithDataStub.restore()
         done(new Error("Expected res.send not to be called, but called with #{code}: #{body}"))
       render: (templateName, data) ->
         try
@@ -49,12 +59,130 @@ test(".index given DPSIR parameters excluding everything except drivers, I shoul
           assert.strictEqual indicator._id.toString(), driverIndicator.id,
             "Expected the returned indicator to be the driver"
 
+          filterIndicatorsWithDataStub.restore()
           done()
         catch err
+          filterIndicatorsWithDataStub.restore()
           done(err)
     }
 
-    ThemeController.index(stubReq, stubRes)
+    try
+      ThemeController.index(stubReq, stubRes)
+    catch err
+      filterIndicatorsWithDataStub.restore()
+      done(err)
 
-  ).fail(done)
+  ).fail( (err) ->
+    filterIndicatorsWithDataStub.restore()
+    done(err)
+  )
+)
+
+test(".index only returns primary indicators", (done) ->
+  theme = new Theme(title: 'test theme')
+  primaryIndicator = new Indicator(
+    theme: theme._id
+    type: 'esri'
+  )
+  externalIndicator = new Indicator(
+    theme: theme._id
+    dpsir: pressure: true
+    type: 'something else'
+  )
+
+  Q.nsend(
+    theme, 'save'
+  ).then(->
+    Q.nsend(primaryIndicator, 'save')
+  ).then(->
+    Q.nsend(externalIndicator, 'save')
+  ).then(->
+    hasDataStub = sinon.stub(Indicator::, 'hasData', -> Q.fcall(->true))
+
+    stubReq = {}
+
+    stubRes = {
+      send: (code, body) ->
+        hasDataStub.restore()
+        done(new Error("Expected res.send not to be called, but called with #{code}: #{body}"))
+      render: (templateName, data) ->
+        try
+          assert.lengthOf data.themes, 1,
+            "Only expected our one theme to be returned"
+
+          assert.lengthOf data.themes[0].indicators, 1,
+            "Only expected one indicator (the primary indicator) to be returned"
+
+          indicator = data.themes[0].indicators[0]
+          assert.strictEqual indicator._id.toString(), primaryIndicator.id,
+            "Expected the returned indicator to be the primary indicator"
+
+          hasDataStub.restore()
+          done()
+        catch err
+          hasDataStub.restore()
+          done(err)
+    }
+
+    try
+      ThemeController.index(stubReq, stubRes)
+    catch
+      hasDataStub.restore()
+      done(err)
+
+  ).fail( (err) ->
+    hasDataStub.restore()
+    done(err)
+  )
+)
+
+test(".index only indicators with data", (done) ->
+  theme = new Theme(title: 'test theme')
+  indicator1 = new Indicator(theme: theme._id, type: 'esri')
+  indicator2 = new Indicator(theme: theme._id, type: 'esri')
+
+  filterIndicatorsWithDataStub = sinon.stub(ThemePresenter::, 'filterIndicatorsWithData', ->
+    @theme.indicators = [@theme.indicators[0]]
+    Q.fcall(->)
+  )
+
+  Q.nsend(
+    theme, 'save'
+  ).then(->
+    Q.nsend(indicator1, 'save')
+  ).then(->
+    Q.nsend(indicator2, 'save')
+  ).then(->
+    stubReq = {}
+
+    stubRes = {
+      send: (code, body) ->
+        filterIndicatorsWithDataStub.restore()
+        done(new Error("Expected res.send not to be called, but called with #{code}: #{body}"))
+      render: (templateName, data) ->
+        try
+          assert.strictEqual filterIndicatorsWithDataStub.callCount, 1,
+            "Expected ThemePresenter::filterIndicatorsWithData to be called once"
+
+          assert.lengthOf data.themes, 1, "Only expected one theme to be returned"
+          assert.lengthOf data.themes[0].indicators, 1,
+            "Expected the theme's indicators to be filtered to only element"
+
+          filterIndicatorsWithDataStub.restore()
+          done()
+        catch err
+          filterIndicatorsWithDataStub.restore()
+          done(err)
+    }
+
+    try
+      ThemeController.index(stubReq, stubRes)
+    catch err
+      filterIndicatorsWithDataStub.restore()
+      done(err)
+
+  ).fail((err)->
+    filterIndicatorsWithDataStub.restore()
+    done(err)
+  )
 )

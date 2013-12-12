@@ -1,9 +1,10 @@
 assert = require('chai').assert
 sinon = require('sinon')
+Q = require('q')
 
 ThemePresenter = require('../../../lib/presenters/theme')
 Theme = require('../../../models/theme').model
-Indicator = require('../../../models/theme').model
+Indicator = require('../../../models/indicator').model
 
 suite('ThemePresenter')
 
@@ -103,5 +104,61 @@ test("#populateIndicators passes filters to Theme.getIndicatorsByTheme", (done) 
   ).fail((err) ->
     getIndicatorsByThemeSpy.restore()
     done(err)
+  )
+)
+
+test(".filterIndicatorsWithData filters out populated indicators without data", (done)->
+  indicatorWithData = new Indicator()
+  indicatorHasDataStub = sinon.stub(indicatorWithData, 'hasData', ->
+    Q.fcall(-> true)
+  )
+  indicatorWithoutData = new Indicator()
+  indicatorHasDataStub = sinon.stub(indicatorWithoutData, 'hasData', ->
+    Q.fcall(-> false)
+  )
+  theme = new Theme()
+  theme.indicators = [indicatorWithData, indicatorWithoutData]
+
+  presenter = new ThemePresenter(theme)
+  presenter.filterIndicatorsWithData().then(->
+    try
+      assert.lengthOf theme.indicators, 1, "Expected only one indicator to remain"
+      assert.strictEqual theme.indicators[0]._id.toString(), indicatorWithData._id.toString(),
+        "Expected only one indicator to remain"
+
+      done()
+    catch err
+      done(err)
+  ).fail(done)
+)
+
+test(".filterIndicatorsWithData given no indicators returns no indicators", (done)->
+  theme = new Theme()
+  theme.indicators = []
+
+  presenter = new ThemePresenter(theme)
+  presenter.filterIndicatorsWithData().then(->
+    try
+      assert.lengthOf theme.indicators, 0, "Expected the indicators list to still be empty"
+
+      done()
+    catch err
+      done(err)
+  ).fail(done)
+)
+
+test(".filterIndicatorsWithData when indicators aren't populated throws an error", (done)->
+  theme = new Theme()
+
+  presenter = new ThemePresenter(theme)
+  presenter.filterIndicatorsWithData().then(->
+    done(new Error("Expected filterIndicatorsWithData not to succeed"))
+  ).fail((err)->
+    try
+      assert.strictEqual(err.message,
+        "filterIndicatorsWithData called on a theme without an indicator attribute")
+      done()
+    catch err
+      done(err)
   )
 )

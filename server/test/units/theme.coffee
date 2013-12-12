@@ -148,6 +148,7 @@ test('.getIndicatorsByTheme returns all Indicators for given Theme', (done) ->
     indicatorAttributes = [{
       title: "I'm an indicator of theme 1"
       theme: themes[0]._id
+      type: 'esri'
     }]
 
     helpers.createIndicatorModels(

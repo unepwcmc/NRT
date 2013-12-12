@@ -377,6 +377,7 @@ test("#findWhereIndicatorHasData returns only indicators with indicator data", (
 
 )
 
+
 test("#findWhereIndicatorHasData respects the given filters", (done)->
   indicatorToFind = indicatorToFilterOut = null
 
@@ -413,6 +414,43 @@ test("#findWhereIndicatorHasData respects the given filters", (done)->
     console.error err.stack
     throw err
   )
+)
+
+test(".hasData returns true when an indicator has data", (done)->
+  indicatorWithData = null
+
+  helpers.createIndicatorModels([{}]).then((indicators) ->
+    indicatorWithData = indicators[0]
+
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        indicator: indicatorWithData
+        data: [{some: 'data'}]
+      }
+    )
+  ).then((indicatorData) ->
+    indicatorWithData.hasData()
+  ).then((hasData) ->
+
+    try
+      assert.isTrue hasData
+      done()
+    catch err
+      done(err)
+
+  ).fail(done)
+)
+
+test(".hasData returns false when an indicator has no data", (done)->
+  helpers.createIndicatorModels([{}]).then((indicators) ->
+    indicators[0].hasData()
+  ).then((hasData) ->
+    try
+      assert.isFalse hasData
+      done()
+    catch err
+      done(err)
+  ).fail(done)
 )
 
 test('#populatePages given an array of indicators, populates their page attributes', (done) ->

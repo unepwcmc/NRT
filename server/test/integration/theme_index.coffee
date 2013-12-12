@@ -17,6 +17,7 @@ test("With a series of themes and indicators, I should see their titles", (done)
   theme1.indicators = [{
     title: "I am an indicator of theme 1"
     narrativeRecency: "Out of date"
+    type: 'esri'
   }]
   theme2 = new Theme({
     title: 'Theme 2'
@@ -24,6 +25,7 @@ test("With a series of themes and indicators, I should see their titles", (done)
   theme2.indicators = [{
     title: "theme 2 indicator"
     narrativeRecency: "Out of date"
+    type: 'esri'
   }]
   themes = [theme1, theme2]
 
