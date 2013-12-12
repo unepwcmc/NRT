@@ -9,10 +9,13 @@ async = require('async')
 Q = require('q')
 
 paramsToBoolean = (params) ->
-  for filter, value of params
-    params[filter] = new RegExp("^true$", "i").test(value)
+  newParams = {}
 
-  params
+  for filter, value of params
+    if new RegExp("^true$", "i").test(value)
+      newParams[filter] = true
+
+  newParams
 
 dpsirParamsToQuery = (params) ->
   queries = []
@@ -22,7 +25,10 @@ dpsirParamsToQuery = (params) ->
     object["dpsir.#{param}"] = value
     queries.push(object)
 
-  return {$or: queries}
+  if queries.length > 0
+    return {$or: queries}
+  else
+    return {}
 
 defaultDpsir =
   driver: true
@@ -32,7 +38,8 @@ defaultDpsir =
   response: true
 
 exports.index = (req, res) ->
-  dpsirFilter = paramsToBoolean(req.query?.dpsir) || defaultDpsir
+  dpsirFilter = paramsToBoolean(req.query?.dpsir)
+  dpsirFilter = defaultDpsir if _.isEmpty(dpsirFilter)
 
   theThemes = null
   Q.nsend(
@@ -44,6 +51,7 @@ exports.index = (req, res) ->
       filters = dpsirParamsToQuery(dpsirFilter)
     else
       filters = {}
+
     filters = _.extend(filters, Indicator.CONDITIONS.IS_PRIMARY)
     ThemePresenter.populateIndicators(theThemes, filters)
   ).then(->

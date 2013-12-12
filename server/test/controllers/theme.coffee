@@ -252,3 +252,60 @@ test(".index only indicators with data", (done) ->
     done(err)
   )
 )
+
+test(".index given DPSIR parameters driver:false, the clause should be ignored", (done) ->
+  theme = new Theme(title: 'test theme')
+  driverIndicator = new Indicator(theme: theme._id, type: 'esri', dpsir: driver: true)
+
+  # Stub to prevent filtering of indicators
+  filterIndicatorsWithDataStub = sinon.stub(ThemePresenter::, 'filterIndicatorsWithData', ->
+    Q.fcall(->)
+  )
+
+  Q.nsend(
+    theme, 'save'
+  ).then(->
+    Q.nsend(driverIndicator, 'save')
+  ).then(->
+    stubReq = {
+      query:
+        dpsir:
+          driver: false
+    }
+
+    stubRes = {
+      send: (code, body) ->
+        filterIndicatorsWithDataStub.restore()
+        done(new Error("Expected res.send not to be called, but called with #{code}: #{body}"))
+      render: (templateName, data) ->
+        try
+          console.log data.dpsir
+
+          assert.lengthOf data.themes, 1, "Expected one theme to be returned"
+          assert.lengthOf data.themes[0].indicators, 1,
+            "Expected the one driver indicator to be returned, regardless of the filter"
+
+          assert.strictEqual(
+            data.themes[0].indicators[0]._id.toString(),
+            driverIndicator._id.toString(),
+            "Expected the driver indicator to be returned, regardless of the filter"
+          )
+
+          filterIndicatorsWithDataStub.restore()
+          done()
+        catch err
+          filterIndicatorsWithDataStub.restore()
+          done(err)
+    }
+
+    try
+      ThemeController.index(stubReq, stubRes)
+    catch err
+      filterIndicatorsWithDataStub.restore()
+      done(err)
+
+  ).fail((err)->
+    filterIndicatorsWithDataStub.restore()
+    done(err)
+  )
+)
