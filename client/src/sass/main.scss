@@ -1322,15 +1322,28 @@ footer{
   }
 }
 
+.filters {
+  margin: 10px 0 20px;
+}
+
 ul.dpsir {
   overflow: hidden;
+  float: right;
+
   li {
+    font-size: 2em;
     font-weight: bold;
     float: left;
     list-style-type: none;
     padding: 0 5px 0 0;
     opacity: 0.2;
   }
+
+  li:hover {
+    color: $linkBlueHover;
+    cursor: pointer;
+  }
+
   li.active {
     opacity: 1;
   }
