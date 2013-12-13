@@ -27,7 +27,7 @@ section.errors {
   display: none;
   padding: 0;
 
-  .show {
+  &.show {
     display: block;
   }
 
