@@ -179,7 +179,7 @@ fetchUserFromLDAP = (username) ->
 
           search.on('end', (result) ->
             if result.status > 0 || !theUser?
-              deferred.reject(new Error())
+              deferred.reject()
           )
       )
   )
