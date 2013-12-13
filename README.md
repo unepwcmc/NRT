@@ -23,6 +23,22 @@ installed (don't worry, they're short!)
 
   `cd server/ && npm run-script setup`
 
+#### Installing in windows as a service:
+Install the application on windows as a service using [NSSM](http://nssm.cc/). Configure NSSM as such:
+
+###### Application:
+Path: C:\Path\To\node.exe
+Startup Directory: C:\Path\To\NRT\server
+Options: .\bin\server.js
+
+###### I/O
+Port all your IO to NRT\server\logs\service.log to be able to read STDOUT/ERR messages
+
+###### Environment Variables
+NODE_ENV=production
+AUTH_TOKEN=changeme
+PORT=80
+
 ## Running the application
 
 ### Development
