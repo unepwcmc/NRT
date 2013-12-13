@@ -39,12 +39,13 @@ passport.use(
             .then( (user) ->
               user.loginFromLDAP(password, done)
             ).fail( (err) ->
-              done(null, false, {message: "Incorrect username or password"})
+              message = User.KNOWN_LDAP_ERRORS[err?.name] ||
+                User.KNOWN_LDAP_ERRORS['InvalidCredentialsError']
+              done(null, false, message: message)
             )
 
       ).fail( (err) ->
-        console.error err
-        done(null, false, {message: err})
+        done(null, false, {message: User.KNOWN_LDAP_ERRORS['OtherError']})
       )
   )
 )

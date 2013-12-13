@@ -107,7 +107,7 @@ userSchema.methods.loginFromLocalDb = (password, callback) ->
     if isValid
       return callback(null, @)
     else
-      return callback("Incorrect username or password")
+      return callback(null, false, message: KNOWN_LDAP_ERRORS["InvalidCredentialsError"])
 
   ).fail( (err) ->
     console.error err
@@ -122,7 +122,10 @@ getLDAPConfig = _.memoize( ->
 
 KNOWN_LDAP_ERRORS = {
   'InvalidCredentialsError': "Incorrect username or password"
+  'OtherError': 'Sorry, we are unable to log you in at this time'
 }
+
+userSchema.statics.KNOWN_LDAP_ERRORS = KNOWN_LDAP_ERRORS
 
 userSchema.methods.loginFromLDAP = (password, done) ->
   ldap = require('ldapjs')
@@ -130,6 +133,8 @@ userSchema.methods.loginFromLDAP = (password, done) ->
 
   client = ldap.createClient(
     url: ldapConfig.host
+    timeout: 10000
+    connectTimeout: 10000
   )
 
   client.bind(@distinguishedName, password, (err) =>
@@ -137,7 +142,7 @@ userSchema.methods.loginFromLDAP = (password, done) ->
       if KNOWN_LDAP_ERRORS[err.name]?
         done(null, false, message: KNOWN_LDAP_ERRORS[err.name])
       else
-        done(err, false)
+        done(null, false, message: KNOWN_LDAP_ERRORS['OtherError'])
     else
       done(null, @)
   )
@@ -150,6 +155,8 @@ fetchUserFromLDAP = (username) ->
 
   client = ldap.createClient(
     url: ldapConfig.host
+    timeout: 10000
+    connectTimeout: 10000
   )
 
   client.bind(ldapConfig.auth_base, ldapConfig.auth_password, (err) =>
@@ -197,7 +204,7 @@ userSchema.statics.createFromLDAPUsername = (username) ->
   ).spread( (user) ->
     deferred.resolve(user)
   ).fail( (err) ->
-    deferred.reject()
+    deferred.reject(err)
   )
 
   return deferred.promise
