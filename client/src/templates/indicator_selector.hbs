@@ -4,6 +4,15 @@
     <h2>{{{t "report/indicator/title"}}}</h2>
   </header>
   <article>
+    {{#if currentIndicator}}
+      <h3>Current Indicator</h3>
+      <ul class="indicators current">
+        {{addSubViewTo thisView "IndicatorSelectorItemView"
+          indicator=currentIndicator
+          section=section
+        }}
+      </ul>
+    {{/if}}
     <h3>Core Indicators</h3>
     <ul class="indicators core">
       {{#each indicators.core}}
