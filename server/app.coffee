@@ -6,6 +6,7 @@ require('express-resource')
 passport = require('passport')
 mongoose = require('mongoose')
 MongoStore = require('connect-mongo')(express)
+AppConfig = require('./initializers/config')
 i18n = require('i18n')
 flash = require('connect-flash')
 
@@ -14,7 +15,7 @@ exports.createApp = ->
 
   require('./initializers/logging')(app)
   require('./initializers/mongo')(app.get('env'))
-  require('./initializers/config')(app)
+  AppConfig.initialize(app)
 
   bindRoutesForApp = require('./route_bindings.coffee')
 
