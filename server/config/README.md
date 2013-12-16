@@ -6,7 +6,7 @@ The config is accessible thusly:
 
 ### Require it
 ```javascript
-  AppConfig = require('initialisers/config')
+  AppConfig = require('initializers/config')
   AppConfig.get('features').dpsir_filtering
 ```
 ### Controllers/Middleware
