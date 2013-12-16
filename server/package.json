@@ -13,8 +13,7 @@
     "win-production": "start cmd.exe /K bin\\server.bat",
     "setup": "node bin/setup.js",
     "backup-data": "coffee lib/tasks/backupIndicatorData.coffee",
-    "create-user": "coffee lib/tasks/create-user.coffee",
-    "install-windows-service": "coffee lib/tasks/install-windows-service.coffee"
+    "create-user": "coffee lib/tasks/create-user.coffee"
   },
   "repository": {
     "type": "git",
