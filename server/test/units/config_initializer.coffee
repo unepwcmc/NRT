@@ -2,6 +2,7 @@ assert = require('chai').assert
 helpers = require '../helpers'
 sinon = require 'sinon'
 fs = require 'fs'
+path = require 'path'
 
 ConfigInitializer = require('../../initializers/config')
 
@@ -27,8 +28,9 @@ middleware which includes that config', ->
   ConfigInitializer(app)
 
   try
-    assert.isTrue readFileStub.calledWith("../config/development.json"),
-      "Expected fs.readFileSync to be called with ../config/development.json but called with
+    configDir = path.join(__dirname, '../../', 'config')
+    assert.isTrue readFileStub.calledWith("#{configDir}/development.json"),
+      "Expected fs.readFileSync to be called with #{configDir}/development.json but called with
       #{readFileStub.getCall(0)?.args}"
     assert.isTrue app.use.calledOnce, "Expected app.use to be called to add the middleware"
 

@@ -1,7 +1,9 @@
 fs = require('fs')
+path = require('path')
 
 module.exports = (app) ->
-  configJSON = fs.readFileSync("../config/#{app.get('env')}.json")
+  configDir = path.join(__dirname, '../', 'config')
+  configJSON = fs.readFileSync("#{configDir}/#{app.get('env')}.json")
   config     = JSON.parse(configJSON)
 
   middleware = (req, res, next) ->
