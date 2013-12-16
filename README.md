@@ -39,6 +39,11 @@ NODE_ENV=production
 AUTH_TOKEN=changeme
 PORT=80
 
+###### Check your path
+If you're intending to use this deployment for automated deploy, check that
+your environment variables are setup for the SYSTEM user which which will run
+the service. Otherwise, your deploy will fail with missing commands.
+
 ## Running the application
 
 ### Development
