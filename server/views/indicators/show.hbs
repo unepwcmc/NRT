@@ -48,7 +48,11 @@
         <p>Refers to data collected up to {{indicator.page.headline.periodEnd}}</p>
 
       </div>
-      {{> dpsir indicator.dpsir }}
+
+      {{#if APP_CONFIG.features.dpsir_filtering}}
+        {{> dpsir indicator.dpsir }}
+      {{/if}}
+
       <h1>{{indicator.title}}</h1>
     </header>
 

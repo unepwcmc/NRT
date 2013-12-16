@@ -14,7 +14,9 @@
       <span class="status {{css-classify narrativeRecency}}"></span>
       {{narrativeRecency}}
 
-      {{> dpsir dpsir }}
+      {{#if APP_CONFIG.features.dpsir_filtering}}
+        {{> dpsir dpsir }}
+      {{/if}}
     </div>
   </a>
 {{/this}}
