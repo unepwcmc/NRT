@@ -8,7 +8,7 @@ exports.get = (key) ->
   if APP_CONFIG?
     _.clone(APP_CONFIG[key])
   else
-    throw new Error("No AppConfig found, have you called AppConfig.initialize() first?")
+    throw new Error("No application config found, have you called AppConfig.initialize() first?")
 
 exports.initialize = (app) ->
   configFile = path.join(__dirname, '../', 'config', "#{app.get('env')}.json")
