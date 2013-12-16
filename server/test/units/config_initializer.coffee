@@ -8,6 +8,8 @@ ConfigInitializer = require('../../initializers/config')
 
 suite('Config Initializer')
 
+configDir = path.join(__dirname, '../../', 'config')
+
 test('when given an app, it reads the config for the env and adds a
 middleware which includes that config', ->
   config = {key: 'value'}
@@ -28,7 +30,6 @@ middleware which includes that config', ->
   ConfigInitializer(app)
 
   try
-    configDir = path.join(__dirname, '../../', 'config')
     assert.isTrue readFileStub.calledWith("#{configDir}/development.json"),
       "Expected fs.readFileSync to be called with #{configDir}/development.json but called with
       #{readFileStub.getCall(0)?.args}"
@@ -53,4 +54,17 @@ middleware which includes that config', ->
       "Expected the middleware to set res.locals.APP_CONFIG to the application config"
   finally
     readFileStub.restore()
+)
+
+test("when there is no config file for the given environemnt, it throws
+an appropriate message", ->
+  env = 'pretendEnv'
+
+  app =
+    get: (key) ->
+      if key is 'env'
+        return env
+
+  assert.throws((-> ConfigInitializer(app)),
+    "No config for env in #{configDir}/#{env}.json, copy config/env.json.example and edit as appropriate")
 )

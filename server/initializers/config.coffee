@@ -2,8 +2,14 @@ fs = require('fs')
 path = require('path')
 
 module.exports = (app) ->
-  configDir = path.join(__dirname, '../', 'config')
-  configJSON = fs.readFileSync("#{configDir}/#{app.get('env')}.json")
+  configFile = path.join(__dirname, '../', 'config', "#{app.get('env')}.json")
+
+  unless fs.existsSync(configFile)
+    throw new Error(
+      "No config for env in #{configFile}, copy config/env.json.example and edit as appropriate"
+    )
+
+  configJSON = fs.readFileSync(configFile)
   config     = JSON.parse(configJSON)
 
   middleware = (req, res, next) ->
