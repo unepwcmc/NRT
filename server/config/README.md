@@ -22,6 +22,7 @@ The config is accessible thusly:
 
 ```json
 {
+  "instance_name": "Abu Dhabi", # The name of the instance
   "features": { # Toggle features
     "dpsir_filtering": true # Enable visibility and filtering of DPSIR attributes
   }
