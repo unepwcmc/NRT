@@ -8,32 +8,36 @@ PARENT_DIR = "#{process.cwd()}/../"
 console.log "Switching to #{PARENT_DIR}"
 process.chdir(PARENT_DIR)
 console.log "Pulling code"
-git_pull = CommandRunner.spawn('git', ['pull', 'origin', 'deploy'])
+gitConfig = CommandRunner.spawn('git', ['config', 'user.email', '"deploy@nrt.io"'])
 
-git_pull.on('close', (code) ->
-  console.log "Code pulled"
-  if code == 0
-    process.chdir('client/')
-    console.log "npm installing in client"
-    npm_install = CommandRunner.spawn('npm', ['install'])
+gitConfig.on('close', (code) ->
+  git_pull = CommandRunner.spawn('git', ['pull', 'origin', 'deploy'])
 
-    npm_install.on('close', (code) ->
-      console.log "client npm installed"
-      if code == 0
-        console.log "running grunt"
-        grunt = CommandRunner.spawn('grunt')
-        grunt.on('close', (code) ->
-          console.log "grunt run"
-          if code == 0
-            process.chdir('../')
-            process.chdir('server/')
+  git_pull.on('close', (code) ->
+    console.log "Code pulled"
+    if code == 0
+      process.chdir('client/')
+      console.log "npm installing in client"
+      npm_install = CommandRunner.spawn('npm', ['install'])
 
-            console.log "Installing server"
-            npm_install = CommandRunner.spawn('npm', ['install'])
-            npm_install.on('close', (code) ->
-              console.log "Server installed, done"
-              process.exit()
-            )
-        )
-    )
+      npm_install.on('close', (code) ->
+        console.log "client npm installed"
+        if code == 0
+          console.log "running grunt"
+          grunt = CommandRunner.spawn('grunt')
+          grunt.on('close', (code) ->
+            console.log "grunt run"
+            if code == 0
+              process.chdir('../')
+              process.chdir('server/')
+
+              console.log "Installing server"
+              npm_install = CommandRunner.spawn('npm', ['install'])
+              npm_install.on('close', (code) ->
+                console.log "Server installed, done"
+                process.exit()
+              )
+          )
+      )
+  )
 )
