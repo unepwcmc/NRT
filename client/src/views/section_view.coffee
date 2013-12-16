@@ -14,6 +14,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
 
   initialize: (options) ->
     @section = options.section
+    @indicator = options.indicator
 
     @addDefaultTitleIfNotSet()
 
@@ -47,6 +48,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
 
   chooseIndicatorForVisualisation: =>
     @indicatorSelectorView = new Backbone.Views.IndicatorSelectorView(
+      currentIndicator: @indicator
       section: @section
     )
 

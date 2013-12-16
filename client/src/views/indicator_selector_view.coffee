@@ -8,7 +8,8 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
   events:
     "click .close": "close"
 
-  initialize: (options) ->
+  initialize: (options = {}) ->
+    @currentIndicator  = options.currentIndicator
     @indicators = new Backbone.Collections.IndicatorCollection()
     @indicators.fetch(
       success: @render
@@ -19,6 +20,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
     @$el.html(@template(
       thisView: @
+      currentIndicator: @currentIndicator
       indicators: @indicators.groupByType()
     ))
     @attachSubViews()
