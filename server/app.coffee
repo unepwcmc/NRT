@@ -12,11 +12,12 @@ flash = require('connect-flash')
 exports.createApp = ->
   app = express()
 
+  require('./initializers/logging')(app)
   require('./initializers/mongo')(app.get('env'))
+  require('./initializers/config')(app)
 
   bindRoutesForApp = require('./route_bindings.coffee')
 
-  require('./initializers/logging')(app)
   app.use express.static(path.join(__dirname, "public"))
 
   app.engine "hbs", hbs.express3(
