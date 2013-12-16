@@ -27,17 +27,19 @@ installed (don't worry, they're short!)
 Install the application on windows as a service using [NSSM](http://nssm.cc/). Configure NSSM as such:
 
 ###### Application:
-Path: C:\Path\To\node.exe
-Startup Directory: C:\Path\To\NRT\server
-Options: .\bin\server.js
+* Path: C:\Path\To\node.exe
+* Startup Directory: C:\Path\To\NRT\server
+* Options: .\bin\server.js
 
 ###### I/O
 Port all your IO to NRT\server\logs\service.log to be able to read STDOUT/ERR messages
 
 ###### Environment Variables
+```
 NODE_ENV=production
 AUTH_TOKEN=changeme
 PORT=80
+```
 
 ###### Check your path
 If you're intending to use this deployment for automated deploy, check that
