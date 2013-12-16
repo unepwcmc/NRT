@@ -25,7 +25,7 @@ installed (don't worry, they're short!)
 
 ### Configuration
 Your application needs a configuration file for the environment it will
-be run in. View the [configuration README](config/README.md) for
+be run in. View the [configuration README](server/config/README.md) for
 possible options.
 
 #### Installing in windows as a service:
