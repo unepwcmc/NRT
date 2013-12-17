@@ -1,3 +1,4 @@
+require('../../initializers/config').initialize()
 require('../../initializers/mongo')()
 
 IndicatorData = require('../../models/indicator_data').model
