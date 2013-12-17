@@ -51,13 +51,13 @@
 <div class="content">
   <div class="indicators-container">
     <aside class="content-sidebar theme-recency">
-      {{#if APP_CONFIG.features.dpsir_filtering}}
+      {{#ifFeatureEnabled 'dpsir_filtering'}}
         <h2>Filters</h2>
         <div class="filters">
           Show:
           {{> dpsir dpsir }}
         </div>
-      {{/if}}
+      {{/ifFeatureEnabled}}
 
       <h2>Themes</h2>
       <ul class="side-theme-list">
