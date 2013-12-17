@@ -15,7 +15,7 @@ exports.createApp = ->
 
   require('./initializers/logging')(app)
   AppConfig.initialize(app)
-  require('./initializers/mongo')(app.get('env'))
+  require('./initializers/mongo')()
 
   bindRoutesForApp = require('./route_bindings.coffee')
 
