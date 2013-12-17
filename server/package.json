@@ -6,10 +6,10 @@
   "scripts": {
     "test": "NODE_ENV=test mocha test/**/*.coffee test/**/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit --reporter spec",
     "test-debug": "NODE_ENV=test mocha test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit --reporter spec --debug",
-    "start": "supervisor -e 'node|js|json|coffee|hbs' ./bin/server.coffee",
-    "debug": "coffee --nodejs --debug ./bin/server.coffee",
+    "start": "supervisor -e 'node|js|json|coffee|hbs' ./bin/server.js",
+    "debug": "node --debug ./bin/server.js",
     "development": "echo 'Please use `npm start` to run the server in development mode'",
-    "production": "NODE_ENV=production coffee ./bin/server.coffee",
+    "production": "NODE_ENV=production node ./bin/server.js",
     "win-production": "start cmd.exe /K bin\\server.bat",
     "setup": "node bin/setup.js",
     "backup-data": "coffee lib/tasks/backupIndicatorData.coffee",
@@ -42,7 +42,8 @@
     "ldapjs": "~0.6.3",
     "connect-mongo": "~0.3.3",
     "connect-flash": "~0.1.1",
-    "range_check": "0.0.4"
+    "range_check": "0.0.4",
+    "libxmljs": "~0.8.1"
   },
   "devDependencies": {
     "Faker": "0.5.11",

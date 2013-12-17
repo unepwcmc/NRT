@@ -15,13 +15,43 @@ Grab the dependencies by running the script for your platform in
 to review the installers first and remove any dependencies you already have
 installed (don't worry, they're short!)
 
-* **OS X**: Uses [homebrew](http://brew.sh) to install the dependecies. 
+* **OS X**: Uses [homebrew](http://brew.sh) to install the dependecies.
 * **Ubuntu**: Uses apt-get
-* **Windows**: 
+* **Windows**:
   * Ensure powershell is installed, then run install.bat as Admin
   * After the install has completed, setup the application with:
 
   `cd server/ && npm run-script setup`
+
+### Configuration
+Your application needs a configuration file for the environment it will
+be run in. View the [configuration README](server/config/README.md) for
+possible options.
+
+#### Installing in windows as a service:
+Install the application on windows as a service using
+[NSSM](http://nssm.cc/). Configure NSSM as such:
+
+###### Application:
+* Path: C:\Path\To\node.exe
+* Startup Directory: C:\Path\To\NRT\server
+* Options: .\bin\server.js
+
+###### I/O
+Port all your IO to NRT\server\logs\service.log to be able to read
+STDOUT/ERR messages
+
+###### Environment Variables
+```
+NODE_ENV=production
+AUTH_TOKEN=changeme
+PORT=80
+```
+
+###### Check your path
+If you're intending to use this deployment for automated deploy, check that
+your environment variables are setup for the SYSTEM user which which will run
+the service. Otherwise, your deploy will fail with missing commands.
 
 ## Running the application
 

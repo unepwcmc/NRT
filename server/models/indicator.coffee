@@ -15,6 +15,7 @@ indicatorSchema = mongoose.Schema(
   title: String
   short_name: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
+  dpsir: mongoose.Schema.Types.Mixed
   theme: {type: mongoose.Schema.Types.ObjectId, ref: 'Theme'}
   type: String
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
@@ -29,6 +30,10 @@ _.extend(indicatorSchema.methods, pageModelMixin.methods)
 _.extend(indicatorSchema.statics, pageModelMixin.statics)
 _.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
 _.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
+
+indicatorSchema.statics.CONDITIONS = {
+  IS_PRIMARY: {type: 'esri'}
+}
 
 replaceThemeNameWithId = (indicators) ->
   Theme = require('./theme').model
@@ -144,10 +149,25 @@ indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
     rows = [[xAxis, yAxis]]
 
     for row in indicatorData
-      rows.push [row[xAxis], row[yAxis]]
+      rows.push [
+        row[xAxis].toString(),
+        row[yAxis].toString()
+      ]
 
     callback(err, rows)
   )
+
+indicatorSchema.methods.hasData = ->
+  deferred = Q.defer()
+
+  @getIndicatorData( (err, data) ->
+    if err?
+      deferred.reject(err)
+    else
+      deferred.resolve(data.length > 0)
+  )
+
+  return deferred.promise
 
 indicatorSchema.methods.getIndicatorData = (filters, callback) ->
   if arguments.length == 1

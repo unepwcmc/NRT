@@ -95,8 +95,14 @@ themeSchema.statics.getFatThemes = (callback) ->
         )
     )
 
-themeSchema.statics.getIndicatorsByTheme = (themeId, callback) ->
-  Indicator.find(theme: themeId)
+themeSchema.statics.getIndicatorsByTheme = (themeId, filters, callback) ->
+  unless callback?
+    callback = filters
+    filters = {}
+
+  filters = _.extend(theme: themeId, filters)
+
+  Indicator.find(filters)
     .sort(_id: 1)
     .exec( (err, indicators) ->
       if err?

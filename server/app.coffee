@@ -6,17 +6,19 @@ require('express-resource')
 passport = require('passport')
 mongoose = require('mongoose')
 MongoStore = require('connect-mongo')(express)
+AppConfig = require('./initializers/config')
 i18n = require('i18n')
 flash = require('connect-flash')
 
 exports.createApp = ->
   app = express()
 
+  require('./initializers/logging')(app)
   require('./initializers/mongo')(app.get('env'))
+  AppConfig.initialize(app)
 
   bindRoutesForApp = require('./route_bindings.coffee')
 
-  require('./initializers/logging')(app)
   app.use express.static(path.join(__dirname, "public"))
 
   app.engine "hbs", hbs.express3(
@@ -54,7 +56,7 @@ exports.createApp = ->
 exports.start = (port, callback) ->
   app = exports.createApp()
 
-  seedData()
+  seedData() unless app.get('env') is "test"
 
   server = http.createServer(app).listen port, (err) ->
     callback err, server

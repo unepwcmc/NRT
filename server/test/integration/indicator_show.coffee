@@ -136,6 +136,42 @@ test("When given a valid indicator it returns 200 and
   )
 )
 
+test("/indicators/:id When given a valid indicator it returns 200 and
+  shows the correct DPSIR content", (done)->
+  libxmljs = require("libxmljs")
+
+  indicator = new Indicator(
+    dpsir:
+      driver: true
+      pressure: false
+  )
+
+  indicator.save( (err) ->
+    request.get {
+      url: helpers.appurl("/indicators/#{indicator.id}")
+    }, (err, res, body) ->
+
+      try
+        assert.equal res.statusCode, 200
+
+        html = libxmljs.parseHtml(body)
+
+        dpsirListEl = html.get("//ul[@class='dpsir']")
+        assert.isDefined dpsirListEl, "Expected to see a UL containing the DPSIR list"
+
+        activeDPSIRs = dpsirListEl.find("li[@class='active']")
+        assert.lengthOf activeDPSIRs, 1,
+          "Expected one of DPSIR to be active"
+
+        assert.strictEqual activeDPSIRs[0].text(), "D",
+          "Expected the active DPSIR to be Driver"
+
+        done()
+      catch e
+        done(e)
+  )
+)
+
 test("When given an indicator that doesn't exist, I should get a 404 response", (done)->
   indicatorId = new Indicator().id
 

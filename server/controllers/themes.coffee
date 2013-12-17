@@ -1,29 +1,93 @@
 Indicator = require('../models/indicator').model
 Theme = require('../models/theme').model
 ThemePresenter = require('../lib/presenters/theme')
+IndicatorPresenter = require('../lib/presenters/theme')
+HeadlineService = require('../lib/services/headline')
+
 _ = require('underscore')
 async = require('async')
 Q = require('q')
 
+paramsToBoolean = (params) ->
+  newParams = {}
+
+  for filter, value of params
+    if new RegExp("^true$", "i").test(value)
+      newParams[filter] = true
+
+  newParams
+
+dpsirParamsToQuery = (params) ->
+  queries = []
+
+  for param, value of params
+    object = {}
+    object["dpsir.#{param}"] = value
+    queries.push(object)
+
+  if queries.length > 0
+    return {$or: queries}
+  else
+    return {}
+
+defaultDpsir =
+  driver: true
+  pressure: true
+  state: true
+  impact: true
+  response: true
+
 exports.index = (req, res) ->
-  Theme.getFatThemes( (err, themes) ->
-    if err?
-      console.error err
-      console.error err.stack
-      return res.send(500, "Error fetching the themes")
+  dpsirFilter = paramsToBoolean(req.query?.dpsir)
+  dpsirFilter = defaultDpsir if _.isEmpty(dpsirFilter)
 
-    Theme.populateDescriptionsFromPages(themes).then(->
+  theThemes = null
+  Q.nsend(
+    Theme, 'find'
+  ).then((themes) ->
+    theThemes = themes
 
-      ThemePresenter.populateIndicatorRecencyStats(themes)
+    if req.query?.dpsir
+      filters = dpsirParamsToQuery(dpsirFilter)
+    else
+      filters = {}
 
-      res.render "themes/index", themes: themes
+    filters = _.extend(filters, Indicator.CONDITIONS.IS_PRIMARY)
+    ThemePresenter.populateIndicators(theThemes, filters)
+  ).then(->
 
-    ).fail((err)->
-      console.error err
-      console.error err.stack
-      return res.send(500, "Error populating descriptions")
+    # For each theme
+    Q.nfcall(
+      async.each, theThemes, (theme, callback) ->
+
+        new ThemePresenter(theme).filterIndicatorsWithData().then(->
+          # For each indicator of said theme
+          Q.nfcall(
+            async.each, theme.indicators, (indicator, cb) ->
+              indicator.populatePage().then(->
+                indicator.populateDescriptionFromPage()
+              ).then(->
+                cb(null)
+              ).fail(cb)
+          )
+        ).then(->
+          HeadlineService.populateNarrativeRecencyOfIndicators(theme.indicators)
+        ).then(->
+          callback()
+        ).fail(callback)
     )
+  ).then( ->
 
+    Theme.populateDescriptionsFromPages(theThemes)
+  ).then(->
+
+    ThemePresenter.populateIndicatorRecencyStats(theThemes)
+    res.render "themes/index", themes: theThemes, dpsir: dpsirFilter
+
+  ).fail((err)->
+    console.error err
+    console.error err.stack
+    return res.send(500, "Error populating descriptions")
   )
 
 exports.show = (req, res) ->

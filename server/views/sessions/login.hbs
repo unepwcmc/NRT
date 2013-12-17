@@ -14,8 +14,8 @@
   });
 </script>
 
-<div class="content login {{#if errors}}show{{/if}}">
-  <section class="errors">
+<div class="content login">
+  <section class="errors {{#if errors}}show{{/if}}">
     <ul>
       {{#each errors}}
         <li>{{this}}</li>

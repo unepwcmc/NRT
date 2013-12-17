@@ -13,6 +13,10 @@
     <div class="last-update">
       <span class="status {{css-classify narrativeRecency}}"></span>
       {{narrativeRecency}}
+
+      {{#if APP_CONFIG.features.dpsir_filtering}}
+        {{> dpsir dpsir }}
+      {{/if}}
     </div>
   </a>
 {{/this}}

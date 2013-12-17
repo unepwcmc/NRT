@@ -3,5 +3,6 @@ client/dist/
 server/public/*
 !server/public/locales/
 server/config/ldap.json
+server/config/production.json
 client/test/tests.coffee
 client/test/tests.js
