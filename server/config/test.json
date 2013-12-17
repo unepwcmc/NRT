@@ -1,5 +1,6 @@
 {
   "features": {
+    "ldap": true,
     "dpsir_filtering": true
   }
 }
