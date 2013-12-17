@@ -3,6 +3,7 @@ fs = require('fs')
 Q = require('q')
 crypto = require('crypto')
 _ = require('underscore')
+ldap = require('ldapjs')
 
 userSchema = mongoose.Schema(
   name: String
@@ -124,11 +125,9 @@ KNOWN_LDAP_ERRORS = {
   'InvalidCredentialsError': "Incorrect username or password"
   'OtherError': 'Sorry, we are unable to log you in at this time'
 }
-
 userSchema.statics.KNOWN_LDAP_ERRORS = KNOWN_LDAP_ERRORS
 
 userSchema.methods.loginFromLDAP = (password, done) ->
-  ldap = require('ldapjs')
   ldapConfig = getLDAPConfig()
 
   client = ldap.createClient(
@@ -150,7 +149,6 @@ userSchema.methods.loginFromLDAP = (password, done) ->
 fetchUserFromLDAP = (username) ->
   deferred = Q.defer()
 
-  ldap = require('ldapjs')
   ldapConfig = getLDAPConfig()
 
   client = ldap.createClient(

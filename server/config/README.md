@@ -24,7 +24,8 @@ The config is accessible thusly:
 {
   "instance_name": "Abu Dhabi", # The name of the instance
   "features": { # Toggle features
-    "dpsir_filtering": true # Enable visibility and filtering of DPSIR attributes
+    "dpsir_filtering": true, # Enable visibility and filtering of DPSIR attributes
+    "ldap": true # Enable LDAP authentication
   }
 }
 ```
