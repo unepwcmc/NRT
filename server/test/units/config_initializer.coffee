@@ -4,36 +4,26 @@ sinon = require 'sinon'
 fs = require 'fs'
 path = require 'path'
 
-AppConfig = require('../../initializers/config')
+appConfig = require('../../initializers/config')
 
 suite('App Config')
 
 configDir = path.join(__dirname, '../../', 'config')
 
-test('.initialize when given an app, it reads the config for the env and adds a
-middleware which includes that config', ->
+test('.initialize when given an app, it reads the config for the env and returns a
+  middleware which includes that config', ->
   config = {key: 'value'}
 
   readFileStub = sinon.stub(fs, 'readFileSync', (path) ->
     JSON.stringify(config)
   )
 
-  middleware = null
-  app =
-    get: (key) ->
-      if key is 'env'
-        return 'development'
-    use: sinon.spy((theMiddleware)->
-        middleware = theMiddleware
-      )
-
-  AppConfig.initialize(app)
+  middleware = appConfig.initialize()
 
   try
-    assert.isTrue readFileStub.calledWith("#{configDir}/development.json"),
-      "Expected fs.readFileSync to be called with #{configDir}/development.json but called with
+    assert.isTrue readFileStub.calledWith("#{configDir}/test.json"),
+      "Expected fs.readFileSync to be called with #{configDir}/test.json but called with
       #{readFileStub.getCall(0)?.args}"
-    assert.isTrue app.use.calledOnce, "Expected app.use to be called to add the middleware"
 
     assert.isNotNull middleware, "Expected the middleware to be assigned"
 
@@ -57,16 +47,15 @@ middleware which includes that config', ->
 )
 
 test(".initialize when there is no config file for the given environemnt, it throws
-an appropriate message", ->
-  env = 'pretendEnv'
+  an appropriate message", ->
+  oldNodeEnv = process.env.NODE_ENV
+  process.env.NODE_ENV = env = 'pretendEnv'
 
-  app =
-    get: (key) ->
-      if key is 'env'
-        return env
-
-  assert.throws((-> AppConfig.initialize(app)),
-    "No config for env in #{configDir}/#{env}.json, copy config/env.json.example and edit as appropriate")
+  try
+    assert.throws((-> appConfig.initialize()),
+      "No config for env in #{configDir}/#{env}.json, copy config/env.json.example and edit as appropriate")
+  finally
+    process.env.NODE_ENV = oldNodeEnv
 )
 
 test(".initialize does not set the APP_CONFIG as references to the cached config object (you
@@ -78,13 +67,9 @@ test(".initialize does not set the APP_CONFIG as references to the cached config
   )
 
   middleware = null
-  app =
-    get: -> 'development'
-    use: (theMiddleware) ->
-      middleware = theMiddleware
 
   try
-    AppConfig.initialize(app)
+    middleware = appConfig.initialize()
 
     req = {}
     res = {locals: {}}
@@ -93,13 +78,13 @@ test(".initialize does not set the APP_CONFIG as references to the cached config
     hatConfig = req.APP_CONFIG
     hatConfig.boat = false
 
-    assert.isTrue AppConfig.get('hat').boat,
+    assert.isTrue appConfig.get('hat').boat,
       "Expected modifying the req.APP_CONFIG not to modify the application config"
 
     hatConfig = res.locals.APP_CONFIG
     hatConfig.boat = false
 
-    assert.isTrue AppConfig.get('hat').boat,
+    assert.isTrue appConfig.get('hat').boat,
       "Expected modifying the res.locals.APP_CONFIG not to modify the application config"
   finally
     readFileStub.restore()
@@ -112,17 +97,14 @@ test(".get returns the values from the config", ->
     JSON.stringify(config)
   )
 
-  app =
-    get: -> 'development'
-    use: ->
+  appConfig.initialize()
 
-  AppConfig.initialize(app)
   try
     assert.strictEqual readFileStub.callCount, 1,
       "Only expected the config file to be read once"
 
-    assert.strictEqual AppConfig.get('hat'), config.hat,
-      "Expected AppConfig.get('hat') to return the config value for hat"
+    assert.strictEqual appConfig.get('hat'), config.hat,
+      "Expected appConfig.get('hat') to return the config value for hat"
 
     assert.strictEqual readFileStub.callCount, 1,
       "Expected the config file not to be read again after initialization"
@@ -138,16 +120,13 @@ test(".get does not return a reference to the cached config object (you
     JSON.stringify(config)
   )
 
-  app =
-    get: -> 'development'
-    use: ->
+  appConfig.initialize()
 
-  AppConfig.initialize(app)
   try
-    hatConfig = AppConfig.get('hat')
+    hatConfig = appConfig.get('hat')
     hatConfig.boat = false
 
-    assert.isTrue AppConfig.get('hat').boat,
+    assert.isTrue appConfig.get('hat').boat,
       "Expected the application config not to have been modified"
   finally
     readFileStub.restore()
