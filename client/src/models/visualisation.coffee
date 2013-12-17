@@ -3,9 +3,6 @@ window.Backbone.Models || = {}
 class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
   idAttribute: '_id'
 
-  defaults:
-    type: 'BarChart'
-
   relations: [
       key: 'indicator'
       type: Backbone.HasOne
@@ -16,6 +13,9 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
   initialize: (options={})->
     unless options.indicator?
       throw "You must initialise Visualisations with an Indicator"
+
+    unless @get('type')?
+      @set('type', @getVisualisationTypes()[0])
 
   urlRoot: '/api/visualisations'
 
@@ -44,11 +44,21 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
   getGeometryField: ->
     @get('indicator').get('indicatorDefinition').geometryField
 
+  getSubIndicatorField: ->
+    @get('indicator').get('indicatorDefinition')?.subIndicatorField
+
   getHighestXRow: ->
     xAxis = @getXAxis()
-    _.max(@get('data').results, (row)->
+    maximum = _.max(@get('data').results, (row)->
       row[xAxis]
     )
+    if isFinite(maximum[xAxis])
+      return maximum
+    else
+      sortedData = _.sortBy(@get('data').results, (row) ->
+        row[xAxis]
+      )
+      return sortedData[sortedData.length - 1]
 
   mapDataToXAndY: ->
     xAxis = @getXAxis()
@@ -83,7 +93,16 @@ class window.Backbone.Models.Visualisation extends Backbone.RelationalModel
 
     return data
 
-  @visualisationTypes: ['BarChart', 'Map', 'Table']
-  
+  getVisualisationTypes: ->
+    subIndicatorField = @getSubIndicatorField()
+    if subIndicatorField?
+      return Visualisation.types.subIndicatorTypes
+    else
+      return Visualisation.types.nonSubIndicatorTypes
+
+  @types:
+    subIndicatorTypes: ['LineChart', 'SubIndicatorMap']
+    nonSubIndicatorTypes: ['BarChart', 'Map', 'Table']
+
 #For backbone relational
 Backbone.Models.Visualisation.setup()

@@ -8,12 +8,26 @@
   <link rel="stylesheet" href="/css/login.css">
 {{/contentFor}}
 
+<script>
+  $(document).ready(function() {
+    $('[name="username"]').focus();
+  });
+</script>
+
 <div class="content login">
+  <section class="errors {{#if errors}}show{{/if}}">
+    <ul>
+      {{#each errors}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  </section>
+
   <section>
     <form method="post" action="/login">
       <fieldset>
         <dl>
-          <dt><label for="username">Email</label></dt>
+          <dt><label for="username">EAD Username</label></dt>
           <dd><input type="text" name="username"></dd>
         </dl>
       </fieldset>

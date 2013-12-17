@@ -10,22 +10,50 @@ Environmental Data Initiative (AGEDI). You can find out more at
 [nrt.io](http://nrt.io)
 
 ## Setup
+Grab the dependencies by running the script for your platform in
+`installers/`. If you're doing this on a development machine, you probably want
+to review the installers first and remove any dependencies you already have
+installed (don't worry, they're short!)
 
-**If you're deploying to Windows, install the
-[dependencies](https://github.com/TooTallNate/node-gyp#installation) for
-`node-gyp` first.**
+* **OS X**: Uses [homebrew](http://brew.sh) to install the dependecies.
+* **Ubuntu**: Uses apt-get
+* **Windows**:
+  * Ensure powershell is installed, then run install.bat as Admin
+  * After the install has completed, setup the application with:
 
-* Install and setup NodeJS (tested on `0.10.*`)
-* `npm install -g handlebars coffee-script grunt-cli`
-* `npm install` in the `client/` and `server/` dirs to get the libs
-* Install mongodb locally (on Mac with [Homebrew](http://brew.sh/)
-  installed, `brew install mongodb`) and start it with `mongod`.
+  `cd server/ && npm run-script setup`
+
+### Configuration
+Your application needs a configuration file for the environment it will
+be run in. View the [configuration README](server/config/README.md) for
+possible options.
+
+#### Installing in windows as a service:
+Install the application on windows as a service using
+[NSSM](http://nssm.cc/). Configure NSSM as such:
+
+###### Application:
+* Path: C:\Path\To\node.exe
+* Startup Directory: C:\Path\To\NRT\server
+* Options: .\bin\server.js
+
+###### I/O
+Port all your IO to NRT\server\logs\service.log to be able to read
+STDOUT/ERR messages
+
+###### Environment Variables
+```
+NODE_ENV=production
+AUTH_TOKEN=changeme
+PORT=80
+```
+
+###### Check your path
+If you're intending to use this deployment for automated deploy, check that
+your environment variables are setup for the SYSTEM user which which will run
+the service. Otherwise, your deploy will fail with missing commands.
 
 ## Running the application
-
-Before you start, you'll need the
-[Indicatorator](https://github.com/unepwcmc/Indicatorator)
-running.
 
 ### Development
 
@@ -46,6 +74,23 @@ pick a user from `server/lib/users.json`, e.g.
 
     nrt@nrt.com
     password
+
+### Seeding data
+Data is seeded and updated from the /admin route. If you wish to update the
+indicators, you'll also need the
+[Indicatorator](https://github.com/unepwcmc/Indicatorator) running. If backup
+data is ok, just click 'Seed from backup'
+
+#### Faking Indicator Data Backups
+There is a [JSON Generator](http://json-generator.com) script which
+generates data in the same format as the indicator data backup in
+`server/lib/indicator_data.json`. To generate fake data backups:
+
+  1. Grab the contents of the file and enter it into the JSON generator
+  2. Save the generated output to the backup file at
+     `server/lib/indicator_data.json`
+  3. Seed from backup by visiting `/admin` and clicking 'seed from
+     backup'
 
 ### Production
 
@@ -78,6 +123,23 @@ document](https://docs.google.com/a/peoplesized.com/document/d/1dYMO3PJhRlTDQ2BE
 for the production details you need.
 
 **In development, LDAP is disabled.**
+
+#### Automatic deployments
+
+Once the application has been setup manually for the first time on a
+server, you can automatically deploy new code pushed to the `deploy`
+branch on Github.
+
+Only one step of setup is required:
+
+  1. Add a WebHook [service hook](https://github.com/unepwcmc/NRT/settings/hooks)
+     that points at your server's deploy route
+     (`http://youdomain.com/deploy`).
+
+Github will notify the server of any changes, and the application should
+automatically pull the new code and update the server's local
+repository. **Make sure you are running your application with `forever`
+or it will not restart after a deploy**.
 
 ## Application structure
 
@@ -120,9 +182,19 @@ Run them with
 ##### Using Q for deferreds in tests
 
 Q.js is used through-out the application to prevent callback pyramids. One
-thing to note when using it, particularly in tests, is that for errors to
-bubble up to mocha, you must call .done() on promises (note this is not the
-done() function from mocha, but part of Q's promises).
+thing to note when using it, particularly in tests, is that you must specify a
+fail callback as well as success for every deferred, or your application will
+silently fail. In tests, you can usually just handle do this by passing mocha's
+`done` function to fail, e.g:
+
+```coffeescript
+test('somePromiseFunction', (done) ->
+  somePromiseFunction.then(->
+    # some assertions
+    done()
+  ).fail(done) # This will call done with an error as first argument, which triggers mocha's error state
+)
+```
 
 #### Client
 

@@ -14,6 +14,7 @@
   <script src="/js/lib/leaflet.js"></script>
   <script src="/js/lib/esri-leaflet.js"></script>
   <script src="/js/lib/medium-editor.min.js"></script>
+  <script src="/js/lib/Chart.min.js"></script>
   <script src="/js/application.js"></script>
 {{/contentFor}}
 
@@ -35,7 +36,7 @@
 <div class="content indicator">
   <article>
     <header>
-      <div {{#if indicator.page.is_draft}}class="parameter p-select"{{else}}class="parameter"{{/if}}>
+      <div class="parameter {{#if indicator.page.is_draft}}p-select{{/if}}">
         <div class="score">
           <span class="number">
             {{indicator.page.headline.value}} {{indicator.indicatorDefinition.short_unit}}
@@ -45,7 +46,13 @@
           </span>
         </div>
         <p>Refers to data collected up to {{indicator.page.headline.periodEnd}}</p>
+
       </div>
+
+      {{#if APP_CONFIG.features.dpsir_filtering}}
+        {{> dpsir indicator.dpsir }}
+      {{/if}}
+
       <h1>{{indicator.title}}</h1>
     </header>
 
@@ -68,15 +75,25 @@
           </li>
           <li>
             <h4>{{{t "indicator/metadata/most_recent"}}}</h4>
-            <span>{{indicator.headlines.newest}}</span>
+            <span>{{indicator.headlineRanges.newest}}</span>
           </li>
           <li>
             <h4>{{{t "indicator/metadata/oldest_data"}}}</h4>
-            <span>{{indicator.headlines.oldest}}</span>
+            <span>{{indicator.headlineRanges.oldest}}</span>
           </li>
           <li>
             <h4>{{{t "indicator/metadata/frequency"}}}</h4>
             <span>{{indicator.indicatorDefinition.period}}</span>
+            <span class="recency-tag {{#unless indicator.isUpToDate}}warning{{/unless}}">
+              {{#unless indicator.isUpToDate}}
+                <i class="icon-warning-sign append"></i>
+              {{/unless}}
+              {{indicator.narrativeRecency}}
+            </span>
+          </li>
+          <li>
+            <h4>Source</h4>
+            <span><a class="source" href="">{{indicator.source}}</a></span>
           </li>
         </ul>
       </section>

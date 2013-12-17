@@ -6,16 +6,19 @@ require('express-resource')
 passport = require('passport')
 mongoose = require('mongoose')
 MongoStore = require('connect-mongo')(express)
+AppConfig = require('./initializers/config')
 i18n = require('i18n')
+flash = require('connect-flash')
 
 exports.createApp = ->
   app = express()
 
-  mongoose.connect("mongodb://localhost/nrt_#{app.get('env')}")
+  require('./initializers/logging')(app)
+  AppConfig.initialize(app)
+  require('./initializers/mongo')()
 
   bindRoutesForApp = require('./route_bindings.coffee')
 
-  require('./initializers/logging')(app)
   app.use express.static(path.join(__dirname, "public"))
 
   app.engine "hbs", hbs.express3(
@@ -39,6 +42,7 @@ exports.createApp = ->
       maxAge: 300000
     )
   )
+  app.use(flash())
 
   require('./initializers/i18n')(app)
 
@@ -52,10 +56,10 @@ exports.createApp = ->
 exports.start = (port, callback) ->
   app = exports.createApp()
 
-  seedData()
+  seedData() unless app.get('env') is "test"
 
   server = http.createServer(app).listen port, (err) ->
-      callback err, server
+    callback err, server
 
   return app
 

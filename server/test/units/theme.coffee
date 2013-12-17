@@ -2,7 +2,6 @@ assert = require('chai').assert
 helpers = require '../helpers'
 Theme = require('../../models/theme').model
 Indicator = require('../../models/indicator').model
-helpers = require '../helpers'
 async = require('async')
 Q = require('q')
 _ = require('underscore')
@@ -78,11 +77,7 @@ test('.getFatThemes returns all the themes
       "Expected indicators to have their narrative recency attribute calculated"
 
     done()
-  ).fail((err)->
-    console.error err
-    console.error err.stack
-    throw new Error(err)
-  )
+  ).fail(done)
 )
 
 test('#getFetThemes only returns themes with indicators of type ESRI', (done) ->
@@ -135,14 +130,12 @@ test('#getFetThemes only returns themes with indicators of type ESRI', (done) ->
       "Expected the returned indicator to be an ESRI indicator"
 
     done()
-  ).fail((err) ->
-    console.error err
-    console.error err.stack
-    throw err
-  )
+  ).fail(done)
 )
 
 test('.getIndicatorsByTheme returns all Indicators for given Theme', (done) ->
+  theThemes = indicatorAttributes = null
+
   themeAttributes = [{
     title: 'Theme 1'
   }]
@@ -150,32 +143,71 @@ test('.getIndicatorsByTheme returns all Indicators for given Theme', (done) ->
   helpers.createThemesFromAttributes(
     themeAttributes
   ).then( (themes) =>
+    theThemes = themes
+
     indicatorAttributes = [{
       title: "I'm an indicator of theme 1"
       theme: themes[0]._id
+      type: 'esri'
     }]
 
     helpers.createIndicatorModels(
       indicatorAttributes
-    ).then( (subIndicators)->
-      Theme.getIndicatorsByTheme(themes[0]._id, (err, returnedIndicators) ->
-        if err?
-          console.error(err)
-          throw new Error(err)
-
-        assert.lengthOf returnedIndicators, 1
-
-        assert.strictEqual returnedIndicators[0].title, indicatorAttributes[0].title
-        done()
-      )
-    ).fail( (err) ->
-      console.error err
-      throw new Error(err)
     )
-  ).fail( (err) ->
-    console.error err
-    throw new Error(err)
-  )
+  ).then( (subIndicators)->
+    Theme.getIndicatorsByTheme(theThemes[0]._id, (err, returnedIndicators) ->
+      if err?
+        console.error(err)
+        throw new Error(err)
+
+      assert.lengthOf returnedIndicators, 1
+
+      assert.strictEqual returnedIndicators[0].title, indicatorAttributes[0].title
+      done()
+    )
+  ).fail(done)
+)
+
+test('.getIndicatorsByTheme supports an optional filter object', (done) ->
+  theThemes = indicatorAttributes = null
+
+  themeAttributes = [{
+    title: 'Theme 1'
+  }]
+
+  helpers.createThemesFromAttributes(
+    themeAttributes
+  ).then( (themes) =>
+    theThemes = themes
+
+    indicatorAttributes = [{
+      title: "I'm an indicator of theme 1"
+      theme: themes[0]._id
+      dpsir: pressure: true
+    }, {
+      title: "I'm also an indicator of theme 1"
+      theme: themes[0]._id
+      dpsir: state: true
+    }]
+
+    helpers.createIndicatorModels(
+      indicatorAttributes
+    )
+  ).then( (indicators)->
+    Q.nfcall(
+      Theme.getIndicatorsByTheme, theThemes[0]._id, {"dpsir.state": true}
+    )
+  ).then( (indicators) ->
+    try
+      assert.lengthOf indicators, 1,
+        "Expected 1 indicator to be returned"
+
+      assert.strictEqual indicators[0].title, indicatorAttributes[1].title
+
+      done()
+    catch err
+      done(err)
+  ).fail(done)
 )
 
 test('.getIndicators returns all Indicators for given Theme', (done) ->

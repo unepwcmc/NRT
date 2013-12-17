@@ -23,7 +23,7 @@ class Backbone.Views.ReportEditVisualisationView extends Backbone.Diorama.Nestin
       visualisation: @visualisation
       visualisationType: @visualisation.get('type')
       visualisationViewName: @visualisation.get('type') + "View"
-      visualisationTypes: Backbone.Models.Visualisation.visualisationTypes
+      visualisationTypes: @visualisation.getVisualisationTypes()
     ))
     @attachSubViews()
     $('body').addClass('stop-scrolling')

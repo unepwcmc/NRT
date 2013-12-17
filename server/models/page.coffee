@@ -1,6 +1,7 @@
 mongoose = require('mongoose')
 async = require('async')
 _ = require('underscore')
+HeadlineService = require('../lib/services/headline.coffee')
 sectionNestingModel = require('../mixins/section_nesting_model.coffee')
 SectionSchema = require('./section.coffee').schema
 Q = require('q')
@@ -37,14 +38,13 @@ pageSchema.methods.createDraftClone = ->
 
     clonedPage.giveSectionsNewIds()
   ).then( (clonedSectionsAndOriginalSectionIds) ->
-
-    async.each(clonedSectionsAndOriginalSectionIds, Section.cloneChildren, (err) ->
-      if err?
-        deferred.reject(err)
-
-      deferred.resolve(clonedPage)
+    Q.nfcall(
+      async.each, clonedSectionsAndOriginalSectionIds, Section.cloneChildren
     )
-
+  ).then( ->
+    Q.nsend(clonedPage, 'save')
+  ).then( ->
+    deferred.resolve(clonedPage)
   ).fail( (err) ->
     deferred.reject(err)
   )
@@ -112,7 +112,8 @@ pageSchema.methods.setHeadlineToMostRecentFromParent = ->
 
   if @parent_type is 'Indicator'
     @getParent().then( (parent) ->
-      parent.getNewestHeadline()
+      headlineService = new HeadlineService(parent)
+      headlineService.getNewestHeadline()
     ).then( (headline) =>
       if headline?
         @headline = headline

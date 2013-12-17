@@ -80,6 +80,45 @@ test('.getUpdateUrl on a cartodb indicator with missing cartodb_user and query
   assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, indicator of type 'cartodb' has no cartodb_user or query in its indicator definition"
 )
 
+test('.getUpdateUrl on an EDE indicator with a valid URL and Variable ID', ->
+  indicator = new Indicator
+    type: 'ede'
+    indicatorDefinition:
+      "apiUrl": "http://localhost:3002/AE"
+      "apiVariableId": 1
+
+  expectedUrl = "http://localhost:3002/AE/1"
+  url = indicator.getUpdateUrl()
+
+  assert.strictEqual url, expectedUrl
+)
+
+test('.getUpdateUrl on an EDE indicator with missing API URL and Variable ID
+ it throws an error', ->
+  indicator = new Indicator(type: 'ede')
+
+  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, indicator has no apiUrl or apiVariableId in its definition"
+)
+
+test('.getUpdateUrl on an Standard indicator with a valid indicatorator ID', ->
+  indicator = new Indicator
+    type: 'standard'
+    indicatorDefinition:
+      "indicatoratorId": 1
+
+  expectedUrl = "http://localhost:3002/indicator/1/data"
+  url = indicator.getUpdateUrl()
+
+  assert.strictEqual url, expectedUrl
+)
+
+test('.getUpdateUrl on an Standard indicator with missing indicatorator ID
+ it throws an error', ->
+  indicator = new Indicator(type: 'standard')
+
+  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, indicator has no indicatorator ID in its definition"
+)
+
 test('.queryIndicatorData queries the remote server for indicator data', (done) ->
   indicator = new Indicator
     type: 'esri'
@@ -118,73 +157,108 @@ test('.queryIndicatorData queries the remote server for indicator data', (done) 
       #{serverResponseData}"
     )
 
+    requestStub.restore()
     done()
   ).fail( (err) ->
-    console.error err
-    throw err
+    requestStub.restore()
+    done(err)
   )
-
 )
 
-test('.convertResponseToIndicatorData on indicator with no type throws an appropriate error', ->
-  indicator = new Indicator()
+test(".queryIndicatorData sends no parameters when there is no 'defaultQueryParameters'
+for the indicator type", (done) ->
+  indicator = new Indicator(type: 'made-up')
+  sinon.stub(indicator, 'getUpdateUrl', ->)
 
-  assert.throws((->
-    indicator.convertResponseToIndicatorData()
-  ), "Couldn't find a data parser for indicator.type: 'undefined'")
+  requestStub = sinon.stub(request, 'get', (options, callback)->
+    assert.isDefined options.qs, "Expected query string parameters to be defined"
+
+    callback(null, {})
+  )
+
+  indicator.queryIndicatorData().then( (response) ->
+    requestStub.restore()
+    done()
+  ).fail((err) ->
+    requestStub.restore()
+    done(err)
+  )
 )
 
 test('.convertResponseToIndicatorData for an esri indicator
-  takes data from remote server and prepares for writing to database', (done)->
+  takes data from remote server and prepares for writing to database', ->
   responseData = {
-    features: [
+    features: [{
+      geometry:
+        x: 53.745
+        y: 23.750
       attributes:
         OBJECTID: 1
         periodStart: 1325376000000
         value: "0.29390622"
         text: "Test"
-    ,
+    }, {
+      geometry:
+        x: 54.745
+        y: 33.750
       attributes:
         OBJECTID: 2
+        periodStart: 1356998400000
+        value: "0.2278165"
+        text: "Test"
+    }]
+  }
+
+  indicator = new Indicator(type: 'esri')
+
+  expectedIndicatorData = {
+    indicator: indicator._id
+    data: [
+        geometry:
+          x: 53.745
+          y: 23.750
+        periodStart: 1325376000000
+        value: "0.29390622"
+        text: "Test"
+      ,
+        geometry:
+          x: 54.745
+          y: 33.750
         periodStart: 1356998400000
         value: "0.2278165"
         text: "Test"
     ]
   }
 
-  helpers.createIndicatorModels([{
-    type: 'esri'
-  }]).then( (indicators) ->
-    indicator = indicators[0]
+  convertedData = indicator.convertResponseToIndicatorData(responseData)
 
-    expectedIndicatorData = {
-      indicator: indicator._id
-      data: [
-          periodStart: 1325376000000
-          value: "0.29390622"
-          text: "Test"
-        ,
-          periodStart: 1356998400000
-          value: "0.2278165"
-          text: "Test"
-      ]
-    }
+  assert.ok(
+    _.isEqual(convertedData, expectedIndicatorData),
+    "Expected converted data:\n
+    #{JSON.stringify(convertedData)}\n
+      to look like expected indicator data:\n
+    #{JSON.stringify(expectedIndicatorData)}"
+  )
+)
 
-    convertedData = indicator.convertResponseToIndicatorData(responseData)
+test('.convertResponseToIndicatorData for an esri indicator
+  with no geometry does not throw an error', ->
+  responseData = {
+    features: [{
+      attributes:
+        OBJECTID: 1
+        periodStart: 1325376000000
+    }, {
+      attributes:
+        OBJECTID: 2
+        periodStart: 1356998400000
+    }]
+  }
 
-    assert.ok(
-      _.isEqual(convertedData, expectedIndicatorData),
-      "Expected converted data:\n
-      #{JSON.stringify(convertedData)}\n
-        to look like expected indicator data:\n
-      #{JSON.stringify(expectedIndicatorData)}"
-    )
+  indicator = new Indicator(type: 'esri')
 
-    done()
-
-  ).fail((err) ->
-    console.error err
-    throw err
+  assert.doesNotThrow(->
+    indicator.convertResponseToIndicatorData(responseData)
   )
 )
 
@@ -329,6 +403,90 @@ test('.convertResponseToIndicatorData on a cartodb indicator
     ), "Can't convert poorly formed indicator data reponse:\n#{
           JSON.stringify(garbageData)
         }\n expected response to be a cartodb api response"
+  )
+)
+
+test('.convertResponseToIndicatorData for a Standard indicator
+  puts the indicator data into the format of the indicator_data table', (done)->
+  responseData = [{"year": 1998, "value": 400}]
+
+  helpers.createIndicatorModels([{
+    type: 'standard'
+  }]).then( (indicators) ->
+    indicator = indicators[0]
+
+    expectedIndicatorData = {
+      indicator: indicator._id
+      data: [
+        {
+          "value": 400,
+          "year": 1998
+        }
+      ]
+    }
+
+    convertedData = indicator.convertResponseToIndicatorData(responseData)
+
+    assert.ok(
+      _.isEqual(convertedData, expectedIndicatorData),
+      "Expected converted data:\n
+      #{JSON.stringify(convertedData)}\n
+        to look like expected indicator data:\n
+      #{JSON.stringify(expectedIndicatorData)}"
+    )
+
+    done()
+
+  ).fail(done)
+)
+
+test('.convertResponseToIndicatorData for an indicator type with no converter specified
+  converts the data in the same way as the standard indicator', (done)->
+  responseData = [{"year": 1998, "value": 400}]
+
+  helpers.createIndicatorModels([{
+    type: 'ede'
+  }]).then( (indicators) ->
+    indicator = indicators[0]
+
+    expectedIndicatorData = {
+      indicator: indicator._id
+      data: [
+        {
+          "value": 400,
+          "year": 1998
+        }
+      ]
+    }
+
+    convertedData = indicator.convertResponseToIndicatorData(responseData)
+
+    assert.ok(
+      _.isEqual(convertedData, expectedIndicatorData),
+      "Expected converted data:\n
+      #{JSON.stringify(convertedData)}\n
+        to look like expected indicator data:\n
+      #{JSON.stringify(expectedIndicatorData)}"
+    )
+
+    done()
+
+  ).fail(done)
+)
+
+test('.convertResponseToIndicatorData on a standard indicator
+  when given a garbage response it throws an error', ->
+  indicator = new Indicator(
+    type: 'standard'
+  )
+
+  garbageData = {hats: 'boats'}
+  assert.throws(
+    (->
+      indicator.convertResponseToIndicatorData(garbageData)
+    ), "Can't convert poorly formed indicator data reponse:\n#{
+          JSON.stringify(garbageData)
+        }\n expected response to be an array"
   )
 )
 

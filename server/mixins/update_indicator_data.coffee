@@ -35,7 +35,11 @@ CONFIG =
       "per_page": 100
       "date": "1960:2013"
       "format": "json"
+
   cartodb:
+    defaultQueryParameters: {}
+
+  ede:
     defaultQueryParameters: {}
 
 CONVERSIONS =
@@ -45,7 +49,7 @@ CONVERSIONS =
 
     date: (value) ->
       new Date(parseInt(value, 10))
-      
+
   decimalPercentage:
     integer: (value)->
       value * 100
@@ -63,7 +67,6 @@ URL_BUILDERS =
     return url
 
   worldBank: ->
-
     if @indicatorDefinition?
       apiUrl = @indicatorDefinition.apiUrl
       apiIndicatorName = @indicatorDefinition.apiIndicatorName
@@ -87,6 +90,26 @@ URL_BUILDERS =
     url = "#{apiUrl}/cdb/#{cartodb_user}/#{cartodb_tablename}/#{query}"
     return url
 
+  ede: ->
+    if @indicatorDefinition?
+      apiUrl = @indicatorDefinition.apiUrl
+      apiVariableId = @indicatorDefinition.apiVariableId
+
+    unless apiUrl? and apiVariableId?
+      throw "Cannot generate update URL, indicator has no apiUrl or apiVariableId in its definition"
+
+    url = "#{apiUrl}/#{apiVariableId}"
+    return url
+
+  standard: ->
+    if @indicatorDefinition?
+      indicatoratorId = @indicatorDefinition.indicatoratorId
+
+    unless indicatoratorId?
+      throw "Cannot generate update URL, indicator has no indicatorator ID in its definition"
+
+    url = "http://localhost:3002/indicator/#{indicatoratorId}/data"
+    return url
 
 SOURCE_DATA_PARSERS =
   esri: (responseBody) ->
@@ -101,7 +124,11 @@ SOURCE_DATA_PARSERS =
     }
 
     for feature in responseBody.features
-      convertedData.data.push _.omit(feature.attributes, 'OBJECTID')
+      featureObject = {geometry: feature.geometry}
+      attributes = _.omit(feature.attributes, 'OBJECTID')
+      _.extend(featureObject, attributes)
+
+      convertedData.data.push featureObject
 
     return convertedData
 
@@ -112,7 +139,7 @@ SOURCE_DATA_PARSERS =
       }\n expected response to be a world bank api response;#{
       } an array with a data array as the second element"
 
-    return convertedData = {
+    return {
       indicator: @_id
       data: responseBody[1]
     }
@@ -123,9 +150,20 @@ SOURCE_DATA_PARSERS =
         JSON.stringify(responseBody)
       }\n expected response to be a cartodb api response"
 
-    return convertedData = {
+    return {
       indicator: @_id
       data: responseBody.data
+    }
+
+  standard: (responseBody) ->
+    unless _.isArray(responseBody)
+      throw "Can't convert poorly formed indicator data reponse:\n#{
+        JSON.stringify(responseBody)
+      }\n expected response to be an array"
+
+    return {
+      indicator: @_id
+      data: responseBody
     }
 
 module.exports =
@@ -143,7 +181,7 @@ module.exports =
 
       request.get
         url: @getUpdateUrl()
-        qs: CONFIG[@type].defaultQueryParameters
+        qs: CONFIG[@type]?.defaultQueryParameters || {}
         json: true
       , (err, response) ->
         if err?
@@ -154,11 +192,8 @@ module.exports =
       return deferred.promise
 
     convertResponseToIndicatorData: (responseBody) ->
-      sourceDataParser = SOURCE_DATA_PARSERS[@type]
-      if sourceDataParser?
-        return sourceDataParser.call(@, responseBody)
-      else
-        throw new Error("Couldn't find a data parser for indicator.type: '#{@type}'")
+      sourceDataParser = SOURCE_DATA_PARSERS[@type] || SOURCE_DATA_PARSERS['standard']
+      return sourceDataParser.call(@, responseBody)
 
     validateIndicatorDataFields: (indicatorData) ->
       firstRow = indicatorData.data[0]

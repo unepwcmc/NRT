@@ -17,3 +17,26 @@ section {
     float: right;
   }
 }
+
+section.errors {
+  width: 100%;
+  margin: 10px 0;
+  color: #b94a48;
+  background-color: #f2dede;
+  border: 1px solid #eed3d7;
+  display: none;
+  padding: 0;
+
+  &.show {
+    display: block;
+  }
+
+  ul {
+    padding: 0;
+    list-style: none;
+
+    li {
+      padding: 10px;
+    }
+  }
+}

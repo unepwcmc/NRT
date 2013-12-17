@@ -1,0 +1,10 @@
+{
+  "instance_name": "Abu Dhabi",
+  "db": {
+    "name": "nrt_development"
+  },
+  "features": {
+    "ldap": false,
+    "dpsir_filtering": true
+  }
+}

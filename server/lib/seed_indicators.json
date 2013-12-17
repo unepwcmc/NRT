@@ -16,15 +16,24 @@
     {"title": "Description", "content": "Average annual NO2 concentration in µg per m3"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": true,
+    "pressure": true,
+    "state": false,
+    "impact": false,
+    "response": false
+  },
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
-      "unit": "µg per m3",
-      "short_unit": "µg/m3",
+      "unit": "stations",
+      "short_unit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/m3",
       "fields": [
         {
           "source": {
@@ -37,10 +46,10 @@
         {
           "source": {
             "name": "value",
-            "type": "integer"
+            "type": "text"
           },
           "name": "value",
-          "type": "integer"
+          "type": "text"
         },
         {
           "source": {
@@ -49,6 +58,13 @@
           },
           "name": "text",
           "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
   }
@@ -60,15 +76,24 @@
     {"title": "Description", "content": "Hourly average SO2 concentration in µg per m3"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": false,
+    "state": true,
+    "impact": false,
+    "response": false
+  },
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 5,
-      "unit": "µg per m3",
-      "short_unit": "µg/m3",
+      "unit": "stations",
+      "short_unit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/m3",
       "fields": [
         {
           "source": {
@@ -93,6 +118,13 @@
           },
           "name": "text",
           "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
   }
@@ -104,15 +136,24 @@
     {"title": "Description", "content": "Daily average PM10 concentration in µg per m3"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": true,
+    "state": false,
+    "impact": false,
+    "response": false
+  },
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 4,
-      "unit": "µg per m3",
-      "short_unit": "µg/m3",
+      "unit": "stations",
+      "short_unit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/m3",
       "fields": [
         {
           "source": {
@@ -137,6 +178,13 @@
           },
           "name": "text",
           "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
   }
@@ -148,6 +196,13 @@
     {"title": "Description", "content": "Annual average PM25 concentration in µg per m3"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": true,
+    "pressure": false,
+    "state": false,
+    "impact": false,
+    "response": false
+  },
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": -1,
@@ -192,15 +247,24 @@
     {"title": "Description", "content": "Daily average PM10 concentration in µg per m3"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": false,
+    "state": true,
+    "impact": true,
+    "response": false
+  },
   "indicatorDefinition": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 3,
-      "unit": "µg per m3",
-      "short_unit": "µg/m3",
+      "unit": "stations",
+      "short_unit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/m3",
       "fields": [
         {
           "source": {
@@ -225,6 +289,13 @@
           },
           "name": "text",
           "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
   }
@@ -237,6 +308,13 @@
     {"title": "Description", "content": "This indicator measures the area of protected land ecosystems, inland water ecosystems, and marine ecosystems expressed as a percentage of the total area of land ecosystems, inland water ecosystems and marine ecosystems respectively.  Protected Area refers to all or partially protected areas of at least 1000 hectares that are designated as national parks, natural monuments, natural reserves or wildlife sanctuaries, protected landscapes and seascapes or scientific reserves with limited public access. The data do not include sites protected under local or provincial law."}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": true,
+    "state": false,
+    "impact": false,
+    "response": false
+  },
   "indicatorDefinition": {
       "serviceName": "NRT_AD_ProtectedArea",
       "featureServer": 2,
@@ -281,6 +359,13 @@
     {"title": "Description", "content": "Area of Selected Key Ecosystems as a Percent of Total Area"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": false,
+    "state": true,
+    "impact": false,
+    "response": false
+  },
   "indicatorDefinition": {
   }
 },{
@@ -317,6 +402,13 @@
     {"title": "Description", "content": "Abundance of Selected Key Species"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": true,
+    "pressure": true,
+    "state": false,
+    "impact": false,
+    "response": false
+  },
   "indicatorDefinition": {
   }
 },{
@@ -327,6 +419,13 @@
     {"title": "Description", "content": "Annual fish catch from sustainable fisheries"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": false,
+    "state": false,
+    "impact": true,
+    "response": true
+  },
   "indicatorDefinition": {
   }
 }, {
@@ -337,15 +436,24 @@
     {"title": "Description", "content": "Area of Selected Key Ecosystems as a Percent of Total Area"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": false,
+    "state": false,
+    "impact": false,
+    "response": true
+  },
   "indicatorDefinition": {
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": 4,
-      "unit": "µg per litre",
-      "short_unit": "µg/L",
+      "unit": "stations",
+      "short_unit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/L",
       "fields": [
         {
           "source": {
@@ -370,6 +478,13 @@
           },
           "name": "text",
           "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
   }
@@ -381,15 +496,24 @@
     {"title": "Description", "content": "Enterococci concentration in 100 ml of coastal waters"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": true,
+    "state": true,
+    "impact": false,
+    "response": false
+  },
   "indicatorDefinition": {
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": 3,
-      "unit": "µg per litre",
-      "short_unit": "µg/L",
+      "unit": "stations",
+      "short_unit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/L",
       "fields": [
         {
           "source": {
@@ -414,6 +538,13 @@
           },
           "name": "text",
           "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
         }
       ]
   }
@@ -425,6 +556,13 @@
     {"title": "Description", "content": "Effective years remaining in usable groundwater reserves"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": true,
+    "state": false,
+    "impact": false,
+    "response": false
+  },
   "indicatorDefinition": {
   }
 }, {
@@ -435,6 +573,13 @@
     {"title": "Description", "content": "Area (km2) of aquifer where water quality is less than or equal to 1500 ppm TDS concentration"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": false,
+    "state": false,
+    "impact": true,
+    "response": false
+  },
   "indicatorDefinition": {
   }
 },{
@@ -445,6 +590,13 @@
     {"title": "Description", "content": "Awareness on ground water depletion and high domestic water consumption"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": false,
+    "state": false,
+    "impact": false,
+    "response": true
+  },
   "indicatorDefinition": {
   }
 },{
@@ -455,6 +607,13 @@
     {"title": "Description", "content": "Awareness on diminishing fish stock"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": true,
+    "state": false,
+    "impact": false,
+    "response": false
+  },
   "indicatorDefinition": {
   }
 },{
@@ -465,6 +624,13 @@
     {"title": "Description", "content": "Awareness on air quality (indoor and outdoor) & noise pollution"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": true,
+    "pressure": true,
+    "state": false,
+    "impact": false,
+    "response": false
+  },
   "indicatorDefinition": {
   }
 },{
@@ -475,6 +641,13 @@
     {"title": "Description", "content": "Awareness on Biodiversity (marine and terrestrial"}
   ],
   "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": true,
+    "state": true,
+    "impact": false,
+    "response": false
+  },
   "indicatorDefinition": {
   }
 },
@@ -580,6 +753,45 @@
         {
           "source": {
             "name": "date",
+            "type": "integer"
+          },
+          "name": "year",
+          "type": "integer"
+        }, {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        }, {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }
+      ]
+    }
+}, {
+  "short_name": "Cereals Production",
+  "title": "Cereals Production (UNEP EDE)",
+  "description": "Production of Cereals",
+  "theme": "Environmental Awareness",
+  "type": "ede",
+  "indicatorDefinition": {
+      "unit": "Metric tons",
+      "short_unit": "T",
+      "apiUrl": "http://localhost:3002/ede/AE",
+      "apiVariableId": "1",
+      "period": "annual",
+      "xAxis": "year",
+      "yAxis": "value",
+      "fields": [
+        {
+          "source": {
+            "name": "year",
             "type": "integer"
           },
           "name": "year",

@@ -3,6 +3,7 @@ fs = require('fs')
 _ = require('underscore')
 async = require('async')
 Indicator = require('./indicator').model
+HeadlineService = require('../lib/services/headline')
 Q = require('q')
 
 pageModelMixin = require('../mixins/page_model.coffee')
@@ -94,8 +95,14 @@ themeSchema.statics.getFatThemes = (callback) ->
         )
     )
 
-themeSchema.statics.getIndicatorsByTheme = (themeId, callback) ->
-  Indicator.find(theme: themeId)
+themeSchema.statics.getIndicatorsByTheme = (themeId, filters, callback) ->
+  unless callback?
+    callback = filters
+    filters = {}
+
+  filters = _.extend(theme: themeId, filters)
+
+  Indicator.find(filters)
     .sort(_id: 1)
     .exec( (err, indicators) ->
       if err?
@@ -121,7 +128,7 @@ themeSchema.methods.populateIndicators = ->
   ).then(->
     Indicator.populateDescriptionsFromPages(theIndicators)
   ).then(->
-    Indicator.calculateNarrativeRecency(theIndicators)
+    HeadlineService.populateNarrativeRecencyOfIndicators(theIndicators)
   ).then(=>
     @indicators = theIndicators.sort(_id: 1)
     Q.fcall(=> @)

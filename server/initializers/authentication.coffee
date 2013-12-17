@@ -1,4 +1,5 @@
 passport = require('passport')
+_ = require('underscore')
 LocalStrategy = require('passport-local').Strategy
 Q = require('q')
 User = require('../models/user').model
@@ -21,6 +22,8 @@ passport.deserializeUser (id, done) ->
       return done(null, user)
     )
 
+AppConfig = require('./config')
+
 passport.use(
   new LocalStrategy(
     (username, password, done) ->
@@ -28,30 +31,44 @@ passport.use(
         User.findOne(email: username), 'exec'
       ).then( (user) ->
 
+        ldapEnabled = AppConfig.get('features').ldap
+
         if user?
-          if user.isLDAPAccount()
+          if ldapEnabled && user.isLDAPAccount()
             user.loginFromLDAP(password, done)
           else
             user.loginFromLocalDb(password, done)
         else
-          User.createFromLDAPUsername(username)
-            .then( (user) ->
-              user.loginFromLDAP(password, done)
-            ).fail( (err) ->
-              done(null, false, {message: "Incorrect username or password"})
-            )
+          if ldapEnabled
+            User.createFromLDAPUsername(username)
+              .then( (user) ->
+                user.loginFromLDAP(password, done)
+              ).fail( (err) ->
+                message = User.KNOWN_LDAP_ERRORS[err?.name] ||
+                  User.KNOWN_LDAP_ERRORS['InvalidCredentialsError']
+                done(null, false, message: message)
+              )
+          else
+            message = User.KNOWN_LDAP_ERRORS['InvalidCredentialsError']
+            return done(null, false, message: message)
 
       ).fail( (err) ->
-        console.error err
-        done(null, false, {message: err})
+        done(null, false, {message: User.KNOWN_LDAP_ERRORS['OtherError']})
       )
   )
 )
 
+userValueBlacklist = ['password', 'salt']
+stripSensitiveDataFromUser = (user) ->
+  _.omit(user.toJSON(), userValueBlacklist)
+
 passport.addCurrentUserToLocals = (req, res, next) ->
   if req.user?
-    res.locals.currentUser= req.user
-    res.locals.currentUserJSON = JSON.stringify(req.user)
+    user = stripSensitiveDataFromUser(req.user)
+
+    res.locals.currentUser = user
+    res.locals.currentUserJSON = JSON.stringify(user)
+
   next()
 
 module.exports = passport

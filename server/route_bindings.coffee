@@ -4,23 +4,24 @@ passport = require('./initializers/authentication')
 tokenAuthentication = require('./lib/token_authentication')
 sessionAuthentication = require('./lib/session_authentication')
 
-visualisationApi = require('./routes/api/visualisation')
-narrativeApi     = require('./routes/api/narrative')
-indicatorApi     = require('./routes/api/indicator')
-reportApi        = require('./routes/api/report')
-themeApi         = require('./routes/api/theme')
-pageApi          = require('./routes/api/page')
-userApi          = require('./routes/api/user')
+visualisationApi = require('./controllers/api/visualisation')
+narrativeApi     = require('./controllers/api/narrative')
+indicatorApi     = require('./controllers/api/indicator')
+reportApi        = require('./controllers/api/report')
+themeApi         = require('./controllers/api/theme')
+pageApi          = require('./controllers/api/page')
+userApi          = require('./controllers/api/user')
 
-dashboardRoutes = require('./routes/dashboard')
-indicatorRoutes = require('./routes/indicators')
-sessionRoutes   = require('./routes/session')
-localeRoutes    = require('./routes/locale')
-reportRoutes    = require('./routes/reports')
-staticRoutes    = require('./routes/static')
-adminRoutes     = require('./routes/admin')
-themeRoutes     = require('./routes/themes')
-testRoutes      = require('./routes/tests')
+dashboardRoutes = require('./controllers/dashboard')
+indicatorRoutes = require('./controllers/indicators')
+sessionRoutes   = require('./controllers/session')
+deployRoutes    = require('./controllers/deploy')
+localeRoutes    = require('./controllers/locale')
+reportRoutes    = require('./controllers/reports')
+staticRoutes    = require('./controllers/static')
+adminRoutes     = require('./controllers/admin')
+themeRoutes     = require('./controllers/themes')
+testRoutes      = require('./controllers/tests')
 
 module.exports = exports = (app) ->
   app.use('/', sessionAuthentication)
@@ -30,7 +31,10 @@ module.exports = exports = (app) ->
 
   app.get "/login", sessionRoutes.login
   app.get "/logout", sessionRoutes.logout
-  app.post '/login', passport.authenticate('local', { failureRedirect: '/login' }), sessionRoutes.loginSuccess
+  app.post '/login', passport.authenticate('local', {
+    failureRedirect: '/login',
+    failureFlash: true
+  }), sessionRoutes.loginSuccess
 
   # REST API
   app.resource 'api/narratives', narrativeApi, { format: 'json' }
@@ -74,6 +78,8 @@ module.exports = exports = (app) ->
 
   app.get "/locale/:locale", localeRoutes.index
   app.get "/locales/en-:locale.json", localeRoutes.redirect
+
+  app.post "/deploy", deployRoutes.index
 
   ## Tests
   unless app.settings.env == 'production'

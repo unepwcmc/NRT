@@ -10,6 +10,8 @@ Indicator = require('../../models/indicator').model
 IndicatorData = require('../../models/indicator_data').model
 Page = require('../../models/page').model
 
+HeadlineService = require '../../lib/services/headline'
+
 suite('Indicator')
 
 test('.getIndicatorDataForCSV with no filters returns all indicator data in a 2D array', (done) ->
@@ -28,9 +30,9 @@ test('.getIndicatorDataForCSV with no filters returns all indicator data in a 2D
 
   expectedData = [
     ['year', 'value'],
-    [2000,4],
-    [2001,4],
-    [2002,4]
+    ["2000","4"],
+    ["2001","4"],
+    ["2002","4"]
   ]
 
   indicator = new Indicator(
@@ -66,6 +68,46 @@ test('.getIndicatorDataForCSV with no filters returns all indicator data in a 2D
   )
 )
 
+test('.getIndicatorDataForCSV converts all fields to String', (done) ->
+  data = [
+    {
+      "date": new Date(2000, 12),
+      "value": 4
+    }
+  ]
+
+  indicator = new Indicator(
+    indicatorDefinition:
+      xAxis: 'date'
+      yAxis: 'value'
+  )
+
+  getIndicatorDataStub = sinon.stub(indicator, 'getIndicatorData', (filters, callback) ->
+    callback(null, data)
+  )
+
+  try
+    indicator.getIndicatorDataForCSV( (err, indicatorData) ->
+      if err?
+        getIndicatorDataStub.restore()
+        return done(err)
+
+      date = indicatorData[1][0]
+      value = indicatorData[1][1]
+
+      assert.typeOf date, 'string'
+      assert.typeOf value, 'string'
+
+      assert.match date, /Mon Jan 01 2001 00:00:00 GMT\+0000/
+      assert.strictEqual value, "4"
+
+      done()
+    )
+  catch err
+    getIndicatorDataStub.restore()
+    done(err)
+)
+
 test('.getIndicatorDataForCSV with filters returns data matching filters in a 2D array', (done) ->
   data = [
     {
@@ -82,8 +124,8 @@ test('.getIndicatorDataForCSV with filters returns data matching filters in a 2D
 
   expectedData = [
     ['year', 'value'],
-    [2001,4],
-    [2002,4]
+    ["2001","4"],
+    ["2002","4"]
   ]
 
   indicator = new Indicator(
@@ -228,181 +270,6 @@ test('.getIndicatorData on an indicator with no indicator data
   )
 )
 
-test('.getRecentHeadlines returns the given number of most recent headlines
-  in decending date order with the period end calculated for annual
-  indicator data', (done)->
-  indicatorData = [
-    {
-      "year": 2000,
-      "value": 2
-      "text": 'Poor'
-    }, {
-      "year": 2001,
-      "value": 9
-      "text": 'Great'
-    }, {
-      "year": 2002,
-      "value": 4
-      "text": 'Fair'
-    }
-  ]
-
-  indicatorDefinition =
-    xAxis: 'year'
-    yAxis: 'value'
-    textField: 'text'
-    fields: [{
-      name: 'year'
-      type: 'integer'
-    }, {
-      name: "value",
-      type: "integer"
-    }, {
-      name: 'text'
-      name: 'text'
-    }]
-
-  theIndicator = null
-
-  Q.nsend(
-    Indicator, 'create',
-      indicatorDefinition: indicatorDefinition
-  ).then( (indicator) ->
-    theIndicator = indicator
-
-    Q.nsend(
-      IndicatorData, 'create'
-        indicator: theIndicator
-        data: indicatorData
-    )
-  ).then( ->
-    theIndicator.getRecentHeadlines(2)
-  ).then( (data) ->
-
-    assert.lengthOf data, 2, "Expected 2 headlines to be returned"
-
-    mostRecentHeadline = data[0]
-
-    assert.strictEqual(mostRecentHeadline.year, 2002,
-      "Expected most recent headline year value to be 2002")
-    assert.strictEqual(mostRecentHeadline.value, 4,
-      "Expected most recent headline value to be 4")
-    assert.strictEqual(mostRecentHeadline.text, "Fair",
-      "Expected most recent headline text to be 'Fair'")
-
-    assert.strictEqual(mostRecentHeadline.periodEnd, "31 Dec 2002",
-      "Expected most recent headline period end to be '31 Dec 2002")
-
-    done()
-
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
-)
-
-test('.getRecentHeadlines successfully returns all headline when the
-  number of headlines requested is undefined', (done)->
-  indicatorData = [
-    {
-      "year": 1999,
-      "value": 3
-      "text": 'Poor'
-    },
-    {
-      "year": 2000,
-      "value": 2
-      "text": 'Poor'
-    }
-  ]
-
-  indicator = new Indicator()
-  sinon.stub(indicator, 'getIndicatorData', (callback) ->
-    callback(null, indicatorData)
-  )
-
-  indicator.getRecentHeadlines()
-  .then( (data) ->
-
-    assert.lengthOf data, 2, "Expected 2 headlines to be returned"
-
-    mostRecentHeadline = data[0]
-
-    assert.strictEqual(mostRecentHeadline.year, 2000,
-      "Expected most recent headline year value to be 2000")
-    assert.strictEqual(mostRecentHeadline.value, 2,
-      "Expected most recent headline value to be 2")
-    assert.strictEqual(mostRecentHeadline.text, "Poor",
-      "Expected most recent headline text to be 'Poor'")
-
-    done()
-
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
-)
-
-test('.getNewestHeadline returns the most recent headline', (done)->
-  indicatorData = [
-    {
-      "year": 2001,
-      "value": 9
-      "text": 'Great'
-    }, {
-      "year": 2002,
-      "value": 4
-      "text": 'Fair'
-    }
-  ]
-
-  indicatorDefinition =
-    xAxis: 'year'
-    yAxis: 'value'
-    textField: 'text'
-    fields: [{
-      name: 'year'
-      type: 'integer'
-    }, {
-      name: "value",
-      type: "integer"
-    }, {
-      name: 'text'
-      name: 'text'
-    }]
-
-  theIndicator = null
-
-  Q.nsend(
-    Indicator, 'create',
-      indicatorDefinition: indicatorDefinition
-  ).then( (indicator) ->
-    theIndicator = indicator
-
-    Q.nsend(
-      IndicatorData, 'create'
-        indicator: theIndicator
-        data: indicatorData
-    )
-  ).then( ->
-    theIndicator.getNewestHeadline()
-  ).then( (mostRecentHeadline) ->
-
-    assert.strictEqual(mostRecentHeadline.year, 2002,
-      "Expected most recent headline year value to be 2002")
-    assert.strictEqual(mostRecentHeadline.value, 4,
-      "Expected most recent headline value to be 4")
-    assert.strictEqual(mostRecentHeadline.text, "Fair",
-      "Expected most recent headline text to be 'Fair'")
-
-    done()
-
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
-)
-
 test('#calculateIndicatorDataBounds should return the upper and lower bounds of data', (done) ->
   indicatorData = [
     {
@@ -510,6 +377,7 @@ test("#findWhereIndicatorHasData returns only indicators with indicator data", (
 
 )
 
+
 test("#findWhereIndicatorHasData respects the given filters", (done)->
   indicatorToFind = indicatorToFilterOut = null
 
@@ -548,100 +416,41 @@ test("#findWhereIndicatorHasData respects the given filters", (done)->
   )
 )
 
-test('.calculateRecencyOfHeadline when given an indicator with a headline date
-  older than the most recent data returns "Out of date"', (done) ->
-  indicator = new Indicator()
-  sinon.stub(indicator, 'getNewestHeadline', ->
-    deferred = Q.defer()
-    deferred.resolve {periodEnd: '31 Dec 2012'}
-    return deferred.promise
-  )
+test(".hasData returns true when an indicator has data", (done)->
+  indicatorWithData = null
 
-  page = new Page(parent_type: 'Indicator', headline: {periodEnd: '30 Dec 2012'})
-  sinon.stub(indicator, 'populatePage', ->
-    deferred = Q.defer()
-    deferred.resolve indicator.page = page
-    return deferred.promise
-  )
+  helpers.createIndicatorModels([{}]).then((indicators) ->
+    indicatorWithData = indicators[0]
 
-  indicator.calculateRecencyOfHeadline().then( (recencyText) ->
-    assert.strictEqual "Out of date", recencyText
-    done()
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
+    Q.nfcall(
+      helpers.createIndicatorData, {
+        indicator: indicatorWithData
+        data: [{some: 'data'}]
+      }
+    )
+  ).then((indicatorData) ->
+    indicatorWithData.hasData()
+  ).then((hasData) ->
+
+    try
+      assert.isTrue hasData
+      done()
+    catch err
+      done(err)
+
+  ).fail(done)
 )
 
-test('.calculateRecencyOfHeadline when given an indicator with a headline date
-  equal to or newer than the most recent data returns "Up to date"', (done) ->
-  indicator = new Indicator()
-  sinon.stub(indicator, 'getNewestHeadline', ->
-    deferred = Q.defer()
-    deferred.resolve {periodEnd: '31 Dec 2012'}
-    return deferred.promise
-  )
-
-  page = new Page(parent_type: 'Indicator', headline: {periodEnd: '01 Jan 2013'})
-  sinon.stub(indicator, 'populatePage', ->
-    deferred = Q.defer()
-    deferred.resolve indicator.page = page
-    return deferred.promise
-  )
-
-  indicator.calculateRecencyOfHeadline().then( (recencyText) ->
-    assert.strictEqual "Up to date", recencyText
-    done()
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
-)
-
-test('.calculateRecencyOfHeadline when given an indicator with no data
-  returns "No Data"', (done) ->
-  indicator = new Indicator()
-
-  page = new Page(parent_type: 'Indicator')
-  sinon.stub(indicator, 'populatePage', ->
-    deferred = Q.defer()
-    deferred.resolve indicator.page = page
-    return deferred.promise
-  )
-
-  indicator.calculateRecencyOfHeadline().then( (recencyText) ->
-    assert.strictEqual "No Data", recencyText
-    done()
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
-)
-
-test('.calculateRecencyOfHeadline when given a headline with
-  no periodEnd returns "Out of date"', (done) ->
-  indicator = new Indicator()
-  sinon.stub(indicator, 'getNewestHeadline', ->
-    deferred = Q.defer()
-    deferred.resolve {text: "OH HAI"}
-    return deferred.promise
-  )
-
-
-  page = new Page(parent_type: 'Indicator', headline: {text: "Not reported on", value: "-"})
-  sinon.stub(indicator, 'populatePage', ->
-    deferred = Q.defer()
-    deferred.resolve indicator.page = page
-    return deferred.promise
-  )
-
-  indicator.calculateRecencyOfHeadline().then( (recencyText) ->
-    assert.strictEqual "Out of date", recencyText
-    done()
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
+test(".hasData returns false when an indicator has no data", (done)->
+  helpers.createIndicatorModels([{}]).then((indicators) ->
+    indicators[0].hasData()
+  ).then((hasData) ->
+    try
+      assert.isFalse hasData
+      done()
+    catch err
+      done(err)
+  ).fail(done)
 )
 
 test('#populatePages given an array of indicators, populates their page attributes', (done) ->
@@ -663,31 +472,10 @@ test('#populatePages given an array of indicators, populates their page attribut
   )
 )
 
-test('#calculateNarrativeRecency given an array of indicators,
-  calculates their narrative recency', (done) ->
-  indicator = new Indicator()
-  narrativeRecency = "Up to date"
-  sinon.stub(indicator, 'calculateRecencyOfHeadline', ->
-    deferred = Q.defer()
-    deferred.resolve narrativeRecency
-    return deferred.promise
-  )
+test("#calculateBoundsForType when given an unkown type returns null", ->
+  bounds = Indicator.calculateBoundsForType("party", [], 'fieldName')
 
-  Indicator.calculateNarrativeRecency([indicator]).then( ->
-    assert.strictEqual indicator.narrativeRecency, narrativeRecency,
-      "Expected the narrativeRecency attribute to be populated with the narrative recency"
-    done()
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
-)
-
-test("#calculateBoundsForType when given an unkown type throws an appropriate error", ->
-  assert.throws((->
-    Indicator.calculateBoundsForType("party", [], 'fieldName'))
-    ,"Don't know how to calculate the bounds of type 'party'"
-  )
+  assert.isNull bounds, "Expected returned bounds to be null"
 )
 
 test("#calculateBoundsForType given an array of dates returns the correct bounds", ->
@@ -728,79 +516,6 @@ test('.convertNestedParametersToAssociationIds converts a Theme object to a Them
   )
 )
 
-test("#roundHeadlineValues truncates decimals to 1 place", ->
-  result = Indicator.roundHeadlineValues([{value: 0.123456789}])
-
-  assert.strictEqual result[0].value, 0.1
-)
-
-test("#roundHeadlineValues when given a value which isn't a number, does nothing", ->
-  result = Indicator.roundHeadlineValues([{value: 'hat'}])
-
-  assert.strictEqual result[0].value, 'hat'
-)
-
-test(".parseDateInHeadlines on an indicator with xAxis 'date' (which is an integer),
-  and no period specified, when given an integer date headline row,
-  adds a 'periodEnd' attribute with the date one year in after the 'date' value", ->
-  indicator = new Indicator(
-    indicatorDefinition:
-      xAxis: "date",
-     fields: [
-       {
-         name: "date",
-         type: "integer"
-       }
-     ]
-  )
-
-  headlineData = [
-    date: 1997
-  ]
-
-  convertedHeadlines = indicator.parseDateInHeadlines(headlineData)
-  convertedHeadline = convertedHeadlines[0]
-
-  assert.strictEqual convertedHeadline.periodEnd, "31 Dec 1997",
-    "Expected the periodEnd attribute to be calculated"
-)
-
-test(".parseDateInHeadlines on an indicator with no xAxis defined does no processing", ->
-  indicator = new Indicator()
-
-  headlineData = [
-    date: 1997
-  ]
-
-  convertedHeadline = indicator.parseDateInHeadlines(headlineData)
-
-  assert.ok _.isEqual(convertedHeadline, headlineData),
-    "Expected the headline data not to be modified"
-)
-
-test(".parseDateInHeadlines on an indicator where the frequency is 'quarterly' 
-  sets periodEnd to 3 months after the initial 'date'", ->
-
-  indicator = new Indicator(
-    indicatorDefinition:
-      period: 'quarterly'
-      xAxis: 'date'
-      fields: [
-        name: 'date'
-      ]
-  )
-
-  headlineData = [
-    date: "2013-04-01T01:00:00.000Z"
-  ]
-
-  convertedHeadlines = indicator.parseDateInHeadlines(headlineData)
-  convertedHeadline = convertedHeadlines[0]
-
-  assert.strictEqual convertedHeadline.periodEnd, "30 Jun 2013",
-    "Expected the periodEnd to be 3 months from the period start"
-)
-
 test(".generateMetadataCSV returns CSV arrays containing the name, theme,
   period and data date", (done) ->
   theIndicator = theTheme = newestHeadlineStub = null
@@ -824,7 +539,7 @@ test(".generateMetadataCSV returns CSV arrays containing the name, theme,
   ).then( (indicator) ->
     theIndicator = indicator
 
-    newestHeadlineStub = sinon.stub(theIndicator, 'getNewestHeadline', ->
+    newestHeadlineStub = sinon.stub(HeadlineService::, 'getNewestHeadline', ->
       Q.fcall(->
         year: 2006
       )
@@ -865,6 +580,7 @@ test(".generateMetadataCSV returns CSV arrays containing the name, theme,
 
   ).fail( (err) ->
     done(err)
+    newestHeadlineStub.restore()
   )
 )
 

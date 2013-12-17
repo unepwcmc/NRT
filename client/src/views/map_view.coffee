@@ -2,8 +2,7 @@ window.Backbone ||= {}
 window.Backbone.Views ||= {}
 
 class Backbone.Views.MapView extends Backbone.View
-  template: Handlebars.templates['map.hbs']
-  className: 'map-view'
+  className: 'section-visualisation map-visualisation'
 
   initialize: (options) ->
     @visualisation = options.visualisation
@@ -12,8 +11,6 @@ class Backbone.Views.MapView extends Backbone.View
 
   render: =>
     if @visualisation.get('data')?
-      @$el.html(@template())
-
       setTimeout(=>
         @renderMap()
       , 500)
@@ -24,7 +21,7 @@ class Backbone.Views.MapView extends Backbone.View
 
   renderMap: =>
     @map = L.map(
-      @$el.find(".map-visualisation")[0],
+      @el,
       scrollWheelZoom: false
       attributionControl: false
     )

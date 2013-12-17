@@ -140,6 +140,25 @@ test(".getHighestXRow should retrieve the row with the highest value of X in the
   assert.strictEqual visualisation.getHighestXRow().year, 2010
 )
 
+test(".getHighestXRow the x axis is stringified dates behaves returns the
+highest sorted value", ->
+  indicator = Factory.indicator(
+    indicatorDefinition:
+      xAxis: 'date'
+  )
+  visualisation = new Backbone.Models.Visualisation(
+    indicator: indicator
+    data:
+      results: [{
+        date: "2013-04-01T01:00:00.000Z"
+      },{
+        date: "2013-01-01T01:00:00.000Z"
+      }]
+  )
+
+  assert.strictEqual visualisation.getHighestXRow().date, "2013-04-01T01:00:00.000Z"
+)
+
 test(".mapDataToXAndY should return data as an array of X and Y objects, with
   formatted and non-formatted attributes", ->
   indicator = Factory.indicator(
@@ -219,4 +238,52 @@ row of results in the given data where the type of the field is date', ->
     'Expected the formatted date to be formatted YYYY-MM-DD'
   assert.strictEqual formattedRow.formatted.otherField, 'an value',
     "Expected the otherField to be included in the formatted data, but unmodified"
+)
+
+test('.getVisualisationTypes returns LineChart, Map types if the
+  Indicator Data has any subIndicators', ->
+  indicator = Factory.indicator(
+    indicatorDefinition:
+      subIndicatorField: "station"
+  )
+
+  data =
+    results: [
+      station: [
+        date: 1357002000000
+        station: "Al Ein"
+        value: 53.6857
+        text: "Great"
+      ]
+    ]
+
+  visualisation = Factory.visualisation(
+    indicator: indicator
+    data: data
+  )
+
+  visualisationTypes = visualisation.getVisualisationTypes()
+
+  assert.lengthOf visualisationTypes, 2
+
+  expectedSubIndicatorTypes = Backbone.Models.Visualisation.types.subIndicatorTypes
+  assert.deepEqual visualisationTypes, expectedSubIndicatorTypes,
+    "Expected the visualisation types available to be sub-indicator types"
+)
+
+test('.getVisualisationTypes returns BarChart, Map and Table types if the
+  Indicator Data does not have any subIndicators', ->
+  indicator = Factory.indicator()
+
+  visualisation = Factory.visualisation(
+    indicator: indicator
+  )
+
+  visualisationTypes = visualisation.getVisualisationTypes()
+
+  assert.lengthOf visualisationTypes, 3
+
+  expectedNonSubIndicatorTypes = Backbone.Models.Visualisation.types.nonSubIndicatorTypes
+  assert.deepEqual visualisationTypes, expectedNonSubIndicatorTypes,
+    "Expected the visualisation types available to be non sub-indicator types"
 )

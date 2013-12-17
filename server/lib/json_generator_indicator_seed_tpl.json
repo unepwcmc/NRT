@@ -1,0 +1,100 @@
+[
+  '{{repeat(21)}}',
+  {
+    "indicator": function(idx) {
+      var indicators = [
+        {name: "SO2 Concentration", type: 'sub'},
+        {name: "NO2 Concentration", type: 'sub'},
+        {name: "PM10 Concentration", type: 'sub'},
+        {name: "PM25 Concentration", type: 'sub'},
+        {name: "O3 Concentration", type: 'sub'},
+        {name: "Area of Key Ecosystems", type: 'sub'},
+        {name: "Threatened species", type: 'sub'},
+        {name: "Abundance of Key Species", type: 'sub'},
+        {name: "Fish Resource Status", type: 'sub'},
+        {name: "Nitrate-N Concentrations", type: 'sub'},
+        {name: "Enterococci Concentrations", type: 'sub'},
+        {name: "Groundwater Reserves", type: 'sub'},
+        {name: "Salinity", type: 'sub'},
+        {name: "Awareness of Water", type: 'sub'},
+        {name: "Awareness of Fish Stocks", type: 'sub'},
+        {name: "Awareness of air quality", type: 'sub'},
+        {name: "Awareness of biodiversity", type: 'sub'},
+        {name: "Urban air pollution", type: 'sub'},
+        {name: "Red List species", type: 'sub'},
+        {name: "Annual Fish Catch", type: 'sub'},
+        {name: "Protected areas", type: null}
+      ];
+
+      window.window.window.window.window.window.indicator = indicators[idx];
+      return window.indicator.name;
+    },
+    "data": [
+        '{{repeat(3)}}',
+        {
+            "date": function(idx) {
+              window.indicatorTexts = {
+                GOOD: 0,
+                BAD: 0
+              };
+
+              return "200" + idx + "-01-01T00:00:00.000Z";
+            },
+            "station": [
+                '{{repeat(5)}}',
+                {
+                  "text": function(idx) {
+                    window.window.window.value = this.numeric(0, 100);
+
+                    if (value > 50) {
+                      choice = 'GOOD';
+                    } else {
+                      choice = 'BAD';
+                    }
+                    window.indicatorTexts[choice] += 1;
+                    return choice;
+                  },
+                  "station": "{{lorem(1)}}",
+                  "value": function(idx) {
+                    return window.value;
+                  },
+                  "periodStart": 1357005600000,
+                  "geometry": {
+                    "x": '{{numeric(0.000001,1)}}',
+                    "y": '{{numeric(50.000001,51)}}'
+                  }
+                }
+            ],
+            "value": function(idx) {
+              if (window.indicator.type === 'sub') {
+                var stationCount = indicatorTexts.GOOD + indicatorTexts.BAD;
+                var value;
+
+                if (indicatorTexts.GOOD > indicatorTexts.BAD) {
+                   value = indicatorTexts.GOOD;
+                   window.text = 'GOOD';
+                } else {
+                   value = indicatorTexts.BAD;
+                   window.text = 'BAD';
+                }
+
+                return value + " of " + stationCount;
+              } else {
+                window.window.window.value = this.numeric(0, 100);
+
+                if (window.window.window.window.window.value > 50) {
+                   window.text = 'GOOD';
+                } else {
+                   window.text = 'BAD';
+                }
+
+                return window.value;
+              }
+            },
+            "text": function(idx) {
+              return window.text;
+            }
+        }
+    ]
+  }
+]

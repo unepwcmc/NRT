@@ -2,6 +2,46 @@
 
 {{#contentFor 'header'}}
   <link rel="stylesheet" href="/css/dashboard.css">
+  <script type="text/javascript">
+    (function() {
+      var scrollToElementWithOffset = function(element, offset) {
+        $('html, body').animate({scrollTop: $(element).offset().top + offset }, 'slow');
+      };
+
+      var scrollToTheme = function(event) {
+        var selectorToScrollTo = $(event.currentTarget).attr('data-theme-name');
+        scrollToElementWithOffset(selectorToScrollTo, -79);
+        event.stopPropagation();
+      };
+
+      var toggleIndicatorList = function(event) {
+        var trayOpenIndicator = $(event.currentTarget).find('.tray-open-indicator');
+        var indicatorList = $(event.currentTarget).next('.indicator-recency-list');
+
+        if (trayOpenIndicator.hasClass('icon-angle-down')) {
+          trayOpenIndicator.removeClass('icon-angle-down');
+          trayOpenIndicator.addClass('icon-angle-up');
+        } else {
+          trayOpenIndicator.removeClass('icon-angle-up');
+          trayOpenIndicator.addClass('icon-angle-down');
+        }
+
+        indicatorList.toggle(400);
+      }
+
+      $(document).ready(function() {
+        $('.side-theme-list > li').click(scrollToTheme);
+        $('.side-theme-list .out-of-date-indicator-count').click(toggleIndicatorList);
+      });
+    })();
+  </script>
+
+  <script src="/js/lib/underscore-min.js"></script>
+  <script src="/js/lib/backbone-min.js"></script>
+  <script src="/js/lib/backbone-relational.js"></script>
+  <script src="/js/lib/handlebars.js"></script>
+  <script src="/js/lib/diorama.js"></script>
+  <script src="/js/application.js"></script>
 {{/contentFor}}
 
 {{#contentFor 'extra-body'}}
@@ -10,9 +50,46 @@
 
 <div class="content">
   <div class="indicators-container">
-    <div class="report-content">
+    <aside class="content-sidebar theme-recency">
+      {{#if APP_CONFIG.features.dpsir_filtering}}
+        <h2>Filters</h2>
+        <div class="filters">
+          Show:
+          {{> dpsir dpsir }}
+        </div>
+      {{/if}}
+
+      <h2>Themes</h2>
+      <ul class="side-theme-list">
+        {{#themes}}
+          <li data-theme-name="#theme-{{css-classify title}}">
+            <h4>{{title}}</h4>
+            {{#if outOfDateIndicatorCount}}
+              <span class="out-of-date-indicator-count">
+                {{outOfDateIndicatorCount}} indicators are out of date
+                <i class="icon-angle-down tray-open-indicator"></i>
+              </span>
+            {{/if}}
+            <ul class="indicator-recency-list">
+              {{#each indicators}}
+                {{#unless isUpToDate}}
+                  <a href="/indicators/{{id}}">
+                    <li>
+                        <span class="status {{css-classify narrativeRecency}}"></span>
+                        <span>{{title}}</span>
+                    </li>
+                  </a>
+                {{/unless}}
+              {{/each}}
+              <hr/>
+            </ul>
+          </li>
+        {{/themes}}
+      </ul>
+    </aside>
+    <div class="theme-list">
       {{#themes}}
-      <div class="theme-block">
+      <div class="theme-block" id="theme-{{css-classify title}}">
         <a href="/themes/{{_id}}">
           <h2>{{title}}<span>›</span></h2>
         </a>
@@ -28,3 +105,9 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  (function() {
+    new Backbone.Views.DpsirFilterView({el: $('aside .dpsir')[0]});
+  })()
+</script>

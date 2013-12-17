@@ -34,45 +34,47 @@
           <a href="/">
             <h1>
               National Reporting Toolkit
-              <small>Abu Dhabi</small>
+              <small>{{APP_CONFIG.instance_name}}</small>
             </h1>
           </a>
         </div>
-
-        <ul class="right">
-          {{#if localeIsArabic}}
-          <a href="/locale/en">
-            <li>
-              English
-            </li>
-          </a>
-          {{else}}
-          <a href="/locale/ar">
-            <li>
-              العربية
-            </li>
-          </a>
-          {{/if}}
-
-          <li class="md-trigger" data-modal="modal-1" onclick="$('#modal-1').addClass('md-show');">
-            {{t "menu/help"}}
-          </li>
-
-          {{#if currentUser}}
-            <a href="/logout">
-              <li class="current-user">
-                <span class="name">
-                {{ currentUser.name }}
-                </span>
-                <span class="logout"><span>›</span>{{t "menu/sign_out"}}</span>
+        <div class="right">
+          <ul>
+            {{#if localeIsArabic}}
+            <a href="/locale/en">
+              <li>
+                English
               </li>
             </a>
-          {{else}}
-            <a href="/login">
-              <li>{{t "menu/log_in"}}</li>
+            {{else}}
+            <a href="/locale/ar">
+              <li>
+                العربية
+              </li>
             </a>
-          {{/if}}
-        </ul>
+            {{/if}}
+
+            <li class="md-trigger" data-modal="modal-1" onclick="$('#modal-1').addClass('md-show');">
+              {{t "menu/help"}}
+            </li>
+
+            {{#if currentUser}}
+              <a href="/logout">
+                <li class="current-user">
+                  <span class="name">
+                  {{ currentUser.name }}
+                  </span>
+                  <span class="logout"><span>›</span>{{t "menu/sign_out"}}</span>
+                </li>
+              </a>
+            {{else}}
+              <a href="/login">
+                <li class="login">{{t "menu/log_in"}}</li>
+              </a>
+            {{/if}}
+          </ul>
+          <img src="/images/agedi-head.png" alt="">
+        </div>
       </div>
     </div>
 
@@ -91,6 +93,7 @@
         </div>
         <div class="md-content">
           <p>UNEP-WCMC, in partnership with AGEDI and EAD, are developing NRT, a system that helps countries report and manage environmental knowledge. This consists of two elements: the environmental information itself, in the form of indicators; and a contextual narrative that explains the trends and implications of these indicators to the audience of decision-makers. As a flexible system it supports the compilation of any type of report, from the short, single issue indicator report through to larger, cross-sectoral State of Environment Report.</p>
+          <img class="agedi" src="/images/agedi-logo.png" alt="AGEDI">
           <img src="/images/tour.png" alt="macbook-tour">
         </div>
         <div class="md-buttons">

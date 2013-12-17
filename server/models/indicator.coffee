@@ -9,10 +9,13 @@ moment = require('moment')
 IndicatorData = require('./indicator_data').model
 Page = require('./page').model
 
+HeadlineService = require '../lib/services/headline'
+
 indicatorSchema = mongoose.Schema(
   title: String
   short_name: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
+  dpsir: mongoose.Schema.Types.Mixed
   theme: {type: mongoose.Schema.Types.ObjectId, ref: 'Theme'}
   type: String
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
@@ -22,14 +25,15 @@ indicatorSchema = mongoose.Schema(
 # Mixins
 pageModelMixin = require('../mixins/page_model.coffee')
 updateIndicatorMixin = require('../mixins/update_indicator_data.coffee')
-indicatorHeadlinesMixin = require('../mixins/indicator_headlines.coffee')
 
 _.extend(indicatorSchema.methods, pageModelMixin.methods)
 _.extend(indicatorSchema.statics, pageModelMixin.statics)
 _.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
 _.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
-_.extend(indicatorSchema.methods, indicatorHeadlinesMixin.methods)
-_.extend(indicatorSchema.statics, indicatorHeadlinesMixin.statics)
+
+indicatorSchema.statics.CONDITIONS = {
+  IS_PRIMARY: {type: 'esri'}
+}
 
 replaceThemeNameWithId = (indicators) ->
   Theme = require('./theme').model
@@ -126,13 +130,12 @@ boundAggregators.integer = (data, fieldName) ->
   return bounds
 
 boundAggregators.date = boundAggregators.integer
-boundAggregators.text = -> null
 
 indicatorSchema.statics.calculateBoundsForType = (fieldType, data, fieldName) ->
   if boundAggregators[fieldType]?
     return boundAggregators[fieldType](data, fieldName)
   else
-    throw new Error("Don't know how to calculate the bounds of type '#{fieldType}'")
+    return null
 
 indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
   if arguments.length == 1
@@ -146,10 +149,25 @@ indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
     rows = [[xAxis, yAxis]]
 
     for row in indicatorData
-      rows.push [row[xAxis], row[yAxis]]
+      rows.push [
+        row[xAxis].toString(),
+        row[yAxis].toString()
+      ]
 
     callback(err, rows)
   )
+
+indicatorSchema.methods.hasData = ->
+  deferred = Q.defer()
+
+  @getIndicatorData( (err, data) ->
+    if err?
+      deferred.reject(err)
+    else
+      deferred.resolve(data.length > 0)
+  )
+
+  return deferred.promise
 
 indicatorSchema.methods.getIndicatorData = (filters, callback) ->
   if arguments.length == 1
@@ -199,7 +217,9 @@ indicatorSchema.methods.calculateIndicatorDataBounds = (callback) ->
       callback(errorMsg)
 
     for field in @indicatorDefinition.fields
-      bounds[field.name] = Indicator.calculateBoundsForType(field.type, data, field.name)
+      calculatedBounds = Indicator.calculateBoundsForType(field.type, data, field.name)
+      if calculatedBounds?
+        bounds[field.name] = calculatedBounds
 
     callback(null, bounds)
   )
@@ -233,7 +253,8 @@ indicatorSchema.methods.generateMetadataCSV = ->
     attributes.push @theme?.title
     attributes.push @indicatorDefinition?.period
 
-    @getNewestHeadline()
+    headlineService = new HeadlineService(@)
+    headlineService.getNewestHeadline()
   ).then((newestHeadline)=>
     xAxis = @indicatorDefinition?.xAxis
 

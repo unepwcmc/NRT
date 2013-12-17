@@ -1,5 +1,6 @@
 mongoose = require('mongoose')
 fs = require('fs')
+async = require('async')
 Q = require 'q'
 
 indicatorDataSchema = mongoose.Schema(
@@ -46,6 +47,34 @@ indicatorDataSchema.statics.seedData = (indicators) ->
       )
     else
       deferred.resolve()
+  )
+
+  return deferred.promise
+
+convertIndicatorDataToJSONBackup = (indicatorData, cb) ->
+  Indicator = require('./indicator').model
+  indicatorData = indicatorData.toObject()
+  delete indicatorData._id
+  Q.nsend(
+    Indicator, 'findOne', _id: indicatorData.indicator
+  ).then( (indicator)->
+    indicatorData.indicator = indicator.short_name
+    cb(null, indicatorData)
+  ).fail(cb)
+
+indicatorDataSchema.statics.dataToSeedJSON = (indicators) ->
+  deferred = Q.defer()
+
+  Q.nsend(
+    IndicatorData, 'find', {}
+  ).then((indicatorDatas)->
+    Q.nfcall(
+      async.map, indicatorDatas, convertIndicatorDataToJSONBackup
+    )
+  ).then((indicatorDatas)->
+    deferred.resolve(JSON.stringify(indicatorDatas))
+  ).fail((err)->
+    deferred.reject(err)
   )
 
   return deferred.promise

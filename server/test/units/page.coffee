@@ -11,6 +11,7 @@ Visualisation = require('../../models/visualisation.coffee').model
 Indicator = require('../../models/indicator.coffee').model
 Section = require('../../models/section.coffee').model
 Page = require('../../models/page').model
+HeadlineService = require('../../lib/services/headline')
 
 suite('Page')
 test('.create', (done) ->
@@ -159,10 +160,7 @@ test('.getParent returns the page parent', (done) ->
   ).then((parent) ->
     assert.strictEqual parent.id, theIndicator.id
     done()
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test('.getOwnable returns the page parent', (done) ->
@@ -179,10 +177,7 @@ test('.getOwnable returns the page parent', (done) ->
   ).then((owner) ->
     assert.strictEqual owner.id, theIndicator.id
     done()
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test('.canBeEditedBy given a user that is logged in it resolves', (done) ->
@@ -203,19 +198,12 @@ test('.canBeEditedBy given a user that is logged in it resolves', (done) ->
     )
 
   ).then((page) ->
-
     thePage = page
-    page.canBeEditedBy(theUser).then(->
-      done()
-    ).fail((err) ->
-      console.error err
-      throw new Error("Expected canBeEditedBy to resolve")
-    )
 
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
+    page.canBeEditedBy(theUser)
+  ).then(->
+    done()
+  ).fail(done)
 )
 
 test('.canBeEditedBy when a user is not logged in fails with an appropriate error', (done) ->
@@ -240,16 +228,13 @@ test('.canBeEditedBy when a user is not logged in fails with an appropriate erro
 
     thePage = page
     page.canBeEditedBy().then(->
-      throw new Error("Expected canBeEditedBy to fail")
+      done(new Error("Expected canBeEditedBy to fail"))
     ).fail( (err) ->
       assert.strictEqual err.message, "Must be authenticated as a user to edit pages"
       done()
     )
 
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test('.createDraftClone clones a public page,
@@ -275,10 +260,7 @@ test('.createDraftClone clones a public page,
     assert.isTrue clonedPage.is_draft
 
     done()
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test('.createDraftClone clones a public page,
@@ -288,6 +270,7 @@ test('.createDraftClone clones a public page,
   Q.nfcall(
     helpers.createIndicator
   ).then( (indicator) ->
+
     helpers.createPage(
       title: "Lovely Page"
       parent_id: indicator.id
@@ -311,15 +294,27 @@ test('.createDraftClone clones a public page,
       "Expected clonedSection.title (#{clonedSection.title}) to equal
         originalSection.title (#{originalSection.title})"
 
-    assert.notStrictEqual clonedSection.id, originalSection.id,
+    assert.notEqual clonedSection.id.toString(), originalSection.id.toString(),
       "Expected clonedSection (id: #{clonedSection.id}) to be a new record, but had same id
         as originalSection (#{originalSection.id})"
 
-    done()
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+    Q.nsend(
+      Page, 'findFatModel', clonedPage.id,
+    )
+  ).then( (reloadedPage) ->
+    reloadedSection = reloadedPage.sections[0]
+
+    try
+      assert.notEqual reloadedSection._id.toString(), originalSection._id.toString(),
+        "Expected reloadedSection (id: #{reloadedSection._id}) to have a different
+        id, but had same id as originalSection (#{originalSection.id})"
+
+      done()
+    catch err
+      console.dir err
+      done(new Error(err.message))
+
+  ).fail(done)
 )
 
 test('.createDraftClone clones a public page,
@@ -372,10 +367,7 @@ test('.createDraftClone clones a public page,
         originalNarrative.id (#{originalNarrative.id})"
 
     done()
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail( done)
 )
 
 test('.createDraftClone clones a public page,
@@ -428,10 +420,7 @@ test('.createDraftClone clones a public page,
         originalVisualisation.id (#{originalVisualisation.id})"
 
     done()
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail( done)
 )
 
 test(".giveSectionsNewIds on a page with one section
@@ -474,17 +463,15 @@ test(".giveSectionsNewIds on a page with one section
 
     done()
 
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test(".setHeadlineToMostRecentFromParent when the parent is an indicator
   sets the headline to the indicator's most recent headline", (done) ->
   indicator = new Indicator()
+
   headlineTitle = 'Good'
-  sinon.stub(indicator, 'getNewestHeadline', ->
+  newestHeadlineStub = sinon.stub(HeadlineService::, 'getNewestHeadline', ->
     deferred = Q.defer()
     deferred.resolve {text: headlineTitle}
     return deferred.promise
@@ -499,10 +486,11 @@ test(".setHeadlineToMostRecentFromParent when the parent is an indicator
 
   page.setHeadlineToMostRecentFromParent().then(->
     assert.strictEqual page.headline.text, headlineTitle
+    newestHeadlineStub.restore()
     done()
-  ).fail((err) ->
-    console.error err
-    throw err
+  ).fail(->
+    newestHeadlineStub.restore()
+    done()
   )
 )
 
@@ -513,10 +501,7 @@ test(".setHeadlineToMostRecentFromParent when the parent is not an indicator
   page.setHeadlineToMostRecentFromParent().then(->
     assert.isUndefined page.headline, "Expected the page headline not to be modified"
     done()
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test("When no headline is set,
@@ -535,10 +520,7 @@ test("When no headline is set,
   ).then(->
     assert.strictEqual page.headline, newHeadline
     done()
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test('.setHeadlineToMostRecentFromParent when parent indicator has no
@@ -571,8 +553,5 @@ test('.setHeadlineToMostRecentFromParent when parent indicator has no
     assert.isNull(headline.periodEnd)
 
     done()
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail( done)
 )

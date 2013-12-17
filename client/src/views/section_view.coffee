@@ -9,13 +9,12 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
   events:
     "click .add-narrative": "addNarrative"
     "click .add-visualisation": "chooseIndicatorForVisualisation"
-    "click .bar-chart-view": "editVisualisation"
-    "click .visualisation-table-view": "editVisualisation"
-    "click .map-view": "editVisualisation"
+    "click .section-visualisation": "editVisualisation"
     "click .delete": "confirmDestroy"
 
   initialize: (options) ->
     @section = options.section
+    @indicator = options.indicator
 
     @addDefaultTitleIfNotSet()
 
@@ -49,6 +48,7 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
 
   chooseIndicatorForVisualisation: =>
     @indicatorSelectorView = new Backbone.Views.IndicatorSelectorView(
+      currentIndicator: @indicator
       section: @section
     )
 
@@ -68,13 +68,14 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     @editVisualisation()
 
   editVisualisation: =>
-    @editVisualisationView = new Backbone.Views.ReportEditVisualisationView(
-      visualisation: @section.get('visualisation')
-    )
+    if @section.isEditable()
+      @editVisualisationView = new Backbone.Views.ReportEditVisualisationView(
+        visualisation: @section.get('visualisation')
+      )
 
-    @listenToOnce(@editVisualisationView, 'close', @render)
+      @listenToOnce(@editVisualisationView, 'close', @render)
 
-    $('body').append(@editVisualisationView.el)
+      $('body').append(@editVisualisationView.el)
 
   confirmDestroy: =>
     if confirm("Are you sure you want to delete this section?")
