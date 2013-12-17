@@ -1,6 +1,6 @@
 {
   "db": {
-    "name": "such_nrt"
+    "name": "such_nrt_tests"
   },
   "features": {
     "ldap": true,
