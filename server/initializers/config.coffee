@@ -11,10 +11,7 @@ exports.get = (key) ->
     throw new Error("No application config found, have you called AppConfig.initialize() first?")
 
 getEnv = ->
-  unless process.env.NODE_ENV?
-    return 'development'
-
-  return process.env.NODE_ENV
+  process.env.NODE_ENV || 'development'
 
 exports.initialize = ->
   env = getEnv()
