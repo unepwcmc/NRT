@@ -29,3 +29,10 @@ hbs.registerHelper('themeIconClass', (title) ->
 hbs.registerHelper('consoleLog', (thing) ->
   console.log thing
 )
+
+hbs.registerHelper('ifFeatureEnabled', (featureName, options) ->
+  features = require('./config').get('features')
+
+  if features[featureName]
+    options.fn(this)
+)
