@@ -14,8 +14,8 @@ exports.createApp = ->
   app = express()
 
   require('./initializers/logging')(app)
-  require('./initializers/mongo')(app.get('env'))
   AppConfig.initialize(app)
+  require('./initializers/mongo')()
 
   bindRoutesForApp = require('./route_bindings.coffee')
 
