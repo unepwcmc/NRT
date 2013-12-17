@@ -1,4 +1,7 @@
 {
+  "db": {
+    "name": "such_nrt"
+  },
   "features": {
     "ldap": true,
     "dpsir_filtering": true
