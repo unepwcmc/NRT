@@ -1,3 +1,4 @@
+require('../../initializers/config').initialize()
 require('../../initializers/mongo')()
 
 User = require('../../models/user').model
