@@ -10,8 +10,16 @@ exports.get = (key) ->
   else
     throw new Error("No application config found, have you called AppConfig.initialize() first?")
 
-exports.initialize = (app) ->
-  configFile = path.join(__dirname, '../', 'config', "#{app.get('env')}.json")
+getEnv = ->
+  unless process.env.NODE_ENV?
+    return 'development'
+
+  return process.env.NODE_ENV
+
+exports.initialize = ->
+  env = getEnv()
+
+  configFile = path.join(__dirname, '../', 'config', "#{env}.json")
 
   unless fs.existsSync(configFile)
     throw new Error(
@@ -26,4 +34,4 @@ exports.initialize = (app) ->
 
     next()
 
-  app.use(middleware)
+  return middleware
