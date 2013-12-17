@@ -1,15 +1,7 @@
 mongoose = require('mongoose')
 AppConfig = require('./config')
 
-getEnv = ->
-  if process.env.NODE_ENV
-    return process.env.NODE_ENV
-  else
-    return 'development'
-
-module.exports = (env) ->
-  env ||= getEnv()
-
+module.exports = ->
   dbConfig = AppConfig.get('db')
 
   unless dbConfig?
@@ -18,7 +10,7 @@ module.exports = (env) ->
   unless dbConfig.name?
     throw new Error("Couldn't connect to database, db config doesn't specify a name. See the app config README for setup instructions.")
 
-  dbName = "#{dbConfig.name}_#{env}"
+  dbName = "#{dbConfig.name}"
 
   console.log "Connecting to DB mongodb://localhost/#{dbName}"
   mongoose.connect("mongodb://localhost/#{dbName}")

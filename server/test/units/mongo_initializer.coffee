@@ -23,8 +23,8 @@ test('connects to the mongo DB named in the config', ->
       "Expected the initalizer to query the app config for db config"
 
     assert.isTrue(
-      mongooseConnectStub.calledWith('mongodb://localhost/nrt-demo_dev'),
-      "Expected the initializer to connect to the database 'nrt-demo_dev'"
+      mongooseConnectStub.calledWith('mongodb://localhost/nrt-demo'),
+      "Expected the initializer to connect to the database 'nrt-demo'"
     )
 
   finally
