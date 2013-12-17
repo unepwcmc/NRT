@@ -23,7 +23,8 @@ The config is accessible thusly:
 ```json
 {
   "features": { # Toggle features
-    "dpsir_filtering": true # Enable visibility and filtering of DPSIR attributes
+    "dpsir_filtering": true, # Enable visibility and filtering of DPSIR attributes
+    "ldap": true # Enable LDAP authentication
   }
 }
 ```
