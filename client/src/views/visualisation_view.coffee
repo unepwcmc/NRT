@@ -7,6 +7,7 @@ class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
   events:
     "click .download-indicator": "downloadAsCsv"
     "click .view-indicator": "downloadAsJson"
+    "click .delete-visualisation": "delete"
 
   initialize: (options) ->
     @visualisation = options.visualisation
@@ -28,6 +29,10 @@ class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
     @attachSubViews()
 
     return @
+
+  delete: (event) =>
+    event.stopPropagation()
+    @visualisation.destroy()
 
   onClose: ->
     @closeSubViews()
