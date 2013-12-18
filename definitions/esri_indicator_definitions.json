@@ -6,6 +6,11 @@
       {"minValue": 0, "message": "Moderate"}
     ]
   },
+  "NRT_AD_AirQuality:1": {
+    "valueField": "value",
+    "reduceField": "station",
+    "ranges":[]
+  },
   "NRT_AD_AirQuality:2": {
     "valueField": "value",
     "reduceField": "station",
@@ -42,6 +47,21 @@
       {"minValue": 0, "message": "Excellent"}
     ]
   },
+  "NRT_AD_MarineWQ:0": {
+    "valueField": "value",
+    "reduceField": "station",
+    "ranges":[]
+  },
+  "NRT_AD_MarineWQ:1": {
+    "valueField": "value",
+    "reduceField": "station",
+    "ranges":[]
+  },
+  "NRT_AD_MarineWQ:2": {
+    "valueField": "value",
+    "reduceField": "station",
+    "ranges":[]
+  },
   "NRT_AD_MarineWQ:3": {
     "valueField": "value",
     "reduceField": "station",
@@ -59,5 +79,10 @@
       {"minValue": 150, "message": "Good"},
       {"minValue": 0, "message": "Excellent"}
     ]
+  },
+  "NRT_AD_MarineWQ:5": {
+    "valueField": "value",
+    "reduceField": "station",
+    "ranges":[]
   }
 }
