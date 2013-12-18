@@ -1,7 +1,7 @@
 Indicatorator
 =================
 
-Turns environmental parameter data into indicators, by adding text! 
+Turns environmental parameter data into indicators, by adding text!
 
 ## Running it
 
