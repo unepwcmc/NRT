@@ -3,6 +3,7 @@ window.Backbone.Views ||= {}
 
 class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
   template: Handlebars.templates['visualisation.hbs']
+  className: 'visualisation-view'
 
   events:
     "click .download-indicator": "downloadAsCsv"
