@@ -36,22 +36,25 @@ test('when initialised it initialises nrtVis.barChart
   indicator = Factory.indicator(
     indicatorDefinition:
       xAxis: 'hat'
-      xAxis: 'boat'
+      yAxis: 'boat'
   )
   visualisation = Factory.visualisation(
     indicator: indicator
   )
 
+  barChartRenderStub = sinon.stub(Backbone.Views.BarChartView::, 'render', ->)
+
   barChartStub = sinon.stub(nrtViz, 'barChart', (options) ->
     try
       assert.strictEqual options.xKey, indicator.get('indicatorDefinition').xAxis
       assert.strictEqual options.yKey, indicator.get('indicatorDefinition').yAxis
+
+      done()
     catch e
       done(e)
     finally
       barChartStub.restore()
-
-    done()
+      barChartRenderStub.restore()
   )
 
   view = new Backbone.Views.BarChartView(visualisation: visualisation)

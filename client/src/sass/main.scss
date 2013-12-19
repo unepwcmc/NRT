@@ -549,13 +549,12 @@ h1, h2, h3, h4, h5 {
   }
 }
 
-section{
+section.section-view {
   padding: 15px 0;
   position: relative;
   margin-top: 20px;
   &:first-child {
-    margin-top: 0;
-    padding-top: 0;
+    margin-top: -15px;
   }
 
   small.updated-at{
@@ -1240,7 +1239,7 @@ footer{
   overflow: hidden;
 
   button.delete {
-    margin-top: 10px;
+    margin-top: 25px;
     padding-left: 0;
     padding-right: 0;
     border: none;
@@ -1260,7 +1259,6 @@ footer{
     }
   }
 }
-
 
 .section-visualisation {
   .legend {
