@@ -19,6 +19,11 @@ class Backbone.Views.SectionView extends Backbone.Diorama.NestingView
     @addDefaultTitleIfNotSet()
 
     @section.bind('change', @render)
+    @section.bind('change:visualisation', =>
+      # Backbone relational doesn't trigger a 'change' if an association is destroyed,
+      # but it does fire 'change:visualisation' :-\
+      @render() unless @section.get('visualisation')?
+    )
     @render()
 
   render: =>

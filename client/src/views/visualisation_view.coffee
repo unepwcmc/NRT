@@ -32,7 +32,11 @@ class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
 
   delete: (event) =>
     event.stopPropagation()
-    @visualisation.destroy()
+    @visualisation.destroy(
+      wait: true
+    ).fail(->
+      alert('Unable to delete section, are you still connected to the internet?')
+    )
 
   onClose: ->
     @closeSubViews()

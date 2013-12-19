@@ -40,13 +40,14 @@ on the parent section', (done)->
   visualisation = Factory.visualisation(
     type: "Table"
   )
-  section.set('visualisations', visualisation)
+  section.set('visualisation', visualisation)
+  visualisationDestroySpy = sinon.spy(visualisation, 'destroy')
 
-  visualisationDestroyStub = sinon.stub(visualisation, 'destroy', ->
-    deferred = $.Deferred()
-    deferred.resolve()
-    return deferred
+  server = sinon.fakeServer.create()
+  server.respondWith("DELETE", new RegExp("/api/visualisations/.*"),
+    [204, { "Content-Type": "application/json" }, JSON.stringify({message:'Deleted'})]
   )
+
   event =
     stopPropagation: sinon.spy()
 
@@ -54,8 +55,9 @@ on the parent section', (done)->
 
   try
     view.delete(event)
+    server.respond()
 
-    assert.strictEqual visualisationDestroyStub.callCount, 1,
+    assert.strictEqual visualisationDestroySpy.callCount, 1,
       "Expected visualisation.destroy() to be called once"
 
     assert.strictEqual event.stopPropagation.callCount, 1,
@@ -66,9 +68,10 @@ on the parent section', (done)->
 
     view.close()
     done()
-
   catch err
     done(err)
+  finally
+    server.restore()
 )
 
 test('Clicking .delete-visualisation calls the delete function', ->
