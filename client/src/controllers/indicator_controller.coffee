@@ -7,8 +7,8 @@ class Backbone.Controllers.IndicatorController extends Backbone.Diorama.Controll
     indicator = new Backbone.Models.Indicator indicatorAttributes
     indicatorView = new Backbone.Views.IndicatorView(indicator: indicator)
 
+    indicatorView.setElement($('.main-content')[0])
     indicatorView.render()
-    $('.main-content').prepend(indicatorView.el)
 
     permissionsView = new Backbone.Views.PermissionsView(
       ownable: indicator
