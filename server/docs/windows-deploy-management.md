@@ -7,7 +7,7 @@ The components of the NRT run as 3 services.
 ### NRT_Web_application
 This is the Node.JS web application. By default, it is configured to run on
 port 80. The application itself is located at <SERVER LOCATION HERE>. This
-runs the `npm run win-production` in the web application `server/` directory.
+runs `node bin/server.js` in the web application `server/` directory.
 It logs to `server/log/production.log` and `server/log/service.log`. This must
 be running at all times.
 
