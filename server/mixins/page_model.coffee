@@ -198,7 +198,11 @@ module.exports = {
       )().then((page)=>
         section = findSectionWithTitle(page, 'Description')
 
-        if !section?
+        if !section? or !section.getNarrative?
+          if section?
+            console.log ":-/ :-/ Returned a section which isn't a model (no getNarrative) :-/ :-/"
+            console.log "section: #{section._id}"
+            console.log "parent: #{@_id}"
           @description = ''
           deferred.resolve(@description)
         else

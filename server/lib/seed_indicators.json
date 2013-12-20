@@ -9,6 +9,66 @@
   "indicatorDefinition": {
   }
 }, {
+  "short_name": "CO Concentration",
+  "title": "Average annual CO concentration in µg per m3",
+  "theme": "Air Quality",
+  "sections": [
+    {"title": "Description", "content": "Average annual CO concentration in µg per m3"}
+  ],
+  "type": "esri",
+  "dpsir": {
+    "driver": true,
+    "pressure": true,
+    "state": false,
+    "impact": false,
+    "response": false
+  },
+  "indicatorDefinition": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 1,
+      "unit": "stations",
+      "short_unit": "stations",
+      "period": "quarterly",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/m3",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "text"
+          },
+          "name": "value",
+          "type": "text"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
+        }
+      ]
+  }
+}, {
   "short_name": "NO2 Concentration",
   "title": "Average annual NO2 concentration in µg per m3",
   "theme": "Air Quality",
@@ -429,6 +489,186 @@
   "indicatorDefinition": {
   }
 }, {
+  "short_name": "Ammonia",
+  "title": "Ammonia",
+  "theme": "Water",
+  "sections": [
+    {"title": "Description", "content": ""}
+  ],
+  "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": false,
+    "state": false,
+    "impact": false,
+    "response": true
+  },
+  "indicatorDefinition": {
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": 0,
+      "unit": "stations",
+      "short_unit": "stations",
+      "period": "quarterly",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/L",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
+        }
+      ]
+  }
+}, {
+  "short_name": "Coastal Chlorophyll",
+  "title": "Coastal Chlorophyll",
+  "theme": "Water",
+  "sections": [
+    {"title": "Description", "content": ""}
+  ],
+  "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": false,
+    "state": false,
+    "impact": false,
+    "response": true
+  },
+  "indicatorDefinition": {
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": 1,
+      "unit": "stations",
+      "short_unit": "stations",
+      "period": "quarterly",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/L",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
+        }
+      ]
+  }
+}, {
+  "short_name": "Dissolved Oxygen",
+  "title": "Dissolved Oxygen",
+  "theme": "Water",
+  "sections": [
+    {"title": "Description", "content": ""}
+  ],
+  "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": false,
+    "state": false,
+    "impact": false,
+    "response": true
+  },
+  "indicatorDefinition": {
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": 2,
+      "unit": "stations",
+      "short_unit": "stations",
+      "period": "quarterly",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/L",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
+        }
+      ]
+  }
+}, {
   "short_name": "Nitrate-N Concentrations",
   "title": "Nitrate –N concentration in coastal waters (µg per L)",
   "theme": "Water",
@@ -446,6 +686,66 @@
   "indicatorDefinition": {
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": 4,
+      "unit": "stations",
+      "short_unit": "stations",
+      "period": "quarterly",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "subIndicatorField": "station",
+      "subIndicatorUnit": "µg/L",
+      "fields": [
+        {
+          "source": {
+            "name": "periodStart",
+            "type": "epoch"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "source": {
+            "name": "value",
+            "type": "integer"
+          },
+          "name": "value",
+          "type": "integer"
+        },
+        {
+          "source": {
+            "name": "text",
+            "type": "text"
+          },
+          "name": "text",
+          "type": "text"
+        }, {
+          "source": {
+            "name": "station",
+            "type": "object"
+          },
+          "name": "station",
+          "type": "object"
+        }
+      ]
+  }
+}, {
+  "short_name": "Phosphate P",
+  "title": "Phosphate P",
+  "theme": "Water",
+  "sections": [
+    {"title": "Description", "content": ""}
+  ],
+  "type": "esri",
+  "dpsir": {
+    "driver": false,
+    "pressure": false,
+    "state": false,
+    "impact": false,
+    "response": true
+  },
+  "indicatorDefinition": {
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": 5,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",

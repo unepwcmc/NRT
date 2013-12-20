@@ -107,7 +107,6 @@
 }
 
 .map-visualisation {
-  margin-top: 8px;
   height: 400px;
 
   /* fix for leaflet controls poking through overlays */
@@ -116,3 +115,23 @@
   }
 }
 
+.visualisation-view button.delete.delete-visualisation {
+  margin-right: 10px;
+  margin-top: 85px;
+  display: none;
+  background-color: rgba(50,50,50,0.5);
+  padding: 5px 10px;
+  z-index: 2;
+  @include transition(background-color 0.5s);
+  @include transition(color 0.5s);
+}
+.visualisation-view:hover button.delete.delete-visualisation {
+  display: inline;
+
+  &:hover {
+    @include transition(background-color 0.5s);
+    @include transition(color 0.5s);
+    background-color: $red;
+    color: white;
+  }
+}

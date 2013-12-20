@@ -6,7 +6,7 @@ require('express-resource')
 passport = require('passport')
 mongoose = require('mongoose')
 MongoStore = require('connect-mongo')(express)
-AppConfig = require('./initializers/config')
+appConfig = require('./initializers/config')
 i18n = require('i18n')
 flash = require('connect-flash')
 
@@ -14,7 +14,9 @@ exports.createApp = ->
   app = express()
 
   require('./initializers/logging')(app)
-  AppConfig.initialize(app)
+
+  app.use appConfig.initialize()
+
   require('./initializers/mongo')()
 
   bindRoutesForApp = require('./route_bindings.coffee')
@@ -42,7 +44,7 @@ exports.createApp = ->
       maxAge: 300000
     )
   )
-  app.use(flash())
+  app.use flash()
 
   require('./initializers/i18n')(app)
 

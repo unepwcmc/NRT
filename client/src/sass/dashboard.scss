@@ -475,11 +475,12 @@ div.row.row-2 {
       background-color: #E37100;
     }
   }
+
   .last-update {
     width: 100%;
-    margin-top: 6px;
+    margin-top: 7px;
     font-size: 0.65em;
-    padding: 0 15px;
+    padding: 0 10px;
     font-weight: 600;
     color: $grey;
     position: relative;
@@ -488,7 +489,7 @@ div.row.row-2 {
 
     .dpsir {
       float: right;
-      margin-right: 25px;
+      margin-right: 15px;
     }
   }
 }
@@ -497,12 +498,13 @@ div.row.row-2 {
   display: inline-block;
   width: 10px;
   height: 10px;
-  margin-right: 8px;
+  margin-right: 3px;
   border-radius: 2px;
+
   &.up-to-date {
     background-color: #66bd63;
   }
-  &.out-of-date {
+  &.newer-data-available {
     background-color: #fdb24c;
   }
   &.overdue {

@@ -3,10 +3,12 @@ window.Backbone.Views ||= {}
 
 class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
   template: Handlebars.templates['visualisation.hbs']
+  className: 'visualisation-view'
 
   events:
     "click .download-indicator": "downloadAsCsv"
     "click .view-indicator": "downloadAsJson"
+    "click .delete-visualisation": "delete"
 
   initialize: (options) ->
     @visualisation = options.visualisation
@@ -28,6 +30,14 @@ class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
     @attachSubViews()
 
     return @
+
+  delete: (event) =>
+    event.stopPropagation()
+    @visualisation.destroy(
+      wait: true
+    ).fail(->
+      alert('Unable to delete section, are you still connected to the internet?')
+    )
 
   onClose: ->
     @closeSubViews()
