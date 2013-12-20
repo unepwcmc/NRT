@@ -11,7 +11,7 @@ page.open('http://localhost:3000/tests', (status) ->
 
     console.log("NUMBER OF FAILURES: #{failureCount}")
 
-    if failureCount > 1
+    if failureCount > 0
       phantom.exit(1)
 
     page.close()
