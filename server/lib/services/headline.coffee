@@ -32,7 +32,7 @@ NARRATIVE_RECENCY_STATES =
     upToDate: "Up to date"
     noData: "No Data"
   outOfDate:
-    outOfDate: "Out of date"
+    outOfDate: "Newer data available"
 
 
 class HeadlineService
