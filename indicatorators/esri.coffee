@@ -6,7 +6,8 @@ SubIndicatorator = require('../lib/subindicatorator')
 indicatorDefinitions = JSON.parse(fs.readFileSync('./definitions/esri_indicator_definitions.json', 'UTF8'))
 
 #ESRI_URL = "http://196.218.36.14/ka/rest/services" # K&A Egypt
-ESRI_URL = "http://nrtstest.ead.ae/ka/rest/services" # EAD Server
+#ESRI_URL = "http://nrtstest.ead.ae/ka/rest/services" # EAD Server
+ESRI_URL = "http://10.20.1.73/ka/rest/services/" # EAD Server (Possibly)
 ESRI_QUERY_SUFFIX =
   'where': 'objectid > 0'
   'objectIds': ''
@@ -86,6 +87,9 @@ exports.indicatorate = (indicatorCode, data) ->
   indicatorDefinition = indicatorDefinitions[indicatorCode]
 
   #rows = exports.addIndicatorTextToData(rows, indicatorCode, indicatorDefinition)
+  
+  unless indicatorDefinition?
+    throw new Error("Couldn't find indicator definition for #{indicatorCode}")
 
   if indicatorDefinition.reduceField?
     rows = SubIndicatorator.groupSubIndicatorsUnderAverageIndicators(
