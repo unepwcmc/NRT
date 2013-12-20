@@ -182,7 +182,7 @@ test('.getNewestHeadline returns the most recent headline', (done)->
 )
 
 test('.calculateRecencyOfHeadline when given an indicator with a headline date
-  older than the most recent data returns "Out of date"', (done) ->
+  older than the most recent data returns "Newer data available"', (done) ->
   indicator = new Indicator()
   headlineService = new HeadlineService(indicator)
 
@@ -200,7 +200,7 @@ test('.calculateRecencyOfHeadline when given an indicator with a headline date
   )
 
   headlineService.calculateRecencyOfHeadline().then( (recencyText) ->
-    assert.strictEqual "Out of date", recencyText
+    assert.strictEqual "Newer data available", recencyText
     done()
   ).fail(done)
 )
@@ -248,7 +248,7 @@ test('.calculateRecencyOfHeadline when given an indicator with no data
 )
 
 test('.calculateRecencyOfHeadline when given a headline with
-  no periodEnd returns "Out of date"', (done) ->
+  no periodEnd returns "Newer data available"', (done) ->
   indicator = new Indicator()
 
   headlineService = new HeadlineService(indicator)
@@ -266,7 +266,7 @@ test('.calculateRecencyOfHeadline when given a headline with
   )
 
   headlineService.calculateRecencyOfHeadline().then( (recencyText) ->
-    assert.strictEqual "Out of date", recencyText
+    assert.strictEqual "Newer data available", recencyText
     done()
   ).fail(done)
 )
@@ -384,5 +384,5 @@ date statuses returns true", ->
 
 test("#narrativeRecencyTextIsUpToDate given text which is not in the list of up to
 date statuses returns false", ->
-  assert.isFalse HeadlineService.narrativeRecencyTextIsUpToDate('Out of date')
+  assert.isFalse HeadlineService.narrativeRecencyTextIsUpToDate('Newer data available')
 )
