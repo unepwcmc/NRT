@@ -8,6 +8,28 @@ createAndShowVisualisationViewForVisualisation = (visualisation) ->
 
 suite('Visualisation View')
 
+test("Shows the title of the indicator", ->
+  indicator = Factory.indicator(
+    title: "Such indicator"
+  )
+
+  view = new Backbone.Views.VisualisationView(
+    visualisation: Factory.visualisation(
+      type: "BarChart"
+      indicator: indicator
+    )
+  )
+  view.render()
+
+  assert.match(
+    view.$el.find('h4').text(),
+    new RegExp(".*#{indicator.get('title')}.*"),
+    "Expected to see the indicator title"
+  )
+
+  view.close()
+)
+
 test("When given a visualisation with type BarChart,
   it renders a BarChartView subView", ->
   view = createAndShowVisualisationViewForVisualisation(
