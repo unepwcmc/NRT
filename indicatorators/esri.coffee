@@ -91,6 +91,8 @@ exports.indicatorate = (indicatorCode, data) ->
   unless indicatorDefinition?
     throw new Error("Couldn't find indicator definition for #{indicatorCode}")
 
+  rows = _.sortBy(rows, 'periodStart')
+
   if indicatorDefinition.reduceField?
     rows = SubIndicatorator.groupSubIndicatorsUnderAverageIndicators(
       rows,
