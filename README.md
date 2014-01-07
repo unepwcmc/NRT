@@ -278,3 +278,7 @@ For example, run your app as so:
 ## Production
 
 WCMC team should already have access to [this document](https://docs.google.com/a/peoplesized.com/document/d/1dYMO3PJhRlTDQ2BEUUOcLwqX0IfJ5UP_UYyfQllnXeQ/)
+
+# License
+
+NRT is released under the [BSD 3-Clause](http://opensource.org/licenses/BSD-3-Clause) License
