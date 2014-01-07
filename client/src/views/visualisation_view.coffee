@@ -24,6 +24,7 @@ class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
   render: =>
     @$el.html(@template(
       thisView: @
+      indicator: @visualisation.get('indicator').toJSON()
       visualisation: @visualisation
       visualisationViewName: @visualisation.get('type') + "View"
     ))
