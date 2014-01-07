@@ -85,7 +85,7 @@ test('.subIndicatorDataToLeafletMarkers sets leaflet marker icon className based
     "Expected the marker to have the right classname set"
 )
 
-test('.headlineTexts returns a unique list of all the headline texts', ->
+test('.uniqueSubIndicatorHeadlineTexts returns a unique list of all the headline texts', ->
   subIndicatorData = [{
     text: 'awesome'
   },{
@@ -96,7 +96,7 @@ test('.headlineTexts returns a unique list of all the headline texts', ->
   indicatorDefinition =
     fields: []
 
-  texts = Backbone.Views.SubIndicatorMapView::subIndicatorHeadlineTexts(
+  texts = Backbone.Views.SubIndicatorMapView::uniqueSubIndicatorHeadlineTexts(
     subIndicatorData
   )
 

@@ -29,7 +29,7 @@ class Backbone.Views.SubIndicatorMapView extends Backbone.Views.MapView
       div = L.DomUtil.create('div', 'legend leaflet-bar')
 
       subIndicatorData = @getSubIndicatorData()
-      legendKeys = @subIndicatorHeadlineTexts(subIndicatorData)
+      legendKeys = @uniqueSubIndicatorHeadlineTexts(subIndicatorData)
       div.innerHTML += legendTemplate(keys: legendKeys)
 
       div
@@ -49,7 +49,7 @@ class Backbone.Views.SubIndicatorMapView extends Backbone.Views.MapView
     for marker in markers
       marker.addTo(@map)
 
-  subIndicatorHeadlineTexts: (subIndicators) ->
+  uniqueSubIndicatorHeadlineTexts: (subIndicators) ->
     headlineTexts = _.map(subIndicators, (subIndicator) ->
       presenter = new Nrt.Presenters.SubIndicatorDataPresenter({})
       headline = presenter.getHeadlineFromData(subIndicator)
