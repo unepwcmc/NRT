@@ -37,7 +37,7 @@
   "report/indicator/title": "Select an indicator",
   "report/visualisation/save": "Save Visualisation",
   "report/visualisation/download_data": "Download Data",
-  "report/visualisation/view_data": "View Data",
+  "report/visualisation/data_api": "Data API",
   "report/visualisation/filters/title": "Data filters",
   "report/visualisation/filters/reset": "Reset all filters",
   "report/modal/close": "Close",
