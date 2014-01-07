@@ -25,22 +25,39 @@ class Backbone.Views.SubIndicatorMapView extends Backbone.Views.MapView
     legendControl = L.control(position: 'bottomleft')
 
     legendTemplate = Handlebars.templates['sub_indicator_legend.hbs']
-    legendControl.onAdd = (map) ->
+    legendControl.onAdd = (map) =>
       div = L.DomUtil.create('div', 'legend leaflet-bar')
-      div.innerHTML += legendTemplate()
+
+      subIndicatorData = @getSubIndicatorData()
+      legendKeys = @subIndicatorHeadlineTexts(subIndicatorData)
+      div.innerHTML += legendTemplate(keys: legendKeys)
+
       div
 
     legendControl.addTo(@map)
 
-  renderDataToMap: ->
+  getSubIndicatorData: ->
     mostRecentData = @visualisation.getHighestXRow()
-    subIndicatorData = mostRecentData[@visualisation.getSubIndicatorField()]
+    mostRecentData[@visualisation.getSubIndicatorField()]
+
+  renderDataToMap: ->
+    subIndicatorData = @getSubIndicatorData()
     markers = @subIndicatorDataToLeafletMarkers(
       subIndicatorData,
       @visualisation.get('indicator').get('indicatorDefinition')
     )
     for marker in markers
       marker.addTo(@map)
+
+  subIndicatorHeadlineTexts: (subIndicators) ->
+    headlineTexts = _.map(subIndicators, (subIndicator) ->
+      presenter = new Nrt.Presenters.SubIndicatorDataPresenter({})
+      headline = presenter.getHeadlineFromData(subIndicator)
+
+      headline.text
+    )
+
+    _.uniq(headlineTexts)
 
   subIndicatorDataToLeafletMarkers: (subIndicators, indicatorDefinition)->
     _.map(subIndicators, (subIndicator) ->

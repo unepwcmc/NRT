@@ -1,4 +1,5 @@
 <ul>
-  <li><span class="leaflet-marker-icon good"></span> Good</li>
-  <li><span class="leaflet-marker-icon bad"></span> Bad</li>
+  {{#each keys}}
+    <li><span class="leaflet-marker-icon {{css-classify this}}"></span> {{this}}</li>
+  {{/each}}
 </ul>
