@@ -13,3 +13,9 @@ Handlebars.registerHelper "selectedIfEqual", (value1, value2) ->
 
 Handlebars.registerHelper "t", (key) ->
   return new Handlebars.SafeString(i18n.t(key))
+
+Handlebars.registerHelper 'css-classify', (text) ->
+  if text?
+    classifiedText = text.toLowerCase()
+    classifiedText = classifiedText.replace(/\ /g, '-')
+    return new Handlebars.SafeString(classifiedText)

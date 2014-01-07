@@ -20,69 +20,44 @@ Libs.LeafletHelpers =
     popupSize:   [0, 0]
     shadowSize:   [0, 0]
 
-class Backbone.Views.SubIndicatorMapView extends Backbone.View
-  className: 'section-visualisation map-visualisation'
+class Backbone.Views.SubIndicatorMapView extends Backbone.Views.MapView
+  renderLegend: ->
+    legendControl = L.control(position: 'bottomleft')
 
-  initialize: (options) ->
-    @visualisation = options.visualisation
-    @listenTo(@visualisation, 'change:data', @render)
-    @render()
+    legendTemplate = Handlebars.templates['sub_indicator_legend.hbs']
+    legendControl.onAdd = (map) =>
+      div = L.DomUtil.create('div', 'legend leaflet-bar')
 
-  render: =>
-    if @visualisation.get('data')?
-      setTimeout(=>
-        @renderMap()
-      , 500)
-    else
-      @visualisation.getIndicatorData()
+      subIndicatorData = @getSubIndicatorData()
+      legendKeys = @uniqueSubIndicatorHeadlineTexts(subIndicatorData)
+      div.innerHTML += legendTemplate(keys: legendKeys)
 
-    return @
+      div
 
-  renderMap: =>
-    @map = L.map(
-      @el,
-      scrollWheelZoom: false
-      attributionControl: false
-    )
+    legendControl.addTo(@map)
 
-    L.tileLayer(
-      'http://{s}.tiles.mapbox.com/v3/onlyjsmith.map-9zy5lnfp/{z}/{x}/{y}.png'
-    ).addTo(@map)
-
-    @fitToBounds()
-    @renderDataToMap()
-
-  saveMapBounds: =>
-    bounds = @map.getBounds()
-    minll = bounds.getSouthWest()
-    maxll = bounds.getNorthEast()
-    bbox = [
-      [minll.lat,minll.lng],
-      [maxll.lat, maxll.lng]
-    ]
-
-    @visualisation.set('map_bounds', bbox)
-
-  fitToBounds: =>
-    if @visualisation.get('map_bounds') and @visualisation.get('map_bounds').length > 1 ?
-      bounds = @visualisation.get('map_bounds')
-    else
-      bounds = [
-        [26.204734267107604, 57.44750976562499],
-        [22.19757745335104, 50.877685546875]
-      ]
-
-    @map.fitBounds(bounds)
+  getSubIndicatorData: ->
+    mostRecentData = @visualisation.getHighestXRow()
+    mostRecentData[@visualisation.getSubIndicatorField()]
 
   renderDataToMap: ->
-    mostRecentData = @visualisation.getHighestXRow()
-    subIndicatorData = mostRecentData[@visualisation.getSubIndicatorField()]
+    subIndicatorData = @getSubIndicatorData()
     markers = @subIndicatorDataToLeafletMarkers(
       subIndicatorData,
       @visualisation.get('indicator').get('indicatorDefinition')
     )
     for marker in markers
       marker.addTo(@map)
+
+  uniqueSubIndicatorHeadlineTexts: (subIndicators) ->
+    headlineTexts = _.map(subIndicators, (subIndicator) ->
+      presenter = new Nrt.Presenters.SubIndicatorDataPresenter({})
+      headline = presenter.getHeadlineFromData(subIndicator)
+
+      headline.text
+    )
+
+    _.uniq(headlineTexts)
 
   subIndicatorDataToLeafletMarkers: (subIndicators, indicatorDefinition)->
     _.map(subIndicators, (subIndicator) ->
@@ -95,7 +70,3 @@ class Backbone.Views.SubIndicatorMapView extends Backbone.View
       )
       marker.bindPopup(Libs.LeafletHelpers.generatePopupText(subIndicator, indicatorDefinition))
     )
-
-  onClose: ->
-    @map.off('moveend') if @map?
-    @stopListening()
