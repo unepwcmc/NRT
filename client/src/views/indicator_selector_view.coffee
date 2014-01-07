@@ -10,7 +10,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
   initialize: (options = {}) ->
     @currentIndicator  = options.currentIndicator
-    @indicators = new Backbone.Collections.IndicatorCollection()
+    @indicators = new Backbone.Collections.IndicatorCollection([], withData: true)
     @indicators.fetch(
       success: @render
     )
