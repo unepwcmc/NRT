@@ -4,7 +4,14 @@ window.Backbone.Collections ||= {}
 class Backbone.Collections.IndicatorCollection extends Backbone.Collection
   model: Backbone.Models.Indicator
 
-  url: "/api/indicators"
+  initialize: (models, options) ->
+    @withData = true if options? and options.withData?
+
+  url: ->
+    url = "/api/indicators"
+    if @withData? and @withData
+      url += "?withData=true"
+    url
 
   groupByType: ->
     grouped = {
