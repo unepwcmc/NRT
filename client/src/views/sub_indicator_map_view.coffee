@@ -21,6 +21,17 @@ Libs.LeafletHelpers =
     shadowSize:   [0, 0]
 
 class Backbone.Views.SubIndicatorMapView extends Backbone.Views.MapView
+  renderLegend: ->
+    legendControl = L.control(position: 'bottomleft')
+
+    legendTemplate = Handlebars.templates['sub_indicator_legend.hbs']
+    legendControl.onAdd = (map) ->
+      div = L.DomUtil.create('div', 'legend leaflet-bar')
+      div.innerHTML += legendTemplate()
+      div
+
+    legendControl.addTo(@map)
+
   renderDataToMap: ->
     mostRecentData = @visualisation.getHighestXRow()
     subIndicatorData = mostRecentData[@visualisation.getSubIndicatorField()]

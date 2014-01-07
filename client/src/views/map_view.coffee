@@ -32,6 +32,7 @@ class Backbone.Views.MapView extends Backbone.View
 
     @fitToBounds()
     @renderDataToMap()
+    @renderLegend()
 
   saveMapBounds: =>
     bounds = @map.getBounds()
@@ -61,6 +62,8 @@ class Backbone.Views.MapView extends Backbone.View
     L.esri.dynamicMapLayer("http://nrtstest.ead.ae/ka/rest/services/#{serviceName}/MapServer",
       opacity: 0.6
     ).addTo(@map)
+
+  renderLegend: ->
 
   onClose: ->
     @map.off('moveend') if @map?
