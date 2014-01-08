@@ -44,7 +44,9 @@ test('populateCollections populates themes and indicators from the server', (don
   server.respond()
 )
 
-test('Renders a list of indicators', ->
+test('.initialize populates the indicators collection,
+  sets the results collection to all indicators
+  and renders the results ', ->
   section = new Backbone.Models.Section(
     _id: Factory.findNextFreeId('Section')
   )
@@ -68,6 +70,9 @@ test('Renders a list of indicators', ->
 
   try
     Helpers.assertCalledOnce(populateCollectionStub)
+
+    assert.deepEqual view.indicators.models, view.results.models,
+      "Expected the results collection to be able to the indicators"
 
     assert.match(
       view.$el.text(),
@@ -197,4 +202,32 @@ test('When an indicator is selected, an `indicatorSelected` event is
   finally
     view.close()
     populateCollectionStub.restore()
+)
+
+test(".filterByTheme given a theme sets the results object to only
+ objects with the same theme id", ->
+  filterTheme = Factory.theme()
+
+  view =
+    indicators: new Backbone.Collections.IndicatorCollection([])
+    results: new Backbone.Collections.IndicatorCollection()
+
+  filterThemeIndicator  = Factory.indicator()
+
+  collectionFilterByThemeStub = sinon.stub(view.indicators, 'filterByTheme', ->
+    return [filterThemeIndicator]
+  )
+
+  Backbone.Views.IndicatorSelectorView::filterByTheme.call(
+    view, filterTheme
+  )
+
+  assert.lengthOf view.results.models, 1,
+    "Expected the collection to be filtered to only the correct indicator"
+
+  assert.deepEqual view.results.at(0), filterThemeIndicator,
+    "Expected the result indicator to be the correct one for the given theme"
+
+  Helpers.assertCalledOnce(collectionFilterByThemeStub)
+  assert.isTrue collectionFilterByThemeStub.calledWith(filterTheme)
 )

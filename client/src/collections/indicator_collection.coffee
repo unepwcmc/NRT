@@ -13,6 +13,11 @@ class Backbone.Collections.IndicatorCollection extends Backbone.Collection
       url += "?withData=true"
     url
 
+  filterByTheme: (theme) ->
+    @filter( (indicator) ->
+      indicator.get('theme') is theme.get(Backbone.Models.Theme::idAttribute)
+    )
+
   groupByType: ->
     grouped = {
       core: []

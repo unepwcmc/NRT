@@ -13,9 +13,13 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     @indicators = new Backbone.Collections.IndicatorCollection([], withData: true)
     @themes = new Backbone.Collections.ThemeCollection()
 
+    @results = new Backbone.Collections.IndicatorCollection()
+    @listenTo(@results, 'reset', @render)
+
     @populateCollections()
-      .then(@render)
-      .fail( (err) ->
+      .then( =>
+        @results.reset(@indicators.models)
+      ).fail( (err) ->
         console.error "Error populating collections"
         console.error err
       )
@@ -26,7 +30,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     @$el.html(@template(
       thisView: @
       currentIndicator: @currentIndicator
-      indicators: @indicators.models
+      indicators: @results.models
       themes: @themes.models
     ))
     @attachSubViews()
@@ -40,7 +44,8 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
       @themes.fetch()
     )
 
-  filterByTheme: =>
+  filterByTheme: (theme) =>
+    @results.reset(@indicators.filterByTheme(theme))
 
   listenToSubViewEvents: ->
     for key, subView of @subViews
