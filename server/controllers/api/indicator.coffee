@@ -5,11 +5,21 @@ Q = require('q')
 csv = require('csv')
 
 exports.index = (req, res) ->
-  Indicator.find( (err, indicators) ->
-    if err?
-      return res.send(500, "Could not retrieve indicators")
+  if req.query.withData == 'true'
+    findPromise = Indicator.findWhereIndicatorHasData()
+  else
+    findPromise = Q.nsend(
+      Indicator, 'find'
+    )
+
+  findPromise.then( (indicators) ->
 
     res.send(JSON.stringify(indicators))
+
+  ).fail((err)->
+    console.error err
+    console.error err.stack
+    return res.send(500, "Could not retrieve indicators")
   )
 
 exports.create = (req, res) ->

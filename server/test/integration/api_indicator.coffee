@@ -109,7 +109,7 @@ test("GET /indicators/:id/fat returns the indicator with its nested page ", (don
   )
 )
 
-test('GET index', (done) ->
+test('GET /api/indicators/ returns all indicators', (done) ->
   async.series([helpers.createIndicator, helpers.createIndicator], (err, indicators) ->
     request.get({
       url: helpers.appurl("api/indicators")
@@ -130,6 +130,37 @@ test('GET index', (done) ->
       assert.deepEqual jsonTitles, indicatorTitles
       done()
     )
+  )
+)
+
+test('GET /api/indicators?withData=true only returns indicators with indicator data associated', (done) ->
+  async.series([helpers.createIndicator, helpers.createIndicator], (err, indicators) ->
+    indicatorWithData = indicators[0]
+
+    Q.nfcall(
+      helpers.createIndicatorData, indicator: indicatorWithData._id
+    ).then( ->
+
+      request.get({
+        url: helpers.appurl("api/indicators")
+        qs: withData: true
+        json: true
+      }, (err, res, body) ->
+        assert.equal res.statusCode, 200
+
+        indicatorJson = body
+
+        try
+          assert.lengthOf indicatorJson, 1, "Only the indicator with data is expected"
+
+          assert.strictEqual indicatorJson[0]._id, indicatorWithData._id.toString(),
+            "Expected the indicator with data to be returned"
+          done()
+        catch err
+          done(err)
+      )
+
+    ).fail(done)
   )
 )
 
