@@ -250,3 +250,46 @@ test(".stopListingToSubViews stops listening to events on sub views", ->
   assert.strictEqual spy.callCount, 0,
     "Expected the spy not to be called, as the parent view should have stopped listening"
 )
+
+test("Clicking theme filters works twice", ->
+  section = new Backbone.Models.Section(
+    _id: Factory.findNextFreeId('Section')
+  )
+
+  themes = [
+    Factory.theme(title: 'theme 1')
+    Factory.theme(title: 'theme 2')
+  ]
+  indicators = [
+    {theme: themes[0].get('_id'), title: 'indicator 1'}
+    {theme: themes[1].get('_id'), title: 'indicator 2'}
+  ]
+
+  populateCollectionStub = sinon.stub(
+    Backbone.Views.IndicatorSelectorView::, 'populateCollections', ->
+      defer = $.Deferred()
+
+      @themes.set(themes)
+      @indicators.set(indicators)
+      defer.resolve()
+
+      defer.promise()
+  )
+
+  view = new Backbone.Views.IndicatorSelectorView(
+    section: section
+  )
+
+  try
+    view.subViews["theme-filter-#{themes[0].cid}"].$el.trigger('click')
+    assert.strictEqual view.results.at(0).get('title'), indicators[0].title,
+      "Expected the first indicator to be the results"
+
+    view.subViews["theme-filter-#{themes[1].cid}"].$el.trigger('click')
+    assert.strictEqual view.results.at(0).get('title'), indicators[1].title,
+      "Expected the second indicator to be the results"
+
+  finally
+    view.close()
+    populateCollectionStub.restore()
+)
