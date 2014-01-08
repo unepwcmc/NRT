@@ -11,9 +11,14 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
   initialize: (options = {}) ->
     @currentIndicator  = options.currentIndicator
     @indicators = new Backbone.Collections.IndicatorCollection([], withData: true)
-    @indicators.fetch(
-      success: @render
-    )
+    @themes = new Backbone.Collections.ThemeCollection()
+
+    @populateCollections()
+      .then(@render)
+      .fail( (err) ->
+        console.error "Error populating collections"
+        console.error err
+      )
 
   render: =>
     $('body').addClass('stop-scrolling')
@@ -21,17 +26,29 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     @$el.html(@template(
       thisView: @
       currentIndicator: @currentIndicator
-      indicators: @indicators.groupByType()
+      indicators: @indicators.models
+      themes: @themes.models
     ))
     @attachSubViews()
 
-    @bindToIndicatorSelection()
+    @listenToSubViewEvents()
 
     return @
 
-  bindToIndicatorSelection: ->
+  populateCollections: ->
+    @indicators.fetch().then(=>
+      @themes.fetch()
+    )
+
+  filterByTheme: =>
+
+  listenToSubViewEvents: ->
     for key, subView of @subViews
-      @listenTo(subView, 'indicatorSelected', @triggerIndicatorSelected)
+      if /theme-filter-.*/.test key
+        @listenTo(subView, 'selected', @filterByTheme)
+
+      if /indicator-/.test key
+        @listenTo(subView, 'indicatorSelected', @triggerIndicatorSelected)
 
   triggerIndicatorSelected: (indicator) =>
     @trigger('indicatorSelected', indicator)

@@ -24,6 +24,7 @@
   "src/views/choose_user_view.coffee",
   "src/views/theme_view.coffee",
   "src/views/indicator_view.coffee",
+  "src/views/theme_filter_item_view.coffee",
   "src/views/indicator_selector_item_view.coffee",
   "src/views/indicator_selector_view.coffee",
   "src/views/section_view.coffee",
