@@ -231,3 +231,22 @@ test(".filterByTheme given a theme sets the results object to only
   Helpers.assertCalledOnce(collectionFilterByThemeStub)
   assert.isTrue collectionFilterByThemeStub.calledWith(filterTheme)
 )
+
+test(".stopListingToSubViews stops listening to events on sub views", ->
+  subView = new Backbone.View()
+  view = new Backbone.Diorama.NestingView()
+
+  view.subViews =
+    view1: new Backbone.View()
+    view2: subView
+
+  spy = sinon.spy()
+  view.listenTo(subView, 'suchEvent', spy)
+
+  Backbone.Views.IndicatorSelectorView::stopListeningToSubViews.call(view)
+
+  subView.trigger('suchEvent')
+
+  assert.strictEqual spy.callCount, 0,
+    "Expected the spy not to be called, as the parent view should have stopped listening"
+)
