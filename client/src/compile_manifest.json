@@ -8,6 +8,7 @@
   "src/models/narrative.coffee",
   "src/collections/narrative_collection.coffee",
   "src/models/theme.coffee",
+  "src/collections/theme_collection.coffee",
   "src/models/indicator.coffee",
   "src/collections/indicator_collection.coffee",
   "src/models/visualisation.coffee",
