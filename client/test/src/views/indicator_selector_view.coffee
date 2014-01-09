@@ -293,3 +293,31 @@ test("Clicking theme filters works twice", ->
     view.close()
     populateCollectionStub.restore()
 )
+
+test(".filterByTitle given an input event sets the results object to only
+ indicators with a matching title", ->
+  view =
+    indicators: new Backbone.Collections.IndicatorCollection([])
+    results: new Backbone.Collections.IndicatorCollection()
+
+  searchInput = document.createElement('input')
+  searchInput.setAttribute('value', 'hats boats cars sheep')
+  event = target: searchInput
+
+  filterTitleIndicator = Factory.indicator()
+  collectionFilterByTitleStub = sinon.stub(view.indicators, 'filterByTitle', ->
+    return [filterTitleIndicator]
+  )
+
+  Backbone.Views.IndicatorSelectorView::filterByTitle.call(
+    view, event
+  )
+
+  assert.lengthOf view.results.models, 1,
+    "Expected the collection to be filtered to only the correct indicator"
+
+  assert.deepEqual view.results.at(0), filterTitleIndicator,
+    "Expected the result indicator to be the correct one for the given theme"
+
+  Helpers.assertCalledOnce(collectionFilterByTitleStub)
+)

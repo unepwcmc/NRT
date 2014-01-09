@@ -56,3 +56,37 @@ test(".filterByTheme given a theme returns an array with only
   assert.deepEqual results[0], selectedThemeIndicator,
     "Expected the result indicator to be the correct one for the given theme"
 )
+
+test(".filterByTitle returns matching indicators, regardless of case", ->
+  indicators = new Backbone.Collections.IndicatorCollection([
+    {title: 'hats'},
+    {title: 'boats'}
+  ])
+
+  results = indicators.filterByTitle('oAt')
+  assert.lengthOf results, 1
+  assert.strictEqual results[0].get('title'), 'boats'
+)
+
+test(".filterByTitle returns all indicators if a blank search term is provided", ->
+  indicators = new Backbone.Collections.IndicatorCollection([
+    {title: 'hats'},
+    {title: 'boats'}
+  ])
+
+  results = indicators.filterByTitle('')
+  assert.lengthOf results, 2
+  assert.strictEqual results[0].get('title'), 'hats'
+  assert.strictEqual results[1].get('title'), 'boats'
+)
+
+test(".filterByTitle ignores extraneous whitespace", ->
+  indicators = new Backbone.Collections.IndicatorCollection([
+    {title: 'hats'},
+    {title: 'boats'}
+  ])
+
+  results = indicators.filterByTitle('ha  ')
+  assert.lengthOf results, 1
+  assert.strictEqual results[0].get('title'), 'hats'
+)

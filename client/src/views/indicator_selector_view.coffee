@@ -7,6 +7,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
   events:
     "click .close": "close"
+    "keyup input": "filterByTitle"
 
   initialize: (options = {}) ->
     @currentIndicator  = options.currentIndicator
@@ -44,6 +45,10 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     @indicators.fetch().then(=>
       @themes.fetch()
     )
+
+  filterByTitle: (event) =>
+    searchTerm = $(event.target).val()
+    @results.reset(@indicators.filterByTitle(searchTerm))
 
   filterByTheme: (theme) =>
     @results.reset(@indicators.filterByTheme(theme))

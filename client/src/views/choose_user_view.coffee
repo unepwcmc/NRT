@@ -10,7 +10,7 @@ class Backbone.Views.ChooseUserView extends Backbone.Diorama.NestingView
     'click .close': 'hideView'
 
   className: 'dialog'
- 
+
   initialize: (options) ->
     @users = new Backbone.Collections.UserCollection()
     @results = new Backbone.Collections.UserCollection()
