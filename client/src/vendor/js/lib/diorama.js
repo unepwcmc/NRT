@@ -191,9 +191,9 @@
         _results = [];
         for (key in _ref) {
           subView = _ref[key];
-          placeholderEl = this.$el.find("[data-sub-view-key=\"" + key + "\"]");
+          if (subView.$el) subView.undelegateEvents();
           subView.$el.insertBefore(placeholderEl);
-          _results.push(placeholderEl.remove());
+          subView.delegateEvents();
         }
         return _results;
       }
