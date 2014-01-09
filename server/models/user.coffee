@@ -138,6 +138,7 @@ userSchema.methods.loginFromLDAP = (password, done) ->
 
   client.bind(@distinguishedName, password, (err) =>
     if err?
+      console.log "LOGIN_USER_ERROR logging in from LDAP for username: #{@distinguishedName}"
       if KNOWN_LDAP_ERRORS[err.name]?
         done(null, false, message: KNOWN_LDAP_ERRORS[err.name])
       else
@@ -202,6 +203,7 @@ userSchema.statics.createFromLDAPUsername = (username) ->
   ).spread( (user) ->
     deferred.resolve(user)
   ).fail( (err) ->
+    console.log "CREATE_USER_ERROR creating user from LDAP for username: #{username}"
     deferred.reject(err)
   )
 
