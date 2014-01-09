@@ -57,6 +57,18 @@ test(".filterByTheme given a theme returns an array with only
     "Expected the result indicator to be the correct one for the given theme"
 )
 
+test('.filterByTheme given an undefined theme returns all indicators', ->
+  indicators = new Backbone.Collections.IndicatorCollection([
+    {title: 'hats'},
+    {title: 'boats'}
+  ])
+
+  results = indicators.filterByTheme()
+
+  assert.lengthOf results, 2,
+    "Expected the collection to be filtered to only the correct indicator"
+)
+
 test(".filterByTitle returns matching indicators, regardless of case", ->
   indicators = new Backbone.Collections.IndicatorCollection([
     {title: 'hats'},
@@ -89,4 +101,16 @@ test(".filterByTitle ignores extraneous whitespace", ->
   results = indicators.filterByTitle('ha  ')
   assert.lengthOf results, 1
   assert.strictEqual results[0].get('title'), 'hats'
+)
+
+test(".filterByTitle returns all indicators if searchTerm is `undefined`", ->
+  indicators = new Backbone.Collections.IndicatorCollection([
+    {title: 'hats'},
+    {title: 'boats'}
+  ])
+
+  results = indicators.filterByTitle(undefined)
+  assert.lengthOf results, 2
+  assert.strictEqual results[0].get('title'), 'hats'
+  assert.strictEqual results[1].get('title'), 'boats'
 )

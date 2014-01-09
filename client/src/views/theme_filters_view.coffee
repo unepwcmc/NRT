@@ -13,7 +13,6 @@ class Backbone.Views.ThemeFiltersView extends Backbone.Diorama.NestingView
     @render()
 
   render: ->
-    console.log @themes.length
     @$el.html(@template(
       thisView: @
       themes: @themes.models

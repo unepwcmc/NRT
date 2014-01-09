@@ -50,10 +50,24 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
   filterByTitle: (event) =>
     searchTerm = $(event.target).val()
-    @results.reset(@indicators.filterByTitle(searchTerm))
+
+    @filter ||= {}
+    @filter.searchTerm = searchTerm
+
+    @filterIndicators()
 
   filterByTheme: (theme) =>
-    @results.reset(@indicators.filterByTheme(theme))
+    @filter ||= {}
+    @filter.theme = theme
+
+    @filterIndicators()
+
+  filterIndicators: ->
+    results = @indicators.filterByTheme(@filter.theme)
+    @results.set(results)
+
+    results = @results.filterByTitle(@filter.searchTerm)
+    @results.reset(results)
 
   triggerIndicatorSelected: (indicator) =>
     @trigger('indicatorSelected', indicator)

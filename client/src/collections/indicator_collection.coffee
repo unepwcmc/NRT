@@ -13,7 +13,7 @@ class Backbone.Collections.IndicatorCollection extends Backbone.Collection
       url += "?withData=true"
     url
 
-  filterByTitle: (title) ->
+  filterByTitle: (title='') ->
     title = title.trim()
 
     regexp = new RegExp(".*#{title}.*", 'i')
@@ -22,9 +22,12 @@ class Backbone.Collections.IndicatorCollection extends Backbone.Collection
     )
 
   filterByTheme: (theme) ->
-    @filter( (indicator) ->
-      indicator.get('theme') is theme.get(Backbone.Models.Theme::idAttribute)
-    )
+    if theme?
+      @filter( (indicator) ->
+        indicator.get('theme') is theme.get(Backbone.Models.Theme::idAttribute)
+      )
+    else
+      @models
 
   groupByType: ->
     grouped = {

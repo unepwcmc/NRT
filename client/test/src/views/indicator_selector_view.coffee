@@ -209,6 +209,7 @@ test(".filterByTheme given a theme sets the results object to only
   view =
     indicators: new Backbone.Collections.IndicatorCollection([])
     results: new Backbone.Collections.IndicatorCollection()
+    filterIndicators: Backbone.Views.IndicatorSelectorView::filterIndicators
 
   filterThemeIndicator  = Factory.indicator()
 
@@ -235,25 +236,72 @@ test(".filterByTitle given an input event sets the results object to only
   view =
     indicators: new Backbone.Collections.IndicatorCollection([])
     results: new Backbone.Collections.IndicatorCollection()
+    filterIndicators: Backbone.Views.IndicatorSelectorView::filterIndicators
 
-  searchInput = document.createElement('input')
-  searchInput.setAttribute('value', 'hats boats cars sheep')
-  event = target: searchInput
+  event = target: '<input value="hats and boats and cats">'
 
   filterTitleIndicator = Factory.indicator()
-  collectionFilterByTitleStub = sinon.stub(view.indicators, 'filterByTitle', ->
-    return [filterTitleIndicator]
+  collectionFilterByTitleStub = sinon.stub(
+    Backbone.Collections.IndicatorCollection::, 'filterByTitle', ->
+      return [filterTitleIndicator]
   )
 
   Backbone.Views.IndicatorSelectorView::filterByTitle.call(
     view, event
   )
 
-  assert.lengthOf view.results.models, 1,
-    "Expected the collection to be filtered to only the correct indicator"
+  try
+    Helpers.assertCalledOnce(collectionFilterByTitleStub)
 
-  assert.deepEqual view.results.at(0), filterTitleIndicator,
-    "Expected the result indicator to be the correct one for the given theme"
+    assert.lengthOf view.results.models, 1,
+      "Expected the collection to be filtered to only the correct indicator"
 
-  Helpers.assertCalledOnce(collectionFilterByTitleStub)
+    assert.deepEqual view.results.at(0), filterTitleIndicator,
+      "Expected the result indicator to be the correct one for the given theme"
+  finally
+    collectionFilterByTitleStub.restore()
+)
+
+test("Theme filtering and text search work in concert", ->
+  section = new Backbone.Models.Section(
+    _id: Factory.findNextFreeId('Section')
+  )
+
+  theme = Factory.theme()
+  matchingIndicator = Factory.indicator(
+    title: "Matching title and theme"
+    theme: theme.get('_id')
+  )
+
+  indicators = [
+    matchingIndicator
+    {title: "Matching title only", theme: Factory.findNextFreeId('Theme')}
+    {title: "Matches theme only", theme: Factory.findNextFreeId('Theme')}
+  ]
+
+  populateCollectionStub = sinon.stub(
+    Backbone.Views.IndicatorSelectorView::, 'populateCollections', ->
+      defer = $.Deferred()
+
+      @indicators.set(indicators)
+      defer.resolve()
+
+      defer.promise()
+  )
+
+  view = new Backbone.Views.IndicatorSelectorView(
+    section: section
+  )
+
+  view.filterByTheme(theme)
+  view.filterByTitle({target: '<input value="Matching">'})
+
+  try
+    assert.lengthOf view.results.models, 1,
+      "Expected the results to only contain one element"
+    assert.deepEqual view.results.models[0], matchingIndicator,
+      "Expected the only result to be the indicator which matches both theme and search"
+  finally
+    view.close()
+    populateCollectionStub.restore()
 )
