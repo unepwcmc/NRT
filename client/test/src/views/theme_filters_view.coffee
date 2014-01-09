@@ -66,3 +66,38 @@ event with no arguments", ->
   assert.isTrue spy.calledWith(undefined),
     "Expected indicator_selector:theme_selected to be triggered with no theme"
 )
+
+test("when clicking 'All Indicators', it adds the class 'active' to that LI", ->
+  view = new Backbone.Views.ThemeFiltersView(
+    themes: new Backbone.Collections.ThemeCollection()
+  )
+
+  allIndicatorsEl = view.$el.find('.all-indicators')
+  allIndicatorsEl.removeClass('active')
+
+  allIndicatorsEl.trigger('click')
+
+  try
+    assert.isTrue allIndicatorsEl.hasClass('active'),
+      "Expected the view to have the active class"
+  finally
+    view.close()
+)
+
+test("On 'indicator_selector:theme_selected' from another view,
+  the active class is removed from the 'All Indicators' element", ->
+  view = new Backbone.Views.ThemeFiltersView(
+    themes: new Backbone.Collections.ThemeCollection()
+  )
+
+  allIndicatorsEl = view.$el.find('.all-indicators')
+  allIndicatorsEl.addClass('active')
+
+  Backbone.trigger('indicator_selector:theme_selected')
+
+  try
+    assert.isFalse allIndicatorsEl.hasClass('active'),
+      "Expected the 'All Indicators' element not to have the active class"
+  finally
+    view.close()
+)

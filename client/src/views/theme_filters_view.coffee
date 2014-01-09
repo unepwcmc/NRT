@@ -13,6 +13,9 @@ class Backbone.Views.ThemeFiltersView extends Backbone.Diorama.NestingView
   initialize: (options) ->
     @themes = options.themes
     @listenTo(@themes, 'sync', @render)
+
+    @listenTo(Backbone, 'indicator_selector:theme_selected', @deactivateAllIndicators)
+
     @render()
 
   render: ->
@@ -24,8 +27,12 @@ class Backbone.Views.ThemeFiltersView extends Backbone.Diorama.NestingView
 
     return @
 
-  showAllIndicators: ->
+  deactivateAllIndicators: ->
+    @$el.find('.all-indicators').removeClass('active')
+
+  showAllIndicators: (event) ->
     Backbone.trigger('indicator_selector:theme_selected')
+    $(event.target).addClass('active')
 
   onClose: ->
     @stopListening()
