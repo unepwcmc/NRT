@@ -9,23 +9,9 @@
       </select>
     </div>
 
-    <ul class="themes">
-      <li class="active">All Indicators</li>
-      {{#each themes}}
-        {{addSubViewTo ../thisView "ThemeFilterItemView"
-        "theme-filter-{{theme.cid}}" theme=this}}
-      {{/each}}
-    </ul>
+    {{addSubViewTo thisView "ThemeFiltersView" themes=themes}}
   </aside>
 
   <input value="Search indicators">
-  <ul class="indicators">
-    {{#each indicators}}
-      {{addSubViewTo ../thisView "IndicatorSelectorItemView"
-        "indicator-{{indicator.cid}}"
-        indicator=this
-        section=../section
-      }}
-    {{/each}}
-  </ul>
+  {{addSubViewTo thisView "IndicatorSelectorResultsView" indicators=indicators}}
 </div>

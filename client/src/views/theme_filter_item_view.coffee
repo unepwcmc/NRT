@@ -14,7 +14,7 @@ class Backbone.Views.ThemeFilterItemView extends Backbone.View
     @render()
 
   triggerSelected: =>
-    @trigger('selected', @theme)
+    Backbone.trigger('indicator_selector:theme_selected', @theme)
 
   render: ->
     @$el.html(@template(
@@ -23,4 +23,3 @@ class Backbone.Views.ThemeFilterItemView extends Backbone.View
     return @
 
   onClose: ->
-    

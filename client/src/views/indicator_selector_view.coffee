@@ -12,10 +12,13 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
   initialize: (options = {}) ->
     @currentIndicator  = options.currentIndicator
     @indicators = new Backbone.Collections.IndicatorCollection([], withData: true)
-    @themes = new Backbone.Collections.ThemeCollection()
-
     @results = new Backbone.Collections.IndicatorCollection()
-    @listenTo(@results, 'reset', @render)
+
+    @themes = new Backbone.Collections.ThemeCollection()
+    @listenTo(@themes, 'reset', @render)
+
+    @listenTo(Backbone, 'indicator_selector:theme_selected', @filterByTheme)
+    @listenTo(Backbone, 'indicator_selector:indicator_selected', @triggerIndicatorSelected)
 
     @populateCollections()
       .then( =>
@@ -25,19 +28,18 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
         console.error err
       )
 
+    @render()
+
   render: =>
-    @stopListeningToSubViews()
     $('body').addClass('stop-scrolling')
 
     @$el.html(@template(
       thisView: @
       currentIndicator: @currentIndicator
-      indicators: @results.models
-      themes: @themes.models
+      indicators: @results
+      themes: @themes
     ))
     @attachSubViews()
-
-    @listenToSubViewEvents()
 
     return @
 
@@ -52,18 +54,6 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
   filterByTheme: (theme) =>
     @results.reset(@indicators.filterByTheme(theme))
-
-  listenToSubViewEvents: ->
-    for key, subView of @subViews
-      if /theme-filter-.*/.test key
-        @listenTo(subView, 'selected', @filterByTheme)
-
-      if /indicator-/.test key
-        @listenTo(subView, 'indicatorSelected', @triggerIndicatorSelected)
-
-  stopListeningToSubViews: ->
-    for key, subView of @subViews
-      @stopListening(subView)
 
   triggerIndicatorSelected: (indicator) =>
     @trigger('indicatorSelected', indicator)

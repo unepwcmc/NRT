@@ -46,7 +46,7 @@ test('populateCollections populates themes and indicators from the server', (don
 
 test('.initialize populates the indicators collection,
   sets the results collection to all indicators
-  and renders the results ', ->
+  and renders an IndicatorSelectorResultsView', ->
   section = new Backbone.Models.Section(
     _id: Factory.findNextFreeId('Section')
   )
@@ -72,19 +72,23 @@ test('.initialize populates the indicators collection,
     Helpers.assertCalledOnce(populateCollectionStub)
 
     assert.deepEqual view.indicators.models, view.results.models,
-      "Expected the results collection to be able to the indicators"
+      "Expected the results collection to be equal to the indicators"
 
-    assert.match(
-      view.$el.text(),
-      new RegExp(".*#{indicatorTitle}.*")
-    )
+    for subViewKey, subView of view.subViews
+      if subView.constructor.name is "IndicatorSelectorResultsView"
+        resultSubView = subView
+
+    assert.isDefined resultSubView,
+      "Expected the view to have a IndicatorSelectorResultsView sub view"
+    assert.deepEqual resultSubView.indicators, view.results,
+      "Expected the resultsSubView to reference the results"
 
   finally
     view.close()
     populateCollectionStub.restore()
 )
 
-test('Renders a list of themes sub views', ->
+test('Renders a ThemeFilters sub view with the collection of themes', ->
   section = new Backbone.Models.Section(
     _id: Factory.findNextFreeId('Section')
   )
@@ -106,27 +110,26 @@ test('Renders a list of themes sub views', ->
   )
 
   try
-    Helpers.assertCalledOnce(populateCollectionStub)
+    for subViewKey, subView of view.subViews
+      if subView.constructor.name is "ThemeFiltersView"
+        themeFilterView = subView
 
-    assert.match(
-      view.$el.text(),
-      new RegExp(".*#{themes[0].title}.*")
-    )
-
-    assert.isTrue Helpers.viewHasSubViewOfClass(view, 'ThemeFilterItemView'),
-      "Expected the view to have a 'ThemeFilterItemView' sub view"
+    assert.isDefined themeFilterView,
+      "Expected the view to have a IndicatorSelectorResultsView sub view"
+    assert.deepEqual themeFilterView.themes, view.themes,
+      "Expected the themeFilterView to reference the themes"
   finally
     view.close()
     populateCollectionStub.restore()
 )
 
-test("When a ThemeFilterItemView sub view triggers 'selected',
+test("When 'indicator_selector:theme_selected' is triggered,
   view.filterByTheme is called", ->
   section = new Backbone.Models.Section(
     _id: Factory.findNextFreeId('Section')
   )
 
-  themes = [{_id: 1, title: "Such Theme"}]
+  themes = [Factory.theme()]
 
   populateCollectionStub = sinon.stub(
     Backbone.Views.IndicatorSelectorView::, 'populateCollections', ->
@@ -146,9 +149,9 @@ test("When a ThemeFilterItemView sub view triggers 'selected',
     section: section
   )
 
-  theme = view.themes.at(0)
-  subView = view.subViews["theme-filter-#{theme.cid}"]
-  subView.trigger('selected', theme)
+  theme = themes[0]
+
+  Backbone.trigger('indicator_selector:theme_selected', theme)
 
   try
     Helpers.assertCalledOnce(filterByThemeStub)
@@ -159,8 +162,8 @@ test("When a ThemeFilterItemView sub view triggers 'selected',
     populateCollectionStub.restore()
 )
 
-test('When an indicator is selected, an `indicatorSelected` event is
-  fired with the selected indicator', (done)->
+test('When `indicator_selector:indicator_selected` event is fired on backbone
+ it triggers the `indicatorSelected` event on itself', (done)->
   indicatorText = 'hats'
   indicatorAttributes = [{
     type: 'cartodb'
@@ -190,15 +193,10 @@ test('When an indicator is selected, an `indicatorSelected` event is
 
   view.on('indicatorSelected', indicatorSelectedCallback)
 
-  subViews = []
-  for key, subView of view.subViews
-    subViews.push subView
-
   try
-    assert.lengthOf subViews, 1,
-      "Expected the view to have an indicator sub view"
-    indicatorItemSubView = subViews[0]
-    indicatorItemSubView.trigger('indicatorSelected', indicatorItemSubView.indicator)
+    Backbone.trigger(
+      'indicator_selector:indicator_selected', view.indicators.at(0)
+    )
   finally
     view.close()
     populateCollectionStub.restore()
@@ -230,68 +228,6 @@ test(".filterByTheme given a theme sets the results object to only
 
   Helpers.assertCalledOnce(collectionFilterByThemeStub)
   assert.isTrue collectionFilterByThemeStub.calledWith(filterTheme)
-)
-
-test(".stopListingToSubViews stops listening to events on sub views", ->
-  subView = new Backbone.View()
-  view = new Backbone.Diorama.NestingView()
-
-  view.subViews =
-    view1: new Backbone.View()
-    view2: subView
-
-  spy = sinon.spy()
-  view.listenTo(subView, 'suchEvent', spy)
-
-  Backbone.Views.IndicatorSelectorView::stopListeningToSubViews.call(view)
-
-  subView.trigger('suchEvent')
-
-  assert.strictEqual spy.callCount, 0,
-    "Expected the spy not to be called, as the parent view should have stopped listening"
-)
-
-test("Clicking theme filters works twice", ->
-  section = new Backbone.Models.Section(
-    _id: Factory.findNextFreeId('Section')
-  )
-
-  themes = [
-    Factory.theme(title: 'theme 1')
-    Factory.theme(title: 'theme 2')
-  ]
-  indicators = [
-    {theme: themes[0].get('_id'), title: 'indicator 1'}
-    {theme: themes[1].get('_id'), title: 'indicator 2'}
-  ]
-
-  populateCollectionStub = sinon.stub(
-    Backbone.Views.IndicatorSelectorView::, 'populateCollections', ->
-      defer = $.Deferred()
-
-      @themes.set(themes)
-      @indicators.set(indicators)
-      defer.resolve()
-
-      defer.promise()
-  )
-
-  view = new Backbone.Views.IndicatorSelectorView(
-    section: section
-  )
-
-  try
-    view.subViews["theme-filter-#{themes[0].cid}"].$el.trigger('click')
-    assert.strictEqual view.results.at(0).get('title'), indicators[0].title,
-      "Expected the first indicator to be the results"
-
-    view.subViews["theme-filter-#{themes[1].cid}"].$el.trigger('click')
-    assert.strictEqual view.results.at(0).get('title'), indicators[1].title,
-      "Expected the second indicator to be the results"
-
-  finally
-    view.close()
-    populateCollectionStub.restore()
 )
 
 test(".filterByTitle given an input event sets the results object to only
