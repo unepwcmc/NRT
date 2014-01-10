@@ -19,7 +19,7 @@ class Backbone.Views.ThemeFiltersView extends Backbone.Diorama.NestingView
 
     @listenTo(Backbone, 'indicator_selector:theme_selected', @deactivateAllIndicators)
 
-    @populateThemes()
+    @themes.fetch()
       .fail( (err) ->
         console.error "Error populating collections"
         console.error err
@@ -37,9 +37,6 @@ class Backbone.Views.ThemeFiltersView extends Backbone.Diorama.NestingView
     @attachSubViews()
 
     return @
-
-  populateThemes: ->
-    @themes.fetch()
 
   deactivateAllIndicators: ->
     @$el.find('.all-indicators').removeClass('active')

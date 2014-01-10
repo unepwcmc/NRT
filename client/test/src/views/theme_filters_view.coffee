@@ -2,38 +2,6 @@ assert = chai.assert
 
 suite('ThemeFiltersView')
 
-test('populateThemes populates themes from the server', (done)->
-  server = sinon.fakeServer.create()
-
-  themes = [title: 'hat']
-
-  themeFiltersView =
-    themes: new Backbone.Collections.ThemeCollection()
-
-  Backbone.Views.ThemeFiltersView::populateThemes.call(themeFiltersView).then(->
-    try
-      Helpers.Assertions.assertPathVisited(server, new RegExp("/api/themes"))
-
-      assert.strictEqual(
-        themeFiltersView.themes.at(0).get('title'), themes[0].title
-      )
-
-      done()
-    finally
-      server.restore()
-  ).fail((err)->
-    server.restore()
-    done(new Error(err))
-  )
-
-  server.respondWith(
-    new RegExp('/api/themes.*'),
-    JSON.stringify(themes)
-  )
-
-  server.respond()
-)
-
 test('renders a ThemeFilterItem sub view for each theme in the given collection', ->
   indicators = new Backbone.Collections.IndicatorCollection()
 
@@ -44,34 +12,6 @@ test('renders a ThemeFilterItem sub view for each theme in the given collection'
 
   view.themes = themes
   view.render()
-
-  assert.match view.$el.text(), new RegExp(theme.get('title')),
-    "Expected to see the theme title"
-
-  for key, v of view.subViews
-    subView = v
-
-  assert.isDefined subView, "Expected the view to have a subView"
-  assert.strictEqual subView.constructor.name, "ThemeFilterItemView",
-    "Expected the sub view to be of type 'ThemeFilterItemView'"
-
-  assert.strictEqual subView.theme.cid, theme.cid,
-    "Expected the sub view to be for the theme"
-)
-
-test('re-renders when the theme collection syncs', ->
-  theme = Factory.theme(title: 'test theme')
-  themes = new Backbone.Collections.ThemeCollection([])
-
-  indicators = new Backbone.Collections.IndicatorCollection()
-
-  view = new Backbone.Views.ThemeFiltersView(indicators: indicators)
-
-  assert.isTrue _.isEmpty(view.subViews),
-    "Expected the view to have no sub views, as the themes collection is empty"
-
-  themes.reset([theme])
-  themes.trigger('sync')
 
   assert.match view.$el.text(), new RegExp(theme.get('title')),
     "Expected to see the theme title"

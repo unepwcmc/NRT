@@ -12,7 +12,9 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
   initialize: (options = {}) ->
     @currentIndicator  = options.currentIndicator
     @indicators = new Backbone.Collections.IndicatorCollection([], withData: true)
+
     @results = new Backbone.Collections.IndicatorCollection()
+    @searchResults = new Backbone.Collections.IndicatorCollection()
 
     @listenTo(Backbone, 'indicator_selector:theme_selected', @filterByTheme)
     @listenTo(Backbone, 'indicator_selector:indicator_selected', @triggerIndicatorSelected)
@@ -20,6 +22,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     @populateCollections()
       .then( =>
         @results.reset(@indicators.models)
+        @searchResults.reset(@indicators.models)
       ).fail( (err) ->
         console.error "Error populating collections"
         console.error err
@@ -34,6 +37,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
       thisView: @
       currentIndicator: @currentIndicator
       indicators: @results
+      searchResults: @searchResults
     ))
     @attachSubViews()
 
@@ -62,6 +66,9 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
     results = @results.filterByTitle(@filter.searchTerm)
     @results.reset(results)
+
+    searchTextResultOnly = @indicators.filterByTitle(@filter.searchTerm)
+    @searchResults.reset(searchTextResultOnly)
 
   triggerIndicatorSelected: (indicator) =>
     @trigger('indicatorSelected', indicator)
