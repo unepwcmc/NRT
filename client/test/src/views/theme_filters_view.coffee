@@ -2,11 +2,48 @@ assert = chai.assert
 
 suite('ThemeFiltersView')
 
-test('renders a ThemeFilterItem sub view for each theme in the given collection  ', ->
+test('populateThemes populates themes from the server', (done)->
+  server = sinon.fakeServer.create()
+
+  themes = [title: 'hat']
+
+  themeFiltersView =
+    themes: new Backbone.Collections.ThemeCollection()
+
+  Backbone.Views.ThemeFiltersView::populateThemes.call(themeFiltersView).then(->
+    try
+      Helpers.Assertions.assertPathVisited(server, new RegExp("/api/themes"))
+
+      assert.strictEqual(
+        themeFiltersView.themes.at(0).get('title'), themes[0].title
+      )
+
+      done()
+    finally
+      server.restore()
+  ).fail((err)->
+    server.restore()
+    done(new Error(err))
+  )
+
+  server.respondWith(
+    new RegExp('/api/themes.*'),
+    JSON.stringify(themes)
+  )
+
+  server.respond()
+)
+
+test('renders a ThemeFilterItem sub view for each theme in the given collection', ->
+  indicators = new Backbone.Collections.IndicatorCollection()
+
+  view = new Backbone.Views.ThemeFiltersView(indicators: indicators)
+
   theme = Factory.theme(title: 'test theme')
   themes = new Backbone.Collections.ThemeCollection([theme])
 
-  view = new Backbone.Views.ThemeFiltersView(themes: themes)
+  view.themes = themes
+  view.render()
 
   assert.match view.$el.text(), new RegExp(theme.get('title')),
     "Expected to see the theme title"
@@ -26,7 +63,9 @@ test('re-renders when the theme collection syncs', ->
   theme = Factory.theme(title: 'test theme')
   themes = new Backbone.Collections.ThemeCollection([])
 
-  view = new Backbone.Views.ThemeFiltersView(themes: themes)
+  indicators = new Backbone.Collections.IndicatorCollection()
+
+  view = new Backbone.Views.ThemeFiltersView(indicators: indicators)
 
   assert.isTrue _.isEmpty(view.subViews),
     "Expected the view to have no sub views, as the themes collection is empty"
@@ -50,9 +89,11 @@ test('re-renders when the theme collection syncs', ->
 
 test("Clicking 'All Indicators' triggers a indicator_selector:theme_selected
 event with no arguments", ->
-  themes = new Backbone.Collections.ThemeCollection([])
+  indicators = new Backbone.Collections.IndicatorCollection()
+  view = new Backbone.Views.ThemeFiltersView(indicators: indicators)
 
-  view = new Backbone.Views.ThemeFiltersView(themes: themes)
+  themes = new Backbone.Collections.ThemeCollection([])
+  view.themes = themes
 
   spy = sinon.spy()
   Backbone.on('indicator_selector:theme_selected', spy)
@@ -69,7 +110,7 @@ event with no arguments", ->
 
 test("when clicking 'All Indicators', it adds the class 'active' to that LI", ->
   view = new Backbone.Views.ThemeFiltersView(
-    themes: new Backbone.Collections.ThemeCollection()
+    indicators: new Backbone.Collections.IndicatorCollection()
   )
 
   allIndicatorsEl = view.$el.find('.all-indicators')
@@ -87,7 +128,7 @@ test("when clicking 'All Indicators', it adds the class 'active' to that LI", ->
 test("On 'indicator_selector:theme_selected' from another view,
   the active class is removed from the 'All Indicators' element", ->
   view = new Backbone.Views.ThemeFiltersView(
-    themes: new Backbone.Collections.ThemeCollection()
+    indicators: new Backbone.Collections.IndicatorCollection()
   )
 
   allIndicatorsEl = view.$el.find('.all-indicators')

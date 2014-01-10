@@ -5,5 +5,11 @@ class Nrt.Presenters.ThemePresenter
   constructor: (@theme) ->
 
   populateIndicatorCount: (indicators) ->
+    return unless indicators?
+
     indicatorsForTheme = indicators.filterByTheme(@theme)
-    @theme.set('indicatorCount', indicatorsForTheme.length)
+
+    indicatorCount = indicatorsForTheme.length
+    indicatorCount = '-' if indicatorCount is 0
+
+    @theme.set('indicatorCount', indicatorCount)

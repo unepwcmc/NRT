@@ -14,9 +14,6 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     @indicators = new Backbone.Collections.IndicatorCollection([], withData: true)
     @results = new Backbone.Collections.IndicatorCollection()
 
-    @themes = new Backbone.Collections.ThemeCollection()
-    @listenTo(@themes, 'reset', @render)
-
     @listenTo(Backbone, 'indicator_selector:theme_selected', @filterByTheme)
     @listenTo(Backbone, 'indicator_selector:indicator_selected', @triggerIndicatorSelected)
 
@@ -37,16 +34,13 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
       thisView: @
       currentIndicator: @currentIndicator
       indicators: @results
-      themes: @themes
     ))
     @attachSubViews()
 
     return @
 
   populateCollections: ->
-    @indicators.fetch().then(=>
-      @themes.fetch()
-    )
+    @indicators.fetch()
 
   filterByTitle: (event) =>
     searchTerm = $(event.target).val()

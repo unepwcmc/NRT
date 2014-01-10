@@ -11,14 +11,25 @@ class Backbone.Views.ThemeFiltersView extends Backbone.Diorama.NestingView
     'click .all-indicators': 'showAllIndicators'
 
   initialize: (options) ->
-    @themes = options.themes
+    @indicators = options.indicators
+    @listenTo(@indicators, 'reset', @render)
+
+    @themes = new Backbone.Collections.ThemeCollection()
     @listenTo(@themes, 'sync', @render)
 
     @listenTo(Backbone, 'indicator_selector:theme_selected', @deactivateAllIndicators)
 
+    @populateThemes()
+      .fail( (err) ->
+        console.error "Error populating collections"
+        console.error err
+      )
+
     @render()
 
   render: ->
+    @themes.populateIndicatorCounts(@indicators)
+
     @$el.html(@template(
       thisView: @
       themes: @themes.models
@@ -26,6 +37,9 @@ class Backbone.Views.ThemeFiltersView extends Backbone.Diorama.NestingView
     @attachSubViews()
 
     return @
+
+  populateThemes: ->
+    @themes.fetch()
 
   deactivateAllIndicators: ->
     @$el.find('.all-indicators').removeClass('active')

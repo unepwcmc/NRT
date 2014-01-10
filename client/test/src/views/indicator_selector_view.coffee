@@ -2,26 +2,20 @@ assert = chai.assert
 
 suite('IndicatorSelectorView')
 
-test('populateCollections populates themes and indicators from the server', (done)->
+test('populateCollections populates indicators from the server', (done)->
   server = sinon.fakeServer.create()
 
   indicators = [title: 'hat']
-  themes = [title: 'boat']
 
   indicatorSelector =
     indicators: new Backbone.Collections.IndicatorCollection([], withData: true)
-    themes: new Backbone.Collections.ThemeCollection()
 
   Backbone.Views.IndicatorSelectorView::populateCollections.call(indicatorSelector).then(->
     try
       Helpers.Assertions.assertPathVisited(server, new RegExp("/api/indicators"))
-      Helpers.Assertions.assertPathVisited(server, new RegExp("/api/themes"))
 
       assert.strictEqual(
         indicatorSelector.indicators.at(0).get('title'), indicators[0].title
-      )
-      assert.strictEqual(
-        indicatorSelector.themes.at(0).get('title'), themes[0].title
       )
 
       done()
@@ -35,10 +29,6 @@ test('populateCollections populates themes and indicators from the server', (don
   server.respondWith(
     new RegExp('/api/indicators.*'),
     JSON.stringify(indicators)
-  )
-  server.respondWith(
-    new RegExp('/api/themes.*'),
-    JSON.stringify(themes)
   )
 
   server.respond()
@@ -88,18 +78,18 @@ test('.initialize populates the indicators collection,
     populateCollectionStub.restore()
 )
 
-test('Renders a ThemeFilters sub view with the collection of themes', ->
+test('Renders a ThemeFilters sub view with the collection of indicators', ->
   section = new Backbone.Models.Section(
     _id: Factory.findNextFreeId('Section')
   )
 
-  themes = [{_id: 1, title: "Such Theme"}]
+  indicators = [{_id: 1, title: "Such Theme"}]
 
   populateCollectionStub = sinon.stub(
     Backbone.Views.IndicatorSelectorView::, 'populateCollections', ->
       defer = $.Deferred()
 
-      @themes.set(themes)
+      @indicators.set(indicators)
       defer.resolve()
 
       defer.promise()
@@ -116,7 +106,7 @@ test('Renders a ThemeFilters sub view with the collection of themes', ->
 
     assert.isDefined themeFilterView,
       "Expected the view to have a IndicatorSelectorResultsView sub view"
-    assert.deepEqual themeFilterView.themes, view.themes,
+    assert.deepEqual themeFilterView.indicators.models, view.indicators.models,
       "Expected the themeFilterView to reference the themes"
   finally
     view.close()
@@ -130,16 +120,6 @@ test("When 'indicator_selector:theme_selected' is triggered,
   )
 
   themes = [Factory.theme()]
-
-  populateCollectionStub = sinon.stub(
-    Backbone.Views.IndicatorSelectorView::, 'populateCollections', ->
-      defer = $.Deferred()
-
-      @themes.set(themes)
-      defer.resolve()
-
-      defer.promise()
-  )
 
   filterByThemeStub = sinon.stub(
     Backbone.Views.IndicatorSelectorView::, 'filterByTheme', ->
@@ -159,7 +139,6 @@ test("When 'indicator_selector:theme_selected' is triggered,
       "Expected filterByTheme to be called with the theme of the event"
   finally
     filterByThemeStub.restore()
-    populateCollectionStub.restore()
 )
 
 test('When `indicator_selector:indicator_selected` event is fired on backbone
