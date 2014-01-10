@@ -2,7 +2,72 @@
 @import "mixins";
 
 .indicator-selector {
-  .themes li.active {
-    font-weight: bolder;
+  .editor { 
+    border: 0;
+    background-color: white;
+  }
+
+  aside {
+    border-left: 0;
+    float: left;
+    background-color: $barBlue;
+    height: 100%;
+
+    .origin {
+      background-color: white;
+      height: 60px;
+      width: 220px;
+      padding: 0 5px;
+      border: 1px solid $lightGrey;
+      border-right: 0;
+    }
+
+    .themes {
+      color: white;
+      font-weight: bolder;
+      
+      li {
+        border-bottom: 1px solid #276CA9;
+        background-color: #2E86D1;
+        font-size: 15px;
+        padding: 10px 5px;
+      }
+      li.active{
+        background-color: #2B3E50;
+      }
+    }
+
+  }
+
+  .main {
+    float:left;
+    width: 668px;
+
+    .search {
+      color: $differentGrey;
+      height: 60px;
+      border: 1px solid $lightGrey;
+      padding: 15px;
+      height: 30px;
+
+      i, input {
+        font-size: 21px;
+      }
+
+      input {
+        color: $differentGrey;
+        border: 0;
+      }
+    }
+
+    .indicators {
+      height: 514px;
+      overflow: scroll;
+
+      li {
+        border-bottom: 1px solid $lightGrey;
+        padding: 15px;
+      }
+    }
   }
 }

@@ -2,7 +2,7 @@
   <span class="close">{{{t "report/modal/close"}}}<i class="icon-remove-circle"></i></span>
 
   <aside>
-    <div>
+    <div class="origin">
       <h5>Data origin:</h5>
       <select>
         <option>NRT Core Indicators</option>
@@ -12,6 +12,12 @@
     {{addSubViewTo thisView "ThemeFiltersView" indicators=indicators}}
   </aside>
 
-  <input value="Search indicators">
-  {{addSubViewTo thisView "IndicatorSelectorResultsView" indicators=indicators}}
+  <div class="main">
+    <div class="search">
+      <i class="icon-search"></i>
+      <input placeholder="Search indicators">
+    </div>
+
+    {{addSubViewTo thisView "IndicatorSelectorResultsView" indicators=indicators}}
+  </div>
 </div>

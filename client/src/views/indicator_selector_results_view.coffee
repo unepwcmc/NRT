@@ -3,6 +3,7 @@ window.Backbone.Views ||= {}
 
 class Backbone.Views.IndicatorSelectorResultsView extends Backbone.Diorama.NestingView
   tagName: 'ul'
+  className: 'indicators'
 
   template: Handlebars.templates['indicator_selector_results.hbs']
 
