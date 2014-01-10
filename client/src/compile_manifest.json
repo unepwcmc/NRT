@@ -47,6 +47,7 @@
   "src/views/sub_indicator_map_view.coffee",
   "src/views/table_view.coffee",
   "src/views/select_headline_date_view.coffee",
+  "src/lib/theme_presenter.coffee",
   "src/lib/sub_indicator_data_presenter.coffee",
   "src/lib/utils.coffee",
   "src/lib/chart_data_parser.coffee",
