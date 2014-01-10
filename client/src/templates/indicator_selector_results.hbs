@@ -1,0 +1,7 @@
+{{#each indicators}}
+  {{addSubViewTo ../thisView "IndicatorSelectorItemView"
+    "indicator-{{indicator.cid}}"
+    indicator=this
+    section=../section
+  }}
+{{/each}}

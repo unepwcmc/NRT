@@ -1,0 +1,4 @@
+<li class="active all-indicators">All Indicators</li>
+{{#each themes}}
+  {{addSubViewTo ../thisView "ThemeFilterItemView" theme=this}}
+{{/each}}

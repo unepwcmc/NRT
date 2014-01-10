@@ -7,13 +7,28 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
   events:
     "click .close": "close"
+    "keyup input": "filterByTitle"
 
   initialize: (options = {}) ->
     @currentIndicator  = options.currentIndicator
     @indicators = new Backbone.Collections.IndicatorCollection([], withData: true)
-    @indicators.fetch(
-      success: @render
-    )
+    @results = new Backbone.Collections.IndicatorCollection()
+
+    @themes = new Backbone.Collections.ThemeCollection()
+    @listenTo(@themes, 'reset', @render)
+
+    @listenTo(Backbone, 'indicator_selector:theme_selected', @filterByTheme)
+    @listenTo(Backbone, 'indicator_selector:indicator_selected', @triggerIndicatorSelected)
+
+    @populateCollections()
+      .then( =>
+        @results.reset(@indicators.models)
+      ).fail( (err) ->
+        console.error "Error populating collections"
+        console.error err
+      )
+
+    @render()
 
   render: =>
     $('body').addClass('stop-scrolling')
@@ -21,17 +36,38 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     @$el.html(@template(
       thisView: @
       currentIndicator: @currentIndicator
-      indicators: @indicators.groupByType()
+      indicators: @results
+      themes: @themes
     ))
     @attachSubViews()
 
-    @bindToIndicatorSelection()
-
     return @
 
-  bindToIndicatorSelection: ->
-    for key, subView of @subViews
-      @listenTo(subView, 'indicatorSelected', @triggerIndicatorSelected)
+  populateCollections: ->
+    @indicators.fetch().then(=>
+      @themes.fetch()
+    )
+
+  filterByTitle: (event) =>
+    searchTerm = $(event.target).val()
+
+    @filter ||= {}
+    @filter.searchTerm = searchTerm
+
+    @filterIndicators()
+
+  filterByTheme: (theme) =>
+    @filter ||= {}
+    @filter.theme = theme
+
+    @filterIndicators()
+
+  filterIndicators: ->
+    results = @indicators.filterByTheme(@filter.theme)
+    @results.set(results)
+
+    results = @results.filterByTitle(@filter.searchTerm)
+    @results.reset(results)
 
   triggerIndicatorSelected: (indicator) =>
     @trigger('indicatorSelected', indicator)

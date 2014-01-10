@@ -2,169 +2,306 @@ assert = chai.assert
 
 suite('IndicatorSelectorView')
 
-test('Renders a list of indicators', ->
+test('populateCollections populates themes and indicators from the server', (done)->
+  server = sinon.fakeServer.create()
+
+  indicators = [title: 'hat']
+  themes = [title: 'boat']
+
+  indicatorSelector =
+    indicators: new Backbone.Collections.IndicatorCollection([], withData: true)
+    themes: new Backbone.Collections.ThemeCollection()
+
+  Backbone.Views.IndicatorSelectorView::populateCollections.call(indicatorSelector).then(->
+    try
+      Helpers.Assertions.assertPathVisited(server, new RegExp("/api/indicators"))
+      Helpers.Assertions.assertPathVisited(server, new RegExp("/api/themes"))
+
+      assert.strictEqual(
+        indicatorSelector.indicators.at(0).get('title'), indicators[0].title
+      )
+      assert.strictEqual(
+        indicatorSelector.themes.at(0).get('title'), themes[0].title
+      )
+
+      done()
+    finally
+      server.restore()
+  ).fail((err)->
+    server.restore()
+    done(new Error(err))
+  )
+
+  server.respondWith(
+    new RegExp('/api/indicators.*'),
+    JSON.stringify(indicators)
+  )
+  server.respondWith(
+    new RegExp('/api/themes.*'),
+    JSON.stringify(themes)
+  )
+
+  server.respond()
+)
+
+test('.initialize populates the indicators collection,
+  sets the results collection to all indicators
+  and renders an IndicatorSelectorResultsView', ->
   section = new Backbone.Models.Section(
     _id: Factory.findNextFreeId('Section')
   )
 
-  server = sinon.fakeServer.create()
+  indicatorTitle = 'An indicator'
+  indicators = [{_id: 1, title: indicatorTitle}]
+
+  populateCollectionStub = sinon.stub(
+    Backbone.Views.IndicatorSelectorView::, 'populateCollections', ->
+      defer = $.Deferred()
+
+      @indicators.set(indicators)
+      defer.resolve()
+
+      defer.promise()
+  )
 
   view = new Backbone.Views.IndicatorSelectorView(
     section: section
   )
 
-  assert.equal(
-    server.requests[0].url,
-    "/api/indicators"
-  )
+  try
+    Helpers.assertCalledOnce(populateCollectionStub)
 
-  indicatorTitle = 'An indicator'
-  Helpers.SinonServer.respondWithJson.call(server, [{_id: 1, title: indicatorTitle}])
-  server.restore()
+    assert.deepEqual view.indicators.models, view.results.models,
+      "Expected the results collection to be equal to the indicators"
 
-  Helpers.renderViewToTestContainer(view)
+    for subViewKey, subView of view.subViews
+      if subView.constructor.name is "IndicatorSelectorResultsView"
+        resultSubView = subView
 
-  assert.match(
-    $('#test-container').text(),
-    new RegExp(".*#{indicatorTitle}.*")
-  )
+    assert.isDefined resultSubView,
+      "Expected the view to have a IndicatorSelectorResultsView sub view"
+    assert.deepEqual resultSubView.indicators, view.results,
+      "Expected the resultsSubView to reference the results"
 
-  view.close()
+  finally
+    view.close()
+    populateCollectionStub.restore()
 )
 
-test('When an indicator is selected, an `indicatorSelected` event is
-  fired with the selected indicator', (done)->
+test('Renders a ThemeFilters sub view with the collection of themes', ->
+  section = new Backbone.Models.Section(
+    _id: Factory.findNextFreeId('Section')
+  )
+
+  themes = [{_id: 1, title: "Such Theme"}]
+
+  populateCollectionStub = sinon.stub(
+    Backbone.Views.IndicatorSelectorView::, 'populateCollections', ->
+      defer = $.Deferred()
+
+      @themes.set(themes)
+      defer.resolve()
+
+      defer.promise()
+  )
+
+  view = new Backbone.Views.IndicatorSelectorView(
+    section: section
+  )
+
+  try
+    for subViewKey, subView of view.subViews
+      if subView.constructor.name is "ThemeFiltersView"
+        themeFilterView = subView
+
+    assert.isDefined themeFilterView,
+      "Expected the view to have a IndicatorSelectorResultsView sub view"
+    assert.deepEqual themeFilterView.themes, view.themes,
+      "Expected the themeFilterView to reference the themes"
+  finally
+    view.close()
+    populateCollectionStub.restore()
+)
+
+test("When 'indicator_selector:theme_selected' is triggered,
+  view.filterByTheme is called", ->
+  section = new Backbone.Models.Section(
+    _id: Factory.findNextFreeId('Section')
+  )
+
+  themes = [Factory.theme()]
+
+  populateCollectionStub = sinon.stub(
+    Backbone.Views.IndicatorSelectorView::, 'populateCollections', ->
+      defer = $.Deferred()
+
+      @themes.set(themes)
+      defer.resolve()
+
+      defer.promise()
+  )
+
+  filterByThemeStub = sinon.stub(
+    Backbone.Views.IndicatorSelectorView::, 'filterByTheme', ->
+  )
+
+  view = new Backbone.Views.IndicatorSelectorView(
+    section: section
+  )
+
+  theme = themes[0]
+
+  Backbone.trigger('indicator_selector:theme_selected', theme)
+
+  try
+    Helpers.assertCalledOnce(filterByThemeStub)
+    assert.isTrue filterByThemeStub.calledWith(theme),
+      "Expected filterByTheme to be called with the theme of the event"
+  finally
+    filterByThemeStub.restore()
+    populateCollectionStub.restore()
+)
+
+test('When `indicator_selector:indicator_selected` event is fired on backbone
+ it triggers the `indicatorSelected` event on itself', (done)->
   indicatorText = 'hats'
   indicatorAttributes = [{
     type: 'cartodb'
     title: indicatorText
   }]
 
-  indicatorCollectionFetchStub = sinon.stub(
-    Backbone.Collections.IndicatorCollection::, 'fetch', (options) ->
-      @set(indicatorAttributes)
-      options.success()
+  populateCollectionStub = sinon.stub(
+    Backbone.Views.IndicatorSelectorView::, 'populateCollections', ->
+      defer = $.Deferred()
+
+      @indicators.set(indicatorAttributes)
+      defer.resolve()
+
+      defer.promise()
   )
 
   view = new Backbone.Views.IndicatorSelectorView()
 
   indicatorSelectedCallback = (indicator) ->
-    assert.strictEqual indicator.get('title'), indicatorText
-    done()
+    try
+      assert.strictEqual indicator.get('title'), indicatorText
+      done()
+    catch err
+      done(err)
+    finally
+      populateCollectionStub.restore()
 
   view.on('indicatorSelected', indicatorSelectedCallback)
 
-  subViews = []
-  for key, subView of view.subViews
-    subViews.push subView
-
-  assert.lengthOf subViews, 1,
-    "Expected the view to have an indicator sub view"
-  indicatorItemSubView = subViews[0]
-  indicatorItemSubView.trigger('indicatorSelected', indicatorItemSubView.indicator)
-
-  indicatorCollectionFetchStub.restore()
-
-  view.close()
+  try
+    Backbone.trigger(
+      'indicator_selector:indicator_selected', view.indicators.at(0)
+    )
+  finally
+    view.close()
+    populateCollectionStub.restore()
 )
 
-test("If a current indicator is provided, I should see 'Current
-  Indicator' and the indicator's title", ->
+test(".filterByTheme given a theme sets the results object to only
+ objects with the same theme id", ->
+  filterTheme = Factory.theme()
 
+  view =
+    indicators: new Backbone.Collections.IndicatorCollection([])
+    results: new Backbone.Collections.IndicatorCollection()
+    filterIndicators: Backbone.Views.IndicatorSelectorView::filterIndicators
+
+  filterThemeIndicator  = Factory.indicator()
+
+  collectionFilterByThemeStub = sinon.stub(view.indicators, 'filterByTheme', ->
+    return [filterThemeIndicator]
+  )
+
+  Backbone.Views.IndicatorSelectorView::filterByTheme.call(
+    view, filterTheme
+  )
+
+  assert.lengthOf view.results.models, 1,
+    "Expected the collection to be filtered to only the correct indicator"
+
+  assert.deepEqual view.results.at(0), filterThemeIndicator,
+    "Expected the result indicator to be the correct one for the given theme"
+
+  Helpers.assertCalledOnce(collectionFilterByThemeStub)
+  assert.isTrue collectionFilterByThemeStub.calledWith(filterTheme)
+)
+
+test(".filterByTitle given an input event sets the results object to only
+ indicators with a matching title", ->
+  view =
+    indicators: new Backbone.Collections.IndicatorCollection([])
+    results: new Backbone.Collections.IndicatorCollection()
+    filterIndicators: Backbone.Views.IndicatorSelectorView::filterIndicators
+
+  event = target: '<input value="hats and boats and cats">'
+
+  filterTitleIndicator = Factory.indicator()
+  collectionFilterByTitleStub = sinon.stub(
+    Backbone.Collections.IndicatorCollection::, 'filterByTitle', ->
+      return [filterTitleIndicator]
+  )
+
+  Backbone.Views.IndicatorSelectorView::filterByTitle.call(
+    view, event
+  )
+
+  try
+    Helpers.assertCalledOnce(collectionFilterByTitleStub)
+
+    assert.lengthOf view.results.models, 1,
+      "Expected the collection to be filtered to only the correct indicator"
+
+    assert.deepEqual view.results.at(0), filterTitleIndicator,
+      "Expected the result indicator to be the correct one for the given theme"
+  finally
+    collectionFilterByTitleStub.restore()
+)
+
+test("Theme filtering and text search work in concert", ->
   section = new Backbone.Models.Section(
     _id: Factory.findNextFreeId('Section')
   )
 
-  indicator = new Backbone.Models.Indicator(
-    _id: Factory.findNextFreeId('Indicator')
-    title: 'A current indicator'
+  theme = Factory.theme()
+  matchingIndicator = Factory.indicator(
+    title: "Matching title and theme"
+    theme: theme.get('_id')
   )
 
-  indicatorCollectionFetchStub = sinon.stub(
-    Backbone.Collections.IndicatorCollection::, 'fetch', (options) ->
-      options.success()
-  )
+  indicators = [
+    matchingIndicator
+    {title: "Matching title only", theme: Factory.findNextFreeId('Theme')}
+    {title: "Matches theme only", theme: Factory.findNextFreeId('Theme')}
+  ]
 
-  view = new Backbone.Views.IndicatorSelectorView(
-    section: section
-    currentIndicator: indicator
-  )
+  populateCollectionStub = sinon.stub(
+    Backbone.Views.IndicatorSelectorView::, 'populateCollections', ->
+      defer = $.Deferred()
 
-  headers = view.$el.find('h3')
-  assert.strictEqual $(headers[0]).text(), 'Current Indicator'
+      @indicators.set(indicators)
+      defer.resolve()
 
-  currentIndicators = view.$el.find('.indicators.current')
-  assert.match currentIndicators.text(), /A current indicator/,
-    "Expected the indicator title to be in the current indicator list"
-
-  indicatorCollectionFetchStub.restore()
-
-  view.close()
-)
-
-test("If no current indicator is provided, I should not see a 'Current
-  Indicator' header", ->
-
-  section = new Backbone.Models.Section(
-    _id: Factory.findNextFreeId('Section')
-  )
-
-  indicatorCollectionFetchStub = sinon.stub(
-    Backbone.Collections.IndicatorCollection::, 'fetch', (options) ->
-      options.success()
+      defer.promise()
   )
 
   view = new Backbone.Views.IndicatorSelectorView(
     section: section
   )
 
-  headers = view.$el.find('h3')
+  view.filterByTheme(theme)
+  view.filterByTitle({target: '<input value="Matching">'})
 
-  for header in headers
-    assert.notEqual $(header).text(), 'Current Indicator'
-
-  indicatorCollectionFetchStub.restore()
-
-  view.close()
-)
-
-test('core and external indicators are listed separately', ->
-  section = new Backbone.Models.Section(
-    _id: Factory.findNextFreeId('Section')
-  )
-
-  indicatorAttributes = [{
-    type: 'esri'
-    title: 'A core indicator'
-  }, {
-    type: 'cartodb'
-    title: 'An external indicator'
-  }]
-
-  indicatorCollectionFetchStub = sinon.stub(
-    Backbone.Collections.IndicatorCollection::, 'fetch', (options) ->
-      @set(indicatorAttributes)
-      options.success()
-  )
-
-  view = new Backbone.Views.IndicatorSelectorView(
-    section: section
-  )
-
-  headers = view.$el.find('h3')
-  assert.lengthOf headers, 2
-  assert.strictEqual $(headers[0]).text(), 'Core Indicators'
-  assert.strictEqual $(headers[1]).text(), 'External Indicators'
-
-  coreIndicators = view.$el.find('.indicators.core')
-  assert.match coreIndicators.text(), /A core indicator/,
-    "Expected the core indicator title to be in the core indicator list"
-
-  externalIndicators = view.$el.find('.indicators.external')
-  assert.match externalIndicators.text(), /An external indicator/,
-    "Expected the external indicator title to be in the external indicator list"
-
-  indicatorCollectionFetchStub.restore()
-
-  view.close()
+  try
+    assert.lengthOf view.results.models, 1,
+      "Expected the results to only contain one element"
+    assert.deepEqual view.results.models[0], matchingIndicator,
+      "Expected the only result to be the indicator which matches both theme and search"
+  finally
+    view.close()
+    populateCollectionStub.restore()
 )

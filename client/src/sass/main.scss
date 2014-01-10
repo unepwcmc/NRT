@@ -173,6 +173,7 @@ div.select {
       &.icon-bookmark-empty{
         display: none;
       }
+
       &.icon-bookmark{
         display: inline;
       }
@@ -181,6 +182,22 @@ div.select {
 
   .pull-right {
     float: right;
+  }
+}
+
+div.select {
+  select {
+    background: transparent;
+    padding-right: 20px;
+    margin-right: -15px;
+    border: 0;
+  }
+
+  i {
+    float: right;
+    margin-right: 0px;
+    margin-top: -24px;
+    overflow: visible;
   }
 }
 
@@ -1281,7 +1298,7 @@ footer{
   }
 }
 
-.leaflet-bottom {
+.section-visualisation .leaflet-bottom {
   z-index: 2;
 }
 
