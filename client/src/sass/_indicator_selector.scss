@@ -97,7 +97,18 @@
 
       li {
         border-bottom: 1px solid $lightGrey;
-        padding: 15px;
+        padding: 10px 15px 20px;
+
+        h4 {
+          color: $darkGrey;
+          font-weight: bold;
+        }
+        
+        p {
+          color: $darkGrey;
+          font-size: 14px;
+          line-height: 11px;
+        }
       }
     }
   }
