@@ -26,15 +26,20 @@
     .themes {
       color: white;
       font-weight: bolder;
-      
+
       li {
         border-bottom: 1px solid #276CA9;
         background-color: #2E86D1;
         font-size: 15px;
         padding: 10px 5px;
       }
+
       li.active{
         background-color: #2B3E50;
+      }
+
+      li:hover {
+        cursor: pointer;
       }
     }
 
@@ -68,6 +73,10 @@
       li {
         border-bottom: 1px solid $lightGrey;
         padding: 15px;
+      }
+
+      li:hover {
+        cursor: pointer;
       }
     }
   }
