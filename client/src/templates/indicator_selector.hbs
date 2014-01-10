@@ -4,9 +4,13 @@
   <aside>
     <div class="origin">
       <h5>Data origin:</h5>
-      <select>
-        <option>NRT Core Indicators</option>
-      </select>
+
+      <div class="select">
+        <select>
+          <option>All sources</option>
+        </select>
+        <i class="icon-chevron-down"></i>
+      </div>
     </div>
 
     {{addSubViewTo thisView "ThemeFiltersView" themes=themes}}
