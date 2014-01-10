@@ -188,6 +188,7 @@ test(".filterByTheme given a theme sets the results object to only
   view =
     indicators: new Backbone.Collections.IndicatorCollection([])
     results: new Backbone.Collections.IndicatorCollection()
+    searchResults: new Backbone.Collections.IndicatorCollection()
     filterIndicators: Backbone.Views.IndicatorSelectorView::filterIndicators
 
   filterThemeIndicator  = Factory.indicator()
@@ -215,6 +216,7 @@ test(".filterByTitle given an input event sets the results object to only
   view =
     indicators: new Backbone.Collections.IndicatorCollection([])
     results: new Backbone.Collections.IndicatorCollection()
+    searchResults: new Backbone.Collections.IndicatorCollection()
     filterIndicators: Backbone.Views.IndicatorSelectorView::filterIndicators
 
   event = target: '<input value="hats and boats and cats">'
@@ -230,7 +232,11 @@ test(".filterByTitle given an input event sets the results object to only
   )
 
   try
-    Helpers.assertCalledOnce(collectionFilterByTitleStub)
+    assert.ok(
+      collectionFilterByTitleStub.calledTwice,
+      "Expected filterByTitle to be called once but was called
+        #{collectionFilterByTitleStub.callCount} times"
+    )
 
     assert.lengthOf view.results.models, 1,
       "Expected the collection to be filtered to only the correct indicator"
