@@ -55,13 +55,24 @@
 
     .themes {
       color: white;
-      font-weight: bolder;
 
       li {
         border-bottom: 1px solid #276CA9;
         background-color: #2E86D1;
         font-size: 15px;
         padding: 10px;
+        overflow: hidden;
+        font-weight: bolder;
+
+        span {
+          float: left;
+          width: 195px;
+        }
+
+        small {
+          font-size: 0.8em;
+          color: white;
+        }
       }
 
       li.active{
