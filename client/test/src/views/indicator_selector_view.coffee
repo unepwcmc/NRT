@@ -2,6 +2,12 @@ assert = chai.assert
 
 suite('IndicatorSelectorView')
 
+dummyFetch = ->
+  defer = $.Deferred()
+  @set([])
+  defer.resolve()
+  defer.promise()
+
 test('populateCollections populates indicators from the server', (done)->
   server = sinon.fakeServer.create()
 
@@ -188,12 +194,12 @@ test(".filterByTheme given a theme sets the results object to only
   view =
     indicators: new Backbone.Collections.IndicatorCollection([])
     results: new Backbone.Collections.IndicatorCollection()
-    searchResults: new Backbone.Collections.IndicatorCollection()
+    textFilteredIndicators: new Backbone.Collections.IndicatorCollection()
     filterIndicators: Backbone.Views.IndicatorSelectorView::filterIndicators
 
   filterThemeIndicator  = Factory.indicator()
 
-  collectionFilterByThemeStub = sinon.stub(view.indicators, 'filterByTheme', ->
+  collectionFilterByThemeStub = sinon.stub(view.results, 'filterByTheme', ->
     return [filterThemeIndicator]
   )
 
@@ -216,7 +222,7 @@ test(".filterByTitle given an input event sets the results object to only
   view =
     indicators: new Backbone.Collections.IndicatorCollection([])
     results: new Backbone.Collections.IndicatorCollection()
-    searchResults: new Backbone.Collections.IndicatorCollection()
+    textFilteredIndicators: new Backbone.Collections.IndicatorCollection()
     filterIndicators: Backbone.Views.IndicatorSelectorView::filterIndicators
 
   event = target: '<input value="hats and boats and cats">'
@@ -233,7 +239,7 @@ test(".filterByTitle given an input event sets the results object to only
 
   try
     assert.ok(
-      collectionFilterByTitleStub.calledTwice,
+      collectionFilterByTitleStub.calledOnce,
       "Expected filterByTitle to be called once but was called
         #{collectionFilterByTitleStub.callCount} times"
     )
@@ -247,21 +253,103 @@ test(".filterByTitle given an input event sets the results object to only
     collectionFilterByTitleStub.restore()
 )
 
-test("Theme filtering and text search work in concert", ->
+test('.filterByType sets a type attribute on the @filter', ->
+  view =
+    filterIndicators: sinon.spy()
+
+  type = 'kittens'
+  Backbone.Views.IndicatorSelectorView::filterByType.call(view, type)
+
+  assert.property view, 'filter',
+    "Expected the view to have a filter attribute created"
+  assert.strictEqual view.filter.type, type,
+    "Expected the filter to have the correct type attribute"
+
+  assert.strictEqual view.filterIndicators.callCount, 1,
+    "Expected filterIndicators to be called with the new filters"
+)
+
+test("When the data origin sub view triggers 'selected', 
+ filterByType is triggered", sinon.test(->
+
+  section = new Backbone.Models.Section(
+    _id: Factory.findNextFreeId('Section')
+  )
+
+
+  @stub(Backbone.Collections.IndicatorCollection::, 'fetch', dummyFetch)
+  @stub(Backbone.Collections.ThemeCollection::, 'fetch', dummyFetch)
+
+  filterByTypeStub = @stub(
+    Backbone.Views.IndicatorSelectorView::, 'filterByType'
+  )
+
+  view = new Backbone.Views.IndicatorSelectorView(
+    section: section
+  )
+
+  dataOriginSubView = view.subViews['data-origin-selector']
+
+  dataOriginSubView.trigger('selected', 'kittens')
+  assert.strictEqual view.filterByType.callCount, 1,
+    "Expected filterByType to called"
+
+  assert.isTrue filterByTypeStub.calledWith('kittens'),
+    "Expected filterByType to be called with the argument of the 'selected' event"
+))
+
+test(".filterIndicators filters the results by calling
+ IndicatorCollection::filterByType with filter.type", sinon.test(->
+  view =
+    indicators: new Backbone.Collections.IndicatorCollection([])
+    results: new Backbone.Collections.IndicatorCollection()
+    textFilteredIndicators: new Backbone.Collections.IndicatorCollection()
+    filterIndicators: Backbone.Views.IndicatorSelectorView::filterIndicators
+    filter: type: 'cygnet'
+
+  filterTypeIndicator = Factory.indicator()
+  collectionFilterByTypeStub = @stub(
+    Backbone.Collections.IndicatorCollection::, 'filterByType', ->
+      return [filterTypeIndicator]
+  )
+
+  Backbone.Views.IndicatorSelectorView::filterIndicators.call(view)
+
+  assert.ok(
+    collectionFilterByTypeStub.calledOnce,
+    "Expected filterByType to be called once but was called
+      #{collectionFilterByTypeStub.callCount} times"
+  )
+
+  assert.ok(
+    collectionFilterByTypeStub.calledWith('cygnet'),
+    "Expected collectionFilterByType to be called with the type"
+  )
+
+  assert.lengthOf view.results.models, 1,
+    "Expected the collection to be filtered to only the correct indicator"
+
+  assert.deepEqual view.results.at(0), filterTypeIndicator,
+    "Expected the result indicator to be the correct one for the given theme"
+))
+
+test("Theme filtering, type filtering and text search work in concert", ->
   section = new Backbone.Models.Section(
     _id: Factory.findNextFreeId('Section')
   )
 
   theme = Factory.theme()
   matchingIndicator = Factory.indicator(
-    title: "Matching title and theme"
+    title: "Matching title, theme and type"
     theme: theme.get('_id')
+    type: 'cygnet'
   )
 
   indicators = [
     matchingIndicator
-    {title: "Matching title only", theme: Factory.findNextFreeId('Theme')}
-    {title: "Matches theme only", theme: Factory.findNextFreeId('Theme')}
+    {title: "Matching title and theme only", theme: theme.get('_id')}
+    {title: "Matches theme and type only", theme: theme.get('_id'), type: 'cygnet'}
+    {title: "Matching title and type only", theme: Factory.findNextFreeId('Theme'), type: 'cygnet'}
   ]
 
   populateCollectionStub = sinon.stub(
@@ -280,6 +368,7 @@ test("Theme filtering and text search work in concert", ->
 
   view.filterByTheme(theme)
   view.filterByTitle({target: '<input value="Matching">'})
+  view.filterByType('cygnet')
 
   try
     assert.lengthOf view.results.models, 1,

@@ -28,6 +28,12 @@ class Backbone.Collections.IndicatorCollection extends Backbone.Collection
       )
     else
       @models
+  
+  filterByType: (type) ->
+    if type?
+      @where(type: type)
+    else
+      @models
 
   groupByType: ->
     grouped = {

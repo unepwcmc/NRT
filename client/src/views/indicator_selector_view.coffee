@@ -15,7 +15,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     @indicators = new Backbone.Collections.IndicatorCollection([], withData: true)
 
     @results = new Backbone.Collections.IndicatorCollection()
-    @searchResults = new Backbone.Collections.IndicatorCollection()
+    @textFilteredIndicators = new Backbone.Collections.IndicatorCollection()
 
     @listenTo(Backbone, 'indicator_selector:theme_selected', @filterByTheme)
     @listenTo(Backbone, 'indicator_selector:indicator_selected', @triggerIndicatorSelected)
@@ -23,13 +23,15 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     @populateCollections()
       .then( =>
         @results.reset(@indicators.models)
-        @searchResults.reset(@indicators.models)
+        @textFilteredIndicators.reset(@indicators.models)
       ).fail( (err) ->
         console.error "Error populating collections"
         console.error err
       )
 
     @render()
+
+    @listenTo(@subViews['data-origin-selector'], 'selected', @filterByType)
 
   render: =>
     $('body').addClass('stop-scrolling')
@@ -38,7 +40,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
       thisView: @
       currentIndicator: @currentIndicator
       indicators: @results
-      searchResults: @searchResults
+      textFilteredIndicators: @textFilteredIndicators
     ))
     @attachSubViews()
 
@@ -46,6 +48,12 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
   populateCollections: ->
     @indicators.fetch()
+
+  filterByType: (type) ->
+    @filter ||= {}
+    @filter.type = type
+
+    @filterIndicators()
 
   filterByTitle: (event) =>
     searchTerm = $(event.target).val()
@@ -62,14 +70,15 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     @filterIndicators()
 
   filterIndicators: ->
-    results = @indicators.filterByTheme(@filter.theme)
+    results = @indicators.filterByType(@filter.type)
     @results.set(results)
 
     results = @results.filterByTitle(@filter.searchTerm)
-    @results.reset(results)
+    @textFilteredIndicators.reset(results)
+    @results.set(results)
 
-    searchTextResultOnly = @indicators.filterByTitle(@filter.searchTerm)
-    @searchResults.reset(searchTextResultOnly)
+    results = @results.filterByTheme(@filter.theme)
+    @results.reset(results)
 
   triggerIndicatorSelected: (indicator) =>
     @trigger('indicatorSelected', indicator)

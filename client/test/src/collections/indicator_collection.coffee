@@ -114,3 +114,34 @@ test(".filterByTitle returns all indicators if searchTerm is `undefined`", ->
   assert.strictEqual results[0].get('title'), 'hats'
   assert.strictEqual results[1].get('title'), 'boats'
 )
+
+test(".filterByType returns an array with only models with the given type", ->
+  selectedTypeIndicator = Factory.indicator(
+    type: 'cygnet'
+  )
+  differentTypeIndicator = Factory.indicator()
+
+  indicators = new Backbone.Collections.IndicatorCollection([
+    selectedTypeIndicator, differentTypeIndicator
+  ])
+
+  results = indicators.filterByType('cygnet')
+
+  assert.lengthOf results, 1,
+    "Expected the collection to be filtered to only the correct indicator"
+
+  assert.deepEqual results[0], selectedTypeIndicator,
+    "Expected the result indicator to be the correct one for the given type"
+)
+
+test('.filterByType given an undefined type returns all indicators', ->
+  indicators = new Backbone.Collections.IndicatorCollection([
+    {type: 'hats'},
+    {type: 'boats'}
+  ])
+
+  results = indicators.filterByType()
+
+  assert.lengthOf results, 2,
+    "Expected the collection to be filtered to only the correct indicator"
+)
