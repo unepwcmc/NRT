@@ -26,6 +26,7 @@
   "src/views/indicator_view.coffee",
   "src/views/theme_filters_view.coffee",
   "src/views/indicator_selector_results_view.coffee",
+  "src/views/data_origin_selector_view.coffee",
   "src/views/theme_filter_item_view.coffee",
   "src/views/indicator_selector_item_view.coffee",
   "src/views/indicator_selector_view.coffee",

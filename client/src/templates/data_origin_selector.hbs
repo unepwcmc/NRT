@@ -1,0 +1,11 @@
+<h5>Data origin:</h5>
+
+<div class='select'>
+  <select>
+    <option value="">All sources</option>
+    {{#each origins}}
+      <option value="{{@key}}">{{this}}</option>
+    {{/each}}
+  </select>
+  <i class="icon-chevron-down"></i>
+</div>

@@ -2,16 +2,7 @@
   <span class="close">{{{t "report/modal/close"}}}<i class="icon-remove-circle"></i></span>
 
   <aside>
-    <div class="origin">
-      <h5>Data origin:</h5>
-
-      <div class="select">
-        <select>
-          <option>All sources</option>
-        </select>
-        <i class="icon-chevron-down"></i>
-      </div>
-    </div>
+    {{addSubViewTo thisView "DataOriginSelectorView"}}
 
     {{addSubViewTo thisView "ThemeFiltersView" indicators=searchResults}}
   </aside>
