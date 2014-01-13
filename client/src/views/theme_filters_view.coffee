@@ -16,6 +16,7 @@ class Backbone.Views.ThemeFiltersView extends Backbone.Diorama.NestingView
 
     @themes = new Backbone.Collections.ThemeCollection()
     @listenTo(@themes, 'sync', @render)
+    @listenTo(@themes, 'change:active', @render)
 
     @themes.fetch()
       .fail( (err) ->

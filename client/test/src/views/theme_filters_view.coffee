@@ -86,3 +86,37 @@ test('.allIndicatorsFilterActive returns false if any of the Themes have
     themeFetchStub.restore()
     view.close()
 )
+
+test("When filtering by a theme, the 'All Indicators' element should be de-activated", ->
+  indicators = new Backbone.Collections.IndicatorCollection()
+
+  theme = Factory.theme()
+
+  themeFetchStub = sinon.stub(
+    Backbone.Collections.ThemeCollection::, 'fetch', ->
+      defer = $.Deferred()
+
+      @set([theme])
+      defer.resolve()
+
+      defer.promise()
+  )
+
+  view = new Backbone.Views.ThemeFiltersView(indicators: indicators)
+
+  try
+    assert.isTrue view.allIndicatorsFilterActive(),
+      "Expected allIndicatorsFilterActive to be active when there are no active themes"
+
+    Backbone.trigger('indicator_selector:theme_selected', theme)
+    theme.set('active', true)
+
+    assert.isFalse view.allIndicatorsFilterActive(),
+      "Expected allIndicatorsFilterActive to be false once a theme filter is activated"
+
+    assert.isFalse view.$el.find('.all-indicators').hasClass('active'),
+      "Expected the view have updated the DOM to show 'All Indicators' as false"
+  finally
+    themeFetchStub.restore()
+    view.close()
+)
