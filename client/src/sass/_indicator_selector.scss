@@ -61,8 +61,17 @@
       }
 
       input {
+        width: 585px;
         color: $differentGrey;
         border: 0;
+      }
+
+      i.clear-search {
+        cursor: pointer;
+
+        &:hover {
+          color: $darkGrey;
+        }
       }
     }
 

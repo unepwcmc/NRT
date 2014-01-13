@@ -7,6 +7,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
   events:
     "click .close": "close"
+    "click .clear-search": "clearSearch"
     "keyup input": "filterByTitle"
 
   initialize: (options = {}) ->
@@ -72,6 +73,11 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
   triggerIndicatorSelected: (indicator) =>
     @trigger('indicatorSelected', indicator)
+
+  clearSearch: ->
+    @$el.find('.main .search input').val('')
+    @filter.searchTerm = ""
+    @filterIndicators()
 
   onClose: ->
     $('body').removeClass('stop-scrolling')
