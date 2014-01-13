@@ -23,7 +23,7 @@ test("when clicked it triggers 'indicator_selector:theme_selected' on Backbone,
     view.close()
 )
 
-test("when clicked, it adds the class 'active' to the $el", ->
+test("when clicked, it sets the 'active' attribute on the theme to `true`", ->
   view = new Backbone.Views.ThemeFilterItemView(
     theme: Factory.theme()
   )
@@ -31,26 +31,25 @@ test("when clicked, it adds the class 'active' to the $el", ->
   view.$el.trigger('click')
 
   try
-    assert.isTrue view.$el.hasClass('active'),
-      "Expected the view to have the active class"
+    assert.isTrue view.theme.get('active'),
+      "Expected the view to have the active attribute"
   finally
     view.close()
 )
 
 test("On 'indicator_selector:theme_selected' from another view,
-  the view removes the active class", ->
+ the view removes the active attribute from the model", ->
   view = new Backbone.Views.ThemeFilterItemView(
-    theme: Factory.theme()
+    theme: Factory.theme(
+      active: true
+    )
   )
-  view.$el.addClass('active')
-
-  renderSpy = sinon.spy(view, 'render')
 
   Backbone.trigger('indicator_selector:theme_selected')
 
   try
-    assert.isFalse view.$el.hasClass('active'),
-      "Expected the view not to have the active class"
+    assert.isFalse view.theme.get('active'),
+      "Expected the view not to have the active attribute"
   finally
     view.close()
 )

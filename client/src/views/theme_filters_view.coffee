@@ -17,8 +17,6 @@ class Backbone.Views.ThemeFiltersView extends Backbone.Diorama.NestingView
     @themes = new Backbone.Collections.ThemeCollection()
     @listenTo(@themes, 'sync', @render)
 
-    @listenTo(Backbone, 'indicator_selector:theme_selected', @deactivateAllIndicators)
-
     @themes.fetch()
       .fail( (err) ->
         console.error "Error populating collections"
@@ -33,13 +31,19 @@ class Backbone.Views.ThemeFiltersView extends Backbone.Diorama.NestingView
     @$el.html(@template(
       thisView: @
       themes: @themes.models
+      allIndicatorsFilterActive: @allIndicatorsFilterActive()
     ))
     @attachSubViews()
 
     return @
 
-  deactivateAllIndicators: ->
-    @$el.find('.all-indicators').removeClass('active')
+  allIndicatorsFilterActive: ->
+    active = true
+    @themes.each( (theme) ->
+      active = false if theme.get('active')
+    )
+
+    return active
 
   showAllIndicators: (event) ->
     Backbone.trigger('indicator_selector:theme_selected')

@@ -27,58 +27,62 @@ test('renders a ThemeFilterItem sub view for each theme in the given collection'
     "Expected the sub view to be for the theme"
 )
 
-test("Clicking 'All Indicators' triggers a indicator_selector:theme_selected
-event with no arguments", ->
+test('.allIndicatorsFilterActive returns true if none of the Themes have
+ a true `active` attribute', ->
   indicators = new Backbone.Collections.IndicatorCollection()
-  view = new Backbone.Views.ThemeFiltersView(indicators: indicators)
 
-  themes = new Backbone.Collections.ThemeCollection([])
-  view.themes = themes
+  themesAttributes = [{
+    active: false,
+  },{
+    active: false
+  }]
 
-  spy = sinon.spy()
-  Backbone.on('indicator_selector:theme_selected', spy)
+  themeFetchStub = sinon.stub(
+    Backbone.Collections.ThemeCollection::, 'fetch', ->
+      defer = $.Deferred()
 
-  allIndicatorsEl = view.$el.find('.all-indicators')
-  allIndicatorsEl.trigger('click')
+      @set(themesAttributes)
+      defer.resolve()
 
-  assert.strictEqual spy.callCount, 1,
-    "Expected indicator_selector:theme_selected to be triggered"
-
-  assert.isTrue spy.calledWith(undefined),
-    "Expected indicator_selector:theme_selected to be triggered with no theme"
-)
-
-test("when clicking 'All Indicators', it adds the class 'active' to that LI", ->
-  view = new Backbone.Views.ThemeFiltersView(
-    indicators: new Backbone.Collections.IndicatorCollection()
+      defer.promise()
   )
 
-  allIndicatorsEl = view.$el.find('.all-indicators')
-  allIndicatorsEl.removeClass('active')
-
-  allIndicatorsEl.trigger('click')
+  view = new Backbone.Views.ThemeFiltersView(indicators: indicators)
 
   try
-    assert.isTrue allIndicatorsEl.hasClass('active'),
-      "Expected the view to have the active class"
+    assert.isTrue view.allIndicatorsFilterActive(),
+      "Expected allIndicatorsFilterActive to return true"
   finally
+    themeFetchStub.restore()
     view.close()
 )
 
-test("On 'indicator_selector:theme_selected' from another view,
-  the active class is removed from the 'All Indicators' element", ->
-  view = new Backbone.Views.ThemeFiltersView(
-    indicators: new Backbone.Collections.IndicatorCollection()
+test('.allIndicatorsFilterActive returns false if any of the Themes have
+ a true `active` attribute', ->
+  indicators = new Backbone.Collections.IndicatorCollection()
+
+  themesAttributes = [{
+    active: true,
+  },{
+    active: false
+  }]
+
+  themeFetchStub = sinon.stub(
+    Backbone.Collections.ThemeCollection::, 'fetch', ->
+      defer = $.Deferred()
+
+      @set(themesAttributes)
+      defer.resolve()
+
+      defer.promise()
   )
 
-  allIndicatorsEl = view.$el.find('.all-indicators')
-  allIndicatorsEl.addClass('active')
-
-  Backbone.trigger('indicator_selector:theme_selected')
+  view = new Backbone.Views.ThemeFiltersView(indicators: indicators)
 
   try
-    assert.isFalse allIndicatorsEl.hasClass('active'),
-      "Expected the 'All Indicators' element not to have the active class"
+    assert.isFalse view.allIndicatorsFilterActive(),
+      "Expected allIndicatorsFilterActive to return false"
   finally
+    themeFetchStub.restore()
     view.close()
 )
