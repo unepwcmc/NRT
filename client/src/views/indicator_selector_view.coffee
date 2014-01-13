@@ -75,7 +75,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     @trigger('indicatorSelected', indicator)
 
   clearSearch: ->
-    @$el.find('.main .search input').val('')
+    @$el.find('input').val('')
     @filter.searchTerm = ""
     @filterIndicators()
 
