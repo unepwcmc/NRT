@@ -290,3 +290,23 @@ test("Theme filtering and text search work in concert", ->
     view.close()
     populateCollectionStub.restore()
 )
+
+test('.clearSearch sets the search term filter to nothing and calls
+ .filterIndicators', ->
+  view =
+    filter:
+      searchTerm: "hats"
+    filterIndicators: sinon.spy()
+    $el: $('<div>')
+
+  Backbone.Views.IndicatorSelectorView::clearSearch.call(view)
+
+  assert.lengthOf view.filter.searchTerm, 0,
+    "Expected search term to be blank"
+
+  assert.ok(
+    view.filterIndicators.calledOnce,
+    "Expected filterIndicators to be called once but was called
+      #{view.filterIndicators.callCount} times"
+  )
+)
