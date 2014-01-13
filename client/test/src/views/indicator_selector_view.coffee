@@ -3,10 +3,9 @@ assert = chai.assert
 suite('IndicatorSelectorView')
 
 dummyFetch = ->
-  defer = $.Deferred()
-  @set([])
-  defer.resolve()
-  defer.promise()
+  Helpers.promisify(=>
+    @set([])
+  )
 
 test('populateCollections populates indicators from the server', (done)->
   server = sinon.fakeServer.create()
@@ -42,7 +41,7 @@ test('populateCollections populates indicators from the server', (done)->
 
 test('.initialize populates the indicators collection,
   sets the results collection to all indicators
-  and renders an IndicatorSelectorResultsView', ->
+  and renders an IndicatorSelectorResultsView', sinon.test(->
   section = new Backbone.Models.Section(
     _id: Factory.findNextFreeId('Section')
   )
@@ -50,14 +49,15 @@ test('.initialize populates the indicators collection,
   indicatorTitle = 'An indicator'
   indicators = [{_id: 1, title: indicatorTitle}]
 
-  populateCollectionStub = sinon.stub(
-    Backbone.Views.IndicatorSelectorView::, 'populateCollections', ->
-      defer = $.Deferred()
-
-      @indicators.set(indicators)
-      defer.resolve()
-
-      defer.promise()
+  @stub(Backbone.Collections.IndicatorCollection::, 'fetch', ->
+    Helpers.promisify(=>
+      @set(indicators)
+    )
+  )
+  @stub(Backbone.Collections.ThemeCollection::, 'fetch', ->
+    Helpers.promisify(=>
+      @set([])
+    )
   )
 
   view = new Backbone.Views.IndicatorSelectorView(
@@ -65,8 +65,6 @@ test('.initialize populates the indicators collection,
   )
 
   try
-    Helpers.assertCalledOnce(populateCollectionStub)
-
     assert.deepEqual view.indicators.models, view.results.models,
       "Expected the results collection to be equal to the indicators"
 
@@ -81,24 +79,24 @@ test('.initialize populates the indicators collection,
 
   finally
     view.close()
-    populateCollectionStub.restore()
-)
+))
 
-test('Renders a ThemeFilters sub view with the collection of indicators', ->
+test('Renders a ThemeFilters sub view with the collection of indicators', sinon.test(->
   section = new Backbone.Models.Section(
     _id: Factory.findNextFreeId('Section')
   )
 
   indicators = [{_id: 1, title: "Such Theme"}]
 
-  populateCollectionStub = sinon.stub(
-    Backbone.Views.IndicatorSelectorView::, 'populateCollections', ->
-      defer = $.Deferred()
-
-      @indicators.set(indicators)
-      defer.resolve()
-
-      defer.promise()
+  @stub(Backbone.Collections.IndicatorCollection::, 'fetch', ->
+    Helpers.promisify(=>
+      @set(indicators)
+    )
+  )
+  @stub(Backbone.Collections.ThemeCollection::, 'fetch', ->
+    Helpers.promisify(=>
+      @set([])
+    )
   )
 
   view = new Backbone.Views.IndicatorSelectorView(
@@ -116,18 +114,28 @@ test('Renders a ThemeFilters sub view with the collection of indicators', ->
       "Expected the themeFilterView to reference the themes"
   finally
     view.close()
-    populateCollectionStub.restore()
-)
+))
 
 test("When 'indicator_selector:theme_selected' is triggered,
-  view.filterByTheme is called", ->
+  view.filterByTheme is called", sinon.test(->
   section = new Backbone.Models.Section(
     _id: Factory.findNextFreeId('Section')
   )
 
   themes = [Factory.theme()]
 
-  filterByThemeStub = sinon.stub(
+  @stub(Backbone.Collections.IndicatorCollection::, 'fetch', ->
+    Helpers.promisify(=>
+      @set([])
+    )
+  )
+  @stub(Backbone.Collections.ThemeCollection::, 'fetch', ->
+    Helpers.promisify(=>
+      @set([])
+    )
+  )
+
+  filterByThemeStub = @stub(
     Backbone.Views.IndicatorSelectorView::, 'filterByTheme', ->
   )
 
@@ -139,13 +147,10 @@ test("When 'indicator_selector:theme_selected' is triggered,
 
   Backbone.trigger('indicator_selector:theme_selected', theme)
 
-  try
-    Helpers.assertCalledOnce(filterByThemeStub)
-    assert.isTrue filterByThemeStub.calledWith(theme),
-      "Expected filterByTheme to be called with the theme of the event"
-  finally
-    filterByThemeStub.restore()
-)
+  Helpers.assertCalledOnce(filterByThemeStub)
+  assert.isTrue filterByThemeStub.calledWith(theme),
+    "Expected filterByTheme to be called with the theme of the event"
+))
 
 test('When `indicator_selector:indicator_selected` event is fired on backbone
  it triggers the `indicatorSelected` event on itself', (done)->
@@ -155,14 +160,17 @@ test('When `indicator_selector:indicator_selected` event is fired on backbone
     title: indicatorText
   }]
 
-  populateCollectionStub = sinon.stub(
-    Backbone.Views.IndicatorSelectorView::, 'populateCollections', ->
-      defer = $.Deferred()
+  sandbox = sinon.sandbox.create()
 
-      @indicators.set(indicatorAttributes)
-      defer.resolve()
-
-      defer.promise()
+  sandbox.stub(Backbone.Collections.IndicatorCollection::, 'fetch', ->
+    Helpers.promisify(=>
+      @set(indicatorAttributes)
+    )
+  )
+  sandbox.stub(Backbone.Collections.ThemeCollection::, 'fetch', ->
+    Helpers.promisify(=>
+      @set([])
+    )
   )
 
   view = new Backbone.Views.IndicatorSelectorView()
@@ -173,8 +181,6 @@ test('When `indicator_selector:indicator_selected` event is fired on backbone
       done()
     catch err
       done(err)
-    finally
-      populateCollectionStub.restore()
 
   view.on('indicatorSelected', indicatorSelectedCallback)
 
@@ -184,7 +190,7 @@ test('When `indicator_selector:indicator_selected` event is fired on backbone
     )
   finally
     view.close()
-    populateCollectionStub.restore()
+    sandbox.restore()
 )
 
 test(".filterByTheme given a theme sets the results object to only
@@ -276,7 +282,6 @@ test("When the data origin sub view triggers 'selected',
     _id: Factory.findNextFreeId('Section')
   )
 
-
   @stub(Backbone.Collections.IndicatorCollection::, 'fetch', dummyFetch)
   @stub(Backbone.Collections.ThemeCollection::, 'fetch', dummyFetch)
 
@@ -333,7 +338,7 @@ test(".filterIndicators filters the results by calling
     "Expected the result indicator to be the correct one for the given theme"
 ))
 
-test("Theme filtering, type filtering and text search work in concert", ->
+test("Theme filtering, type filtering and text search work in concert", sinon.test(->
   section = new Backbone.Models.Section(
     _id: Factory.findNextFreeId('Section')
   )
@@ -352,15 +357,12 @@ test("Theme filtering, type filtering and text search work in concert", ->
     {title: "Matching title and type only", theme: Factory.findNextFreeId('Theme'), type: 'cygnet'}
   ]
 
-  populateCollectionStub = sinon.stub(
-    Backbone.Views.IndicatorSelectorView::, 'populateCollections', ->
-      defer = $.Deferred()
-
-      @indicators.set(indicators)
-      defer.resolve()
-
-      defer.promise()
+  @stub(Backbone.Collections.IndicatorCollection::, 'fetch', ->
+    Helpers.promisify(=>
+      @set(indicators)
+    )
   )
+  @stub(Backbone.Collections.ThemeCollection::, 'fetch', dummyFetch)
 
   view = new Backbone.Views.IndicatorSelectorView(
     section: section
@@ -377,8 +379,7 @@ test("Theme filtering, type filtering and text search work in concert", ->
       "Expected the only result to be the indicator which matches both theme and search"
   finally
     view.close()
-    populateCollectionStub.restore()
-)
+))
 
 test('.clearSearch sets the search term filter to nothing and calls
  .filterIndicators', ->

@@ -13,6 +13,11 @@ Helpers.viewHasSubViewOfClass = (view, subViewClassName) ->
       subViewExists = true
   return subViewExists
 
+Helpers.promisify = (fn) ->
+  defer = $.Deferred()
+  defer.resolve(fn())
+  defer.promise()
+
 # Used to extend Sinon Servers with common response method
 Helpers.SinonServer.respondWithJson = (jsonData) ->
   @requests[0].respond(
