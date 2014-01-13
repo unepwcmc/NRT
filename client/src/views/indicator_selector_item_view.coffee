@@ -17,6 +17,6 @@ class Backbone.Views.IndicatorSelectorItemView extends Backbone.View
     Backbone.trigger('indicator_selector:indicator_selected', @indicator)
 
   render: =>
-    @$el.html(@template(title: @indicator.get('title')))
+    @$el.html(@template(@indicator.toJSON()))
 
   onClose: ->
