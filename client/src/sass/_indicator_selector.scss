@@ -128,8 +128,23 @@
         h4 {
           color: $darkGrey;
           font-weight: bold;
+          display: inline-block;
+          margin-right: 5px;
         }
-        
+
+        small {
+          text-transform: uppercase;
+          font-weight: 600;
+          font-size: 0.6em;
+          color: #2e86d1;
+        }
+
+        .right {
+          float: right;
+          font-size: 0.7em;
+          color: $mediumGrey;
+        }
+
         p {
           color: $darkGrey;
           font-size: 14px;
