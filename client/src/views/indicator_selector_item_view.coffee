@@ -11,6 +11,7 @@ class Backbone.Views.IndicatorSelectorItemView extends Backbone.View
 
   initialize: (options) ->
     @indicator = options.indicator
+    @listenTo(@indicator, 'change:theme', @render)
     @render()
 
   selectIndicator: =>
@@ -21,6 +22,8 @@ class Backbone.Views.IndicatorSelectorItemView extends Backbone.View
     theme = @indicator.get('theme')
     if theme?
       indicatorJSON.theme = theme.toJSON()
+
     @$el.html(@template(indicatorJSON))
 
   onClose: ->
+    @stopListening()
