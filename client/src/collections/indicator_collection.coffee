@@ -23,8 +23,12 @@ class Backbone.Collections.IndicatorCollection extends Backbone.Collection
 
   filterByTheme: (theme) ->
     if theme?
+      idAttr = Backbone.Models.Theme::idAttribute
       @filter( (indicator) ->
-        indicator.get('theme') is theme.get(Backbone.Models.Theme::idAttribute)
+        if indicator.get('theme')?
+          indicator.get('theme').get(idAttr) is theme.get(idAttr)
+        else
+          false
       )
     else
       @models

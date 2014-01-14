@@ -12,11 +12,16 @@ class window.Backbone.Models.Indicator extends Backbone.RelationalModel
     reverseRelation:
       key: 'parent'
       includeInJSON: false
-  },{
+  }, {
     key: 'owner'
     type: Backbone.HasOne
     relatedModel: 'Backbone.Models.User'
     includeInJSON: Backbone.Models.User::idAttribute
+  }, {
+    key: 'theme'
+    type: Backbone.HasOne
+    relatedModel: 'Backbone.Models.Theme'
+    includeInJSON: Backbone.Models.Theme::idAttribute
   }]
 
   getFieldType: (fieldName) ->

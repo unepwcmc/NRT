@@ -21,3 +21,13 @@ test("when clicked it triggers 'indicator_selector:indicator_selected' on Backbo
   finally
     Backbone.off('indicator_selector:indicator_selected', eventSpy)
 )
+
+test("renders to the theme title", ->
+  theme = Factory.theme(title: "Lovely lovely theme")
+  indicator = Factory.indicator(theme: theme.get(Backbone.Models.Theme::idAttribute))
+
+  view = new Backbone.Views.IndicatorSelectorItemView(indicator: indicator)
+
+  assert.match view.$el.text(), new RegExp(theme.get('title')),
+    "Expected to see the theme title"
+)

@@ -47,3 +47,31 @@ returns "Unknown"', ->
 
   assert.strictEqual indicator.getFieldType('someField'), 'Unknown'
 )
+
+test('when initialized with the ID of a theme also in memory,
+  get("theme") returns that model', ->
+  theme = Factory.theme()
+
+  indicator = Factory.indicator(
+    theme: theme.get('_id')
+  )
+
+  assert.property indicator.get('theme'), 'cid',
+    "Expected the indicator to have a reference to a theme model"
+
+  assert.strictEqual indicator.get('theme').cid, theme.cid,
+    "Expected indicator.get('theme') to reference the correct theme model"
+)
+
+test("when initialized with the ID of a theme that isn't in memory, 
+  get('theme') returns null, but the ID is recorded in the relation", ->
+  themeId = Factory.findNextFreeId("Theme")
+  indicator = Factory.indicator(
+    theme: themeId
+  )
+
+  assert.isNull indicator.get('theme'),
+    "Expected indicator.get('theme') to return the theme ID"
+  assert.strictEqual indicator.getRelation('theme').keyId, themeId,
+    "Expected indicator.getRelation('theme') to store the theme ID"
+)
