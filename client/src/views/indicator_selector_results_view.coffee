@@ -9,13 +9,14 @@ class Backbone.Views.IndicatorSelectorResultsView extends Backbone.Diorama.Nesti
 
   initialize: (options) ->
     @indicators = options.indicators
+    console.log "Initializing IndicatorSelectorResultsView #{@cid}"
 
     @listenTo(@indicators, 'reset', @render)
 
     @render()
 
   render: ->
-    @$el.html(@template(
+    @$el.empty().html(@template(
       indicators: @indicators.models
       thisView: @
     ))
