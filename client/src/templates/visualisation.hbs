@@ -1,7 +1,10 @@
 <h4>{{indicator.title}}</h4>
-<button class="delete delete-visualisation">
-  <i class="icon-remove"></i>Delete
-</button>
+
+{{#if isEditable}}
+  <button class="delete delete-visualisation">
+    <i class="icon-remove"></i>Delete
+  </button>
+{{/if}}
 
 {{addSubViewTo thisView visualisationViewName width=680 visualisation=visualisation}}
 
