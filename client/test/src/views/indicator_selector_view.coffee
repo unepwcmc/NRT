@@ -13,9 +13,9 @@ test('Renders a list of indicators', ->
     section: section
   )
 
-  assert.equal(
+  assert.match(
     server.requests[0].url,
-    "/api/indicators"
+    new RegExp("/api/indicators")
   )
 
   indicatorTitle = 'An indicator'
