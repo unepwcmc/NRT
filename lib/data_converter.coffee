@@ -1,7 +1,7 @@
 CONVERTERS =
   percentage:
     decimal: (value) ->
-      parseInt(value, 10) / 100
+      parseFloat(value, 10) / 100
   date:
     epoch: (value) ->
       new Date(value).getTime()
