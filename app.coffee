@@ -1,5 +1,7 @@
 express = require('express')
 http = require('http')
+fs = require('fs')
+
 worldBankQuery = require('./controllers/worldbank_query')
 esriQuery = require('./controllers/esri_query')
 cartodbQuery = require('./controllers/cartodb_query')
@@ -9,6 +11,8 @@ indicatorData = require('./controllers/indicator_data')
 PORT = 3002
 
 startApp = ->
+  checkForIndicatorDefinition()
+
   app = express()
 
   app.get "/wb/:countryCode/:indicatorCode", worldBankQuery
@@ -23,5 +27,14 @@ startApp = ->
       process.exit 1
     else
       console.log "Express server listening on port " + PORT
+
+checkForIndicatorDefinition = ->
+  unless fs.existsSync('./definitions/indicators.json')
+    throw new Error(
+      """
+        Couldn't find an indicator definition file in ./definitions/indicators.json
+        See ./definitions/examples/ for example config
+      """
+    )
 
 startApp()

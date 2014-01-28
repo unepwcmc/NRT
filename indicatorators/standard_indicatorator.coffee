@@ -1,4 +1,3 @@
-fs = require('fs')
 _  = require('underscore')
 
 exports.applyRanges = (data, ranges) ->
