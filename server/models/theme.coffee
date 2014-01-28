@@ -56,7 +56,7 @@ themeSchema.statics.seedData = (callback) ->
 
     if count == 0
       dummyThemes = JSON.parse(
-        fs.readFileSync("#{process.cwd()}/lib/sample_themes.json", 'UTF8')
+        fs.readFileSync("#{process.cwd()}/config/seeds/themes.json", 'UTF8')
       )
 
       async.map(dummyThemes, createThemeWithSections, (error, results) ->
