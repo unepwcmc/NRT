@@ -94,9 +94,15 @@ indicatorSchema.statics.seedData = ->
       return deferred.reject(error)
 
     if count is 0
-      dummyIndicators = JSON.parse(
-        fs.readFileSync("#{process.cwd()}/config/seeds/indicators.json", 'UTF8')
-      )
+      try
+        dummyIndicators = JSON.parse(
+          fs.readFileSync("#{process.cwd()}/config/seeds/indicators.json", 'UTF8')
+        )
+      catch err
+        console.log err
+        return deferred.reject(
+          "Unable to load indicator seed file, have you copied seeds from config/instances/ to config/seeds/?"
+        )
 
       replaceThemeNameWithId(
         dummyIndicators
