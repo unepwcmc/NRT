@@ -1,3 +1,5 @@
+DataConverter = require '../lib/data_converter'
+
 module.exports = (data) ->
   records = []
   for key, value of data.headers
@@ -5,12 +7,14 @@ module.exports = (data) ->
 
     if index >= 4
       record =
-        periodStart: dateToEpoch(value.value)
-        value: percentageToDecimal(data.data[0][key].value)
+        periodStart: DataConverter.convert('date', 'epoch', value.value)
+        value: DataConverter.convert('percentage', 'decimal', data.data[0][key].value)
 
 
       if data.data.length > 1
-        subIndicators = extractSubIndicators(data.data, key, dateToEpoch(value.value))
+        subIndicators = extractSubIndicators(
+          data.data, key, DataConverter.convert('date', 'epoch', value.value)
+        )
         record.subIndicator = subIndicators
 
       records.push record
@@ -24,14 +28,8 @@ extractSubIndicators = (data, key, periodStart) ->
 
     subIndicators.push(
       subIndicator: row['3'].value
-      value: percentageToDecimal(row[key].value)
+      value: DataConverter.convert('percentage', 'decimal', row[key].value)
       periodStart: periodStart
     )
 
   return subIndicators
-
-percentageToDecimal = (percentage) ->
-  parseInt(percentage, 10) / 100
-
-dateToEpoch = (date) ->
-  new Date(date).getTime()
