@@ -3,10 +3,91 @@
     "id": "1",
     "type": "standard",
     "name": "Agriculture",
-    "spreadsheet_key": "0Aum2hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
     "range": [
         {"minValue": 0.5, "message": "Good"},
         {"minValue": 0, "message": "Bad"}
+    ]
+  }, {
+    "id": "2",
+    "type": "standard",
+    "name": "Other Primary Industries",
+    "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "range": [
+      {"minValue": 0.5, "message": "Good"},
+      {"minValue": 0.0, "message": "Bad"}
+    ]
+  }, {
+    "id": "3",
+    "type": "standard",
+    "name": "Manufacture of food, beverages and tobacco",
+    "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "range": [
+      {"minValue": 0.5, "message": "Good"},
+      {"minValue": 0.0, "message": "Bad"}
+    ]
+  }, {
+    "id": "4",
+    "type": "standard",
+    "name": "Wood and paper",
+    "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "range": [
+      {"minValue": 0.5, "message": "Good"},
+      {"minValue": 0.0, "message": "Bad"}
+    ]
+  }, {
+    "id": "5",
+    "type": "standard",
+    "name": "Chemical Industry",
+    "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "range": [
+      {"minValue": 0.5, "message": "Good"},
+      {"minValue": 0.0, "message": "Bad"}
+    ]
+  }, {
+    "id": "6",
+    "type": "standard",
+    "name": "Other Manufacturing",
+    "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "range": [
+      {"minValue": 0.5, "message": "Good"},
+      {"minValue": 0.0, "message": "Bad"}
+    ]
+  }, {
+    "id": "7",
+    "type": "standard",
+    "name": "Construction",
+    "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "range": [
+      {"minValue": 0.5, "message": "Good"},
+      {"minValue": 0.0, "message": "Bad"}
+    ]
+  }, {
+    "id": "8",
+    "type": "standard",
+    "name": "Wholesale and Retail Trade",
+    "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "range": [
+      {"minValue": 0.5, "message": "Good"},
+      {"minValue": 0.0, "message": "Bad"}
+    ]
+  }, {
+    "id": "9",
+    "type": "standard",
+    "name": "Hotels and Transport",
+    "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "range": [
+      {"minValue": 0.5, "message": "Good"},
+      {"minValue": 0.0, "message": "Bad"}
+    ]
+  }, {
+    "id": "10",
+    "type": "standard",
+    "name": "Other Services",
+    "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "range": [
+      {"minValue": 0.5, "message": "Good"},
+      {"minValue": 0.0, "message": "Bad"}
     ]
   }
 ]
