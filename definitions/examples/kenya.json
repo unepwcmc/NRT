@@ -1,0 +1,12 @@
+[
+  {
+    "id": "1",
+    "type": "standard",
+    "name": "Agriculture",
+    "spreadsheet_key": "0Aum2hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }
+]
