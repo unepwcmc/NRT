@@ -1,0 +1,10 @@
+{
+  "instance_name": "Kenya",
+  "db": {
+    "name": "nrt_development"
+  },
+  "features": {
+    "ldap": false,
+    "dpsir_filtering": true
+  }
+}
