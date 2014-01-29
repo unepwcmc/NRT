@@ -38,4 +38,128 @@
     }
     ]
   }
-}]
+}, {
+    "short_name": "Agriculture contribution to Other Primary Industries",
+    "title": "Agriculture contribution to Other Primary Industries",
+    "theme": "Contribution of the forestry sector",
+    "sections": [],
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatorId": 2,
+      "name": "Agriculture contribution to Other Primary Industries",
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "yearly",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    },
+    ]
+  }, {
+    "short_name": "Manufacture of food, beverages and tobacco",
+    "title": "Manufacture of food, beverages and tobacco",
+    "theme": "Contribution of the forestry sector",
+    "sections": [],
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 3,
+      "short_name": "Manufacture of food, beverages and tobacco",
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "quarterly",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Agriculture contribution to the Wood and paper sector",
+    "title": "Agriculture contribution to the Wood and paper sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "id": "4",
+  }, {
+    "short_name": "Agriculture contribution to the Chemical Industry sector",
+    "title": "Agriculture contribution to the Chemical Industry sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "id": "5",
+  }, {
+    "short_name": "Agriculture contribution to the Other Manufacturing sector",
+    "title": "Agriculture contribution to the Other Manufacturing sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "id": "6",
+  }, {
+    "short_name": "Agriculture contribution to the Construction sector",
+    "title": "Agriculture contribution to the Construction sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "id": "7",
+  }, {
+    "short_name": "Agriculture contribution to the Wholesale and Retail Trade sector",
+    "title": "Agriculture contribution to the Wholesale and Retail Trade sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "id": "8",
+  }, {
+    "short_name": "Agriculture contribution to the Hotels and Transport sector",
+    "title": "Agriculture contribution to the Hotels and Transport sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "id": "9",
+  }, {
+    "short_name": "Agriculture contribution to the Other Services sector",
+    "title": "Agriculture contribution to the Other Services sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "id": "10",
+  }
+]
