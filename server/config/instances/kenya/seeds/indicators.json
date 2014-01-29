@@ -6,10 +6,9 @@
   "type": "standard",
   "indicatorDefinition": {
     "indicatoratorId": 1,
-    "name": "Agriculture contribution to the forestry section",
     "unit": "% contribution",
     "short_unit": "%",
-    "period": "quarterly",
+    "period": "annual",
     "xAxis": "date",
     "yAxis": "value",
     "geometryField": "geometry",
@@ -45,11 +44,10 @@
     "sections": [],
     "type": "standard",
     "indicatorDefinition": {
-      "indicatorId": 2,
-      "name": "Agriculture contribution to Other Primary Industries",
+      "indicatoratorId": 2,
       "unit": "% contribution",
       "short_unit": "%",
-      "period": "yearly",
+      "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
@@ -77,8 +75,7 @@
         "type": "text"
       }
       ]
-    },
-    ]
+    }
   }, {
     "short_name": "Manufacture of food, beverages and tobacco",
     "title": "Manufacture of food, beverages and tobacco",
@@ -87,10 +84,9 @@
     "type": "standard",
     "indicatorDefinition": {
       "indicatoratorId": 3,
-      "short_name": "Manufacture of food, beverages and tobacco",
       "unit": "% contribution",
       "short_unit": "%",
-      "period": "quarterly",
+      "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
       "geometryField": "geometry",
@@ -124,42 +120,266 @@
     "title": "Agriculture contribution to the Wood and paper sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
-    "id": "4",
+    "indicatorDefinition": {
+      "indicatoratorId": 4,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
   }, {
     "short_name": "Agriculture contribution to the Chemical Industry sector",
     "title": "Agriculture contribution to the Chemical Industry sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
-    "id": "5",
+    "indicatorDefinition": {
+      "indicatoratorId": 5,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
   }, {
     "short_name": "Agriculture contribution to the Other Manufacturing sector",
     "title": "Agriculture contribution to the Other Manufacturing sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
-    "id": "6",
+    "indicatorDefinition": {
+      "indicatoratorId": 6,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
   }, {
     "short_name": "Agriculture contribution to the Construction sector",
     "title": "Agriculture contribution to the Construction sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
-    "id": "7",
+    "indicatorDefinition": {
+      "indicatoratorId": 7,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
   }, {
     "short_name": "Agriculture contribution to the Wholesale and Retail Trade sector",
     "title": "Agriculture contribution to the Wholesale and Retail Trade sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
-    "id": "8",
+    "indicatorDefinition": {
+      "indicatoratorId": 8,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
   }, {
     "short_name": "Agriculture contribution to the Hotels and Transport sector",
     "title": "Agriculture contribution to the Hotels and Transport sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
-    "id": "9",
+    "indicatorDefinition": {
+      "indicatoratorId": 9,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
   }, {
     "short_name": "Agriculture contribution to the Other Services sector",
     "title": "Agriculture contribution to the Other Services sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
-    "id": "10",
+    "indicatorDefinition": {
+      "indicatoratorId": 10,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
   }
 ]
