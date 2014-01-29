@@ -1,6 +1,9 @@
 [
 {
   "title": "Contribution of the forestry sector",
-  "image_url": ""
+  "image_url": "",
+  "sections": [
+    {"title": "Description", "content": "Contribution of the forestry sector to value-added in the different industries (as a share of total value added induced)"}
+  ]
 } 
 ]

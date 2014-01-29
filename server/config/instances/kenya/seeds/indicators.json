@@ -1,6 +1,6 @@
 [{
-  "short_name": "Agriculture contribution to the forestry section",
-  "title": "Agriculture contribution to the forestry section",
+  "short_name": "Contribution to agriculture section",
+  "title": "Forestry sector contribution to the agriculture section",
   "theme": "Contribution of the forestry sector",
   "sections": [],
   "type": "standard",
@@ -38,8 +38,8 @@
     ]
   }
 }, {
-    "short_name": "Agriculture contribution to Other Primary Industries",
-    "title": "Agriculture contribution to Other Primary Industries",
+    "short_name": "Contribution other primary industries",
+    "title": "Forestry sector contribution to other primary industries",
     "theme": "Contribution of the forestry sector",
     "sections": [],
     "type": "standard",
@@ -116,8 +116,8 @@
       ]
     }
   }, {
-    "short_name": "Agriculture contribution to the Wood and paper sector",
-    "title": "Agriculture contribution to the Wood and paper sector",
+    "short_name": "Contribution to wood and paper sector",
+    "title": "Forestry sector contribution to the wood and paper sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "indicatorDefinition": {
@@ -154,8 +154,8 @@
       ]
     }
   }, {
-    "short_name": "Agriculture contribution to the Chemical Industry sector",
-    "title": "Agriculture contribution to the Chemical Industry sector",
+    "short_name": "Contribution to chemical industry sector",
+    "title": "Forestry sector contribution to the chemical industry sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "indicatorDefinition": {
@@ -192,8 +192,8 @@
       ]
     }
   }, {
-    "short_name": "Agriculture contribution to the Other Manufacturing sector",
-    "title": "Agriculture contribution to the Other Manufacturing sector",
+    "short_name": "Contribution to other manufacturing sector",
+    "title": "Forestry sector contribution to other manufacturing sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "indicatorDefinition": {
@@ -230,8 +230,8 @@
       ]
     }
   }, {
-    "short_name": "Agriculture contribution to the Construction sector",
-    "title": "Agriculture contribution to the Construction sector",
+    "short_name": "Contribution to construction sector",
+    "title": "Forestry sector contribution to the construction sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "indicatorDefinition": {
@@ -268,8 +268,8 @@
       ]
     }
   }, {
-    "short_name": "Agriculture contribution to the Wholesale and Retail Trade sector",
-    "title": "Agriculture contribution to the Wholesale and Retail Trade sector",
+    "short_name": "Contribution to wholesale and retail trade sector",
+    "title": "Forestry sector contribution to wholesale and retail trade sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "indicatorDefinition": {
@@ -306,8 +306,8 @@
       ]
     }
   }, {
-    "short_name": "Agriculture contribution to the Hotels and Transport sector",
-    "title": "Agriculture contribution to the Hotels and Transport sector",
+    "short_name": "Contribution to hotels and transport sector",
+    "title": "Forestry sector contribution to the hotels and transport sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "indicatorDefinition": {
@@ -344,8 +344,8 @@
       ]
     }
   }, {
-    "short_name": "Agriculture contribution to the Other Services sector",
-    "title": "Agriculture contribution to the Other Services sector",
+    "short_name": "Contribution to other services sector",
+    "title": "Forestry sector contribution to the other services sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "indicatorDefinition": {
