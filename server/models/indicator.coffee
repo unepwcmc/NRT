@@ -34,7 +34,7 @@ _.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
 _.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
 
 indicatorSchema.statics.CONDITIONS = {
-  IS_PRIMARY: {type: AppConfig.get('indicators').primary_type}
+  IS_PRIMARY: {type: AppConfig.get('indicators')?.primary_type}
 }
 
 replaceThemeNameWithId = (indicators) ->
