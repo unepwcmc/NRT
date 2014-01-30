@@ -19,9 +19,6 @@ readConfigFile = ->
 
   configFile = path.join(__dirname, '../', 'config', "#{env}.json")
 
-  console.log 'going to read'
-  console.log configFile
-
   unless fs.existsSync(configFile)
     throw new Error(
       "No config for env in #{configFile}, copy config/env.json.example and edit as appropriate"
