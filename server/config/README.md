@@ -3,7 +3,11 @@ NRT is powered by a number of configuration files
 
 ## config/`env`.json
 This file sets the global app configuration for the given environment.
-Currently, the possible environments are 'development', 'test' and 'production'
+Currently, the possible environments are 'development', 'test' and 'production'.
+
+If you are configuring a specific instance of NRT, you can store and
+commit the config files in `config/instances` and then use symlinks to
+include these configurations in the correct location as above.
 
 ### Using it in the app
 The config is accessible thusly:
