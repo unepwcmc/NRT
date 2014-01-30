@@ -6,6 +6,8 @@ async = require('async')
 Q = require('q')
 moment = require('moment')
 
+AppConfig = require('../initializers/config')
+
 IndicatorData = require('./indicator_data').model
 Page = require('./page').model
 
@@ -32,7 +34,7 @@ _.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
 _.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
 
 indicatorSchema.statics.CONDITIONS = {
-  IS_PRIMARY: {type: 'esri'}
+  IS_PRIMARY: {type: AppConfig.get('indicators').primary_type}
 }
 
 replaceThemeNameWithId = (indicators) ->
