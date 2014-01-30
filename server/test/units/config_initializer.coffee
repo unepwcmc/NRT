@@ -10,7 +10,7 @@ suite('App Config')
 
 configDir = path.join(__dirname, '../../', 'config')
 
-test('.initialize returns the middleware containing the app config', -
+test('.initialize returns the middleware containing the app config', ->
   middleware = appConfig.initialize()
 
   assert.isNotNull middleware, "Expected the middleware to be assigned"

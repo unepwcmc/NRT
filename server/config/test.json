@@ -2,6 +2,9 @@
   "db": {
     "name": "such_nrt_tests"
   },
+  "indicators": {
+    "primary_type": "esri"
+  },
   "features": {
     "ldap": true,
     "dpsir_filtering": true
