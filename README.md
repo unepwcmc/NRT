@@ -24,7 +24,7 @@ installed (don't worry, they're short!)
   `cd server/ && npm run-script setup`
 
 ### Configuration
-Your application needs a configuration file for the environment it will
+Your application needs configuration files for the environment it will
 be run in. View the [configuration README](server/config/README.md) for
 possible options.
 

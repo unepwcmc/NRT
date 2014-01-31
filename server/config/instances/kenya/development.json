@@ -1,5 +1,8 @@
 {
-  "instance_name": "Abu Dhabi",
+  "instance_name": "Kenya",
+  "indicators": {
+    "primary_type": "standard"
+  },
   "db": {
     "name": "nrt_development"
   },

@@ -6,6 +6,8 @@ async = require('async')
 Q = require('q')
 moment = require('moment')
 
+AppConfig = require('../initializers/config')
+
 IndicatorData = require('./indicator_data').model
 Page = require('./page').model
 
@@ -32,7 +34,7 @@ _.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
 _.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
 
 indicatorSchema.statics.CONDITIONS = {
-  IS_PRIMARY: {type: 'esri'}
+  IS_PRIMARY: {type: AppConfig.get('indicators')?.primary_type}
 }
 
 replaceThemeNameWithId = (indicators) ->
@@ -94,9 +96,15 @@ indicatorSchema.statics.seedData = ->
       return deferred.reject(error)
 
     if count is 0
-      dummyIndicators = JSON.parse(
-        fs.readFileSync("#{process.cwd()}/lib/seed_indicators.json", 'UTF8')
-      )
+      try
+        dummyIndicators = JSON.parse(
+          fs.readFileSync("#{process.cwd()}/config/seeds/indicators.json", 'UTF8')
+        )
+      catch err
+        console.log err
+        return deferred.reject(
+          "Unable to load indicator seed file, have you copied seeds from config/instances/ to config/seeds/?"
+        )
 
       replaceThemeNameWithId(
         dummyIndicators

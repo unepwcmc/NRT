@@ -1,6 +1,6 @@
 # Defining indicators
 The indicators the application is seeded with are defined inside
-lib/seed_indicators.json. This document describes the fields indicators are
+config/seeds/indicators.json. This document describes the fields indicators are
 expected to have, and how they affect the behavior of the application 
 
 ## Fields
