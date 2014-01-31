@@ -28,6 +28,8 @@ readConfigFile = ->
   return JSON.parse(configJSON)
 
 exports.initialize = ->
+  readConfigFile()
+
   middleware = (req, res, next) ->
     req.APP_CONFIG = res.locals.APP_CONFIG = APP_CONFIG
 
