@@ -1,1 +1,385 @@
-[{"data":[{"text":"Good","value":20.8,"date":"1997-01-01T00:00:00.000Z"},{"text":"Good","value":19.8,"date":"1998-01-01T00:00:00.000Z"},{"text":"Good","value":19.8,"date":"1999-01-01T00:00:00.000Z"},{"text":"Bad","value":14.2,"date":"2000-01-01T00:00:00.000Z"},{"text":"Good","value":21,"date":"2001-01-01T00:00:00.000Z"},{"text":"Good","value":19.4,"date":"2002-01-01T00:00:00.000Z"},{"text":"Good","value":17.9,"date":"2003-01-01T00:00:00.000Z"},{"text":"Good","value":15.1,"date":"2004-01-01T00:00:00.000Z"},{"text":"Bad","value":12.8,"date":"2005-01-01T00:00:00.000Z"},{"text":"Bad","value":11.7,"date":"2006-01-01T00:00:00.000Z"},{"text":"Bad","value":9.9,"date":"2007-01-01T00:00:00.000Z"},{"text":"Bad","value":10.7,"date":"2008-01-01T00:00:00.000Z"},{"text":"Bad","value":8.4,"date":"2009-01-01T00:00:00.000Z"}],"indicator":"Contribution to agriculture section"},{"data":[{"text":"Bad","value":0.2,"date":"1997-01-01T00:00:00.000Z"},{"text":"Bad","value":0.2,"date":"1998-01-01T00:00:00.000Z"},{"text":"Bad","value":0.6,"date":"1999-01-01T00:00:00.000Z"},{"text":"Bad","value":0.5,"date":"2000-01-01T00:00:00.000Z"},{"text":"Bad","value":0.5,"date":"2001-01-01T00:00:00.000Z"},{"text":"Bad","value":1,"date":"2002-01-01T00:00:00.000Z"},{"text":"Bad","value":0.8,"date":"2003-01-01T00:00:00.000Z"},{"text":"Bad","value":0.6,"date":"2004-01-01T00:00:00.000Z"},{"text":"Bad","value":0.3,"date":"2005-01-01T00:00:00.000Z"},{"text":"Bad","value":0.3,"date":"2006-01-01T00:00:00.000Z"},{"text":"Bad","value":0.3,"date":"2007-01-01T00:00:00.000Z"},{"text":"Bad","value":0.2,"date":"2008-01-01T00:00:00.000Z"},{"text":"Bad","value":0.4,"date":"2009-01-01T00:00:00.000Z"}],"indicator":"Contribution other primary industries"},{"data":[{"text":"Bad","value":6,"date":"1997-01-01T00:00:00.000Z"},{"text":"Bad","value":5.5,"date":"1998-01-01T00:00:00.000Z"},{"text":"Bad","value":5.6,"date":"1999-01-01T00:00:00.000Z"},{"text":"Bad","value":3.8,"date":"2000-01-01T00:00:00.000Z"},{"text":"Bad","value":4.8,"date":"2001-01-01T00:00:00.000Z"},{"text":"Bad","value":4.8,"date":"2002-01-01T00:00:00.000Z"},{"text":"Bad","value":5.5,"date":"2003-01-01T00:00:00.000Z"},{"text":"Bad","value":5.7,"date":"2004-01-01T00:00:00.000Z"},{"text":"Bad","value":4.5,"date":"2005-01-01T00:00:00.000Z"},{"text":"Bad","value":5.1,"date":"2006-01-01T00:00:00.000Z"},{"text":"Bad","value":4.4,"date":"2007-01-01T00:00:00.000Z"},{"text":"Bad","value":4.5,"date":"2008-01-01T00:00:00.000Z"},{"text":"Bad","value":5.3,"date":"2009-01-01T00:00:00.000Z"}],"indicator":"Manufacture of food, beverages and tobacco"},{"data":[{"text":"Bad","value":14.000000000000002,"date":"1997-01-01T00:00:00.000Z"},{"text":"Good","value":17.2,"date":"1998-01-01T00:00:00.000Z"},{"text":"Bad","value":6.3,"date":"1999-01-01T00:00:00.000Z"},{"text":"Bad","value":10.3,"date":"2000-01-01T00:00:00.000Z"},{"text":"Bad","value":7.9,"date":"2001-01-01T00:00:00.000Z"},{"text":"Bad","value":8.2,"date":"2002-01-01T00:00:00.000Z"},{"text":"Bad","value":14.3,"date":"2003-01-01T00:00:00.000Z"},{"text":"Good","value":17.3,"date":"2004-01-01T00:00:00.000Z"},{"text":"Bad","value":14.499999999999998,"date":"2005-01-01T00:00:00.000Z"},{"text":"Bad","value":14.400000000000002,"date":"2006-01-01T00:00:00.000Z"},{"text":"Good","value":15.2,"date":"2007-01-01T00:00:00.000Z"},{"text":"Good","value":15.9,"date":"2008-01-01T00:00:00.000Z"},{"text":"Good","value":16.6,"date":"2009-01-01T00:00:00.000Z"}],"indicator":"Contribution to wood and paper sector"},{"data":[{"text":"Good","value":29.2,"date":"1997-01-01T00:00:00.000Z"},{"text":"Good","value":25.5,"date":"1998-01-01T00:00:00.000Z"},{"text":"Good","value":32.5,"date":"1999-01-01T00:00:00.000Z"},{"text":"Good","value":27.200000000000003,"date":"2000-01-01T00:00:00.000Z"},{"text":"Good","value":34.8,"date":"2001-01-01T00:00:00.000Z"},{"text":"Good","value":26.700000000000003,"date":"2002-01-01T00:00:00.000Z"},{"text":"Good","value":27.699999999999996,"date":"2003-01-01T00:00:00.000Z"},{"text":"Good","value":26.1,"date":"2004-01-01T00:00:00.000Z"},{"text":"Excellent","value":39.8,"date":"2005-01-01T00:00:00.000Z"},{"text":"Excellent","value":39.5,"date":"2006-01-01T00:00:00.000Z"},{"text":"Good","value":32.3,"date":"2007-01-01T00:00:00.000Z"},{"text":"Good","value":33.8,"date":"2008-01-01T00:00:00.000Z"},{"text":"Good","value":24.4,"date":"2009-01-01T00:00:00.000Z"}],"indicator":"Contribution to chemical industry sector"},{"data":[{"text":"Bad","value":5.6,"date":"1997-01-01T00:00:00.000Z"},{"text":"Bad","value":5.5,"date":"1998-01-01T00:00:00.000Z"},{"text":"Bad","value":5.8,"date":"1999-01-01T00:00:00.000Z"},{"text":"Bad","value":5.8,"date":"2000-01-01T00:00:00.000Z"},{"text":"Bad","value":4.4,"date":"2001-01-01T00:00:00.000Z"},{"text":"Bad","value":6.3,"date":"2002-01-01T00:00:00.000Z"},{"text":"Bad","value":6,"date":"2003-01-01T00:00:00.000Z"},{"text":"Bad","value":6.5,"date":"2004-01-01T00:00:00.000Z"},{"text":"Bad","value":4.9,"date":"2005-01-01T00:00:00.000Z"},{"text":"Bad","value":5.5,"date":"2006-01-01T00:00:00.000Z"},{"text":"Bad","value":4.6,"date":"2007-01-01T00:00:00.000Z"},{"text":"Bad","value":4.1,"date":"2008-01-01T00:00:00.000Z"},{"text":"Bad","value":4.7,"date":"2009-01-01T00:00:00.000Z"}],"indicator":"Contribution to other manufacturing sector"},{"data":[{"text":"Bad","value":9.3,"date":"1997-01-01T00:00:00.000Z"},{"text":"Bad","value":8.9,"date":"1998-01-01T00:00:00.000Z"},{"text":"Bad","value":9.7,"date":"1999-01-01T00:00:00.000Z"},{"text":"Good","value":18,"date":"2000-01-01T00:00:00.000Z"},{"text":"Bad","value":8.9,"date":"2001-01-01T00:00:00.000Z"},{"text":"Bad","value":10.9,"date":"2002-01-01T00:00:00.000Z"},{"text":"Bad","value":9.9,"date":"2003-01-01T00:00:00.000Z"},{"text":"Bad","value":8.4,"date":"2004-01-01T00:00:00.000Z"},{"text":"Bad","value":8.6,"date":"2005-01-01T00:00:00.000Z"},{"text":"Bad","value":8.3,"date":"2006-01-01T00:00:00.000Z"},{"text":"Good","value":16,"date":"2007-01-01T00:00:00.000Z"},{"text":"Good","value":17.2,"date":"2008-01-01T00:00:00.000Z"},{"text":"Good","value":25.6,"date":"2009-01-01T00:00:00.000Z"}],"indicator":"Contribution to construction sector"},{"data":[{"text":"Bad","value":5.2,"date":"1997-01-01T00:00:00.000Z"},{"text":"Bad","value":6.6000000000000005,"date":"1998-01-01T00:00:00.000Z"},{"text":"Bad","value":7.000000000000001,"date":"1999-01-01T00:00:00.000Z"},{"text":"Bad","value":7.400000000000001,"date":"2000-01-01T00:00:00.000Z"},{"text":"Bad","value":5.8,"date":"2001-01-01T00:00:00.000Z"},{"text":"Bad","value":7.3,"date":"2002-01-01T00:00:00.000Z"},{"text":"Bad","value":6.2,"date":"2003-01-01T00:00:00.000Z"},{"text":"Bad","value":7.3,"date":"2004-01-01T00:00:00.000Z"},{"text":"Bad","value":5.9,"date":"2005-01-01T00:00:00.000Z"},{"text":"Bad","value":5.9,"date":"2006-01-01T00:00:00.000Z"},{"text":"Bad","value":6.9,"date":"2007-01-01T00:00:00.000Z"},{"text":"Bad","value":5.8,"date":"2008-01-01T00:00:00.000Z"},{"text":"Bad","value":5,"date":"2009-01-01T00:00:00.000Z"}],"indicator":"Contribution to wholesale and retail trade sector"},{"data":[{"text":"Bad","value":3.6000000000000005,"date":"1997-01-01T00:00:00.000Z"},{"text":"Bad","value":4.3,"date":"1998-01-01T00:00:00.000Z"},{"text":"Bad","value":5.2,"date":"1999-01-01T00:00:00.000Z"},{"text":"Bad","value":6.2,"date":"2000-01-01T00:00:00.000Z"},{"text":"Bad","value":5.2,"date":"2001-01-01T00:00:00.000Z"},{"text":"Bad","value":7.1,"date":"2002-01-01T00:00:00.000Z"},{"text":"Bad","value":5.4,"date":"2003-01-01T00:00:00.000Z"},{"text":"Bad","value":6.4,"date":"2004-01-01T00:00:00.000Z"},{"text":"Bad","value":4.4,"date":"2005-01-01T00:00:00.000Z"},{"text":"Bad","value":5,"date":"2006-01-01T00:00:00.000Z"},{"text":"Bad","value":5.5,"date":"2007-01-01T00:00:00.000Z"},{"text":"Bad","value":3.9,"date":"2008-01-01T00:00:00.000Z"},{"text":"Bad","value":4,"date":"2009-01-01T00:00:00.000Z"}],"indicator":"Contribution to hotels and transport sector"},{"data":[{"text":"Bad","value":6.1,"date":"1997-01-01T00:00:00.000Z"},{"text":"Bad","value":6.6000000000000005,"date":"1998-01-01T00:00:00.000Z"},{"text":"Bad","value":7.6,"date":"1999-01-01T00:00:00.000Z"},{"text":"Bad","value":6.6000000000000005,"date":"2000-01-01T00:00:00.000Z"},{"text":"Bad","value":6.800000000000001,"date":"2001-01-01T00:00:00.000Z"},{"text":"Bad","value":8.4,"date":"2002-01-01T00:00:00.000Z"},{"text":"Bad","value":6.3,"date":"2003-01-01T00:00:00.000Z"},{"text":"Bad","value":6.7,"date":"2004-01-01T00:00:00.000Z"},{"text":"Bad","value":4.4,"date":"2005-01-01T00:00:00.000Z"},{"text":"Bad","value":4.2,"date":"2006-01-01T00:00:00.000Z"},{"text":"Bad","value":4.9,"date":"2007-01-01T00:00:00.000Z"},{"text":"Bad","value":3.9,"date":"2008-01-01T00:00:00.000Z"},{"text":"Bad","value":5.6,"date":"2009-01-01T00:00:00.000Z"}],"indicator":"Contribution to other services sector"}]
+[{
+  "short_name": "Contribution to agriculture section",
+  "title": "Forestry sector contribution to the agriculture section",
+  "theme": "Contribution of the forestry sector",
+  "sections": [],
+  "type": "standard",
+  "indicatorDefinition": {
+    "indicatoratorId": 1,
+    "unit": "% contribution",
+    "short_unit": "%",
+    "period": "annual",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+    {
+      "source": {
+        "name": "periodStart",
+        "type": "epoch"
+      },
+      "name": "date",
+      "type": "date"
+    }, {
+      "source": {
+        "name": "value",
+        "type": "decimalPercentage"
+      },
+      "name": "value",
+      "type": "integer"
+    }, {
+      "source": {
+        "name": "text",
+        "type": "text"
+      },
+      "name": "text",
+      "type": "text"
+    }
+    ]
+  }
+}, {
+    "short_name": "Contribution other primary industries",
+    "title": "Forestry sector contribution to other primary industries",
+    "theme": "Contribution of the forestry sector",
+    "sections": [],
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 2,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Manufacture of food, beverages and tobacco",
+    "title": "Manufacture of food, beverages and tobacco",
+    "theme": "Contribution of the forestry sector",
+    "sections": [],
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 3,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Contribution to wood and paper sector",
+    "title": "Forestry sector contribution to the wood and paper sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 4,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Contribution to chemical industry sector",
+    "title": "Forestry sector contribution to the chemical industry sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 5,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Contribution to other manufacturing sector",
+    "title": "Forestry sector contribution to other manufacturing sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 6,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Contribution to construction sector",
+    "title": "Forestry sector contribution to the construction sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 7,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Contribution to wholesale and retail trade sector",
+    "title": "Forestry sector contribution to wholesale and retail trade sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 8,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Contribution to hotels and transport sector",
+    "title": "Forestry sector contribution to the hotels and transport sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 9,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Contribution to other services sector",
+    "title": "Forestry sector contribution to the other services sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 10,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }
+]
