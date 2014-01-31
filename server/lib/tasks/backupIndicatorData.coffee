@@ -8,7 +8,7 @@ fs = require('fs')
 
 console.log "Backing up Indicator Data"
 IndicatorData.dataToSeedJSON().then((json)->
-  dataFilename = path.join(process.cwd(), 'config', 'seeds', 'indicators.json')
+  dataFilename = path.join(process.cwd(), 'config', 'seeds', 'indicator_data.json')
 
   fs.writeFile(dataFilename, json, (err) ->
     if err
