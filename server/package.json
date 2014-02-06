@@ -6,7 +6,7 @@
   "scripts": {
     "test": "NODE_ENV=test mocha test/**/*.coffee test/**/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit --reporter spec",
     "test-debug": "NODE_ENV=test mocha test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit --reporter spec --debug",
-    "start": "supervisor -e 'node|js|json|coffee|hbs' ./bin/server.js",
+    "start": "supervisor -e 'node,js,json,coffee,hbs' ./bin/server.js",
     "debug": "node --debug ./bin/server.js",
     "development": "echo 'Please use `npm start` to run the server in development mode'",
     "production": "NODE_ENV=production node ./bin/server.js",
