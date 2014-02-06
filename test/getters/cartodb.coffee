@@ -41,7 +41,7 @@ test(".fetch builds a request URL, queries it, and returns the data", (done) ->
         but called with #{getStub.getCall(0).args}"
       )
 
-      assert.strictEqual(fetchedData, theData.rows,
+      assert.strictEqual(fetchedData, theData,
         "Expected fetch to return the rows of the get request"
       )
       done()
