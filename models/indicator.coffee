@@ -2,26 +2,29 @@ fs = require('fs')
 Q = require('q')
 _ = require('underscore')
 
-GDocGetter = require('../getters/gdoc')
 GDocFormatter = require('../formatters/gdoc')
 StandardIndicatorator = require('../indicatorators/standard_indicatorator')
+
+GETTERS =
+  gdoc: require('../getters/gdoc')
 
 module.exports = class Indicator
   constructor: (attributes) ->
     _.extend(@, attributes)
 
   query: ->
-    @getDataFrom(@source).then( (data) =>
-      @formatDataFrom(@source, data)
+    @getData().then( (data) =>
+      @formatData(data)
     )
     #new GDocGetter(@).then( (data) =>
       #formattedData = GDocFormatter(data)
       #StandardIndicatorator.applyRanges(formattedData, @range)
     #)
 
-  getDataFrom: ->
+  getData: ->
+    GETTERS[@source](@)
 
-  formatDataFrom: ->
+  formatData: ->
 
   @find: (id) ->
     deferred = Q.defer()

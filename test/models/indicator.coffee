@@ -47,7 +47,7 @@ test(".query loads and formats the data based on its source", (done) ->
     Q.fcall(-> gotData)
   )
 
-  formatDataFrom = sinon.stub(indicator, 'formatDataFrom', ->)
+  formatData = sinon.stub(indicator, 'formatData', ->)
 
   indicator.query().then( ->
     try
@@ -56,11 +56,11 @@ test(".query loads and formats the data based on its source", (done) ->
         "Expected getData to be called"
       )
 
-      formatDataCallArgs = formatDataFrom.getCall(0).args
+      formatDataCallArgs = formatData.getCall(0).args
 
       assert.isTrue(
-        formatDataFrom.calledWith(gotData),
-        "Expected formatDataFrom to be called with the fetched data,
+        formatData.calledWith(gotData),
+        "Expected formatData to be called with the fetched data,
         but was called with #{formatDataCallArgs}"
       )
 
@@ -70,25 +70,12 @@ test(".query loads and formats the data based on its source", (done) ->
   ).fail(done)
 )
 
-test(".getData calls a getter based on the given type", ->
+test('.getData throws an error if there is no getter for the source', ->
   indicator = new Indicator(
-    source: 'gdoc'
+    source: "this_source_does_not_exist"
   )
 
-  gDocGetterStub = sinon.stub(GDocGetter::, 'constructor', ->
-    Q.fcall(->)
-  )
-
-  indicator.getData().then(->
-    try
-      assert.isTrue(
-        gDocGetterStub.calledOnce,
-        "Expect the GDocGetter to be called, as the indicator.source is 'gdoc'"
-      )
-      done()
-    catch err
-      done(err)
-    finally
-      gDocGetterStub.restore()
-  ).fail(done)
+  assert.throw( (->
+    indicator.getData()
+  ), "No known getter for source 'this_source_does_not_exist'")
 )
