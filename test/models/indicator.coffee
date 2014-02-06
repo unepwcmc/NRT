@@ -4,7 +4,9 @@ sinon = require('sinon')
 Indicator = require('../../models/indicator')
 fs = require 'fs'
 Q = require('q')
+
 GDocGetter = require('../../getters/gdoc')
+StandardIndicatorator = require('../../indicatorators/standard_indicatorator')
 
 suite('Indicator')
 
@@ -49,6 +51,8 @@ test(".query loads and formats the data based on its source", (done) ->
 
   formatData = sinon.stub(indicator, 'formatData', ->)
 
+  applyRangesStub = sinon.stub(StandardIndicatorator, 'applyRanges', ->)
+
   indicator.query().then( ->
     try
       assert.isTrue(
@@ -67,7 +71,12 @@ test(".query loads and formats the data based on its source", (done) ->
       done()
     catch err
       done(err)
-  ).fail(done)
+    finally
+      applyRangesStub.restore()
+  ).fail((err) ->
+    applyRangesStub.restore()
+    done(err)
+  )
 )
 
 test('.getData throws an error if there is no getter for the source', ->
