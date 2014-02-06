@@ -4,6 +4,7 @@ sinon = require('sinon')
 Indicator = require('../../models/indicator')
 fs = require 'fs'
 Q = require('q')
+GDocGetter = require('../../getters/gdoc')
 
 suite('Indicator')
 
@@ -51,20 +52,43 @@ test(".query loads and formats the data based on its source", (done) ->
   indicator.query().then( ->
     try
       assert.isTrue(
-        getDataStub.calledWith(indicator.source),
-        "Expected getDataFrom to be called with the indicator source"
+        getDataStub.calledOnce,
+        "Expected getDataFrom to be called"
       )
 
       formatDataCallArgs = formatDataFrom.getCall(0).args
 
       assert.isTrue(
-        formatDataFrom.calledWith(indicator.source, gotData),
-        "Expected formatDataFrom to be called with the indicator source and
-          fetched data, but was called with #{formatDataCallArgs}"
+        formatDataFrom.calledWith(gotData),
+        "Expected formatDataFrom to be called with the fetched data,
+        but was called with #{formatDataCallArgs}"
       )
 
       done()
     catch err
       done(err)
+  ).fail(done)
+)
+
+test(".getDataFrom calls a getter based on the given type", ->
+  indicator = new Indicator(
+    source: 'gdoc'
+  )
+
+  gDocGetterStub = sinon.stub(GDocGetter::, 'constructor', ->
+    Q.fcall(->)
+  )
+
+  indicator.getDataFrom().then(->
+    try
+      assert.isTrue(
+        gDocGetterStub.calledOnce,
+        "Expect the GDocGetter to be called, as the indicator.source is 'gdoc'"
+      )
+      done()
+    catch err
+      done(err)
+    finally
+      gDocGetterStub.restore()
   ).fail(done)
 )
