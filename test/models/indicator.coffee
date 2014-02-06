@@ -79,3 +79,13 @@ test('.getData throws an error if there is no getter for the source', ->
     indicator.getData()
   ), "No known getter for source 'this_source_does_not_exist'")
 )
+
+test('.fomatData throws an error if there is no fomatter for the source', ->
+  indicator = new Indicator(
+    source: "this_source_does_not_exist"
+  )
+
+  assert.throw( (->
+    indicator.formatData()
+  ), "No known formatter for source 'this_source_does_not_exist'")
+)

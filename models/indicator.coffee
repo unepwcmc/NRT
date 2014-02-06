@@ -16,13 +16,13 @@ module.exports = class Indicator
     @getData().then( (data) =>
       @formatData(data)
     )
-    #new GDocGetter(@).then( (data) =>
-      #formattedData = GDocFormatter(data)
-      #StandardIndicatorator.applyRanges(formattedData, @range)
-    #)
 
   getData: ->
-    GETTERS[@source](@)
+    getter = GETTERS[@source]
+    if getter?
+      getter(@)
+    else
+      throw new Error("No known getter for source '#{@source}'")
 
   formatData: ->
 
