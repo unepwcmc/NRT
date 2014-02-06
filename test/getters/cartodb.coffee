@@ -55,3 +55,50 @@ test(".fetch builds a request URL, queries it, and returns the data", (done) ->
     done(err)
   )
 )
+
+test('.buildUrl throws an error if the Indicator does not have any CartoDB configs', ->
+  indicator = new Indicator()
+  getter = new CartoDBGetter(indicator)
+
+  assert.throw( (->
+    getter.buildUrl()
+  ), "Indicator does not define a cartodb_config attribute")
+)
+
+test('.buildUrl throws an error if the Indicator cartodb_config does not specify a username', ->
+  indicator = new Indicator(
+    cartodb_config: {}
+  )
+  getter = new CartoDBGetter(indicator)
+
+  assert.throw( (->
+    getter.buildUrl()
+  ), "Indicator cartodb_config does not define a username attribute")
+)
+
+test('.buildUrl throws an error if the Indicator cartodb_config does not specify a query', ->
+  indicator = new Indicator(
+    cartodb_config:
+      username: ''
+  )
+  getter = new CartoDBGetter(indicator)
+
+  assert.throw( (->
+    getter.buildUrl()
+  ), "Indicator cartodb_config does not define a query attribute")
+)
+
+test('.buildUrl constructs the correct URL with username and query', ->
+  indicator = new Indicator(
+    cartodb_config:
+      username: 'someguy'
+      query: 'select * the things'
+  )
+
+  getter = new CartoDBGetter(indicator)
+
+  builtUrl = getter.buildUrl()
+  expectedUrl = "http://someguy.cartodb.com/api/v2/sql?q=select * the things"
+
+  assert.strictEqual builtUrl, expectedUrl
+)
