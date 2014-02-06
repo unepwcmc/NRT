@@ -64,9 +64,11 @@ test("GDoc getter takes an Indicator and queries Google Spreadsheets
     )
   )
 
-  new GDocGetter(
+  getter = new GDocGetter(
     indicator
-  ).then( (data) ->
+  )
+
+  getter.fetch().then( (data) ->
     assert.isTrue googleSpreadsheetStub.calledWith(key: '123'),
       "Expected GoogleSpreadsheets to be called with spreadsheet key '123'"
 

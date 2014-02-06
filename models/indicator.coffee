@@ -22,16 +22,16 @@ module.exports = class Indicator
 
   getData: ->
     Getter = GETTERS[@source]
-    if getter?
+    if Getter?
       getter = new Getter(@)
       getter.fetch()
     else
       throw new Error("No known getter for source '#{@source}'")
 
-  formatData: (dota) ->
+  formatData: (data) ->
     formatter = FORMATTERS[@source]
     if formatter?
-      formatter(dota)
+      formatter(data)
     else
       throw new Error("No known formatter for source '#{@source}'")
 
