@@ -79,6 +79,33 @@ test(".query loads and formats the data based on its source", (done) ->
   )
 )
 
+test('.getData finds the getter for the indicator.source and calls fetch', ->
+  indicator = new Indicator(
+    source: "gdoc"
+  )
+
+  getterFetchStub = sinon.stub(GDocGetter::, 'fetch', ->
+    Q.fcall(->)
+  )
+
+  indicator.getData().then(->
+    try
+      assert.isTrue(
+        getterFetchStub.calledOnce(),
+        "Expected getter.fetch to be called once, but called #{getterFetchStub.callCount}"
+      )
+
+      done()
+    catch err
+      done(err)
+    finally
+      getterFetchStub.restore()
+  ).fail((err) ->
+    getterFetchStub.restore()
+    done(err)
+  )
+)
+
 test('.getData throws an error if there is no getter for the source', ->
   indicator = new Indicator(
     source: "this_source_does_not_exist"
