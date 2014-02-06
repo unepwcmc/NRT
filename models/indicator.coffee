@@ -11,10 +11,17 @@ module.exports = class Indicator
     _.extend(@, attributes)
 
   query: ->
-    new GDocGetter(@).then( (data) =>
-      formattedData = GDocFormatter(data)
-      StandardIndicatorator.applyRanges(formattedData, @range)
+    @getDataFrom(@source).then( (data) =>
+      @formatDataFrom(@source, data)
     )
+    #new GDocGetter(@).then( (data) =>
+      #formattedData = GDocFormatter(data)
+      #StandardIndicatorator.applyRanges(formattedData, @range)
+    #)
+
+  getDataFrom: ->
+
+  formatDataFrom: ->
 
   @find: (id) ->
     deferred = Q.defer()
