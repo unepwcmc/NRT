@@ -2,6 +2,7 @@ assert = require('chai').assert
 sinon = require('sinon')
 Q = require('q')
 _ = require('underscore')
+request = require('request')
 
 Indicator = require('../../models/indicator')
 CartoDBGetter = require("../../getters/cartodb")
@@ -27,14 +28,14 @@ test(".fetch builds a request URL, queries it, and returns the data", (done) ->
   )
 
   theData = {some: 'data'}
-  getStub = sinon.stub(request, 'get', (cb) ->
-    cb(null, theData)
+  getStub = sinon.stub(request, 'get', (options, cb) ->
+    cb(null, body: theData)
   )
-  
+
   getter.fetch().then((fetchedData)->
     try
       assert.isTrue(
-        getStub.calledWith(fakeCartodbURL),
+        getStub.calledWith({url: fakeCartodbURL}),
         "Expected request.get to be called with the result of @buildUrl,
         but called with #{getStub.getCall(0).args}"
       )
