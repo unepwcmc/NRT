@@ -2,11 +2,13 @@ fs = require('fs')
 Q = require('q')
 _ = require('underscore')
 
-GDocFormatter = require('../formatters/gdoc')
 StandardIndicatorator = require('../indicatorators/standard_indicatorator')
 
 GETTERS =
   gdoc: require('../getters/gdoc')
+
+FORMATTERS =
+  gdoc = require('../formatters/gdoc')
 
 module.exports = class Indicator
   constructor: (attributes) ->
@@ -25,6 +27,11 @@ module.exports = class Indicator
       throw new Error("No known getter for source '#{@source}'")
 
   formatData: ->
+    formatter = FORMATTERS[@source]
+    if formatter?
+      formatter(@)
+    else
+      throw new Error("No known formatter for source '#{@source}'")
 
   @find: (id) ->
     deferred = Q.defer()
