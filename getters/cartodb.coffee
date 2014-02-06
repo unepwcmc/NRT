@@ -12,7 +12,7 @@ module.exports = class CartoDBGetter
       if err
         return deferred.reject(err)
 
-      deferred.resolve(response.body)
+      deferred.resolve(response.body.rows)
     )
 
     return deferred.promise

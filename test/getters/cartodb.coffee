@@ -27,7 +27,8 @@ test(".fetch builds a request URL, queries it, and returns the data", (done) ->
     return fakeCartodbURL
   )
 
-  theData = {some: 'data'}
+  theData =
+    rows: {some: 'data'}
   getStub = sinon.stub(request, 'get', (options, cb) ->
     cb(null, body: theData)
   )
@@ -40,8 +41,8 @@ test(".fetch builds a request URL, queries it, and returns the data", (done) ->
         but called with #{getStub.getCall(0).args}"
       )
 
-      assert.strictEqual(fetchedData, theData,
-        "Expected fetch to return the results of the get request"
+      assert.strictEqual(fetchedData, theData.rows,
+        "Expected fetch to return the rows of the get request"
       )
       done()
 
