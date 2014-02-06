@@ -6,6 +6,7 @@ StandardIndicatorator = require('../indicatorators/standard_indicatorator')
 
 GETTERS =
   gdoc: require('../getters/gdoc')
+  cartodb: require('../getters/cartodb')
 
 FORMATTERS =
   gdoc = require('../formatters/gdoc')
