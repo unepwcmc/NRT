@@ -43,7 +43,7 @@ test(".query loads and formats the data based on its source", (done) ->
   )
 
   gotData = {some: 'data'}
-  getDataStub = sinon.stub(indicator, 'getDataFrom', ->
+  getDataStub = sinon.stub(indicator, 'getData', ->
     Q.fcall(-> gotData)
   )
 
@@ -53,7 +53,7 @@ test(".query loads and formats the data based on its source", (done) ->
     try
       assert.isTrue(
         getDataStub.calledOnce,
-        "Expected getDataFrom to be called"
+        "Expected getData to be called"
       )
 
       formatDataCallArgs = formatDataFrom.getCall(0).args
@@ -70,7 +70,7 @@ test(".query loads and formats the data based on its source", (done) ->
   ).fail(done)
 )
 
-test(".getDataFrom calls a getter based on the given type", ->
+test(".getData calls a getter based on the given type", ->
   indicator = new Indicator(
     source: 'gdoc'
   )
@@ -79,7 +79,7 @@ test(".getDataFrom calls a getter based on the given type", ->
     Q.fcall(->)
   )
 
-  indicator.getDataFrom().then(->
+  indicator.getData().then(->
     try
       assert.isTrue(
         gDocGetterStub.calledOnce,
