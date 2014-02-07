@@ -17,7 +17,6 @@ startApp = ->
 
   app.get "/wb/:countryCode/:indicatorCode", worldBankQuery
   app.get "/esri/:serviceName/:featureServer", esriQuery
-  app.get "/cdb/:username/:tablename/:query", cartodbQuery
   app.get "/ede/:countryCode/:variableId", edeQuery
   app.get "/indicator/:id/data", indicatorData.query
 

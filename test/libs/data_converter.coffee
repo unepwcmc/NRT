@@ -26,3 +26,8 @@ test("#convert throws an appropriate error when type is null", ->
     DataConverter.convert('date', 'epoch', null)
   ), "DataConverter can't convert null or undefined values")
 )
+
+test("#convert('year', 'epoch', value) converts the year into an epoch", ->
+  result = DataConverter.convert('year', 'epoch', '1998')
+  assert.strictEqual(result, 883612800000)
+)

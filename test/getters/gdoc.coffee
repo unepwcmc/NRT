@@ -9,6 +9,16 @@ GoogleSpreadsheets = require("google-spreadsheets")
 
 suite('Google Docs getter')
 
+test("GDoc stores a reference to the given indicator", ->
+  indicator = {some: "data"}
+
+  getter = new GDocGetter(
+    indicator
+  )
+
+  assert.strictEqual(getter.indicator, indicator)
+)
+
 test("GDoc getter takes an Indicator and queries Google Spreadsheets
   with the indicator's spreadsheet id", (done) ->
   indicator = new Indicator(
@@ -54,9 +64,11 @@ test("GDoc getter takes an Indicator and queries Google Spreadsheets
     )
   )
 
-  new GDocGetter(
+  getter = new GDocGetter(
     indicator
-  ).then( (data) ->
+  )
+
+  getter.fetch().then( (data) ->
     assert.isTrue googleSpreadsheetStub.calledWith(key: '123'),
       "Expected GoogleSpreadsheets to be called with spreadsheet key '123'"
 
@@ -75,7 +87,7 @@ test("GDoc getter takes an Indicator and queries Google Spreadsheets
   )
 )
 
-test("GDoc getter returns all rows of a sub indicator", (done) ->
+test(".fetch returns all rows of a sub indicator", (done) ->
   indicator = new Indicator(
     spreadsheet_key: '123'
     name: 'Key stakeholders identified'
@@ -132,9 +144,11 @@ test("GDoc getter returns all rows of a sub indicator", (done) ->
     )
   )
 
-  new GDocGetter(
+  getter = new GDocGetter(
     indicator
-  ).then( (data) ->
+  )
+
+  getter.fetch().then( (data) ->
     assert.isTrue googleSpreadsheetStub.calledWith(key: '123'),
       "Expected GoogleSpreadsheets to be called with spreadsheet key '123'"
 

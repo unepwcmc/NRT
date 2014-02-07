@@ -2,19 +2,40 @@ fs = require('fs')
 Q = require('q')
 _ = require('underscore')
 
-GDocGetter = require('../getters/gdoc')
-GDocFormatter = require('../formatters/gdoc')
 StandardIndicatorator = require('../indicatorators/standard_indicatorator')
+
+GETTERS =
+  gdoc: require('../getters/gdoc')
+  cartodb: require('../getters/cartodb')
+
+FORMATTERS =
+  gdoc: require('../formatters/gdoc')
+  cartodb: require('../formatters/cartodb')
 
 module.exports = class Indicator
   constructor: (attributes) ->
     _.extend(@, attributes)
 
   query: ->
-    new GDocGetter(@).then( (data) =>
-      formattedData = GDocFormatter(data)
+    @getData().then( (data) =>
+      formattedData = @formatData(data)
       StandardIndicatorator.applyRanges(formattedData, @range)
     )
+
+  getData: ->
+    Getter = GETTERS[@source]
+    if Getter?
+      getter = new Getter(@)
+      getter.fetch()
+    else
+      throw new Error("No known getter for source '#{@source}'")
+
+  formatData: (data) ->
+    formatter = FORMATTERS[@source]
+    if formatter?
+      formatter(data)
+    else
+      throw new Error("No known formatter for source '#{@source}'")
 
   @find: (id) ->
     deferred = Q.defer()
