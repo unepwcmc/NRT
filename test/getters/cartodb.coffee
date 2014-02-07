@@ -77,7 +77,7 @@ test('.buildUrl throws an error if the Indicator cartodb_config does not specify
   ), "Indicator cartodb_config does not define a username attribute")
 )
 
-test('.buildUrl throws an error if the Indicator cartodb_config does not specify a query', ->
+test('.buildUrl throws an error if the Indicator cartodb_config does not specify a table_name', ->
   indicator = new Indicator(
     cartodb_config:
       username: ''
@@ -86,20 +86,21 @@ test('.buildUrl throws an error if the Indicator cartodb_config does not specify
 
   assert.throw( (->
     getter.buildUrl()
-  ), "Indicator cartodb_config does not define a query attribute")
+  ), "Indicator cartodb_config does not define a table_name attribute")
 )
 
 test('.buildUrl constructs the correct URL with username and query', ->
   indicator = new Indicator(
+    name: "CO 2"
     cartodb_config:
       username: 'someguy'
-      query: 'select * the things'
+      table_name: 'dat_table'
   )
 
   getter = new CartoDBGetter(indicator)
 
   builtUrl = getter.buildUrl()
-  expectedUrl = "http://someguy.cartodb.com/api/v2/sql?q=select * the things"
+  expectedUrl = "http://someguy.cartodb.com/api/v2/sql?q=SELECT * FROM dat_table\nWHERE field_2 = 'CO 2'\nOR field_1 = 'Theme'"
 
   assert.strictEqual builtUrl, expectedUrl
 )
