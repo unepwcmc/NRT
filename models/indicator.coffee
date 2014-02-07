@@ -9,7 +9,8 @@ GETTERS =
   cartodb: require('../getters/cartodb')
 
 FORMATTERS =
-  gdoc = require('../formatters/gdoc')
+  gdoc: require('../formatters/gdoc')
+  cartodb: require('../formatters/cartodb')
 
 module.exports = class Indicator
   constructor: (attributes) ->
