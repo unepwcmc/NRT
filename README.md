@@ -44,6 +44,11 @@ The columns for your data should be as so:
 
     Theme, Indicator, SubIndicator, <date>, <date>, <date>
 
+There is an
+[example](https://docs.google.com/spreadsheet/ccc?key=0Aum2hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE&usp=drive_web#gid=0)
+data table available on [Google
+Docs](https://docs.google.com/spreadsheet/ccc?key=0Aum2hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE&usp=drive_web#gid=0).
+
 As Postgresql does not support Integer column names (which we use for
 grouping values by year), the columns for the table should be stored in
 CartoDB as so:
