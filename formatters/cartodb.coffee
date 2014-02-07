@@ -23,4 +23,12 @@ module.exports = (data) ->
   return records
 
 stripMetadataFromRow = (row) ->
-  _.omit(row, ['field_1', 'field_2', 'field_3'])
+  index = 4
+
+  values = {}
+  while row["field_#{index}"]?
+    key = "field_#{index}"
+    values[key] = row[key]
+    index += 1
+
+  return values
