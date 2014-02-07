@@ -23,7 +23,9 @@ public *and* 'published for web' from the 'File -> publish for web' in google
 docs.
 
 The columns for the table are:
+
     Theme, Indicator, SubIndicator, <date>, <date>, <date>
+
 The first three are simply strings, name is matched on in the indicator
 definition. The date columns should be dates, which will be converted to epochs
 
