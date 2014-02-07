@@ -8,11 +8,16 @@ module.exports = class CartoDBGetter
   fetch: ->
     deferred = Q.defer()
 
-    request.get(url: @buildUrl(), (err, response) ->
+    request.get(url: @buildUrl(), (err, response) =>
       if err
         return deferred.reject(err)
 
-      deferred.resolve(response.body)
+      rows = JSON.parse(response.body).rows
+
+      if rows.length <= 1
+        deferred.reject(new Error("Unable to find indicator with name '#{@indicator.name}'"))
+
+      deferred.resolve(rows)
     )
 
     return deferred.promise

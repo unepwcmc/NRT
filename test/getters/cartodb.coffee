@@ -28,9 +28,12 @@ test(".fetch builds a request URL, queries it, and returns the data", (done) ->
   )
 
   theData =
-    rows: {some: 'data'}
+    rows: [
+      {header: 'row'},
+      {indicator: 'row'}
+    ]
   getStub = sinon.stub(request, 'get', (options, cb) ->
-    cb(null, body: theData)
+    cb(null, body: JSON.stringify(theData))
   )
 
   getter.fetch().then((fetchedData)->
@@ -41,7 +44,7 @@ test(".fetch builds a request URL, queries it, and returns the data", (done) ->
         but called with #{getStub.getCall(0).args}"
       )
 
-      assert.strictEqual(fetchedData, theData,
+      assert.deepEqual(fetchedData, theData.rows,
         "Expected fetch to return the rows of the get request"
       )
       done()
@@ -54,6 +57,41 @@ test(".fetch builds a request URL, queries it, and returns the data", (done) ->
   ).fail((err) ->
     getStub.restore()
     done(err)
+  )
+)
+
+test(".fetch if only the header row is returned, throw a 'can't find indicator' error", (done)->
+  indicator = {name: 'an indicator'}
+  getter = new CartoDBGetter(indicator)
+
+  fakeCartodbURL = "http://fake.cartodb/api"
+  sinon.stub(getter, 'buildUrl', ->
+    return fakeCartodbURL
+  )
+
+  theData =
+    rows: [header: 'row']
+  getStub = sinon.stub(request, 'get', (options, cb) ->
+    cb(null, body: JSON.stringify(theData))
+  )
+
+  getter.fetch().then((fetchedData)->
+    getStub.restore()
+    done(new Error("Expected CartoDBGetter.fetch to fail, but it succeeded"))
+
+  ).fail((err) ->
+
+    try
+      assert.strictEqual(
+        err.message, "Unable to find indicator with name '#{indicator.name}'",
+        "Expected the error to have the right message"
+      )
+      done()
+
+    catch err
+      done(err)
+    finally
+      getStub.restore()
   )
 )
 
