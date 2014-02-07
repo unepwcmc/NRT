@@ -4,6 +4,7 @@
     "type": "standard",
     "name": "Agriculture",
     "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "source": "gdoc",
     "range": [
         {"minValue": 0.35, "message": "Excellent"},
         {"minValue": 0.15, "message": "Good"},
@@ -14,6 +15,7 @@
     "type": "standard",
     "name": "Other Primary Industries",
     "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "source": "gdoc",
     "range": [
         {"minValue": 0.35, "message": "Excellent"},
         {"minValue": 0.15, "message": "Good"},
@@ -24,6 +26,7 @@
     "type": "standard",
     "name": "Manufacture of food, beverages and tobacco",
     "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "source": "gdoc",
     "range": [
         {"minValue": 0.35, "message": "Excellent"},
         {"minValue": 0.15, "message": "Good"},
@@ -34,6 +37,7 @@
     "type": "standard",
     "name": "Wood and paper",
     "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "source": "gdoc",
     "range": [
         {"minValue": 0.35, "message": "Excellent"},
         {"minValue": 0.15, "message": "Good"},
@@ -44,6 +48,7 @@
     "type": "standard",
     "name": "Chemical Industry",
     "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "source": "gdoc",
     "range": [
         {"minValue": 0.35, "message": "Excellent"},
         {"minValue": 0.15, "message": "Good"},
@@ -54,6 +59,7 @@
     "type": "standard",
     "name": "Other Manufacturing",
     "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "source": "gdoc",
     "range": [
         {"minValue": 0.35, "message": "Excellent"},
         {"minValue": 0.15, "message": "Good"},
@@ -64,6 +70,7 @@
     "type": "standard",
     "name": "Construction",
     "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "source": "gdoc",
     "range": [
         {"minValue": 0.35, "message": "Excellent"},
         {"minValue": 0.15, "message": "Good"},
@@ -74,6 +81,7 @@
     "type": "standard",
     "name": "Wholesale and Retail Trade",
     "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "source": "gdoc",
     "range": [
         {"minValue": 0.35, "message": "Excellent"},
         {"minValue": 0.15, "message": "Good"},
@@ -84,6 +92,7 @@
     "type": "standard",
     "name": "Hotels and Transport",
     "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "source": "gdoc",
     "range": [
         {"minValue": 0.35, "message": "Excellent"},
         {"minValue": 0.15, "message": "Good"},
@@ -94,6 +103,7 @@
     "type": "standard",
     "name": "Other Services",
     "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "source": "gdoc",
     "range": [
         {"minValue": 0.35, "message": "Excellent"},
         {"minValue": 0.15, "message": "Good"},
