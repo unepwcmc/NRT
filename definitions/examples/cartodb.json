@@ -2,11 +2,25 @@
   {
     "id": "1",
     "type": "standard",
-    "name": "CartoDB Test",
+    "name": "Agriculture",
     "source": "cartodb",
     "cartodb_config": {
       "username": "carbon-tool",
-      "query": "SELECT * FROM kenya_indicator_data_feed"
+      "table_name": "kenya_20indicator_20data_20feed"
+    },
+    "range": [
+        {"minValue": 0.35, "message": "Excellent"},
+        {"minValue": 0.15, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }, {
+    "id": "2",
+    "type": "standard",
+    "name": "Other Primary Industries",
+    "source": "cartodb",
+    "cartodb_config": {
+      "username": "carbon-tool",
+      "table_name": "kenya_20indicator_20data_20feed"
     },
     "range": [
         {"minValue": 0.35, "message": "Excellent"},
