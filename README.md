@@ -40,8 +40,13 @@ Sync](http://blog.cartodb.com/post/65639747344/synced-tables-create-real-time-ma
 which will automatically collect your data (in formats such as XLS, CSV,
 etc.) up to every hour.
 
+The columns for your data should be as so:
+
+    Theme, Indicator, SubIndicator, <date>, <date>, <date>
+
 As Postgresql does not support Integer column names (which we use for
-grouping values by year), the columns for the table are as so:
+grouping values by year), the columns for the table should be stored in
+CartoDB as so:
 
     Theme, Indicator, SubIndicator, field_1, field_2, [...], field_n
 
