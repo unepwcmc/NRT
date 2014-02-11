@@ -117,12 +117,14 @@ configured. Note that for EAD LDAP use, you must be within the EAD VPN.
 
 ##### LDAP
 
+NRT can connect to a LDAP to authenticate and create users. 
 LDAP is configured by the file `server/config/ldap.json`, and an example
 can be found in `server/config/ldap.json.example`. See the [deployment secrets
 document](https://docs.google.com/a/peoplesized.com/document/d/1dYMO3PJhRlTDQ2BEUUOcLwqX0IfJ5UP_UYyfQllnXeQ/)
 for the production details you need.
 
-**In development, LDAP is disabled.**
+LDAP is a optional feature which can be disabled in the application config:
+https://github.com/unepwcmc/NRT/tree/master/server/config#example
 
 #### Automatic deployments
 
