@@ -1114,6 +1114,10 @@ footer{
   border-bottom: 1px solid $lightGrey;
   padding: 20px 30px;
 
+  h4 {
+    text-transform: uppercase;
+    color: red;
+  }
 }
 
 .md-box h3 {
@@ -1121,7 +1125,6 @@ footer{
   font-size: 1.2em;
   font-weight: 400;
   width: 510px;
-  float: left;
 }
 
 .md-box .md-content{
@@ -1191,23 +1194,25 @@ footer{
   }
 
   &.feedback {
-      float: right;
-      margin-top: 4px;
-      display: inline;
-      font-size: 0.7em;
+    position: absolute;
+    right: 30px;
+    top: 26px;
+    margin-top: 4px;
+    display: inline;
+    font-size: 0.7em;
+    color: $white;
+    background-color: $green;
+    border: 1px solid $green;
+    &:hover {
       color: $white;
-      background-color: $green;
-      border: 1px solid $green;
-      &:hover {
-        color: $white;
-        border: 1px solid darken($green, 10);
-      }
-      &:active{
-        color: $white;
-        background-color: $greenHover;
-        border: 1px solid $greenHover;
-      }
+      border: 1px solid darken($green, 10);
     }
+    &:active{
+      color: $white;
+      background-color: $greenHover;
+      border: 1px solid $greenHover;
+    }
+  }
 }
 
 .md-effect-1 .md-box {
