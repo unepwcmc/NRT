@@ -2,6 +2,7 @@ node_modules
 client/dist/
 server/public/*
 !server/public/locales/
+!server/public/assets/
 server/config/ldap.json
 server/config/seeds/
 server/config/production.json
