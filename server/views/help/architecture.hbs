@@ -1,0 +1,33 @@
+{{!< main}}
+
+{{#contentFor 'header'}}
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/about.css">
+{{/contentFor}}
+
+{{#contentFor 'breadcrumbs'}}
+  <li class="home"><i class="icon-home"></i><a href="/">Home</a></li>
+  <li class="help-link"><a href="/about" title="About">About</a></li>
+  <li class="help-link"><a href="/assets/NRT-User-Manual.pdf" title="NRT User Manual">User manual</a></li>
+  <li class="help-link">
+    <a href="https://github.com/unepwcmc/NRT/blob/master/README.md" title="Technical Information">Technical Information</a>
+  </li>
+  <li class="help-link">
+    <a href="/architecture">System Architecture</a>
+  </li>
+{{/contentFor}}
+
+<div id="heading-container">
+  <section>
+    <h1>System architechture</h1>
+  </section>
+</div>
+
+<section id="feedback">
+  <h2>The flow of data in NRT</h2>
+
+  <img class="diagram" src="images/NRT System Diagram.png" width="850px" height="" alt="" />
+  <p>
+    This diagram shows how environmental data flows into the National Reporting Toolkit, starting as raw data on the left, and ending up as indicator data on this site on the right.
+  </p>
+</section>

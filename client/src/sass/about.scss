@@ -60,6 +60,10 @@ section {
     padding: 50px 20px 60px 20px;
   }
   &#feedback {
+
+    img.diagram {
+      padding: 20px;
+    }
     border-top: 1px solid $lightGrey;
     border-bottom: 1px solid $lightGrey;
     button {
@@ -118,3 +122,5 @@ footer {
     margin-right: 10px;
   }
 }
+
+
