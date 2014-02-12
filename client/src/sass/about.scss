@@ -107,3 +107,10 @@ div#heading-container {
 footer {
   margin-top: 0;
 }
+
+.breadcrumbs {
+  li.help-link:before {
+    content: "";
+    padding: 0;
+  }
+}
