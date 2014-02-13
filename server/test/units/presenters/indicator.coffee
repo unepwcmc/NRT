@@ -47,7 +47,7 @@ with the correct human readable value and a URL", ->
     "Expected the indicator to have a 'source' attribute populated"
 )
 
-test(".populateHeadlineRangesFromHeadlines when given headlines
+test(".populateHeadlineRangesFromHeadlines when given sorted headlines
 populates a 'headlineRanges' attribute with the oldest and newest xAxis values
 formatted as D MM YYYY", ->
   indicator = Indicator(
