@@ -107,18 +107,22 @@ class HeadlineService
 
     return deferred.promise
 
-  getRecentHeadlines: (amount) ->
-    Indicator = require('../../models/indicator.coffee').model
+  sortHeadlines = (headlines) ->
+    _.sortBy(headlines, (headline) ->
+      moment(headline.periodEnd)
+    )
 
+  getRecentHeadlines: (amount) ->
     deferred = Q.defer()
 
     Q.nsend(
       @indicator, 'getIndicatorData'
-    ).then( (data) =>
+    ).then( (headlineData) =>
 
-      headlineData = data
-      headlineData = _.last(data, amount) if amount?
       headlines = @convertDataToHeadline(headlineData)
+
+      headlines = sortHeadlines(headlines)
+      headlines = _.last(headlines, amount) if amount?
 
       deferred.resolve(headlines.reverse())
 
