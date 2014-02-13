@@ -465,7 +465,7 @@ test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
   )
 )
 
-test('GET /:id/headlines returns the 5 most recent headlines', (done) ->
+test('GET /:id/headlines returns the 5 most recent headlines in descending order', (done) ->
   indicatorData = [
     {
       "year": 2000,
@@ -480,11 +480,11 @@ test('GET /:id/headlines returns the 5 most recent headlines', (done) ->
       "value": 4
       "text": 'Fair'
     }, {
-      "year": 2003,
+      "year": 2004,
       "value": 4
       "text": 'Fair'
     }, {
-      "year": 2004,
+      "year": 2003,
       "value": 4
       "text": 'Fair'
     }
@@ -531,6 +531,9 @@ test('GET /:id/headlines returns the 5 most recent headlines', (done) ->
       assert.equal res.statusCode, 200
 
       assert.lengthOf headlines, 5, "Expected 5 headlines to be returned"
+
+      mostRecentHeadline = headlines[0]
+      assert.strictEqual mostRecentHeadline.year, 2004, "Expected the most recent headline first"
 
       done()
     catch e
