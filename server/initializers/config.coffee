@@ -6,7 +6,6 @@ APP_CONFIG = null
 
 exports.get = (key) ->
   unless APP_CONFIG?
-    console.log 'no app config'
     APP_CONFIG = readConfigFile()
 
   _.clone(APP_CONFIG[key])

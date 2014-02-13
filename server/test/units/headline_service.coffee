@@ -17,10 +17,6 @@ test('.getRecentHeadlines returns the given number of most recent headlines
   indicator data', (done)->
   indicatorData = [
     {
-      "year": 2000,
-      "value": 2
-      "text": 'Poor'
-    }, {
       "year": 2001,
       "value": 9
       "text": 'Great'
@@ -28,6 +24,10 @@ test('.getRecentHeadlines returns the given number of most recent headlines
       "year": 2002,
       "value": 4
       "text": 'Fair'
+    }, {
+      "year": 2000,
+      "value": 2
+      "text": 'Poor'
     }
   ]
 
@@ -124,25 +124,26 @@ test('.getRecentHeadlines successfully returns all headline when the
 )
 
 test('.getNewestHeadline returns the most recent headline', (done)->
+  mostRecentDate = "2013-03-01T02:00:00.000Z"
   indicatorData = [
     {
-      "year": 2001,
+      "date": mostRecentDate
       "value": 9
       "text": 'Great'
     }, {
-      "year": 2002,
+      "date": "2013-01-01T02:00:00.000Z",
       "value": 4
       "text": 'Fair'
     }
   ]
 
   indicatorDefinition =
-    xAxis: 'year'
+    xAxis: 'date'
     yAxis: 'value'
     textField: 'text'
     fields: [{
-      name: 'year'
-      type: 'integer'
+      name: 'date'
+      type: "date"
     }, {
       name: "value",
       type: "integer"
@@ -169,12 +170,12 @@ test('.getNewestHeadline returns the most recent headline', (done)->
     headlineService.getNewestHeadline()
   ).then( (mostRecentHeadline) ->
 
-    assert.strictEqual(mostRecentHeadline.year, 2002,
-      "Expected most recent headline year value to be 2002")
-    assert.strictEqual(mostRecentHeadline.value, 4,
-      "Expected most recent headline value to be 4")
-    assert.strictEqual(mostRecentHeadline.text, "Fair",
-      "Expected most recent headline text to be 'Fair'")
+    assert.strictEqual(mostRecentHeadline.date, mostRecentDate,
+      "Expected most recent headline year value to be #{mostRecentDate}")
+    assert.strictEqual(mostRecentHeadline.value, 9,
+      "Expected most recent headline value to be 9")
+    assert.strictEqual(mostRecentHeadline.text, "Great",
+      "Expected most recent headline text to be 'Great'")
 
     done()
 
