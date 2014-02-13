@@ -55,11 +55,11 @@ formatted as D MM YYYY", ->
       xAxis: 'year'
   )
   headlines = [{
-    year: 2006
+    year: 2008
   }, {
     year: 2007
   }, {
-    year: 2008
+    year: 2006
   }]
 
   presenter = new IndicatorPresenter(indicator)

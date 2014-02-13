@@ -25,8 +25,8 @@ module.exports = class IndicatorPresenter
     xAxis = @indicator.indicatorDefinition?.xAxis
 
     if xAxis?
-      oldest = headlines[0][xAxis].toString()
-      newest = headlines[headlines.length - 1][xAxis].toString()
+      newest = headlines[0][xAxis].toString()
+      oldest = headlines[headlines.length - 1][xAxis].toString()
 
       @indicator.headlineRanges =
         oldest: moment(oldest).format(DATE_FORMAT)
