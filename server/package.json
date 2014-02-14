@@ -43,7 +43,8 @@
     "connect-mongo": "~0.3.3",
     "connect-flash": "~0.1.1",
     "range_check": "0.0.4",
-    "libxmljs": "~0.8.1"
+    "libxmljs": "~0.8.1",
+    "bluebird": "~1.0.4"
   },
   "devDependencies": {
     "Faker": "0.5.11",
