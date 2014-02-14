@@ -12,8 +12,8 @@ test('Asks for the server target and tag name, then creates a new tag', (done) -
 
   sinon.stub(readline, 'createInterface', ->
     once: (event, callback) ->
-      callback(null, responses[readlineCount])
       readlineCount += 1
+      callback(responses[readlineCount-1])
   )
 
   requestStub = sinon.stub(request, 'post', (options, callback)->
@@ -42,7 +42,7 @@ test('Asks for the server target and tag name, then creates a new tag', (done) -
         "body": "New feature",
       }
 
-      assert.deepEqual expectPayload, requestArgs[0].json,
+      assert.deepEqual requestArgs[0].json, expectPayload,
         "Expected the right payload to be sent to github"
 
       done()
