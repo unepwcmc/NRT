@@ -35,25 +35,25 @@ For indicator data stored in CartoDB tables, your indicator definitions
 need to include `table_name` and CartoDB `username` attributes. The
 CartoDB table must be publicly available.
 
-It is advisable that you set up [CartoDB
+You can also use [CartoDB
 Sync](http://blog.cartodb.com/post/65639747344/synced-tables-create-real-time-maps-from-data-anywhere)
-which will automatically collect your data (in formats such as XLS, CSV,
+to read spreadsheets into cartodb which will automatically collected (in formats such as XLS, CSV,
 etc.) up to every hour.
 
-The columns for your data should be as so:
+The format for data is a little constrained due to the fact postgres can't
+handle integers column names. You must use column names field_1 through field_n,
+and instead put the column headers in as the first row in the table, like so:
 
-    Theme, Indicator, SubIndicator, <date>, <date>, <date>
+field_1 | field_2   | field_3      | field_4 | field_5 | field_n
+------- | --------- | ------------ | ------- | ------- | -------
+Theme   | Indicator | SubIndicator | 1998    | 1999    | n
+Air     | NO2       | -            | 0.4     | 0.9     | n
+Air     | O2        | -            | 0.8     | 0.8     | n
+
+The first 3 values should always be Theme, Indicator and SubIndicator, followed
+by your date fields in order.
 
 There is an
 [example](https://docs.google.com/spreadsheet/ccc?key=0Aum2hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE&usp=drive_web#gid=0)
 data table available on [Google
 Docs](https://docs.google.com/spreadsheet/ccc?key=0Aum2hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE&usp=drive_web#gid=0).
-
-As Postgresql does not support Integer column names (which we use for
-grouping values by year), the columns for the table should be stored in
-CartoDB as so:
-
-    Theme, Indicator, SubIndicator, field_1, field_2, [...], field_n
-
-Where `n` is the number of years you have data for. However, usually
-this column naming will be handled automatically by CartoDB.
