@@ -65,7 +65,7 @@ In **development**, supervisor is used to handle exceptions:
 
 #### Compile coffeescripts
 
-`cd client && grunt watch`
+`cd client && grunt && grunt watch`
 
 #### Logging in
 
@@ -107,7 +107,7 @@ generates data in the same format as the indicator data backup in
 
 #### Compile coffeescripts
 
-`cd client && grunt watch`
+`cd client && grunt`
 
 #### Authentication and logging in
 
