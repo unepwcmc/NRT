@@ -9,3 +9,4 @@ server/config/development.json
 server/config/seeds
 client/test/tests.coffee
 client/test/tests.js
+client/src/templates/templates.js
