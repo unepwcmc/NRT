@@ -63,9 +63,11 @@ In **development**, supervisor is used to handle exceptions:
 
 `cd server/ && npm start`
 
-#### Compile coffeescripts
+#### Asset compilation
 
-`cd client && grunt watch`
+*For more info, check out the [asset README](client/README.md).*
+
+`cd client && grunt && grunt watch`
 
 #### Logging in
 
@@ -105,9 +107,11 @@ generates data in the same format as the indicator data backup in
 
 * `cd server/ && npm run-script production`
 
-#### Compile coffeescripts
+#### Asset compilation
 
-`cd client && grunt watch`
+*For more info, check out the [asset README](client/README.md).*
+
+`cd client && grunt`
 
 #### Authentication and logging in
 
