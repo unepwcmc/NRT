@@ -3,6 +3,9 @@ services: mongodb
 before_script:
   - cd server/
   - npm install
+  - npm start
+  - sleep 5
+script: npm run test-client
 node_js:
   - "0.10"
 branches:
