@@ -97,8 +97,7 @@ module.exports = (grunt) ->
 
     mocha:
       test:
-        options:
-          urls: ['http://localhost:3000/tests']
+        src: '../server/views/tests.html'
   )
 
   grunt.loadNpmTasks('grunt-contrib-handlebars')
