@@ -94,14 +94,21 @@ module.exports = (grunt) ->
       tests:
         files: ['test/src/**/*.coffee']
         tasks: 'tests'
+
+    mocha:
+      test:
+        src: '../server/views/tests.html'
+        options:
+          timeout: 30000
   )
 
-  grunt.loadNpmTasks('grunt-contrib-coffee')
-  grunt.loadNpmTasks('grunt-contrib-clean')
-  grunt.loadNpmTasks('grunt-contrib-concat')
-  grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-contrib-handlebars')
+  grunt.loadNpmTasks('grunt-contrib-coffee')
+  grunt.loadNpmTasks('grunt-contrib-concat')
+  grunt.loadNpmTasks('grunt-contrib-clean')
+  grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-contrib-copy')
+  grunt.loadNpmTasks('grunt-mocha')
   grunt.loadNpmTasks('grunt-sass')
 
   grunt.registerTask('templates', ['handlebars', 'copy:templates'])
