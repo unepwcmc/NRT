@@ -55,7 +55,7 @@
             </a>
             {{/if}}
 
-            <li class="md-trigger">
+            <li class='help-btn'>
               {{t "menu/help"}}
             </li>
 
@@ -79,6 +79,31 @@
       </div>
     </div>
 
+    <div class='sub-nav'>
+      <div class="inner">
+        <ul>
+          <li class="md-trigger"><a href="#" title="About">About</a></li>
+          <li><a href="/assets/NRT-User-Manual.pdf" title="NRT User Manual">User manual</a></li>
+          <li>
+            <a href="https://github.com/unepwcmc/NRT/blob/master/README.md" title="Technical Information">Technical Information</a>
+          </li>
+          <li>
+            <a href="/architecture">System Architecture</a>
+          </li>
+          <li>
+            <a href="/assets/NRT-Data-Schema.pdf" title="Data Schema">Data Schema</a>
+          </li>
+          <li><a href="/partners" title="Partners">Partners</a></li>
+          <li>
+            <a href="/assets/NRT-API-Specification.pdf">API Specification</a>
+          </li>
+          <li>
+            <a href="http://10.20.1.73/nrtimport" title="NRT Data Source - only accessible from EAD internal network">Data Source (EAD Only)</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
     <div class="breadcrumbs">
       <div class="inner">
         <ul>
@@ -90,6 +115,24 @@
     {{{body}}}
 
     {{> modal}}
+
+    <script>
+      (function() {
+        var subMenuOpen = false;
+
+        $('.help-btn').on('click', function() {
+          if (subMenuOpen) {
+            $('.help-btn').removeClass('active');
+            $('.sub-nav').slideUp();
+            subMenuOpen = !subMenuOpen;
+          } else {
+            $('.help-btn').addClass('active');
+            $('.sub-nav').slideDown();
+            subMenuOpen = !subMenuOpen;
+          }
+        });
+      })()
+    </script>
 
     <footer>
       <div class="inner">
