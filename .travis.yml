@@ -1,6 +1,7 @@
 language: node_js
 services: mongodb
 before_script:
+  - phantomjs --version
   - cd server/
   - npm install
   - cd ../client/
