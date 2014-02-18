@@ -54,7 +54,11 @@
         resGetPath: '../public/locales/__lng__.json'
       }).done(function() {
         i18n.setLng('en');
-        mocha.run();
+        if (window.mochaPhantomJS) {
+          mochaPhantomJS.run();
+        } else {
+          mocha.run();
+        }
       });
     </script>
 
