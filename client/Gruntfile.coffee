@@ -98,6 +98,8 @@ module.exports = (grunt) ->
     mocha:
       test:
         src: '../server/views/tests.html'
+        options:
+          timeout: 30000
   )
 
   grunt.loadNpmTasks('grunt-contrib-handlebars')
