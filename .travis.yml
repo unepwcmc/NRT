@@ -3,6 +3,10 @@ services: mongodb
 before_script:
   - cd server/
   - npm install
+  - cd ../client/
+  - npm install -g grunt-cli
+  - npm install
+  - cd ../server/
 script: npm run test-client
 node_js:
   - "0.10"
