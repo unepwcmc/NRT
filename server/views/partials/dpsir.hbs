@@ -1,15 +1,15 @@
 <ul class="dpsir">
   {{#if this}}
-    <li class='{{#if driver}}active{{/if}}'>D</li>
-    <li class='{{#if pressure}}active{{/if}}'>P</li>
-    <li class='{{#if state}}active{{/if}}'>S</li>
-    <li class='{{#if impact}}active{{/if}}'>I</li>
-    <li class='{{#if response}}active{{/if}}'>R</li>
+    <li title="Driver" class='{{#if driver}}active{{/if}}'>D</li>
+    <li title="Pressure" class='{{#if pressure}}active{{/if}}'>P</li>
+    <li title="State"class='{{#if state}}active{{/if}}'>S</li>
+    <li title="Impact" class='{{#if impact}}active{{/if}}'>I</li>
+    <li title="Response" class='{{#if response}}active{{/if}}'>R</li>
   {{else}}
-    <li>D</li>
-    <li>P</li>
-    <li>S</li>
-    <li>I</li>
-    <li>R</li>
+    <li title="Driver">D</li>
+    <li title="Pressure">P</li>
+    <li title="State">S</li>
+    <li title="Impact">I</li>
+    <li title="Response">R</li>
   {{/if}}
 </ul>
