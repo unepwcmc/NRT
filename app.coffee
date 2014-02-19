@@ -8,9 +8,7 @@ cartodbQuery = require('./controllers/cartodb_query')
 edeQuery = require('./controllers/ede_query')
 indicatorData = require('./controllers/indicator_data')
 
-PORT = 3002
-
-startApp = ->
+exports.start = (port, callback) ->
   checkForIndicatorDefinition()
 
   app = express()
@@ -20,12 +18,8 @@ startApp = ->
   app.get "/ede/:countryCode/:variableId", edeQuery
   app.get "/indicator/:id/data", indicatorData.query
 
-  server = http.createServer(app).listen PORT, (err) ->
-    if err
-      console.error err
-      process.exit 1
-    else
-      console.log "Express server listening on port " + PORT
+  server = http.createServer(app).listen port, (err) ->
+    callback err, server
 
 checkForIndicatorDefinition = ->
   unless fs.existsSync('./definitions/indicators.json')
@@ -35,5 +29,3 @@ checkForIndicatorDefinition = ->
         See ./definitions/examples/ for example config
       """
     )
-
-startApp()

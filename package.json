@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha test/*.coffee test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit --reporter spec",
-    "start": "supervisor app.coffee"
+    "start": "supervisor index.js"
   },
   "repository": {
     "type": "git",
