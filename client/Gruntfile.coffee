@@ -83,6 +83,7 @@ module.exports = (grunt) ->
           '../server/public/css/theme.css': 'src/css/theme.scss'
           '../server/public/css/login.css': 'src/css/login.scss'
           '../server/public/css/rtl_overrides.css': 'src/css/rtl_overrides.scss'
+          '../server/public/css/admin.css': 'src/css/admin.scss'
 
     watch:
       source:
