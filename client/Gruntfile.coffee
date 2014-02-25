@@ -74,15 +74,13 @@ module.exports = (grunt) ->
 
     sass:
       dist:
-        files:
-          '../server/public/css/main.css': 'src/css/main.scss'
-          '../server/public/css/report.css': 'src/css/report.scss'
-          '../server/public/css/dashboard.css': 'src/css/dashboard.scss'
-          '../server/public/css/about.css': 'src/css/about.scss'
-          '../server/public/css/indicator.css': 'src/css/indicator.scss'
-          '../server/public/css/theme.css': 'src/css/theme.scss'
-          '../server/public/css/login.css': 'src/css/login.scss'
-          '../server/public/css/rtl_overrides.css': 'src/css/rtl_overrides.scss'
+        files: [{
+          expand: true,
+          cwd: 'src/css',
+          src: ['*.scss'],
+          dest: '../server/public/css',
+          ext: '.css'
+        }]
 
     watch:
       source:
