@@ -15,9 +15,25 @@ Indicator definitions are stored in `./definitions/indicators.json`. These
 files are responsible for listing the indicator and the ranges for the
 indicator's threshold. Examples are stored in `./definitions/examples/`
 
-### GDocs configuration
+### 'standard' type indicators
+Originally, we have different types for different indicators, for
+example 'esri', 'cartodb' etc. Now, we're pushing attributes towards a
+consistent type named 'standard', and instead handling differences using
+the 'source' attribute described below.
 
-For indicator data stored in google docs, your indicator definitions need to
+### Indicator 'sources'
+Indicators must specify a 'source' attribute. This attribute tells the
+indicatorator where to query the data from, and how to format it.
+
+Each 'source' has a corresponding 'getter' module (responsible for
+fetching the data) and a 'formatter' module (responsible for formatting
+the queried responses).
+
+## Possible Source values
+
+### 'gdocs'
+
+For indicator data stored in 'google' docs, your indicator definitions need to
 include a `spreadsheet_key` attribute. The spreadsheet in question must be
 public *and* 'published for web' from the 'File -> publish for web' in google
 docs.
@@ -29,7 +45,7 @@ The columns for the table are:
 The first three are simply strings, name is matched on in the indicator
 definition. The date columns should be dates, which will be converted to epochs
 
-### CartoDB configuration
+### cartodb
 
 For indicator data stored in CartoDB tables, your indicator definitions
 need to include `table_name` and CartoDB `username` attributes. The
