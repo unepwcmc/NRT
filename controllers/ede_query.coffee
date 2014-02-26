@@ -1,5 +1,5 @@
 Ede = require('../retrievers/ede')
-StandardIndicatorator = require('../indicatorators/standard_indicatorator')
+EdeIndicatorator = require('../indicatorators/ede_indicatorator')
 
 module.exports = (req, res) ->
   countryCode = req.params.countryCode
@@ -14,7 +14,7 @@ module.exports = (req, res) ->
         #{ede.makeGetUrl()}")
 
     try
-      indicatorator = new StandardIndicatorator('ede', ede.indicatorCode)
+      indicatorator = new EdeIndicatorator('ede', ede.indicatorCode)
       indicatorData = indicatorator.indicatorate(data)
       res.send(200, JSON.stringify(indicatorData))
     catch e

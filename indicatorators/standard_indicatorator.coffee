@@ -1,37 +1,26 @@
-fs = require('fs')
 _  = require('underscore')
 
-class StandardIndicatorator
-  constructor: (indicatorType, indicatorCode) ->
-    indicatorType = indicatorType.toLowerCase()
+exports.applyRanges = (data, ranges) ->
+  unless data?
+    throw new Error("No data to indicatorate")
 
-    @indicatorDefinition = JSON.parse(
-      fs.readFileSync("./definitions/#{indicatorType}_indicator_definitions.json", 'UTF8')
-    )[indicatorCode]
+  outputRows = []
 
-  indicatorate: (data) ->
-    unless data?
-      throw new Error("No data to indicatorate")
+  for row in data
+    value = row.value
+    continue unless value?
+    text = calculateIndicatorText(value, ranges)
+    outputRows.push(_.extend(row, text: text))
 
-    valueField = @indicatorDefinition.valueField
+    if row.subIndicator?
+      exports.applyRanges(row.subIndicator, ranges)
 
-    outputRows = []
+  return outputRows
 
-    for row in data
-      value = row[valueField]
-      continue unless value?
-      text = @calculateIndicatorText(value)
-      outputRows.push(_.extend(row, text: text))
+calculateIndicatorText = (value, ranges) ->
+  value = parseFloat(value)
 
-    return outputRows
+  for range in ranges
+    return range.message if value >= range.minValue
 
-  calculateIndicatorText: (value) ->
-    value = parseFloat(value)
-    ranges = @indicatorDefinition.ranges
-
-    for range in ranges
-      return range.message if value > range.minValue
-
-    return "Error: Value #{value} outside expected range"
-
-module.exports = StandardIndicatorator
+  return "Error: Value #{value} outside expected range"
