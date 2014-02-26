@@ -9,7 +9,6 @@ exports.getBranch = ->
   )
   branchName = ''
 
-  console.dir getBranchCommand
   getBranchCommand.stdout.on('data', (str) ->
     branchName = str
   )
