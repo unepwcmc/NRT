@@ -17,9 +17,9 @@
   ],
   "type": "esri",
   "dpsir": {
-    "driver": true,
-    "pressure": true,
-    "state": false,
+    "driver": false,
+    "pressure": false,
+    "state": true,
     "impact": false,
     "response": false
   },
@@ -77,9 +77,9 @@
   ],
   "type": "esri",
   "dpsir": {
-    "driver": true,
-    "pressure": true,
-    "state": false,
+    "driver": false,
+    "pressure": false,
+    "state": true,
     "impact": false,
     "response": false
   },
@@ -198,8 +198,8 @@
   "type": "esri",
   "dpsir": {
     "driver": false,
-    "pressure": true,
-    "state": false,
+    "pressure": false,
+    "state": true,
     "impact": false,
     "response": false
   },
@@ -257,9 +257,9 @@
   ],
   "type": "esri",
   "dpsir": {
-    "driver": true,
+    "driver": false,
     "pressure": false,
-    "state": false,
+    "state": true,
     "impact": false,
     "response": false
   },
@@ -311,7 +311,7 @@
     "driver": false,
     "pressure": false,
     "state": true,
-    "impact": true,
+    "impact": false,
     "response": false
   },
   "indicatorDefinition": {
@@ -370,10 +370,10 @@
   "type": "esri",
   "dpsir": {
     "driver": false,
-    "pressure": true,
+    "pressure": false,
     "state": false,
     "impact": false,
-    "response": false
+    "response": true
   },
   "indicatorDefinition": {
       "serviceName": "NRT_AD_ProtectedArea",
@@ -422,9 +422,9 @@
   "dpsir": {
     "driver": false,
     "pressure": false,
-    "state": true,
+    "state": false,
     "impact": false,
-    "response": false
+    "response": true
   },
   "indicatorDefinition": {
   }
@@ -464,9 +464,9 @@
   "type": "esri",
   "dpsir": {
     "driver": true,
-    "pressure": true,
+    "pressure": false,
     "state": false,
-    "impact": false,
+    "impact": true,
     "response": false
   },
   "indicatorDefinition": {
@@ -484,7 +484,7 @@
     "pressure": false,
     "state": false,
     "impact": true,
-    "response": true
+    "response": false
   },
   "indicatorDefinition": {
   }
@@ -499,9 +499,9 @@
   "dpsir": {
     "driver": false,
     "pressure": false,
-    "state": false,
+    "state": true,
     "impact": false,
-    "response": true
+    "response": false
   },
   "indicatorDefinition": {
       "serviceName": "NRT_AD_MarineWQ",
@@ -559,9 +559,9 @@
   "dpsir": {
     "driver": false,
     "pressure": false,
-    "state": false,
+    "state": true,
     "impact": false,
-    "response": true
+    "response": false
   },
   "indicatorDefinition": {
       "serviceName": "NRT_AD_MarineWQ",
@@ -619,9 +619,9 @@
   "dpsir": {
     "driver": false,
     "pressure": false,
-    "state": false,
+    "state": true,
     "impact": false,
-    "response": true
+    "response": false
   },
   "indicatorDefinition": {
       "serviceName": "NRT_AD_MarineWQ",
@@ -679,9 +679,9 @@
   "dpsir": {
     "driver": false,
     "pressure": false,
-    "state": false,
+    "state": true,
     "impact": false,
-    "response": true
+    "response": false
   },
   "indicatorDefinition": {
       "serviceName": "NRT_AD_MarineWQ",
@@ -739,9 +739,9 @@
   "dpsir": {
     "driver": false,
     "pressure": false,
-    "state": false,
+    "state": true,
     "impact": false,
-    "response": true
+    "response": false
   },
   "indicatorDefinition": {
       "serviceName": "NRT_AD_MarineWQ",
@@ -798,7 +798,7 @@
   "type": "esri",
   "dpsir": {
     "driver": false,
-    "pressure": true,
+    "pressure": false,
     "state": true,
     "impact": false,
     "response": false

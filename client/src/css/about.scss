@@ -18,7 +18,7 @@ section {
   h2 {
     padding-bottom: 1em;
   }
-  p {
+  p, li {
     font-size: 0.8em;
     line-height: 1.6em;
     padding-bottom: 10px;
@@ -60,6 +60,10 @@ section {
     padding: 50px 20px 60px 20px;
   }
   &#feedback {
+
+    img.diagram {
+      padding: 20px;
+    }
     border-top: 1px solid $lightGrey;
     border-bottom: 1px solid $lightGrey;
     button {
@@ -106,4 +110,24 @@ div#heading-container {
 
 footer {
   margin-top: 0;
+}
+
+.breadcrumbs {
+  li.help-link:before {
+    content: "";
+    padding: 0;
+  }
+
+  li.help-link {
+    margin-right: 10px;
+  }
+}
+
+.help-page {
+  ul {
+    margin-left: 25px;
+    li {
+      list-style-type: disc;
+    }
+  }
 }
