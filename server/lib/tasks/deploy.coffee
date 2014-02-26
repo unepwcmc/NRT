@@ -2,6 +2,8 @@ Promise = require('bluebird')
 readline = require('readline')
 request = Promise.promisifyAll(require('request'))
 
+CommandRunner = require('../../bin/command-runner')
+
 rl = readline.createInterface(
   input: process.stdin
   output: process.stdout
@@ -17,20 +19,25 @@ module.exports = new Promise( (resolve, reject) ->
   rl.once('line', (target) ->
     console.log "What does this deploy feature?"
     rl.once('line', (description) ->
-      url = "https://api.github.com/v3/repos/unepwcmc/NRT/releases"
-
       tagName = "#{target}-#{normaliseDescription(description)}"
 
-      releaseOptions = {
-        tag_name: tagName
-        name: description
-        body: description
-      }
+      gitArgs = [
+        "tag",
+        "-a",
+        "-m",
+        "'#{description}'",
+        "#{tagName}"
+      ]
 
-      request.postAsync(
-        url: url
-        json: releaseOptions
-      ).then(resolve).catch(reject)
+      console.log "Creating tag '#{tagName}'"
+      gitTag = CommandRunner.spawn('git', gitArgs)
+
+      gitTag.on('close', (code) ->
+        if code > 0
+          return reject("Unable to create tag #{tagName}")
+
+        resolve()
+      )
     )
   )
 )

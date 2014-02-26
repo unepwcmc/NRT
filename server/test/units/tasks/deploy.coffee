@@ -4,6 +4,8 @@ sinon = require 'sinon'
 readline = require 'readline'
 request = require 'request'
 
+CommandRunner = require('../../../bin/command-runner')
+
 suite('Deploy')
 
 test('Asks for the server target and tag name, then creates a new tag', (done) ->
@@ -16,41 +18,48 @@ test('Asks for the server target and tag name, then creates a new tag', (done) -
       callback(responses[readlineCount-1])
   )
 
-  requestStub = sinon.stub(request, 'post', (options, callback)->
-    callback(null, {
-      body: JSON.stringify({message: 'ok'})
-    })
+  spawnStub = sinon.stub(CommandRunner, 'spawn', ->
+    process =
+      on: (event, cb) ->
+        if event is 'close'
+          cb(0)
+
+    return process
   )
 
   require('../../../lib/tasks/deploy').then(->
     try
-      theRequest = requestStub.firstCall
+      createTagCall = spawnStub.firstCall
 
-      assert.isNotNull theRequest, "Expected a post request to be sent"
+      assert.isNotNull createTagCall, "Expected a process to be spawn"
 
-      requestArgs = theRequest.args
+      createTagArgs = createTagCall.args
 
       assert.strictEqual(
-        "https://api.github.com/v3/repos/unepwcmc/NRT/releases",
-        requestArgs[0].url,
-        "Expected the deploy command to post a new release to github"
+        "git",
+        createTagArgs[0],
+        "Expected deploy task to spawn a git command"
       )
 
-      expectPayload = {
-        "tag_name": "staging-new-feature",
-        "name": "New feature",
-        "body": "New feature",
-      }
+      expectedGitArgs = [
+        "tag",
+        "-a",
+        "-m",
+        "'#{responses[1]}'",
+        "staging-new-feature"
+      ]
 
-      assert.deepEqual requestArgs[0].json, expectPayload,
-        "Expected the right payload to be sent to github"
+      assert.deepEqual createTagArgs[1], expectedGitArgs,
+        """
+          Expected the git to be called with #{expectedGitArgs},
+            but called with #{createTagArgs}"""
 
       done()
 
     catch err
       done(err)
     finally
-      requestStub.restore()
+      spawnStub.restore()
 
   ).catch(done)
 )
