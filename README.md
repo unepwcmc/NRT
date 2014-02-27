@@ -121,7 +121,7 @@ configured. Note that for EAD LDAP use, you must be within the EAD VPN.
 
 ##### LDAP
 
-NRT can connect to a LDAP to authenticate and create users. 
+NRT can connect to a LDAP to authenticate and create users.
 LDAP is configured by the file `server/config/ldap.json`, and an example
 can be found in `server/config/ldap.json.example`. See the [deployment secrets
 document](https://docs.google.com/a/peoplesized.com/document/d/1dYMO3PJhRlTDQ2BEUUOcLwqX0IfJ5UP_UYyfQllnXeQ/)
@@ -132,19 +132,30 @@ https://github.com/unepwcmc/NRT/tree/master/server/config#example
 
 #### Automatic deployments
 
-Once the application has been setup manually for the first time on a
-server, you can automatically deploy new code pushed to the `deploy`
-branch on Github.
+To deploy, run the deploy command on your local machine:
 
-Only one step of setup is required:
+    cd server && coffee lib/tasks/deploy.coffee
+
+This will ask for the name of your target server (staging/production), and
+what the feature introduces, and then create a tag. Once this tag has been
+pushed, the Github deploy hooks take over
+
+##### GitHub Deploy hooks
+Servers should be configured to listen to the creation of tags on Github:
 
   1. Add a WebHook [service hook](https://github.com/unepwcmc/NRT/settings/hooks)
      that points at your server's deploy route
      (`http://youdomain.com/deploy`).
 
-Github will notify the server of any changes, and the application should
-automatically pull the new code and update the server's local
-repository. **Make sure you are running your application with `forever`
+Github will notify the server when a new tag is created. At this point, the server
+will inspect the tag name to see if it matches:
+
+    <server-name>-<new-feature-name>-<id>
+
+If <server-name> is the same as 'server_name' specified in
+`config/<env>.json` (e.g. 'AD-staging'), the application will automatically
+pull the new code and update the server's local repository.
+**Make sure you are running your application with `forever`
 or it will not restart after a deploy**.
 
 ## Application structure

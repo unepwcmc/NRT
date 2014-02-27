@@ -26,6 +26,7 @@ The config is accessible thusly:
 ```json
 {
   "instance_name": "Abu Dhabi", # The name of the instance
+  "server_name": "abu-dhabi-production", # servername, used to identify deploy targets
   "db": {
     "name: "nrt_production" # The name of your database
   }
