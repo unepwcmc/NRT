@@ -94,3 +94,51 @@ test('createTag creates a new tag for the given name and description', (done)->
     done(err)
   )
 )
+
+test('.push pushes the given item', (done)->
+  tagName = "fancy-banana"
+
+  spawnStub = sinon.stub(CommandRunner, 'spawn', ->
+    process =
+      on: (event, cb) ->
+        if event is 'close'
+          cb(0)
+
+    return process
+  )
+
+  Git.push(tagName).then(->
+    try
+      pushCall = spawnStub.firstCall
+
+      assert.isNotNull pushCall, "Expected a process to be spawned"
+
+      pushTagArgs = pushCall.args
+
+      assert.strictEqual(
+        "git",
+        pushTagArgs[0],
+        "Expected push task to spawn a git command"
+      )
+
+      expectedGitArgs = [
+        "push",
+        "origin",
+        "#{tagName}"
+      ]
+
+      assert.deepEqual pushTagArgs[1], expectedGitArgs,
+        """
+          Expected git to be called with #{expectedGitArgs},
+            but called with #{pushTagArgs}"""
+
+      done()
+    catch e
+      done(e)
+    finally
+      spawnStub.restore()
+  ).catch((err)->
+    spawnStub.restore()
+    done(err)
+  )
+)

@@ -33,3 +33,17 @@ exports.createTag = (tagName, description) ->
         reject("create tag command failed")
     )
   )
+
+exports.push = (tagName) ->
+  new Promise( (resolve, reject) ->
+    pushCommand = CommandRunner.spawn(
+      "git", ["push", "origin", tagName]
+    )
+
+    pushCommand.on('close', (code) ->
+      if code is 0
+        resolve()
+      else
+        reject("push command failed")
+    )
+  )
