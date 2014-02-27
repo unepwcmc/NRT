@@ -38,7 +38,7 @@ test('getBranch returns the current branch', (done) ->
     finally
       spawnStub.restore()
 
-  ).fail(->
+  ).catch(->
     spawnStub.restore()
     done(err)
   )

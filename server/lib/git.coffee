@@ -1,27 +1,24 @@
-Q = require 'q'
 Promise = require('bluebird')
 CommandRunner = require '../bin/command-runner'
 
 exports.getBranch = ->
-  deferred = Q.defer()
+  new Promise( (resolve, reject) ->
+    getBranchCommand = CommandRunner.spawn(
+      "git", ["rev-parse", "--abbrev-ref", "HEAD"]
+    )
+    branchName = ''
 
-  getBranchCommand = CommandRunner.spawn(
-    "git", ["rev-parse", "--abbrev-ref", "HEAD"]
+    getBranchCommand.stdout.on('data', (str) ->
+      branchName = str
+    )
+
+    getBranchCommand.on('close', (code) ->
+      if code is 0
+        resolve(branchName)
+      else
+        reject('git branch command failed')
+    )
   )
-  branchName = ''
-
-  getBranchCommand.stdout.on('data', (str) ->
-    branchName = str
-  )
-
-  getBranchCommand.on('close', (code) ->
-    if code is 0
-      deferred.resolve(branchName)
-    else
-      deferred.reject('git branch command failed')
-  )
-
-  return deferred.promise
 
 exports.createTag = (tagName) ->
   return new Promise( (resolve, reject) ->
