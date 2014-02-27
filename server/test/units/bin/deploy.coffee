@@ -21,7 +21,11 @@ runs npm install in both client and server', (done) ->
     new Promise((resolve)-> resolve())
   )
 
-  gitPullStub = sandbox.stub(Git, 'pull', ->
+  gitFetchStub = sandbox.stub(Git, 'fetch', ->
+    new Promise((resolve)-> resolve())
+  )
+
+  gitCheckoutStub = sandbox.stub(Git, 'checkout', ->
     new Promise((resolve)-> resolve())
   )
 
@@ -33,8 +37,13 @@ runs npm install in both client and server', (done) ->
       )
 
       assert.isTrue(
-        gitPullStub.calledWith(tagName),
-        "Expected the given tag to be pulled"
+        gitFetchStub.calledOnce,
+        "Expected git fetch to be called"
+      )
+
+      assert.isTrue(
+        gitCheckoutStub.calledWith(tagName),
+        "Expected the fetched tag to be checked out"
       )
 
       done()

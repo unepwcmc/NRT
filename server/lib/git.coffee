@@ -62,4 +62,30 @@ exports.setEmail = (email) ->
     )
   )
 
-exports.pull = ->
+exports.fetch = ->
+  new Promise( (resolve, reject) ->
+    fetchCommand = CommandRunner.spawn(
+      "git", ["fetch"]
+    )
+
+    fetchCommand.on('close', (code) ->
+      if code is 0
+        resolve()
+      else
+        reject("Failed to fetch changes from remote")
+    )
+  )
+
+exports.checkout = (tagName) ->
+  new Promise( (resolve, reject) ->
+    checkoutCommand = CommandRunner.spawn(
+      "git", ["checkout", tagName]
+    )
+
+    checkoutCommand.on('close', (code) ->
+      if code is 0
+        resolve()
+      else
+        reject("Failed to checkout tag #{tagName}")
+    )
+  )

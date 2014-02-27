@@ -189,3 +189,93 @@ test('setEmail sets the git user email config', (done)->
     done(err)
   )
 )
+
+test('.fetch runs git fetch', (done)->
+  tagName = 'corporate-banana'
+  spawnStub = sinon.stub(CommandRunner, 'spawn', ->
+    return {
+      on: (event, cb) ->
+        if event is 'close'
+          cb(0)
+    }
+  )
+
+  Git.fetch().then(->
+    try
+      fetchCall = spawnStub.firstCall
+
+      assert.isNotNull fetchCall, "Expected a process to be spawned"
+
+      gitFetchArgs = fetchCall.args
+
+      assert.strictEqual(
+        "git",
+        gitFetchArgs[0],
+        "Expected deploy task to spawn a git command"
+      )
+
+      expectedGitArgs = [
+        "fetch"
+      ]
+
+      assert.deepEqual gitFetchArgs[1], expectedGitArgs,
+        """
+          Expected git to be called with #{expectedGitArgs},
+            but called with #{gitFetchArgs}"""
+
+      done()
+    catch e
+      done(e)
+    finally
+      spawnStub.restore()
+  ).catch((err)->
+    spawnStub.restore()
+    done(err)
+  )
+)
+
+
+test('.checkout checkouts the given tag', (done)->
+  tagName = 'corporate-banana'
+  spawnStub = sinon.stub(CommandRunner, 'spawn', ->
+    return {
+      on: (event, cb) ->
+        if event is 'close'
+          cb(0)
+    }
+  )
+
+  Git.checkout(tagName).then(->
+    try
+      fetchCall = spawnStub.firstCall
+
+      assert.isNotNull fetchCall, "Expected a process to be spawned"
+
+      gitFetchArgs = fetchCall.args
+
+      assert.strictEqual(
+        "git",
+        gitFetchArgs[0],
+        "Expected deploy task to spawn a git command"
+      )
+
+      expectedGitArgs = [
+        "checkout",
+        tagName
+      ]
+
+      assert.deepEqual gitFetchArgs[1], expectedGitArgs,
+        """
+          Expected git to be called with #{expectedGitArgs},
+            but called with #{gitFetchArgs}"""
+
+      done()
+    catch e
+      done(e)
+    finally
+      spawnStub.restore()
+  ).catch((err)->
+    spawnStub.restore()
+    done(err)
+  )
+)
