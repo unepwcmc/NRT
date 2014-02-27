@@ -4,21 +4,24 @@ request = require('request')
 fs = require('fs')
 sinon = require('sinon')
 Q = require('q')
+Promise = require('bluebird')
 
 CommandRunner = require('../../bin/command-runner')
 AppConfig = require('../../initializers/config')
 range_check = require('range_check')
+UpdateCode = require('../../lib/update_code')
 
 suite('Deploy')
 
 test('POST /deploy with a github payload for new deploy tag which refers
-to the same role as the server causes the server to trigger the deploy
+to the same server-name as the server causes the server to trigger the deploy
 command', (done) ->
   sandbox = sinon.sandbox.create()
 
   deployRole = 'staging'
+  tagName = "#{deployRole}-test-webhooks-1bcc7a0470"
   commitHookPayload = {
-    "ref": "#{deployRole}-test-webhooks-1bcc7a0470",
+    "ref": tagName,
     "ref_type": "tag"
   }
 
@@ -29,8 +32,8 @@ command', (done) ->
       return deployRole
   )
 
-  commandSpawnStub = sandbox.stub(CommandRunner, 'spawn', ->
-    return {on: ->}
+  updateCodeStub = sandbox.stub(UpdateCode, 'fromTag', ->
+    new Promise(()->)
   )
 
   Q.nfcall(
@@ -42,18 +45,15 @@ command', (done) ->
   ).spread( (res, body) ->
 
     try
+      console.log res.body
       assert.equal res.statusCode, 200,
         "Expected the request to succeed"
 
-      assert.strictEqual commandSpawnStub.callCount, 1,
-        "Expected CommandRunner.spawn to be called once"
+      assert.strictEqual updateCodeStub.callCount, 1,
+        "Expected UpdateCode.fromTag to be called once"
 
-      assert.isTrue(
-        commandSpawnStub.calledWith(
-          "coffee #{process.cwd()}/bin/deploy.coffee"
-        ),
-        "Expected CommandRunner.spawn to call the deploy command"
-      )
+      assert.isTrue updateCodeStub.calledWith(tagName),
+        "Expected UpdateCode.fromTag to be called with the tag name"
 
       done()
     catch e
@@ -80,9 +80,7 @@ server", (done) ->
 
   rangeCheckStub = sandbox.stub(range_check, 'in_range', -> true)
 
-  commandSpawnStub = sandbox.stub(CommandRunner, 'spawn', ->
-    return {on: ->}
-  )
+  updateCodeStub = sandbox.stub(UpdateCode, 'fromTag', ->)
 
   configStub = sandbox.stub(AppConfig, 'get', (variable)->
     if variable is 'server_name'
@@ -98,7 +96,7 @@ server", (done) ->
   ).spread( (res, body) ->
 
     try
-      assert.strictEqual commandSpawnStub.callCount, 0,
+      assert.strictEqual updateCodeStub.callCount, 0,
         "Expected CommandRunner.spawn to not be called once"
 
       assert.equal res.statusCode, 500
@@ -119,9 +117,7 @@ test("POST deploy fails if the IP is not of GitHub's servers", (done) ->
 
   rangeCheckStub = sandbox.stub(range_check, 'in_range', -> false)
 
-  commandSpawnStub = sandbox.stub(CommandRunner, 'spawn', ->
-    return {on: ->}
-  )
+  updateCodeStub = sandbox.stub(UpdateCode, 'fromTag', ->)
 
   Q.nfcall(
     request.post, {
@@ -134,7 +130,7 @@ test("POST deploy fails if the IP is not of GitHub's servers", (done) ->
     try
       assert.equal res.statusCode, 401
 
-      assert.isFalse commandSpawnStub.calledOnce,
+      assert.isFalse updateCodeStub.calledOnce,
         "Expected CommandRunner.spawn not to be called"
 
       done()

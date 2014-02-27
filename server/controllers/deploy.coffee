@@ -1,5 +1,5 @@
 AppConfig = require('../initializers/config')
-CommandRunner = require('../bin/command-runner')
+UpdateCode = require('../lib/update_code')
 range_check = require('range_check')
 
 tagRefersToServer = (tag, serverName) ->
@@ -28,15 +28,13 @@ exports.index = (req, res) ->
     console.log "Ignoring, only deploys on pushes from deploy"
     return res.send 500, "Only commits from deploy branch are accepted"
 
-  console.log "Forking #{process.cwd()}/bin/deploy.coffee"
-
-  deployProcess = CommandRunner.spawn "coffee #{process.cwd()}/bin/deploy.coffee"
-
-  console.log "Forked!"
-
-  deployProcess.on('close', ->
-    console.log "deploy finished, restarting server"
+  console.log "Updating code..."
+  UpdateCode.fromTag(tagName).then(->
+    console.log "Code update finished, restarting server"
     process.exit()
+  ).catch((err)->
+    console.log "Error updating code:"
+    console.error err
   )
 
   res.send 200
