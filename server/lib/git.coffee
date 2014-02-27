@@ -1,4 +1,5 @@
 Q = require 'q'
+Promise = require('bluebird')
 CommandRunner = require '../bin/command-runner'
 
 exports.getBranch = ->
@@ -21,3 +22,17 @@ exports.getBranch = ->
   )
 
   return deferred.promise
+
+exports.createTag = (tagName) ->
+  return new Promise( (resolve, reject) ->
+    createTagCommand = CommandRunner.spawn(
+      "git", ["tag", "-a", tagName]
+    )
+
+    createTagCommand.on('close', (code) ->
+      if code is 0
+        resolve()
+      else
+        reject()
+    )
+  )
