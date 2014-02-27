@@ -47,7 +47,6 @@ test('Asks for the server target and tag name, then creates a new tag', (done) -
         with staging-new-feature-#{randomNumber}, 'New feature'"
       )
 
-
       done()
 
     catch err

@@ -20,7 +20,7 @@ module.exports = new Promise( (resolve, reject) ->
   rl.once('line', (target) ->
     console.log "What does this deploy feature?"
     rl.once('line', (description) ->
-      hash = crypto.randomBytes(20).toString('hex')
+      hash = crypto.randomBytes(5).toString('hex')
       tagName = "#{target}-#{normaliseDescription(description)}-#{hash}"
 
       console.log "Creating tag '#{tagName}'"
