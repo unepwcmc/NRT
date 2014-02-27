@@ -15,7 +15,7 @@ suite('Deploy')
 
 test('Asks for the server target and tag name, then creates a new tag', (done) ->
   readlineCount = 0
-  responses = ['staging', 'New feature']
+  responses = ['staging', 'New feature stuff']
 
   sandbox = sinon.sandbox.create()
 
@@ -36,15 +36,26 @@ test('Asks for the server target and tag name, then creates a new tag', (done) -
     new Promise((resolve, reject) -> resolve())
   )
 
+  pushTagStub = sandbox.stub(Git, 'push', ->
+    new Promise((resolve, reject) -> resolve())
+  )
+
   require('../../../lib/tasks/deploy').then(->
     try
+      expectedBranchName = "staging-new-feature-stuff-#{randomNumber}"
 
       assert.isTrue(
         createTagStub.calledWith(
-          "staging-new-feature-#{randomNumber}", 'New feature'
+          expectedBranchName, 'New feature stuff'
         ),
         "Expected Git.createTag to be called
-        with staging-new-feature-#{randomNumber}, 'New feature'"
+        with #{expectedBranchName}, 'New feature stuff', but was called with
+        #{createTagStub.getCall(0).args}"
+      )
+
+      assert.isTrue(
+        pushTagStub.calledWith(expectedBranchName),
+        "Expected the created tag to be pushed"
       )
 
       done()

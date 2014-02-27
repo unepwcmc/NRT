@@ -24,7 +24,9 @@ module.exports = new Promise( (resolve, reject) ->
       tagName = "#{target}-#{normaliseDescription(description)}-#{hash}"
 
       console.log "Creating tag '#{tagName}'"
-      Git.createTag(tagName, description).then(resolve).error(reject)
+      Git.createTag(tagName, description).then( ->
+        Git.push(tagName)
+      ).then(resolve).error(reject)
     )
   )
 )
