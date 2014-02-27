@@ -47,3 +47,7 @@ exports.push = (tagName) ->
         reject("push command failed")
     )
   )
+
+exports.setEmail = ->
+
+exports.pull = ->

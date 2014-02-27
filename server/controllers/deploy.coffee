@@ -1,5 +1,5 @@
 AppConfig = require('../initializers/config')
-UpdateCode = require('../lib/update_code')
+Deploy = require('../lib/deploy')
 range_check = require('range_check')
 
 tagRefersToServer = (tag, serverName) ->
@@ -29,7 +29,7 @@ exports.index = (req, res) ->
     return res.send 500, "Only commits from deploy branch are accepted"
 
   console.log "Updating code..."
-  UpdateCode.fromTag(tagName).then(->
+  Deploy.deploy(tagName).then(->
     console.log "Code update finished, restarting server"
     process.exit()
   ).catch((err)->

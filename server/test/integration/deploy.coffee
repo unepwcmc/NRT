@@ -9,7 +9,7 @@ Promise = require('bluebird')
 CommandRunner = require('../../bin/command-runner')
 AppConfig = require('../../initializers/config')
 range_check = require('range_check')
-UpdateCode = require('../../lib/update_code')
+Deploy = require('../../lib/deploy')
 
 suite('Deploy')
 
@@ -32,7 +32,7 @@ command', (done) ->
       return deployRole
   )
 
-  updateCodeStub = sandbox.stub(UpdateCode, 'fromTag', ->
+  updateCodeStub = sandbox.stub(Deploy, 'deploy', ->
     new Promise(()->)
   )
 
@@ -50,10 +50,10 @@ command', (done) ->
         "Expected the request to succeed"
 
       assert.strictEqual updateCodeStub.callCount, 1,
-        "Expected UpdateCode.fromTag to be called once"
+        "Expected Deploy.deploy to be called once"
 
       assert.isTrue updateCodeStub.calledWith(tagName),
-        "Expected UpdateCode.fromTag to be called with the tag name"
+        "Expected Deploy.deploy to be called with the tag name"
 
       done()
     catch e
@@ -80,7 +80,7 @@ server", (done) ->
 
   rangeCheckStub = sandbox.stub(range_check, 'in_range', -> true)
 
-  updateCodeStub = sandbox.stub(UpdateCode, 'fromTag', ->)
+  updateCodeStub = sandbox.stub(Deploy, 'deploy', ->)
 
   configStub = sandbox.stub(AppConfig, 'get', (variable)->
     if variable is 'server_name'
@@ -117,7 +117,7 @@ test("POST deploy fails if the IP is not of GitHub's servers", (done) ->
 
   rangeCheckStub = sandbox.stub(range_check, 'in_range', -> false)
 
-  updateCodeStub = sandbox.stub(UpdateCode, 'fromTag', ->)
+  updateCodeStub = sandbox.stub(Deploy, 'deploy', ->)
 
   Q.nfcall(
     request.post, {
