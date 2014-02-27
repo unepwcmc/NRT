@@ -3,8 +3,13 @@ helpers = require '../../helpers'
 sinon = require 'sinon'
 readline = require 'readline'
 request = require 'request'
+Promise = require 'bluebird'
+crypto = require('crypto')
+
+
 
 CommandRunner = require('../../../bin/command-runner')
+Git = require('../../../lib/git')
 
 suite('Deploy')
 
@@ -12,54 +17,44 @@ test('Asks for the server target and tag name, then creates a new tag', (done) -
   readlineCount = 0
   responses = ['staging', 'New feature']
 
-  sinon.stub(readline, 'createInterface', ->
+  sandbox = sinon.sandbox.create()
+
+  sandbox.stub(readline, 'createInterface', ->
     once: (event, callback) ->
       readlineCount += 1
       callback(responses[readlineCount-1])
   )
 
-  spawnStub = sinon.stub(CommandRunner, 'spawn', ->
-    process =
-      on: (event, cb) ->
-        if event is 'close'
-          cb(0)
+  # Determined by dice roll, guaranteed to be random
+  randomNumber = 4
+  randomStub = sinon.stub(crypto, 'randomBytes', ->
+    toString: ->
+      randomNumber
+  )
 
-    return process
+  createTagStub = sandbox.stub(Git, 'createTag', ->
+    new Promise((resolve, reject) -> resolve())
   )
 
   require('../../../lib/tasks/deploy').then(->
     try
-      createTagCall = spawnStub.firstCall
 
-      assert.isNotNull createTagCall, "Expected a process to be spawn"
-
-      createTagArgs = createTagCall.args
-
-      assert.strictEqual(
-        "git",
-        createTagArgs[0],
-        "Expected deploy task to spawn a git command"
+      assert.isTrue(
+        createTagStub.calledWith("staging-new-feature-#{randomNumber}"),
+        "Expected Git.createTag to be called
+        with staging-new-feature-#{randomNumber}"
       )
 
-      expectedGitArgs = [
-        "tag",
-        "-a",
-        "-m",
-        "'#{responses[1]}'",
-        "staging-new-feature"
-      ]
-
-      assert.deepEqual createTagArgs[1], expectedGitArgs,
-        """
-          Expected the git to be called with #{expectedGitArgs},
-            but called with #{createTagArgs}"""
 
       done()
 
     catch err
       done(err)
     finally
-      spawnStub.restore()
+      sandbox.restore()
 
-  ).catch(done)
+  ).catch( (err)->
+    sandbox.resore()
+    done(err)
+  )
 )

@@ -1,8 +1,9 @@
 Promise = require('bluebird')
 readline = require('readline')
 request = Promise.promisifyAll(require('request'))
+crypto = require('crypto')
 
-CommandRunner = require('../../bin/command-runner')
+Git = require('../git')
 
 rl = readline.createInterface(
   input: process.stdin
@@ -19,25 +20,11 @@ module.exports = new Promise( (resolve, reject) ->
   rl.once('line', (target) ->
     console.log "What does this deploy feature?"
     rl.once('line', (description) ->
-      tagName = "#{target}-#{normaliseDescription(description)}"
-
-      gitArgs = [
-        "tag",
-        "-a",
-        "-m",
-        "'#{description}'",
-        "#{tagName}"
-      ]
+      hash = crypto.randomBytes(20).toString('hex')
+      tagName = "#{target}-#{normaliseDescription(description)}-#{hash}"
 
       console.log "Creating tag '#{tagName}'"
-      gitTag = CommandRunner.spawn('git', gitArgs)
-
-      gitTag.on('close', (code) ->
-        if code > 0
-          return reject("Unable to create tag #{tagName}")
-
-        resolve()
-      )
+      Git.createTag(tagName).then(resolve).error(reject)
     )
   )
 )
