@@ -142,3 +142,50 @@ test('.push pushes the given item', (done)->
     done(err)
   )
 )
+
+test('setEmail sets the git user email config', (done)->
+  spawnStub = sinon.stub(CommandRunner, 'spawn', ->
+    process =
+      on: (event, cb) ->
+        if event is 'close'
+          cb(0)
+
+    return process
+  )
+
+  email = "deploy@nrt.io"
+  Git.setEmail(email).then(->
+    try
+      setEmailCall = spawnStub.firstCall
+
+      assert.isNotNull setEmailCall, "Expected a process to be spawned"
+
+      setEmailArgs = setEmailCall.args
+
+      assert.strictEqual(
+        "git",
+        setEmailArgs[0],
+        "Expected deploy task to spawn a git command"
+      )
+
+      expectedGitArgs = [
+        "config",
+        "user.email",
+        "'#{email}'"
+      ]
+
+      assert.deepEqual setEmailArgs[1], expectedGitArgs,
+        """
+          Expected git to be called with #{expectedGitArgs},
+            but called with #{setEmailArgs}"""
+
+      done()
+    catch e
+      done(e)
+    finally
+      spawnStub.restore()
+  ).catch((err)->
+    spawnStub.restore()
+    done(err)
+  )
+)

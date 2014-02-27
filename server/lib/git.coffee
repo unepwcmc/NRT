@@ -48,6 +48,18 @@ exports.push = (tagName) ->
     )
   )
 
-exports.setEmail = ->
+exports.setEmail = (email) ->
+  new Promise( (resolve, reject) ->
+    setConfigCommand = CommandRunner.spawn(
+      "git", ["config", "user.email", "'#{email}'"]
+    )
+
+    setConfigCommand.on('close', (code) ->
+      if code is 0
+        resolve()
+      else
+        reject("Failed to set email in git config")
+    )
+  )
 
 exports.pull = ->

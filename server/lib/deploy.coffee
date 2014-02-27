@@ -1,8 +1,9 @@
 Promise = require 'bluebird'
+Git = require('./git')
 
 exports.updateFromTag = ->
   new Promise( (resolve, reject) ->
-    resolve()
+    Git.setEmail('deploy@nrt.io').then(resolve).catch(reject)
   )
 
 exports.deploy = ->
