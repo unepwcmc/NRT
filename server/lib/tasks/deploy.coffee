@@ -12,7 +12,7 @@ rl = readline.createInterface(
 )
 
 normaliseDescription = (tagName) ->
-  tagName.toLowerCase().replace(/\s+/, '-')
+  tagName.toLowerCase().replace(/\s+/g, '-')
 
 console.log "What server do you want to deploy to (e.g. staging, production):"
 

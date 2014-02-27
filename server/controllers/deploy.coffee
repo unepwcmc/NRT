@@ -1,9 +1,9 @@
+AppConfig = require('../initializers/config')
 CommandRunner = require('../bin/command-runner')
 range_check = require('range_check')
 
-getBranchFromRef = (ref) ->
-  refParts = ref.split("/")
-  return refParts[refParts.length-1]
+tagRefersToServer = (tag, serverName) ->
+  return new RegExp("^#{serverName}").test(tag)
 
 getIpFromRequest = (req) ->
   req.connection.remoteAddress
@@ -17,10 +17,14 @@ exports.index = (req, res) ->
   remoteIp = getIpFromRequest(req)
   return res.send 401 unless ipIsFromGithub(remoteIp)
 
-  parsedPayload = JSON.parse(req.body.payload)
+  parsedPayload = req.body
 
   console.log "Got deploy message from #{parsedPayload.ref}"
-  unless getBranchFromRef(parsedPayload.ref) is "deploy"
+
+  serverName = AppConfig.get('server_name')
+  tagName = parsedPayload.ref
+
+  unless tagRefersToServer(tagName, serverName)
     console.log "Ignoring, only deploys on pushes from deploy"
     return res.send 500, "Only commits from deploy branch are accepted"
 
