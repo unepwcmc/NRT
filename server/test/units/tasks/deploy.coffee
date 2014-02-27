@@ -40,9 +40,11 @@ test('Asks for the server target and tag name, then creates a new tag', (done) -
     try
 
       assert.isTrue(
-        createTagStub.calledWith("staging-new-feature-#{randomNumber}"),
+        createTagStub.calledWith(
+          "staging-new-feature-#{randomNumber}", 'New feature'
+        ),
         "Expected Git.createTag to be called
-        with staging-new-feature-#{randomNumber}"
+        with staging-new-feature-#{randomNumber}, 'New feature'"
       )
 
 

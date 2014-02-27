@@ -20,16 +20,16 @@ exports.getBranch = ->
     )
   )
 
-exports.createTag = (tagName) ->
+exports.createTag = (tagName, description) ->
   return new Promise( (resolve, reject) ->
     createTagCommand = CommandRunner.spawn(
-      "git", ["tag", "-a", tagName]
+      "git", ["tag", "-a", "-m", "'#{description}'", tagName]
     )
 
     createTagCommand.on('close', (code) ->
       if code is 0
         resolve()
       else
-        reject()
+        reject("create tag command failed")
     )
   )

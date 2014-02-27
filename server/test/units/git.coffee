@@ -44,8 +44,9 @@ test('getBranch returns the current branch', (done) ->
   )
 )
 
-test('createTag creates a new tag for the given name', (done)->
+test('createTag creates a new tag for the given name and description', (done)->
   newTagName = "fancy-banana"
+  newDescription = "Fancy Banana"
 
   spawnStub = sinon.stub(CommandRunner, 'spawn', ->
     process =
@@ -56,7 +57,7 @@ test('createTag creates a new tag for the given name', (done)->
     return process
   )
 
-  Git.createTag(newTagName).then(->
+  Git.createTag(newTagName, newDescription).then(->
     try
       createTagCall = spawnStub.firstCall
 
@@ -73,7 +74,9 @@ test('createTag creates a new tag for the given name', (done)->
       expectedGitArgs = [
         "tag",
         "-a",
-        "fancy-banana"
+        "-m",
+        "'#{newDescription}'",
+        "#{newTagName}"
       ]
 
       assert.deepEqual createTagArgs[1], expectedGitArgs,
@@ -86,7 +89,7 @@ test('createTag creates a new tag for the given name', (done)->
       done(e)
     finally
       spawnStub.restore()
-  ).catch(->
+  ).catch((err)->
     spawnStub.restore()
     done(err)
   )
