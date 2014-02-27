@@ -57,3 +57,29 @@ runs npm install in both client and server', (done) ->
     done(err)
   )
 )
+
+
+test('.deploy checkouts the given tag', (done) ->
+  sandbox = sinon.sandbox.create()
+  tagName = 'twiki'
+  updateStub = sandbox.stub(Deploy, 'updateFromTag', ->
+    new Promise((resolve)-> resolve())
+  )
+
+  Deploy.deploy(tagName).then(->
+    try
+      assert.isTrue(
+        updateStub.calledWith(tagName),
+        "Expected Deploy.updateFromtag to be called with teh tagname"
+      )
+
+      done()
+    catch err
+      done(err)
+    finally
+      sandbox.restore()
+  ).catch((err)->
+    sandbox.restore()
+    done(err)
+  )
+)

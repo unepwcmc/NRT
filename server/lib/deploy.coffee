@@ -10,7 +10,7 @@ exports.updateFromTag = (tagName)->
     ).then(resolve).catch(reject)
   )
 
-exports.deploy = ->
+exports.deploy = (tagName) ->
   new Promise( (resolve, reject) ->
-    resolve()
+    exports.updateFromTag(tagName).then(resolve).catch(reject)
   )
