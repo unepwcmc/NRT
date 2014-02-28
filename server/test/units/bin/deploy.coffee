@@ -6,13 +6,15 @@ Promise = require 'bluebird'
 
 CommandRunner = require('../../../bin/command-runner')
 Git = require('../../../lib/git')
+GitHubDeploy = require('../../../lib/git_hub_deploy')
 Deploy = require('../../../lib/deploy')
 
 suite('Deploy')
 
-test('.updateFromTag Sets the gits username,
+test('.updateFromTag sets the gits username,
 pulls the given tag,
-runs npm install in both client and server', (done) ->
+runs npm install in both client and server,
+notifying github at each step', (done) ->
   sandbox = sinon.sandbox.create()
 
   tagName = "corporate-banana"
@@ -29,7 +31,14 @@ runs npm install in both client and server', (done) ->
     new Promise((resolve)-> resolve())
   )
 
-  Deploy.updateFromTag(tagName).then( ->
+  deploy = {
+    updateDeployState: sandbox.spy(->
+      new Promise((resolve)-> resolve())
+    )
+  }
+
+
+  Deploy.updateFromTag(tagName, deploy).then( ->
     try
       assert.isTrue(
         gitSetEmailStub.calledWith('deploy@nrt.io'),
@@ -46,6 +55,16 @@ runs npm install in both client and server', (done) ->
         "Expected the fetched tag to be checked out"
       )
 
+      assert.isTrue(
+        deploy.updateDeployState.calledWith('pending', 'Fetching tags'),
+        "Expected github to be notified of fetching tags"
+      )
+
+      assert.isTrue(
+        deploy.updateDeployState.calledWith('pending', "Checking out tag '#{tagName}'"),
+        "Expected github to be notified of tag checkout  "
+      )
+
       done()
     catch err
       done(err)
@@ -59,18 +78,31 @@ runs npm install in both client and server', (done) ->
 )
 
 
-test('.deploy checkouts the given tag', (done) ->
+test('.deploy starts a new deploy and
+checks out the given tag', (done) ->
   sandbox = sinon.sandbox.create()
   tagName = 'twiki'
+
   updateStub = sandbox.stub(Deploy, 'updateFromTag', ->
     new Promise((resolve)-> resolve())
+  )
+  startGithubDeployStub = sandbox.stub(GitHubDeploy::, 'start', ->
+    new Promise((resolve)->
+      @id = 5
+      resolve()
+    )
   )
 
   Deploy.deploy(tagName).then(->
     try
       assert.isTrue(
+        startGithubDeployStub.calledOnce,
+        "Expected GitHubDeploy::start to be called"
+      )
+
+      assert.isTrue(
         updateStub.calledWith(tagName),
-        "Expected Deploy.updateFromtag to be called with teh tagname"
+        "Expected Deploy.updateFromtag to be called with the tagname"
       )
 
       done()
