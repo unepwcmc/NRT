@@ -3,17 +3,50 @@ helpers = require '../helpers'
 sinon = require 'sinon'
 request = require 'request'
 Promise = require 'bluebird'
+AppConfig = require('../../initializers/config')
 
 GitHubDeploy = require('../../lib/git_hub_deploy')
 
 suite('GitHubDeploy')
 
+test('.githubConfig returns the github basic auth config from the config file', ->
+  expectedGithubConfig =
+    username: 'abcd'
+    password: 'x-oauth-basic'
+
+  appConfigStub = sinon.stub(AppConfig, 'get', (key) ->
+    return {
+      github: expectedGithubConfig
+    }
+  )
+
+  try
+    deploy = new GitHubDeploy('fanciest-of-bananas')
+
+    githubConfig = deploy.githubConfig()
+
+    assert.deepEqual githubConfig, expectedGithubConfig,
+      "Expected correct github config to be returned"
+  finally
+    appConfigStub.restore()
+)
+
 test(".start creates a GitHub deploy for the given tag name", (done)->
   tagName = "be-suited-bananana"
   newDeployId = 10
 
-  postStub = sinon.stub(request, 'post', (options, cb) ->
+  sandbox = sinon.sandbox.create()
+
+  postStub = sandbox.stub(request, 'post', (options, cb) ->
     cb(null, {statusCode: 200, body: JSON.stringify({id: newDeployId})})
+  )
+
+  appConfigStub = sandbox.stub(AppConfig, 'get', (key) ->
+    return {
+      github:
+        username: 'abcd'
+        password: 'x-oauth-basic'
+    }
   )
 
   deploy = new GitHubDeploy(tagName)
@@ -24,6 +57,10 @@ test(".start creates a GitHub deploy for the given tag name", (done)->
       headers: {
         'Accept': 'application/vnd.github.cannonball-preview+json'
         'User-Agent': 'National Reporting Toolkit Deployment Bot 2000x'
+      }
+      auth: {
+        username: 'abcd'
+        password: 'x-oauth-basic'
       }
       body: JSON.stringify({"description": tagName, "payload": {}, "ref": tagName})
 
@@ -41,24 +78,31 @@ test(".start creates a GitHub deploy for the given tag name", (done)->
     catch err
       done(err)
     finally
-      postStub.restore()
+      sandbox.restore()
 
   ).catch((err)->
-    postStub.restore()
+    sandbox.restore()
     done(err)
   )
 )
 
 test('.start throws an error if Github responds with an error', (done) ->
   errorResponse = JSON.stringify({message: "Not found"})
-  postStub = sinon.stub(request, 'post', (options, cb) ->
+
+  sandbox = sinon.sandbox.create()
+
+  postStub = sandbox.stub(request, 'post', (options, cb) ->
     cb(null, {statusCode: 404, body: errorResponse})
+  )
+
+  appConfigStub = sandbox.stub(AppConfig, 'get', (key) ->
+    return github: {}
   )
 
   deploy = new GitHubDeploy("fancy-banana-stand")
 
   deploy.start().then(->
-    postStub.restore()
+    sandbox.restore()
     done(new Error("Expected deploy.start to throw an error"))
   ).catch( (err)->
     try
@@ -71,7 +115,7 @@ test('.start throws an error if Github responds with an error', (done) ->
     catch err
       done(err)
     finally
-      postStub.restore()
+      sandbox.restore()
   )
 )
 

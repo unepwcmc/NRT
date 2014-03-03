@@ -1,4 +1,5 @@
 Promise = require('bluebird')
+AppConfig = require('../initializers/config')
 request = Promise.promisifyAll(require('request'))
 
 REQUEST_HEADERS =
@@ -13,6 +14,7 @@ module.exports = class GitHubDeploy
       request.post({
         url: "https://api.github.com/repos/unepwcmc/NRT/deployments"
         headers: REQUEST_HEADERS
+        auth: @githubConfig()
         body: JSON.stringify(
           description: @tagName
           payload: {}
@@ -48,3 +50,7 @@ module.exports = class GitHubDeploy
           resolve()
       )
     )
+
+  githubConfig: ->
+    username: AppConfig.get('deploy').github.username
+    password: AppConfig.get('deploy').github.password
