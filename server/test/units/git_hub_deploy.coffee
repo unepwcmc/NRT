@@ -121,9 +121,20 @@ test('.start throws an error if Github responds with an error', (done) ->
 
 test('.updateDeployState posts the given state and description to
  github', (done) ->
+  sandbox = sinon.sandbox.create()
+
   deployId = 4
-  postStub = sinon.stub(request, 'post', (options, cb) ->
+  postStub = sandbox.stub(request, 'post', (options, cb) ->
     cb(null, {statusCode: 200})
+  )
+
+  auth = {
+    username: 'abcd'
+    password: 'x-oauth-basic'
+  }
+
+  appConfigStub = sandbox.stub(GitHubDeploy::, 'githubConfig', (key) ->
+    return auth
   )
 
   deploy = new GitHubDeploy()
@@ -140,6 +151,7 @@ test('.updateDeployState posts the given state and description to
         'Accept': 'application/vnd.github.cannonball-preview+json'
         'User-Agent': 'National Reporting Toolkit Deployment Bot 2000x'
       }
+      auth: auth
       body: JSON.stringify(
         state: state
         description: description
@@ -157,24 +169,30 @@ test('.updateDeployState posts the given state and description to
     catch err
       done(err)
     finally
-      postStub.restore()
+      sandbox.restore()
 
   ).catch((err)->
-    postStub.restore()
+    sandbox.restore()
     done(err)
   )
 )
 
 test('.updateDeployState throws an error if Github responds with an error', (done) ->
+  sandbox = sinon.sandbox.create()
+
   errorResponse = JSON.stringify({message: "Not found"})
-  postStub = sinon.stub(request, 'post', (options, cb) ->
+  postStub = sandbox.stub(request, 'post', (options, cb) ->
     cb(null, {statusCode: 404, body: errorResponse})
+  )
+
+  appConfigStub = sandbox.stub(GitHubDeploy::, 'githubConfig', (key) ->
+    return {}
   )
 
   deploy = new GitHubDeploy("fancy-banana-stand")
 
   deploy.updateDeployState("pending", "hey here's a deploy").then(->
-    postStub.restore()
+    sandbox.restore()
     done(new Error("Expected deploy.updateDeployState to throw an error"))
   ).catch( (err)->
     try
@@ -187,6 +205,6 @@ test('.updateDeployState throws an error if Github responds with an error', (don
     catch err
       done(err)
     finally
-      postStub.restore()
+      sandbox.restore()
   )
 )

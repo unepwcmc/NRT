@@ -37,6 +37,7 @@ module.exports = class GitHubDeploy
       request.post({
         url: "https://api.github.com/repos/unepwcmc/NRT/deployments/#{@id}/statuses"
         headers: REQUEST_HEADERS
+        auth: @githubConfig()
         body: JSON.stringify(
           state: state
           description: description
