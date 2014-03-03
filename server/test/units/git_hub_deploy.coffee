@@ -21,6 +21,10 @@ test(".start creates a GitHub deploy for the given tag name", (done)->
   deploy.start().then(->
     expectedRequestParams =
       url: "https://api.github.com/repos/unepwcmc/NRT/deployments"
+      headers: {
+        'Accept': 'application/vnd.github.cannonball-preview+json'
+        'User-Agent': 'National Reporting Toolkit Deployment Bot 2000x'
+      }
       body: JSON.stringify({"description": tagName, "payload": {}, "ref": tagName})
 
     try
@@ -63,6 +67,10 @@ test('.updateDeployState posts the given state and description to
   deploy.updateDeployState(state, description).then(->
     expectedGitHubQuery =
       url: "https://api.github.com/repos/unepwcmc/NRT/deployments/#{deployId}/statuses"
+      headers: {
+        'Accept': 'application/vnd.github.cannonball-preview+json'
+        'User-Agent': 'National Reporting Toolkit Deployment Bot 2000x'
+      }
       body: JSON.stringify(
         state: state
         description: description
