@@ -21,6 +21,8 @@ module.exports = class GitHubDeploy
       }, (err, response) =>
         if err?
           reject(err)
+        else if response.statusCode isnt 200
+          reject(JSON.parse(response.body))
         else
           deployment = JSON.parse(response.body)
           @id = deployment.id
@@ -40,6 +42,8 @@ module.exports = class GitHubDeploy
       }, (err, response) ->
         if err?
           reject(err)
+        else if response.statusCode isnt 200
+          reject(JSON.parse(response.body))
         else
           resolve()
       )

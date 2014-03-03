@@ -13,7 +13,7 @@ test(".start creates a GitHub deploy for the given tag name", (done)->
   newDeployId = 10
 
   postStub = sinon.stub(request, 'post', (options, cb) ->
-    cb(null, {body: JSON.stringify({id: newDeployId})})
+    cb(null, {statusCode: 200, body: JSON.stringify({id: newDeployId})})
   )
 
   deploy = new GitHubDeploy(tagName)
@@ -49,12 +49,37 @@ test(".start creates a GitHub deploy for the given tag name", (done)->
   )
 )
 
+test('.start throws an error if Github responds with an error', (done) ->
+  errorResponse = JSON.stringify({message: "Not found"})
+  postStub = sinon.stub(request, 'post', (options, cb) ->
+    cb(null, {statusCode: 404, body: errorResponse})
+  )
+
+  deploy = new GitHubDeploy("fancy-banana-stand")
+
+  deploy.start().then(->
+    postStub.restore()
+    done(new Error("Expected deploy.start to throw an error"))
+  ).catch( (err)->
+    try
+
+      assert.deepEqual err, {"message": "Not found"},
+        "Expected deploy.start() to throw the error returned by github"
+
+      done()
+
+    catch err
+      done(err)
+    finally
+      postStub.restore()
+  )
+)
+
 test('.updateDeployState posts the given state and description to
  github', (done) ->
   deployId = 4
   postStub = sinon.stub(request, 'post', (options, cb) ->
-    console.log "Pineapparu"
-    cb(null, {})
+    cb(null, {statusCode: 200})
   )
 
   deploy = new GitHubDeploy()
@@ -93,5 +118,31 @@ test('.updateDeployState posts the given state and description to
   ).catch((err)->
     postStub.restore()
     done(err)
+  )
+)
+
+test('.updateDeployState throws an error if Github responds with an error', (done) ->
+  errorResponse = JSON.stringify({message: "Not found"})
+  postStub = sinon.stub(request, 'post', (options, cb) ->
+    cb(null, {statusCode: 404, body: errorResponse})
+  )
+
+  deploy = new GitHubDeploy("fancy-banana-stand")
+
+  deploy.updateDeployState("pending", "hey here's a deploy").then(->
+    postStub.restore()
+    done(new Error("Expected deploy.updateDeployState to throw an error"))
+  ).catch( (err)->
+    try
+
+      assert.deepEqual err, {"message": "Not found"},
+        "Expected deploy.updateDeployState() to throw the error returned by github"
+
+      done()
+
+    catch err
+      done(err)
+    finally
+      postStub.restore()
   )
 )
