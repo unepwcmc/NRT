@@ -135,7 +135,7 @@ test("POST deploy fails if the IP is not of GitHub's servers", (done) ->
 
       done()
     catch err
-      done(e)
+      done(err)
     finally
       sandbox.restore()
 

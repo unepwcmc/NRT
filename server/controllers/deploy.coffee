@@ -25,10 +25,11 @@ exports.index = (req, res) ->
   tagName = parsedPayload.ref
 
   unless tagRefersToServer(tagName, serverName)
-    console.log "Ignoring, only deploys on pushes from deploy"
-    return res.send 500, "Only commits from deploy branch are accepted"
+    errMessage = "Only deploys for this server (#{serverName}) are accepted"
+    console.log errMessage
+    return res.send 500, errMessage
 
-  console.log "Updating code..."
+  console.log "Updating code from #{tagName}..."
   Deploy.deploy(tagName).then(->
     console.log "Code update finished, restarting server"
     process.exit()
