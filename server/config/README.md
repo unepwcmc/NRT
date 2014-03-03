@@ -34,6 +34,12 @@ The config is accessible thusly:
     "dpsir_filtering": true, # Enable visibility and filtering of DPSIR attributes
     "ldap": true # Enable LDAP authentication
   }
+  "deploy": { # Automatic deployment config
+    "github": { # Login details for GitHub deployment statuses
+      "username": "123abc",
+      "password": "x-oauth-token"
+    }
+  }
 }
 ```
 
