@@ -15,8 +15,8 @@ ipIsFromGithub = (ip) ->
 
 exports.index = (req, res) ->
   remoteIp = getIpFromRequest(req)
-  envIsProduction = process.env.NODE_ENV is 'production'
-  if !ipIsFromGithub(remoteIp) and envIsProduction
+  envIsNotDevelopment = process.env.NODE_ENV isnt 'development'
+  if !ipIsFromGithub(remoteIp) and envIsNotDevelopment
     return res.send 401
 
   parsedPayload = req.body
