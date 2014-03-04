@@ -361,13 +361,13 @@ test(".pollStatus polls and prints deploy status until success", (done)->
     id: 1
     state: "pending"
     description: "Fetching something or rather"
-    createdAt: "2014-03-04T10:08:32Z"
+    created_at: "2014-03-04T10:08:32Z"
   }
-  finishedStatusResponse = {
+  successStatusResponse = {
     id: 2
-    state: "finished"
+    state: "success"
     description: "totally done"
-    createdAt: "2014-03-04T10:09:00Z"
+    created_at: "2014-03-04T10:09:00Z"
   }
   responses = [{
     body: JSON.stringify(
@@ -375,7 +375,7 @@ test(".pollStatus polls and prints deploy status until success", (done)->
     )
   }, {
     body: JSON.stringify(
-      [pendingStatusResponse, finishedStatusResponse]
+      [pendingStatusResponse, successStatusResponse]
     )
   }]
 
@@ -395,8 +395,8 @@ test(".pollStatus polls and prints deploy status until success", (done)->
   deploy.pollStatus().then(->
     try
       expectedLogs = [
-        "[#{pendingStatusResponse.createdAt}] pending: #{pendingStatusResponse.description}"
-        "[#{finishedStatusResponse.createdAt}] finished: #{finishedStatusResponse.description}"
+        "[#{pendingStatusResponse.created_at}] pending: #{pendingStatusResponse.description}"
+        "[#{successStatusResponse.created_at}] success: #{successStatusResponse.description}"
       ]
 
       for message, index in expectedLogs
@@ -465,7 +465,7 @@ is encountered", (done)->
     id: 1
     state: "failure"
     description: "PC Load Letter"
-    createdAt: "2014-03-04T10:08:32Z"
+    created_at: "2014-03-04T10:08:32Z"
   }
 
   getStub = sandbox.stub(request, 'get', (options, cb)->
@@ -484,7 +484,7 @@ is encountered", (done)->
 
   deploy.pollStatus().then(->
     try
-      expectedLog = "[#{failedResponse.createdAt}] failure: #{failedResponse.description}"
+      expectedLog = "[#{failedResponse.created_at}] failure: #{failedResponse.description}"
 
       logCall = logSpy.getCall(0)
 
