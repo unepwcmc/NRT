@@ -58,7 +58,7 @@ module.exports = class GitHubDeploy
   @getDeployForTag: (tagName) ->
     new Promise( (resolve, reject) ->
       request.get(
-        url: ''
+        url: "https://api.github.com/repos/unepwcmc/NRT/deployments"
       , (err, response) ->
         if err?
           reject(err)

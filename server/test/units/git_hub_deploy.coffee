@@ -221,7 +221,7 @@ with a deploy instance with the correct ID", (done) ->
 
   sandbox = sinon.sandbox.create()
 
-  sandbox.stub(request, 'get', (options, cb)->
+  getStub = sandbox.stub(request, 'get', (options, cb)->
     response =
       body: JSON.stringify([{
         id: deployId
@@ -238,8 +238,19 @@ with a deploy instance with the correct ID", (done) ->
       assert.strictEqual deploy.id, deployId,
         "Expected the returned deploy instance to have the correct ID"
 
+      assert.isTrue getStub.calledOnce,
+        "Expected request.get to be called"
+
+      requestArgs = getStub.getCall(0).args
+
+      assert.strictEqual(
+        requestArgs[0].url,
+        "https://api.github.com/repos/unepwcmc/NRT/deployments",
+        "Expected a request to be sent to right URL"
+      )
+
       done()
-    catch
+    catch err
       done(err)
     finally
       sandbox.restore()
