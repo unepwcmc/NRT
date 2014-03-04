@@ -311,3 +311,81 @@ deployment not included in first result", (done) ->
   clock.restore()
 
 )
+
+test(".pollStatus polls and prints deploy status until success", (done)->
+  deploy = new GitHubDeploy()
+  deploy.id = 5
+
+  clock = sinon.useFakeTimers()
+  sandbox = sinon.sandbox.create()
+
+  requestCount = 0
+
+  pendingStatusResponse = {
+    id: 1
+    state: "pending"
+    description: "Fetching something or rather"
+    createdAt: "2014-03-04T10:08:32Z"
+  }
+  finishedStatusResponse = {
+    id: 2
+    state: "finished"
+    description: "totally done"
+    createdAt: "2014-03-04T10:09:00Z"
+  }
+  responses = [{
+    body: JSON.stringify(
+      [pendingStatusResponse]
+    )
+  }, {
+    body: JSON.stringify(
+      [pendingStatusResponse, finishedStatusResponse]
+    )
+  }]
+
+  getStub = sandbox.stub(request, 'get', (options, cb)->
+    response = responses[requestCount]
+    requestCount += 1
+    cb(null, response)
+  )
+
+  logSpy = sandbox.spy(console, 'log')
+
+  deploy.pollStatus().then(->
+    try
+      expectedLogs = [
+        "[#{pendingStatusResponse.createdAt}] pending: #{pendingStatusResponse.description}"
+        "[#{finishedStatusResponse.createdAt}] finished: #{finishedStatusResponse.description}"
+      ]
+
+      for message, index in expectedLogs
+        logCall = logSpy.getCall(index)
+
+        unless logCall?
+          return done(new Error("Couldn't find console.log call for #{message}"))
+
+        assert.strictEqual(
+          logCall.args[0], message,
+          "Expected console.log to be called with message"
+        )
+
+      assert.strictEqual(logSpy.callCount, expectedLogs.length,
+        "Wrong number of console.log calls"
+      )
+      done()
+
+    catch err
+      done(err)
+    finally
+      sandbox.restore()
+
+  ).catch((err) ->
+    sandbox.restore()
+    done(err)
+  )
+
+  # Skip to second poll
+  clock.tick(1000)
+  clock.restore()
+
+)

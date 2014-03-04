@@ -69,11 +69,33 @@ module.exports = class GitHubDeploy
           if deploy?
             resolve(deploy)
           else
-            console.log "unable to find deploy with tag #{tagName}"
             setTimeout((->
-              console.log "Calling getDeployTag again"
               GitHubDeploy.getDeployForTag(tagName).then(resolve).catch(reject)
             ), 1000)
+      )
+    )
+
+  pollStatus: ->
+    new Promise( (resolve, reject) =>
+      request.get(
+        url: "https://api.github.com/repos/unepwcmc/NRT/deployments/#{@id}/statuses"
+      , (err, response) =>
+        if err?
+          reject(err)
+        else
+          statuses = JSON.parse(response.body)
+
+          @printedStatusIDs ||= []
+          for status in statuses
+            unless status.id in @printedStatusIDs
+              @printedStatusIDs.push status.id
+              console.log "[#{status.createdAt}] #{status.state}: #{status.description}"
+              if status.state is 'finished'
+                return resolve()
+          
+          setTimeout( =>
+            @pollStatus().then(resolve).catch(reject)
+          , 1000)
       )
     )
 
