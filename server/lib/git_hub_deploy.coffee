@@ -102,7 +102,7 @@ module.exports = class GitHubDeploy
           for status in statuses
             unless status.id in @printedStatusIDs
               @printedStatusIDs.push status.id
-              console.log "[#{status.createdAt}] #{status.state}: #{status.description}"
+              console.log "[#{status.created_at}] #{status.state}: #{status.description}"
               if status.state in ['finished', 'failure']
                 return resolve()
           
