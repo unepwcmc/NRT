@@ -109,5 +109,9 @@ module.exports = class GitHubDeploy
     )
 
   @githubConfig: ->
-    username: AppConfig.get('deploy').github.username
-    password: AppConfig.get('deploy').github.password
+    githubConfig = AppConfig.get('deploy').github
+
+    if githubConfig?
+      return githubConfig
+    else
+      throw new Error("Unable to find 'github' attribute in config")

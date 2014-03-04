@@ -34,6 +34,21 @@ test('#githubConfig returns the github basic auth config from the config file', 
     appConfigStub.restore()
 )
 
+test('#githubConfig throws an appropriate error if no config found', ->
+
+  appConfigStub = sinon.stub(AppConfig, 'get', (key) ->
+    return { }
+  )
+
+  try
+    assert.throws((->
+      githubConfig = GitHubDeploy.githubConfig()
+    ), "Unable to find 'github' attribute in config")
+
+  finally
+    appConfigStub.restore()
+)
+
 test(".start creates a GitHub deploy for the given tag name", (done)->
   tagName = "be-suited-bananana"
   newDeployId = 10
