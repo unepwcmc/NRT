@@ -1,13 +1,13 @@
 assert = require('chai').assert
-helpers = require '../../helpers'
+helpers = require '../helpers'
 sinon = require 'sinon'
 request = require 'request'
 Promise = require 'bluebird'
 
-CommandRunner = require('../../../bin/command-runner')
-Git = require('../../../lib/git')
-GitHubDeploy = require('../../../lib/git_hub_deploy')
-Deploy = require('../../../lib/deploy')
+CommandRunner = require('../../bin/command-runner')
+Git = require('../../lib/git')
+GitHubDeploy = require('../../lib/git_hub_deploy')
+Deploy = require('../../lib/deploy')
 
 suite('Deploy')
 
@@ -114,4 +114,51 @@ checks out the given tag', (done) ->
     sandbox.restore()
     done(err)
   )
+)
+
+test('.deploy posts the error status if an error occurs', (done) ->
+  sandbox = sinon.sandbox.create()
+
+  sandbox.stub(GitHubDeploy::, 'start', ->
+    new Promise((resolve)->
+      @id = 5
+      resolve()
+    )
+  )
+
+  updateDeployStateStub = sandbox.stub(GitHubDeploy::, 'updateDeployState', ->
+    new Promise((resolve) -> resolve())
+  )
+
+  failure = new Error("Big end has gone")
+  sandbox.stub(Deploy, 'updateFromTag', ->
+    new Promise((resolve, reject) -> reject(failure))
+  )
+
+  Deploy.deploy().then(->
+    sandbox.restore()
+    done(new Error("Deploy should fail"))
+  ).catch((err)->
+    try
+      assert.strictEqual err.message, failure.message,
+        "Expected the right error to be thrown"
+
+      assert.isTrue updateDeployStateStub.calledOnce,
+        "Expected updateDeployState to be called"
+
+      updateDeployStateCall = updateDeployStateStub.getCall(0)
+      assert.isTrue updateDeployStateStub.calledWith('failure', failure.message),
+        """
+        Expected updateDeployState to be called with
+        'failure', #{failure.message}, but called with
+        #{updateDeployStateCall.args}
+      """
+
+      done()
+    catch assertErr
+      done(assertErr)
+    finally
+      sandbox.restore()
+  )
+
 )
