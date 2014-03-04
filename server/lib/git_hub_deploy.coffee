@@ -76,7 +76,9 @@ module.exports = class GitHubDeploy
           deploy = _.findWhere(deploys, {description: tagName})
 
           if deploy?
-            resolve(deploy)
+            githubDeploy = new GitHubDeploy(tagName)
+            githubDeploy.id = deploy.id
+            resolve(githubDeploy)
           else
             setTimeout((->
               GitHubDeploy.getDeployForTag(tagName).then(resolve).catch(reject)

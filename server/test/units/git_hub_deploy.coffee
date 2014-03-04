@@ -252,6 +252,9 @@ with a deploy instance with the correct ID", (done) ->
 
   GitHubDeploy.getDeployForTag(tagName).then((deploy) ->
     try
+      assert.strictEqual deploy.constructor.name, 'GitHubDeploy',
+        "Expected the returned object to be an instance of GitHubDeploy"
+
       assert.strictEqual deploy.id, deployId,
         "Expected the returned deploy instance to have the correct ID"
 
