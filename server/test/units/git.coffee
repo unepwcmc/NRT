@@ -279,3 +279,31 @@ test('.checkout checkouts the given tag', (done)->
     done(err)
   )
 )
+
+test('.checkout rejects with an error if it fails', (done) ->
+  tagName = 'corporate-banana'
+  spawnStub = sinon.stub(CommandRunner, 'spawn', ->
+    return {
+      on: (event, cb) ->
+        if event is 'close'
+          cb(1)
+    }
+  )
+
+  Git.checkout(tagName).then(->
+    spawnStub.restore()
+    done(new Error("Expected command to fail"))
+  ).catch((err)->
+    try
+      assert.strictEqual err.constructor.name, "Error",
+        "Expect checkout to reject with an error"
+
+      assert.strictEqual err.message, "Failed to checkout tag #{tagName}"
+
+      done()
+    catch assertErr
+      done(assertErr)
+    finally
+    spawnStub.restore()
+  )
+)

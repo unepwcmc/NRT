@@ -16,7 +16,7 @@ exports.getBranch = ->
       if code is 0
         resolve(branchName)
       else
-        reject('git branch command failed')
+        reject(new Error('git branch command failed'))
     )
   )
 
@@ -30,7 +30,7 @@ exports.createTag = (tagName, description) ->
       if code is 0
         resolve()
       else
-        reject("create tag command failed")
+        reject(new Error("create tag command failed"))
     )
   )
 
@@ -44,7 +44,7 @@ exports.push = (tagName) ->
       if code is 0
         resolve()
       else
-        reject("push command failed")
+        reject(new Error("push command failed"))
     )
   )
 
@@ -58,7 +58,7 @@ exports.setEmail = (email) ->
       if code is 0
         resolve()
       else
-        reject("Failed to set email in git config")
+        reject(new Error("Failed to set email in git config"))
     )
   )
 
@@ -72,7 +72,7 @@ exports.fetch = ->
       if code is 0
         resolve()
       else
-        reject("Failed to fetch changes from remote")
+        reject(new Error("Failed to fetch changes from remote"))
     )
   )
 
@@ -86,6 +86,6 @@ exports.checkout = (tagName) ->
       if code is 0
         resolve()
       else
-        reject("Failed to checkout tag #{tagName}")
+        reject(new Error("Failed to checkout tag #{tagName}"))
     )
   )
