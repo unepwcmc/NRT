@@ -30,6 +30,7 @@ module.exports = new Promise( (resolve, reject) ->
       ).then(->
         GitHubDeploy.getDeployForTag(tagName)
       ).then((deploy)->
+        console.log "Found deploy #{deploy.id}, polling status..."
         deploy.pollStatus()
       ).then(
         resolve
