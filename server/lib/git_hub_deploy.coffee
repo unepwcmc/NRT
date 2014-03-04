@@ -54,6 +54,8 @@ module.exports = class GitHubDeploy
       )
     )
 
+  @getDeployForTag: (tagName) ->
+
   githubConfig: ->
     username: AppConfig.get('deploy').github.username
     password: AppConfig.get('deploy').github.password

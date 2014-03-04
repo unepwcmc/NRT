@@ -4,6 +4,7 @@ request = Promise.promisifyAll(require('request'))
 crypto = require('crypto')
 
 Git = require('../git')
+GitHubDeploy = require('../git_hub_deploy')
 
 rl = readline.createInterface(
   input: process.stdin
@@ -26,7 +27,13 @@ module.exports = new Promise( (resolve, reject) ->
       console.log "Creating tag '#{tagName}'"
       Git.createTag(tagName, description).then( ->
         Git.push(tagName)
-      ).then(resolve).error(reject)
+      ).then(->
+        GitHubDeploy.getDeployForTag(tagName)
+      ).then((deploy)->
+        deploy.pollStatus()
+      ).then(
+        resolve
+      ).catch(reject)
     )
   )
 )

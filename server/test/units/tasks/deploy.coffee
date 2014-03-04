@@ -7,13 +7,14 @@ Promise = require 'bluebird'
 crypto = require('crypto')
 
 
-
 CommandRunner = require('../../../bin/command-runner')
 Git = require('../../../lib/git')
+GitHubDeploy = require('../../../lib/git_hub_deploy')
 
 suite('Deploy')
 
-test('Asks for the server target and tag name, then creates a new tag', (done) ->
+test("Asks for the server target and tag name,
+  then creates a new tag and polls it's deploy state", (done) ->
   readlineCount = 0
   responses = ['staging', 'New feature stuff']
 
@@ -40,6 +41,17 @@ test('Asks for the server target and tag name, then creates a new tag', (done) -
     new Promise((resolve, reject) -> resolve())
   )
 
+  deploy =
+    pollStatus: sinon.spy(->
+      new Promise((resolve) -> resolve())
+    )
+
+  getDeployStub = sandbox.stub(GitHubDeploy, 'getDeployForTag', ->
+    new Promise((resolve) ->
+      resolve(deploy)
+    )
+  )
+
   require('../../../lib/tasks/deploy').then(->
     try
       expectedBranchName = "staging-new-feature-stuff-#{randomNumber}"
@@ -58,6 +70,16 @@ test('Asks for the server target and tag name, then creates a new tag', (done) -
         "Expected the created tag to be pushed"
       )
 
+      assert.isTrue getDeployStub.calledOnce,
+        "Expected GitHubDeploy to be called once"
+
+      assert.isTrue getDeployStub.calledWith(expectedBranchName),
+        """
+        Expected GitHubDeploy.getDeployForTag to be called
+        with #{expectedBranchName}, but called with
+        #{getDeployStub.getCall(0).args}
+        """
+
       done()
 
     catch err
@@ -66,7 +88,7 @@ test('Asks for the server target and tag name, then creates a new tag', (done) -
       sandbox.restore()
 
   ).catch( (err)->
-    sandbox.resore()
+    sandbox.restore()
     done(err)
   )
 )
