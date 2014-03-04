@@ -130,9 +130,10 @@ test('.deploy posts the error status if an error occurs', (done) ->
     new Promise((resolve) -> resolve())
   )
 
-  failure = new Error("Big end has gone")
+  failMessage = "Big end has gone"
+  
   sandbox.stub(Deploy, 'updateFromTag', ->
-    new Promise((resolve, reject) -> reject(failure))
+    new Promise((resolve, reject) -> reject(new Error(failMessage)))
   )
 
   Deploy.deploy().then(->
@@ -140,17 +141,17 @@ test('.deploy posts the error status if an error occurs', (done) ->
     done(new Error("Deploy should fail"))
   ).catch((err)->
     try
-      assert.strictEqual err.message, failure.message,
+      assert.strictEqual err.message, failMessage,
         "Expected the right error to be thrown"
 
       assert.isTrue updateDeployStateStub.calledOnce,
         "Expected updateDeployState to be called"
 
       updateDeployStateCall = updateDeployStateStub.getCall(0)
-      assert.isTrue updateDeployStateStub.calledWith('failure', failure.message),
+      assert.isTrue updateDeployStateStub.calledWith('failure', failMessage),
         """
         Expected updateDeployState to be called with
-        'failure', #{failure.message}, but called with
+        'failure', #{failMessage}, but called with
         #{updateDeployStateCall.args}
       """
 
