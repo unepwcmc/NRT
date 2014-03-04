@@ -1,6 +1,7 @@
 Promise = require('bluebird')
 AppConfig = require('../initializers/config')
 request = Promise.promisifyAll(require('request'))
+_ = require('underscore')
 
 REQUEST_HEADERS =
   'Accept': 'application/vnd.github.cannonball-preview+json'
@@ -55,6 +56,26 @@ module.exports = class GitHubDeploy
     )
 
   @getDeployForTag: (tagName) ->
+    new Promise( (resolve, reject) ->
+      request.get(
+        url: ''
+      , (err, response) ->
+        if err?
+          reject(err)
+        else
+          deploys = JSON.parse(response.body)
+          deploy = _.findWhere(deploys, {description: tagName})
+
+          if deploy?
+            resolve(deploy)
+          else
+            console.log "unable to find deploy with tag #{tagName}"
+            setTimeout((->
+              console.log "Calling getDeployTag again"
+              GitHubDeploy.getDeployForTag(tagName).then(resolve).catch(reject)
+            ), 1000)
+      )
+    )
 
   githubConfig: ->
     username: AppConfig.get('deploy').github.username

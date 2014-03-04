@@ -213,3 +213,90 @@ test('.updateDeployState throws an error if Github responds with an error', (don
       sandbox.restore()
   )
 )
+
+test("#getDeployForTag queries github for deployments and resolves
+with a deploy instance with the correct ID", (done) ->
+  deployId = 345
+  tagName = 'hippy-banana'
+
+  sandbox = sinon.sandbox.create()
+
+  sandbox.stub(request, 'get', (options, cb)->
+    response =
+      body: JSON.stringify([{
+        id: deployId
+        description: tagName
+      }, {
+        id: 432789423
+        description: 'corporate-banana'
+      }])
+    cb(null, response)
+  )
+
+  GitHubDeploy.getDeployForTag(tagName).then((deploy) ->
+    try
+      assert.strictEqual deploy.id, deployId,
+        "Expected the returned deploy instance to have the correct ID"
+
+      done()
+    catch
+      done(err)
+    finally
+      sandbox.restore()
+  ).catch((err) ->
+    sandbox.restore()
+    done(err)
+  )
+
+)
+
+test("#getDeployForTag polls github for deployments if 
+deployment not included in first result", (done) ->
+  deployId = 345
+  tagName = 'hippy-banana'
+
+  clock = sinon.useFakeTimers()
+  sandbox = sinon.sandbox.create()
+
+  requestCount = 0
+
+  noDeployResponse = {
+    body: JSON.stringify([])
+  }
+  deployResponse = {
+    body: JSON.stringify([
+      id: deployId
+      description: tagName
+    ])
+  }
+  responses = [noDeployResponse, deployResponse]
+
+  getStub = sandbox.stub(request, 'get', (options, cb)->
+    response = responses[requestCount]
+    requestCount += 1
+    cb(null, response)
+  )
+
+  GitHubDeploy.getDeployForTag(tagName).then((deploy) ->
+    try
+      assert.strictEqual deploy.id, deployId,
+        "Expected the returned deploy instance to have the correct ID"
+
+      assert.strictEqual getStub.callCount, 2,
+        "Expected 2 requests to be made to github"
+
+      done()
+    catch err
+      done(err)
+    finally
+      sandbox.restore()
+  ).catch((err) ->
+    sandbox.restore()
+    done(err)
+  )
+
+  # Skip to second poll
+  clock.tick(1000)
+  clock.restore()
+
+)
