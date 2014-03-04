@@ -14,6 +14,7 @@ suite('Deploy')
 test('.updateFromTag sets the gits username,
 pulls the given tag,
 runs npm install in both client and server,
+
 notifying github at each step', (done) ->
   sandbox = sinon.sandbox.create()
 
@@ -182,6 +183,99 @@ test('.deploy posts the error status if an error occurs', (done) ->
         #{updateDeployStateCall.args}
       """
 
+      done()
+    catch assertErr
+      done(assertErr)
+    finally
+      sandbox.restore()
+  )
+
+)
+
+test('.npmInstallClient changes into the client/ dir and calls
+npm install', (done) ->
+  sandbox = sinon.sandbox.create()
+
+  spawnStub = sandbox.stub(CommandRunner, 'spawn', ->
+    return {
+      on: (event, cb) ->
+        if event is 'close'
+          cb(0)
+    }
+  )
+
+  chdirStub = sandbox.stub(process, 'chdir', ->)
+
+  cwd = process.cwd()
+
+  Deploy.npmInstallClient().then(->
+    try
+      firstChdir = chdirStub.getCall(0)
+
+      assert.isNotNull firstChdir, "Expected chdir to be called at least once"
+      assert.strictEqual(
+        firstChdir.args[0],
+        '../client',
+        "Expected process to be changed to client dir"
+      )
+
+      spawnCall = spawnStub.getCall(0)
+      assert.isNotNull(spawnCall, "Expected spawn to be called at least once")
+
+      assert.deepEqual(
+        spawnCall.args,
+        ['npm', ['install']],
+        "Expected spawn to be called with npm install"
+      )
+
+      secondChdir = chdirStub.getCall(1)
+
+      assert.isNotNull secondChdir, "Expected chdir to be called a second time"
+      console.log "secondChdir.args"
+      console.log secondChdir.args
+
+
+      assert.strictEqual(
+        secondChdir.args[0],
+        cwd,
+        "Expected process to be change to server dir"
+      )
+
+      done()
+    catch assertErr
+      console.error assertErr.stack
+      done(assertErr)
+    finally
+      sandbox.restore()
+
+  ).catch((err)->
+    sandbox.restore()
+    done(err)
+  )
+)
+
+test('.npmInstallClient rejects if npm install fails', (done) ->
+  sandbox = sinon.sandbox.create()
+
+  chdirStub = sandbox.stub(process, 'chdir', ->)
+  spawnStub = sandbox.stub(CommandRunner, 'spawn', ->
+    return {
+      on: (event, cb) ->
+        if event is 'close'
+          cb(1)
+    }
+  )
+
+  Deploy.npmInstallClient().then(->
+    sandbox.restore()
+    done(new Error("Expected npm install to fail"))
+  ).catch((err)->
+    try
+      assert.strictEqual(err.constructor.name, "Error",
+        "Expected an error from reject"
+      )
+
+      assert.strictEqual(err.message, "npm install exited with status code 1")
       done()
     catch assertErr
       done(assertErr)

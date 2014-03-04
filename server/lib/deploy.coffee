@@ -1,6 +1,7 @@
 Promise = require 'bluebird'
 Git = require('./git')
 GitHubDeploy = require('./git_hub_deploy')
+CommandRunner = require('../bin/command-runner')
 
 exports.updateFromTag = (tagName, deploy)->
   new Promise( (resolve, reject) ->
@@ -16,6 +17,19 @@ exports.updateFromTag = (tagName, deploy)->
   )
 
 exports.npmInstallClient = ->
+  new Promise( (resolve, reject) ->
+    originalDir = process.cwd()
+    process.chdir('../client')
+
+    npmInstall = CommandRunner.spawn('npm', ['install'])
+    npmInstall.on('close', (statusCode) ->
+      if statusCode is 0
+        process.chdir(originalDir)
+        resolve()
+      else
+        reject(new Error("npm install exited with status code #{statusCode}"))
+    )
+  )
 
 exports.npmInstallServer = ->
 
@@ -27,9 +41,9 @@ exports.deploy = (tagName) ->
     deploy.start().then(->
       exports.updateFromTag(tagName, deploy)
     ).then(
-      exports.grunt
-    ).then(
       exports.npmInstallClient
+    ).then(
+      exports.grunt
     ).then(
       exports.npmInstallServer
     ).then(resolve).catch( (err) ->
