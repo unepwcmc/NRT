@@ -38,7 +38,7 @@ test(".start creates a GitHub deploy for the given tag name", (done)->
   sandbox = sinon.sandbox.create()
 
   postStub = sandbox.stub(request, 'post', (options, cb) ->
-    cb(null, {statusCode: 200, body: JSON.stringify({id: newDeployId})})
+    cb(null, {statusCode: 201, body: JSON.stringify({id: newDeployId})})
   )
 
   appConfigStub = sandbox.stub(AppConfig, 'get', (key) ->
@@ -130,7 +130,7 @@ test('.updateDeployState posts the given state and description to
 
   deployId = 4
   postStub = sandbox.stub(request, 'post', (options, cb) ->
-    cb(null, {statusCode: 200})
+    cb(null, {statusCode: 201})
   )
 
   auth = {
