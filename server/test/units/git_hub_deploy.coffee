@@ -43,7 +43,7 @@ test('#githubConfig throws an appropriate error if no config found', ->
   try
     assert.throws((->
       githubConfig = GitHubDeploy.githubConfig()
-    ), "Unable to find 'github' attribute in config")
+    ), "Unable to find 'deploy.github' attribute in config")
 
   finally
     appConfigStub.restore()
@@ -384,6 +384,11 @@ test(".pollStatus polls and prints deploy status until success", (done)->
 
   logSpy = sandbox.spy(console, 'log')
 
+  githubConf = {dummy: 'config'}
+  appConfigStub = sandbox.stub(GitHubDeploy, 'githubConfig', (key) ->
+    return githubConf
+  )
+
   deploy.pollStatus().then(->
     try
       expectedLogs = [
@@ -405,6 +410,30 @@ test(".pollStatus polls and prints deploy status until success", (done)->
       assert.strictEqual(logSpy.callCount, expectedLogs.length,
         "Wrong number of console.log calls"
       )
+
+      assert.isTrue getStub.calledTwice,
+        "Expected request.get to be called twice"
+
+      requestArgs = getStub.getCall(0).args
+
+      assert.strictEqual(
+        requestArgs[0].url,
+        "https://api.github.com/repos/unepwcmc/NRT/deployments/#{deploy.id}/statuses",
+        "Expected a request to be sent to right URL"
+      )
+
+      assert.deepEqual(
+        requestArgs[0].headers,
+        defaultHeaders,
+        "Expected the github headers to be set"
+      )
+
+      assert.deepEqual(
+        requestArgs[0].auth,
+        githubConf,
+        "Expected the github auth to be sent"
+      )
+
       done()
 
     catch err
@@ -445,6 +474,10 @@ is encountered", (done)->
   )
 
   logSpy = sandbox.spy(console, 'log')
+
+  appConfigStub = sandbox.stub(GitHubDeploy, 'githubConfig', (key) ->
+    return {}
+  )
 
   deploy.pollStatus().then(->
     try

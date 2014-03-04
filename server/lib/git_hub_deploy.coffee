@@ -86,9 +86,11 @@ module.exports = class GitHubDeploy
 
   pollStatus: ->
     new Promise( (resolve, reject) =>
-      request.get(
+      requestOptions = mergeWithDefaultOptions(
         url: "https://api.github.com/repos/unepwcmc/NRT/deployments/#{@id}/statuses"
-      , (err, response) =>
+      )
+
+      request.get(requestOptions, (err, response) =>
         if err?
           reject(err)
         else
