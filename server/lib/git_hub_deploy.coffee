@@ -111,9 +111,9 @@ module.exports = class GitHubDeploy
     )
 
   @githubConfig: ->
-    githubConfig = AppConfig.get('deploy').github
+    githubConfig = AppConfig.get('deploy')?.github
 
     if githubConfig?
       return githubConfig
     else
-      throw new Error("Unable to find 'github' attribute in config")
+      throw new Error("Unable to find 'deploy.github' attribute in config")
