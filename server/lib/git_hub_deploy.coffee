@@ -7,22 +7,29 @@ REQUEST_HEADERS =
   'Accept': 'application/vnd.github.cannonball-preview+json'
   'User-Agent': 'National Reporting Toolkit Deployment Bot 2000x'
 
+mergeWithDefaultOptions = (options) ->
+  defaultOptions =
+    headers: REQUEST_HEADERS
+    auth: GitHubDeploy.githubConfig()
+
+  return _.extend(defaultOptions, options)
+
 module.exports = class GitHubDeploy
   constructor: (@tagName) ->
 
   start: ->
     new Promise( (resolve, reject) =>
-      request.post({
+      requestOptions = mergeWithDefaultOptions(
         url: "https://api.github.com/repos/unepwcmc/NRT/deployments"
-        headers: REQUEST_HEADERS
-        auth: @githubConfig()
         body: JSON.stringify(
           description: @tagName
           payload: {}
           ref: @tagName
           force: true
         )
-      }, (err, response) =>
+      )
+
+      request.post(requestOptions, (err, response) =>
         if err?
           reject(err)
         else if response.statusCode isnt 201
@@ -37,15 +44,15 @@ module.exports = class GitHubDeploy
 
   updateDeployState: (state, description) ->
     new Promise( (resolve, reject) =>
-      request.post({
+      requestOptions = mergeWithDefaultOptions(
         url: "https://api.github.com/repos/unepwcmc/NRT/deployments/#{@id}/statuses"
-        headers: REQUEST_HEADERS
-        auth: @githubConfig()
         body: JSON.stringify(
           state: state
           description: description
         )
-      }, (err, response) ->
+      )
+
+      request.post(requestOptions, (err, response) ->
         if err?
           reject(err)
         else if response.statusCode isnt 201
@@ -57,9 +64,11 @@ module.exports = class GitHubDeploy
 
   @getDeployForTag: (tagName) ->
     new Promise( (resolve, reject) ->
-      request.get(
+      requestOptions = mergeWithDefaultOptions(
         url: "https://api.github.com/repos/unepwcmc/NRT/deployments"
-      , (err, response) ->
+      )
+
+      request.get(requestOptions, (err, response) ->
         if err?
           reject(err)
         else
@@ -99,6 +108,6 @@ module.exports = class GitHubDeploy
       )
     )
 
-  githubConfig: ->
+  @githubConfig: ->
     username: AppConfig.get('deploy').github.username
     password: AppConfig.get('deploy').github.password

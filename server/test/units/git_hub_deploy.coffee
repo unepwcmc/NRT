@@ -7,9 +7,14 @@ AppConfig = require('../../initializers/config')
 
 GitHubDeploy = require('../../lib/git_hub_deploy')
 
+defaultHeaders =
+  'Accept': 'application/vnd.github.cannonball-preview+json'
+  'User-Agent': 'National Reporting Toolkit Deployment Bot 2000x'
+
+
 suite('GitHubDeploy')
 
-test('.githubConfig returns the github basic auth config from the config file', ->
+test('#githubConfig returns the github basic auth config from the config file', ->
   expectedGithubConfig =
     username: 'abcd'
     password: 'x-oauth-basic'
@@ -21,9 +26,7 @@ test('.githubConfig returns the github basic auth config from the config file', 
   )
 
   try
-    deploy = new GitHubDeploy('fanciest-of-bananas')
-
-    githubConfig = deploy.githubConfig()
+    githubConfig = GitHubDeploy.githubConfig()
 
     assert.deepEqual githubConfig, expectedGithubConfig,
       "Expected correct github config to be returned"
@@ -54,10 +57,7 @@ test(".start creates a GitHub deploy for the given tag name", (done)->
   deploy.start().then(->
     expectedRequestParams =
       url: "https://api.github.com/repos/unepwcmc/NRT/deployments"
-      headers: {
-        'Accept': 'application/vnd.github.cannonball-preview+json'
-        'User-Agent': 'National Reporting Toolkit Deployment Bot 2000x'
-      }
+      headers: defaultHeaders
       auth: {
         username: 'abcd'
         password: 'x-oauth-basic'
@@ -138,7 +138,7 @@ test('.updateDeployState posts the given state and description to
     password: 'x-oauth-basic'
   }
 
-  appConfigStub = sandbox.stub(GitHubDeploy::, 'githubConfig', (key) ->
+  appConfigStub = sandbox.stub(GitHubDeploy, 'githubConfig', (key) ->
     return auth
   )
 
@@ -152,10 +152,7 @@ test('.updateDeployState posts the given state and description to
   deploy.updateDeployState(state, description).then(->
     expectedGitHubQuery =
       url: "https://api.github.com/repos/unepwcmc/NRT/deployments/#{deployId}/statuses"
-      headers: {
-        'Accept': 'application/vnd.github.cannonball-preview+json'
-        'User-Agent': 'National Reporting Toolkit Deployment Bot 2000x'
-      }
+      headers: defaultHeaders
       auth: auth
       body: JSON.stringify(
         state: state
@@ -190,7 +187,7 @@ test('.updateDeployState throws an error if Github responds with an error', (don
     cb(null, {statusCode: 404, body: errorResponse})
   )
 
-  appConfigStub = sandbox.stub(GitHubDeploy::, 'githubConfig', (key) ->
+  appConfigStub = sandbox.stub(GitHubDeploy, 'githubConfig', (key) ->
     return {}
   )
 
@@ -233,6 +230,11 @@ with a deploy instance with the correct ID", (done) ->
     cb(null, response)
   )
 
+  githubConf = {dummy: 'config'}
+  appConfigStub = sandbox.stub(GitHubDeploy, 'githubConfig', (key) ->
+    return githubConf
+  )
+
   GitHubDeploy.getDeployForTag(tagName).then((deploy) ->
     try
       assert.strictEqual deploy.id, deployId,
@@ -247,6 +249,18 @@ with a deploy instance with the correct ID", (done) ->
         requestArgs[0].url,
         "https://api.github.com/repos/unepwcmc/NRT/deployments",
         "Expected a request to be sent to right URL"
+      )
+
+      assert.deepEqual(
+        requestArgs[0].headers,
+        defaultHeaders,
+        "Expected the github headers to be set"
+      )
+
+      assert.deepEqual(
+        requestArgs[0].auth,
+        githubConf,
+        "Expected the github auth to be sent"
       )
 
       done()
@@ -286,6 +300,10 @@ deployment not included in first result", (done) ->
     response = responses[requestCount]
     requestCount += 1
     cb(null, response)
+  )
+
+  appConfigStub = sandbox.stub(GitHubDeploy, 'githubConfig', (key) ->
+    return {}
   )
 
   GitHubDeploy.getDeployForTag(tagName).then((deploy) ->
