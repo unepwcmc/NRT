@@ -15,11 +15,23 @@ exports.updateFromTag = (tagName, deploy)->
     ).then(resolve).catch(reject)
   )
 
+exports.npmInstallClient = ->
+
+exports.npmInstallServer = ->
+
+exports.grunt = ->
+
 exports.deploy = (tagName) ->
   new Promise( (resolve, reject) ->
     deploy = new GitHubDeploy(tagName)
     deploy.start().then(->
       exports.updateFromTag(tagName, deploy)
+    ).then(
+      exports.grunt
+    ).then(
+      exports.npmInstallClient
+    ).then(
+      exports.npmInstallServer
     ).then(resolve).catch( (err) ->
       deploy.updateDeployState('failure', err.message).finally( ->
         reject(err)

@@ -93,6 +93,18 @@ checks out the given tag', (done) ->
     )
   )
 
+  npmClienStub = sandbox.stub(Deploy, 'npmInstallClient', ->
+    new Promise((resolve) -> resolve())
+  )
+
+  gruntStub = sandbox.stub(Deploy, 'grunt', ->
+    new Promise((resolve) -> resolve())
+  )
+
+  npmServerStub = sandbox.stub(Deploy, 'npmInstallServer', ->
+    new Promise((resolve) -> resolve())
+  )
+
   Deploy.deploy(tagName).then(->
     try
       assert.isTrue(
@@ -103,6 +115,21 @@ checks out the given tag', (done) ->
       assert.isTrue(
         updateStub.calledWith(tagName),
         "Expected Deploy.updateFromtag to be called with the tagname"
+      )
+
+      assert.isTrue(
+        npmClienStub.calledOnce
+        "Expected Deploy.npmInstallClient to be called"
+      )
+
+      assert.isTrue(
+        gruntStub.calledOnce
+        "Expected Deploy.grunt to be called"
+      )
+
+      assert.isTrue(
+        npmServerStub.calledOnce
+        "Expected Deploy.npmInstallServer to be called"
       )
 
       done()
