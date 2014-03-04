@@ -90,7 +90,7 @@ module.exports = class GitHubDeploy
             unless status.id in @printedStatusIDs
               @printedStatusIDs.push status.id
               console.log "[#{status.createdAt}] #{status.state}: #{status.description}"
-              if status.state is 'finished'
+              if status.state in ['finished', 'failure']
                 return resolve()
           
           setTimeout( =>

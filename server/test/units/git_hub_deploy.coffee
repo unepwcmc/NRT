@@ -387,5 +387,58 @@ test(".pollStatus polls and prints deploy status until success", (done)->
   # Skip to second poll
   clock.tick(1000)
   clock.restore()
+)
 
+test(".pollStatus polls rejects the returned promise if a failure state
+is encountered", (done)->
+  deploy = new GitHubDeploy()
+  deploy.id = 5
+
+  sandbox = sinon.sandbox.create()
+
+  failedResponse = {
+    id: 1
+    state: "failure"
+    description: "PC Load Letter"
+    createdAt: "2014-03-04T10:08:32Z"
+  }
+
+  getStub = sandbox.stub(request, 'get', (options, cb)->
+    response =
+      body: JSON.stringify([
+        failedResponse
+      ])
+    cb(null, response)
+  )
+
+  logSpy = sandbox.spy(console, 'log')
+
+  deploy.pollStatus().then(->
+    try
+      expectedLog = "[#{failedResponse.createdAt}] failure: #{failedResponse.description}"
+
+      logCall = logSpy.getCall(0)
+
+      unless logCall?
+        throw new Error("Couldn't find console.log call for #{expectedLog}")
+
+      assert.strictEqual(
+        logCall.args[0], expectedLog,
+        "Expected console.log to be called with #{expectedLog}"
+      )
+
+      assert.strictEqual(logSpy.callCount, 1,
+        "Expects console.log to be called only once"
+      )
+      done()
+
+    catch err
+      done(err)
+    finally
+      sandbox.restore()
+
+  ).catch((err) ->
+    sandbox.restore()
+    done(err)
+  )
 )
