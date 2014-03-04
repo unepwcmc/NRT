@@ -363,9 +363,9 @@ test(".pollStatus polls and prints deploy status until success", (done)->
     description: "Fetching something or rather"
     created_at: "2014-03-04T10:08:32Z"
   }
-  finishedStatusResponse = {
+  successStatusResponse = {
     id: 2
-    state: "finished"
+    state: "success"
     description: "totally done"
     created_at: "2014-03-04T10:09:00Z"
   }
@@ -375,7 +375,7 @@ test(".pollStatus polls and prints deploy status until success", (done)->
     )
   }, {
     body: JSON.stringify(
-      [pendingStatusResponse, finishedStatusResponse]
+      [pendingStatusResponse, successStatusResponse]
     )
   }]
 
@@ -396,7 +396,7 @@ test(".pollStatus polls and prints deploy status until success", (done)->
     try
       expectedLogs = [
         "[#{pendingStatusResponse.created_at}] pending: #{pendingStatusResponse.description}"
-        "[#{finishedStatusResponse.created_at}] finished: #{finishedStatusResponse.description}"
+        "[#{successStatusResponse.created_at}] success: #{successStatusResponse.description}"
       ]
 
       for message, index in expectedLogs
