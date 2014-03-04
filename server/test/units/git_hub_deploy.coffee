@@ -62,7 +62,12 @@ test(".start creates a GitHub deploy for the given tag name", (done)->
         username: 'abcd'
         password: 'x-oauth-basic'
       }
-      body: JSON.stringify({"description": tagName, "payload": {}, "ref": tagName})
+      body: JSON.stringify({
+        "description": tagName,
+        "payload": {},
+        "ref": tagName,
+        "force": true
+      })
 
     try
       assert.isTrue(
@@ -191,7 +196,7 @@ test('.updateDeployState throws an error if Github responds with an error', (don
 
   deploy = new GitHubDeploy("fancy-banana-stand")
 
-  deploy.updateDeployState("pending", "hey here's a deploy").then(->
+  deploy.updateDeployState("pending", "hey, here's a deploy").then(->
     sandbox.restore()
     done(new Error("Expected deploy.updateDeployState to throw an error"))
   ).catch( (err)->

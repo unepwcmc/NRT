@@ -19,6 +19,7 @@ module.exports = class GitHubDeploy
           description: @tagName
           payload: {}
           ref: @tagName
+          force: true
         )
       }, (err, response) =>
         if err?
