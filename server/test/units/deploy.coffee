@@ -14,7 +14,6 @@ suite('Deploy')
 test('.updateFromTag sets the gits username,
 pulls the given tag,
 runs npm install in both client and server,
-
 notifying github at each step', (done) ->
   sandbox = sinon.sandbox.create()
 
