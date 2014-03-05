@@ -1,6 +1,6 @@
 Promise = require('bluebird')
 AppConfig = require('../initializers/config')
-request = Promise.promisifyAll(require('request'))
+request = require('request')
 _ = require('underscore')
 
 REQUEST_HEADERS =
