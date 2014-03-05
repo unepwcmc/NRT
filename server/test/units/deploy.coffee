@@ -94,7 +94,11 @@ checks out the given tag', (done) ->
     )
   )
 
-  npmClienStub = sandbox.stub(Deploy, 'npmInstallClient', ->
+  deployUpdateStateStub = sandbox.stub(GitHubDeploy::, 'updateDeployState', ->
+    new Promise((resolve)-> resolve())
+  )
+
+  npmClientStub = sandbox.stub(Deploy, 'npmInstallClient', ->
     new Promise((resolve) -> resolve())
   )
 
@@ -119,7 +123,7 @@ checks out the given tag', (done) ->
       )
 
       assert.isTrue(
-        npmClienStub.calledOnce
+        npmClientStub.calledOnce
         "Expected Deploy.npmInstallClient to be called"
       )
 
@@ -131,6 +135,17 @@ checks out the given tag', (done) ->
       assert.isTrue(
         npmServerStub.calledOnce
         "Expected Deploy.npmInstallServer to be called"
+      )
+
+      assert.isTrue(
+        deployUpdateStateStub.callCount > 0,
+        """Expected deploy.updateDeployState to be called at least once
+        (called #{deployUpdateStateStub.callCount})"""
+      )
+
+      assert.isTrue(
+        deployUpdateStateStub.calledWith('success'),
+        "Expected to be notified of successful deploy"
       )
 
       done()

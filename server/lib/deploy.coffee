@@ -62,13 +62,22 @@ exports.deploy = (tagName) ->
     deploy = new GitHubDeploy(tagName)
     deploy.start().then(->
       exports.updateFromTag(tagName, deploy)
+    ).then(->
+      deploy.updateDeployState('pending', 'Installing client libs')
     ).then(
       exports.npmInstallClient
+    ).then(->
+      deploy.updateDeployState('pending', 'Compiling assets with grunt')
     ).then(
       exports.grunt
+    ).then(->
+      deploy.updateDeployState('pending', 'Installing server libs')
     ).then(
       exports.npmInstallServer
-    ).then(resolve).catch( (err) ->
+    ).then(->
+      deploy.updateDeployState('success', 'Deploy completed successfully')
+      resolve()
+    ).catch( (err) ->
       deploy.updateDeployState('failure', err.message).finally( ->
         reject(err)
       )
