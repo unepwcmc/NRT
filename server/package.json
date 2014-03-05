@@ -8,7 +8,6 @@
     "test-debug": "NODE_ENV=test mocha --debug",
     "start": "supervisor -e 'node,js,json,coffee,hbs' -i ./public ./bin/server.js",
     "debug": "node --debug ./bin/server.js",
-    "development": "echo 'Please use `npm start` to run the server in development mode'",
     "production": "NODE_ENV=production node ./bin/server.js",
     "win-production": "start cmd.exe /K bin\\server.bat",
     "setup": "node bin/setup.js",
