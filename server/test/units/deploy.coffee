@@ -78,8 +78,9 @@ notifying github at each step', (done) ->
 )
 
 
-test('.deploy starts a new deploy and
-checks out the given tag', (done) ->
+test('.deploy starts a new deploy and checks out the given tag, then
+ installs the client and server NPM modules, and runs grunt before
+ reporting success', (done) ->
   sandbox = sinon.sandbox.create()
   tagName = 'twiki'
 
