@@ -10,3 +10,4 @@ Deploy.deploy(tagName).then( ->
   console.log 'Deploy failed'
   console.error err
 )
+
