@@ -131,17 +131,9 @@ LDAP is a optional feature which can be disabled in the application config:
 https://github.com/unepwcmc/NRT/tree/master/server/config#example
 
 #### Automatic deployments
+Servers can be deployed to automatically using GitHub deploy hooks.
 
-To deploy, run the deploy command on your local machine:
-
-    cd server && coffee lib/tasks/deploy.coffee
-
-This will ask for the name of your target server (staging/production), and
-what the feature introduces, and then create a tag. Once this tag has been
-pushed, the Github deploy hooks take over
-
-##### GitHub Deploy hooks
-###### Config
+##### Config
 Before a server can be deployed to, you must configure it in
 `server/config/<env>.json` with 2 variables:
 
@@ -161,7 +153,7 @@ Then, modify your config to include these credentials:
   }
 ```
 
-###### Add webhooks
+##### GitHub Deploy hooks
 Servers must be configured to listen to the creation of tags on Github:
 
   1. Add a WebHook [service hook](https://github.com/unepwcmc/NRT/settings/hooks)
@@ -178,6 +170,15 @@ If <server-name> is the same as 'server_name' specified in
 pull the new code and update the server's local repository.
 **Make sure you are running your application with `forever`
 or it will not restart after a deploy**.
+
+##### The deploy command
+To deploy, run the deploy command on your local machine:
+
+    cd server && coffee lib/tasks/deploy.coffee
+
+This will ask for the name of your target server (staging/production), and
+what the feature introduces, and then create a tag. Once this tag has been
+pushed, the Github deploy hooks take over
 
 ## Application structure
 
