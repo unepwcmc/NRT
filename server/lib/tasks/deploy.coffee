@@ -1,6 +1,5 @@
 Promise = require('bluebird')
 readline = require('readline')
-request = Promise.promisifyAll(require('request'))
 crypto = require('crypto')
 
 Git = require('../git')
