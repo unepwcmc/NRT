@@ -141,7 +141,28 @@ what the feature introduces, and then create a tag. Once this tag has been
 pushed, the Github deploy hooks take over
 
 ##### GitHub Deploy hooks
-Servers should be configured to listen to the creation of tags on Github:
+###### Config
+Before a server can be deployed to, you must configure it in
+`server/config/<env>.json` with 2 variables:
+
+**server_name**: Allows your server to be identified as a deploy target, e.g.
+'ad-staging'. Simply add `server_name` as root attribute in the config.
+
+**github authentication**: To notify about deployment, your server must
+authenticate with github. To do this, create an auth token on GitHub:
+http://developer.github.com/v3/#authentication
+Then, modify your config to include these credentials:
+
+```json
+  "deploy": { "github": {
+      "password": "x-oauth-basic",
+      "username": "<your-auth-token>"
+    }
+  }
+```
+
+###### Add webhooks
+Servers must be configured to listen to the creation of tags on Github:
 
   1. Add a WebHook [service hook](https://github.com/unepwcmc/NRT/settings/hooks)
      that points at your server's deploy route
@@ -153,7 +174,7 @@ will inspect the tag name to see if it matches:
     <server-name>-<new-feature-name>-<id>
 
 If <server-name> is the same as 'server_name' specified in
-`config/<env>.json` (e.g. 'AD-staging'), the application will automatically
+`config/<env>.json`, the application will automatically
 pull the new code and update the server's local repository.
 **Make sure you are running your application with `forever`
 or it will not restart after a deploy**.
@@ -300,4 +321,3 @@ WCMC team should already have access to [this document](https://docs.google.com/
 
 NRT is released under the [BSD 3-Clause](http://opensource.org/licenses/BSD-3-Clause) License
 
-# Test seotgndfjkgnd
