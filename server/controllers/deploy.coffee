@@ -1,9 +1,9 @@
-CommandRunner = require('../bin/command-runner')
+AppConfig = require('../initializers/config')
+Deploy = require('../lib/deploy')
 range_check = require('range_check')
 
-getBranchFromRef = (ref) ->
-  refParts = ref.split("/")
-  return refParts[refParts.length-1]
+tagRefersToServer = (tag, serverName) ->
+  return new RegExp("^#{serverName}").test(tag)
 
 getIpFromRequest = (req) ->
   req.connection.remoteAddress
@@ -15,24 +15,31 @@ ipIsFromGithub = (ip) ->
 
 exports.index = (req, res) ->
   remoteIp = getIpFromRequest(req)
-  return res.send 401 unless ipIsFromGithub(remoteIp)
 
-  parsedPayload = JSON.parse(req.body.payload)
+  env = process.env.NODE_ENV
+  env ||= 'development'
+  if env isnt 'development'
+    return res.send 401 unless ipIsFromGithub(remoteIp)
+
+  parsedPayload = req.body
 
   console.log "Got deploy message from #{parsedPayload.ref}"
-  unless getBranchFromRef(parsedPayload.ref) is "deploy"
-    console.log "Ignoring, only deploys on pushes from deploy"
-    return res.send 500, "Only commits from deploy branch are accepted"
 
-  console.log "Forking #{process.cwd()}/bin/deploy.coffee"
+  serverName = AppConfig.get('server_name')
+  tagName = parsedPayload.ref
 
-  deployProcess = CommandRunner.spawn "coffee #{process.cwd()}/bin/deploy.coffee"
+  unless tagRefersToServer(tagName, serverName)
+    errMessage = "Only deploys for this server (#{serverName}) are accepted"
+    console.log errMessage
+    return res.send 500, errMessage
 
-  console.log "Forked!"
-
-  deployProcess.on('close', ->
-    console.log "deploy finished, restarting server"
+  console.log "Updating code from #{tagName}..."
+  Deploy.deploy(tagName).then(->
+    console.log "Code update finished, restarting server"
     process.exit()
+  ).catch((err)->
+    console.log "Error updating code:"
+    console.error err
   )
 
   res.send 200
