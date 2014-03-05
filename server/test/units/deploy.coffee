@@ -350,3 +350,94 @@ test('.npmInstallServer rejects if npm install fails', (done) ->
   )
 
 )
+
+test('.grunt changes to the client/ directory and calls grunt', (done) ->
+  sandbox = sinon.sandbox.create()
+
+  spawnStub = sandbox.stub(CommandRunner, 'spawn', ->
+    return {
+      on: (event, cb) ->
+        if event is 'close'
+          cb(0)
+    }
+  )
+
+  chdirStub = sandbox.stub(process, 'chdir', ->)
+
+  cwd = process.cwd()
+
+  Deploy.grunt().then(->
+    try
+      firstChdir = chdirStub.getCall(0)
+
+      assert.isNotNull firstChdir, "Expected chdir to be called at least once"
+      assert.strictEqual(
+        firstChdir.args[0],
+        '../client',
+        "Expected process to be changed to client dir"
+      )
+
+      spawnCall = spawnStub.getCall(0)
+      assert.isNotNull(spawnCall, "Expected spawn to be called at least once")
+
+      assert.deepEqual(
+        spawnCall.args,
+        ['grunt'],
+        "Expected spawn to be called with grunt"
+      )
+
+      secondChdir = chdirStub.getCall(1)
+
+      assert.isNotNull secondChdir, "Expected chdir to be called a second time"
+      console.log "secondChdir.args"
+      console.log secondChdir.args
+
+
+      assert.strictEqual(
+        secondChdir.args[0],
+        cwd,
+        "Expected process to be change to server dir"
+      )
+
+      done()
+    catch assertErr
+      console.error assertErr.stack
+      done(assertErr)
+    finally
+      sandbox.restore()
+
+  ).catch((err)->
+    sandbox.restore()
+    done(err)
+  )
+)
+
+test('.grunt rejects if grunt fails', (done) ->
+  sandbox = sinon.sandbox.create()
+
+  chdirStub = sandbox.stub(process, 'chdir', ->)
+  spawnStub = sandbox.stub(CommandRunner, 'spawn', ->
+    return {
+      on: (event, cb) ->
+        if event is 'close'
+          cb(1)
+    }
+  )
+
+  Deploy.grunt().then(->
+    sandbox.restore()
+    done(new Error("Expected npm install to fail"))
+  ).catch((err)->
+    try
+      assert.strictEqual(err.constructor.name, "Error",
+        "Expected an error from reject"
+      )
+
+      assert.strictEqual(err.message, "grunt exited with status code 1")
+      done()
+    catch assertErr
+      done(assertErr)
+    finally
+      sandbox.restore()
+  )
+)

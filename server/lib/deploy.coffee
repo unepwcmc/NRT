@@ -43,6 +43,19 @@ exports.npmInstallServer = ->
   )
 
 exports.grunt = ->
+  new Promise( (resolve, reject) ->
+    originalDir = process.cwd()
+    process.chdir('../client')
+
+    grunt = CommandRunner.spawn('grunt')
+    grunt.on('close', (statusCode) ->
+      if statusCode is 0
+        process.chdir(originalDir)
+        resolve()
+      else
+        reject(new Error("grunt exited with status code #{statusCode}"))
+    )
+  )
 
 exports.deploy = (tagName) ->
   new Promise( (resolve, reject) ->
