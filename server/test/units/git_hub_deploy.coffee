@@ -298,8 +298,8 @@ deployment not included in first result", (done) ->
   deployId = 345
   tagName = 'hippy-banana'
 
-  clock = sinon.useFakeTimers()
   sandbox = sinon.sandbox.create()
+  clock = sandbox.useFakeTimers()
 
   requestCount = 0
 
@@ -344,7 +344,6 @@ deployment not included in first result", (done) ->
 
   # Skip to second poll
   clock.tick(1000)
-  clock.restore()
 
 )
 
@@ -352,8 +351,8 @@ test(".pollStatus polls and prints deploy status until success", (done)->
   deploy = new GitHubDeploy()
   deploy.id = 5
 
-  clock = sinon.useFakeTimers()
   sandbox = sinon.sandbox.create()
+  clock = sandbox.useFakeTimers()
 
   requestCount = 0
 
@@ -451,7 +450,6 @@ test(".pollStatus polls and prints deploy status until success", (done)->
 
   # Skip to second poll
   clock.tick(1000)
-  clock.restore()
 )
 
 test(".pollStatus polls rejects the returned promise if a failure state
