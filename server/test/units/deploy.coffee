@@ -284,3 +284,69 @@ test('.npmInstallClient rejects if npm install fails', (done) ->
   )
 
 )
+
+test('.npmInstallServer calls npm install', (done) ->
+  sandbox = sinon.sandbox.create()
+
+  spawnStub = sandbox.stub(CommandRunner, 'spawn', ->
+    return {
+      on: (event, cb) ->
+        if event is 'close'
+          cb(0)
+    }
+  )
+
+  Deploy.npmInstallServer().then(->
+    try
+      spawnCall = spawnStub.getCall(0)
+      assert.isNotNull(spawnCall, "Expected spawn to be called at least once")
+
+      assert.deepEqual(
+        spawnCall.args,
+        ['npm', ['install']],
+        "Expected spawn to be called with npm install"
+      )
+
+      done()
+    catch assertErr
+      console.error assertErr.stack
+      done(assertErr)
+    finally
+      sandbox.restore()
+
+  ).catch((err)->
+    sandbox.restore()
+    done(err)
+  )
+)
+
+test('.npmInstallServer rejects if npm install fails', (done) ->
+  sandbox = sinon.sandbox.create()
+
+  chdirStub = sandbox.stub(process, 'chdir', ->)
+  spawnStub = sandbox.stub(CommandRunner, 'spawn', ->
+    return {
+      on: (event, cb) ->
+        if event is 'close'
+          cb(1)
+    }
+  )
+
+  Deploy.npmInstallServer().then(->
+    sandbox.restore()
+    done(new Error("Expected npm install to fail"))
+  ).catch((err)->
+    try
+      assert.strictEqual(err.constructor.name, "Error",
+        "Expected an error from reject"
+      )
+
+      assert.strictEqual(err.message, "npm install exited with status code 1")
+      done()
+    catch assertErr
+      done(assertErr)
+    finally
+      sandbox.restore()
+  )
+
+)

@@ -32,6 +32,15 @@ exports.npmInstallClient = ->
   )
 
 exports.npmInstallServer = ->
+  new Promise( (resolve, reject) ->
+    npmInstall = CommandRunner.spawn('npm', ['install'])
+    npmInstall.on('close', (statusCode) ->
+      if statusCode is 0
+        resolve()
+      else
+        reject(new Error("npm install exited with status code #{statusCode}"))
+    )
+  )
 
 exports.grunt = ->
 
