@@ -76,7 +76,8 @@ exports.deploy = (tagName) ->
       exports.npmInstallServer
     ).then(->
       deploy.updateDeployState('success', 'Deploy completed successfully')
-      resolve()
+    ).then(
+      resolve
     ).catch( (err) ->
       deploy.updateDeployState('failure', err.message).finally( ->
         reject(err)
