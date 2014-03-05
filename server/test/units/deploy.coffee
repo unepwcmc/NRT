@@ -245,9 +245,6 @@ npm install', (done) ->
       secondChdir = chdirStub.getCall(1)
 
       assert.isNotNull secondChdir, "Expected chdir to be called a second time"
-      console.log "secondChdir.args"
-      console.log secondChdir.args
-
 
       assert.strictEqual(
         secondChdir.args[0],

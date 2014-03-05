@@ -45,7 +45,6 @@ command', (done) ->
   ).spread( (res, body) ->
 
     try
-      console.log res.body
       assert.equal res.statusCode, 200,
         "Expected the request to succeed"
 
