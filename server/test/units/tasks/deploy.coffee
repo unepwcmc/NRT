@@ -28,7 +28,7 @@ test("Asks for the server target and tag name,
 
   # Determined by dice roll, guaranteed to be random
   randomNumber = 4
-  randomStub = sinon.stub(crypto, 'randomBytes', ->
+  randomStub = sandbox.stub(crypto, 'randomBytes', ->
     toString: ->
       randomNumber
   )
@@ -42,7 +42,7 @@ test("Asks for the server target and tag name,
   )
 
   deploy =
-    pollStatus: sinon.spy(->
+    pollStatus: sandbox.spy(->
       new Promise((resolve) -> resolve())
     )
 

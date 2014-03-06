@@ -159,7 +159,6 @@ test("Usernames must be unique", (done) ->
   ).then( ->
     done(new Error("Expected duplicate user creation to fail"))
   ).fail( (err) ->
-    console.error err
     assert.match err, /duplicate key error index/
     done()
   )
