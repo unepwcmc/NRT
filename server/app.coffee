@@ -38,7 +38,11 @@ exports.createApp = ->
       encodeSrc: false
     )
 
-  app.use express.static(path.join(__dirname, "public"))
+  app.use express.compress()
+
+  oneWeekInMilliseconds = (60 * 60 * 24 * 7) * 1000
+  oneYearInMilliseconds = oneWeekInMilliseconds * 52
+  app.use express.static(path.join(__dirname, "public"), maxAge: oneYearInMilliseconds)
 
   app.engine "hbs", hbs.express3(
     partialsDir: __dirname + '/views/partials'
@@ -58,7 +62,7 @@ exports.createApp = ->
   app.use express.session(
     store: new MongoStore(
       url: "mongodb://localhost/nrt_#{app.get('env')}"
-      maxAge: 300000
+      maxAge: oneWeekInMilliseconds
     )
   )
   app.use flash()
