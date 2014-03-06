@@ -1,5 +1,6 @@
 {
   "instance_name": "Kenya",
+  "server_name": "staging",
   "indicators": {
     "primary_type": "standard"
   },
