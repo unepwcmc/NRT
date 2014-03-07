@@ -8,9 +8,7 @@ suite('User')
 test('Password salt values can be stored on user', (done) ->
   user = new User(salt: 'sodiumchloride')
   user.save( (err, theUser) ->
-    if err?
-      console.error err
-      throw new Error(err)
+    return done(err) if err?
 
     assert.strictEqual(
       theUser.salt,
@@ -48,34 +46,39 @@ test('.canEdit resolves when given a page whose parent is owned by the user', (d
   ).fail(done)
 )
 
-test(".isValidPassword checks if bcrypt(password)
-  matches stored password", (done) ->
+test(".isValidPassword returns false if bcrypt(password)
+ does not match stored password", (done) ->
   user = new User(password: "password")
 
   user.save( (err, savedUser) ->
-    if err?
-      console.error err
-      throw new Error(err)
+    return done(err) if err?
 
-    savedUser
-      .isValidPassword('password')
-      .then( (isValid) ->
-
-        assert.isTrue(
-          isValid,
-          "Expected password 'password' for user to be valid"
-        )
-
-        savedUser.isValidPassword('hats')
-      ).then( (isValid) ->
-
-        assert.isFalse(
-          isValid
-          "Expected password 'hats' for user to be invalid"
-        )
-
-        done()
+    savedUser.isValidPassword('password').then( (isValid) ->
+      assert.isTrue(
+        isValid,
+        "Expected password 'password' for user to be valid"
       )
+
+      done()
+    ).fail(done)
+  )
+)
+
+test(".isValidPassword returns true if bcrypt(password)
+ matches stored password", (done) ->
+  user = new User(password: "password")
+
+  user.save( (err, savedUser) ->
+    return done(err) if err?
+
+    savedUser.isValidPassword('hats').then( (isValid) ->
+      assert.isFalse(
+        isValid,
+        "Expected password 'hats' for user to be invalid"
+      )
+
+      done()
+    ).fail(done)
   )
 )
 
@@ -83,9 +86,7 @@ test(".save hashes the user's password before saving", (done) ->
   user = new User(password: "password")
 
   user.save( (err, savedUser) ->
-    if err?
-      console.error err
-      throw new Error(err)
+    return done(err) if err?
 
     assert.notStrictEqual(
       "password",
@@ -102,9 +103,7 @@ test('.save with a distinguishedName', (done) ->
   user = new User(distinguishedName: dn)
 
   user.save( (err, savedUser) ->
-    if err?
-      console.error err
-      throw new Error(err)
+    return done(err) if err?
 
     assert.strictEqual(
       dn,
@@ -135,14 +134,10 @@ test(".loginFromLocalDb succeeds if the user's password is correct", (done) ->
     authenticationCallback = (err, user) ->
       assert.ok user, "Expected user to be returned when authentication successful"
       assert.strictEqual "hats", user.email
-
       done()
 
     user.loginFromLocalDb("boats", authenticationCallback)
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test(".loginFromLocalDb fails if the user's password is incorrect", (done) ->
@@ -152,29 +147,19 @@ test(".loginFromLocalDb fails if the user's password is incorrect", (done) ->
   ).then( (user) ->
     callback = (err, user) ->
       assert.notOk user, "Expected user to not be returned when authentication fails"
-
       done()
 
     user.loginFromLocalDb("ships", callback)
-  ).fail( (err) ->
-    console.error err
-    throw err
-  )
+  ).fail(done)
 )
 
 test("Usernames must be unique", (done) ->
   helpers.createUser().then( (user) ->
     helpers.createUser()
-  ).then( (user) ->
-
-    assert.isUndefined user, "Expected duplicate user creation to fail"
-    done()
-
+  ).then( ->
+    done(new Error("Expected duplicate user creation to fail"))
   ).fail( (err) ->
-
-    console.error err
     assert.match err, /duplicate key error index/
     done()
-
   )
 )
