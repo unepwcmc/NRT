@@ -1,10 +1,9 @@
 suite("FancySelect")
 
-test(".fancify() hides select boxes with data-behavior='fancy-select'", ->
-  selectEl = $('<select data-behavior="fancy-select"></select>')
-  $('body').append(selectEl)
+test(".fancify() hides select box children in the given DOM element", ->
+  selectEl = $('<div><select></select></div>')
 
-  FancySelect.fancify()
+  FancySelect.fancify(selectEl)
 
   try
     assert.isFalse($(selectEl).is(':visible'),
