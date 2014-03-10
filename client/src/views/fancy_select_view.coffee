@@ -18,8 +18,10 @@ class window.FancySelect
 
   populateListEl: ->
     optionEls = @$selectEl.find('option')
+
     _.each(optionEls, (optionEl) =>
-      listItemEl = $("<li>#{$(optionEl).text()}</li>")
+      $optionEl = $(optionEl)
+      listItemEl = $("<li value='#{$optionEl.attr('value')}'>#{$optionEl.text()}</li>")
       @bindClickHandler(listItemEl)
       @$listEl.append(listItemEl)
     )

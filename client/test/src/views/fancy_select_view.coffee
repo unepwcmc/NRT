@@ -23,9 +23,10 @@ test(".fancify() creates a UL with a fancy-select class after a select in the DO
 )
 
 test(".constructor creates an <li> element for each <option>", ->
+  optionValue = 'seductive-el'
   selectEl = $("""
     <select data-behavior="fancy-select">
-      <option>Pick me!</option>')
+      <option value="#{optionValue}">Pick me!</option>')
     </select>
   """)
   $('body').append(selectEl)
@@ -40,15 +41,22 @@ test(".constructor creates an <li> element for each <option>", ->
       "Expected there to be one <li> element in the <ul>"
 
     assert.strictEqual $(listItems[0]).text(), "Pick me!"
+
+    assert.strictEqual $(listItems[0]).attr('value'), optionValue,
+      "Expected the <li> to have the value of the option"
+
   finally
     $('[data-behavior="fancy-select"]').remove()
     $listEl.remove()
 )
 
-test('Clicking on a list element triggers a change event for the select', ->
+test('Clicking on a list element a changes the selected
+value and triggers the change event', ->
+  elemId = "seductive-element"
   selectEl = $("""
     <select data-behavior="fancy-select">
-      <option>Pick me!</option>')
+      <option value="bland-el">Boring</option>
+      <option value="#{elemId}">Pick me!</option>
     </select>
   """)
   $('body').append(selectEl)
@@ -60,7 +68,7 @@ test('Clicking on a list element triggers a change event for the select', ->
   selectEl.on('change', itemSelectListener)
 
   $listEl = $(selectEl).next()
-  listItem = $($listEl.find('li')[0])
+  listItem = $($listEl.find("li[value='#{elemId}']")[0])
   listItem.trigger('click')
 
   try
@@ -69,6 +77,12 @@ test('Clicking on a list element triggers a change event for the select', ->
       "Expected itemSelectListener to be called once but was called
         #{itemSelectListener.callCount} times"
     )
+
+    assert.strictEqual(
+      selectEl.find("option:selected").attr('value'), elemId,
+      "Expected the select to have the correct element selected"
+    )
+
   finally
     $('[data-behavior="fancy-select"]').remove()
     $listEl.remove()
