@@ -1,12 +1,17 @@
 class window.FancySelect
   constructor: (@selectEl) ->
     @$selectEl = $(@selectEl)
-    @$listEl   = $('<ul>')
+    @$listEl   = $('<ul class="fancy-select">')
 
     @$selectEl.hide()
 
+    @copyAttributesToListEl()
     @insertListEl()
     @populateListEl()
+
+  copyAttributesToListEl: ->
+    selectClass = @$selectEl.attr('class')
+    @$listEl.addClass(selectClass)
 
   insertListEl: ->
     @$selectEl.after(@$listEl)
