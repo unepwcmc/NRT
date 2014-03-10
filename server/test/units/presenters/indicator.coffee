@@ -7,9 +7,9 @@ HeadlineService = require('../../../lib/services/headline')
 
 suite('IndicatorPresentor')
 
-test(".populateSourceFromType on an indicator with a known 'type'
+test(".populateSourceFromType on an indicator with an ESRI 'type'
 adds a 'source' attribute to the indicator object,
-with the correct human readable value", ->
+with the correct human readable value and a URL", ->
   indicator = Indicator(type: 'esri')
 
   presenter = new IndicatorPresenter(indicator)
@@ -18,11 +18,36 @@ with the correct human readable value", ->
   assert.property indicator, 'source',
     "Expected the indicator to have a 'source' attribute populated"
 
-  assert.strictEqual indicator.source, 'Environment Agency - Abu Dhabi',
+  expectedSource = {
+    name: 'Environment Agency - Abu Dhabi'
+    url:  'http://www.ead.ae'
+  }
+
+  assert.deepEqual indicator.source, expectedSource,
     "Expected the indicator to have a 'source' attribute populated"
 )
 
-test(".populateHeadlineRangesFromHeadlines when given headlines
+test(".populateSourceFromType on an indicator with a World Bank 'type'
+adds a 'source' attribute to the indicator object,
+with the correct human readable value and a URL", ->
+  indicator = Indicator(type: 'worldBank')
+
+  presenter = new IndicatorPresenter(indicator)
+  presenter.populateSourceFromType()
+
+  assert.property indicator, 'source',
+    "Expected the indicator to have a 'source' attribute populated"
+
+  expectedSource = {
+    name: 'World Bank Database'
+    url:  'http://data.worldbank.org'
+  }
+
+  assert.deepEqual indicator.source, expectedSource,
+    "Expected the indicator to have a 'source' attribute populated"
+)
+
+test(".populateHeadlineRangesFromHeadlines when given sorted headlines
 populates a 'headlineRanges' attribute with the oldest and newest xAxis values
 formatted as D MM YYYY", ->
   indicator = Indicator(
@@ -30,11 +55,11 @@ formatted as D MM YYYY", ->
       xAxis: 'year'
   )
   headlines = [{
-    year: 2006
+    year: 2008
   }, {
     year: 2007
   }, {
-    year: 2008
+    year: 2006
   }]
 
   presenter = new IndicatorPresenter(indicator)

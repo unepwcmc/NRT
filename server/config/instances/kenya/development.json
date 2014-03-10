@@ -1,0 +1,14 @@
+{
+  "instance_name": "Kenya",
+  "server_name": "staging",
+  "indicators": {
+    "primary_type": "standard"
+  },
+  "db": {
+    "name": "nrt_development"
+  },
+  "features": {
+    "ldap": false,
+    "dpsir_filtering": true
+  }
+}

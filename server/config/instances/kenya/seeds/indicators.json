@@ -1,0 +1,385 @@
+[{
+  "short_name": "Contribution to agriculture section",
+  "title": "Forestry sector contribution to the agriculture section",
+  "theme": "Contribution of the forestry sector",
+  "sections": [],
+  "type": "standard",
+  "indicatorDefinition": {
+    "indicatoratorId": 1,
+    "unit": "% contribution",
+    "short_unit": "%",
+    "period": "annual",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+    {
+      "source": {
+        "name": "periodStart",
+        "type": "epoch"
+      },
+      "name": "date",
+      "type": "date"
+    }, {
+      "source": {
+        "name": "value",
+        "type": "decimalPercentage"
+      },
+      "name": "value",
+      "type": "integer"
+    }, {
+      "source": {
+        "name": "text",
+        "type": "text"
+      },
+      "name": "text",
+      "type": "text"
+    }
+    ]
+  }
+}, {
+    "short_name": "Contribution other primary industries",
+    "title": "Forestry sector contribution to other primary industries",
+    "theme": "Contribution of the forestry sector",
+    "sections": [],
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 2,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Manufacture of food, beverages and tobacco",
+    "title": "Manufacture of food, beverages and tobacco",
+    "theme": "Contribution of the forestry sector",
+    "sections": [],
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 3,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Contribution to wood and paper sector",
+    "title": "Forestry sector contribution to the wood and paper sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 4,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Contribution to chemical industry sector",
+    "title": "Forestry sector contribution to the chemical industry sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 5,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Contribution to other manufacturing sector",
+    "title": "Forestry sector contribution to other manufacturing sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 6,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Contribution to construction sector",
+    "title": "Forestry sector contribution to the construction sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 7,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Contribution to wholesale and retail trade sector",
+    "title": "Forestry sector contribution to wholesale and retail trade sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 8,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Contribution to hotels and transport sector",
+    "title": "Forestry sector contribution to the hotels and transport sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 9,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }, {
+    "short_name": "Contribution to other services sector",
+    "title": "Forestry sector contribution to the other services sector",
+    "theme": "Contribution of the forestry sector",
+    "type": "standard",
+    "indicatorDefinition": {
+      "indicatoratorId": 10,
+      "unit": "% contribution",
+      "short_unit": "%",
+      "period": "annual",
+      "xAxis": "date",
+      "yAxis": "value",
+      "geometryField": "geometry",
+      "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "date",
+        "type": "date"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "decimalPercentage"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+      ]
+    }
+  }
+]

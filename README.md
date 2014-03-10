@@ -24,7 +24,7 @@ installed (don't worry, they're short!)
   `cd server/ && npm run-script setup`
 
 ### Configuration
-Your application needs a configuration file for the environment it will
+Your application needs configuration files for the environment it will
 be run in. View the [configuration README](server/config/README.md) for
 possible options.
 
@@ -63,9 +63,11 @@ In **development**, supervisor is used to handle exceptions:
 
 `cd server/ && npm start`
 
-#### Compile coffeescripts
+#### Asset compilation
 
-`cd client && grunt watch`
+*For more info, check out the [asset README](client/README.md).*
+
+`cd client && grunt && grunt watch`
 
 #### Logging in
 
@@ -105,9 +107,11 @@ generates data in the same format as the indicator data backup in
 
 * `cd server/ && npm run-script production`
 
-#### Compile coffeescripts
+#### Asset compilation
 
-`cd client && grunt watch`
+*For more info, check out the [asset README](client/README.md).*
+
+`cd client && grunt`
 
 #### Authentication and logging in
 
@@ -117,29 +121,64 @@ configured. Note that for EAD LDAP use, you must be within the EAD VPN.
 
 ##### LDAP
 
+NRT can connect to a LDAP to authenticate and create users.
 LDAP is configured by the file `server/config/ldap.json`, and an example
 can be found in `server/config/ldap.json.example`. See the [deployment secrets
 document](https://docs.google.com/a/peoplesized.com/document/d/1dYMO3PJhRlTDQ2BEUUOcLwqX0IfJ5UP_UYyfQllnXeQ/)
 for the production details you need.
 
-**In development, LDAP is disabled.**
+LDAP is a optional feature which can be disabled in the application config:
+https://github.com/unepwcmc/NRT/tree/master/server/config#example
 
 #### Automatic deployments
+Servers can be deployed to automatically using GitHub deploy hooks.
 
-Once the application has been setup manually for the first time on a
-server, you can automatically deploy new code pushed to the `deploy`
-branch on Github.
+##### Config
+Before a server can be deployed to, you must configure it in
+`server/config/<env>.json` with 2 variables:
 
-Only one step of setup is required:
+**server_name**: Allows your server to be identified as a deploy target, e.g.
+'ad-staging'. Simply add `server_name` as root attribute in the config.
+
+**github authentication**: To notify about deployment, your server must
+authenticate with github. To do this, create an auth token on GitHub:
+http://developer.github.com/v3/#authentication
+Then, modify your config to include these credentials:
+
+```json
+  "deploy": { "github": {
+      "password": "x-oauth-basic",
+      "username": "<your-auth-token>"
+    }
+  }
+```
+
+##### GitHub Deploy hooks
+Servers must be configured to listen to the creation of tags on Github:
 
   1. Add a WebHook [service hook](https://github.com/unepwcmc/NRT/settings/hooks)
      that points at your server's deploy route
      (`http://youdomain.com/deploy`).
 
-Github will notify the server of any changes, and the application should
-automatically pull the new code and update the server's local
-repository. **Make sure you are running your application with `forever`
+Github will notify the server when a new tag is created. At this point, the server
+will inspect the tag name to see if it matches:
+
+    <server-name>-<new-feature-name>-<id>
+
+If <server-name> is the same as 'server_name' specified in
+`config/<env>.json`, the application will automatically
+pull the new code and update the server's local repository.
+**Make sure you are running your application with `forever`
 or it will not restart after a deploy**.
+
+##### The deploy command
+To deploy, run the deploy command on your local machine:
+
+    cd server && coffee lib/tasks/deploy.coffee
+
+This will ask for the name of your target server (staging/production), and
+what the feature introduces, and then create a tag. Once this tag has been
+pushed, the Github deploy hooks take over
 
 ## Application structure
 
@@ -151,9 +190,9 @@ Application entry point. Includes required modules and starts the server
 
 #### route_bindings.coffee
 
-Binds the server paths (e.g. '/indicators/') to the routes in the route folder
+Binds the server paths (e.g. '/indicators/') to the controllers in the controllers folder
 
-#### routes/
+#### controllers/
 
 Contains the 'actions' in the application, grouped into modules by their
 responsibility. These are mapped to paths by route_bindings.coffee
@@ -282,3 +321,4 @@ WCMC team should already have access to [this document](https://docs.google.com/
 # License
 
 NRT is released under the [BSD 3-Clause](http://opensource.org/licenses/BSD-3-Clause) License
+

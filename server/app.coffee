@@ -21,6 +21,23 @@ exports.createApp = ->
 
   bindRoutesForApp = require('./route_bindings.coffee')
 
+  if app.get('env') isnt 'production'
+    sass = require('node-sass')
+    app.use sass.middleware(
+      src: path.join(__dirname, "..", "client", "src")
+      dest: path.join(__dirname, 'public')
+      debug: true
+    )
+
+    coffee = require('coffee-middleware')
+    app.use coffee(
+      src: path.join(__dirname, "public")
+      compress: true
+      force: true
+      debug: true
+      encodeSrc: false
+    )
+
   app.use express.static(path.join(__dirname, "public"))
 
   app.engine "hbs", hbs.express3(

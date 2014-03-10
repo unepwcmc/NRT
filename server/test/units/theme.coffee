@@ -5,6 +5,7 @@ Indicator = require('../../models/indicator').model
 async = require('async')
 Q = require('q')
 _ = require('underscore')
+sinon = require('sinon')
 
 suite('Theme')
 
@@ -259,4 +260,29 @@ test('.getFatPage should be mixed in', ->
 test(".toObjectWithNestedPage is mixed in", ->
   theme = new Theme()
   assert.typeOf theme.toObjectWithNestedPage, 'Function'
+)
+
+test("#seedData when no seed file exist reports an appropriate error", (done) ->
+  fs = require('fs')
+  readFileStub = sinon.stub(fs, 'readFileSync', ->
+    throw new Error("ENOENT, no such file or directory './config/seeds/themes.json'")
+  )
+
+  Theme.seedData().then(->
+    done("Expected Theme.seedData to fail")
+  ).fail((err)->
+
+    try
+      console.log err
+      assert.strictEqual(
+        err,
+        "Unable to load theme seed file, have you copied seeds from config/instances/ to config/seeds/?"
+      )
+      done()
+    catch err
+      done(err)
+
+  ).finally(->
+    readFileStub.restore()
+  )
 )

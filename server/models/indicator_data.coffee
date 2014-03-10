@@ -30,7 +30,7 @@ indicatorDataSchema.statics.seedData = (indicators) ->
     if count is 0
       # Grab indcator data from disk
       dummyIndicatorData = JSON.parse(
-        fs.readFileSync("#{process.cwd()}/lib/indicator_data.json", 'UTF8'),
+        fs.readFileSync("#{process.cwd()}/config/seeds/indicator_data.json", 'UTF8'),
         dateReviver
       )
 

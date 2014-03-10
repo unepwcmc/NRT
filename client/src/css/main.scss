@@ -464,7 +464,7 @@ h1, h2, h3, h4, h5 {
         }
       }
 
-      &:hover {
+      &:hover, &.active {
         background-color: #008bdc;
         cursor: pointer;
 
@@ -472,6 +472,30 @@ h1, h2, h3, h4, h5 {
           color: white;
         }
       }
+    }
+  }
+}
+
+.sub-nav {
+  background-color: white;
+  overflow: hidden;
+  display: none;
+  position: fixed;
+  top: 80px;
+  left: 0;
+  right: 0;
+  padding: 14px 0;
+  border-bottom: 1px solid #EEE;
+  top-bottom: 1px solid #EEE;
+  z-index: 1000;
+
+  li {
+    float: left;
+    margin-right: 1.8%;
+
+    a {
+      color: #008ed6;
+      font-size: 0.75em;
     }
   }
 }
@@ -501,6 +525,15 @@ h1, h2, h3, h4, h5 {
   display: none;
 }
 
+.breadcrumbs, .sub-nav {
+  .inner {
+    margin: 0 auto;
+    padding: 0 20px 15px 20px;
+    width: 980px;
+    position: relative;
+  }
+}
+
 .breadcrumbs {
   border-bottom: 1px solid #eee;
   padding-top: 79px;
@@ -519,13 +552,6 @@ h1, h2, h3, h4, h5 {
     &:active {
       color: white;
     }
-  }
-
-  .inner {
-    margin: 0 auto;
-    padding: 0 20px 15px 20px;
-    width: 980px;
-    position: relative;
   }
 
   li, a {
@@ -1131,6 +1157,10 @@ footer{
   border-bottom: 1px solid $lightGrey;
   padding: 20px 30px;
 
+  h4 {
+    text-transform: uppercase;
+    color: red;
+  }
 }
 
 .md-box h3 {
@@ -1138,7 +1168,6 @@ footer{
   font-size: 1.2em;
   font-weight: 400;
   width: 510px;
-  float: left;
 }
 
 .md-box .md-content{
@@ -1208,23 +1237,25 @@ footer{
   }
 
   &.feedback {
-      float: right;
-      margin-top: 4px;
-      display: inline;
-      font-size: 0.7em;
+    position: absolute;
+    right: 30px;
+    top: 26px;
+    margin-top: 4px;
+    display: inline;
+    font-size: 0.7em;
+    color: $white;
+    background-color: $green;
+    border: 1px solid $green;
+    &:hover {
       color: $white;
-      background-color: $green;
-      border: 1px solid $green;
-      &:hover {
-        color: $white;
-        border: 1px solid darken($green, 10);
-      }
-      &:active{
-        color: $white;
-        background-color: $greenHover;
-        border: 1px solid $greenHover;
-      }
+      border: 1px solid darken($green, 10);
     }
+    &:active{
+      color: $white;
+      background-color: $greenHover;
+      border: 1px solid $greenHover;
+    }
+  }
 }
 
 .md-effect-1 .md-box {
