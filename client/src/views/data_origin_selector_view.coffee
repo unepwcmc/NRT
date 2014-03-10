@@ -26,7 +26,7 @@ class Backbone.Views.DataOriginSelectorView extends Backbone.View
       origins: @Origins
     ))
 
-    FancySelect.fancify()
+    FancySelect.fancify(@$el)
 
     return @
 

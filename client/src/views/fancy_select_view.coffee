@@ -29,8 +29,8 @@ class window.FancySelect
       @$selectEl.trigger('change')
     )
 
-  @fancify: ->
-    selectEls = $('[data-behavior="fancy-select"]')
+  @fancify: (container)->
+    selectEls = $(container).find('[data-behavior="fancy-select"]')
 
     _.each(selectEls, (selectEl) ->
       new FancySelect(selectEl)

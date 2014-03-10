@@ -1,31 +1,25 @@
 suite("FancySelect")
 
 test(".fancify() hides select box children in the given DOM element", ->
-  selectEl = $('<div><select></select></div>')
+  selectEl = $('<div><select data-behavior="fancy-select"></select></div>')
+  $('body').append(selectEl)
 
   FancySelect.fancify(selectEl)
 
-  try
-    assert.isFalse($(selectEl).is(':visible'),
-      "Expected the select element to be hidden")
-  finally
-    $('[data-behavior="fancy-select"]').remove()
+  assert.isTrue($(selectEl).is(':visible'),
+    "Expected the select element to be hidden")
 )
 
 test(".fancify() creates a UL with a fancy-select class after a select in the DOM", ->
-  selectEl = $('<select data-behavior="fancy-select"></select>')
-  $('body').append(selectEl)
+  container = $('<div><select data-behavior="fancy-select"></select></div>')
 
-  FancySelect.fancify()
+  FancySelect.fancify(container)
 
-  try
-    nextEl = $(selectEl).next()
-    assert.strictEqual(nextEl.prop("tagName"), "UL",
-      "Expected a UL to be appended after the select box")
-    assert.strictEqual(nextEl.attr('class'), "fancy-select",
-      "Expected the UL to have the class 'fancy-select'")
-  finally
-    $('[data-behavior="fancy-select"]').remove()
+  nextEl = $(container).find('select').next()
+  assert.strictEqual(nextEl.prop("tagName"), "UL",
+    "Expected a UL to be appended after the select box")
+  assert.strictEqual(nextEl.attr('class'), "fancy-select",
+    "Expected the UL to have the class 'fancy-select'")
 )
 
 test(".constructor creates an <li> element for each <option>", ->
