@@ -3,7 +3,8 @@ class window.FancySelect extends Backbone.View
   className: 'fancy-select'
 
   events:
-    'click': 'setSelectionToClick'
+    'click': 'toggleDisplay'
+    'click li': 'setSelectionToClick'
 
   initialize: (options) ->
     @selectEl = options.selectEl
@@ -38,6 +39,11 @@ class window.FancySelect extends Backbone.View
     @$selectEl.after(@$el)
 
     return @
+
+  toggleDisplay: (event) ->
+    targetEl = $(event.target)
+    unless targetEl.is('li')
+      @$el.find('ul').toggle()
 
   setSelectionToClick: (event) =>
     $itemEl = $(event.target)

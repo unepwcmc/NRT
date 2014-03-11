@@ -2,7 +2,7 @@
 @import "mixins";
 
 .indicator-selector {
-  .editor { 
+  .editor {
     border: 0;
     background-color: white;
   }
@@ -28,28 +28,6 @@
         font-size: 12px;
         color: $lightishGrey;
         line-height: 13px;
-      }
-
-      div.select {
-        border: 0;
-        padding: 0;
-        font-size: 17px;
-        font-weight: bold;
-
-        &:active {
-          background-color: white;
-          border-color: white;
-        }
-
-        select {
-          width: 205px;
-          font-weight: bold;
-          color: $darkGrey;
-        }
-
-        i {
-          margin-top: 6px
-        }
       }
     }
 
@@ -130,7 +108,7 @@
           color: $darkGrey;
           font-weight: bold;
         }
-        
+
         p {
           color: $darkGrey;
           font-size: 14px;
