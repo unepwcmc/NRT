@@ -31,7 +31,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
     @render()
 
-    @listenTo(@subViews['data-origin-selector'], 'selected', @filterByType)
+    @listenTo(Backbone, 'indicator_selector:data_origin:selected', @filterByType)
 
   render: =>
     $('body').addClass('stop-scrolling')

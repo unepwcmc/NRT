@@ -293,9 +293,7 @@ test("When the data origin sub view triggers 'selected',
     section: section
   )
 
-  dataOriginSubView = view.subViews['data-origin-selector']
-
-  dataOriginSubView.trigger('selected', 'kittens')
+  Backbone.trigger('indicator_selector:data_origin:selected', 'kittens')
   assert.strictEqual view.filterByType.callCount, 1,
     "Expected filterByType to called"
 

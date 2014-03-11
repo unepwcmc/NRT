@@ -27,7 +27,7 @@ test("renders the list of ::Origins", ->
 )
 
 test("When an option is selected, the view triggers a 'selected' event with the
-origin name", (done)->
+origin name", ->
   view = new Backbone.Views.DataOriginSelectorView()
 
   view.Origins =
@@ -36,22 +36,27 @@ origin name", (done)->
 
   view.render()
 
-  view.on('selected', (originName) ->
-    try
-      assert.strictEqual originName, 'kittens',
-        "Expected the event to be triggered with the origin name"
+  selectedSpy = sinon.spy()
+  Backbone.on('indicator_selector:data_origin:selected', selectedSpy)
 
-      done()
-    catch err
-      done(err)
+  view.$el.find("li[value='kittens']").trigger('click')
+
+  assert.isTrue(
+    selectedSpy.calledOnce,
+    "Expected selectedSpy to be called once but was called
+      #{selectedSpy.callCount} times"
   )
 
-  view.$el.find("option[value='kittens']").prop("selected",true)
-  view.$el.find("select").trigger('change')
+  assert.isTrue(
+    selectedSpy.calledWith('kittens'),
+    "Expected the event to be triggered with the origin name"
+  )
+
+  Backbone.off('indicator_selector:data_origin:selected')
 )
 
 test("When 'All sources' is selected, the view triggers a 'selected' event with 
-undefined as an argument", (done)->
+undefined as an argument", ->
   view = new Backbone.Views.DataOriginSelectorView()
 
   view.Origins =
@@ -59,17 +64,22 @@ undefined as an argument", (done)->
 
   view.render()
 
-  view.on('selected', (originName) ->
-    try
-      assert.isUndefined originName,
-        "Expected the event to be triggered with no origin name"
-
-      done()
-    catch err
-      done(err)
-  )
+  selectedSpy = sinon.spy()
+  Backbone.on('indicator_selector:data_origin:selected', selectedSpy)
 
   $(view.$el.find("option")[0]).prop("selected", true)
   view.$el.find("select").trigger('change')
-)
 
+  assert.isTrue(
+    selectedSpy.calledOnce,
+    "Expected selectedSpy to be called once but was called
+      #{selectedSpy.callCount} times"
+  )
+
+  assert.isTrue(
+    selectedSpy.calledWith(undefined),
+    "Expected the event to be triggered with no origin name"
+  )
+
+  Backbone.off('indicator_selector:data_origin:selected')
+)
