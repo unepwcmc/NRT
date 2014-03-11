@@ -21,13 +21,17 @@ class window.FancySelect
 
     _.each(optionEls, (optionEl) =>
       $optionEl = $(optionEl)
-      listItemEl = $("<li value='#{$optionEl.attr('value')}'>#{$optionEl.text()}</li>")
-      @bindClickHandler(listItemEl)
-      @$listEl.append(listItemEl)
+      $listItemEl = $('<li>')
+        .attr('value', $optionEl.attr('value'))
+        .text($optionEl.text())
+
+      @bindSetSelectionToClick($listItemEl, $optionEl)
+      @$listEl.append($listItemEl)
     )
 
-  bindClickHandler: (element) ->
-    element.on('click', =>
+  bindSetSelectionToClick: ($listItemEl, $optionEl) ->
+    $listItemEl.on('click', =>
+      @$selectEl.val($optionEl.attr('value'))
       @$selectEl.trigger('change')
     )
 
