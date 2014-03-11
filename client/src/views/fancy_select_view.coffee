@@ -1,43 +1,55 @@
-class window.FancySelect
-  constructor: (@selectEl) ->
-    @$selectEl = $(@selectEl)
-    @$listEl   = $('<ul class="fancy-select">')
+class window.FancySelect extends Backbone.View
+  template: Handlebars.templates['fancy_select.hbs']
+  className: 'fancy-select'
 
+  events:
+    'click': 'setSelectionToClick'
+
+  initialize: (options) ->
+    @selectEl = options.selectEl
+    @$selectEl = $(@selectEl)
     @$selectEl.hide()
 
-    @copyAttributesToListEl()
-    @insertListEl()
-    @populateListEl()
+    @render()
 
-  copyAttributesToListEl: ->
-    selectClass = @$selectEl.attr('class')
-    @$listEl.addClass(selectClass)
-
-  insertListEl: ->
-    @$selectEl.after(@$listEl)
-
-  populateListEl: ->
+  selectOptions: ->
     optionEls = @$selectEl.find('option')
 
-    _.each(optionEls, (optionEl) =>
+    return _.map(optionEls, (optionEl) =>
       $optionEl = $(optionEl)
-      $listItemEl = $('<li>')
-        .attr('value', $optionEl.attr('value'))
-        .text($optionEl.text())
-
-      @bindSetSelectionToClick($listItemEl, $optionEl)
-      @$listEl.append($listItemEl)
+      return {
+        value: $optionEl.attr('value')
+        text: $optionEl.text()
+      }
     )
 
-  bindSetSelectionToClick: ($listItemEl, $optionEl) ->
-    $listItemEl.on('click', =>
-      @$selectEl.val($optionEl.attr('value'))
-      @$selectEl.trigger('change')
-    )
+  selectedItemText: ->
+    return @$selectEl.find('option:selected').text()
+
+  render: ->
+    selectClass = @$selectEl.attr('class')
+    @$el.addClass(selectClass)
+
+    @$el.html(@template(
+      selectedItem: @selectedItemText()
+      listItems: @selectOptions()
+    ))
+
+    @$selectEl.after(@$el)
+
+    return @
+
+  setSelectionToClick: (event) =>
+    $itemEl = $(event.target)
+
+    @$selectEl.val($itemEl.attr('value'))
+    @$selectEl.trigger('change')
+
+    @render()
 
   @fancify: (container)->
     selectEls = $(container).find('[data-behavior="fancy-select"]')
 
     _.each(selectEls, (selectEl) ->
-      new FancySelect(selectEl)
+      new FancySelect(selectEl: selectEl)
     )

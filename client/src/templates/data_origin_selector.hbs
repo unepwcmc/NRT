@@ -1,11 +1,8 @@
 <h5>Data origin:</h5>
 
-<div class='select'>
-  <select data-behavior="fancy-select">
-    <option value="">All sources</option>
-    {{#each origins}}
-      <option value="{{@key}}">{{this}}</option>
-    {{/each}}
-  </select>
-  <i class="icon-chevron-down"></i>
-</div>
+<select data-behavior="fancy-select">
+  <option value="">All sources</option>
+  {{#each origins}}
+    <option value="{{@key}}">{{this}}</option>
+  {{/each}}
+</select>

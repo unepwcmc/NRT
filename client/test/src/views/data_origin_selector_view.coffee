@@ -19,7 +19,7 @@ test("renders the list of ::Origins", ->
   assert.lengthOf view.$el.find("option[value='dogs']"), 1,
     "Expected the view to contain an option with the origin name"
 
-  assert.lengthOf view.$el.find("ul.fancy-select"), 1,
+  assert.lengthOf view.$el.find(".fancy-select"), 1,
     "Expected the view to contain a FancySelect element for the origin selector"
 
   assert.lengthOf view.$el.find("li[value='dogs']"), 1,

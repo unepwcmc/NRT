@@ -10,16 +10,20 @@ test(".fancify() hides select box children in the given DOM element", ->
     "Expected the select element to be hidden")
 )
 
-test(".fancify() creates a UL with a fancy-select class after a select in the DOM", ->
+test(".fancify() creates a UL with a parent div.fancy-select after a select in the DOM", ->
   container = $('<div><select data-behavior="fancy-select"></select></div>')
 
   FancySelect.fancify(container)
 
   nextEl = $(container).find('select').next()
-  assert.strictEqual(nextEl.prop("tagName"), "UL",
-    "Expected a UL to be appended after the select box")
+  assert.strictEqual(nextEl.prop("tagName"), "DIV",
+    "Expected a DIV to be appended after the select box")
   assert.strictEqual(nextEl.attr('class'), "fancy-select",
-    "Expected the UL to have the class 'fancy-select'")
+    "Expected the DIV to have the class 'fancy-select'")
+
+  listEl = nextEl.find('ul')
+  assert.lengthOf listEl, 1,
+    'Expected a UL to be inside the appended DIV'
 )
 
 test(".constructor creates an <li> element for each <option>", ->
@@ -31,10 +35,10 @@ test(".constructor creates an <li> element for each <option>", ->
   """)
   $('body').append(selectEl)
 
-  new FancySelect(selectEl)
+  new FancySelect(selectEl: selectEl)
 
   try
-    $listEl = $(selectEl).next()
+    $listEl = $(selectEl).next().find('ul')
     listItems = $listEl.find('li')
 
     assert.lengthOf listItems, 1,
@@ -61,13 +65,13 @@ value and triggers the change event', ->
   """)
   $('body').append(selectEl)
 
-  new FancySelect(selectEl)
+  new FancySelect(selectEl: selectEl)
 
   itemSelectListener = sinon.spy()
 
   selectEl.on('change', itemSelectListener)
 
-  $listEl = $(selectEl).next()
+  $listEl = $(selectEl).next().find('ul')
   listItem = $($listEl.find("li[value='#{elemId}']")[0])
   listItem.trigger('click')
 
@@ -92,7 +96,7 @@ test('.constructor appends the class attribute of the <select> element to the <u
   selectEl = $('<select data-behavior="fancy-select" class="hats"></select>')
   $('body').append(selectEl)
 
-  new FancySelect(selectEl)
+  new FancySelect(selectEl: selectEl)
 
   try
     $listEl = $(selectEl).next()
@@ -104,5 +108,52 @@ test('.constructor appends the class attribute of the <select> element to the <u
     assert.deepEqual classNames, ["fancy-select", "hats"]
   finally
     $('[data-behavior="fancy-select"]').remove()
+    selectEl.remove()
     $listEl.remove()
+)
+
+test('.selectOptions returns the <options> as an array objects with text and value', ->
+  selectEl = $("""
+    <select data-behavior="fancy-select">
+      <option value="bland-el">Boring</option>
+      <option value="super-el" selected>Pick me!</option>
+    </select>
+  """)
+  $('body').append(selectEl)
+
+  renderStub = sinon.stub(FancySelect::, 'render', ->)
+  fancySelect = new FancySelect(selectEl: selectEl)
+
+  try
+    expectedOptions = [{
+      value: "bland-el"
+      text: "Boring"
+    }, {
+      value: "super-el"
+      text: "Pick me!"
+    }]
+
+    assert.deepEqual fancySelect.selectOptions(), expectedOptions
+  finally
+    renderStub.restore()
+)
+
+test('.selectedItemText returns the item currently selected in the <select> tag', ->
+  selectEl = $("""
+    <select data-behavior="fancy-select">
+      <option value="bland-el">Boring</option>
+      <option value="super-el" selected>Pick me!</option>
+    </select>
+  """)
+  $('body').append(selectEl)
+
+  renderStub = sinon.stub(FancySelect::, 'render', ->)
+  fancySelect = new FancySelect(selectEl: selectEl)
+
+  try
+    assert.strictEqual fancySelect.selectedItemText(), "Pick me!",
+      "Expected the selected item to be 'Pick me!'"
+  finally
+    renderStub.restore()
+    selectEl.remove()
 )
