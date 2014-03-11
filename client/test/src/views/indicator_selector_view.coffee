@@ -230,6 +230,7 @@ test(".filterByTitle given an input event sets the results object to only
     results: new Backbone.Collections.IndicatorCollection()
     textFilteredIndicators: new Backbone.Collections.IndicatorCollection()
     filterIndicators: Backbone.Views.IndicatorSelectorView::filterIndicators
+    updateClearSearchButton: ->
 
   event = target: '<input value="hats and boats and cats">'
 
@@ -386,6 +387,7 @@ test('.clearSearch sets the search term filter to nothing and calls
       searchTerm: "hats"
     filterIndicators: sinon.spy()
     $el: $('<div>')
+    updateClearSearchButton: ->
 
   Backbone.Views.IndicatorSelectorView::clearSearch.call(view)
 

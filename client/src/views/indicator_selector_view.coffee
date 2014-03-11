@@ -56,7 +56,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     @filterIndicators()
 
   filterByTitle: (event) =>
-    searchTerm = @$el.find('input').val()
+    searchTerm = $(event.target).val()
 
     @updateClearSearchButton()
 
@@ -93,7 +93,6 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
       clearSearchBtn.hide()
     else
       clearSearchBtn.show()
-
 
   clearSearch: ->
     @$el.find('input').val('')
