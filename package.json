@@ -4,8 +4,8 @@
   "description": "Turns environmental parameter data into indicators, kind of like K&A were going to do...",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha test/*.coffee test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit --reporter spec",
-    "start": "supervisor index.js"
+    "test": "NODE_ENV=test mocha test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit --reporter spec",
+    "start": "supervisor -e 'node,js,json,coffee,hbs' index.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/unepwcmc/NRT-indicatorator",
   "dependencies": {
-    "coffee-script": "1.6.x",
+    "coffee-script": "~1.6.3",
     "express": "~3.4.0",
     "request": "~2.27.0",
     "underscore": "~1.5.2",
