@@ -5,6 +5,9 @@ class window.Backbone.Models.Theme extends Backbone.RelationalModel
 
   urlRoot: '/api/themes'
 
+  defaults:
+    active: false
+
   relations: [{
     key: 'page'
     type: Backbone.HasOne

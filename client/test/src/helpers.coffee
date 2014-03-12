@@ -6,19 +6,17 @@ Helpers.renderViewToTestContainer = (view) ->
 
 window.Helpers.SinonServer ||= {}
 
-Helpers.assertCalledOnce = (sinonObj) ->
-  assert.ok(
-    sinonObj.calledOnce,
-    "Expected spy/stub to be called once but was called
-      #{sinonObj.callCount} times"
-  )
-
 Helpers.viewHasSubViewOfClass = (view, subViewClassName) ->
   subViewExists = false
   for subViewKey, subView of view.subViews
     if subView.constructor.name == subViewClassName
       subViewExists = true
   return subViewExists
+
+Helpers.promisify = (fn) ->
+  defer = $.Deferred()
+  defer.resolve(fn())
+  defer.promise()
 
 # Used to extend Sinon Servers with common response method
 Helpers.SinonServer.respondWithJson = (jsonData) ->
@@ -27,6 +25,25 @@ Helpers.SinonServer.respondWithJson = (jsonData) ->
     { "Content-Type": "application/json" },
     JSON.stringify(jsonData)
   )
+
+Helpers.Assertions ||= {}
+
+Helpers.assertCalledOnce = (sinonObj) ->
+  assert.ok(
+    sinonObj.calledOnce,
+    "Expected spy/stub to be called once but was called
+      #{sinonObj.callCount} times"
+  )
+
+Helpers.Assertions.assertPathVisited = (server, path) ->
+  requestedUrls = _.map(server.requests, (req)-> req.url)
+  matchCount = 0
+  for url in requestedUrls
+    if path.test url
+      matchCount++
+
+  assert matchCount > 0,
+    "Expected at least one request to #{path}"
 
 window.Factory ||= {}
 

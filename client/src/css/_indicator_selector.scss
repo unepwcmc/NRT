@@ -2,68 +2,122 @@
 @import "mixins";
 
 .indicator-selector {
-
-  article {
-    height: 480px;
-    overflow: scroll;
-    border-top: 1px solid #DDD;
-    width: 100%;
-
-    h3 {
-      padding: 10px 20px;
-      background-color: #DDD;
-    }
+  .editor {
+    border: 0;
+    background-color: white;
   }
 
-  .indicators {
-    background-color: $white;
-    @include box-sizing(border-box);
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    position: relative;
-    z-index: 2;
-    list-style-type: none;
-    padding: 0;
+  aside {
+    border-left: 0;
+    float: left;
+    background-color: $barBlue;
+    height: 100%;
+    width: 231px;
+    color: $darkGrey;
 
-    li {
-      border-bottom: 1px solid #DDD;
-      @include clearfix;
-      padding: 0;
+    .origin {
+      background-color: white;
+      height: 40px;
+      width: 210px;
+      padding: 10px;
+      border: 1px solid $lightGrey;
+      border-right: 0;
 
-      & > div {
-        float: left;
+      h5 {
+        font-weight: bold;
+        font-size: 12px;
+        color: $lightishGrey;
+        line-height: 13px;
+      }
+    }
+
+    .themes {
+      color: white;
+
+      li {
+        border-bottom: 1px solid #276CA9;
+        background-color: #2E86D1;
+        font-size: 15px;
+        padding: 10px;
+        overflow: hidden;
+        font-weight: bolder;
+
+        span {
+          float: left;
+          width: 195px;
+        }
+
+        small {
+          font-size: 0.8em;
+          font-weight: normal;
+          color: white;
+        }
       }
 
-      .icon {
-        width: 13px;
-        padding: 10px 23px;
+      li.active{
+        background-color: #2B3E50;
       }
 
-      .info {
-        width: 808px;
-        padding: 10px 15px;
-        border-left: 1px solid #DDD;
+      li:hover {
+        cursor: pointer;
+      }
+    }
+
+  }
+
+  .main {
+    float:left;
+    width: 668px;
+
+    .search {
+      color: $differentGrey;
+      height: 60px;
+      border: 1px solid $lightGrey;
+      padding: 15px;
+      height: 30px;
+
+      i, input {
+        font-size: 21px;
+      }
+
+      input {
+        width: 585px;
+        color: $differentGrey;
+        border: 0;
+      }
+
+      i.clear-search {
+        display: none;
+        cursor: pointer;
 
         &:hover {
-          background: $linkBlue;
-          color: white;
-          cursor: pointer;
+          color: $darkGrey;
+        }
+      }
+    }
 
-          h4 {
-            color: white;
-          }
+    .indicators {
+      height: 514px;
+      overflow: scroll;
+
+      li {
+        border-bottom: 1px solid $lightGrey;
+        padding: 10px 15px 20px;
+
+        h4 {
+          color: $darkGrey;
+          font-weight: bold;
         }
 
         p {
-          padding-bottom: 0;
-          font-size: 0.75em;
-          line-height: 1.3em;
+          color: $darkGrey;
+          font-size: 14px;
+          line-height: 11px;
         }
       }
 
-      .h4 {
-        font-weight: 600;
-        font-size: 0.85em;
+      li:hover {
+        cursor: pointer;
       }
     }
   }

@@ -40,9 +40,12 @@ exports.createApp = ->
 
   app.use express.compress()
 
-  oneWeekInMilliseconds = (60 * 60 * 24 * 7) * 1000
-  oneYearInMilliseconds = oneWeekInMilliseconds * 52
-  app.use express.static(path.join(__dirname, "public"), maxAge: oneYearInMilliseconds)
+  maxAge = -1
+  if app.get('env') is 'production'
+    oneWeekInMilliseconds = (60 * 60 * 24 * 7) * 1000
+    oneYearInMilliseconds = oneWeekInMilliseconds * 52
+    maxAge = oneYearInMilliseconds
+  app.use express.static(path.join(__dirname, "public"), maxAge: maxAge)
 
   app.engine "hbs", hbs.express3(
     partialsDir: __dirname + '/views/partials'
