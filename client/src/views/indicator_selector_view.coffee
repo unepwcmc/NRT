@@ -31,7 +31,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
     @render()
 
-    @listenTo(@subViews['data-origin-selector'], 'selected', @filterByType)
+    @listenTo(Backbone, 'indicator_selector:data_origin:selected', @filterByType)
 
   render: =>
     $('body').addClass('stop-scrolling')
@@ -58,6 +58,8 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
   filterByTitle: (event) =>
     searchTerm = $(event.target).val()
 
+    @updateClearSearchButton()
+
     @filter ||= {}
     @filter.searchTerm = searchTerm
 
@@ -83,9 +85,19 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
   triggerIndicatorSelected: (indicator) =>
     @trigger('indicatorSelected', indicator)
 
+  updateClearSearchButton: ->
+    searchTerm = @$el.find('input').val()
+
+    clearSearchBtn = @$el.find('.clear-search')
+    if searchTerm.length is 0
+      clearSearchBtn.hide()
+    else
+      clearSearchBtn.show()
+
   clearSearch: ->
     @$el.find('input').val('')
     @filter.searchTerm = ""
+    @updateClearSearchButton()
     @filterIndicators()
 
   onClose: ->

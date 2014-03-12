@@ -18,6 +18,7 @@
   "src/models/section.coffee",
   "src/models/indicator_section.coffee",
   "src/collections/section_collection.coffee",
+  "src/views/fancy_select_view.coffee",
   "src/views/dpsir_filter_view.coffee",
   "src/views/permissions_view.coffee",
   "src/views/search_results_view.coffee",

@@ -1426,3 +1426,61 @@ ul.dpsir {
     opacity: 1;
   }
 }
+
+.fancy-select {
+  border: 0;
+  padding: 0;
+  font-size: 1.1em;
+  font-weight: bold;
+  overflow: hidden;
+  height: 35px;
+
+  i {
+    float: right;
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    i {
+      color: $buttonBlue;
+    }
+  }
+
+  h6 {
+    float: left;
+    width: 190px
+  }
+
+  ul {
+    font-weight: normal;
+    display: none;
+    background: white;
+    position: absolute;
+    left: 0px;
+    width: 230px;
+    top: 61px;
+    border: 1px solid #eee;
+
+    li {
+      font-size: 0.8em;
+      padding: 5px 10px;
+      border-bottom: 1px solid #eee;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    li:hover {
+      color: white;
+      cursor: pointer;
+      background-color: #2B3E50;
+    }
+  }
+
+  &:active {
+    background-color: white;
+    border-color: white;
+  }
+}

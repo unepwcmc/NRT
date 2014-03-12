@@ -19,12 +19,15 @@ class Backbone.Views.DataOriginSelectorView extends Backbone.View
     originName = @$el.find('select').val()
     originName = undefined if originName is ""
 
-    @trigger('selected', originName)
+    Backbone.trigger('indicator_selector:data_origin:selected', originName)
 
   render: ->
     @$el.html(@template(
       origins: @Origins
     ))
+
+    FancySelect.fancify(@$el)
+
     return @
 
   onClose: ->

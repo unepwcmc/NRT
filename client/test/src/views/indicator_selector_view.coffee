@@ -230,6 +230,7 @@ test(".filterByTitle given an input event sets the results object to only
     results: new Backbone.Collections.IndicatorCollection()
     textFilteredIndicators: new Backbone.Collections.IndicatorCollection()
     filterIndicators: Backbone.Views.IndicatorSelectorView::filterIndicators
+    updateClearSearchButton: ->
 
   event = target: '<input value="hats and boats and cats">'
 
@@ -293,9 +294,7 @@ test("When the data origin sub view triggers 'selected',
     section: section
   )
 
-  dataOriginSubView = view.subViews['data-origin-selector']
-
-  dataOriginSubView.trigger('selected', 'kittens')
+  Backbone.trigger('indicator_selector:data_origin:selected', 'kittens')
   assert.strictEqual view.filterByType.callCount, 1,
     "Expected filterByType to called"
 
@@ -388,6 +387,7 @@ test('.clearSearch sets the search term filter to nothing and calls
       searchTerm: "hats"
     filterIndicators: sinon.spy()
     $el: $('<div>')
+    updateClearSearchButton: ->
 
   Backbone.Views.IndicatorSelectorView::clearSearch.call(view)
 
