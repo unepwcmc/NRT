@@ -41,18 +41,19 @@ origin name", ->
 
   view.$el.find("li[value='kittens']").trigger('click')
 
-  assert.isTrue(
-    selectedSpy.calledOnce,
-    "Expected selectedSpy to be called once but was called
-      #{selectedSpy.callCount} times"
-  )
+  try
+    assert.isTrue(
+      selectedSpy.calledOnce,
+      "Expected selectedSpy to be called once but was called
+        #{selectedSpy.callCount} times"
+    )
 
-  assert.isTrue(
-    selectedSpy.calledWith('kittens'),
-    "Expected the event to be triggered with the origin name"
-  )
-
-  Backbone.off('indicator_selector:data_origin:selected')
+    assert.isTrue(
+      selectedSpy.calledWith('kittens'),
+      "Expected the event to be triggered with the origin name"
+    )
+  finally
+    Backbone.off('indicator_selector:data_origin:selected')
 )
 
 test("When 'All sources' is selected, the view triggers a 'selected' event with 
@@ -70,16 +71,17 @@ undefined as an argument", ->
   $(view.$el.find("option")[0]).prop("selected", true)
   view.$el.find("select").trigger('change')
 
-  assert.isTrue(
-    selectedSpy.calledOnce,
-    "Expected selectedSpy to be called once but was called
-      #{selectedSpy.callCount} times"
-  )
+  try
+    assert.isTrue(
+      selectedSpy.calledOnce,
+      "Expected selectedSpy to be called once but was called
+        #{selectedSpy.callCount} times"
+    )
 
-  assert.isTrue(
-    selectedSpy.calledWith(undefined),
-    "Expected the event to be triggered with no origin name"
-  )
-
-  Backbone.off('indicator_selector:data_origin:selected')
+    assert.isTrue(
+      selectedSpy.calledWith(undefined),
+      "Expected the event to be triggered with no origin name"
+    )
+  finally
+    Backbone.off('indicator_selector:data_origin:selected')
 )
