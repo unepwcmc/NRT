@@ -6,12 +6,12 @@
       {"minValue": 0, "message": "Moderate"}
     ]
   },
-  "NRT_AD_AQI:4": {
+  "NRT_AD_AirQuality:1": {
     "valueField": "value",
     "reduceField": "station",
     "ranges":[]
   },
-  "NRT_AD_AQI:3": {
+  "NRT_AD_AirQuality:2": {
     "valueField": "value",
     "reduceField": "station",
     "ranges":[
@@ -20,7 +20,7 @@
       {"minValue": 0, "message": "Excellent"}
     ]
   },
-  "NRT_AD_AQI:2": {
+  "NRT_AD_AirQuality:3": {
     "valueField": "value",
     "reduceField": "station",
     "ranges":[
@@ -29,7 +29,7 @@
       {"minValue": 0, "message": "Excellent"}
     ]
   },
-  "NRT_AD_AQI:1": {
+  "NRT_AD_AirQuality:4": {
     "valueField": "value",
     "reduceField": "station",
     "ranges":[
@@ -38,7 +38,7 @@
       {"minValue": 0, "message": "Excellent"}
     ]
   },
-  "NRT_AD_AQI:0": {
+  "NRT_AD_AirQuality:5": {
     "valueField": "value",
     "reduceField": "station",
     "ranges":[
