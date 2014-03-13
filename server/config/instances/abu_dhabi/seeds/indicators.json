@@ -24,8 +24,8 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_AirQuality",
-      "featureServer": 1,
+      "serviceName": "NRT_AD_AQI",
+      "featureServer": 4,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -84,8 +84,8 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_AirQuality",
-      "featureServer": 2,
+      "serviceName": "NRT_AD_AQI",
+      "featureServer": 3,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -144,8 +144,8 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_AirQuality",
-      "featureServer": 5,
+      "serviceName": "NRT_AD_AQI",
+      "featureServer": 0,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -204,8 +204,8 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_AirQuality",
-      "featureServer": 4,
+      "serviceName": "NRT_AD_AQI",
+      "featureServer": 1,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -315,8 +315,8 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_AirQuality",
-      "featureServer": 3,
+      "serviceName": "NRT_AD_AQI",
+      "featureServer": 2,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
