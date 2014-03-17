@@ -111,6 +111,9 @@ test('Esri query result, it formats it correctly', ->
   assert.deepEqual actualResult, expectedResult
 )
 
-test("If the data is missing a 'periodStart', it throws an appropriate error")
-
-test("If the data doesn't have a feature attribute, it throws an appropriate error")
+test("If the data doesn't have a feature attribute,
+  it throws an appropriate error", ->
+  assert.throws((->
+    EsriFormatter({})
+  ), "Non-ESRI data passed to ESRI formatter, data is lacking  a 'feature' attribute: '{}'")
+)
