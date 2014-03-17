@@ -107,10 +107,11 @@ indicatorates the data", (done) ->
     "featureName": "NRT_AD_MarineWQ:3",
     "valueField": "value",
     "reduceField": "station",
-    "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
-    ]
+    "esriConfig": {
+      "serviceName": "AD_Water_quality"
+      "featureServer": "hat.boat"
+      "serverUrl": "/features/"
+    }
   }]
 
   # Stubs
@@ -125,7 +126,7 @@ indicatorates the data", (done) ->
   assertions = (statusCode, data) ->
     try
       assert.strictEqual statusCode, 200,
-        "Expected the server to respond with success"
+        "Expected the server to respond with success, but #{statusCode}, #{data}"
       assert.deepEqual JSON.parse(data), expectedJSON,
         "Expected the application to return the correct indicatorated JSON"
     catch err
@@ -134,7 +135,7 @@ indicatorates the data", (done) ->
       sandbox.restore()
 
   request =
-    params: id: 4
+    params: id: "4"
 
   response =
     send: assertions

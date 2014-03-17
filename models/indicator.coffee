@@ -7,10 +7,12 @@ StandardIndicatorator = require('../indicatorators/standard_indicatorator')
 GETTERS =
   gdoc: require('../getters/gdoc')
   cartodb: require('../getters/cartodb')
+  esri: require('../getters/esri')
 
 FORMATTERS =
   gdoc: require('../formatters/gdoc')
   cartodb: require('../formatters/cartodb')
+  esri: require('../formatters/esri')
 
 module.exports = class Indicator
   constructor: (attributes) ->
