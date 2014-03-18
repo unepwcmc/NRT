@@ -44,7 +44,6 @@ Indicator definitions are stored in `./definitions/indicators.json`. These
 files are responsible for listing the indicator and the ranges for the
 indicator's threshold. Examples are stored in `./definitions/examples/`
 
-### 'standard' type indicators
 Originally, we have different types for different indicators, for
 example 'esri', 'cartodb' etc. Now, we're pushing attributes towards a
 consistent type named 'standard', and instead handling differences using
@@ -58,9 +57,9 @@ Each 'source' has a corresponding 'getter' module (responsible for
 fetching the data) and a 'formatter' module (responsible for formatting
 the queried responses).
 
-## Possible Source values
+### Possible Source values
 
-### esri
+#### esri
 For indicator data stored in ESRI services and served over their REST JSON API.
 It is required to specify (in addition to source: 'esri'):
 
@@ -74,7 +73,7 @@ These 3 components can be extracted from an esri rest URL, like so:
     http://myserver.net/rest/services/NRT_AD_AirQuality/FeatureServer/2
     < serverUrl --------------------> < serviceName -->               <featureServer>
 
-### gdocs
+#### gdocs
 
 For indicator data stored in 'google' docs, your indicator definitions need to
 include a `spreadsheet_key` attribute. The spreadsheet in question must be
@@ -88,7 +87,7 @@ The columns for the table are:
 The first three are simply strings, name is matched on in the indicator
 definition. The date columns should be dates, which will be converted to epochs
 
-### cartodb
+#### cartodb
 
 For indicator data stored in CartoDB tables, your indicator definitions
 need to include `table_name` and CartoDB `username` attributes. The
@@ -116,3 +115,17 @@ There is an
 [example](https://docs.google.com/spreadsheet/ccc?key=0Aum2hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE&usp=drive_web#gid=0)
 data table available on [Google
 Docs](https://docs.google.com/spreadsheet/ccc?key=0Aum2hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE&usp=drive_web#gid=0).
+
+### Optional standard indicator features
+
+#### applyRanges: (true)
+By default, indicatoration applies text values to raw indicator data, using the
+ranges specified in the 'range' attribute. If you don't want this to happen, 
+specify applyRanges: false
+
+#### reduceField: (null)
+Basic sub indicator support is implemented by allowing grouping on a text field.
+For example, if you had a collection of data for the same year but for different
+monitoring stations, specify the group field here, e.g. 'station' to have the 
+data grouped on the station, by periodStart
+
