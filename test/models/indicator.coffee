@@ -79,6 +79,32 @@ test(".query loads and formats the data based on its source", (done) ->
   )
 )
 
+test(".query doesn't apply ranges if the indicator has applyRanges: false", (done)->
+  indicator = new Indicator(
+    applyRanges: false
+  )
+
+  applyRangesStub = sinon.stub(StandardIndicatorator, 'applyRanges')
+  sinon.stub(indicator, 'getData', ->
+    Q.fcall(->)
+  )
+  sinon.stub(indicator, 'formatData', ->)
+
+  indicator.query().then(->
+    try
+      assert.strictEqual applyRangesStub.callCount, 0,
+        "Expected StandardIndicatorator.applyRanges not to be called"
+      done()
+    catch err
+      done(err)
+    finally
+      applyRangesStub.restore()
+  ).catch((err)->
+    applyRangesStub.restore()
+    done(err)
+  )
+)
+
 test('.getData finds the getter for the indicator.source and calls fetch', ->
   indicator = new Indicator(
     source: "gdoc"

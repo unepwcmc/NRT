@@ -21,7 +21,10 @@ module.exports = class Indicator
   query: ->
     @getData().then( (data) =>
       formattedData = @formatData(data)
-      StandardIndicatorator.applyRanges(formattedData, @range)
+      if @applyRanges is false
+        return formattedData
+      else
+        return StandardIndicatorator.applyRanges(formattedData, @range)
     )
 
   getData: ->
