@@ -60,7 +60,21 @@ the queried responses).
 
 ## Possible Source values
 
-### 'gdocs'
+### esri
+For indicator data stored in ESRI services and served over their REST JSON API.
+It is required to specify (in addition to source: 'esri'):
+
+* `esriConfig`:
+  * `serverUrl`: The root of the URl of the server, e.g. http://myserver.net/rest/services
+  * `serviceName`: The of the service, e.g. NRT_AD_AirQuality
+  * `featureServer`: The feature server ID, e.g. 1
+
+These 3 components can be extracted from an esri rest URL, like so:
+
+    http://myserver.net/rest/services/NRT_AD_AirQuality/FeatureServer/2
+    < serverUrl --------------------> < serviceName -->               <featureServer>
+
+### gdocs
 
 For indicator data stored in 'google' docs, your indicator definitions need to
 include a `spreadsheet_key` attribute. The spreadsheet in question must be
