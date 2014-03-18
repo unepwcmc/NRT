@@ -13,34 +13,56 @@ with source: 'esri', applyRanges: false and
   sandbox = sinon.sandbox.create()
 
   expectedJSON = [{
-    "date": "2013-01-01T00:00:00.000Z",
-    "station": [{
-      "text": "GOOD",
-      "value": 37,
-      "periodStart": 1356998400000,
-      "station": "Palace Beach",
-      "geometry": {
-        "y": 24.428641001000074,
-        "x": 54.374894503000064
+    text: "GOOD"
+    value: "1 of 2",
+    station: [{
+      geometry: {
+        x: 54.374894503000064,
+        y: 24.428641001000074
       }
+      OBJECTID: 1,
+      station: "Palace Beach",
+      periodStart: 1356998400000,
+      value: 37,
+      text: "GOOD",
+    }, {
+      geometry: {
+        x: 54.30470040400007,
+        y: 24.465522647000057
+      },
+      OBJECTID: 15,
+      station: "Emirates Palace Beach",
+      periodStart: 1356998400000,
+      value: 160,
+      text: "BAD"
     }],
-    "value": "9 of 13",
-    "text": "BAD"
+    periodStart: 1356998400000
   },
   {
-    "date": "2013-04-01T00:00:00.000Z",
-    "station": [{
-      "text": "GOOD",
-      "value": 50,
-      "periodStart": 1364774400000,
-      "station": "Emirates Palace Beach",
-      "geometry": {
-        "y": 24.465522647000057,
-        "x": 54.30470040400007
+    text: "GOOD",
+    value: "1 of 2",
+    station: [{
+      geometry: {
+        x: 54.30470040400007,
+        y: 24.465522647000057
       }
+      OBJECTID: 3,
+      station: "Emirates Palace Beach",
+      periodStart: 1364774400000,
+      value: 50,
+      text: "GOOD"
+    }, {
+      geometry: {
+        x: 54.374894503000064,
+        y: 24.428641001000074
+      },
+      OBJECTID: 25,
+      station: "Palace Beach",
+      periodStart: 1364774400000,
+      value: 400,
+      text: "BAD"
     }],
-    "value": "10 of 20",
-    "text": "GOOD"
+    periodStart: 1364774400000
   }]
 
   esriServerResponse = {
@@ -130,6 +152,9 @@ with source: 'esri', applyRanges: false and
         "Expected the server to respond with success, but #{statusCode}, #{data}"
       assert.deepEqual data, expectedJSON,
         "Expected the application to return the correct indicatorated JSON"
+
+      done()
+
     catch err
       done(err)
     finally
