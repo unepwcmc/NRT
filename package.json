@@ -4,7 +4,7 @@
   "description": "Turns environmental parameter data into indicators, kind of like K&A were going to do...",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit --reporter spec",
+    "test": "NODE_ENV=test mocha test/*.coffee test/**/*.coffee --compilers coffee:coffee-script --require coffee-script --ui qunit --reporter spec",
     "start": "supervisor -e 'node,js,json,coffee,hbs' index.js"
   },
   "repository": {

@@ -2,6 +2,7 @@ assert = require('chai').assert
 sinon = require('sinon')
 
 StandardIndicatorator = require '../indicatorators/standard_indicatorator'
+SubIndicator = require '../lib/subindicatorator'
 
 suite('Standard indicatorator')
 

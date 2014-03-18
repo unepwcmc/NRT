@@ -105,6 +105,43 @@ test(".query doesn't apply ranges if the indicator has applyRanges: false", (don
   )
 )
 
+test(".query groups sub indicators if the indicator definition includes
+ a reduceField attribute", (done)->
+  indicator = new Indicator(
+    reduceField: 'station'
+  )
+
+  groupStub = sinon.stub(
+    SubIndicatorator, 'groupSubIndicatorsUnderAverageIndicators'
+  )
+  theData = {id: 5}
+  sinon.stub(StandardIndicatorator, 'applyRanges', -> theData)
+
+  sinon.stub(indicator, 'getData', ->
+    Q.fcall(->)
+  )
+  sinon.stub(indicator, 'formatData', ->)
+
+  indicator.query().then(->
+    try
+      assert.strictEqual groupStub.callCount, 1,
+        "Expected SubIndicatorator.groupSubIndicatorsUnderAverageIndicators to be called once"
+  
+      assert.isTrue groupStub.calledWith(
+        theData, {valueField: 'value', reduceField: indicator.reduceField}
+      ), "Expected groupSubIndicatorsUnderAverageIndicators to be called with the data and the field grouping data"
+
+      done()
+    catch err
+      done(err)
+    finally
+      applyRangesStub.restore()
+  ).catch((err)->
+    applyRangesStub.restore()
+    done(err)
+  )
+)
+
 test('.getData finds the getter for the indicator.source and calls fetch', ->
   indicator = new Indicator(
     source: "gdoc"
