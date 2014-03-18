@@ -8,6 +8,6 @@ exports.query = (req, res) ->
     ).then( (data) ->
       res.send(200, data)
     ).fail( (err) ->
-      console.error err
+      console.error err.stack
       res.send(500, err)
     )

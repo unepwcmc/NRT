@@ -7,8 +7,9 @@ indicatorData = require('../../controllers/indicator_data')
 
 suite('Standard Indicatorator')
 
-test("Querying a standard indicator with source 'esri' correctly
-indicatorates the data", (done) ->
+test("Querying a standard indicator
+with source: 'esri', applyRanges: false and 
+ a reduceField indicatorates the data", (done) ->
   sandbox = sinon.sandbox.create()
 
   expectedJSON = [{
@@ -104,11 +105,11 @@ indicatorates the data", (done) ->
     "type": "standard",
     "source": "esri",
     "name": "Phosphate P water quality",
-    "featureName": "NRT_AD_MarineWQ:3",
     "valueField": "value",
     "reduceField": "station",
+    "applyRanges": false,
     "esriConfig": {
-      "serviceName": "AD_Water_quality"
+      "serviceName": "NRT_AD_MarineWQ:3",
       "featureServer": "hat.boat"
       "serverUrl": "/features/"
     }
@@ -127,7 +128,7 @@ indicatorates the data", (done) ->
     try
       assert.strictEqual statusCode, 200,
         "Expected the server to respond with success, but #{statusCode}, #{data}"
-      assert.deepEqual JSON.parse(data), expectedJSON,
+      assert.deepEqual data, expectedJSON,
         "Expected the application to return the correct indicatorated JSON"
     catch err
       done(err)
