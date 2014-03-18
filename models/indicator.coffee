@@ -3,6 +3,7 @@ Q = require('q')
 _ = require('underscore')
 
 StandardIndicatorator = require('../indicatorators/standard_indicatorator')
+SubIndicatorator = require('../lib/subindicatorator')
 
 GETTERS =
   gdoc: require('../getters/gdoc')
@@ -21,10 +22,15 @@ module.exports = class Indicator
   query: ->
     @getData().then( (data) =>
       formattedData = @formatData(data)
-      if @applyRanges is false
-        return formattedData
-      else
-        return StandardIndicatorator.applyRanges(formattedData, @range)
+      unless @applyRanges is false
+        formattedData = StandardIndicatorator.applyRanges(formattedData, @range)
+
+      if @reduceField?
+        formattedData = SubIndicatorator.groupSubIndicatorsUnderAverageIndicators(
+          formattedData, {valueField: 'value', reduceField: @reduceField}
+        )
+        
+      return formattedData
     )
 
   getData: ->

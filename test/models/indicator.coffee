@@ -7,6 +7,7 @@ Q = require('q')
 
 GDocGetter = require('../../getters/gdoc')
 StandardIndicatorator = require('../../indicatorators/standard_indicatorator')
+SubIndicatorator = require('../../lib/subindicatorator')
 
 suite('Indicator')
 
