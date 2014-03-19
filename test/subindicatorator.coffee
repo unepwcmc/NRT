@@ -33,8 +33,8 @@ test('groupSubIndicatorsByPeriod groups rows with the same periodStart', ->
     "Expected groupedRows[2010] to not contain the station 2 record"
 )
 
-test('groupSubIndicatorsUnderAverageIndicators when the indicator definition includes 
-a reduce field it averages the text field and includes the child data
+test('groupSubIndicatorsUnderAverageIndicators when the indicator definition
+includes a reduce field it averages the text field and includes the child data
 under the reduce field attribute', ->
   sampleRows = [{
     station: "station 1"
@@ -86,6 +86,115 @@ under the reduce field attribute', ->
       "Expected the results to include period start of the sub indicators"
   finally
     calculateAverageStub.restore()
+)
+
+test('.groupSubIndicatorsUnderAverageIndicators groups data with subindicators
+ on the given reduce field', ->
+  indicatorData = [{
+    geometry: {
+      x: 54.374894503000064,
+      y: 24.428641001000074
+    },
+    OBJECTID: 1,
+    station: "Palace Beach",
+    periodStart: 1356998400000,
+    value: 37,
+    text: "GOOD"
+  }, {
+    geometry: {
+        x: 54.30470040400007,
+        y: 24.465522647000057
+    },
+    OBJECTID: 3,
+    station: "Emirates Palace Beach",
+    periodStart: 1364774400000,
+    value: 50,
+    text: "GOOD"
+  }, {
+    geometry: {
+        x: 54.30470040400007,
+        y: 24.465522647000057
+    },
+    OBJECTID: 15,
+    station: "Emirates Palace Beach",
+    periodStart: 1356998400000,
+    value: 160,
+    text: "BAD"
+  }, {
+    geometry: {
+        x: 54.374894503000064,
+        y: 24.428641001000074
+    },
+    OBJECTID: 25,
+    station: "Palace Beach",
+    periodStart: 1364774400000,
+    value: 400,
+    text: "BAD"
+  }]
+
+  expectedResult = [{
+    text: "GOOD",
+    value: "1 of 2",
+    station: [{
+      geometry: {
+        x: 54.374894503000064,
+        y: 24.428641001000074
+      },
+      OBJECTID: 1,
+      station: "Palace Beach",
+      periodStart: 1356998400000,
+      value: 37,
+      text: "GOOD"
+    }, {
+      geometry: {
+          x: 54.30470040400007,
+          y: 24.465522647000057
+      }
+      OBJECTID: 15,
+      station: "Emirates Palace Beach",
+      periodStart: 1356998400000,
+      value: 160,
+      text: "BAD"
+    }],
+    periodStart: 1356998400000
+  },
+  {
+    text: "GOOD",
+    value: "1 of 2",
+    station: [{
+        geometry: {
+            x: 54.30470040400007,
+            y: 24.465522647000057
+        }
+        OBJECTID: 3,
+        station: "Emirates Palace Beach",
+        periodStart: 1364774400000,
+        value: 50,
+        text: "GOOD",
+    }, {
+        geometry: {
+          x: 54.374894503000064,
+          y: 24.428641001000074
+        }
+        OBJECTID: 25,
+        station: "Palace Beach",
+        periodStart: 1364774400000,
+        value: 400,
+        text: "BAD",
+      }],
+    periodStart: 1364774400000
+  }]
+
+  indicatorDefinition =
+    valueField: 'value'
+    reduceField: "station"
+
+  result = SubIndicatorator.groupSubIndicatorsUnderAverageIndicators(
+    indicatorData, indicatorDefinition
+  )
+
+  assert.deepEqual result, expectedResult,
+    "Expected the sub indicators to be grouped"
 )
 
 test("#calculateAverageIndicator given an array of subIndicators returns an object

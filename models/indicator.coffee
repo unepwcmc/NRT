@@ -3,14 +3,17 @@ Q = require('q')
 _ = require('underscore')
 
 StandardIndicatorator = require('../indicatorators/standard_indicatorator')
+SubIndicatorator = require('../lib/subindicatorator')
 
 GETTERS =
   gdoc: require('../getters/gdoc')
   cartodb: require('../getters/cartodb')
+  esri: require('../getters/esri')
 
 FORMATTERS =
   gdoc: require('../formatters/gdoc')
   cartodb: require('../formatters/cartodb')
+  esri: require('../formatters/esri')
 
 module.exports = class Indicator
   constructor: (attributes) ->
@@ -19,7 +22,15 @@ module.exports = class Indicator
   query: ->
     @getData().then( (data) =>
       formattedData = @formatData(data)
-      StandardIndicatorator.applyRanges(formattedData, @range)
+      unless @applyRanges is false
+        formattedData = StandardIndicatorator.applyRanges(formattedData, @range)
+
+      if @reduceField?
+        formattedData = SubIndicatorator.groupSubIndicatorsUnderAverageIndicators(
+          formattedData, {valueField: 'value', reduceField: @reduceField}
+        )
+        
+      return formattedData
     )
 
   getData: ->

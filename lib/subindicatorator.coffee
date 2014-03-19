@@ -43,7 +43,14 @@ exports.groupSubIndicatorsUnderAverageIndicators = (subIndicators, indicatorDefi
   for periodStart, subIndicators of groupedRows
     averageIndicator = exports.calculateAverageIndicator(subIndicators, indicatorDefinition)
     averageIndicator[indicatorDefinition.reduceField] = subIndicators
-    averageIndicator.periodStart = periodStart
+
+    if subIndicators.length > 0
+      # This periodStart is preferrable, because the grouping casts
+      # integer period to a string to us it as a key.
+      # Querying the subIndcator uses the original type 
+      averageIndicator.periodStart = subIndicators[0].periodStart
+    else
+      averageIndicator.periodStart = periodStart
 
     averagedRows.push(averageIndicator)
 

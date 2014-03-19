@@ -7,6 +7,7 @@ Q = require('q')
 
 GDocGetter = require('../../getters/gdoc')
 StandardIndicatorator = require('../../indicatorators/standard_indicatorator')
+SubIndicatorator = require('../../lib/subindicatorator')
 
 suite('Indicator')
 
@@ -74,6 +75,69 @@ test(".query loads and formats the data based on its source", (done) ->
     finally
       applyRangesStub.restore()
   ).fail((err) ->
+    applyRangesStub.restore()
+    done(err)
+  )
+)
+
+test(".query doesn't apply ranges if the indicator has applyRanges: false", (done)->
+  indicator = new Indicator(
+    applyRanges: false
+  )
+
+  applyRangesStub = sinon.stub(StandardIndicatorator, 'applyRanges')
+  sinon.stub(indicator, 'getData', ->
+    Q.fcall(->)
+  )
+  sinon.stub(indicator, 'formatData', ->)
+
+  indicator.query().then(->
+    try
+      assert.strictEqual applyRangesStub.callCount, 0,
+        "Expected StandardIndicatorator.applyRanges not to be called"
+      done()
+    catch err
+      done(err)
+    finally
+      applyRangesStub.restore()
+  ).catch((err)->
+    applyRangesStub.restore()
+    done(err)
+  )
+)
+
+test(".query groups sub indicators if the indicator definition includes
+ a reduceField attribute", (done)->
+  indicator = new Indicator(
+    reduceField: 'station'
+  )
+
+  groupStub = sinon.stub(
+    SubIndicatorator, 'groupSubIndicatorsUnderAverageIndicators'
+  )
+  theData = {id: 5}
+  sinon.stub(StandardIndicatorator, 'applyRanges', -> theData)
+
+  sinon.stub(indicator, 'getData', ->
+    Q.fcall(->)
+  )
+  sinon.stub(indicator, 'formatData', ->)
+
+  indicator.query().then(->
+    try
+      assert.strictEqual groupStub.callCount, 1,
+        "Expected SubIndicatorator.groupSubIndicatorsUnderAverageIndicators to be called once"
+  
+      assert.isTrue groupStub.calledWith(
+        theData, {valueField: 'value', reduceField: indicator.reduceField}
+      ), "Expected groupSubIndicatorsUnderAverageIndicators to be called with the data and the field grouping data"
+
+      done()
+    catch err
+      done(err)
+    finally
+      applyRangesStub.restore()
+  ).catch((err)->
     applyRangesStub.restore()
     done(err)
   )
