@@ -74,7 +74,7 @@
   "sections": [
     {"title": "Description", "content": "Average annual NO2 concentration in µg per m3"}
   ],
-  "type": "esri",
+  "type": "standard",
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -83,8 +83,7 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_AirQuality",
-      "featureServer": 2,
+      "indicatoratorId": 3,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -134,7 +133,7 @@
   "sections": [
     {"title": "Description", "content": "Hourly average SO2 concentration in µg per m3"}
   ],
-  "type": "esri",
+  "type": "standard",
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -143,8 +142,7 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_AirQuality",
-      "featureServer": 5,
+      "indicatoratorId": 6,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -194,7 +192,7 @@
   "sections": [
     {"title": "Description", "content": "Daily average PM10 concentration in µg per m3"}
   ],
-  "type": "esri",
+  "type": "standard",
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -203,8 +201,7 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_AirQuality",
-      "featureServer": 4,
+      "indicatoratorId": 5,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -305,7 +302,7 @@
   "sections": [
     {"title": "Description", "content": "Daily average PM10 concentration in µg per m3"}
   ],
-  "type": "esri",
+  "type": "standard",
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -314,8 +311,7 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_AirQuality",
-      "featureServer": 3,
+      "indicatoratorId": 4,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -366,7 +362,7 @@
   "sections": [
     {"title": "Description", "content": "This indicator measures the area of protected land ecosystems, inland water ecosystems, and marine ecosystems expressed as a percentage of the total area of land ecosystems, inland water ecosystems and marine ecosystems respectively.  Protected Area refers to all or partially protected areas of at least 1000 hectares that are designated as national parks, natural monuments, natural reserves or wildlife sanctuaries, protected landscapes and seascapes or scientific reserves with limited public access. The data do not include sites protected under local or provincial law."}
   ],
-  "type": "esri",
+  "type": "standard",
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -375,8 +371,7 @@
     "response": true
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_ProtectedArea",
-      "featureServer": 2,
+      "indicatoratorId": 2,
       "unit": "%",
       "short_unit": "%",
       "period": "annual",
@@ -494,7 +489,7 @@
   "sections": [
     {"title": "Description", "content": ""}
   ],
-  "type": "esri",
+  "type": "standard",
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -503,8 +498,7 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_MarineWQ",
-      "featureServer": 0,
+      "indicatoratorId": 7,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -554,7 +548,7 @@
   "sections": [
     {"title": "Description", "content": ""}
   ],
-  "type": "esri",
+  "type": "standard",
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -563,8 +557,7 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_MarineWQ",
-      "featureServer": 1,
+      "indicatoratorId": 8,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -614,7 +607,7 @@
   "sections": [
     {"title": "Description", "content": ""}
   ],
-  "type": "esri",
+  "type": "standard",
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -623,8 +616,7 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_MarineWQ",
-      "featureServer": 2,
+      "indicatoratorId": 9,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -674,7 +666,7 @@
   "sections": [
     {"title": "Description", "content": "Area of Selected Key Ecosystems as a Percent of Total Area"}
   ],
-  "type": "esri",
+  "type": "standard",
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -683,8 +675,7 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_MarineWQ",
-      "featureServer": 4,
+      "indicatoratorId": 11,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -734,7 +725,7 @@
   "sections": [
     {"title": "Description", "content": ""}
   ],
-  "type": "esri",
+  "type": "standard",
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -743,8 +734,7 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_MarineWQ",
-      "featureServer": 5,
+      "indicatoratorId": 12,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -794,7 +784,7 @@
   "sections": [
     {"title": "Description", "content": "Enterococci concentration in 100 ml of coastal waters"}
   ],
-  "type": "esri",
+  "type": "standard",
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -803,8 +793,7 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_MarineWQ",
-      "featureServer": 3,
+      "indicatoratorId": 10,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
