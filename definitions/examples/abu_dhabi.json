@@ -2,8 +2,8 @@
   {
     "id": "1",
     "type": "standard",
-    "name": "CO Concentration",
     "source": "esri",
+    "name": "CO Concentration",
     "esriConfig": {
       "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
       "serviceName": "NRT_AD_AirQuality",
@@ -11,5 +11,125 @@
     },
     "applyRanges": false,
     "reduceField": "station"
+  },
+  { 
+    "id": 0,
+    "type": "standard",
+    "source": "esri",
+    "name": "NRT_AD_ProtectedArea:2",
+    "esriConfig": {
+      "serviceName": "NRT_AD_ProtectedArea",
+      "featureServer": "2"
+    }
+  },
+  { 
+    "id": 0,
+    "type": "standard",
+    "name": "NRT_AD_AirQuality:1",
+    "source": "esri",
+    "esriConfig": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": "1"
+    }
+  },
+  {
+    "id": 0,
+    "type": "standard",
+    "source": "esri",
+    "name": "NRT_AD_AirQuality:2",
+    "esriConfig": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": "2"
+    }
+  },
+  {
+    "id": 0,
+    "type": "standard",
+    "source": "esri",
+    "name": "NRT_AD_AirQuality:3",
+    "esriConfig": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": "3"
+    }
+  },
+  {
+    "id": 0,
+    "type": "standard",
+    "source": "esri",
+    "name": "NRT_AD_AirQuality:4",
+    "esriConfig": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": "4"
+    }
+  },
+  {
+    "id": 0,
+    "type": "standard",
+    "source": "esri",
+    "name": "NRT_AD_AirQuality:5",
+    "esriConfig": {
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": "5"
+    }
+  },
+  {
+    "id": 0,
+    "type": "standard",
+    "source": "esri",
+    "name": "NRT_AD_MarineWQ:0",
+    "esriConfig": {
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "0"
+    }
+  },
+  {
+    "id": 0,
+    "type": "standard",
+    "source": "esri",
+    "name": "NRT_AD_MarineWQ:1",
+    "esriConfig": {
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "1"
+    }
+  },
+  {
+    "id": 0,
+    "type": "standard",
+    "source": "esri",
+    "name": "NRT_AD_MarineWQ:2",
+    "esriConfig": {
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "2"
+    }
+  },
+  {
+    "id": 0,
+    "type": "standard",
+    "source": "esri",
+    "name": "NRT_AD_MarineWQ:3",
+    "esriConfig": {
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "3"
+    }
+  },
+  {
+    "id": 0,
+    "type": "standard",
+    "source": "esri",
+    "name": "NRT_AD_MarineWQ:4",
+    "esriConfig": {
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "4"
+    }
+  },
+  {
+    "id": 0,
+    "type": "standard",
+    "source": "esri",
+    "name": "NRT_AD_MarineWQ:5",
+    "esriConfig": {
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "5"
+    }
   }
 ]
