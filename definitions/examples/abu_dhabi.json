@@ -1,0 +1,15 @@
+[
+  {
+    "id": "1",
+    "type": "standard",
+    "name": "CO Concentration",
+    "source": "esri",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 1
+    },
+    "applyRanges": false,
+    "reduceField": "station"
+  }
+]
