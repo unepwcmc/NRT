@@ -21,7 +21,7 @@ and returns an indicator with the correct attributes for that ID", (done)->
     callback(null, JSON.stringify(definitions))
   )
 
-  Indicator.find(5).then((indicator) ->
+  Indicator.find("5").then((indicator) ->
     try
       assert.isTrue readFileStub.calledWith('./definitions/indicators.json'),
         "Expected find to read the definitions file"

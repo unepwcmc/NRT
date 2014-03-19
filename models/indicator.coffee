@@ -56,8 +56,12 @@ module.exports = class Indicator
     ).then( (definitionsJSON) ->
 
       definitions = JSON.parse(definitionsJSON)
+      definitions = _.map(definitions, (definition)->
+        definition.id = definition.id + ""
+        definition
+      )
       indicator = new Indicator(
-        _.findWhere(definitions, id: id)
+        _.findWhere(definitions, id: String(id))
       )
 
       deferred.resolve(indicator)
