@@ -1,6 +1,6 @@
 [
   {
-    "id": "1",
+    "id": 1,
     "type": "standard",
     "source": "esri",
     "name": "CO Concentration",
@@ -13,120 +13,132 @@
     "reduceField": "station"
   },
   { 
-    "id": 0,
+    "id": 2,
     "type": "standard",
     "source": "esri",
-    "name": "NRT_AD_ProtectedArea:2",
+    "name": "Protected Areas",
+    "applyRanges": false,
+    "reduceField": "station",
     "esriConfig": {
       "serviceName": "NRT_AD_ProtectedArea",
       "featureServer": "2"
     }
   },
-  { 
-    "id": 0,
-    "type": "standard",
-    "name": "NRT_AD_AirQuality:1",
-    "source": "esri",
-    "esriConfig": {
-      "serviceName": "NRT_AD_AirQuality",
-      "featureServer": "1"
-    }
-  },
   {
-    "id": 0,
+    "id": 3,
     "type": "standard",
     "source": "esri",
-    "name": "NRT_AD_AirQuality:2",
+    "name": "NO2 Concentration",
+    "applyRanges": false,
+    "reduceField": "station",
     "esriConfig": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": "2"
     }
   },
   {
-    "id": 0,
+    "id": 4,
     "type": "standard",
     "source": "esri",
-    "name": "NRT_AD_AirQuality:3",
+    "name": "O3 Concentration",
+    "applyRanges": false,
+    "reduceField": "station",
     "esriConfig": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": "3"
     }
   },
   {
-    "id": 0,
+    "id": 5,
     "type": "standard",
     "source": "esri",
-    "name": "NRT_AD_AirQuality:4",
+    "name": "PM10 Concentration",
+    "applyRanges": false,
+    "reduceField": "station",
     "esriConfig": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": "4"
     }
   },
   {
-    "id": 0,
+    "id": 6,
     "type": "standard",
     "source": "esri",
-    "name": "NRT_AD_AirQuality:5",
+    "name": "SO2 Concentration",
+    "applyRanges": false,
+    "reduceField": "station",
     "esriConfig": {
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": "5"
     }
   },
   {
-    "id": 0,
+    "id": 7,
     "type": "standard",
     "source": "esri",
-    "name": "NRT_AD_MarineWQ:0",
+    "name": "Ammonia",
+    "applyRanges": false,
+    "reduceField": "station",
     "esriConfig": {
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": "0"
     }
   },
   {
-    "id": 0,
+    "id": 8,
     "type": "standard",
     "source": "esri",
-    "name": "NRT_AD_MarineWQ:1",
+    "name": "Coastal Chlorophyll",
+    "applyRanges": false,
+    "reduceField": "station",
     "esriConfig": {
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": "1"
     }
   },
   {
-    "id": 0,
+    "id": 9,
     "type": "standard",
     "source": "esri",
-    "name": "NRT_AD_MarineWQ:2",
+    "name": "Dissolved Oxygen",
+    "applyRanges": false,
+    "reduceField": "station",
     "esriConfig": {
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": "2"
     }
   },
   {
-    "id": 0,
+    "id": 10,
     "type": "standard",
     "source": "esri",
-    "name": "NRT_AD_MarineWQ:3",
+    "name": "Enterococci Concentrations",
+    "applyRanges": false,
+    "reduceField": "station",
     "esriConfig": {
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": "3"
     }
   },
   {
-    "id": 0,
+    "id": 11,
     "type": "standard",
     "source": "esri",
-    "name": "NRT_AD_MarineWQ:4",
+    "name": "Nitrate-N Concentrations",
+    "applyRanges": false,
+    "reduceField": "station",
     "esriConfig": {
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": "4"
     }
   },
   {
-    "id": 0,
+    "id": 12,
     "type": "standard",
     "source": "esri",
-    "name": "NRT_AD_MarineWQ:5",
+    "name": "Phosphate P",
+    "applyRanges": false,
+    "reduceField": "station",
     "esriConfig": {
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": "5"
