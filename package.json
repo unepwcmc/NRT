@@ -1,0 +1,25 @@
+{
+  "name": "NRT",
+  "version": "1.0.0",
+  "description": "[![Build Status](https://travis-ci.org/unepwcmc/NRT.png)](https://travis-ci.org/unepwcmc/NRT)",
+  "main": "index.js",
+  "scripts": {
+    "test": "cd server && npm test",
+    "start": "cd server && npm start"
+  },
+  "dependencies": {
+    "grunt-mocha": "~0.4.10",
+    "grunt": "~0.4.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/unepwcmc/NRT.git"
+  },
+  "author": "UNEP-WCMC",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/unepwcmc/NRT/issues"
+  },
+  "homepage": "https://github.com/unepwcmc/NRT"
+}
