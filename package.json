@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/unepwcmc/NRT/issues"
   },
-  "homepage": "https://github.com/unepwcmc/NRT"
+  "homepage": "https://github.com/unepwcmc/NRT",
+  "setup": {
+    "osx": "/bin/sh ./installers/installOSX.sh"
+  }
 }

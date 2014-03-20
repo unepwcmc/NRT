@@ -1,4 +1,6 @@
-# Install dependencies from with homebrew
+#!/bin/sh
+
+# Install dependencies with homebrew
 brew install node
 brew install mongo
 
