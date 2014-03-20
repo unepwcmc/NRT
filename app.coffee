@@ -3,7 +3,6 @@ http = require('http')
 fs = require('fs')
 
 worldBankQuery = require('./controllers/worldbank_query')
-esriQuery = require('./controllers/esri_query')
 cartodbQuery = require('./controllers/cartodb_query')
 edeQuery = require('./controllers/ede_query')
 indicatorData = require('./controllers/indicator_data')
@@ -14,7 +13,6 @@ exports.start = (port, callback) ->
   app = express()
 
   app.get "/wb/:countryCode/:indicatorCode", worldBankQuery
-  app.get "/esri/:serviceName/:featureServer", esriQuery
   app.get "/ede/:countryCode/:variableId", edeQuery
   app.get "/indicator/:id/data", indicatorData.query
 
