@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "cd server && npm test",
-    "start": "cd server && npm start",
-    "setup-osx": "/bin/sh ./installers/installOSX.sh"
+    "start": "cd server && npm start"
   },
   "dependencies": {
     "grunt-mocha": "~0.4.10",
