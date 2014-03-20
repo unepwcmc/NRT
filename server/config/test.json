@@ -3,7 +3,7 @@
     "name": "such_nrt_tests"
   },
   "indicators": {
-    "primary_type": "esri"
+    "primary_type": "standard"
   },
   "features": {
     "ldap": true,
