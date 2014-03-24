@@ -4,6 +4,7 @@
   "theme": "Contribution of the forestry sector",
   "sections": [],
   "type": "standard",
+  "primary": true,
   "indicatorDefinition": {
     "indicatoratorId": 1,
     "unit": "% contribution",
@@ -43,6 +44,7 @@
     "theme": "Contribution of the forestry sector",
     "sections": [],
     "type": "standard",
+    "primary": true,
     "indicatorDefinition": {
       "indicatoratorId": 2,
       "unit": "% contribution",
@@ -82,6 +84,7 @@
     "theme": "Contribution of the forestry sector",
     "sections": [],
     "type": "standard",
+    "primary": true,
     "indicatorDefinition": {
       "indicatoratorId": 3,
       "unit": "% contribution",
@@ -120,6 +123,7 @@
     "title": "Forestry sector contribution to the wood and paper sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
+    "primary": true,
     "indicatorDefinition": {
       "indicatoratorId": 4,
       "unit": "% contribution",
@@ -158,6 +162,7 @@
     "title": "Forestry sector contribution to the chemical industry sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
+    "primary": true,
     "indicatorDefinition": {
       "indicatoratorId": 5,
       "unit": "% contribution",
@@ -196,6 +201,7 @@
     "title": "Forestry sector contribution to other manufacturing sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
+    "primary": true,
     "indicatorDefinition": {
       "indicatoratorId": 6,
       "unit": "% contribution",
@@ -234,6 +240,7 @@
     "title": "Forestry sector contribution to the construction sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
+    "primary": true,
     "indicatorDefinition": {
       "indicatoratorId": 7,
       "unit": "% contribution",
@@ -272,6 +279,7 @@
     "title": "Forestry sector contribution to wholesale and retail trade sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
+    "primary": true,
     "indicatorDefinition": {
       "indicatoratorId": 8,
       "unit": "% contribution",
@@ -310,6 +318,7 @@
     "title": "Forestry sector contribution to the hotels and transport sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
+    "primary": true,
     "indicatorDefinition": {
       "indicatoratorId": 9,
       "unit": "% contribution",
@@ -348,6 +357,7 @@
     "title": "Forestry sector contribution to the other services sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
+    "primary": true,
     "indicatorDefinition": {
       "indicatoratorId": 10,
       "unit": "% contribution",

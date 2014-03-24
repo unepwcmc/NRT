@@ -4,6 +4,7 @@
   "theme": "Application",
   "sections": [],
   "type": "standard",
+  "primary": true,
   "indicatorDefinition": {
     "indicatoratorId": 1,
     "name": "Key stakeholders identified",
@@ -43,6 +44,7 @@
   "short_name":"Key stakeholders on-board",
   "theme":"Stakeholders",
   "type":"standard",
+  "primary": true,
   "sections": [
   {"title": "Description", "content": "More than 50% of countries have endorsement from government"}
   ],
@@ -88,6 +90,7 @@
   "theme": "Data and indicators",
   "sections": [],
   "type": "standard",
+  "primary": true,
   "indicatorDefinition": {
     "indicatoratorId": 3,
     "name": "Indicator objectives identified",
@@ -136,6 +139,7 @@
   "short_name":"Indicators described and documented",
   "theme":"Data and indicators",
   "type":"standard",
+  "primary": true,
   "sections": [
   {"title": "Description", "content": "More than 50% of countries have indicators defined"}
   ],
@@ -186,6 +190,7 @@
   "short_name":"Raw data collected and flowing",
   "theme":"Data and indicators",
   "type":"standard",
+  "primary": true,
   "sections": [
   {"title": "Description", "content": "More than 50% of indicators for all countries have raw data flows"}
   ],
@@ -236,6 +241,7 @@
   "short_name":"Indicators data feeds",
   "theme":"Data and indicators",
   "type":"standard",
+  "primary": true,
   "sections": [
   {"title": "Description", "content": "More than 50% of indicators for all countries have indicator data flows"}
   ],
@@ -286,6 +292,7 @@
   "short_name":"Source code available and accessible",
   "theme":"Infrastructure",
   "type":"standard",
+  "primary": true,
   "sections": [
   {"title": "Description", "content": "Source code is available and accessible for deployment"}
   ],
@@ -327,6 +334,7 @@
   "short_name":"SaaS system deployed",
   "theme":"Infrastructure",
   "type":"standard",
+  "primary": true,
   "sections": [
   {"title": "Description", "content": "Software-as-a-Service is available"}
   ],
@@ -368,6 +376,7 @@
   "short_name":"SaaS system is used",
   "theme":"Infrastructure",
   "type":"standard",
+  "primary": true,
   "sections": [
   {"title": "Description", "content": "More than 2 live instances of SaaS"}
   ],
@@ -409,6 +418,7 @@
   "short_name":"NRT network instances are up to date",
   "theme":"Infrastructure",
   "type":"standard",
+  "primary": true,
   "sections": [
   {"title": "Description", "content": "More than 80% of NRTs are running latest released code"}
   ],
@@ -450,6 +460,7 @@
   "short_name":"Reporting GUI complete",
   "theme":"Application",
   "type":"standard",
+  "primary": true,
   "sections": [
   {"title": "Description", "content": "Reporting GUI is complete"}
   ],
@@ -492,6 +503,7 @@
   "short_name":"Indicator management GUI complete",
   "theme":"Application",
   "type":"standard",
+  "primary": true,
   "sections": [
   {"title": "Description", "content": "Indicator management GUI is complete"}
   ],
@@ -534,6 +546,7 @@
   "short_name":"Admin GUI complete",
   "theme":"Application",
   "type":"standard",
+  "primary": true,
   "sections": [
   {"title": "Description", "content": "Admin GUI is complete"}
   ],
@@ -576,6 +589,7 @@
   "short_name":"Local NRTs exposing data to UNEP-Live",
   "theme":"Sharing data",
   "type":"standard",
+  "primary": true,
   "sections": [
   {"title": "Description", "content": "More than 1 NRT indicator feed for each country is consumed by UNEP-Live"}
   ],
@@ -626,6 +640,7 @@
   "short_name":"Local NRTs consuming data",
   "theme":"Sharing data",
   "type":"standard",
+  "primary": true,
   "sections": [
   {"title": "Description", "content": "More than 1 NRT indicator feed per country is consumed from live local data"}
   ],
