@@ -20,6 +20,7 @@ indicatorSchema = mongoose.Schema(
   dpsir: mongoose.Schema.Types.Mixed
   theme: {type: mongoose.Schema.Types.ObjectId, ref: 'Theme'}
   type: String
+  primary: Boolean
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
   description: String
 )
@@ -34,7 +35,7 @@ _.extend(indicatorSchema.methods, updateIndicatorMixin.methods)
 _.extend(indicatorSchema.statics, updateIndicatorMixin.statics)
 
 indicatorSchema.statics.CONDITIONS = {
-  IS_PRIMARY: {type: AppConfig.get('indicators')?.primary_type}
+  IS_PRIMARY: {primary: true}
 }
 
 replaceThemeNameWithId = (indicators) ->
