@@ -34,17 +34,3 @@ class Backbone.Collections.IndicatorCollection extends Backbone.Collection
       @where(type: type)
     else
       @models
-
-  groupByType: ->
-    grouped = {
-      core: []
-      external: []
-    }
-
-    for indicator in @models
-      if indicator.get('primary')
-        grouped.core.push(indicator)
-      else
-        grouped.external.push(indicator)
-
-    return grouped
