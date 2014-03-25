@@ -26,5 +26,5 @@ module.exports = class MessageServer
       messageJSON = JSON.parse(message)
 
       if messageJSON.type is event
-        callback(messageJSON)
+        callback(messageJSON.message)
     )

@@ -46,7 +46,10 @@ test(".start reads in and publishes questions to a MessageServer and
       "Expected messageServer.publish to be called once"
 
     publishArgs = publishStub.getCall(0).args
-    assert.strictEqual publishArgs[0], JSON.stringify(expectedQuestions),
+    assert.strictEqual publishArgs[0], 'questions',
+      "Expected the questions to be published to the MessageServer with the type 'questions'"
+
+    assert.strictEqual publishArgs[1], JSON.stringify(expectedQuestions),
       "Expected the questions to be published to the MessageServer"
   finally
     sandbox.restore()
