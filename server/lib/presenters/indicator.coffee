@@ -17,9 +17,6 @@ module.exports = class IndicatorPresenter
 
   constructor: (@indicator) ->
 
-  populateSourceFromType: ->
-    @indicator.source = TYPE_SOURCE_MAP[@indicator.type]
-
   populateHeadlineRangesFromHeadlines: (headlines) ->
     @indicator.headlineRanges = {}
     xAxis = @indicator.indicatorDefinition?.xAxis

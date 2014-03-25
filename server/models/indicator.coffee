@@ -20,6 +20,7 @@ indicatorSchema = mongoose.Schema(
   dpsir: mongoose.Schema.Types.Mixed
   theme: {type: mongoose.Schema.Types.ObjectId, ref: 'Theme'}
   type: String
+  source: mongoose.Schema.Types.Mixed
   primary: Boolean
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
   description: String

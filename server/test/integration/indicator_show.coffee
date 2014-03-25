@@ -33,13 +33,14 @@ test("When given a valid indicator, I should get a 200 and see the title", (done
 )
 
 test("When given a valid indicator, I should get a 200 and see the source", (done)->
-  indicator = new Indicator()
+  indicator = new Indicator(
+    source: {
+      name: 'Environment Agency - Abu Dhabi'
+      url:  'http://www.ead.ae'
+    }
+  )
 
   theSource = 'The indicator data source'
-  IndicatorPresenter = require('../../lib/presenters/indicator')
-  populateSourceStub = sinon.stub(IndicatorPresenter::, 'populateSourceFromType', ->
-    @indicator.source = theSource
-  )
 
   indicator.save( (err, indicator) ->
     request.get {
@@ -48,15 +49,14 @@ test("When given a valid indicator, I should get a 200 and see the source", (don
       try
         assert.equal res.statusCode, 200
 
-        assert.strictEqual populateSourceStub.callCount, 1,
-          "Expected IndicatorPresenter::populateSourceFromType to be called"
+        assert.match body, new RegExp(".*#{indicator.source.name}.*"),
+          "Expected to see the source name"
+        assert.match body, new RegExp(".*#{indicator.source.url}.*"),
+          "Expected to see the source URL"
 
-        assert.match body, new RegExp(".*#{theSource}.*")
         done()
       catch e
         done(e)
-      finally
-        populateSourceStub.restore()
   )
 )
 
