@@ -6,8 +6,8 @@ MessageServer = require('../message_server')
 CONFIG_PATH = path.join(__dirname, '..', '..', 'config', 'config_questions.json')
 
 exports.start = ->
-  [..., serverId] = process.ARGV
-  messageServer = new MessageServer(id: serverId)
+  serverId = process.argv[process.argv.length-1]
+  messageServer = new MessageServer(serverId: serverId)
 
   messageServer.on('answer', ->)
   messageServer.on('done', ->)
