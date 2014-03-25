@@ -5,6 +5,7 @@ ConfigureTask = require '../../../lib/tasks/configure'
 
 MessageServer = require '../../../lib/message_server'
 fs = require 'fs'
+Redis = require('redis')
 
 suite 'Configure Application'
 
@@ -23,6 +24,11 @@ test(".start reads in and publishes questions to a MessageServer and
 
   onMessageStub = sandbox.stub(MessageServer::, 'on', ->)
   publishStub = sandbox.stub(MessageServer::, 'publish', ->)
+
+  redisClient =
+    publish: ->
+    subscribe: ->
+  createClientStub = sandbox.stub(Redis, 'createClient', -> redisClient)
 
   try
     ConfigureTask.start()
@@ -49,7 +55,7 @@ test(".start reads in and publishes questions to a MessageServer and
     assert.strictEqual publishArgs[0], 'questions',
       "Expected the questions to be published to the MessageServer with the type 'questions'"
 
-    assert.strictEqual publishArgs[1], JSON.stringify(expectedQuestions),
+    assert.deepEqual publishArgs[1], expectedQuestions,
       "Expected the questions to be published to the MessageServer"
   finally
     sandbox.restore()
