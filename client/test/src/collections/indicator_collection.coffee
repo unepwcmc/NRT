@@ -18,15 +18,15 @@ test(".url when initialized with withData: true it adds that parameter to the fe
 
 test('.groupByType returns the indicators grouped by core or external', ->
   collection = new Backbone.Collections.IndicatorCollection([{
-    type: 'esri'
+    primary: true
   }, {
-    type: 'esri'
+    primary: true
   }, {
-    type: 'esri'
+    primary: true
   }, {
-    type: 'cartodb'
+    primary: false
   }, {
-    type: 'world bank'
+    primary: false
   }])
 
   groupedIndicators = collection.groupByType()
