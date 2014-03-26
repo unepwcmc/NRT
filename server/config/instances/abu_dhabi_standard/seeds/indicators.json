@@ -6,6 +6,10 @@
     {"title": "Description", "content": "Total GHG emissions as % of year 2010 level of emissions"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "indicatorDefinition": {
   }
@@ -17,6 +21,10 @@
     {"title": "Description", "content": "Average annual CO concentration in µg per m3"}
   ],
   "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -77,6 +85,10 @@
     {"title": "Description", "content": "Average annual NO2 concentration in µg per m3"}
   ],
   "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -137,6 +149,10 @@
     {"title": "Description", "content": "Hourly average SO2 concentration in µg per m3"}
   ],
   "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -197,6 +213,10 @@
     {"title": "Description", "content": "Daily average PM10 concentration in µg per m3"}
   ],
   "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -257,6 +277,10 @@
     {"title": "Description", "content": "Annual average PM25 concentration in µg per m3"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -309,6 +333,10 @@
     {"title": "Description", "content": "Daily average PM10 concentration in µg per m3"}
   ],
   "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -370,6 +398,10 @@
     {"title": "Description", "content": "This indicator measures the area of protected land ecosystems, inland water ecosystems, and marine ecosystems expressed as a percentage of the total area of land ecosystems, inland water ecosystems and marine ecosystems respectively.  Protected Area refers to all or partially protected areas of at least 1000 hectares that are designated as national parks, natural monuments, natural reserves or wildlife sanctuaries, protected landscapes and seascapes or scientific reserves with limited public access. The data do not include sites protected under local or provincial law."}
   ],
   "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -421,6 +453,10 @@
     {"title": "Description", "content": "Area of Selected Key Ecosystems as a Percent of Total Area"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -465,6 +501,10 @@
     {"title": "Description", "content": "Abundance of Selected Key Species"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": true,
@@ -483,6 +523,10 @@
     {"title": "Description", "content": "Annual fish catch from sustainable fisheries"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -501,6 +545,10 @@
     {"title": "Description", "content": ""}
   ],
   "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -561,6 +609,10 @@
     {"title": "Description", "content": ""}
   ],
   "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -621,6 +673,10 @@
     {"title": "Description", "content": ""}
   ],
   "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -681,6 +737,10 @@
     {"title": "Description", "content": "Area of Selected Key Ecosystems as a Percent of Total Area"}
   ],
   "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -741,6 +801,10 @@
     {"title": "Description", "content": ""}
   ],
   "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -801,6 +865,10 @@
     {"title": "Description", "content": "Enterococci concentration in 100 ml of coastal waters"}
   ],
   "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -860,6 +928,10 @@
     {"title": "Description", "content": "Effective years remaining in usable groundwater reserves"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -878,6 +950,10 @@
     {"title": "Description", "content": "Area (km2) of aquifer where water quality is less than or equal to 1500 ppm TDS concentration"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -896,6 +972,10 @@
     {"title": "Description", "content": "Awareness on ground water depletion and high domestic water consumption"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -914,6 +994,10 @@
     {"title": "Description", "content": "Awareness on diminishing fish stock"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -932,6 +1016,10 @@
     {"title": "Description", "content": "Awareness on air quality (indoor and outdoor) & noise pollution"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": true,
@@ -950,6 +1038,10 @@
     {"title": "Description", "content": "Awareness on Biodiversity (marine and terrestrial"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "primary": true,
   "dpsir": {
     "driver": false,
@@ -1051,6 +1143,10 @@
   "theme": "Biodiversity",
   "type": "worldBank",
   "primary": false,
+  "source": {
+    "name": "World Bank Database",
+    "url": "http://data.worldbank.org"
+  },
   "indicatorDefinition": {
       "unit": "%",
       "short_unit": "%",
@@ -1131,6 +1227,10 @@
   "theme": "Biodiversity",
   "type": "cartodb",
   "primary": false,
+  "source": {
+    "name": "EAD Blue Carbon",
+    "url": "http://www.ead.ae"
+  },
   "indicatorDefinition": {
     "apiUrl": "http://localhost:3002",
     "cartodb_user": "carbon-tool",
