@@ -11,7 +11,7 @@ WORLD_BANK_QUERY_SUFFIX =
 class WorldBank
   constructor: (@countryCode, @indicatorCode) ->
     @indicatorDefinition = JSON.parse(
-      fs.readFileSync('./worldbank_indicator_definitions.json', 'UTF8')
+      fs.readFileSync('./definitions/worldbank_indicator_definitions.json', 'UTF8')
     )[@indicatorCode]
 
   indicatorate: ->
