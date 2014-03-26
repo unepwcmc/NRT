@@ -212,3 +212,35 @@ with source: 'esri', applyRanges: false and
 
   IndicatorDataController.query(request, response)
 )
+
+test('.index returns the list of standard indicators', (done) ->
+  indicatorDefinitions = [
+    {
+      "id": 1,
+      "type": "standard",
+      "source": "esri",
+    }, {
+      "id": 2,
+      "type": "standard",
+      "source": "esri",
+    }
+  ]
+  indicatorAllStub = sinon.stub(Indicator, 'all', ->
+    Q.fcall(->
+      indicatorDefinitions
+    )
+  )
+
+  assertions = (statusCode, data) ->
+    try
+      done()
+    catch err
+      done(err)
+    finally
+      indicatorAllStub.restore()
+
+  response =
+    send: assertions
+
+  IndicatorDataController.index({}, response)
+)

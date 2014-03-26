@@ -40,6 +40,8 @@ and returns an indicator with the correct attributes for that ID", (done)->
   ).fail(done)
 )
 
+test("#all returns all indicators from definition file")
+
 test(".query loads and formats the data based on its source", (done) ->
   indicator = new Indicator(
     source: "gdoc"

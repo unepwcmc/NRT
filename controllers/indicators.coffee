@@ -11,3 +11,6 @@ exports.query = (req, res) ->
       console.error err.stack
       res.send(500, err)
     )
+
+exports.index = (req, res) ->
+

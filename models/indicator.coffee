@@ -48,6 +48,8 @@ module.exports = class Indicator
     else
       throw new Error("No known formatter for source '#{@source}'")
 
+  @all: ->
+
   @find: (id) ->
     deferred = Q.defer()
 
