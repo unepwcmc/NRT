@@ -34,3 +34,14 @@ class Backbone.Collections.IndicatorCollection extends Backbone.Collection
       @where(type: type)
     else
       @models
+
+  getSources: ->
+    sources = []
+    @each((model) ->
+      source = model.get('source')
+      sources.push(source) if source?
+    )
+    return _.uniq(sources, false, (source)->
+      source.name
+    )
+

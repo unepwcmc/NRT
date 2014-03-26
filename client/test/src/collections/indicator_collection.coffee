@@ -27,3 +27,35 @@ test('.filterByType given an undefined type returns all indicators', ->
   assert.lengthOf results, 2,
     "Expected the collection to be filtered to only the correct indicator"
 )
+test('.filterBySourceName given an returns only indicators with 
+ correct source name')
+
+test('.getSources returns unique sources', ->
+  indicators = new Backbone.Collections.IndicatorCollection([
+    {source: name: 'hats'},
+    {source: name: 'hats'},
+    {source: name: 'cats'}
+  ])
+
+  sources = indicators.getSources()
+
+  assert.lengthOf sources, 2,
+    "Expected only 2 sources to be returned"
+
+  firstSource = sources[0]
+  assert.strictEqual firstSource.name, 'hats',
+    "Expected the results to contain the 'hats'"
+
+  secondSource = sources[1]
+  assert.strictEqual secondSource.name, 'cats',
+    "Expected the results to contain the 'cats'"
+)
+
+test('.getSources when an indicator has no source returns nothing', ->
+  indicators = new Backbone.Collections.IndicatorCollection({})
+
+  sources = indicators.getSources()
+
+  assert.lengthOf sources, 0,
+    "Expected no sources to be returned"
+)

@@ -5,14 +5,11 @@ class Backbone.Views.DataOriginSelectorView extends Backbone.View
   template: Handlebars.templates['data_origin_selector.hbs']
   className: 'origin'
 
-  Origins:
-    esri: 'Environment Agency - Abu Dhabi'
-    worldBank: 'World Bank Database'
-
   events:
     'change select': 'triggerSelected'
 
   initialize: (options) ->
+    @indicators = options.indicators
     @render()
 
   triggerSelected: ->
@@ -23,7 +20,7 @@ class Backbone.Views.DataOriginSelectorView extends Backbone.View
 
   render: ->
     @$el.html(@template(
-      origins: @Origins
+      origins: @indicators.getSources()
     ))
 
     FancySelect.fancify(@$el)
