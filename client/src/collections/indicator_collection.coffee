@@ -28,10 +28,15 @@ class Backbone.Collections.IndicatorCollection extends Backbone.Collection
       )
     else
       @models
-  
-  filterByType: (type) ->
-    if type?
-      @where(type: type)
+
+  filterBySource: (sourceName) ->
+    if sourceName?
+      models = []
+      @each((model) ->
+        if model.get('source')?.name is sourceName
+          models.push model
+      )
+      return models
     else
       @models
 

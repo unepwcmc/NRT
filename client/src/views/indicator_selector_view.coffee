@@ -31,7 +31,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
     @render()
 
-    @listenTo(Backbone, 'indicator_selector:data_origin:selected', @filterByType)
+    @listenTo(Backbone, 'indicator_selector:data_origin:selected', @filterBySource)
 
   render: =>
     $('body').addClass('stop-scrolling')
@@ -49,9 +49,9 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
   populateCollections: ->
     @indicators.fetch()
 
-  filterByType: (type) ->
+  filterBySource: (sourceName) ->
     @filter ||= {}
-    @filter.type = type
+    @filter.sourceName = sourceName
 
     @filterIndicators()
 
@@ -72,7 +72,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     @filterIndicators()
 
   filterIndicators: ->
-    results = @indicators.filterByType(@filter.type)
+    results = @indicators.filterBySource(@filter.sourceName)
     @results.set(results)
 
     results = @results.filterByTitle(@filter.searchTerm)

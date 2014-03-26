@@ -16,19 +16,33 @@ test(".url when initialized with withData: true it adds that parameter to the fe
     "Expected the URL to include the widthData parameter"
 )
 
-test('.filterByType given an undefined type returns all indicators', ->
+test('.filterBySource given an undefined sourceName returns all indicators', ->
   indicators = new Backbone.Collections.IndicatorCollection([
-    {type: 'hats'},
-    {type: 'boats'}
+    {source: name: 'hats'},
+    {source: name: 'boats'}
   ])
 
-  results = indicators.filterByType()
+  results = indicators.filterBySource()
 
   assert.lengthOf results, 2,
-    "Expected the collection to be filtered to only the correct indicator"
+    "Expected the full collection to be returned"
 )
-test('.filterBySourceName given an returns only indicators with 
- correct source name')
+
+test('.filterBySource given an returns only indicators with 
+ correct source name', ->
+  indicators = new Backbone.Collections.IndicatorCollection([
+    {source: name: 'cat'},
+    {source: name: 'doge'}
+  ])
+
+  results = indicators.filterBySource('doge')
+
+  assert.lengthOf results, 1,
+    "Expected the collection to be filtered to only 1 indicator"
+
+  assert.strictEqual results[0].get('source').name, 'doge',
+    "Expected the model with the matching source to be returned"
+)
 
 test('.getSources returns unique sources', ->
   indicators = new Backbone.Collections.IndicatorCollection([
