@@ -5,7 +5,7 @@ fs = require('fs')
 worldBankQuery = require('./controllers/worldbank_query')
 cartodbQuery = require('./controllers/cartodb_query')
 edeQuery = require('./controllers/ede_query')
-indicatorData = require('./controllers/indicator_data')
+indicatorData = require('./controllers/indicators')
 
 exports.start = (port, callback) ->
   checkForIndicatorDefinition()
