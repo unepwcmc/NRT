@@ -119,3 +119,19 @@ undefined as an argument", ->
   finally
     Backbone.off('indicator_selector:data_origin:selected')
 )
+
+test("re-renders when the indicator collection resets", ->
+  indicators = new Backbone.Collections.IndicatorCollection()
+
+  renderSpy = sinon.spy(Backbone.Views.DataOriginSelectorView::, 'render')
+  view = new Backbone.Views.DataOriginSelectorView(indicators: indicators)
+
+  indicators.trigger('reset')
+
+  try
+    assert.strictEqual(renderSpy.callCount, 2,
+      "Expected DataOriginSelectorView.render to occur second time on 'reset'"
+    )
+  finally
+    renderSpy.restore()
+)

@@ -10,6 +10,7 @@ class Backbone.Views.DataOriginSelectorView extends Backbone.View
 
   initialize: (options) ->
     @indicators = options.indicators
+    @listenTo(@indicators, 'reset', @render)
     @render()
 
   triggerSelected: ->
@@ -18,7 +19,7 @@ class Backbone.Views.DataOriginSelectorView extends Backbone.View
 
     Backbone.trigger('indicator_selector:data_origin:selected', originName)
 
-  render: ->
+  render: =>
     @$el.html(@template(
       origins: @indicators.getSources()
     ))
@@ -28,3 +29,4 @@ class Backbone.Views.DataOriginSelectorView extends Backbone.View
     return @
 
   onClose: ->
+    @stopListening()
