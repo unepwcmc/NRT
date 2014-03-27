@@ -16,28 +16,6 @@ test('.getUpdateUrl on indicator with no type throws an appropriate error', ->
   ), "Couldn't find a url builder for indicator.type: 'undefined'")
 )
 
-test('.getUpdateUrl on an esri indicator with a valid serviceName and featureServer
- it returns a valid url', ->
-  indicator = new Indicator
-    type: 'esri'
-    indicatorDefinition:
-      serviceName:  'NRT_AD_ProtectedArea'
-      featureServer: 2
-  expectedUrl = 'http://localhost:3002/esri/NRT_AD_ProtectedArea/2'
-  url = indicator.getUpdateUrl()
-
-  assert.strictEqual url, expectedUrl
-)
-
-test('.getUpdateUrl on an esri indicator with no serviceName and featureServer
- it throws an error', ->
-  indicator = new Indicator(
-    type: 'esri'
-  )
-
-  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, esri indicator has no serviceName or featureServer in its indicator definition"
-)
-
 test('.getUpdateUrl on a worldBank indicator with a valid apiUrl and apiIndicatorName', ->
   indicator = new Indicator
     type: 'worldBank'
@@ -120,24 +98,20 @@ test('.getUpdateUrl on an Standard indicator with missing indicatorator ID
 )
 
 test('.queryIndicatorData queries the remote server for indicator data', (done) ->
-  indicator = new Indicator
-    type: 'esri'
+  indicator = new Indicator(
+    type: 'standard'
     indicatorDefinition:
-      serviceName:  'NRT_AD_ProtectedArea'
-      featureServer: 2
+      indicatoratorId: 2
+  )
 
   serverResponseData = [
-    attributes:
-      OBJECTID: 1
-      periodStart: 1325376000000
-      value: "0.29390622"
-      text: "Test"
+    periodStart: 1325376000000
+    value: "0.29390622"
+    text: "Test"
   ,
-    attributes:
-      OBJECTID: 2
-      periodStart: 1356998400000
-      value: "0.2278165"
-      text: "Test"
+    periodStart: 1356998400000
+    value: "0.2278165"
+    text: "Test"
   ]
 
   requestStub = sinon.stub(request, 'get', (options, callback)->
@@ -182,99 +156,6 @@ for the indicator type", (done) ->
   ).fail((err) ->
     requestStub.restore()
     done(err)
-  )
-)
-
-test('.convertResponseToIndicatorData for an esri indicator
-  takes data from remote server and prepares for writing to database', ->
-  responseData = {
-    features: [{
-      geometry:
-        x: 53.745
-        y: 23.750
-      attributes:
-        OBJECTID: 1
-        periodStart: 1325376000000
-        value: "0.29390622"
-        text: "Test"
-    }, {
-      geometry:
-        x: 54.745
-        y: 33.750
-      attributes:
-        OBJECTID: 2
-        periodStart: 1356998400000
-        value: "0.2278165"
-        text: "Test"
-    }]
-  }
-
-  indicator = new Indicator(type: 'esri')
-
-  expectedIndicatorData = {
-    indicator: indicator._id
-    data: [
-        geometry:
-          x: 53.745
-          y: 23.750
-        periodStart: 1325376000000
-        value: "0.29390622"
-        text: "Test"
-      ,
-        geometry:
-          x: 54.745
-          y: 33.750
-        periodStart: 1356998400000
-        value: "0.2278165"
-        text: "Test"
-    ]
-  }
-
-  convertedData = indicator.convertResponseToIndicatorData(responseData)
-
-  assert.ok(
-    _.isEqual(convertedData, expectedIndicatorData),
-    "Expected converted data:\n
-    #{JSON.stringify(convertedData)}\n
-      to look like expected indicator data:\n
-    #{JSON.stringify(expectedIndicatorData)}"
-  )
-)
-
-test('.convertResponseToIndicatorData for an esri indicator
-  with no geometry does not throw an error', ->
-  responseData = {
-    features: [{
-      attributes:
-        OBJECTID: 1
-        periodStart: 1325376000000
-    }, {
-      attributes:
-        OBJECTID: 2
-        periodStart: 1356998400000
-    }]
-  }
-
-  indicator = new Indicator(type: 'esri')
-
-  assert.doesNotThrow(->
-    indicator.convertResponseToIndicatorData(responseData)
-  )
-)
-
-test('.convertResponseToIndicatorData on an esri indicator
-  when given a garbage response it throws an error', ->
-  indicator = new Indicator(
-    type: 'esri'
-  )
-
-  garbageData = {hats: 'boats'}
-  assert.throws(
-    (->
-      indicator.convertResponseToIndicatorData(garbageData)
-    ), "Can't convert poorly formed indicator data reponse:\n#{
-          JSON.stringify(garbageData)
-        }\n expected response to contains 'features' attribute which is an array"
   )
 )
 

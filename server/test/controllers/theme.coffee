@@ -8,21 +8,23 @@ Theme = require('../../models/theme').model
 Indicator = require('../../models/indicator').model
 ThemeController = require('../../controllers/themes')
 ThemePresenter = require('../../lib/presenters/theme')
+AppConfig = require('../../initializers/config')
+
 
 suite('Theme Controller')
 
-test(".index given no DPSIR parameters it only returns all indicators
+test(".index given no DPSIR parameters it returns all indicators
  and an DPSIR object with everything enabled", (done) ->
   theme = new Theme(title: 'test theme')
   driverIndicator = new Indicator(
     theme: theme._id
     dpsir: driver: true
-    type: 'esri'
+    primary: true
   )
   pressureIndicator = new Indicator(
     theme: theme._id
     dpsir: pressure: true
-    type: 'esri'
+    primary: true
   )
 
   # Don't filter indicators
@@ -84,12 +86,12 @@ test(".index given DPSIR parameters excluding everything except drivers,
   driverIndicator = new Indicator(
     theme: theme._id
     dpsir: driver: true
-    type: 'esri'
+    primary: true
   )
   pressureIndicator = new Indicator(
     theme: theme._id
     dpsir: pressure: true
-    type: 'esri'
+    primary: true
   )
 
   # Don't filter indicators
@@ -148,12 +150,12 @@ test(".index only returns primary indicators", (done) ->
   theme = new Theme(title: 'test theme')
   primaryIndicator = new Indicator(
     theme: theme._id
-    type: 'esri'
+    primary: true
   )
   externalIndicator = new Indicator(
     theme: theme._id
     dpsir: pressure: true
-    type: 'something else'
+    primary: false
   )
 
   Q.nsend(
@@ -204,8 +206,12 @@ test(".index only returns primary indicators", (done) ->
 
 test(".index only indicators with data", (done) ->
   theme = new Theme(title: 'test theme')
-  indicator1 = new Indicator(theme: theme._id, type: 'esri')
-  indicator2 = new Indicator(theme: theme._id, type: 'esri')
+  indicator1 = new Indicator(
+    theme: theme._id, primary: true
+  )
+  indicator2 = new Indicator(
+    theme: theme._id, primary: true
+  )
 
   filterIndicatorsWithDataStub = sinon.stub(ThemePresenter::, 'filterIndicatorsWithData', ->
     @theme.indicators = [@theme.indicators[0]]
@@ -255,7 +261,11 @@ test(".index only indicators with data", (done) ->
 
 test(".index given DPSIR parameters driver:false, the clause should be ignored", (done) ->
   theme = new Theme(title: 'test theme')
-  driverIndicator = new Indicator(theme: theme._id, type: 'esri', dpsir: driver: true)
+  driverIndicator = new Indicator(
+    theme: theme._id,
+    primary: true
+    dpsir: driver: true
+  )
 
   # Stub to prevent filtering of indicators
   filterIndicatorsWithDataStub = sinon.stub(ThemePresenter::, 'filterIndicatorsWithData', ->
