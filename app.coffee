@@ -5,7 +5,7 @@ fs = require('fs')
 worldBankQuery = require('./controllers/worldbank_query')
 cartodbQuery = require('./controllers/cartodb_query')
 edeQuery = require('./controllers/ede_query')
-indicatorData = require('./controllers/indicators')
+indicatorController = require('./controllers/indicators')
 
 exports.start = (port, callback) ->
   checkForIndicatorDefinition()
@@ -14,7 +14,8 @@ exports.start = (port, callback) ->
 
   app.get "/wb/:countryCode/:indicatorCode", worldBankQuery
   app.get "/ede/:countryCode/:variableId", edeQuery
-  app.get "/indicator/:id/data", indicatorData.query
+  app.get "/indicator/:id/data", indicatorController.query
+  app.get "/indicators", indicatorController.index
 
   server = http.createServer(app).listen port, (err) ->
     callback err, server
