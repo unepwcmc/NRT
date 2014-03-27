@@ -260,16 +260,16 @@ test(".filterByTitle given an input event sets the results object to only
     collectionFilterByTitleStub.restore()
 )
 
-test('.filterByType sets a type attribute on the @filter', ->
+test('.filterBySource sets a sourceName attribute on the @filter', ->
   view =
     filterIndicators: sinon.spy()
 
-  type = 'kittens'
-  Backbone.Views.IndicatorSelectorView::filterByType.call(view, type)
+  sourceName = 'kittens'
+  Backbone.Views.IndicatorSelectorView::filterBySource.call(view, sourceName)
 
   assert.property view, 'filter',
     "Expected the view to have a filter attribute created"
-  assert.strictEqual view.filter.type, type,
+  assert.strictEqual view.filter.sourceName, sourceName,
     "Expected the filter to have the correct type attribute"
 
   assert.strictEqual view.filterIndicators.callCount, 1,
@@ -277,7 +277,7 @@ test('.filterByType sets a type attribute on the @filter', ->
 )
 
 test("When the data origin sub view triggers 'selected', 
- filterByType is triggered", sinon.test(->
+ filterBySource is triggered", sinon.test(->
 
   section = new Backbone.Models.Section(
     _id: Factory.findNextFreeId('Section')
@@ -286,8 +286,8 @@ test("When the data origin sub view triggers 'selected',
   @stub(Backbone.Collections.IndicatorCollection::, 'fetch', dummyFetch)
   @stub(Backbone.Collections.ThemeCollection::, 'fetch', dummyFetch)
 
-  filterByTypeStub = @stub(
-    Backbone.Views.IndicatorSelectorView::, 'filterByType'
+  filterBySourceStub = @stub(
+    Backbone.Views.IndicatorSelectorView::, 'filterBySource'
   )
 
   view = new Backbone.Views.IndicatorSelectorView(
@@ -295,33 +295,33 @@ test("When the data origin sub view triggers 'selected',
   )
 
   Backbone.trigger('indicator_selector:data_origin:selected', 'kittens')
-  assert.strictEqual view.filterByType.callCount, 1,
-    "Expected filterByType to called"
+  assert.strictEqual view.filterBySource.callCount, 1,
+    "Expected filterBySource to called"
 
-  assert.isTrue filterByTypeStub.calledWith('kittens'),
-    "Expected filterByType to be called with the argument of the 'selected' event"
+  assert.isTrue filterBySourceStub.calledWith('kittens'),
+    "Expected filterBySource to be called with the argument of the 'selected' event"
 ))
 
 test(".filterIndicators filters the results by calling
- IndicatorCollection::filterByType with filter.type", sinon.test(->
+ IndicatorCollection::filterBySource with filter.sourceName", sinon.test(->
   view =
     indicators: new Backbone.Collections.IndicatorCollection([])
     results: new Backbone.Collections.IndicatorCollection()
     textFilteredIndicators: new Backbone.Collections.IndicatorCollection()
     filterIndicators: Backbone.Views.IndicatorSelectorView::filterIndicators
-    filter: type: 'cygnet'
+    filter: sourceName: 'cygnet'
 
-  filterTypeIndicator = Factory.indicator()
+  filterSourceIndicator = Factory.indicator()
   collectionFilterByTypeStub = @stub(
-    Backbone.Collections.IndicatorCollection::, 'filterByType', ->
-      return [filterTypeIndicator]
+    Backbone.Collections.IndicatorCollection::, 'filterBySource', ->
+      return [filterSourceIndicator]
   )
 
   Backbone.Views.IndicatorSelectorView::filterIndicators.call(view)
 
   assert.ok(
     collectionFilterByTypeStub.calledOnce,
-    "Expected filterByType to be called once but was called
+    "Expected filterBySource to be called once but was called
       #{collectionFilterByTypeStub.callCount} times"
   )
 
@@ -333,11 +333,12 @@ test(".filterIndicators filters the results by calling
   assert.lengthOf view.results.models, 1,
     "Expected the collection to be filtered to only the correct indicator"
 
-  assert.deepEqual view.results.at(0), filterTypeIndicator,
+  assert.deepEqual view.results.at(0), filterSourceIndicator,
     "Expected the result indicator to be the correct one for the given theme"
 ))
 
-test("Theme filtering, type filtering and text search work in concert", sinon.test(->
+test("Theme filtering, source filtering and text search work in concert",
+sinon.test(->
   section = new Backbone.Models.Section(
     _id: Factory.findNextFreeId('Section')
   )
@@ -346,14 +347,23 @@ test("Theme filtering, type filtering and text search work in concert", sinon.te
   matchingIndicator = Factory.indicator(
     title: "Matching title, theme and type"
     theme: theme.get('_id')
-    type: 'cygnet'
+    source: name: 'cygnet'
   )
 
   indicators = [
     matchingIndicator
-    {title: "Matching title and theme only", theme: theme.get('_id')}
-    {title: "Matches theme and type only", theme: theme.get('_id'), type: 'cygnet'}
-    {title: "Matching title and type only", theme: Factory.findNextFreeId('Theme'), type: 'cygnet'}
+    {
+      title: "Matching title and theme only", theme: theme.get('_id')}
+    {
+      title: "Matches theme and source only",
+      theme: theme.get('_id'),
+      source: name: 'cygnet'
+    },
+    {
+      title: "Matching title and source only",
+      theme: Factory.findNextFreeId('Theme'),
+      source: name: 'cygnet'
+    }
   ]
 
   @stub(Backbone.Collections.IndicatorCollection::, 'fetch', ->
@@ -369,7 +379,7 @@ test("Theme filtering, type filtering and text search work in concert", sinon.te
 
   view.filterByTheme(theme)
   view.filterByTitle({target: '<input value="Matching">'})
-  view.filterByType('cygnet')
+  view.filterBySource('cygnet')
 
   try
     assert.lengthOf view.results.models, 1,

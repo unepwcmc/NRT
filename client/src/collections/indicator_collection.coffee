@@ -28,23 +28,25 @@ class Backbone.Collections.IndicatorCollection extends Backbone.Collection
       )
     else
       @models
-  
-  filterByType: (type) ->
-    if type?
-      @where(type: type)
+
+  filterBySource: (sourceName) ->
+    if sourceName?
+      models = []
+      @each((model) ->
+        if model.get('source')?.name is sourceName
+          models.push model
+      )
+      return models
     else
       @models
 
-  groupByType: ->
-    grouped = {
-      core: []
-      external: []
-    }
+  getSources: ->
+    sources = []
+    @each((model) ->
+      source = model.get('source')
+      sources.push(source) if source?
+    )
+    return _.uniq(sources, false, (source)->
+      source.name
+    )
 
-    for indicator in @models
-      if indicator.get('type') is 'esri'
-        grouped.core.push(indicator)
-      else
-        grouped.external.push(indicator)
-
-    return grouped

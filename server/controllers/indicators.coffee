@@ -44,7 +44,6 @@ exports.show = (req, res) ->
 
     presenter = new IndicatorPresenter(theIndicatorObject)
     presenter.populateHeadlineRangesFromHeadlines(theHeadlines)
-    presenter.populateSourceFromType()
     presenter.populateIsUpToDate()
   ).then(->
 
