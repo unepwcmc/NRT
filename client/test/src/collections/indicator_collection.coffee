@@ -28,8 +28,7 @@ test('.filterBySource given an undefined sourceName returns all indicators', ->
     "Expected the full collection to be returned"
 )
 
-test('.filterBySource given an returns only indicators with 
- correct source name', ->
+test('.filterBySource returns only indicators with correct source name', ->
   indicators = new Backbone.Collections.IndicatorCollection([
     {source: name: 'cat'},
     {source: name: 'doge'}
