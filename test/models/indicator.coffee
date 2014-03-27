@@ -11,20 +11,21 @@ SubIndicatorator = require('../../lib/subindicatorator')
 
 suite('Indicator')
 
-test(".find reads the definition from definitions/indicators.json
-and returns an indicator with the correct attributes for that ID", (done)->
+test(".find returns from all indicators the indicator with the correct
+  attributes for that ID", (done)->
+
   definitions = [
     {id: 1, type: 'esri'},
     {id: 5, type: 'standard'}
   ]
-  readFileStub = sinon.stub(fs, 'readFile', (filename, callback) ->
-    callback(null, JSON.stringify(definitions))
+  indicatorAllStub = sinon.stub(Indicator, 'all', ->
+    Q.fcall(-> definitions)
   )
 
   Indicator.find("5").then((indicator) ->
     try
-      assert.isTrue readFileStub.calledWith('./definitions/indicators.json'),
-        "Expected find to read the definitions file"
+      assert.isTrue indicatorAllStub.calledOnce,
+        "Expected find to call Indicator.all"
 
       assert.property indicator, 'type',
         "Expected the type property from the JSON to be populated on indicator model"
@@ -36,9 +37,9 @@ and returns an indicator with the correct attributes for that ID", (done)->
     catch err
       done(err)
     finally
-      readFileStub.restore()
+      indicatorAllStub.restore()
   ).fail((err) ->
-    readFileStub.restore()
+    indicatorAllStub.restore()
     done(err)
   )
 )

@@ -62,15 +62,13 @@ module.exports = class Indicator
   @find: (id) ->
     deferred = Q.defer()
 
-    Q.nsend(
-      fs, 'readFile', './definitions/indicators.json'
-    ).then( (definitionsJSON) ->
+    Indicator.all().then((definitions) ->
 
-      definitions = JSON.parse(definitionsJSON)
       definitions = _.map(definitions, (definition)->
         definition.id = definition.id + ""
         definition
       )
+
       indicator = new Indicator(
         _.findWhere(definitions, id: String(id))
       )
