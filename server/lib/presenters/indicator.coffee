@@ -3,14 +3,6 @@ moment = require('moment')
 
 HeadlineService = require('../services/headline')
 
-TYPE_SOURCE_MAP =
-  esri:
-    name: 'Environment Agency - Abu Dhabi'
-    url: 'http://www.ead.ae'
-  worldBank:
-    name: 'World Bank Database'
-    url: 'http://data.worldbank.org'
-
 DATE_FORMAT = 'D MMM YYYY'
 
 module.exports = class IndicatorPresenter
