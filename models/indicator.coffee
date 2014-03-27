@@ -49,6 +49,15 @@ module.exports = class Indicator
       throw new Error("No known formatter for source '#{@source}'")
 
   @all: ->
+    deferred = Q.defer()
+
+    Q.nsend(
+      fs, 'readFile', './definitions/indicators.json'
+    ).then( (definitionsJSON) ->
+      deferred.resolve(JSON.parse(definitionsJSON))
+    )
+
+    return deferred.promise
 
   @find: (id) ->
     deferred = Q.defer()

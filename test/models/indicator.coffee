@@ -37,10 +37,40 @@ and returns an indicator with the correct attributes for that ID", (done)->
       done(err)
     finally
       readFileStub.restore()
-  ).fail(done)
+  ).fail((err) ->
+    readFileStub.restore()
+    done(err)
+  )
 )
 
-test("#all returns all indicators from definition file")
+test("#all returns all indicators from definition file", (done) ->
+  definitions = [
+    {id: 1, type: 'esri'},
+    {id: 5, type: 'standard'}
+  ]
+  readFileStub = sinon.stub(fs, 'readFile', (filename, callback) ->
+    callback(null, JSON.stringify(definitions))
+  )
+
+  Indicator.all().then((result) ->
+    try
+      assert.isTrue readFileStub.calledWith('./definitions/indicators.json'),
+        "Expected find to read the definitions file"
+
+      assert.deepEqual(result, definitions,
+        "Expected the definitions to be returned"
+      )
+
+      done()
+    catch err
+      done(err)
+    finally
+      readFileStub.restore()
+  ).fail((err) ->
+    readFileStub.restore()
+    done(err)
+  )
+)
 
 test(".query loads and formats the data based on its source", (done) ->
   indicator = new Indicator(
