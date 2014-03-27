@@ -73,6 +73,53 @@ test("#all returns all indicators from definition file", (done) ->
   )
 )
 
+test("#all throws an appropriate error if definitions can't be parsed", (done) ->
+  brokenDefinitions = "[}"
+  readFileStub = sinon.stub(fs, 'readFile', (filename, callback) ->
+    callback(null, brokenDefinitions)
+  )
+
+  Indicator.all().then((result) ->
+    readFileStub.restore()
+    done(new Error("Indicator.all was expected to fail, but it didn't"))
+  ).fail((err) ->
+    try
+      assert.strictEqual err.message, "Unable to parse ./definitions/indicators.json",
+        "Expected the correct error message"
+
+      done()
+    catch err
+      done(err)
+    finally
+      readFileStub.restore()
+  )
+)
+
+test("#all throws an appropriate error if the definitions can't be read", (done) ->
+  readFileStub = sinon.stub(fs, 'readFile', (filename, callback) ->
+    try
+      # Recreate an accurate file missing error
+      fs.readFileSync("./does_not_exist", "utf8")
+    catch err
+      callback(err)
+  )
+
+  Indicator.all().then((result) ->
+    readFileStub.restore()
+    done(new Error("Indicator.all was expected to fail, but it didn't"))
+  ).fail((err) ->
+    try
+      assert.strictEqual err.message, "ENOENT, no such file or directory './does_not_exist'",
+        "Expected the correct error message"
+
+      done()
+    catch err
+      done(err)
+    finally
+      readFileStub.restore()
+  )
+)
+
 test(".query loads and formats the data based on its source", (done) ->
   indicator = new Indicator(
     source: "gdoc"

@@ -54,8 +54,13 @@ module.exports = class Indicator
     Q.nsend(
       fs, 'readFile', './definitions/indicators.json'
     ).then( (definitionsJSON) ->
-      deferred.resolve(JSON.parse(definitionsJSON))
-    )
+      try
+        definitions = JSON.parse(definitionsJSON)
+      catch err
+        return deferred.reject(new Error("Unable to parse ./definitions/indicators.json"))
+
+      deferred.resolve(definitions)
+    ).fail(deferred.reject)
 
     return deferred.promise
 
