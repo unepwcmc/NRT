@@ -11,3 +11,12 @@ exports.query = (req, res) ->
       console.error err.stack
       res.send(500, err)
     )
+
+exports.index = (req, res) ->
+  Indicator.all().then((definitions)->
+    res.send 200, definitions
+  ).fail( (err) ->
+    console.error err.stack
+    res.send(500, err)
+  )
+

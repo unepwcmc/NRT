@@ -48,18 +48,32 @@ module.exports = class Indicator
     else
       throw new Error("No known formatter for source '#{@source}'")
 
-  @find: (id) ->
+  @all: ->
     deferred = Q.defer()
 
     Q.nsend(
       fs, 'readFile', './definitions/indicators.json'
     ).then( (definitionsJSON) ->
+      try
+        definitions = JSON.parse(definitionsJSON)
+      catch err
+        return deferred.reject(new Error("Unable to parse ./definitions/indicators.json"))
 
-      definitions = JSON.parse(definitionsJSON)
+      deferred.resolve(definitions)
+    ).fail(deferred.reject)
+
+    return deferred.promise
+
+  @find: (id) ->
+    deferred = Q.defer()
+
+    Indicator.all().then((definitions) ->
+
       definitions = _.map(definitions, (definition)->
         definition.id = definition.id + ""
         definition
       )
+
       indicator = new Indicator(
         _.findWhere(definitions, id: String(id))
       )

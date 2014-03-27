@@ -11,20 +11,21 @@ SubIndicatorator = require('../../lib/subindicatorator')
 
 suite('Indicator')
 
-test(".find reads the definition from definitions/indicators.json
-and returns an indicator with the correct attributes for that ID", (done)->
+test(".find returns from all indicators the indicator with the correct
+  attributes for that ID", (done)->
+
   definitions = [
     {id: 1, type: 'esri'},
     {id: 5, type: 'standard'}
   ]
-  readFileStub = sinon.stub(fs, 'readFile', (filename, callback) ->
-    callback(null, JSON.stringify(definitions))
+  indicatorAllStub = sinon.stub(Indicator, 'all', ->
+    Q.fcall(-> definitions)
   )
 
   Indicator.find("5").then((indicator) ->
     try
-      assert.isTrue readFileStub.calledWith('./definitions/indicators.json'),
-        "Expected find to read the definitions file"
+      assert.isTrue indicatorAllStub.calledOnce,
+        "Expected find to call Indicator.all"
 
       assert.property indicator, 'type',
         "Expected the type property from the JSON to be populated on indicator model"
@@ -36,8 +37,87 @@ and returns an indicator with the correct attributes for that ID", (done)->
     catch err
       done(err)
     finally
+      indicatorAllStub.restore()
+  ).fail((err) ->
+    indicatorAllStub.restore()
+    done(err)
+  )
+)
+
+test("#all returns all indicators from definition file", (done) ->
+  definitions = [
+    {id: 1, type: 'esri'},
+    {id: 5, type: 'standard'}
+  ]
+  readFileStub = sinon.stub(fs, 'readFile', (filename, callback) ->
+    callback(null, JSON.stringify(definitions))
+  )
+
+  Indicator.all().then((result) ->
+    try
+      assert.isTrue readFileStub.calledWith('./definitions/indicators.json'),
+        "Expected find to read the definitions file"
+
+      assert.deepEqual(result, definitions,
+        "Expected the definitions to be returned"
+      )
+
+      done()
+    catch err
+      done(err)
+    finally
       readFileStub.restore()
-  ).fail(done)
+  ).fail((err) ->
+    readFileStub.restore()
+    done(err)
+  )
+)
+
+test("#all throws an appropriate error if definitions can't be parsed", (done) ->
+  brokenDefinitions = "[}"
+  readFileStub = sinon.stub(fs, 'readFile', (filename, callback) ->
+    callback(null, brokenDefinitions)
+  )
+
+  Indicator.all().then((result) ->
+    readFileStub.restore()
+    done(new Error("Indicator.all was expected to fail, but it didn't"))
+  ).fail((err) ->
+    try
+      assert.strictEqual err.message, "Unable to parse ./definitions/indicators.json",
+        "Expected the correct error message"
+
+      done()
+    catch err
+      done(err)
+    finally
+      readFileStub.restore()
+  )
+)
+
+test("#all throws an appropriate error if the definitions can't be read", (done) ->
+  readFileStub = sinon.stub(fs, 'readFile', (filename, callback) ->
+    try
+      # Recreate an accurate file missing error
+      fs.readFileSync("./does_not_exist", "utf8")
+    catch err
+      callback(err)
+  )
+
+  Indicator.all().then((result) ->
+    readFileStub.restore()
+    done(new Error("Indicator.all was expected to fail, but it didn't"))
+  ).fail((err) ->
+    try
+      assert.strictEqual err.message, "ENOENT, no such file or directory './does_not_exist'",
+        "Expected the correct error message"
+
+      done()
+    catch err
+      done(err)
+    finally
+      readFileStub.restore()
+  )
 )
 
 test(".query loads and formats the data based on its source", (done) ->
