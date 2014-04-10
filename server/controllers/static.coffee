@@ -10,3 +10,11 @@ exports.about = (req, res) ->
   res.render "about",
     aboutHTML: aboutHTML
     title: "Welcome to the NRT"
+
+exports.architecture = (req, res) ->
+  res.render "help/architecture",
+    title: "NRT System Architecture"
+
+exports.partners = (req, res) ->
+  res.render "help/partners",
+    title: "NRT Partners"

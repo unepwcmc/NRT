@@ -1,0 +1,124 @@
+@import "variables";
+@import "mixins";
+
+.indicator-selector {
+  .editor {
+    border: 0;
+    background-color: white;
+  }
+
+  aside {
+    border-left: 0;
+    float: left;
+    background-color: $barBlue;
+    height: 100%;
+    width: 231px;
+    color: $darkGrey;
+
+    .origin {
+      background-color: white;
+      height: 40px;
+      width: 210px;
+      padding: 10px;
+      border: 1px solid $lightGrey;
+      border-right: 0;
+
+      h5 {
+        font-weight: bold;
+        font-size: 12px;
+        color: $lightishGrey;
+        line-height: 13px;
+      }
+    }
+
+    .themes {
+      color: white;
+
+      li {
+        border-bottom: 1px solid #276CA9;
+        background-color: #2E86D1;
+        font-size: 15px;
+        padding: 10px;
+        overflow: hidden;
+        font-weight: bolder;
+
+        span {
+          float: left;
+          width: 195px;
+        }
+
+        small {
+          font-size: 0.8em;
+          font-weight: normal;
+          color: white;
+        }
+      }
+
+      li.active{
+        background-color: #2B3E50;
+      }
+
+      li:hover {
+        cursor: pointer;
+      }
+    }
+
+  }
+
+  .main {
+    float:left;
+    width: 668px;
+
+    .search {
+      color: $differentGrey;
+      height: 60px;
+      border: 1px solid $lightGrey;
+      padding: 15px;
+      height: 30px;
+
+      i, input {
+        font-size: 21px;
+      }
+
+      input {
+        width: 585px;
+        color: $differentGrey;
+        border: 0;
+      }
+
+      i.clear-search {
+        display: none;
+        cursor: pointer;
+
+        &:hover {
+          color: $darkGrey;
+        }
+      }
+    }
+
+    .indicators {
+      height: 514px;
+      overflow: scroll;
+
+      li {
+        border-bottom: 1px solid $lightGrey;
+        padding: 10px 15px 20px;
+
+        h4 {
+          color: $darkGrey;
+          font-weight: bold;
+        }
+
+        p {
+          color: $darkGrey;
+          font-size: 14px;
+          line-height: 11px;
+        }
+      }
+
+      li:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

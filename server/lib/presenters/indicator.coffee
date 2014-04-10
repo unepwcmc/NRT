@@ -3,26 +3,19 @@ moment = require('moment')
 
 HeadlineService = require('../services/headline')
 
-TYPE_SOURCE_MAP =
-  esri: 'Environment Agency - Abu Dhabi'
-  worldBank: 'World Bank Database'
-
 DATE_FORMAT = 'D MMM YYYY'
 
 module.exports = class IndicatorPresenter
 
   constructor: (@indicator) ->
 
-  populateSourceFromType: ->
-    @indicator.source = TYPE_SOURCE_MAP[@indicator.type]
-
   populateHeadlineRangesFromHeadlines: (headlines) ->
     @indicator.headlineRanges = {}
     xAxis = @indicator.indicatorDefinition?.xAxis
 
     if xAxis?
-      oldest = headlines[0][xAxis].toString()
-      newest = headlines[headlines.length - 1][xAxis].toString()
+      newest = headlines[0][xAxis].toString()
+      oldest = headlines[headlines.length - 1][xAxis].toString()
 
       @indicator.headlineRanges =
         oldest: moment(oldest).format(DATE_FORMAT)

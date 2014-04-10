@@ -12,6 +12,7 @@ class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
 
   initialize: (options) ->
     @visualisation = options.visualisation
+    @section       = @visualisation.get('section')
 
     @render()
 
@@ -24,8 +25,10 @@ class Backbone.Views.VisualisationView extends Backbone.Diorama.NestingView
   render: =>
     @$el.html(@template(
       thisView: @
+      indicator: @visualisation.get('indicator').toJSON()
       visualisation: @visualisation
       visualisationViewName: @visualisation.get('type') + "View"
+      isEditable: @section?.isEditable()
     ))
     @attachSubViews()
 

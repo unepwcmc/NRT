@@ -2,7 +2,12 @@ node_modules
 client/dist/
 server/public/*
 !server/public/locales/
+!server/public/assets/
 server/config/ldap.json
+server/config/seeds/
 server/config/production.json
+server/config/development.json
+server/config/seeds
 client/test/tests.coffee
 client/test/tests.js
+client/src/templates/templates.js

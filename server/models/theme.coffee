@@ -55,9 +55,15 @@ themeSchema.statics.seedData = (callback) ->
       return deferred.reject(error)
 
     if count == 0
-      dummyThemes = JSON.parse(
-        fs.readFileSync("#{process.cwd()}/lib/sample_themes.json", 'UTF8')
-      )
+      try
+        dummyThemes = JSON.parse(
+          fs.readFileSync("#{process.cwd()}/config/seeds/themes.json", 'UTF8')
+        )
+      catch err
+        console.log err
+        return deferred.reject(
+          "Unable to load theme seed file, have you copied seeds from config/instances/ to config/seeds/?"
+        )
 
       async.map(dummyThemes, createThemeWithSections, (error, results) ->
         if error?

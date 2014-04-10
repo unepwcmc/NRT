@@ -614,3 +614,52 @@ returns blank values for those fields", (done) ->
  )
   
 )
+
+test("#seedData when no seed file exist reports an appropriate error", (done) ->
+  fs = require('fs')
+  readFileStub = sinon.stub(fs, 'readFileSync', ->
+    throw new Error("ENOENT, no such file or directory './config/seeds/indicators.json'")
+  )
+
+  Indicator.seedData().then(->
+    done("Expected Indicator.seedData to fail")
+  ).fail((err)->
+
+    try
+      console.log err
+      assert.strictEqual(
+        err,
+        "Unable to load indicator seed file, have you copied seeds from config/instances/ to config/seeds/?"
+      )
+      done()
+    catch err
+      done(err)
+
+  ).finally(->
+    readFileStub.restore()
+  )
+
+  
+)
+
+test('#CONDITIONS.IS_PRIMARY only returns indicators with indicators
+  with primary: true', (done) ->
+  helpers.createIndicatorModels([{
+    primary: true
+  }, {
+    primary: false
+  }]).then(->
+    Q.nsend(
+      Indicator, 'find', Indicator.CONDITIONS.IS_PRIMARY
+    )
+  ).then((indicators)->
+    try
+      assert.lengthOf indicators, 1,
+        "Only expected the primary indicator to be returned"
+
+      done()
+    catch err
+      done(err)
+  ).fail(done)
+  
+)

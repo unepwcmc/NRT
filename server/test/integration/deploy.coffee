@@ -4,70 +4,98 @@ request = require('request')
 fs = require('fs')
 sinon = require('sinon')
 Q = require('q')
+Promise = require('bluebird')
+
 CommandRunner = require('../../bin/command-runner')
+AppConfig = require('../../initializers/config')
 range_check = require('range_check')
+Deploy = require('../../lib/deploy')
 
 suite('Deploy')
 
-test('POST deploy after commit deploy branch on GitHub', (done) ->
-  commitHookPayload = fs.readFileSync("#{process.cwd()}/test/data/github_commit.json", 'UTF8')
+test('POST /deploy with a github payload for new deploy tag which refers
+to the same server-name as the server causes the server to trigger the deploy
+command', (done) ->
+  sandbox = sinon.sandbox.create()
 
-  rangeCheckStub = sinon.stub(range_check, 'in_range', -> true)
+  deployRole = 'staging'
+  tagName = "#{deployRole}-test-webhooks-1bcc7a0470"
+  commitHookPayload = {
+    "ref": tagName,
+    "ref_type": "tag"
+  }
 
-  commandSpawnStub = sinon.stub(CommandRunner, 'spawn', ->
-    return {on: ->}
+  rangeCheckStub = sandbox.stub(range_check, 'in_range', -> true)
+
+  configStub = sandbox.stub(AppConfig, 'get', (variable)->
+    if variable is 'server_name'
+      return deployRole
+  )
+
+  updateCodeStub = sandbox.stub(Deploy, 'deploy', ->
+    new Promise(()->)
   )
 
   Q.nfcall(
     request.post, {
       url: helpers.appurl('/deploy')
       json: true
-      body:
-        payload: commitHookPayload
+      body: commitHookPayload
     }
   ).spread( (res, body) ->
 
     try
-      assert.strictEqual commandSpawnStub.callCount, 1,
-        "Expected CommandRunner.spawn to be called once"
+      assert.equal res.statusCode, 200,
+        "Expected the request to succeed"
 
-      assert.equal res.statusCode, 200
+      assert.strictEqual updateCodeStub.callCount, 1,
+        "Expected Deploy.deploy to be called once"
+
+      assert.isTrue updateCodeStub.calledWith(tagName),
+        "Expected Deploy.deploy to be called with the tag name"
+
       done()
     catch e
       done(e)
     finally
-      rangeCheckStub.restore()
-      commandSpawnStub.restore()
+      sandbox.restore()
 
   ).fail( (err) ->
     console.error err
-    rangeCheckStub.restore()
-    commandSpawnStub.restore()
+    sandbox.restore()
     done(err)
   )
 )
 
-test('POST deploy after commit to GitHub fails if branch is not deploy', (done) ->
-  rangeCheckStub = sinon.stub(range_check, 'in_range', -> true)
+test("POST deploy fails given tagname doesn't refer to this
+server", (done) ->
+  sandbox = sinon.sandbox.create()
 
-  commitHookResponse = JSON.parse(
-    fs.readFileSync("#{process.cwd()}/test/data/github_commit_master.json", 'UTF8')
-  )
+  deployRole = 'staging'
+  commitHookPayload = {
+    "ref": "#{deployRole}-test-webhooks-1bcc7a0470",
+    "ref_type": "tag"
+  }
 
-  commandSpawnStub = sinon.stub(CommandRunner, 'spawn', ->
-    return {on: ->}
+  rangeCheckStub = sandbox.stub(range_check, 'in_range', -> true)
+
+  updateCodeStub = sandbox.stub(Deploy, 'deploy', ->)
+
+  configStub = sandbox.stub(AppConfig, 'get', (variable)->
+    if variable is 'server_name'
+      return 'not staging'
   )
 
   Q.nfcall(
     request.post, {
       url: helpers.appurl('/deploy')
       json: true
-      body: commitHookResponse
+      body: commitHookPayload
     }
   ).spread( (res, body) ->
 
     try
-      assert.strictEqual commandSpawnStub.callCount, 0,
+      assert.strictEqual updateCodeStub.callCount, 0,
         "Expected CommandRunner.spawn to not be called once"
 
       assert.equal res.statusCode, 500
@@ -75,18 +103,20 @@ test('POST deploy after commit to GitHub fails if branch is not deploy', (done) 
     catch e
       done(e)
     finally
-      commandSpawnStub.restore()
-      rangeCheckStub.restore()
+      sandbox.restore()
 
   ).fail( (err) ->
-    rangeCheckStub.restore()
-    commandSpawnStub.restore()
+    sandbox.restore()
     done(err)
   )
 )
 
 test("POST deploy fails if the IP is not of GitHub's servers", (done) ->
-  rangeCheckStub = sinon.stub(range_check, 'in_range', -> false)
+  sandbox = sinon.sandbox.create()
+
+  rangeCheckStub = sandbox.stub(range_check, 'in_range', -> false)
+
+  updateCodeStub = sandbox.stub(Deploy, 'deploy', ->)
 
   Q.nfcall(
     request.post, {
@@ -99,40 +129,17 @@ test("POST deploy fails if the IP is not of GitHub's servers", (done) ->
     try
       assert.equal res.statusCode, 401
 
-      done()
-    catch e
-      done(e)
-    finally
-      rangeCheckStub.restore()
-
-  ).fail( (err) ->
-    rangeCheckStub.restore()
-    done(err)
-  )
-)
-
-test("POST deploy succeeds if the IP matches one of GitHub's servers", (done) ->
-  rangeCheckStub = sinon.stub(range_check, 'in_range', -> true)
-
-  Q.nfcall(
-    request.post, {
-      url: helpers.appurl('/deploy')
-      json: true
-      body: {}
-    }
-  ).spread( (res, body) ->
-
-    try
-      assert.notEqual res.statusCode, 401
+      assert.isFalse updateCodeStub.calledOnce,
+        "Expected CommandRunner.spawn not to be called"
 
       done()
-    catch e
-      done(e)
+    catch err
+      done(err)
     finally
-      rangeCheckStub.restore()
+      sandbox.restore()
 
   ).fail( (err) ->
-    rangeCheckStub.restore()
+    sandbox.restore()
     done(err)
   )
 )

@@ -15,6 +15,7 @@
   <script src="/js/lib/esri-leaflet.js"></script>
   <script src="/js/lib/medium-editor.min.js"></script>
   <script src="/js/lib/Chart.min.js"></script>
+  <script src="/js/templates.js"></script>
   <script src="/js/application.js"></script>
 {{/contentFor}}
 
@@ -93,7 +94,15 @@
           </li>
           <li>
             <h4>Source</h4>
-            <span><a class="source" href="">{{indicator.source}}</a></span>
+            <span>
+              <a class="source" href="{{indicator.source.url}}">{{indicator.source.name}}</a>
+            </span>
+          </li>
+          <li>
+            <h4>Indicator definition</h4>
+            <span>
+              <a class="source" href="/assets/Big book of indicators.pdf">Download PDF</a>
+            </span>
           </li>
         </ul>
       </section>

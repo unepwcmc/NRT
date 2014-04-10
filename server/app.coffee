@@ -21,7 +21,31 @@ exports.createApp = ->
 
   bindRoutesForApp = require('./route_bindings.coffee')
 
-  app.use express.static(path.join(__dirname, "public"))
+  if app.get('env') isnt 'production'
+    sass = require('node-sass')
+    app.use sass.middleware(
+      src: path.join(__dirname, "..", "client", "src")
+      dest: path.join(__dirname, 'public')
+      debug: true
+    )
+
+    coffee = require('coffee-middleware')
+    app.use coffee(
+      src: path.join(__dirname, "public")
+      compress: true
+      force: true
+      debug: true
+      encodeSrc: false
+    )
+
+  app.use express.compress()
+
+  maxAge = -1
+  if app.get('env') is 'production'
+    oneWeekInMilliseconds = (60 * 60 * 24 * 7) * 1000
+    oneYearInMilliseconds = oneWeekInMilliseconds * 52
+    maxAge = oneYearInMilliseconds
+  app.use express.static(path.join(__dirname, "public"), maxAge: maxAge)
 
   app.engine "hbs", hbs.express3(
     partialsDir: __dirname + '/views/partials'
@@ -41,7 +65,7 @@ exports.createApp = ->
   app.use express.session(
     store: new MongoStore(
       url: "mongodb://localhost/nrt_#{app.get('env')}"
-      maxAge: 300000
+      maxAge: oneWeekInMilliseconds
     )
   )
   app.use flash()

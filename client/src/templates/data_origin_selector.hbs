@@ -1,0 +1,8 @@
+<h5>Data origin:</h5>
+
+<select data-behavior="fancy-select" class="data-origin-selector">
+  <option value="">All sources</option>
+  {{#each origins}}
+    <option value="{{name}}">{{name}}</option>
+  {{/each}}
+</select>

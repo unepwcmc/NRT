@@ -8,6 +8,28 @@ createAndShowVisualisationViewForVisualisation = (visualisation) ->
 
 suite('Visualisation View')
 
+test("Shows the title of the indicator", ->
+  indicator = Factory.indicator(
+    title: "Such indicator"
+  )
+
+  view = new Backbone.Views.VisualisationView(
+    visualisation: Factory.visualisation(
+      type: "BarChart"
+      indicator: indicator
+    )
+  )
+  view.render()
+
+  assert.match(
+    view.$el.find('h4').text(),
+    new RegExp(".*#{indicator.get('title')}.*"),
+    "Expected to see the indicator title"
+  )
+
+  view.close()
+)
+
 test("When given a visualisation with type BarChart,
   it renders a BarChartView subView", ->
   view = createAndShowVisualisationViewForVisualisation(
@@ -95,3 +117,41 @@ test('Clicking .delete-visualisation calls the delete function', ->
     view.close()
     viewDeleteStub.restore()
 )
+
+test('Does not show the Delete button when the section is not marked as
+ editable', sinon.test(->
+  section = Factory.section()
+  sectionIsEditableStub = @stub(section, 'isEditable', -> false)
+
+  visualisation = Factory.visualisation(
+    section: section
+  )
+
+  view = new Backbone.Views.VisualisationView(visualisation: visualisation)
+
+  assert.lengthOf view.$el.find('.delete-visualisation'), 0
+
+  assert.strictEqual sectionIsEditableStub.callCount, 1,
+    "Expected section.isEditable() to be called once"
+
+  view.close()
+))
+
+test('Shows the Delete button when the section is marked as
+ editable', sinon.test(->
+  section = Factory.section()
+  sectionIsEditableStub = @stub(section, 'isEditable', -> true)
+
+  visualisation = Factory.visualisation(
+    section: section
+  )
+
+  view = new Backbone.Views.VisualisationView(visualisation: visualisation)
+
+  assert.lengthOf view.$el.find('.delete-visualisation'), 1
+
+  assert.strictEqual sectionIsEditableStub.callCount, 1,
+    "Expected section.isEditable() to be called once"
+
+  view.close()
+))

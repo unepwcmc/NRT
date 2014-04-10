@@ -1,0 +1,140 @@
+@import "variables";
+@import "mixins";
+
+.edit-visualisation {
+  .filters,
+  .visualisation {
+    border: 1px solid $lightishGrey;
+    box-sizing: border-box;
+    height: 484px;
+  }
+
+  aside.filters {
+    width: 270px;
+    float: right;
+    border-left: 0;
+
+    .filter-fields {
+      padding: 21px;
+
+      li {
+        margin-bottom: 20px;
+
+        h4 {
+          color: #c3c3c3;
+          text-transform: capitalize;
+          border-bottom: 1px solid #eee;
+          margin-bottom: 12px;
+          padding-bottom: 5px;
+          font-weight: 600;
+        }
+      }
+    }
+
+    header {
+      padding: 12px 20px;
+      border-bottom: 1px solid $lightishGrey;
+      position: relative;
+      height: auto;
+
+      h3 {
+        border-bottom: 0;
+        color: $mediumGrey;
+        font-weight: bold;
+      }
+
+      a {
+        color: $differentGrey;
+        text-decoration: underline;
+        font-size: 0.8em;
+        position: absolute;
+        right: 20px;
+        top: 10px;
+      }
+    }
+  }
+
+  .visualisation {
+    background-color: white;
+    width: 630px;
+    float: left;
+    position: relative;
+
+    .visualisation-table-view {
+      height: 400px;
+      overflow: scroll;
+      margin: 10px;
+
+      table {
+        width: 578px;
+      }
+    }
+
+    .controls {
+      overflow: hidden;
+      margin: 10px 10px 0;
+
+      button,
+      .select {
+        margin-left: 10px;
+        float: right;
+      }
+
+      .select {
+        padding: 2px 15px;
+
+        &:active {
+          background: none;
+          color: inherit;
+          border-color: inherit;
+        }
+
+        &:hover {
+          select {
+            cursor: pointer;
+            color: $buttonBlue;
+          }
+        }
+      }
+
+      select {
+        color: $lightishGrey;
+        border: 0;
+      }
+    }
+
+    .bar-chart-view {
+      padding: 10px;
+    }
+  }
+}
+
+.map-visualisation {
+  height: 400px;
+
+  /* fix for leaflet controls poking through overlays */
+  .leaflet-top {
+    z-index: 0;
+  }
+}
+
+.visualisation-view button.delete.delete-visualisation {
+  margin-right: 10px;
+  margin-top: 85px;
+  display: none;
+  background-color: rgba(50,50,50,0.5);
+  padding: 5px 10px;
+  z-index: 2;
+  @include transition(background-color 0.5s);
+  @include transition(color 0.5s);
+}
+.visualisation-view:hover button.delete.delete-visualisation {
+  display: inline;
+
+  &:hover {
+    @include transition(background-color 0.5s);
+    @include transition(color 0.5s);
+    background-color: $red;
+    color: white;
+  }
+}

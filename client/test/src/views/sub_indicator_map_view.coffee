@@ -84,3 +84,27 @@ test('.subIndicatorDataToLeafletMarkers sets leaflet marker icon className based
   assert.strictEqual icon.options.className, 'excellent',
     "Expected the marker to have the right classname set"
 )
+
+test('.uniqueSubIndicatorHeadlineTexts returns a unique list of all the headline texts', ->
+  subIndicatorData = [{
+    text: 'awesome'
+  },{
+    text: 'horrid'
+  },{
+    text: 'awesome'
+  }]
+  indicatorDefinition =
+    fields: []
+
+  texts = Backbone.Views.SubIndicatorMapView::uniqueSubIndicatorHeadlineTexts(
+    subIndicatorData
+  )
+
+  assert.lengthOf texts, 2, 'Only expected one headline text'
+
+  assert.strictEqual texts[0], 'awesome',
+    'Expected the first headline text to be "awesome"'
+
+  assert.strictEqual texts[1], 'horrid',
+    'Expected the second headline text to be "horrid"'
+)
