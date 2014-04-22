@@ -1,0 +1,158 @@
+[
+  {
+    "id": 1,
+    "type": "standard",
+    "source": "esri",
+    "name": "CO Concentration",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": 1
+    },
+    "applyRanges": false,
+    "reduceField": "station"
+  },
+  { 
+    "id": 2,
+    "type": "standard",
+    "source": "esri",
+    "name": "Protected Areas",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_ProtectedArea",
+      "featureServer": "2"
+    }
+  },
+  {
+    "id": 3,
+    "type": "standard",
+    "source": "esri",
+    "name": "NO2 Concentration",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": "2"
+    }
+  },
+  {
+    "id": 4,
+    "type": "standard",
+    "source": "esri",
+    "name": "O3 Concentration",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": "3"
+    }
+  },
+  {
+    "id": 5,
+    "type": "standard",
+    "source": "esri",
+    "name": "PM10 Concentration",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": "4"
+    }
+  },
+  {
+    "id": 6,
+    "type": "standard",
+    "source": "esri",
+    "name": "SO2 Concentration",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": "5"
+    }
+  },
+  {
+    "id": 7,
+    "type": "standard",
+    "source": "esri",
+    "name": "Ammonia",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "0"
+    }
+  },
+  {
+    "id": 8,
+    "type": "standard",
+    "source": "esri",
+    "name": "Coastal Chlorophyll",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "1"
+    }
+  },
+  {
+    "id": 9,
+    "type": "standard",
+    "source": "esri",
+    "name": "Dissolved Oxygen",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "2"
+    }
+  },
+  {
+    "id": 10,
+    "type": "standard",
+    "source": "esri",
+    "name": "Enterococci Concentrations",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "3"
+    }
+  },
+  {
+    "id": 11,
+    "type": "standard",
+    "source": "esri",
+    "name": "Nitrate-N Concentrations",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "4"
+    }
+  },
+  {
+    "id": 12,
+    "type": "standard",
+    "source": "esri",
+    "name": "Phosphate P",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "5"
+    }
+  }
+]

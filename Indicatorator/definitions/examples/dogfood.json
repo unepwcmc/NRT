@@ -1,0 +1,153 @@
+[
+  {
+    "id": "1",
+    "type": "standard",
+    "source": "gdoc",
+    "name": "Key stakeholders identified",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }, {
+    "id": "2",
+    "type": "standard",
+    "source": "gdoc",
+    "name": "Key stakeholders on-board",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }, {
+    "id": "3",
+    "type": "standard",
+    "source": "gdoc",
+    "name": "Indicator objectives identified",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }, {
+    "id": "4",
+    "type": "standard",
+    "source": "gdoc",
+    "name": "Indicators described and documented",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }, {
+    "id": "5",
+    "type": "standard",
+    "source": "gdoc",
+    "name": "Raw data collected and flowing",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }, {
+    "id": "6",
+    "type": "standard",
+    "source": "gdoc",
+    "name": "Indicator data feeds",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }, {
+    "id": "7",
+    "type": "standard",
+    "source": "gdoc",
+    "name": "Source code available and accessible",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }, {
+    "id": "8",
+    "type": "standard",
+    "source": "gdoc",
+    "name": "SaaS system deployed",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }, {
+    "id": "9",
+    "type": "standard",
+    "source": "gdoc",
+    "name": "SaaS system is used",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }, {
+    "id": "10",
+    "type": "standard",
+    "source": "gdoc",
+    "name": "NRT network instances are up to date",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }, {
+    "id": "11",
+    "type": "standard",
+    "source": "gdoc",
+    "name": "Reporting GUI complete",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }, {
+    "id": "12",
+    "type": "standard",
+    "source": "gdoc",
+    "name": "Indicator management GUI complete",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }, {
+    "id": "13",
+    "type": "standard",
+    "source": "gdoc",
+    "name": "Admin GUI complete",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }, {
+    "id": "14",
+    "type": "standard",
+    "source": "gdoc",
+    "name": "Local NRTs exposing data to UNEP-Live",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }, {
+    "id": "15",
+    "type": "standard",
+    "source": "gdoc",
+    "name": "Local NRTs consuming data",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  }
+]
