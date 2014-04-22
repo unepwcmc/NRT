@@ -22,6 +22,9 @@ adds a 'text' attribute with the correct values based on the range", ->
   rangedData = StandardIndicatorator.applyRanges(data, ranges)
 
   firstRow = rangedData[0]
+  assert.isDefined firstRow,
+    "Expected there to be a first row of results"
+
   assert.property firstRow, 'text',
     "Expected a text property to be added"
   assert.strictEqual firstRow.text, 'Moderate',

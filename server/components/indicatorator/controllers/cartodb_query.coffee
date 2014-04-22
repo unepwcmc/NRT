@@ -2,7 +2,7 @@ request = require('request')
 _ = require('underscore')
 fs = require('fs')
 
-indicatorDefinitions = JSON.parse(fs.readFileSync('./definitions/cartodb_indicator_definitions.json', 'UTF8'))
+indicatorDefinitions = JSON.parse(fs.readFileSync("#{__dirname}/../definitions/cartodb_indicator_definitions.json", 'UTF8'))
 
 CARTODB_API_URL = "cartodb.com/api/v2"
 

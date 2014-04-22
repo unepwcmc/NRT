@@ -55,8 +55,12 @@ test("#all returns all indicators from definition file", (done) ->
 
   Indicator.all().then((result) ->
     try
-      assert.isTrue readFileStub.calledWith('./definitions/indicators.json'),
+      assert.isTrue(
+        readFileStub.calledWithMatch(
+          new RegExp("/definitions/indicators.json")
+        ),
         "Expected find to read the definitions file"
+      )
 
       assert.deepEqual(result, definitions,
         "Expected the definitions to be returned"
@@ -192,16 +196,18 @@ test(".query groups sub indicators if the indicator definition includes
     reduceField: 'station'
   )
 
-  groupStub = sinon.stub(
+  sandbox = sinon.sandbox.create()
+
+  groupStub = sandbox.stub(
     SubIndicatorator, 'groupSubIndicatorsUnderAverageIndicators'
   )
   theData = {id: 5}
-  sinon.stub(StandardIndicatorator, 'applyRanges', -> theData)
+  sandbox.stub(StandardIndicatorator, 'applyRanges', -> theData)
 
-  sinon.stub(indicator, 'getData', ->
+  sandbox.stub(indicator, 'getData', ->
     Q.fcall(->)
   )
-  sinon.stub(indicator, 'formatData', ->)
+  sandbox.stub(indicator, 'formatData', ->)
 
   indicator.query().then(->
     try
@@ -216,9 +222,9 @@ test(".query groups sub indicators if the indicator definition includes
     catch err
       done(err)
     finally
-      applyRangesStub.restore()
+      sandbox.restore()
   ).catch((err)->
-    applyRangesStub.restore()
+    sandbox.restore()
     done(err)
   )
 )
