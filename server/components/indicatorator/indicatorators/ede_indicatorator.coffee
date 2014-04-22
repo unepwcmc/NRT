@@ -6,7 +6,9 @@ class EdeIndicatorator
     indicatorType = indicatorType.toLowerCase()
 
     @indicatorDefinition = JSON.parse(
-      fs.readFileSync("./definitions/#{indicatorType}_indicator_definitions.json", 'UTF8')
+      fs.readFileSync(
+        "#{__dirname}/../definitions/#{indicatorType}_indicator_definitions.json", 'UTF8'
+      )
     )[indicatorCode]
 
   indicatorate: (data) ->
