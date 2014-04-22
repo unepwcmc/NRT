@@ -55,8 +55,12 @@ test("#all returns all indicators from definition file", (done) ->
 
   Indicator.all().then((result) ->
     try
-      assert.isTrue readFileStub.calledWith('./definitions/indicators.json'),
+      assert.isTrue(
+        readFileStub.calledWithMatch(
+          new RegExp("/definitions/indicators.json")
+        ),
         "Expected find to read the definitions file"
+      )
 
       assert.deepEqual(result, definitions,
         "Expected the definitions to be returned"

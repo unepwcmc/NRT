@@ -23,11 +23,15 @@ adminRoutes     = require('./controllers/admin')
 themeRoutes     = require('./controllers/themes')
 testRoutes      = require('./controllers/tests')
 
+indicatorator   = require('./Indicatorator/app')
+
 module.exports = exports = (app) ->
   app.use('/', sessionAuthentication)
   app.use('/api/users', tokenAuthentication)
 
   app.use passport.addCurrentUserToLocals
+
+  app.use indicatorator
 
   app.get "/login", sessionRoutes.login
   app.get "/logout", sessionRoutes.logout
