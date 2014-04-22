@@ -23,7 +23,7 @@ adminRoutes     = require('./controllers/admin')
 themeRoutes     = require('./controllers/themes')
 testRoutes      = require('./controllers/tests')
 
-indicatorator   = require('./Indicatorator/app')
+indicatorator   = require('./components/indicatorator/app')
 
 module.exports = exports = (app) ->
   app.use('/', sessionAuthentication)
