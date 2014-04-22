@@ -668,5 +668,51 @@ test(".replaceIndicatorData when called on an  indicator where indicator data
     console.error err
     throw err
   )
-  
+
+)
+
+test(".updateIndicatorData queries IndicatoratorIndicator and calls
+  .replaceIndicatorData with the converted result", (done) ->
+  IndicatoratorIndicator = require('../../components/indicatorator/models/indicator.coffee')
+
+  fakeIndicator = {
+    query: sinon.spy(->
+      Q.fcall(->
+        []
+      )
+    )
+  }
+
+  indicatoratorIndicatorFindSpy = sinon.stub(IndicatoratorIndicator, 'find', (id) ->
+    Q.fcall(->
+      fakeIndicator
+    )
+  )
+
+  indicatoratorId = 5
+  indicator = new Indicator(
+    indicatorDefinition:
+      indicatoratorId: indicatoratorId
+      fields: []
+  )
+
+  indicator.updateIndicatorData().then(->
+    try
+      assert.strictEqual indicatoratorIndicatorFindSpy.callCount, 1,
+        "Expected IndicatoratorIndicator.find to be called"
+      assert.isTrue indicatoratorIndicatorFindSpy.calledWith(indicatoratorId),
+        "Expected IndicatoratorIndicator.find to be called with the indicatoratorId"
+      assert.strictEqual fakeIndicator.query.callCount, 1,
+        "Expected IndicatoratorIndicator.query to be called"
+
+      done()
+    catch err
+      done(err)
+    finally
+      indicatoratorIndicatorFindSpy.restore()
+  ).fail((err)->
+    indicatoratorIndicatorFindSpy.restore()
+    done(err)
+  )
+
 )

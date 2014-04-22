@@ -223,9 +223,15 @@ module.exports =
 
     updateIndicatorData: ->
       deferred = Q.defer()
-      @queryIndicatorData(
-      ).then( (response) =>
-        newIndicatorData = @convertResponseToIndicatorData(response.body)
+
+      IndicatoratorIndicator = require('../components/indicatorator/models/indicator')
+
+      IndicatoratorIndicator.find(
+        @indicatorDefinition.indicatoratorId
+      ).invoke(
+        'query'
+      ).then( (data) =>
+        newIndicatorData = @convertResponseToIndicatorData(data)
         if @validateIndicatorDataFields(newIndicatorData)
           newIndicatorData = @convertIndicatorDataFields(newIndicatorData)
           return @replaceIndicatorData(newIndicatorData)
