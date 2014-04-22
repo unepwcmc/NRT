@@ -74,9 +74,12 @@ module.exports = class Indicator
         definition
       )
 
-      indicator = new Indicator(
-        _.findWhere(definitions, id: String(id))
-      )
+      definition = _.findWhere(definitions, id: String(id))
+
+      unless definition?
+        throw new Error("No indicator definition found for id '#{id}'")
+
+      indicator = new Indicator(definition)
 
       deferred.resolve(indicator)
     ).fail(
