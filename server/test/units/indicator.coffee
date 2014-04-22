@@ -641,3 +641,25 @@ test("#seedData when no seed file exist reports an appropriate error", (done) ->
 
   
 )
+
+test('#CONDITIONS.IS_PRIMARY only returns indicators with indicators
+  with primary: true', (done) ->
+  helpers.createIndicatorModels([{
+    primary: true
+  }, {
+    primary: false
+  }]).then(->
+    Q.nsend(
+      Indicator, 'find', Indicator.CONDITIONS.IS_PRIMARY
+    )
+  ).then((indicators)->
+    try
+      assert.lengthOf indicators, 1,
+        "Only expected the primary indicator to be returned"
+
+      done()
+    catch err
+      done(err)
+  ).fail(done)
+  
+)

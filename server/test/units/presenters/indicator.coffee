@@ -7,46 +7,6 @@ HeadlineService = require('../../../lib/services/headline')
 
 suite('IndicatorPresentor')
 
-test(".populateSourceFromType on an indicator with an ESRI 'type'
-adds a 'source' attribute to the indicator object,
-with the correct human readable value and a URL", ->
-  indicator = Indicator(type: 'esri')
-
-  presenter = new IndicatorPresenter(indicator)
-  presenter.populateSourceFromType()
-
-  assert.property indicator, 'source',
-    "Expected the indicator to have a 'source' attribute populated"
-
-  expectedSource = {
-    name: 'Environment Agency - Abu Dhabi'
-    url:  'http://www.ead.ae'
-  }
-
-  assert.deepEqual indicator.source, expectedSource,
-    "Expected the indicator to have a 'source' attribute populated"
-)
-
-test(".populateSourceFromType on an indicator with a World Bank 'type'
-adds a 'source' attribute to the indicator object,
-with the correct human readable value and a URL", ->
-  indicator = Indicator(type: 'worldBank')
-
-  presenter = new IndicatorPresenter(indicator)
-  presenter.populateSourceFromType()
-
-  assert.property indicator, 'source',
-    "Expected the indicator to have a 'source' attribute populated"
-
-  expectedSource = {
-    name: 'World Bank Database'
-    url:  'http://data.worldbank.org'
-  }
-
-  assert.deepEqual indicator.source, expectedSource,
-    "Expected the indicator to have a 'source' attribute populated"
-)
-
 test(".populateHeadlineRangesFromHeadlines when given sorted headlines
 populates a 'headlineRanges' attribute with the oldest and newest xAxis values
 formatted as D MM YYYY", ->

@@ -4,32 +4,6 @@ request = require('request')
 _ = require('underscore')
 
 CONFIG =
-  esri:
-    indicatorServer: 'localhost:3002/esri'
-    defaultQueryParameters:
-      'where': 'objectid > 0'
-      'objectIds': ''
-      'time': ''
-      'geometry': ''
-      'geometryType':'esriGeometryEnvelope'
-      'inSR': ''
-      'spatialRel':'esriSpatialRelIntersects'
-      'relationParam': ''
-      'outFields': ''
-      'returnGeometry':'false'
-      'maxAllowableOffset': ''
-      'geometryPrecision': ''
-      'outSR': ''
-      'gdbVersion': ''
-      'returnIdsOnly':'false'
-      'returnCountOnly':'false'
-      'orderByFields': ''
-      'groupByFieldsForStatistics': ''
-      'outStatistics': ''
-      'returnZ':'false'
-      'returnM':'false'
-      'f':'pjson'
-
   worldBank:
     defaultQueryParameters:
       "per_page": 100
@@ -55,16 +29,6 @@ CONVERSIONS =
       value * 100
 
 URL_BUILDERS =
-  esri: ->
-    if @indicatorDefinition?
-      serviceName = @indicatorDefinition.serviceName
-      featureServer = @indicatorDefinition.featureServer
-
-    unless serviceName? and featureServer?
-      throw "Cannot generate update URL, esri indicator has no serviceName or featureServer in its indicator definition"
-
-    url = "http://#{CONFIG[@type].indicatorServer}/#{serviceName}/#{featureServer}"
-    return url
 
   worldBank: ->
     if @indicatorDefinition?
@@ -112,25 +76,6 @@ URL_BUILDERS =
     return url
 
 SOURCE_DATA_PARSERS =
-  esri: (responseBody) ->
-    unless _.isArray(responseBody.features)
-      throw "Can't convert poorly formed indicator data reponse:\n#{
-        JSON.stringify(responseBody)
-      }\n expected response to contains 'features' attribute which is an array"
-
-    convertedData = {
-      indicator: @_id
-      data: []
-    }
-
-    for feature in responseBody.features
-      featureObject = {geometry: feature.geometry}
-      attributes = _.omit(feature.attributes, 'OBJECTID')
-      _.extend(featureObject, attributes)
-
-      convertedData.data.push featureObject
-
-    return convertedData
 
   worldBank: (responseBody) ->
     unless _.isArray(responseBody) and responseBody.length is 2
