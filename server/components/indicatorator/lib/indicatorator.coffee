@@ -1,28 +1,31 @@
-module.exports.getData = ->
-  getData().then( (data) =>
-    formattedData = formatData(data)
-    unless @applyRanges is false
-      formattedData = StandardIndicatorator.applyRanges(formattedData, @range)
+StandardIndicatorator = require('../indicatorators/standard_indicatorator')
+SubIndicatorator = require('../lib/subindicatorator')
 
-    if @reduceField?
-      formattedData = SubIndicatorator.groupSubIndicatorsUnderAverageIndicators(
-        formattedData, {valueField: 'value', reduceField: @reduceField}
-      )
+exports.getData = (indicator) ->
+    exports.fetchData().then( (data) =>
+      formattedData = exports.formatData(data)
+      unless indicator.indicatoration.applyRanges is false
+        formattedData = StandardIndicatorator.applyRanges(formattedData, @range)
 
-    return formattedData
-  )
+      if indicator.indicatoration.reduceField?
+        formattedData = SubIndicatorator.groupSubIndicatorsUnderAverageIndicators(
+          formattedData, {valueField: 'value', reduceField: @reduceField}
+        )
 
-getData = ->
-  Getter = GETTERS[@source]
-  if Getter?
-    getter = new Getter(@)
-    getter.fetch()
-  else
-    throw new Error("No known getter for source '#{@source}'")
+      return formattedData
+    )
 
-formatData = (data) ->
-  formatter = FORMATTERS[@source]
-  if formatter?
-    formatter(data)
-  else
-    throw new Error("No known formatter for source '#{@source}'")
+exports.fetchData = ->
+    Getter = GETTERS[@source]
+    if Getter?
+      getter = new Getter(@)
+      getter.fetch()
+    else
+      throw new Error("No known getter for source '#{@source}'")
+
+exports.formatData = (data) ->
+    formatter = FORMATTERS[@source]
+    if formatter?
+      formatter(data)
+    else
+      throw new Error("No known formatter for source '#{@source}'")

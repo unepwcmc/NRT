@@ -661,5 +661,13 @@ test('#CONDITIONS.IS_PRIMARY only returns indicators with indicators
     catch err
       done(err)
   ).fail(done)
-  
+
+)
+
+test('creating a new Indicator without an "indicatoration" attribute
+  initialises it with a empty object', ->
+  indicator = new Indicator()
+
+  assert.deepEqual indicator.indicatoration, {},
+    "Expected indicator.indicatoration to be defaulted to {}"
 )
