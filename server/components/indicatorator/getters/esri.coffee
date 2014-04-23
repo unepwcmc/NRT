@@ -26,25 +26,25 @@ ESRI_QUERY_PARAMS =
   'f':'pjson'
 
 module.exports = class EsriGetter
-  constructor: (indicator) ->
-    @indicator = indicator
+  constructor: (@indicator) ->
 
   buildUrl: ->
-    if !@indicator.esriConfig?
+    console.log @indicator
+    if !@indicator.indicatoration.esriConfig?
       throw new Error("Indicator does not define a esriConfig attribute")
-    else if !@indicator.esriConfig.serviceName?
+    else if !@indicator.indicatoration.esriConfig.serviceName?
       throw new Error("Indicator esriConfig does not define a serviceName attribute")
-    else if !@indicator.esriConfig.featureServer?
+    else if !@indicator.indicatoration.esriConfig.featureServer?
       throw new Error("Indicator esriConfig does not define a featureServer attribute")
-    else if !@indicator.esriConfig.serverUrl?
+    else if !@indicator.indicatoration.esriConfig.serverUrl?
       throw new Error("Indicator esriConfig does not define a serverUrl attribute")
 
     return "#{
-      @indicator.esriConfig.serverUrl
+      @indicator.indicatoration.esriConfig.serverUrl
     }/#{
-      @indicator.esriConfig.serviceName
+      @indicator.indicatoration.esriConfig.serviceName
     }/FeatureServer/#{
-      @indicator.esriConfig.featureServer
+      @indicator.indicatoration.esriConfig.featureServer
     }/query"
 
   fetch: ->

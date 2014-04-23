@@ -2,7 +2,7 @@ assert = require('chai').assert
 sinon = require('sinon')
 request = require('request')
 
-Indicator = require('../../models/indicator')
+Indicator = require('../../../../models/indicator').model
 EsriGetter = require("../../getters/esri")
 
 suite('Esri getter')
@@ -18,7 +18,8 @@ test('.buildUrl throws an error if the Indicator does not have any Esri configs'
 
 test('.buildUrl throws an error if the Indicator esriConfig does not specify a serviceName', ->
   indicator = new Indicator(
-    esriConfig: {}
+    indicatoration:
+      esriConfig: {}
   )
   getter = new EsriGetter(indicator)
 
@@ -29,8 +30,9 @@ test('.buildUrl throws an error if the Indicator esriConfig does not specify a s
 
 test('.buildUrl throws an error if the Indicator esriConfig does not specify a featureServer', ->
   indicator = new Indicator(
-    esriConfig:
-      serviceName: ''
+    indicatoration:
+      esriConfig:
+        serviceName: ''
   )
   getter = new EsriGetter(indicator)
 
@@ -41,9 +43,10 @@ test('.buildUrl throws an error if the Indicator esriConfig does not specify a f
 
 test('.buildUrl throws an error if the Indicator esriConfig does not specify a serverUrl', ->
   indicator = new Indicator(
-    esriConfig:
-      serviceName: ''
-      featureServer: ''
+    indicatoration:
+      esriConfig:
+        serviceName: ''
+        featureServer: ''
   )
   getter = new EsriGetter(indicator)
 
@@ -55,10 +58,11 @@ test('.buildUrl throws an error if the Indicator esriConfig does not specify a s
 test('.buildUrl constructs the correct URL with serviceName, featureServer, serverUrl', ->
   indicator = new Indicator(
     name: "Phosphate P Diddy"
-    esriConfig:
-      serverUrl: 'http://esri-server.com/rest/services'
-      serviceName: 'WQ'
-      featureServer: '4'
+    indicatoration:
+      esriConfig:
+        serverUrl: 'http://esri-server.com/rest/services'
+        serviceName: 'WQ'
+        featureServer: '4'
   )
 
   getter = new EsriGetter(indicator)
