@@ -63,8 +63,6 @@ class HeadlineService
     _.contains(upToDateStates, text)
 
   convertDataToHeadline: (data) ->
-    Indicator = require('../../models/indicator.coffee').model
-
     data = @parseDateInHeadlines(data)
     data = HeadlineService.roundHeadlineValues(data)
     return data

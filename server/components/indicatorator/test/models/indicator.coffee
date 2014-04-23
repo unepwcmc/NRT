@@ -44,6 +44,29 @@ test(".find returns from all indicators the indicator with the correct
   )
 )
 
+
+test(".find throws an appropriate error when no definition is found", (done)->
+
+  indicatorAllStub = sinon.stub(Indicator, 'all', ->
+    Q.fcall(-> [])
+  )
+
+  Indicator.find("5").then((indicator) ->
+    indicatorAllStub.restore()
+    done(new Error("Expected Indicator.find to fail, as there is no definition"))
+  ).fail((err) ->
+    try
+      assert.strictEqual err.message, "No indicator definition found for id '5'",
+        "Expected an appropriate error message"
+
+      done()
+    catch err
+      done(err)
+    finally
+      indicatorAllStub.restore()
+  )
+)
+
 test("#all returns all indicators from definition file", (done) ->
   definitions = [
     {id: 1, type: 'esri'},
