@@ -358,47 +358,48 @@ test(".replaceIndicatorData when called on an  indicator where indicator data
 
 )
 
-test(".updateIndicatorData queries IndicatoratorIndicator and calls
-  .replaceIndicatorData with the converted result", (done) ->
-  IndicatoratorIndicator = require('../../components/indicatorator/models/indicator.coffee')
+test(".updateIndicatorData calls Indicatorator.getData(indicator) and updates
+  the indicator data with the result", (done) ->
+  Indicatorator = require('../../components/indicatorator/lib/indicatorator.coffee')
 
-  fakeIndicator = {
-    query: sinon.spy(->
-      Q.fcall(->
-        []
-      )
-    )
-  }
-
-  indicatoratorIndicatorFindSpy = sinon.stub(IndicatoratorIndicator, 'find', (id) ->
-    Q.fcall(->
-      fakeIndicator
-    )
-  )
-
-  indicatoratorId = 5
   indicator = new Indicator(
     indicatorDefinition:
-      indicatoratorId: indicatoratorId
       fields: []
   )
 
+  sinon.stub(indicator, 'replaceIndicatorData', ->
+    Q.fcall(->)
+  )
+
+  indicatoratorGetDataStub = sinon.stub(Indicatorator, 'getData', (indicator) ->
+    Q.fcall(->
+      []
+    )
+  )
+
+
   indicator.updateIndicatorData().then(->
     try
-      assert.strictEqual indicatoratorIndicatorFindSpy.callCount, 1,
-        "Expected IndicatoratorIndicator.find to be called"
-      assert.isTrue indicatoratorIndicatorFindSpy.calledWith(indicatoratorId),
-        "Expected IndicatoratorIndicator.find to be called with the indicatoratorId"
-      assert.strictEqual fakeIndicator.query.callCount, 1,
-        "Expected IndicatoratorIndicator.query to be called"
+      assert.strictEqual indicatoratorGetDataStub.callCount, 1,
+        "Expected Indicatorator.getData to be called"
+      assert.isTrue indicatoratorGetDataStub.calledWith(indicator),
+        "Expected Indicatorator.getData to be called with the indicator"
+
+      assert.strictEqual indicator.replaceIndicatorData.callCount, 1,
+        "Expected the indicator.replaceIndicatorData to be called"
+      expectedIndicatorData = {indicator: indicator._id, data: []}
+      replacedIndicatorData = indicator.replaceIndicatorData.getCall(0).args[0]
+      assert.isTrue indicator.replaceIndicatorData.calledWith(expectedIndicatorData),
+        "Expected the indicator data to be replaced with #{JSON.stringify(expectedIndicatorData)},
+        but got #{JSON.stringify(replacedIndicatorData)}"
 
       done()
     catch err
       done(err)
     finally
-      indicatoratorIndicatorFindSpy.restore()
+      indicatoratorGetDataStub.restore()
   ).fail((err)->
-    indicatoratorIndicatorFindSpy.restore()
+    indicatoratorGetDataStub.restore()
     done(err)
   )
 
