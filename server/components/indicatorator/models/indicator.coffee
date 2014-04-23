@@ -2,6 +2,15 @@ fs = require('fs')
 Q = require('q')
 _ = require('underscore')
 
+checkForIndicatorDefinition = ->
+  unless fs.existsSync("#{__dirname}/../definitions/indicators.json")
+    throw new Error("""
+      Couldn't find an indicator definition file in #{__dirname}/definitions/indicators.json
+      See #{__dirname}/definitions/examples/ for example config
+    """)
+
+checkForIndicatorDefinition()
+
 StandardIndicatorator = require('../indicatorators/standard_indicatorator')
 SubIndicatorator = require('../lib/subindicatorator')
 
