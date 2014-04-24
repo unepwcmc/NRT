@@ -3,10 +3,18 @@
   "title": "Forestry sector contribution to the agriculture section",
   "theme": "Contribution of the forestry sector",
   "sections": [],
+  "indicatorationConfig": {
+    "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+    "source": "gdoc",
+    "range": [
+        {"minValue": 0.35, "message": "Excellent"},
+        {"minValue": 0.15, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  },
   "type": "standard",
   "primary": true,
   "indicatorDefinition": {
-    "indicatoratorId": 1,
     "unit": "% contribution",
     "short_unit": "%",
     "period": "annual",
@@ -43,10 +51,18 @@
     "title": "Forestry sector contribution to other primary industries",
     "theme": "Contribution of the forestry sector",
     "sections": [],
+    "indicatorationConfig": {
+      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "source": "gdoc",
+      "range": [
+          {"minValue": 0.35, "message": "Excellent"},
+          {"minValue": 0.15, "message": "Good"},
+          {"minValue": 0, "message": "Bad"}
+      ]
+    },
     "type": "standard",
     "primary": true,
     "indicatorDefinition": {
-      "indicatoratorId": 2,
       "unit": "% contribution",
       "short_unit": "%",
       "period": "annual",
@@ -83,10 +99,18 @@
     "title": "Manufacture of food, beverages and tobacco",
     "theme": "Contribution of the forestry sector",
     "sections": [],
+    "indicatorationConfig": {
+      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "source": "gdoc",
+      "range": [
+          {"minValue": 0.35, "message": "Excellent"},
+          {"minValue": 0.15, "message": "Good"},
+          {"minValue": 0, "message": "Bad"}
+      ]
+    },
     "type": "standard",
     "primary": true,
     "indicatorDefinition": {
-      "indicatoratorId": 3,
       "unit": "% contribution",
       "short_unit": "%",
       "period": "annual",
@@ -124,8 +148,16 @@
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "primary": true,
+    "indicatorationConfig": {
+      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "source": "gdoc",
+      "range": [
+          {"minValue": 0.35, "message": "Excellent"},
+          {"minValue": 0.15, "message": "Good"},
+          {"minValue": 0, "message": "Bad"}
+      ]
+    },
     "indicatorDefinition": {
-      "indicatoratorId": 4,
       "unit": "% contribution",
       "short_unit": "%",
       "period": "annual",
@@ -163,8 +195,16 @@
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "primary": true,
+    "indicatorationConfig": {
+      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "source": "gdoc",
+      "range": [
+          {"minValue": 0.35, "message": "Excellent"},
+          {"minValue": 0.15, "message": "Good"},
+          {"minValue": 0, "message": "Bad"}
+      ]
+    },
     "indicatorDefinition": {
-      "indicatoratorId": 5,
       "unit": "% contribution",
       "short_unit": "%",
       "period": "annual",
@@ -202,8 +242,16 @@
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "primary": true,
+    "indicatorationConfig": {
+      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "source": "gdoc",
+      "range": [
+          {"minValue": 0.35, "message": "Excellent"},
+          {"minValue": 0.15, "message": "Good"},
+          {"minValue": 0, "message": "Bad"}
+      ]
+    },
     "indicatorDefinition": {
-      "indicatoratorId": 6,
       "unit": "% contribution",
       "short_unit": "%",
       "period": "annual",
@@ -241,8 +289,16 @@
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "primary": true,
+    "indicatorationConfig": {
+      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "source": "gdoc",
+      "range": [
+          {"minValue": 0.35, "message": "Excellent"},
+          {"minValue": 0.15, "message": "Good"},
+          {"minValue": 0, "message": "Bad"}
+      ]
+    },
     "indicatorDefinition": {
-      "indicatoratorId": 7,
       "unit": "% contribution",
       "short_unit": "%",
       "period": "annual",
@@ -280,8 +336,16 @@
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "primary": true,
+    "indicatorationConfig": {
+      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "source": "gdoc",
+      "range": [
+          {"minValue": 0.35, "message": "Excellent"},
+          {"minValue": 0.15, "message": "Good"},
+          {"minValue": 0, "message": "Bad"}
+      ]
+    },
     "indicatorDefinition": {
-      "indicatoratorId": 8,
       "unit": "% contribution",
       "short_unit": "%",
       "period": "annual",
@@ -319,8 +383,16 @@
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "primary": true,
+    "indicatorationConfig": {
+      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "source": "gdoc",
+      "range": [
+          {"minValue": 0.35, "message": "Excellent"},
+          {"minValue": 0.15, "message": "Good"},
+          {"minValue": 0, "message": "Bad"}
+      ]
+    },
     "indicatorDefinition": {
-      "indicatoratorId": 9,
       "unit": "% contribution",
       "short_unit": "%",
       "period": "annual",
@@ -358,8 +430,16 @@
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "primary": true,
+    "indicatorationConfig": {
+      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "source": "gdoc",
+      "range": [
+          {"minValue": 0.35, "message": "Excellent"},
+          {"minValue": 0.15, "message": "Good"},
+          {"minValue": 0, "message": "Bad"}
+      ]
+    },
     "indicatorDefinition": {
-      "indicatoratorId": 10,
       "unit": "% contribution",
       "short_unit": "%",
       "period": "annual",
