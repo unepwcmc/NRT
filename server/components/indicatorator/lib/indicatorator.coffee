@@ -1,4 +1,4 @@
-StandardIndicatorator = require('../indicatorators/standard_indicatorator')
+RangeApplicator = require('../lib/range_applicator')
 SubIndicatorator = require('../lib/subindicatorator')
 
 GETTERS =
@@ -16,7 +16,7 @@ exports.getData = (indicator) ->
   exports.fetchData(indicator).then( (data) =>
     formattedData = exports.formatData(indicator.indicatoration.source, data)
     unless indicator.indicatoration.applyRanges is false
-      formattedData = StandardIndicatorator.applyRanges(
+      formattedData = RangeApplicator.applyRanges(
         formattedData, indicator.indicatoration.range
       )
 
