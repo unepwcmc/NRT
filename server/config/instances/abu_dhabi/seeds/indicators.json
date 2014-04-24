@@ -117,7 +117,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "indicatoratorId": 3,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -191,7 +190,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "indicatoratorId": 6,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -265,7 +263,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "indicatoratorId": 5,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -395,7 +392,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "indicatoratorId": 4,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -470,7 +466,6 @@
     "response": true
   },
   "indicatorDefinition": {
-      "indicatoratorId": 2,
       "unit": "%",
       "short_unit": "%",
       "period": "annual",
@@ -627,7 +622,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "indicatoratorId": 7,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -701,7 +695,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "indicatoratorId": 8,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -775,7 +768,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "indicatoratorId": 9,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -849,7 +841,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "indicatoratorId": 11,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -923,7 +914,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "indicatoratorId": 12,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -996,7 +986,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "indicatoratorId": 10,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
