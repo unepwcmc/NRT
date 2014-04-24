@@ -30,21 +30,21 @@ module.exports = class EsriGetter
 
   buildUrl: ->
     console.log @indicator
-    if !@indicator.indicatoration.esriConfig?
+    if !@indicator.indicatorationConfig.esriConfig?
       throw new Error("Indicator does not define a esriConfig attribute")
-    else if !@indicator.indicatoration.esriConfig.serviceName?
+    else if !@indicator.indicatorationConfig.esriConfig.serviceName?
       throw new Error("Indicator esriConfig does not define a serviceName attribute")
-    else if !@indicator.indicatoration.esriConfig.featureServer?
+    else if !@indicator.indicatorationConfig.esriConfig.featureServer?
       throw new Error("Indicator esriConfig does not define a featureServer attribute")
-    else if !@indicator.indicatoration.esriConfig.serverUrl?
+    else if !@indicator.indicatorationConfig.esriConfig.serverUrl?
       throw new Error("Indicator esriConfig does not define a serverUrl attribute")
 
     return "#{
-      @indicator.indicatoration.esriConfig.serverUrl
+      @indicator.indicatorationConfig.esriConfig.serverUrl
     }/#{
-      @indicator.indicatoration.esriConfig.serviceName
+      @indicator.indicatorationConfig.esriConfig.serviceName
     }/FeatureServer/#{
-      @indicator.indicatoration.esriConfig.featureServer
+      @indicator.indicatorationConfig.esriConfig.featureServer
     }/query"
 
   fetch: ->

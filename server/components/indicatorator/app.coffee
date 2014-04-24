@@ -1,5 +1,4 @@
 express = require('express')
-http = require('http')
 
 app = module.exports = express()
 

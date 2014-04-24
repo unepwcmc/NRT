@@ -1,8 +1,8 @@
 assert = require('chai').assert
 sinon = require('sinon')
 
-StandardIndicatorator = require '../indicatorators/standard_indicatorator'
-SubIndicator = require '../lib/subindicatorator'
+RangeApplicator = require '../../lib/range_applicator'
+SubIndicator = require '../../lib/subindicatorator'
 
 suite('Standard indicatorator')
 
@@ -19,7 +19,7 @@ adds a 'text' attribute with the correct values based on the range", ->
     {"minValue": 0, "message": "Poor"}
   ]
 
-  rangedData = StandardIndicatorator.applyRanges(data, ranges)
+  rangedData = RangeApplicator.applyRanges(data, ranges)
 
   firstRow = rangedData[0]
   assert.isDefined firstRow,
@@ -57,7 +57,7 @@ adds a 'text' to both the indicator and subindicators", ->
     {"minValue": 0, "message": "Poor"}
   ]
 
-  rangedData = StandardIndicatorator.applyRanges(data, ranges)
+  rangedData = RangeApplicator.applyRanges(data, ranges)
 
   firstRow = rangedData[0]
   assert.property firstRow, 'text',

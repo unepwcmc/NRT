@@ -18,7 +18,7 @@ test('.buildUrl throws an error if the Indicator does not have any Esri configs'
 
 test('.buildUrl throws an error if the Indicator esriConfig does not specify a serviceName', ->
   indicator = new Indicator(
-    indicatoration:
+    indicatorationConfig:
       esriConfig: {}
   )
   getter = new EsriGetter(indicator)
@@ -30,7 +30,7 @@ test('.buildUrl throws an error if the Indicator esriConfig does not specify a s
 
 test('.buildUrl throws an error if the Indicator esriConfig does not specify a featureServer', ->
   indicator = new Indicator(
-    indicatoration:
+    indicatorationConfig:
       esriConfig:
         serviceName: ''
   )
@@ -43,7 +43,7 @@ test('.buildUrl throws an error if the Indicator esriConfig does not specify a f
 
 test('.buildUrl throws an error if the Indicator esriConfig does not specify a serverUrl', ->
   indicator = new Indicator(
-    indicatoration:
+    indicatorationConfig:
       esriConfig:
         serviceName: ''
         featureServer: ''
@@ -58,7 +58,7 @@ test('.buildUrl throws an error if the Indicator esriConfig does not specify a s
 test('.buildUrl constructs the correct URL with serviceName, featureServer, serverUrl', ->
   indicator = new Indicator(
     name: "Phosphate P Diddy"
-    indicatoration:
+    indicatorationConfig:
       esriConfig:
         serverUrl: 'http://esri-server.com/rest/services'
         serviceName: 'WQ'
