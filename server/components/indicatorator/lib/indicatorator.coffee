@@ -22,7 +22,7 @@ exports.getData = (indicator) ->
 
     if indicator.indicatoration.reduceField?
       formattedData = SubIndicatorator.groupSubIndicatorsUnderAverageIndicators(
-        formattedData, {valueField: 'value', reduceField: @reduceField}
+        formattedData, {valueField: 'value', reduceField: indicator.indicatoration.reduceField}
       )
 
     return formattedData
