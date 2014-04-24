@@ -7,7 +7,7 @@ Q = require('q')
 GDocGetter = require('../../getters/gdoc')
 Indicator = require('../../../../models/indicator').model
 Indicatorator = require('../../lib/indicatorator')
-StandardIndicatorator = require('../../indicatorators/standard_indicatorator')
+RangeApplicator = require('../../lib/range_applicator')
 SubIndicatorator = require('../../lib/subindicatorator')
 
 suite('Indicatorator')
@@ -28,7 +28,7 @@ test(".getData loads and formats the data based on its source", (done) ->
   formattedData = {fancy: 'data'}
   formatDataStub = sandbox.stub(Indicatorator, 'formatData', -> formattedData)
 
-  applyRangesStub = sandbox.stub(StandardIndicatorator, 'applyRanges', (data) ->
+  applyRangesStub = sandbox.stub(RangeApplicator, 'applyRanges', (data) ->
     data
   )
 
@@ -70,7 +70,7 @@ test(".getData doesn't apply ranges if the indicator has
 
   sandbox = sinon.sandbox.create()
 
-  applyRangesStub = sandbox.stub(StandardIndicatorator, 'applyRanges')
+  applyRangesStub = sandbox.stub(RangeApplicator, 'applyRanges')
   sandbox.stub(Indicatorator, 'fetchData', ->
     Q.fcall(->)
   )
@@ -79,7 +79,7 @@ test(".getData doesn't apply ranges if the indicator has
   Indicatorator.getData(indicator).then( (data) ->
     try
       assert.strictEqual applyRangesStub.callCount, 0,
-        "Expected StandardIndicatorator.applyRanges not to be called"
+        "Expected RangeApplicator.applyRanges not to be called"
       done()
     catch err
       done(err)
@@ -104,7 +104,7 @@ test(".query groups sub indicators if the indicator definition includes
     SubIndicatorator, 'groupSubIndicatorsUnderAverageIndicators'
   )
   theData = {id: 5}
-  sandbox.stub(StandardIndicatorator, 'applyRanges', -> theData)
+  sandbox.stub(RangeApplicator, 'applyRanges', -> theData)
 
   sandbox.stub(Indicatorator, 'fetchData', ->
     Q.fcall(->)
