@@ -45,7 +45,8 @@
     "libxmljs": "~0.8.1",
     "bluebird": "~1.0.4",
     "node-sass": "~0.8.1",
-    "coffee-middleware": "~0.2.1"
+    "coffee-middleware": "~0.2.1",
+    "google-spreadsheets": "~0.3.0"
   },
   "devDependencies": {
     "Faker": "0.5.11",
