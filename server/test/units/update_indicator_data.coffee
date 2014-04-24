@@ -197,7 +197,7 @@ test('.convertIndicatorDataFields when given valid epoch to integer field transl
       to look like expected indicator data:\n
     #{JSON.stringify(expectedData)}"
   )
-  
+
 )
 
 test('.translateRow includes fields with definitions and skips those without', ->
@@ -225,7 +225,7 @@ test('.translateRow includes fields with definitions and skips those without', -
     "Expected periodStart property to not be included in translatedRow"
 )
 
-test('.convertSourceValueToInternalValue when given two values of the same 
+test('.convertSourceValueToInternalValue when given two values of the same
   type it returns same value', ->
   indicator = new Indicator(
     indicatorDefinition:
@@ -258,10 +258,10 @@ test(".convertSourceValueToInternalValue when given a type conversion which
   assert.throws (->
     indicator.convertSourceValueToInternalValue('periodStart', 5)
   ), "Don't know how to convert 'apples' to 'oranges' for field 'periodStart'"
-    
+
 )
 
-test(".convertSourceValueToInternalValue when given a decimalPercentage to 
+test(".convertSourceValueToInternalValue when given a decimalPercentage to
   integer conversion, it multiplies by 100", ->
   indicator = new Indicator(
     indicatorDefinition:
@@ -277,10 +277,10 @@ test(".convertSourceValueToInternalValue when given a decimalPercentage to
   result = indicator.convertSourceValueToInternalValue('value', 0.504)
   assert.strictEqual result, 50.4,
     "Expected value to be mutliplied by 100"
-    
+
 )
 
-test(".convertSourceValueToInternalValue when given an epoch to 
+test(".convertSourceValueToInternalValue when given an epoch to
   date conversion, it converts the value correctly", ->
   indicator = new Indicator(
     indicatorDefinition:
@@ -301,7 +301,7 @@ test(".convertSourceValueToInternalValue when given an epoch to
     "Expected the date to be in October"
   assert.strictEqual result.getFullYear(), 2012,
     "Expected the date to be in 2013"
-    
+
 )
 
 test(".replaceIndicatorData when called on an  indicator where indicator data

@@ -92,7 +92,7 @@ module.exports = exports = (app) ->
   unless app.settings.env == 'production'
     app.get "/tests", testRoutes.test
 
-  app.get "/admin/updateIndicatorData/:id", adminRoutes.updateIndicatorData
+  app.post "/admin/updateIndicatorData/:id", adminRoutes.updateIndicatorData
   app.get "/admin/updateAll", adminRoutes.updateAll
   app.get "/admin", adminRoutes.updateAll
   app.get "/admin/seedIndicatorData", adminRoutes.seedIndicatorData
