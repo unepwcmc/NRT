@@ -1,7 +1,6 @@
 assert = require('chai').assert
 sinon = require('sinon')
 
-Indicator = require('../../models/indicator')
 EsriFormatter = require('../../formatters/esri')
 
 suite('Esri Formatter')
