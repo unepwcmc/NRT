@@ -3,7 +3,7 @@ sinon = require('sinon')
 Q = require('q')
 _ = require('underscore')
 
-Indicator = require('../../models/indicator')
+Indicator = require('../../../../models/indicator').model
 GDocGetter = require("../../getters/gdoc")
 GoogleSpreadsheets = require("google-spreadsheets")
 
@@ -22,8 +22,9 @@ test("GDoc stores a reference to the given indicator", ->
 test("GDoc getter takes an Indicator and queries Google Spreadsheets
   with the indicator's spreadsheet id", (done) ->
   indicator = new Indicator(
-    spreadsheet_key: '123'
-    name: 'Key stakeholders identified'
+    short_name: 'Key stakeholders identified'
+    indicatoration:
+      spreadsheet_key: '123'
   )
 
   expectedData = {
@@ -89,8 +90,9 @@ test("GDoc getter takes an Indicator and queries Google Spreadsheets
 
 test(".fetch returns all rows of a sub indicator", (done) ->
   indicator = new Indicator(
-    spreadsheet_key: '123'
-    name: 'Key stakeholders identified'
+    short_name: 'Key stakeholders identified'
+    indicatoration:
+      spreadsheet_key: '123'
   )
 
   expectedData = {

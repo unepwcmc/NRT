@@ -114,12 +114,10 @@ module.exports =
     updateIndicatorData: ->
       deferred = Q.defer()
 
-      IndicatoratorIndicator = require('../components/indicatorator/models/indicator')
+      Indicatorator = require('../components/indicatorator/lib/indicatorator')
 
-      IndicatoratorIndicator.find(
-        @indicatorDefinition.indicatoratorId
-      ).invoke(
-        'query'
+      Indicatorator.getData(
+        @
       ).then( (data) =>
         newIndicatorData = @convertResponseToIndicatorData(data)
         if @validateIndicatorDataFields(newIndicatorData)

@@ -197,7 +197,7 @@ test('.convertIndicatorDataFields when given valid epoch to integer field transl
       to look like expected indicator data:\n
     #{JSON.stringify(expectedData)}"
   )
-  
+
 )
 
 test('.translateRow includes fields with definitions and skips those without', ->
@@ -225,7 +225,7 @@ test('.translateRow includes fields with definitions and skips those without', -
     "Expected periodStart property to not be included in translatedRow"
 )
 
-test('.convertSourceValueToInternalValue when given two values of the same 
+test('.convertSourceValueToInternalValue when given two values of the same
   type it returns same value', ->
   indicator = new Indicator(
     indicatorDefinition:
@@ -258,10 +258,10 @@ test(".convertSourceValueToInternalValue when given a type conversion which
   assert.throws (->
     indicator.convertSourceValueToInternalValue('periodStart', 5)
   ), "Don't know how to convert 'apples' to 'oranges' for field 'periodStart'"
-    
+
 )
 
-test(".convertSourceValueToInternalValue when given a decimalPercentage to 
+test(".convertSourceValueToInternalValue when given a decimalPercentage to
   integer conversion, it multiplies by 100", ->
   indicator = new Indicator(
     indicatorDefinition:
@@ -277,10 +277,10 @@ test(".convertSourceValueToInternalValue when given a decimalPercentage to
   result = indicator.convertSourceValueToInternalValue('value', 0.504)
   assert.strictEqual result, 50.4,
     "Expected value to be mutliplied by 100"
-    
+
 )
 
-test(".convertSourceValueToInternalValue when given an epoch to 
+test(".convertSourceValueToInternalValue when given an epoch to
   date conversion, it converts the value correctly", ->
   indicator = new Indicator(
     indicatorDefinition:
@@ -301,7 +301,7 @@ test(".convertSourceValueToInternalValue when given an epoch to
     "Expected the date to be in October"
   assert.strictEqual result.getFullYear(), 2012,
     "Expected the date to be in 2013"
-    
+
 )
 
 test(".replaceIndicatorData when called on an  indicator where indicator data
@@ -358,47 +358,48 @@ test(".replaceIndicatorData when called on an  indicator where indicator data
 
 )
 
-test(".updateIndicatorData queries IndicatoratorIndicator and calls
-  .replaceIndicatorData with the converted result", (done) ->
-  IndicatoratorIndicator = require('../../components/indicatorator/models/indicator.coffee')
+test(".updateIndicatorData calls Indicatorator.getData(indicator) and updates
+  the indicator data with the result", (done) ->
+  Indicatorator = require('../../components/indicatorator/lib/indicatorator.coffee')
 
-  fakeIndicator = {
-    query: sinon.spy(->
-      Q.fcall(->
-        []
-      )
-    )
-  }
-
-  indicatoratorIndicatorFindSpy = sinon.stub(IndicatoratorIndicator, 'find', (id) ->
-    Q.fcall(->
-      fakeIndicator
-    )
-  )
-
-  indicatoratorId = 5
   indicator = new Indicator(
     indicatorDefinition:
-      indicatoratorId: indicatoratorId
       fields: []
   )
 
+  sinon.stub(indicator, 'replaceIndicatorData', ->
+    Q.fcall(->)
+  )
+
+  indicatoratorGetDataStub = sinon.stub(Indicatorator, 'getData', (indicator) ->
+    Q.fcall(->
+      []
+    )
+  )
+
+
   indicator.updateIndicatorData().then(->
     try
-      assert.strictEqual indicatoratorIndicatorFindSpy.callCount, 1,
-        "Expected IndicatoratorIndicator.find to be called"
-      assert.isTrue indicatoratorIndicatorFindSpy.calledWith(indicatoratorId),
-        "Expected IndicatoratorIndicator.find to be called with the indicatoratorId"
-      assert.strictEqual fakeIndicator.query.callCount, 1,
-        "Expected IndicatoratorIndicator.query to be called"
+      assert.strictEqual indicatoratorGetDataStub.callCount, 1,
+        "Expected Indicatorator.getData to be called"
+      assert.isTrue indicatoratorGetDataStub.calledWith(indicator),
+        "Expected Indicatorator.getData to be called with the indicator"
+
+      assert.strictEqual indicator.replaceIndicatorData.callCount, 1,
+        "Expected the indicator.replaceIndicatorData to be called"
+      expectedIndicatorData = {indicator: indicator._id, data: []}
+      replacedIndicatorData = indicator.replaceIndicatorData.getCall(0).args[0]
+      assert.isTrue indicator.replaceIndicatorData.calledWith(expectedIndicatorData),
+        "Expected the indicator data to be replaced with #{JSON.stringify(expectedIndicatorData)},
+        but got #{JSON.stringify(replacedIndicatorData)}"
 
       done()
     catch err
       done(err)
     finally
-      indicatoratorIndicatorFindSpy.restore()
+      indicatoratorGetDataStub.restore()
   ).fail((err)->
-    indicatoratorIndicatorFindSpy.restore()
+    indicatoratorGetDataStub.restore()
     done(err)
   )
 

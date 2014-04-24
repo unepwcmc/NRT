@@ -47,6 +47,7 @@
   $('a.update').click(function(e){
     id = e.currentTarget.id;
     $.ajax({
+      method: 'POST',
       url: "/admin/updateIndicatorData/"+id,
       success: function(data) {
         $("#"+id+".action-or-response").text('Success');

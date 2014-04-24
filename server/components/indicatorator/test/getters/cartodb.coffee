@@ -4,7 +4,7 @@ Q = require('q')
 _ = require('underscore')
 request = require('request')
 
-Indicator = require('../../models/indicator')
+Indicator = require('../../../../models/indicator').model
 CartoDBGetter = require("../../getters/cartodb")
 
 suite('CartoDB getter')
@@ -106,7 +106,8 @@ test('.buildUrl throws an error if the Indicator does not have any CartoDB confi
 
 test('.buildUrl throws an error if the Indicator cartodb_config does not specify a username', ->
   indicator = new Indicator(
-    cartodb_config: {}
+    indicatoration:
+      cartodb_config: {}
   )
   getter = new CartoDBGetter(indicator)
 
@@ -117,8 +118,9 @@ test('.buildUrl throws an error if the Indicator cartodb_config does not specify
 
 test('.buildUrl throws an error if the Indicator cartodb_config does not specify a table_name', ->
   indicator = new Indicator(
-    cartodb_config:
-      username: ''
+    indicatoration:
+      cartodb_config:
+        username: ''
   )
   getter = new CartoDBGetter(indicator)
 
@@ -129,10 +131,11 @@ test('.buildUrl throws an error if the Indicator cartodb_config does not specify
 
 test('.buildUrl constructs the correct URL with username and query', ->
   indicator = new Indicator(
-    name: "CO 2"
-    cartodb_config:
-      username: 'someguy'
-      table_name: 'dat_table'
+    short_name: "CO 2"
+    indicatoration:
+      cartodb_config:
+        username: 'someguy'
+        table_name: 'dat_table'
   )
 
   getter = new CartoDBGetter(indicator)

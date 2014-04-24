@@ -2,20 +2,19 @@ _ = require('underscore')
 Q = require('q')
 
 module.exports = class GDoc
-  constructor: (indicator) ->
-    @indicator = indicator
+  constructor: (@indicator) ->
 
   fetch: ->
     deferred = Q.defer()
 
     @queryGoogleSpreadsheet(
-      key: @indicator.spreadsheet_key
+      key: @indicator.indicatoration.spreadsheet_key
     ).then( (spreadsheet) =>
 
       spreadsheet.worksheets[0].cells({}, (err, cells) =>
         headers = cells.cells['1']
         indicatorData = _.filter(cells.cells, (row) =>
-          row['2'].value is @indicator.name
+          row['2'].value is @indicator.short_name
         )
 
         deferred.resolve {

@@ -2,8 +2,7 @@ request = require('request')
 Q = require('q')
 
 module.exports = class CartoDBGetter
-  constructor: (indicator) ->
-    @indicator = indicator
+  constructor: (@indicator) ->
 
   fetch: ->
     deferred = Q.defer()
@@ -23,18 +22,18 @@ module.exports = class CartoDBGetter
     return deferred.promise
 
   buildUrl: ->
-    if !@indicator.cartodb_config?
+    if !@indicator.indicatoration.cartodb_config?
       throw new Error("Indicator does not define a cartodb_config attribute")
-    else if !@indicator.cartodb_config.username?
+    else if !@indicator.indicatoration.cartodb_config.username?
       throw new Error("Indicator cartodb_config does not define a username attribute")
-    else if !@indicator.cartodb_config.table_name?
+    else if !@indicator.indicatoration.cartodb_config.table_name?
       throw new Error("Indicator cartodb_config does not define a table_name attribute")
 
-    username = @indicator.cartodb_config.username
-    table_name = @indicator.cartodb_config.table_name
+    username = @indicator.indicatoration.cartodb_config.username
+    table_name = @indicator.indicatoration.cartodb_config.table_name
     query = """
       SELECT * FROM #{table_name}
-      WHERE field_2 = '#{@indicator.name}'
+      WHERE field_2 = '#{@indicator.short_name}'
       OR field_1 = 'Theme'
     """
 

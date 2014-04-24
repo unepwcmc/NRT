@@ -17,6 +17,9 @@ indicatorSchema = mongoose.Schema(
   title: String
   short_name: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
+  indicatoration:
+    type: mongoose.Schema.Types.Mixed
+    default: {}
   dpsir: mongoose.Schema.Types.Mixed
   theme: {type: mongoose.Schema.Types.ObjectId, ref: 'Theme'}
   type: String
