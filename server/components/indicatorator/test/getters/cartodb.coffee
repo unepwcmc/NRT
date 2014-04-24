@@ -106,7 +106,7 @@ test('.buildUrl throws an error if the Indicator does not have any CartoDB confi
 
 test('.buildUrl throws an error if the Indicator cartodb_config does not specify a username', ->
   indicator = new Indicator(
-    indicatoration:
+    indicatorationConfig:
       cartodb_config: {}
   )
   getter = new CartoDBGetter(indicator)
@@ -118,7 +118,7 @@ test('.buildUrl throws an error if the Indicator cartodb_config does not specify
 
 test('.buildUrl throws an error if the Indicator cartodb_config does not specify a table_name', ->
   indicator = new Indicator(
-    indicatoration:
+    indicatorationConfig:
       cartodb_config:
         username: ''
   )
@@ -132,7 +132,7 @@ test('.buildUrl throws an error if the Indicator cartodb_config does not specify
 test('.buildUrl constructs the correct URL with username and query', ->
   indicator = new Indicator(
     short_name: "CO 2"
-    indicatoration:
+    indicatorationConfig:
       cartodb_config:
         username: 'someguy'
         table_name: 'dat_table'

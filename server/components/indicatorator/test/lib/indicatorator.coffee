@@ -14,7 +14,7 @@ suite('Indicatorator')
 
 test(".getData loads and formats the data based on its source", (done) ->
   indicator = new Indicator(
-    indicatoration:
+    indicatorationConfig:
       source: "esri"
   )
 
@@ -42,7 +42,7 @@ test(".getData loads and formats the data based on its source", (done) ->
       formatDataCallArgs = formatDataStub.getCall(0).args
 
       assert.isTrue(
-        formatDataStub.calledWith(indicator.indicatoration.source, gotData),
+        formatDataStub.calledWith(indicator.indicatorationConfig.source, gotData),
         "Expected formatData to be called with the indicator source and the fetched data,
         but was called with #{JSON.stringify formatDataCallArgs}"
       )
@@ -62,9 +62,9 @@ test(".getData loads and formats the data based on its source", (done) ->
 )
 
 test(".getData doesn't apply ranges if the indicator has
-  indicatoration.applyRanges: false", (done)->
+  indicatorationConfig.applyRanges: false", (done)->
   indicator = new Indicator(
-    indicatoration:
+    indicatorationConfig:
       applyRanges: false
   )
 
@@ -94,7 +94,7 @@ test(".getData doesn't apply ranges if the indicator has
 test(".query groups sub indicators if the indicator definition includes
  a reduceField attribute", (done)->
   indicator = new Indicator(
-    indicatoration:
+    indicatorationConfig:
       reduceField: 'station'
   )
 
@@ -117,7 +117,7 @@ test(".query groups sub indicators if the indicator definition includes
         "Expected SubIndicatorator.groupSubIndicatorsUnderAverageIndicators to be called once"
 
       assert.isTrue groupStub.calledWith(
-        theData, {valueField: 'value', reduceField: indicator.indicatoration.reduceField}
+        theData, {valueField: 'value', reduceField: indicator.indicatorationConfig.reduceField}
       ), "Expected groupSubIndicatorsUnderAverageIndicators to be called with the data and the field grouping data"
 
       done()
@@ -134,7 +134,7 @@ test(".query groups sub indicators if the indicator definition includes
 
 test('.fetchData finds the getter for the indicator.source and calls fetch on it', (done) ->
   indicator = new Indicator(
-    indicatoration:
+    indicatorationConfig:
       source: "gdoc"
   )
 
@@ -167,7 +167,7 @@ test('.fetchData finds the getter for the indicator.source and calls fetch on it
 
 test('.fetchData throws an error if there is no getter for the source', ->
   indicator = new Indicator(
-    indicatoration:
+    indicatorationConfig:
       source: "this_source_does_not_exist"
   )
 

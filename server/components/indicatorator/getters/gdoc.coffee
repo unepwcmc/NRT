@@ -8,7 +8,7 @@ module.exports = class GDoc
     deferred = Q.defer()
 
     @queryGoogleSpreadsheet(
-      key: @indicator.indicatoration.spreadsheet_key
+      key: @indicator.indicatorationConfig.spreadsheet_key
     ).then( (spreadsheet) =>
 
       spreadsheet.worksheets[0].cells({}, (err, cells) =>
