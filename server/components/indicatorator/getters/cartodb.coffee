@@ -22,15 +22,15 @@ module.exports = class CartoDBGetter
     return deferred.promise
 
   buildUrl: ->
-    if !@indicator.indicatoration.cartodb_config?
+    if !@indicator.indicatorationConfig.cartodb_config?
       throw new Error("Indicator does not define a cartodb_config attribute")
-    else if !@indicator.indicatoration.cartodb_config.username?
+    else if !@indicator.indicatorationConfig.cartodb_config.username?
       throw new Error("Indicator cartodb_config does not define a username attribute")
-    else if !@indicator.indicatoration.cartodb_config.table_name?
+    else if !@indicator.indicatorationConfig.cartodb_config.table_name?
       throw new Error("Indicator cartodb_config does not define a table_name attribute")
 
-    username = @indicator.indicatoration.cartodb_config.username
-    table_name = @indicator.indicatoration.cartodb_config.table_name
+    username = @indicator.indicatorationConfig.cartodb_config.username
+    table_name = @indicator.indicatorationConfig.cartodb_config.table_name
     query = """
       SELECT * FROM #{table_name}
       WHERE field_2 = '#{@indicator.short_name}'

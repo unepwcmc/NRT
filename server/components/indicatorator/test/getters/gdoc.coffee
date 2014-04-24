@@ -23,7 +23,7 @@ test("GDoc getter takes an Indicator and queries Google Spreadsheets
   with the indicator's spreadsheet id", (done) ->
   indicator = new Indicator(
     short_name: 'Key stakeholders identified'
-    indicatoration:
+    indicatorationConfig:
       spreadsheet_key: '123'
   )
 
@@ -91,7 +91,7 @@ test("GDoc getter takes an Indicator and queries Google Spreadsheets
 test(".fetch returns all rows of a sub indicator", (done) ->
   indicator = new Indicator(
     short_name: 'Key stakeholders identified'
-    indicatoration:
+    indicatorationConfig:
       spreadsheet_key: '123'
   )
 

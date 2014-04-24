@@ -19,7 +19,7 @@ test("calling /admin/updateIndicatorData/{indicatorId}
     indicatorDefinition: {
       fields: []
     }
-    indicatoration: {
+    indicatorationConfig: {
       source: "esri"
       esriConfig: {
         serverUrl: "http://nrtstest.ead.ae/ka/rest/services"
