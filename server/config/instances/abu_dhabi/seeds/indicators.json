@@ -5,7 +5,12 @@
   "sections": [
     {"title": "Description", "content": "Total GHG emissions as % of year 2010 level of emissions"}
   ],
-  "type": "esri",
+  "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "indicatorDefinition": {
   }
 }, {
@@ -15,7 +20,12 @@
   "sections": [
     {"title": "Description", "content": "Average annual CO concentration in µg per m3"}
   ],
-  "type": "esri",
+  "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -23,50 +33,58 @@
     "impact": false,
     "response": false
   },
-  "indicatorDefinition": {
+  "indicatorationConfig": {
+    "source": "esri",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
       "serviceName": "NRT_AD_AirQuality",
-      "featureServer": 1,
-      "unit": "stations",
-      "short_unit": "stations",
-      "period": "quarterly",
-      "xAxis": "date",
-      "yAxis": "value",
-      "geometryField": "geometry",
-      "subIndicatorField": "station",
-      "subIndicatorUnit": "µg/m3",
-      "fields": [
-        {
-          "source": {
-            "name": "periodStart",
-            "type": "epoch"
-          },
-          "name": "date",
-          "type": "date"
+      "featureServer": 1
+    },
+    "applyRanges": false,
+    "reduceField": "station"
+  },
+  "indicatorDefinition": {
+    "unit": "stations",
+    "short_unit": "stations",
+    "period": "quarterly",
+    "xAxis": "date",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "subIndicatorField": "station",
+    "subIndicatorUnit": "µg/m3",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
         },
-        {
-          "source": {
-            "name": "value",
-            "type": "text"
-          },
+        "name": "date",
+        "type": "date"
+      },
+      {
+        "source": {
           "name": "value",
           "type": "text"
         },
-        {
-          "source": {
-            "name": "text",
-            "type": "text"
-          },
+        "name": "value",
+        "type": "text"
+      },
+      {
+        "source": {
           "name": "text",
           "type": "text"
-        }, {
-          "source": {
-            "name": "station",
-            "type": "object"
-          },
+        },
+        "name": "text",
+        "type": "text"
+      }, {
+        "source": {
           "name": "station",
           "type": "object"
-        }
-      ]
+        },
+        "name": "station",
+        "type": "object"
+      }
+    ]
   }
 }, {
   "short_name": "NO2 Concentration",
@@ -75,7 +93,22 @@
   "sections": [
     {"title": "Description", "content": "Average annual NO2 concentration in µg per m3"}
   ],
-  "type": "esri",
+  "indicatorationConfig": {
+    "source": "esri",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": "2"
+    }
+  },
+  "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -84,8 +117,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_AirQuality",
-      "featureServer": 2,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -135,7 +166,22 @@
   "sections": [
     {"title": "Description", "content": "Hourly average SO2 concentration in µg per m3"}
   ],
-  "type": "esri",
+  "indicatorationConfig": {
+    "source": "esri",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": "5"
+    }
+  },
+  "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -144,8 +190,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_AirQuality",
-      "featureServer": 5,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -195,7 +239,22 @@
   "sections": [
     {"title": "Description", "content": "Daily average PM10 concentration in µg per m3"}
   ],
-  "type": "esri",
+  "indicatorationConfig": {
+    "source": "esri",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": "4"
+    }
+  },
+  "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -204,8 +263,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_AirQuality",
-      "featureServer": 4,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -256,6 +313,11 @@
     {"title": "Description", "content": "Annual average PM25 concentration in µg per m3"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -306,7 +368,22 @@
   "sections": [
     {"title": "Description", "content": "Daily average PM10 concentration in µg per m3"}
   ],
-  "type": "esri",
+  "indicatorationConfig": {
+    "source": "esri",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_AirQuality",
+      "featureServer": "3"
+    }
+  },
+  "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -315,8 +392,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_AirQuality",
-      "featureServer": 3,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -362,12 +437,27 @@
 },{
   "short_name": "Protected areas",
   "title": "Protected Area as a Percent of Total area",
-  
+
   "theme": "Biodiversity",
   "sections": [
     {"title": "Description", "content": "This indicator measures the area of protected land ecosystems, inland water ecosystems, and marine ecosystems expressed as a percentage of the total area of land ecosystems, inland water ecosystems and marine ecosystems respectively.  Protected Area refers to all or partially protected areas of at least 1000 hectares that are designated as national parks, natural monuments, natural reserves or wildlife sanctuaries, protected landscapes and seascapes or scientific reserves with limited public access. The data do not include sites protected under local or provincial law."}
   ],
-  "type": "esri",
+  "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "indicatorationConfig": {
+    "source": "esri",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_ProtectedArea",
+      "featureServer": "2"
+    }
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -376,8 +466,6 @@
     "response": true
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_ProtectedArea",
-      "featureServer": 2,
       "unit": "%",
       "short_unit": "%",
       "period": "annual",
@@ -419,6 +507,11 @@
     {"title": "Description", "content": "Area of Selected Key Ecosystems as a Percent of Total Area"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -462,6 +555,11 @@
     {"title": "Description", "content": "Abundance of Selected Key Species"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": true,
     "pressure": false,
@@ -479,6 +577,11 @@
     {"title": "Description", "content": "Annual fish catch from sustainable fisheries"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -495,7 +598,22 @@
   "sections": [
     {"title": "Description", "content": ""}
   ],
-  "type": "esri",
+  "indicatorationConfig": {
+    "source": "esri",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "0"
+    }
+  },
+  "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -504,8 +622,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_MarineWQ",
-      "featureServer": 0,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -555,7 +671,22 @@
   "sections": [
     {"title": "Description", "content": ""}
   ],
-  "type": "esri",
+  "indicatorationConfig": {
+    "source": "esri",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "1"
+    }
+  },
+  "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -564,8 +695,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_MarineWQ",
-      "featureServer": 1,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -615,7 +744,22 @@
   "sections": [
     {"title": "Description", "content": ""}
   ],
-  "type": "esri",
+  "indicatorationConfig": {
+    "source": "esri",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "2"
+    }
+  },
+  "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -624,8 +768,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_MarineWQ",
-      "featureServer": 2,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -675,7 +817,22 @@
   "sections": [
     {"title": "Description", "content": "Area of Selected Key Ecosystems as a Percent of Total Area"}
   ],
-  "type": "esri",
+  "indicatorationConfig": {
+    "source": "esri",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "4"
+    }
+  },
+  "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -684,8 +841,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_MarineWQ",
-      "featureServer": 4,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -735,7 +890,22 @@
   "sections": [
     {"title": "Description", "content": ""}
   ],
-  "type": "esri",
+  "indicatorationConfig": {
+    "source": "esri",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "5"
+    }
+  },
+  "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -744,8 +914,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_MarineWQ",
-      "featureServer": 5,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -795,7 +963,21 @@
   "sections": [
     {"title": "Description", "content": "Enterococci concentration in 100 ml of coastal waters"}
   ],
-  "type": "esri",
+  "indicatorationConfig": {
+    "source": "esri",
+    "applyRanges": false,
+    "reduceField": "station",
+    "esriConfig": {
+      "serverUrl": "http://nrtstest.ead.ae/ka/rest/services",
+      "serviceName": "NRT_AD_MarineWQ",
+      "featureServer": "3"
+    }
+  },
+  "type": "standard",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -804,8 +986,6 @@
     "response": false
   },
   "indicatorDefinition": {
-      "serviceName": "NRT_AD_MarineWQ",
-      "featureServer": 3,
       "unit": "stations",
       "short_unit": "stations",
       "period": "quarterly",
@@ -856,6 +1036,11 @@
     {"title": "Description", "content": "Effective years remaining in usable groundwater reserves"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": true,
@@ -873,6 +1058,11 @@
     {"title": "Description", "content": "Area (km2) of aquifer where water quality is less than or equal to 1500 ppm TDS concentration"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -890,6 +1080,11 @@
     {"title": "Description", "content": "Awareness on ground water depletion and high domestic water consumption"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": false,
@@ -907,6 +1102,11 @@
     {"title": "Description", "content": "Awareness on diminishing fish stock"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": true,
@@ -924,6 +1124,11 @@
     {"title": "Description", "content": "Awareness on air quality (indoor and outdoor) & noise pollution"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": true,
     "pressure": true,
@@ -941,6 +1146,11 @@
     {"title": "Description", "content": "Awareness on Biodiversity (marine and terrestrial"}
   ],
   "type": "esri",
+  "source": {
+     "name": "Environment Agency - Abu Dhabi",
+     "url": "http://www.ead.ae"
+  },
+  "primary": true,
   "dpsir": {
     "driver": false,
     "pressure": true,
@@ -1040,6 +1250,11 @@
   "description": "Protected Area coverage (World Bank)",
   "theme": "Biodiversity",
   "type": "worldBank",
+  "primary": false,
+  "source": {
+    "name": "World Bank Database",
+    "url": "http://data.worldbank.org"
+  },
   "indicatorDefinition": {
       "unit": "%",
       "short_unit": "%",
@@ -1080,6 +1295,11 @@
   "description": "Production of Cereals",
   "theme": "Environmental Awareness",
   "type": "ede",
+  "primary": "false",
+  "source": {
+    "name": "UNEP EDE",
+    "url": "http://unep.org"
+  },
   "indicatorDefinition": {
       "unit": "Metric tons",
       "short_unit": "T",
@@ -1119,6 +1339,11 @@
   "description": "Seagrass area (Blue carbon)",
   "theme": "Biodiversity",
   "type": "cartodb",
+  "primary": false,
+  "source": {
+    "name": "EAD Blue Carbon",
+    "url": "http://www.ead.ae"
+  },
   "indicatorDefinition": {
     "apiUrl": "http://localhost:3002",
     "cartodb_user": "carbon-tool",
