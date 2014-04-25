@@ -4,8 +4,11 @@
   "theme": "Contribution of the forestry sector",
   "sections": [],
   "indicatorationConfig": {
-    "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
-    "source": "gdoc",
+    "source": "cartodb",
+    "cartodb_config": {
+      "username": "carbon-tool",
+      "table_name": "kenya_20indicator_20data_20feed"
+    },
     "range": [
         {"minValue": 0.35, "message": "Excellent"},
         {"minValue": 0.15, "message": "Good"},
@@ -52,8 +55,11 @@
     "theme": "Contribution of the forestry sector",
     "sections": [],
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
-      "source": "gdoc",
+      "source": "cartodb",
+      "cartodb_config": {
+        "username": "carbon-tool",
+        "table_name": "kenya_20indicator_20data_20feed"
+      },
       "range": [
           {"minValue": 0.35, "message": "Excellent"},
           {"minValue": 0.15, "message": "Good"},
