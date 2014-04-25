@@ -23,11 +23,15 @@ adminRoutes     = require('./controllers/admin')
 themeRoutes     = require('./controllers/themes')
 testRoutes      = require('./controllers/tests')
 
+indicatorator   = require('./components/indicatorator/app')
+
 module.exports = exports = (app) ->
   app.use('/', sessionAuthentication)
   app.use('/api/users', tokenAuthentication)
 
   app.use passport.addCurrentUserToLocals
+
+  app.use indicatorator
 
   app.get "/login", sessionRoutes.login
   app.get "/logout", sessionRoutes.logout
@@ -88,7 +92,7 @@ module.exports = exports = (app) ->
   unless app.settings.env == 'production'
     app.get "/tests", testRoutes.test
 
-  app.get "/admin/updateIndicatorData/:id", adminRoutes.updateIndicatorData
+  app.post "/admin/updateIndicatorData/:id", adminRoutes.updateIndicatorData
   app.get "/admin/updateAll", adminRoutes.updateAll
   app.get "/admin", adminRoutes.updateAll
   app.get "/admin/seedIndicatorData", adminRoutes.seedIndicatorData

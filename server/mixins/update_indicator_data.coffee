@@ -3,19 +3,6 @@ Q = require('q')
 request = require('request')
 _ = require('underscore')
 
-CONFIG =
-  worldBank:
-    defaultQueryParameters:
-      "per_page": 100
-      "date": "1960:2013"
-      "format": "json"
-
-  cartodb:
-    defaultQueryParameters: {}
-
-  ede:
-    defaultQueryParameters: {}
-
 CONVERSIONS =
   epoch:
     integer: (value) ->
@@ -28,117 +15,20 @@ CONVERSIONS =
     integer: (value)->
       value * 100
 
-URL_BUILDERS =
-
-  worldBank: ->
-    if @indicatorDefinition?
-      apiUrl = @indicatorDefinition.apiUrl
-      apiIndicatorName = @indicatorDefinition.apiIndicatorName
-
-    unless apiUrl? and apiIndicatorName?
-      throw "Cannot generate update URL, indicator has no apiUrl or apiIndicatorName in its indicator definition"
-
-    url = "#{apiUrl}/#{apiIndicatorName}"
-    return url
-
-  cartodb: ->
-    if @indicatorDefinition?
-      apiUrl = @indicatorDefinition.apiUrl
-      cartodb_user = @indicatorDefinition.cartodb_user
-      cartodb_tablename = @indicatorDefinition.cartodb_tablename
-      query = encodeURIComponent(@indicatorDefinition.query)
-
-    unless cartodb_user? and query?
-      throw "Cannot generate update URL, indicator of type 'cartodb' has no cartodb_user or query in its indicator definition"
-
-    url = "#{apiUrl}/cdb/#{cartodb_user}/#{cartodb_tablename}/#{query}"
-    return url
-
-  ede: ->
-    if @indicatorDefinition?
-      apiUrl = @indicatorDefinition.apiUrl
-      apiVariableId = @indicatorDefinition.apiVariableId
-
-    unless apiUrl? and apiVariableId?
-      throw "Cannot generate update URL, indicator has no apiUrl or apiVariableId in its definition"
-
-    url = "#{apiUrl}/#{apiVariableId}"
-    return url
-
-  standard: ->
-    if @indicatorDefinition?
-      indicatoratorId = @indicatorDefinition.indicatoratorId
-
-    unless indicatoratorId?
-      throw "Cannot generate update URL, indicator has no indicatorator ID in its definition"
-
-    url = "http://localhost:3002/indicator/#{indicatoratorId}/data"
-    return url
-
-SOURCE_DATA_PARSERS =
-
-  worldBank: (responseBody) ->
-    unless _.isArray(responseBody) and responseBody.length is 2
-      throw "Can't convert poorly formed indicator data reponse:\n#{
-        JSON.stringify(responseBody)
-      }\n expected response to be a world bank api response;#{
-      } an array with a data array as the second element"
-
-    return {
-      indicator: @_id
-      data: responseBody[1]
-    }
-
-  cartodb: (responseBody) ->
-    unless responseBody.data?
-      throw "Can't convert poorly formed indicator data reponse:\n#{
-        JSON.stringify(responseBody)
-      }\n expected response to be a cartodb api response"
-
-    return {
-      indicator: @_id
-      data: responseBody.data
-    }
-
-  standard: (responseBody) ->
-    unless _.isArray(responseBody)
-      throw "Can't convert poorly formed indicator data reponse:\n#{
-        JSON.stringify(responseBody)
-      }\n expected response to be an array"
-
-    return {
-      indicator: @_id
-      data: responseBody
-    }
 
 module.exports =
   statics: {}
   methods:
-    getUpdateUrl: ->
-      urlBuilder = URL_BUILDERS[@type]
-      if urlBuilder?
-        return urlBuilder.call(@)
-      else
-        throw new Error("Couldn't find a url builder for indicator.type: '#{@type}'")
+    convertResponseToIndicatorData: (data) ->
+      unless _.isArray(data)
+        throw "Can't convert poorly formed indicator data reponse:\n#{
+          JSON.stringify(data)
+        }\n expected response to be an array"
 
-    queryIndicatorData: ->
-      deferred = Q.defer()
-
-      request.get
-        url: @getUpdateUrl()
-        qs: CONFIG[@type]?.defaultQueryParameters || {}
-        json: true
-      , (err, response) ->
-        if err?
-          deferred.reject(err)
-
-        deferred.resolve(response)
-
-      return deferred.promise
-
-    convertResponseToIndicatorData: (responseBody) ->
-      sourceDataParser = SOURCE_DATA_PARSERS[@type] || SOURCE_DATA_PARSERS['standard']
-      return sourceDataParser.call(@, responseBody)
+      return {
+        indicator: @_id
+        data: data
+      }
 
     validateIndicatorDataFields: (indicatorData) ->
       firstRow = indicatorData.data[0]
@@ -223,9 +113,13 @@ module.exports =
 
     updateIndicatorData: ->
       deferred = Q.defer()
-      @queryIndicatorData(
-      ).then( (response) =>
-        newIndicatorData = @convertResponseToIndicatorData(response.body)
+
+      Indicatorator = require('../components/indicatorator/lib/indicatorator')
+
+      Indicatorator.getData(
+        @
+      ).then( (data) =>
+        newIndicatorData = @convertResponseToIndicatorData(data)
         if @validateIndicatorDataFields(newIndicatorData)
           newIndicatorData = @convertIndicatorDataFields(newIndicatorData)
           return @replaceIndicatorData(newIndicatorData)

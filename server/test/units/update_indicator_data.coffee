@@ -8,287 +8,8 @@ _ = require('underscore')
 
 suite('Update Indicator Mixin')
 
-test('.getUpdateUrl on indicator with no type throws an appropriate error', ->
-  indicator = new Indicator()
-
-  assert.throws((->
-    indicator.getUpdateUrl()
-  ), "Couldn't find a url builder for indicator.type: 'undefined'")
-)
-
-test('.getUpdateUrl on a worldBank indicator with a valid apiUrl and apiIndicatorName', ->
-  indicator = new Indicator
-    type: 'worldBank'
-    indicatorDefinition:
-      apiUrl: "http://api.worldbank.org/countries/ARE"
-      apiIndicatorName: "NY.ADJ.DCO2.GN.ZS"
-
-  expectedUrl = "http://api.worldbank.org/countries/ARE/NY.ADJ.DCO2.GN.ZS"
-  url = indicator.getUpdateUrl()
-
-  assert.strictEqual url, expectedUrl
-)
-
-test('.getUpdateUrl on a worldBank indicator with missing apiUrl and apiIndicatorName
- it throws an error', ->
-  indicator = new Indicator(type: 'worldBank')
-
-  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, indicator has no apiUrl or apiIndicatorName in its indicator definition"
-)
-
-test('.getUpdateUrl on a cartodb indicator with a valid user and query', ->
-  indicator = new Indicator
-    type: 'cartodb'
-    indicatorDefinition:
-      "apiUrl": "http://localhost:3002"
-      "cartodb_user": "carbon-tool",
-      "cartodb_tablename": "nrt_bc_seagrass_copy",
-      "query": "SELECT SUM(area_ha) FROM nrt_bc_seagrass_copy"
-
-  expectedUrl = "http://localhost:3002/cdb/carbon-tool/nrt_bc_seagrass_copy/SELECT%20SUM(area_ha)%20FROM%20nrt_bc_seagrass_copy"
-  url = indicator.getUpdateUrl()
-
-  assert.strictEqual url, expectedUrl
-)
-
-test('.getUpdateUrl on a cartodb indicator with missing cartodb_user and query
- it throws an error', ->
-  indicator = new Indicator(type: 'cartodb')
-
-  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, indicator of type 'cartodb' has no cartodb_user or query in its indicator definition"
-)
-
-test('.getUpdateUrl on an EDE indicator with a valid URL and Variable ID', ->
-  indicator = new Indicator
-    type: 'ede'
-    indicatorDefinition:
-      "apiUrl": "http://localhost:3002/AE"
-      "apiVariableId": 1
-
-  expectedUrl = "http://localhost:3002/AE/1"
-  url = indicator.getUpdateUrl()
-
-  assert.strictEqual url, expectedUrl
-)
-
-test('.getUpdateUrl on an EDE indicator with missing API URL and Variable ID
- it throws an error', ->
-  indicator = new Indicator(type: 'ede')
-
-  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, indicator has no apiUrl or apiVariableId in its definition"
-)
-
-test('.getUpdateUrl on an Standard indicator with a valid indicatorator ID', ->
-  indicator = new Indicator
-    type: 'standard'
-    indicatorDefinition:
-      "indicatoratorId": 1
-
-  expectedUrl = "http://localhost:3002/indicator/1/data"
-  url = indicator.getUpdateUrl()
-
-  assert.strictEqual url, expectedUrl
-)
-
-test('.getUpdateUrl on an Standard indicator with missing indicatorator ID
- it throws an error', ->
-  indicator = new Indicator(type: 'standard')
-
-  assert.throws (-> indicator.getUpdateUrl()), "Cannot generate update URL, indicator has no indicatorator ID in its definition"
-)
-
-test('.queryIndicatorData queries the remote server for indicator data', (done) ->
-  indicator = new Indicator(
-    type: 'standard'
-    indicatorDefinition:
-      indicatoratorId: 2
-  )
-
-  serverResponseData = [
-    periodStart: 1325376000000
-    value: "0.29390622"
-    text: "Test"
-  ,
-    periodStart: 1356998400000
-    value: "0.2278165"
-    text: "Test"
-  ]
-
-  requestStub = sinon.stub(request, 'get', (options, callback)->
-    assert.strictEqual options.url, indicator.getUpdateUrl()
-    assert.isDefined options.qs, "Expected query string parameters to be defined"
-
-    callback(null, {
-      body: serverResponseData
-    }))
-
-  indicator.queryIndicatorData().then( (response) ->
-    assert.ok(
-      _.isEqual(response.body, serverResponseData),
-      "Expected responseBody:\n
-      #{response.body}\n
-        to look like expected server response data:\n
-      #{serverResponseData}"
-    )
-
-    requestStub.restore()
-    done()
-  ).fail( (err) ->
-    requestStub.restore()
-    done(err)
-  )
-)
-
-test(".queryIndicatorData sends no parameters when there is no 'defaultQueryParameters'
-for the indicator type", (done) ->
-  indicator = new Indicator(type: 'made-up')
-  sinon.stub(indicator, 'getUpdateUrl', ->)
-
-  requestStub = sinon.stub(request, 'get', (options, callback)->
-    assert.isDefined options.qs, "Expected query string parameters to be defined"
-
-    callback(null, {})
-  )
-
-  indicator.queryIndicatorData().then( (response) ->
-    requestStub.restore()
-    done()
-  ).fail((err) ->
-    requestStub.restore()
-    done(err)
-  )
-)
-
-test('.convertResponseToIndicatorData for a worldBank indicator
-  takes data from remote server and prepares for writing to database', (done)->
-  responseData = [
-    {
-      "page": 1
-    },
-    [
-      {
-        "indicator": {
-          "id": "NY.ADJ.DCO2.GN.ZS",
-          "value": "Adjusted savings: carbon dioxide damage (% of GNI)"
-        },
-        "value": null,
-        "decimal": "1",
-        "date": "1961"
-      }
-    ]
-  ]
-
-  helpers.createIndicatorModels([{
-    type: 'worldBank'
-  }]).then( (indicators) ->
-    indicator = indicators[0]
-
-    expectedIndicatorData = {
-      indicator: indicator._id
-      data: [
-        {
-          "indicator": {
-            "id": "NY.ADJ.DCO2.GN.ZS",
-            "value": "Adjusted savings: carbon dioxide damage (% of GNI)"
-          },
-          "value": null,
-          "decimal": "1",
-          "date": "1961"
-        }
-      ]
-    }
-
-    convertedData = indicator.convertResponseToIndicatorData(responseData)
-
-    assert.ok(
-      _.isEqual(convertedData, expectedIndicatorData),
-      "Expected converted data:\n
-      #{JSON.stringify(convertedData)}\n
-        to look like expected indicator data:\n
-      #{JSON.stringify(expectedIndicatorData)}"
-    )
-
-    done()
-
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
-)
-
-test('.convertResponseToIndicatorData on a worldBank indicator
-  when given a garbage response it throws an error', ->
-  indicator = new Indicator(
-    type: 'worldBank'
-  )
-
-  garbageData = {hats: 'boats'}
-  assert.throws(
-    (->
-      indicator.convertResponseToIndicatorData(garbageData)
-    ), "Can't convert poorly formed indicator data reponse:\n#{
-          JSON.stringify(garbageData)
-        }\n expected response to be a world bank api response;#{
-      } an array with a data array as the second element"
-  )
-)
-
-test('.convertResponseToIndicatorData for a cartodb indicator
-  takes data from remote server and prepares for writing to database', (done)->
-  responseData = {"data":[{"value":10.5,"year":2013,"text":"Excellent"}]} 
-
-  helpers.createIndicatorModels([{
-    type: 'cartodb'
-  }]).then( (indicators) ->
-    indicator = indicators[0]
-
-    expectedIndicatorData = {
-      indicator: indicator._id
-      data: [
-        {
-          "value": 10.5,
-          "year": 2013,
-          "text": "Excellent"
-        }
-      ]
-    }
-
-    convertedData = indicator.convertResponseToIndicatorData(responseData)
-
-    assert.ok(
-      _.isEqual(convertedData, expectedIndicatorData),
-      "Expected converted data:\n
-      #{JSON.stringify(convertedData)}\n
-        to look like expected indicator data:\n
-      #{JSON.stringify(expectedIndicatorData)}"
-    )
-
-    done()
-
-  ).fail((err) ->
-    console.error err
-    throw err
-  )
-)
-
-test('.convertResponseToIndicatorData on a cartodb indicator
-  when given a garbage response it throws an error', ->
-  indicator = new Indicator(
-    type: 'cartodb'
-  )
-
-  garbageData = {hats: 'boats'}
-  assert.throws(
-    (->
-      indicator.convertResponseToIndicatorData(garbageData)
-    ), "Can't convert poorly formed indicator data reponse:\n#{
-          JSON.stringify(garbageData)
-        }\n expected response to be a cartodb api response"
-  )
-)
-
-test('.convertResponseToIndicatorData for a Standard indicator
-  puts the indicator data into the format of the indicator_data table', (done)->
+test('.convertResponseToIndicatorData puts the indicator data into
+  the format of the indicator_data table', (done)->
   responseData = [{"year": 1998, "value": 400}]
 
   helpers.createIndicatorModels([{
@@ -321,42 +42,8 @@ test('.convertResponseToIndicatorData for a Standard indicator
   ).fail(done)
 )
 
-test('.convertResponseToIndicatorData for an indicator type with no converter specified
-  converts the data in the same way as the standard indicator', (done)->
-  responseData = [{"year": 1998, "value": 400}]
-
-  helpers.createIndicatorModels([{
-    type: 'ede'
-  }]).then( (indicators) ->
-    indicator = indicators[0]
-
-    expectedIndicatorData = {
-      indicator: indicator._id
-      data: [
-        {
-          "value": 400,
-          "year": 1998
-        }
-      ]
-    }
-
-    convertedData = indicator.convertResponseToIndicatorData(responseData)
-
-    assert.ok(
-      _.isEqual(convertedData, expectedIndicatorData),
-      "Expected converted data:\n
-      #{JSON.stringify(convertedData)}\n
-        to look like expected indicator data:\n
-      #{JSON.stringify(expectedIndicatorData)}"
-    )
-
-    done()
-
-  ).fail(done)
-)
-
-test('.convertResponseToIndicatorData on a standard indicator
-  when given a garbage response it throws an error', ->
+test('.convertResponseToIndicatorData when given a garbage response
+  throws an error', ->
   indicator = new Indicator(
     type: 'standard'
   )
@@ -510,7 +197,7 @@ test('.convertIndicatorDataFields when given valid epoch to integer field transl
       to look like expected indicator data:\n
     #{JSON.stringify(expectedData)}"
   )
-  
+
 )
 
 test('.translateRow includes fields with definitions and skips those without', ->
@@ -538,7 +225,7 @@ test('.translateRow includes fields with definitions and skips those without', -
     "Expected periodStart property to not be included in translatedRow"
 )
 
-test('.convertSourceValueToInternalValue when given two values of the same 
+test('.convertSourceValueToInternalValue when given two values of the same
   type it returns same value', ->
   indicator = new Indicator(
     indicatorDefinition:
@@ -571,10 +258,10 @@ test(".convertSourceValueToInternalValue when given a type conversion which
   assert.throws (->
     indicator.convertSourceValueToInternalValue('periodStart', 5)
   ), "Don't know how to convert 'apples' to 'oranges' for field 'periodStart'"
-    
+
 )
 
-test(".convertSourceValueToInternalValue when given a decimalPercentage to 
+test(".convertSourceValueToInternalValue when given a decimalPercentage to
   integer conversion, it multiplies by 100", ->
   indicator = new Indicator(
     indicatorDefinition:
@@ -590,10 +277,10 @@ test(".convertSourceValueToInternalValue when given a decimalPercentage to
   result = indicator.convertSourceValueToInternalValue('value', 0.504)
   assert.strictEqual result, 50.4,
     "Expected value to be mutliplied by 100"
-    
+
 )
 
-test(".convertSourceValueToInternalValue when given an epoch to 
+test(".convertSourceValueToInternalValue when given an epoch to
   date conversion, it converts the value correctly", ->
   indicator = new Indicator(
     indicatorDefinition:
@@ -614,7 +301,7 @@ test(".convertSourceValueToInternalValue when given an epoch to
     "Expected the date to be in October"
   assert.strictEqual result.getFullYear(), 2012,
     "Expected the date to be in 2013"
-    
+
 )
 
 test(".replaceIndicatorData when called on an  indicator where indicator data
@@ -668,5 +355,52 @@ test(".replaceIndicatorData when called on an  indicator where indicator data
     console.error err
     throw err
   )
-  
+
+)
+
+test(".updateIndicatorData calls Indicatorator.getData(indicator) and updates
+  the indicator data with the result", (done) ->
+  Indicatorator = require('../../components/indicatorator/lib/indicatorator.coffee')
+
+  indicator = new Indicator(
+    indicatorDefinition:
+      fields: []
+  )
+
+  sinon.stub(indicator, 'replaceIndicatorData', ->
+    Q.fcall(->)
+  )
+
+  indicatoratorGetDataStub = sinon.stub(Indicatorator, 'getData', (indicator) ->
+    Q.fcall(->
+      []
+    )
+  )
+
+
+  indicator.updateIndicatorData().then(->
+    try
+      assert.strictEqual indicatoratorGetDataStub.callCount, 1,
+        "Expected Indicatorator.getData to be called"
+      assert.isTrue indicatoratorGetDataStub.calledWith(indicator),
+        "Expected Indicatorator.getData to be called with the indicator"
+
+      assert.strictEqual indicator.replaceIndicatorData.callCount, 1,
+        "Expected the indicator.replaceIndicatorData to be called"
+      expectedIndicatorData = {indicator: indicator._id, data: []}
+      replacedIndicatorData = indicator.replaceIndicatorData.getCall(0).args[0]
+      assert.isTrue indicator.replaceIndicatorData.calledWith(expectedIndicatorData),
+        "Expected the indicator data to be replaced with #{JSON.stringify(expectedIndicatorData)},
+        but got #{JSON.stringify(replacedIndicatorData)}"
+
+      done()
+    catch err
+      done(err)
+    finally
+      indicatoratorGetDataStub.restore()
+  ).fail((err)->
+    indicatoratorGetDataStub.restore()
+    done(err)
+  )
+
 )

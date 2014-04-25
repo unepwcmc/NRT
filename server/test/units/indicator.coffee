@@ -193,7 +193,7 @@ test('.getIndicatorData with no filters returns all indicator data for this indi
       indicatorData, 'save'
     )
   ).then( ->
-    
+
     indicator.getIndicatorData((err, data) ->
       assert.ok(
         _.isEqual(data, expectedData),
@@ -257,7 +257,7 @@ test('.getIndicatorData with an integer filter \'min\' value
   )
 )
 
-test('.getIndicatorData on an indicator with no indicator data 
+test('.getIndicatorData on an indicator with no indicator data
   returns an empty array', (done) ->
   indicator = new Indicator()
 
@@ -362,7 +362,7 @@ test("#findWhereIndicatorHasData returns only indicators with indicator data", (
   ).then((indicatorData) ->
     Indicator.findWhereIndicatorHasData()
   ).then((indicators) ->
-    
+
     assert.lengthOf indicators, 1, "Expected only the one indicator with data to be returned"
     assert.strictEqual indicators[0]._id.toString(), indicatorWithData._id.toString(),
       "Expected the returned indicator to be the indicator with data"
@@ -402,7 +402,7 @@ test("#findWhereIndicatorHasData respects the given filters", (done)->
   ).then((indicatorData) ->
     Indicator.findWhereIndicatorHasData(_id: indicatorToFind._id)
   ).then((indicators) ->
-    
+
     assert.lengthOf indicators, 1, "Expected only the one indicator with data to be returned"
     assert.strictEqual indicators[0]._id.toString(), indicatorToFind._id.toString(),
       "Expected the returned indicator to be the indicator with data"
@@ -612,7 +612,7 @@ returns blank values for those fields", (done) ->
  ).fail( (err) ->
    done(err)
  )
-  
+
 )
 
 test("#seedData when no seed file exist reports an appropriate error", (done) ->
@@ -639,7 +639,7 @@ test("#seedData when no seed file exist reports an appropriate error", (done) ->
     readFileStub.restore()
   )
 
-  
+
 )
 
 test('#CONDITIONS.IS_PRIMARY only returns indicators with indicators
@@ -661,5 +661,13 @@ test('#CONDITIONS.IS_PRIMARY only returns indicators with indicators
     catch err
       done(err)
   ).fail(done)
-  
+
+)
+
+test('creating a new Indicator without an "indicatorationConfig" attribute
+  initialises it with a empty object', ->
+  indicator = new Indicator()
+
+  assert.deepEqual indicator.indicatorationConfig, {},
+    "Expected indicator.indicatoration to be defaulted to {}"
 )

@@ -4,9 +4,12 @@ _ = require('underscore')
 
 APP_CONFIG = null
 
-exports.get = (key) ->
+ensureAppConfig = ->
   unless APP_CONFIG?
     APP_CONFIG = readConfigFile()
+
+exports.get = (key) ->
+  ensureAppConfig()
 
   _.clone(APP_CONFIG[key])
 
@@ -27,7 +30,7 @@ readConfigFile = ->
   return JSON.parse(configJSON)
 
 exports.initialize = ->
-  readConfigFile()
+  ensureAppConfig()
 
   middleware = (req, res, next) ->
     req.APP_CONFIG = res.locals.APP_CONFIG = APP_CONFIG
