@@ -4,7 +4,6 @@ Q = require('q')
 WORLD_BANK_URL = "http://api.worldbank.org/countries"
 WORLD_BANK_QUERY_SUFFIX =
     "per_page": 100
-    "date": "1960:2013"
     "format": "json"
 
 module.exports = class WorldBankGetter
