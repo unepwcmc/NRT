@@ -6,7 +6,7 @@ tagRefersToServer = (tag, serverName) ->
   return new RegExp("^#{serverName}").test(tag)
 
 getIpFromRequest = (req) ->
-  req.connection.remoteAddress
+  req.headers['x-real-ip'] or req.connection.remoteAddress
 
 GITHUB_IP_RANGE = "192.30.252.0/22"
 

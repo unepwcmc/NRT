@@ -127,6 +127,7 @@ test("POST deploy fails if the IP is not of GitHub's servers", (done) ->
   ).spread( (res, body) ->
 
     try
+      console.log body
       assert.equal res.statusCode, 401
 
       assert.isFalse updateCodeStub.calledOnce,
