@@ -5,6 +5,7 @@ GETTERS =
   gdoc: require('../getters/gdoc')
   cartodb: require('../getters/cartodb')
   esri: require('../getters/esri')
+  worldBank: require('../getters/world_bank')
 
 FORMATTERS =
   gdoc: require('../formatters/gdoc')
