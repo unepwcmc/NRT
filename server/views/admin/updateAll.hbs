@@ -14,8 +14,8 @@
       Update indicator data
     </h1>
   </header>
-  <a class='button update-all'>Update all</a>
-  <a href="/admin/seedIndicatorData" class='button'>Seed from backup</a>
+  <a class="button update-all">Update all</a>
+  <a href="/admin/seedIndicatorData" class="button">Seed from backup</a>
 
   <table>
     <thead>
@@ -33,9 +33,9 @@
             </p>
             <small>{{id}}</small>
           </td>
-          <td class='action-or-response' id="{{id}}">
-            <a id="{{id}}" class='update button'>Update </a>
-            <a href="/admin/updateIndicatorData/{{id}}" class='button'>Details</a>
+          <td class="action-or-response" id="{{id}}">
+            <a id="{{id}}" class="update button">Update </a>
+            <a href="/admin/updateIndicatorData/{{id}}" class="button">Details</a>
           </td>
         </tr>
       {{/indicators}}
@@ -45,24 +45,24 @@
 
 <script type="text/javascript" charset="utf-8">
   $('a.update').click(function(e){
-    id = e.currentTarget.id;
+    var id = e.currentTarget.id;
     $.ajax({
       method: 'POST',
-      url: "/admin/updateIndicatorData/"+id,
+      url: '/admin/updateIndicatorData/'+id,
       success: function(data) {
-        $("#"+id+".action-or-response").text('Success');
+        $('#'+id+'.action-or-response').text('Success');
       },
       error: function(err){
-        $("#"+id+".action-or-response").text('Failed');
-        console.log("Message from remote server for "+id+": "+ err.responseText);
+        $('#'+id+'.action-or-response').text('Failed');
+        console.log('Message from remote server for '+id+': '+ err.responseText);
       },
     });
   })
 
   $('a.update-all').click(function(e){
-    _.each($(".button.update"), function(elem, idx) {
+    _.each($('.button.update'), function(elem, idx) {
       setTimeout(function() {
-        $(elem).trigger("click");
+        $(elem).trigger('click');
       }, idx*1000);
     })
   })
