@@ -116,8 +116,24 @@ test("calling /admin/updateIndicatorData/{indicatorId}
     }
   )
 
-  worldBankResponse = {
-  }
+  worldBankResponse = [
+    {},
+    [
+      {
+        "indicator": {
+          "id": "AG.LND.FRST.ZS",
+          "value": "Forest area (% of land area)"
+        },
+        "country": {
+          "id": "MU",
+          "value": "Mauritius"
+        },
+        "value": "17.2512315270936",
+        "decimal": "1",
+        "date": "1969"
+      }
+    ]
+  ]
 
   requestGetStub = sinon.stub(request, 'get', (options, cb) ->
     cb(null, {body: JSON.stringify(worldBankResponse)})
