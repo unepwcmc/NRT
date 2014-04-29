@@ -1,0 +1,48 @@
+[{
+  "short_name": "Fish Landings",
+  "title": "Fish Landings",
+  "theme": "Coastal and Marine resources",
+  "sections": [],
+  "primary": true,
+  "indicatorationConfig": {
+    "source": "gdoc",
+    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  },
+  "indicatorDefinition": {
+    "name": "Fish Landings",
+    "unit": "landings",
+    "short_unit": "landings",
+    "period": "yearly",
+    "xAxis": "year",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "year",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "integer"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
+  }
+}]
