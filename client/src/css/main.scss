@@ -343,10 +343,18 @@ h1, h2, h3, h4, h5 {
     padding-top: 16px;
     padding-right: 15px;
     padding-bottom: 0;
+
     small {
       font-weight: 600;
       display: block;
       color: white;
+
+      .flag {
+        height: 24px;
+        width: 24px;
+        margin: 0px 5px 0  0;
+        float:left;
+      }
     }
   }
 

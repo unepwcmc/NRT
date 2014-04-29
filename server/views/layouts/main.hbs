@@ -35,7 +35,13 @@
           <a href="/">
             <h1>
               National Reporting Toolkit
-              <small>{{APP_CONFIG.instance_name}}</small>
+              <small>
+                {{#if APP_CONFIG.iso2}}
+                  <img class='flag' src="/images/flags/{{APP_CONFIG.iso2}}.png"/>
+                {{/if}}
+
+                {{APP_CONFIG.instance_name}}
+              </small>
             </h1>
           </a>
         </div>
