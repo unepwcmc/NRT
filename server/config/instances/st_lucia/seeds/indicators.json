@@ -6,7 +6,7 @@
   "primary": true,
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "spreadsheet_key": "1IsJzMWxbj0ljOnpA9tszIaajZtoCrsGm1eEwT_riDfc",
     "range": [
         {"minValue": 0.5, "message": "Good"},
         {"minValue": 0, "message": "Bad"}
