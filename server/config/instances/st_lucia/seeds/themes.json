@@ -9,5 +9,15 @@
     "sections": [
       {"title": "Description", "content": "Energy and Minerals"}
     ]
+  }, {
+    "title": "Air",
+    "sections": [
+      {"title": "Description", "content": "Air"}
+    ]
+  }, {
+    "title": "Biodiversity",
+    "sections": [
+      {"title": "Description", "content": "Biodiversity"}
+    ]
   }
 ]
