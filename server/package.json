@@ -8,7 +8,7 @@
     "test-debug": "NODE_ENV=test mocha --debug",
     "start": "supervisor -e 'node,js,json,coffee,hbs' -i ./public ./bin/server.js",
     "debug": "node --debug ./bin/server.js",
-    "production": "NODE_ENV=production node ./bin/server.js",
+    "production": "NODE_ENV=production forever -c node ./bin/server.js",
     "win-production": "start cmd.exe /K bin\\server.bat",
     "setup": "node bin/setup.js",
     "backup-data": "coffee lib/tasks/backupIndicatorData.coffee",
