@@ -92,4 +92,151 @@
       }
     ]
   }
+}, {
+  "short_name": "CO2 emissions (metric tons per capita)",
+  "title": "CO2 emissions (metric tons per capita)",
+  "theme": "Air",
+  "sections": [],
+  "primary": true,
+  "indicatorationConfig": {
+    "source": "worldBank",
+    "worldBankConfig": {
+      "indicatorCode": "EN.ATM.CO2E.PC",
+      "countryCode": "LC"
+    },
+    "range": [
+      {"minValue": 0, "message": "Good"},
+      {"minValue": 20, "message": "Bad"}
+    ]
+  },
+  "indicatorDefinition": {
+    "unit": "metric tons",
+    "short_unit": "t",
+    "period": "annual",
+    "xAxis": "year",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "date",
+          "type": "integer"
+        },
+        "name": "year",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "integer"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
+  }
+}, {
+  "short_name": "Terrestrial protected areas (% of total land area)",
+  "title": "Terrestrial protected areas (% of total land area)",
+  "theme": "Biodiversity",
+  "sections": [],
+  "primary": true,
+  "indicatorationConfig": {
+    "source": "worldBank",
+    "worldBankConfig": {
+      "indicatorCode": "ER.LND.PTLD.ZS",
+      "countryCode": "LC"
+    },
+    "range": [
+      {"minValue": 50, "message": "Good"},
+      {"minValue": 0, "message": "Bad"}
+    ]
+  },
+  "indicatorDefinition": {
+    "unit": "percentage",
+    "short_unit": "%",
+    "period": "annual",
+    "xAxis": "year",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "date",
+          "type": "integer"
+        },
+        "name": "year",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "integer"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
+  }
+}, {
+  "short_name": "Fish species, threatened",
+  "title": "Fish species, threatened",
+  "theme": "Biodiversity",
+  "sections": [],
+  "primary": true,
+  "indicatorationConfig": {
+    "source": "worldBank",
+    "worldBankConfig": {
+      "indicatorCode": "EN.FSH.THRD.NO",
+      "countryCode": "LC"
+    },
+    "range": [
+      {"minValue": 0, "message": "Good"},
+      {"minValue": 20, "message": "Bad"}
+    ]
+  },
+  "indicatorDefinition": {
+    "unit": "threatened species",
+    "short_unit": "species",
+    "period": "annual",
+    "xAxis": "year",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "date",
+          "type": "integer"
+        },
+        "name": "year",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "integer"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
+  }
 }]
