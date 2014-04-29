@@ -29,7 +29,6 @@ module.exports = class EsriGetter
   constructor: (@indicator) ->
 
   buildUrl: ->
-    console.log @indicator
     if !@indicator.indicatorationConfig.esriConfig?
       throw new Error("Indicator does not define a esriConfig attribute")
     else if !@indicator.indicatorationConfig.esriConfig.serviceName?

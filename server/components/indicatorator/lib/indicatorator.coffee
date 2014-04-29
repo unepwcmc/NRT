@@ -5,11 +5,13 @@ GETTERS =
   gdoc: require('../getters/gdoc')
   cartodb: require('../getters/cartodb')
   esri: require('../getters/esri')
+  worldBank: require('../getters/world_bank')
 
 FORMATTERS =
   gdoc: require('../formatters/gdoc')
   cartodb: require('../formatters/cartodb')
   esri: require('../formatters/esri')
+  worldBank: require('../formatters/world_bank')
 
 
 exports.getData = (indicator) ->

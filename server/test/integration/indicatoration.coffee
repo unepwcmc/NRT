@@ -68,7 +68,6 @@ test("calling /admin/updateIndicatorData/{indicatorId}
       IndicatorData.findOne(indicator: indicator.id),
       'exec'
     ).then((indicatorData) ->
-      console.log indicatorData
       try
         assert.equal res.statusCode, 201,
           "Expected response to succeed, but got error:
@@ -95,5 +94,86 @@ test("calling /admin/updateIndicatorData/{indicatorId}
 )
 
 
-test("When an indicator with an invalid configuration is posted, a helpful
-  error is returned")
+test("calling /admin/updateIndicatorData/{indicatorId}
+  correctly queries an indicator with a world bank source", (done) ->
+  indicator = new Indicator(
+    type: "standard"
+    shortName: "Forest Area"
+    indicatorDefinition: {
+      fields: []
+    }
+    indicatorationConfig: {
+      source: "worldBank"
+      worldBankConfig: {
+        countryCode: 'MU'
+        indicatorCode: 'AG.LND.FRST.ZS'
+      }
+      range: [
+        {minValue: 0.35, message: "Excellent"},
+        {minValue: 0.15, message: "Good"},
+        {minValue: 0, message: "Bad"}
+      ]
+    }
+  )
+
+  worldBankResponse = [
+    {},
+    [
+      {
+        "indicator": {
+          "id": "AG.LND.FRST.ZS",
+          "value": "Forest area (% of land area)"
+        },
+        "country": {
+          "id": "MU",
+          "value": "Mauritius"
+        },
+        "value": "17.2512315270936",
+        "decimal": "1",
+        "date": "1969"
+      }
+    ]
+  ]
+
+  requestGetStub = sinon.stub(request, 'get', (options, cb) ->
+    cb(null, {body: JSON.stringify(worldBankResponse)})
+  )
+
+  Q.nsend(
+    indicator, 'save'
+  ).spread( (savedIndicator) ->
+    indicator = savedIndicator
+    Q.nfcall(
+      request.post, {
+        url: helpers.appurl("/admin/updateIndicatorData/#{indicator.id}")
+      }
+    )
+  ).spread((res, body) ->
+    Q.nsend(
+      IndicatorData.findOne(indicator: indicator.id),
+      'exec'
+    ).then((indicatorData) ->
+      try
+        assert.equal res.statusCode, 201,
+          "Expected response to succeed, but got error:
+          #{body}"
+
+        indicatorDataIdMatch = "\"_id\":\"#{indicatorData.id}\""
+        indicatorIdMatch = "\"indicator\":\"#{indicator.id}\""
+        dataMatch = "\"data\":\\[null\\]"
+        assert.match body, new RegExp(".*Successfully updated indicator.*")
+        assert.match body, new RegExp(".*#{indicatorDataIdMatch}.*")
+        assert.match body, new RegExp(".*#{indicatorIdMatch}.*")
+        assert.match body, new RegExp(".*#{dataMatch}.*")
+
+        done()
+      catch e
+        done(e)
+      finally
+        requestGetStub.restore()
+    )
+  ).fail((err)->
+    requestGetStub.restore()
+    return done(err)
+  )
+)
