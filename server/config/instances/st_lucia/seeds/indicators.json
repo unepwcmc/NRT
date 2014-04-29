@@ -61,8 +61,8 @@
   },
   "indicatorDefinition": {
     "name": "% of households using gas or electricity for cooking",
-    "unit": "households",
-    "short_unit": "households",
+    "unit": "percentage",
+    "short_unit": "percentage",
     "period": "yearly",
     "xAxis": "year",
     "yAxis": "value",
