@@ -74,7 +74,9 @@
               </a>
             {{/if}}
           </ul>
-          <img src="/images/agedi-head.png" alt="">
+          {{#if APP_CONFIG.features.ad_branding}}
+            <img src="/images/agedi-head.png" alt="">
+          {{/if}}
         </div>
       </div>
     </div>
@@ -138,7 +140,9 @@
       <div class="inner">
         <h3>NRT is developed by:</h3>
         <img src="/images/unep-logo.png" alt="">
-        <img src="/images/ead-logo.png" alt="">
+        {{#if APP_CONFIG.features.ad_branding}}
+          <img src="/images/ead-logo.png" alt="">
+        {{/if}}
         <img src="/images/agedi-logo.png" alt="">
       </div>
     </footer>
