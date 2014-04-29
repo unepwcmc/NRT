@@ -135,7 +135,7 @@ Servers can be deployed to automatically using GitHub deploy hooks.
 
 ##### Config
 Before a server can be deployed to, you must configure it in
-`server/config/<env>.json` with 2 variables:
+`server/config/<env>.json` with a 'deploy' attribute, containing:
 
 **server_name**: Allows your server to be identified as a deploy target, e.g.
 'ad-staging'. Simply add `server_name` as root attribute in the config.
@@ -146,7 +146,9 @@ http://developer.github.com/v3/#authentication
 Then, modify your config to include these credentials:
 
 ```json
-  "deploy": { "github": {
+  "deploy": {
+    "server_name": "lovely-staging-server",
+    "github": {
       "password": "x-oauth-basic",
       "username": "<your-auth-token>"
     }
