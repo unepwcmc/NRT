@@ -25,7 +25,7 @@ exports.index = (req, res) ->
 
   console.log "Got deploy message from #{parsedPayload.ref}"
 
-  serverName = AppConfig.get('server_name')
+  serverName = AppConfig.get('deploy')?.server_name
   tagName = parsedPayload.ref
 
   unless tagRefersToServer(tagName, serverName)
