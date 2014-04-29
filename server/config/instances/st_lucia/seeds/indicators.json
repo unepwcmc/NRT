@@ -1,0 +1,95 @@
+[{
+  "short_name": "Fish Landings",
+  "title": "Fish Landings",
+  "theme": "Coastal and Marine resources",
+  "sections": [],
+  "primary": true,
+  "indicatorationConfig": {
+    "source": "gdoc",
+    "spreadsheet_key": "1IsJzMWxbj0ljOnpA9tszIaajZtoCrsGm1eEwT_riDfc",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  },
+  "indicatorDefinition": {
+    "name": "Fish Landings",
+    "unit": "landings",
+    "short_unit": "landings",
+    "period": "yearly",
+    "xAxis": "year",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "year",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "integer"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
+  }
+}, {
+  "short_name": "% of households using gas or electricity for cooking",
+  "title": "% of households using gas or electricity for cooking",
+  "theme": "Energy and Minerals",
+  "sections": [],
+  "primary": true,
+  "indicatorationConfig": {
+    "source": "gdoc",
+    "spreadsheet_key": "10Ulqfl6W8DtMV1USAYHOifLiGrozRZ7JzBJx4lN1alY",
+    "range": [
+        {"minValue": 0.5, "message": "Good"},
+        {"minValue": 0, "message": "Bad"}
+    ]
+  },
+  "indicatorDefinition": {
+    "name": "% of households using gas or electricity for cooking",
+    "unit": "percentage",
+    "short_unit": "percentage",
+    "period": "yearly",
+    "xAxis": "year",
+    "yAxis": "value",
+    "geometryField": "geometry",
+    "fields": [
+      {
+        "source": {
+          "name": "periodStart",
+          "type": "epoch"
+        },
+        "name": "year",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "value",
+          "type": "integer"
+        },
+        "name": "value",
+        "type": "integer"
+      }, {
+        "source": {
+          "name": "text",
+          "type": "text"
+        },
+        "name": "text",
+        "type": "text"
+      }
+    ]
+  }
+}]
