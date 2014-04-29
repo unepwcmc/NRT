@@ -21,7 +21,7 @@ exports.index = (req, res) ->
   if env isnt 'development'
     return res.send 401 unless ipIsFromGithub(remoteIp)
 
-  parsedPayload = req.body
+  parsedPayload = JSON.parse(req.body.payload)
 
   console.log "Got deploy message from #{parsedPayload.ref}"
 
