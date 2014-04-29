@@ -55,7 +55,7 @@
             </a>
             {{/if}}
 
-            <li class='help-btn'>
+            <li class='help-btn {{#unless APP_CONFIG.features.ad_branding}}md-trigger{{/unless}}'>
               {{t "menu/help"}}
             </li>
 
@@ -74,35 +74,39 @@
               </a>
             {{/if}}
           </ul>
-          <img src="/images/agedi-head.png" alt="">
+          {{#if APP_CONFIG.features.ad_branding}}
+            <img src="/images/agedi-head.png" alt="">
+          {{/if}}
         </div>
       </div>
     </div>
 
-    <div class='sub-nav'>
-      <div class="inner">
-        <ul>
-          <li class="md-trigger"><a href="#" title="About">About</a></li>
-          <li><a href="/assets/NRT-User-Manual.pdf" title="NRT User Manual">User manual</a></li>
-          <li>
-            <a href="https://github.com/unepwcmc/NRT/blob/master/README.md" title="Technical Information">Technical Information</a>
-          </li>
-          <li>
-            <a href="/architecture">System Architecture</a>
-          </li>
-          <li>
-            <a href="/assets/NRT-Data-Schema.pdf" title="Data Schema">Data Schema</a>
-          </li>
-          <li><a href="/partners" title="Partners">Partners</a></li>
-          <li>
-            <a href="/assets/NRT-API-Specification.pdf">API Specification</a>
-          </li>
-          <li>
-            <a href="http://10.20.1.73/nrtimport" title="NRT Data Source - only accessible from EAD internal network">Data Source (EAD Only)</a>
-          </li>
-        </ul>
+    {{#if APP_CONFIG.features.ad_branding}}
+      <div class='sub-nav'>
+        <div class="inner">
+          <ul>
+            <li class="md-trigger"><a href="#" title="About">About</a></li>
+            <li><a href="/assets/NRT-User-Manual.pdf" title="NRT User Manual">User manual</a></li>
+            <li>
+              <a href="https://github.com/unepwcmc/NRT/blob/master/README.md" title="Technical Information">Technical Information</a>
+            </li>
+            <li>
+              <a href="/architecture">System Architecture</a>
+            </li>
+            <li>
+              <a href="/assets/NRT-Data-Schema.pdf" title="Data Schema">Data Schema</a>
+            </li>
+            <li><a href="/partners" title="Partners">Partners</a></li>
+            <li>
+              <a href="/assets/NRT-API-Specification.pdf">API Specification</a>
+            </li>
+            <li>
+              <a href="http://10.20.1.73/nrtimport" title="NRT Data Source - only accessible from EAD internal network">Data Source (EAD Only)</a>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+    {{/if}}
 
     <div class="breadcrumbs">
       <div class="inner">
@@ -116,30 +120,35 @@
 
     {{> modal}}
 
-    <script>
-      (function() {
-        var subMenuOpen = false;
-
-        $('.help-btn').on('click', function() {
-          if (subMenuOpen) {
-            $('.help-btn').removeClass('active');
-            $('.sub-nav').slideUp();
-            subMenuOpen = !subMenuOpen;
-          } else {
-            $('.help-btn').addClass('active');
-            $('.sub-nav').slideDown();
-            subMenuOpen = !subMenuOpen;
+    {{#if APP_CONFIG.features.ad_branding}}
+      <script>
+        (function() {
+          var subMenuOpen = false;
+          var showSubMenu = function() {
+            if (subMenuOpen) {
+              $('.help-btn').removeClass('active');
+              $('.sub-nav').slideUp();
+              subMenuOpen = !subMenuOpen;
+            } else {
+              $('.help-btn').addClass('active');
+              $('.sub-nav').slideDown();
+              subMenuOpen = !subMenuOpen;
+            }
           }
-        });
-      })()
-    </script>
+
+          $('.help-btn').on('click', showSubMenu);
+        })()
+      </script>
+    {{/if}}
 
     <footer>
       <div class="inner">
         <h3>NRT is developed by:</h3>
         <img src="/images/unep-logo.png" alt="">
-        <img src="/images/ead-logo.png" alt="">
-        <img src="/images/agedi-logo.png" alt="">
+        {{#if APP_CONFIG.features.ad_branding}}
+          <img src="/images/ead-logo.png" alt="">
+          <img src="/images/agedi-logo.png" alt="">
+        {{/if}}
       </div>
     </footer>
 
