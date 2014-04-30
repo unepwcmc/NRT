@@ -1,5 +1,6 @@
 hbs = require('express-hbs')
 HeadlineService = require ('../lib/services/headline')
+Permissions = require ('../lib/services/permissions')
 
 hbs.registerHelper('css-classify', (text) ->
   if text?
@@ -34,5 +35,10 @@ hbs.registerHelper('ifFeatureEnabled', (featureName, options) ->
   features = require('./config').get('features')
 
   if features[featureName]
+    options.fn(this)
+)
+
+hbs.registerHelper('ifCanEdit', (user, options) ->
+  if (new Permissions(user)).canEdit()
     options.fn(this)
 )
