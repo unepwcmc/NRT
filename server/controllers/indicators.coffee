@@ -1,6 +1,7 @@
 Indicator = require('../models/indicator').model
 Theme = require('../models/theme').model
 HeadlineService = require('../lib/services/headline')
+Permissions = require('../lib/services/permissions')
 IndicatorPresenter = require('../lib/presenters/indicator')
 
 _ = require('underscore')
@@ -11,7 +12,9 @@ exports.show = (req, res) ->
   theIndicator = theHeadlines = theNarrativeRecency = theIndicatorObject = null
 
   draftMode = req.path.match(/.*\/draft\/?$/)?
-  return res.redirect('back') unless req.isAuthenticated() || !draftMode
+
+  unless (new Permissions(req.user)).canEdit() || !draftMode
+    return res.redirect('back')
 
   Q.nsend(
     Indicator

@@ -23,11 +23,11 @@
   <li class="home"><i class="icon-home"></i><a href="/">Home</a></li>
   <li><a href="/themes/{{indicator.theme._id}}">Go back to theme {{ indicator.theme.title }}</a></li>
 
-  {{#if currentUser}}
+  {{#ifCanEdit currentUser}}
     <a class="button" href="/indicators/{{indicator._id}}/draft">
       <i class="icon-edit"></i> {{{t "indicator/update"}}}
     </a>
-  {{/if}}
+  {{/ifCanEdit}}
 {{/contentFor}}
 
 {{#if indicator.page.is_draft}}
