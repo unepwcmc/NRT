@@ -60,7 +60,7 @@ exports.show = (req, res) ->
   )
 
 exports.publishDraft = (req, res) ->
-  return res.redirect('back') unless req.isAuthenticated()
+  return res.redirect('back') unless (new Permissions(req.user)).canEdit()
 
   theIndicator = null
 
@@ -86,7 +86,7 @@ exports.publishDraft = (req, res) ->
   )
 
 exports.discardDraft = (req, res) ->
-  return res.redirect('back') unless req.isAuthenticated()
+  return res.redirect('back') unless (new Permissions(req.user)).canEdit()
 
   theIndicator = null
 
