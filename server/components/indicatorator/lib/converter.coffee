@@ -15,9 +15,14 @@ CONVERSIONS =
   percentage:
     decimal: (value) ->
       parseFloat(value, 10) / 100
+  text:
+    date: (value) ->
+      new Date(value.toString())
   year:
     epoch: (value) ->
       new Date(value.toString()).getTime()
+    date: (value) ->
+      new Date(parseInt(value, 10))
 
 
 exports.FieldFinder = class FieldFinder
