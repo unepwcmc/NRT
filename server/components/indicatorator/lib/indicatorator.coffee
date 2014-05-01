@@ -1,5 +1,6 @@
-RangeApplicator = require('../lib/range_applicator')
+Converter        = require('../lib/converter')
 Sorter           = require('../lib/sorter')
+RangeApplicator  = require('../lib/range_applicator')
 SubIndicatorator = require('../lib/subindicatorator')
 
 GETTERS =
@@ -17,6 +18,7 @@ FORMATTERS =
 
 exports.getData = (indicator) ->
   indicatorationConfig = indicator.indicatorationConfig
+  indicatorDefinition = indicator.indicatorDefinition
 
   exports.fetchData(
     indicator
@@ -33,10 +35,12 @@ exports.getData = (indicator) ->
     else
       formattedData
   ).then( (formattedData) =>
+	exports.convertData(indicatorDefinition.fields, formattedData)
+  ).then( (convertedData) =>
     if indicatorationConfig.sorting?
-      exports.sortData(indicatorationConfig.sorting, formattedData)
+      exports.sortData(indicatorationConfig.sorting, convertedData)
     else
-      formattedData
+      convertedData
   )
 
 exports.fetchData = (indicator) ->
@@ -53,6 +57,9 @@ exports.formatData = (source, data) ->
     formatter(data)
   else
     throw new Error("No known formatter for source '#{source}'")
+
+exports.convertData = (indicatorFields, data) ->
+  Converter.convertData(indicatorFields, data)
 
 exports.sortData = (sorting, data) ->
   if sorting?

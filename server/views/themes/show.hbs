@@ -19,11 +19,11 @@
 {{#contentFor 'breadcrumbs'}}
   <li><a href="/">Back to theme list</a></li>
 
-  {{#if currentUser}}
+  {{#ifCanEdit currentUser}}
     <a class="button" href="/themes/{{theme._id}}/draft">
       <i class="icon-edit"></i> {{{t "theme/update"}}}
     </a>
-  {{/if}}
+  {{/ifCanEdit}}
 {{/contentFor}}
 
 {{#contentFor 'extra-body'}}

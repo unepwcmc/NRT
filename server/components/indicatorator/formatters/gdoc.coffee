@@ -1,5 +1,3 @@
-DataConverter = require '../lib/data_converter'
-
 module.exports = (data) ->
   records = []
   for key, value of data.headers
@@ -7,13 +5,13 @@ module.exports = (data) ->
 
     if index >= 4
       record =
-        periodStart: DataConverter.convert('date', 'epoch', value.value)
-        value: DataConverter.convert('percentage', 'decimal', data.data[0][key].value)
+        periodStart: value.value
+        value: data.data[0][key].value
 
 
       if data.data.length > 1
         subIndicators = extractSubIndicators(
-          data.data, key, DataConverter.convert('date', 'epoch', value.value)
+          data.data, key, value.value
         )
         record.subIndicator = subIndicators
 
@@ -28,7 +26,7 @@ extractSubIndicators = (data, key, periodStart) ->
 
     subIndicators.push(
       subIndicator: row['3'].value
-      value: DataConverter.convert('percentage', 'decimal', row[key].value)
+      value: row[key].value
       periodStart: periodStart
     )
 

@@ -1,4 +1,3 @@
-DataConverter = require '../lib/data_converter'
 _ = require('underscore')
 
 module.exports = (data) ->
@@ -15,8 +14,8 @@ module.exports = (data) ->
     value = values[index]
 
     records.push(
-      periodStart: DataConverter.convert('year', 'epoch', date)
-      value: DataConverter.convert('percentage', 'decimal', value)
+      periodStart: date
+      value: value
     )
   )
 

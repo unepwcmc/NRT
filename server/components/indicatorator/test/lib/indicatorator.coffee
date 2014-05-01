@@ -12,13 +12,27 @@ SubIndicatorator = require('../../lib/subindicatorator')
 
 suite('Indicatorator')
 
-test(".getData loads, formats and sorts the data based on its source", (done) ->
+test(".getData loads, formats, converts and sorts the data based on its source", (done) ->
   indicator = new Indicator(
     indicatorationConfig:
       source: "esri"
       sorting:
         field: "year"
         order: "asc"
+    indicatorDefinition:
+      fields: [
+          source:
+            name: "fancy"
+            type: "text"
+          name: "superFancy"
+          type: "text"
+        ,
+          source:
+            name: "year"
+            type: "integer"
+          name: "superYear"
+          type: "epoch"
+      ]
   )
 
   sandbox = sinon.sandbox.create()
@@ -35,9 +49,15 @@ test(".getData loads, formats and sorts the data based on its source", (done) ->
     data
   )
 
+  convertedData = [
+    {superFancy: 'data', superYear: 978307200000}
+    {superFancy: 'otherData', superYear: 883612800000}
+  ]
+  convertDataStub = sandbox.stub(Indicatorator, 'convertData', -> convertedData)
+
   sortedData = [
-    {fancy: 'otherData', year: 1998},
-    {fancy: 'data', year: 2001}
+    {superFancy: 'otherData', superYear: 883612800000}
+    {superFancy: 'data', superYear: 978307200000}
   ]
   sortDataStub = sandbox.stub(Indicatorator, 'sortData', -> sortedData)
 
@@ -49,11 +69,17 @@ test(".getData loads, formats and sorts the data based on its source", (done) ->
       )
 
       formatDataCallArgs = formatDataStub.getCall(0).args
-
       assert.isTrue(
         formatDataStub.calledWith(indicator.indicatorationConfig.source, gotData),
         "Expected formatData to be called with the indicator source and the fetched data,
         but was called with #{JSON.stringify formatDataCallArgs}"
+      )
+
+      convertDataCallArgs = convertDataStub.getCall(0).args
+      assert.isTrue(
+        convertDataStub.calledWith(indicator.indicatorDefinition.fields, formattedData),
+        "Expected convertData to be called with the indicator field definitions
+        and the formatted data, but was called with #{JSON.stringify convertDataCallArgs}"
       )
 
       sortDataCallArgs = sortDataStub.getCall(0).args
@@ -82,6 +108,8 @@ test(".getData doesn't apply ranges if the indicator has
   indicator = new Indicator(
     indicatorationConfig:
       applyRanges: false
+    indicatorDefinition:
+      fields: []
   )
 
   sandbox = sinon.sandbox.create()
@@ -91,6 +119,7 @@ test(".getData doesn't apply ranges if the indicator has
     Q.fcall(->)
   )
   sandbox.stub(Indicatorator, 'formatData', ->)
+  sandbox.stub(Indicatorator, 'convertData', ->)
 
   Indicatorator.getData(indicator).then( (data) ->
     try
@@ -112,6 +141,8 @@ test(".query groups sub indicators if the indicator definition includes
   indicator = new Indicator(
     indicatorationConfig:
       reduceField: 'station'
+    indicatorDefinition:
+      fields: []
   )
 
   sandbox = sinon.sandbox.create()
@@ -122,6 +153,7 @@ test(".query groups sub indicators if the indicator definition includes
 
   sandbox.stub(Indicatorator, 'fetchData', -> Q.fcall(->))
   sandbox.stub(Indicatorator, 'formatData', ->)
+  sandbox.stub(Indicatorator, 'convertData', ->)
   sandbox.stub(RangeApplicator, 'applyRanges', -> theData)
 
   Indicatorator.getData(indicator).then(->
@@ -195,6 +227,55 @@ test('.formatData throws an error if there is no formatter for the source', ->
   assert.throw( (->
     Indicatorator.formatData("this_source_does_not_exist", [])
   ), "No known formatter for source 'this_source_does_not_exist'")
+)
+
+test('.convertData gets the formatted data and returns it converted', (done) ->
+  indicatorFields = [
+    source:
+      name: "value"
+      type: "decimal"
+    name: "value"
+    type: "decimal"
+  ,
+    source:
+      name: "year"
+      type: "epoch"
+    name: "superYear"
+    type: "integer"
+  ]
+
+  data = [
+    year: 1325376000000
+    value: 0.2
+  ,
+    year: 915148800000
+    value: 4
+  ,
+    year: 1262304000000
+    value: 0.1
+  ]
+
+  Indicatorator.convertData(
+    indicatorFields,
+    data
+  ).then( (convertedData) ->
+    expectedData = [
+      superYear: 2012
+      value: 0.2
+    ,
+      superYear: 1999
+      value: 4
+    ,
+      superYear: 2010
+      value: 0.1
+    ]
+
+    assert.deepEqual convertedData, expectedData,
+      "Expected the data to be correctly converted"
+    done()
+  ).fail((err) ->
+    done(err)
+  )
 )
 
 test('.sortData gets the formatted data and returns it sorted', (done) ->

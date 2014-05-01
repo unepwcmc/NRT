@@ -47,18 +47,20 @@
         </div>
         <div class="right">
           <ul>
-            {{#if localeIsArabic}}
-            <a href="/locale/en">
-              <li>
-                English
-              </li>
-            </a>
-            {{else}}
-            <a href="/locale/ar">
-              <li>
-                العربية
-              </li>
-            </a>
+            {{#if APP_CONFIG.features.ad_branding}}
+              {{#if localeIsArabic}}
+                <a href="/locale/en">
+                  <li>
+                    English
+                  </li>
+                </a>
+              {{else}}
+                <a href="/locale/ar">
+                  <li>
+                    العربية
+                  </li>
+                </a>
+              {{/if}}
             {{/if}}
 
             <li class='help-btn {{#unless APP_CONFIG.features.ad_branding}}md-trigger{{/unless}}'>

@@ -35,8 +35,8 @@ test('CartoDB query result, it formats it correctly', ->
   ]
 
   expectedResult = [
-    {periodStart: 852076800000, value: 0},
-    {periodStart: 883612800000, value: 0.80}
+    {periodStart: "1997", value: "0%"},
+    {periodStart: "1998", value: "80%"}
   ]
 
   actualResult = CartoDBFormatter(rawData)

@@ -52,7 +52,7 @@ test('.convertResponseToIndicatorData when given a garbage response
   assert.throws(
     (->
       indicator.convertResponseToIndicatorData(garbageData)
-    ), "Can't convert poorly formed indicator data reponse:\n#{
+    ), "Can't convert poorly formed indicator data response:\n#{
           JSON.stringify(garbageData)
         }\n expected response to be an array"
   )
@@ -112,39 +112,6 @@ test(".validateIndicatorDataFields when a field is present but null returns no e
     "Expected validateIndicatorData to return true without error"
 )
 
-test(".validateIndicatorDataFields when missing fields returns an error", ->
-  indicator = new Indicator(
-    title: "Protected Areas"
-    indicatorDefinition:
-      fields: [{
-        source:
-          name: 'periodStart'
-          type: 'epoch'
-        name: 'year'
-        type: 'integer'
-      }, {
-        source:
-          name: 'value'
-          type: 'integer'
-        name: 'value'
-        type: 'integer'
-      }]
-  )
-
-  indicatorData = {
-    indicator: indicator._id
-    data: [{
-      periodStart: 192340000
-      text: "Test"
-    }]
-  }
-
-  assert.throws( (->
-      indicator.validateIndicatorDataFields(indicatorData)
-    ), new RegExp("Couldn't find source attribute \'value\' in data")
-  )
-)
-
 test(".validateIndicatorDataFields on an indicator with fields with no source
  throws an appropriate error ", ->
   indicator = new Indicator(
@@ -161,148 +128,6 @@ test(".validateIndicatorDataFields on an indicator with fields with no source
   )
 )
 
-test('.convertIndicatorDataFields when given valid epoch to integer field translation
-  it converts the field to the correct name and type', ->
-
-  indicator = new Indicator(
-    indicatorDefinition:
-      fields: [{
-        source:
-          name: 'periodStart'
-          type: 'epoch'
-        name: 'year'
-        type: 'integer'
-      }]
-  )
-
-  untranslatedData = {
-    indicator: indicator._id
-    data: [
-      periodStart: 1325376000000
-    ]
-  }
-
-  expectedData = {
-    indicator: indicator._id
-    data: [
-      year: 2012
-    ]
-  }
-
-  convertedData = indicator.convertIndicatorDataFields(untranslatedData)
-  assert.ok(
-    _.isEqual(convertedData, expectedData),
-    "Expected converted data:\n
-    #{JSON.stringify(convertedData)}\n
-      to look like expected indicator data:\n
-    #{JSON.stringify(expectedData)}"
-  )
-
-)
-
-test('.translateRow includes fields with definitions and skips those without', ->
-  indicator = new Indicator(
-    indicatorDefinition:
-      fields: [{
-        source:
-          name: 'periodStart'
-          type: 'integer'
-        name: 'year'
-        type: 'integer'
-      }]
-  )
-
-  row = {
-    periodStart: 12343242300000
-    fresh: true
-  }
-
-  translatedRow = indicator.translateRow(row)
-
-  assert.property translatedRow, 'year',
-    "Expected periodStart property to be included in translatedRow"
-  assert.notProperty translatedRow, 'fresh',
-    "Expected periodStart property to not be included in translatedRow"
-)
-
-test('.convertSourceValueToInternalValue when given two values of the same
-  type it returns same value', ->
-  indicator = new Indicator(
-    indicatorDefinition:
-      fields: [{
-        source:
-          name: 'periodStart'
-          type: 'integer'
-        name: 'year'
-        type: 'integer'
-      }]
-  )
-  result = indicator.convertSourceValueToInternalValue('periodStart', 5)
-  assert.strictEqual result, 5,
-    "Expected conversion not to modify source value"
-)
-
-test(".convertSourceValueToInternalValue when given a type conversion which
-  doesn't exist, it throws appropriate error", ->
-  indicator = new Indicator(
-    indicatorDefinition:
-      fields: [{
-        source:
-          name: 'periodStart'
-          type: 'apples'
-        name: 'year'
-        type: 'oranges'
-      }]
-  )
-
-  assert.throws (->
-    indicator.convertSourceValueToInternalValue('periodStart', 5)
-  ), "Don't know how to convert 'apples' to 'oranges' for field 'periodStart'"
-
-)
-
-test(".convertSourceValueToInternalValue when given a decimalPercentage to
-  integer conversion, it multiplies by 100", ->
-  indicator = new Indicator(
-    indicatorDefinition:
-      fields: [{
-        source:
-          name: 'value'
-          type: 'decimalPercentage'
-        name: 'value'
-        type: 'integer'
-      }]
-  )
-
-  result = indicator.convertSourceValueToInternalValue('value', 0.504)
-  assert.strictEqual result, 50.4,
-    "Expected value to be mutliplied by 100"
-
-)
-
-test(".convertSourceValueToInternalValue when given an epoch to
-  date conversion, it converts the value correctly", ->
-  indicator = new Indicator(
-    indicatorDefinition:
-      fields: [{
-        source:
-          name: 'value'
-          type: 'epoch'
-        name: 'value'
-        type: 'date'
-      }]
-  )
-
-  result = indicator.convertSourceValueToInternalValue('value', 1325376000000)
-
-  assert.ok typeof result.getMonth is 'function',
-    "Expected the result to be a date"
-  assert.strictEqual result.getMonth(), 0,
-    "Expected the date to be in October"
-  assert.strictEqual result.getFullYear(), 2012,
-    "Expected the date to be in 2013"
-
-)
 
 test(".replaceIndicatorData when called on an  indicator where indicator data
   already exists,
