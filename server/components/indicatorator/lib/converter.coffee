@@ -15,6 +15,8 @@ CONVERSIONS =
   percentage:
     decimal: (value) ->
       parseFloat(value, 10) / 100
+    integer: (value) ->
+      parseFloat(value, 10)
   text:
     date: (value) ->
       new Date(value.toString())
