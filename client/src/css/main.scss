@@ -403,13 +403,13 @@ h1, h2, h3, h4, h5 {
 
     a {
       float: right;
-      &:first-child {
-        display: inline-block;
-        border-right: 1px solid #EEEEEE;
-      }
-      &:last-child {
-        border-left: 1px solid #EEEEEE;
-      }
+    }
+    :first-child {
+      display: inline-block;
+      border-right: 1px solid #EEEEEE;
+    }
+    :last-child {
+      border-left: 1px solid #EEEEEE;
     }
 
     li {
