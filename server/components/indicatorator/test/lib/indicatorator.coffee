@@ -12,25 +12,34 @@ SubIndicatorator = require('../../lib/subindicatorator')
 
 suite('Indicatorator')
 
-test(".getData loads and formats the data based on its source", (done) ->
+test(".getData loads, formats and sorts the data based on its source", (done) ->
   indicator = new Indicator(
     indicatorationConfig:
       source: "esri"
+      sorting:
+        field: "year"
+        order: "asc"
   )
 
   sandbox = sinon.sandbox.create()
 
-  gotData = {some: 'data'}
+  gotData = [{some: 'data', from: 2001}, {some: 'otherData', from: 1998}]
   fetchDataStub = sandbox.stub(Indicatorator, 'fetchData', ->
     Q.fcall(-> gotData)
   )
 
-  formattedData = {fancy: 'data'}
+  formattedData = [{fancy: 'data', year: 2001}, {fancy: 'otherData', year: 1998}]
   formatDataStub = sandbox.stub(Indicatorator, 'formatData', -> formattedData)
 
   applyRangesStub = sandbox.stub(RangeApplicator, 'applyRanges', (data) ->
     data
   )
+
+  sortedData = [
+    {fancy: 'otherData', year: 1998},
+    {fancy: 'data', year: 2001}
+  ]
+  sortDataStub = sandbox.stub(Indicatorator, 'sortData', -> sortedData)
 
   Indicatorator.getData(indicator).then( (data) ->
     try
@@ -47,8 +56,15 @@ test(".getData loads and formats the data based on its source", (done) ->
         but was called with #{JSON.stringify formatDataCallArgs}"
       )
 
-      assert.deepEqual data, formattedData,
-        "Expected the formatted data to be returned"
+      sortDataCallArgs = sortDataStub.getCall(0).args
+      assert.isTrue(
+        sortDataStub.calledWith(indicator.indicatorationConfig.sorting, formattedData),
+        "Expected sortData to be called with the indicatoration sorting configuration
+        and the formatted data, but was called with #{JSON.stringify sortDataCallArgs}"
+      )
+
+      assert.deepEqual data, sortedData,
+        "Expected the sorted data to be returned"
 
       done()
     catch err
@@ -100,16 +116,13 @@ test(".query groups sub indicators if the indicator definition includes
 
   sandbox = sinon.sandbox.create()
 
-  groupStub = sandbox.stub(
-    SubIndicatorator, 'groupSubIndicatorsUnderAverageIndicators'
-  )
   theData = {id: 5}
-  sandbox.stub(RangeApplicator, 'applyRanges', -> theData)
 
-  sandbox.stub(Indicatorator, 'fetchData', ->
-    Q.fcall(->)
-  )
+  groupStub = sandbox.stub(SubIndicatorator, 'groupSubIndicatorsUnderAverageIndicators')
+
+  sandbox.stub(Indicatorator, 'fetchData', -> Q.fcall(->))
   sandbox.stub(Indicatorator, 'formatData', ->)
+  sandbox.stub(RangeApplicator, 'applyRanges', -> theData)
 
   Indicatorator.getData(indicator).then(->
     try
@@ -182,4 +195,47 @@ test('.formatData throws an error if there is no formatter for the source', ->
   assert.throw( (->
     Indicatorator.formatData("this_source_does_not_exist", [])
   ), "No known formatter for source 'this_source_does_not_exist'")
+)
+
+test('.sortData gets the formatted data and returns it sorted', (done) ->
+  indicator = new Indicator(
+    indicatorationConfig:
+      source: "worldBank"
+      sorting:
+        field: "year"
+        order: "asc"
+  )
+
+  data = [
+    year: 2012
+    value: 0.2
+  ,
+    year: 1999
+    value: 4
+  ,
+    year: 2010
+    value: 0.1
+  ]
+
+  Indicatorator.sortData(
+    indicator.indicatorationConfig.sorting,
+    data
+  ).then( (orderedData) ->
+    expectedData = [
+      year: 1999
+      value: 4
+    ,
+      year: 2010
+      value: 0.1
+    ,
+      year: 2012
+      value: 0.2
+    ]
+
+    assert.deepEqual orderedData, expectedData,
+      "Expected the data to be correctly ordered"
+    done()
+  ).fail((err) ->
+    done(err)
+  )
 )

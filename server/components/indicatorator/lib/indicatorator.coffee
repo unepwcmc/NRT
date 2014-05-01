@@ -1,4 +1,5 @@
 RangeApplicator = require('../lib/range_applicator')
+Sorter           = require('../lib/sorter')
 SubIndicatorator = require('../lib/subindicatorator')
 
 GETTERS =
@@ -15,19 +16,27 @@ FORMATTERS =
 
 
 exports.getData = (indicator) ->
-  exports.fetchData(indicator).then( (data) =>
-    formattedData = exports.formatData(indicator.indicatorationConfig.source, data)
-    unless indicator.indicatorationConfig.applyRanges is false
-      formattedData = RangeApplicator.applyRanges(
-        formattedData, indicator.indicatorationConfig.range
-      )
+  indicatorationConfig = indicator.indicatorationConfig
 
-    if indicator.indicatorationConfig.reduceField?
-      formattedData = SubIndicatorator.groupSubIndicatorsUnderAverageIndicators(
-        formattedData, {valueField: 'value', reduceField: indicator.indicatorationConfig.reduceField}
-      )
-
-    return formattedData
+  exports.fetchData(
+    indicator
+  ).then( (rawData) =>
+    exports.formatData(indicatorationConfig.source, rawData)
+  ).then( (formattedData) =>
+    if indicatorationConfig.applyRanges is false
+      formattedData
+    else
+      applyRanges(indicatorationConfig.range, formattedData)
+  ).then( (formattedData) =>
+    if indicatorationConfig.reduceField?
+      reduceFields(indicatorationConfig.reduceField, formattedData)
+    else
+      formattedData
+  ).then( (formattedData) =>
+    if indicatorationConfig.sorting?
+      exports.sortData(indicatorationConfig.sorting, formattedData)
+    else
+      formattedData
   )
 
 exports.fetchData = (indicator) ->
@@ -44,3 +53,17 @@ exports.formatData = (source, data) ->
     formatter(data)
   else
     throw new Error("No known formatter for source '#{source}'")
+
+exports.sortData = (sorting, data) ->
+  if sorting?
+    return Sorter.sortData(sorting, data)
+  else
+    return data
+
+applyRanges = (ranges, data) ->
+  RangeApplicator.applyRanges(data, ranges)
+
+reduceFields = (reduceField, data) ->
+  return SubIndicatorator.groupSubIndicatorsUnderAverageIndicators(
+    data, {valueField: 'value', reduceField: reduceField}
+  )
