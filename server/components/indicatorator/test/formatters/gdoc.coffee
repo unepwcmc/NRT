@@ -25,8 +25,8 @@ test('Given a GoogleSpreadsheets query result, it formats it correctly', ->
   }
 
   expectedResult = [
-    {periodStart: 1356998400000, value: 0},
-    {periodStart: 1357257600000, value: 0.80}
+    {periodStart: '01/01/2013', value: '0%'},
+    {periodStart: '01/04/2013', value: '80%'}
   ]
 
   actualResult = GDocFormatter(expectedData)
@@ -65,14 +65,14 @@ test('Given a GoogleSpreadsheets query result with sub indicators,
   }
 
   expectedResult = [{
-    periodStart: 1356998400000, value: 0.1, subIndicator: [
-      {subIndicator: 'Kuwait', value: 0, periodStart: 1356998400000},
-      {subIndicator: 'BP', value: 0.2, periodStart: 1356998400000}
+    periodStart: '01/01/2013', value: '10%', subIndicator: [
+      {subIndicator: 'Kuwait', value: '0%', periodStart: '01/01/2013'},
+      {subIndicator: 'BP', value: '20%', periodStart: '01/01/2013'}
     ]
   }, {
-    periodStart: 1357257600000, value: 0.80, subIndicator: [
-      {subIndicator: 'Kuwait', value: 0.8, periodStart: 1357257600000},
-      {subIndicator: 'BP', value: 0.8, periodStart: 1357257600000}
+    periodStart: '01/04/2013', value: '80%', subIndicator: [
+      {subIndicator: 'Kuwait', value: '80%', periodStart: '01/04/2013'},
+      {subIndicator: 'BP', value: '80%', periodStart: '01/04/2013'}
     ]
   }]
 

@@ -1,4 +1,5 @@
-RangeApplicator = require('../lib/range_applicator')
+Converter        = require('../lib/converter')
+RangeApplicator  = require('../lib/range_applicator')
 SubIndicatorator = require('../lib/subindicatorator')
 
 GETTERS =
@@ -15,19 +16,25 @@ FORMATTERS =
 
 
 exports.getData = (indicator) ->
-  exports.fetchData(indicator).then( (data) =>
-    formattedData = exports.formatData(indicator.indicatorationConfig.source, data)
-    unless indicator.indicatorationConfig.applyRanges is false
-      formattedData = RangeApplicator.applyRanges(
-        formattedData, indicator.indicatorationConfig.range
-      )
+  indicatorationConfig = indicator.indicatorationConfig
+  indicatorDefinition = indicator.indicatorDefinition
 
-    if indicator.indicatorationConfig.reduceField?
-      formattedData = SubIndicatorator.groupSubIndicatorsUnderAverageIndicators(
-        formattedData, {valueField: 'value', reduceField: indicator.indicatorationConfig.reduceField}
-      )
-
-    return formattedData
+  exports.fetchData(
+    indicator
+  ).then( (rawData) =>
+    exports.formatData(indicatorationConfig.source, rawData)
+  ).then( (formattedData) =>
+    if indicatorationConfig.applyRanges is false
+      formattedData
+    else
+      applyRanges(indicatorationConfig.range, formattedData)
+  ).then( (formattedData) =>
+    if indicatorationConfig.reduceField?
+      reduceFields(indicatorationConfig.reduceField, formattedData)
+    else
+      formattedData
+  ).then( (formattedData) =>
+    exports.convertData(indicatorDefinition.fields, formattedData)
   )
 
 exports.fetchData = (indicator) ->
@@ -44,3 +51,14 @@ exports.formatData = (source, data) ->
     formatter(data)
   else
     throw new Error("No known formatter for source '#{source}'")
+
+exports.convertData = (indicatorFields, data) ->
+  Converter.convertData(indicatorFields, data)
+
+applyRanges = (ranges, data) ->
+  RangeApplicator.applyRanges(data, ranges)
+
+reduceFields = (reduceField, data) ->
+  return SubIndicatorator.groupSubIndicatorsUnderAverageIndicators(
+    data, {valueField: 'value', reduceField: reduceField}
+  )
