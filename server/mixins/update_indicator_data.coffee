@@ -1,8 +1,5 @@
-async = require('async')
 Q = require('q')
-request = require('request')
 _ = require('underscore')
-
 
 module.exports =
   statics: {}
