@@ -9,7 +9,7 @@ module.exports =
   methods:
     convertResponseToIndicatorData: (data) ->
       unless _.isArray(data)
-        throw "Can't convert poorly formed indicator data reponse:\n#{
+        throw "Can't convert poorly formed indicator data response:\n#{
           JSON.stringify(data)
         }\n expected response to be an array"
 

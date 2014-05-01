@@ -52,7 +52,7 @@ test('.convertResponseToIndicatorData when given a garbage response
   assert.throws(
     (->
       indicator.convertResponseToIndicatorData(garbageData)
-    ), "Can't convert poorly formed indicator data reponse:\n#{
+    ), "Can't convert poorly formed indicator data response:\n#{
           JSON.stringify(garbageData)
         }\n expected response to be an array"
   )
