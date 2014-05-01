@@ -26,9 +26,6 @@ module.exports =
           errors.push "Indicator field definition doesn't include a source attribute: #{
             JSON.stringify(field)
           }"
-          continue
-        unless firstRow.hasOwnProperty(field.source.name)
-          errors.push "Couldn't find source attribute '#{field.source.name}' in data"
 
       if errors.length is 0
         return true

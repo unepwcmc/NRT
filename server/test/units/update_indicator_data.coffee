@@ -112,39 +112,6 @@ test(".validateIndicatorDataFields when a field is present but null returns no e
     "Expected validateIndicatorData to return true without error"
 )
 
-test(".validateIndicatorDataFields when missing fields returns an error", ->
-  indicator = new Indicator(
-    title: "Protected Areas"
-    indicatorDefinition:
-      fields: [{
-        source:
-          name: 'periodStart'
-          type: 'epoch'
-        name: 'year'
-        type: 'integer'
-      }, {
-        source:
-          name: 'value'
-          type: 'integer'
-        name: 'value'
-        type: 'integer'
-      }]
-  )
-
-  indicatorData = {
-    indicator: indicator._id
-    data: [{
-      periodStart: 192340000
-      text: "Test"
-    }]
-  }
-
-  assert.throws( (->
-      indicator.validateIndicatorDataFields(indicatorData)
-    ), new RegExp("Couldn't find source attribute \'value\' in data")
-  )
-)
-
 test(".validateIndicatorDataFields on an indicator with fields with no source
  throws an appropriate error ", ->
   indicator = new Indicator(
