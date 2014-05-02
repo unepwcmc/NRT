@@ -671,3 +671,7 @@ test('creating a new Indicator without an "indicatorationConfig" attribute
   assert.deepEqual indicator.indicatorationConfig, {},
     "Expected indicator.indicatoration to be defaulted to {}"
 )
+
+test('.buildWithDefaults exists', ->
+  assert.typeOf Indicator.buildWithDefaults, 'Function'
+)

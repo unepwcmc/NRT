@@ -2,20 +2,44 @@ Promise = require 'bluebird'
 Indicator = require('../models/indicator').model
 GDocWrapper = require('./gdoc_wrapper')
 
-buildIndicatorDefinitionFromSpreadsheet = ->
+extractRangesFromWorksheet = (worksheet) ->
+  index = 2
+
+  ranges = []
+  while (range = worksheet[index.toString()])?
+    ranges.push(
+      threshold:  range['1'].value
+      text:  range['2'].value
+    )
+    index = index + 1
+
+  return ranges
 
 module.exports =
   import: (key) ->
     new Promise((resolve, reject) ->
 
-      GDocWrapper.importByKey(key).then((spreadsheet)->
+      spreadsheet = null
+      definition = {}
 
-        spreadsheet.getWorksheetData('definition')
-      ).then((def) ->
+      GDocWrapper.importByKey(key).then((spr)->
+        spreadsheet = spr
 
-        definition = buildIndicatorDefinitionFromSpreadsheet(def)
+        spreadsheet.getWorksheetData('Definition')
+      ).then((worksheet) ->
 
-        Promise.promisify(Indicator.create, Indicator)(definition)
+        definition.name = worksheet['2']['1'].value
+        definition.theme = worksheet['2']['2'].value
+        definition.unit = worksheet['2']['3'].value
+
+        spreadsheet.getWorksheetData('Range')
+      ).then((worksheet) ->
+
+        definition.ranges = extractRangesFromWorksheet(worksheet)
+
+        indicator = Indicator.buildWithDefaults(definition)
+
+        Promise.promisify(indicator.save, indicator)()
       ).then(
         resolve, reject
       )

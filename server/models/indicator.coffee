@@ -382,6 +382,8 @@ indicatorSchema.statics.convertNestedParametersToAssociationIds = (attributes) -
 
   return attributes
 
+indicatorSchema.statics.buildWithDefaults = ->
+
 Indicator = mongoose.model('Indicator', indicatorSchema)
 
 module.exports = {

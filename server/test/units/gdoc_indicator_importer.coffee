@@ -5,6 +5,7 @@ Promise = require 'bluebird'
 
 GDocIndicatorImporter = require '../../lib/gdoc_indicator_importer'
 GDocWrapper = require '../../lib/gdoc_wrapper'
+Indicator = require('../../models/indicator').model
 
 suite('GdocIndicatorImporter')
 
@@ -42,22 +43,32 @@ test('#import when given a valid spreadsheet key
         '1': { row: '1', col: '1', value: indicatorDefinition.ranges[0].threshold},
         '2': { row: '1', col: '2', value: indicatorDefinition.ranges[0].text}
       }
-      '2': {
+      '3': {
         '1': { row: '1', col: '1', value: indicatorDefinition.ranges[1].threshold},
         '2': { row: '1', col: '2', value: indicatorDefinition.ranges[1].text}
       }
   }
 
-  gdocFetchStub = sinon.stub GDocWrapper, 'importByKey', ->
+  sandbox = sinon.sandbox.create()
+
+  gdocFetchStub = sandbox.stub GDocWrapper, 'importByKey', ->
     then: (cb)->
       gdoc = new GDocWrapper({})
-      sinon.stub(gdoc, 'getWorksheetData', (name) ->
-        new Promise((resolve) ->
-          resolve(fakeGdoc[name])
+      sandbox.stub(gdoc, 'getWorksheetData', (name) ->
+        new Promise((resolve, reject) ->
+          if name in ['Definition', 'Range']
+            resolve(fakeGdoc[name])
+          else
+            reject(new Error("Expected the 'Definition' worksheet to be requested,
+            but got '#{name}' instead"))
         )
       )
 
       cb(gdoc)
+
+  indicatorBuildStub = sandbox.stub(Indicator, 'buildWithDefaults', (definition)->
+    save: (cb)-> cb(null, true)
+  )
 
   key = '12-n-xlzFlT3T1dScfaI7a7ZnhEILbtSCjXSNKbfLJEI'
   GDocIndicatorImporter.import(key).then( (createdIndicator)->
@@ -69,6 +80,14 @@ test('#import when given a valid spreadsheet key
       assert.isTrue gdocFetchStub.calledWith(key),
         "Expected fetch to be called with the given spreadsheet key"
 
+      assert.strictEqual indicatorBuildStub.callCount, 1,
+        "Expected Indicator.buildWithDefaults to be called"
+
+      indicatorBuildArgs = indicatorBuildStub.getCall(0).args[0]
+      assert.deepEqual indicatorBuildArgs, indicatorDefinition,
+        "Expected Indicator.buildWithDefaults to be called with the
+          spreadsheet definition"
+
       done()
     catch err
       done(err)
@@ -76,6 +95,6 @@ test('#import when given a valid spreadsheet key
   ).error((err)->
     done(err)
   ).finally(->
-    gdocFetchStub.restore()
+    sandbox.restore()
   )
 )
