@@ -672,6 +672,38 @@ test('creating a new Indicator without an "indicatorationConfig" attribute
     "Expected indicator.indicatoration to be defaulted to {}"
 )
 
-test('.buildWithDefaults exists', ->
-  assert.typeOf Indicator.buildWithDefaults, 'Function'
+test('.buildWithDefaults fills in all name fields based on the given
+  name attribute', ->
+  name = 'My lovely indicator'
+  indicator = Indicator.buildWithDefaults(name: name)
+
+  assert.strictEqual indicator.title, name,
+    "Expected the title field to be set correctly"
+
+  assert.strictEqual indicator.short_name, name,
+    "Expected the short_name field to be set correctly"
+)
+
+test('.buildWithDefaults fills in the unit fields with the given attribute', ->
+  unit = 'Kg'
+  indicator = Indicator.buildWithDefaults(unit: unit)
+
+  assert.strictEqual indicator.indicatorDefinition.unit, unit,
+    "Expected the unit field to be set correctly"
+
+  assert.strictEqual indicator.indicatorDefinition.short_unit, unit,
+    "Expected the short_unit field to be set correctly"
+)
+
+test('.buildWithDefaults fills in the default indicatorDefintion', ->
+  indicator = Indicator.buildWithDefaults({})
+
+  assert.isDefined indicator.indicatorDefinition.xAxis,
+    "Expected the indicator definition to have an xAxis defined"
+
+  assert.isDefined indicator.indicatorDefinition.yAxis,
+    "Expected the indicator definition to have an yAxis defined"
+
+  assert.typeOf indicator.indicatorDefinition.fields, 'Array',
+    "Expected the indicator definition to have a field array"
 )
