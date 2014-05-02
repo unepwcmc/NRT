@@ -1,6 +1,7 @@
 assert = require('chai').assert
 helpers = require '../helpers'
 sinon = require 'sinon'
+Promise = require 'bluebird'
 
 GDocIndicatorImporter = require '../../lib/gdoc_indicator_importer'
 GDocWrapper = require '../../lib/gdoc_wrapper'
@@ -50,9 +51,11 @@ test('#import when given a valid spreadsheet key
   gdocFetchStub = sinon.stub GDocWrapper, 'importByKey', ->
     then: (cb)->
       gdoc = new GDocWrapper({})
-      sinon.stub(gdoc, 'getWorksheetData', new Promise((res) (name)->
-        resolve(fakeGdoc[name])
-      ))
+      sinon.stub(gdoc, 'getWorksheetData', (name) ->
+        new Promise((resolve) ->
+          resolve(fakeGdoc[name])
+        )
+      )
 
       cb(gdoc)
 
