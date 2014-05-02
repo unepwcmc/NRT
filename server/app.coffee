@@ -10,8 +10,13 @@ appConfig = require('./initializers/config')
 i18n = require('i18n')
 flash = require('connect-flash')
 
+
 exports.createApp = ->
   app = express()
+
+  if app.get('env') isnt 'production'
+    require('bluebird').longStackTraces()
+    require('q').longStackSupport = true
 
   require('./initializers/logging')(app)
 
