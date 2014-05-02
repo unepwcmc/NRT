@@ -48,7 +48,7 @@ test('.getWorksheetData returns the data of the worksheet with the
 
   sinon.stub(gdoc, 'getWorksheetByName', ->
     title: 'Definition', cells: (range, cb) ->
-      cb(null, definitionData)
+      cb(null, cells: definitionData)
   )
 
   gdoc.getWorksheetData('definition').then((fetchedData) ->

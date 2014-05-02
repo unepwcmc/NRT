@@ -18,4 +18,6 @@ module.exports = class GDocWrapper
   getWorksheetData: (worksheetName) ->
     worksheet = @getWorksheetByName(worksheetName)
 
-    Promise.promisify(worksheet.cells, worksheet)({})
+    Promise.promisify(worksheet.cells, worksheet)({}).then((result)->
+      result.cells
+    )
