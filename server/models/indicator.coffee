@@ -24,7 +24,9 @@ indicatorSchema = mongoose.Schema(
   theme: {type: mongoose.Schema.Types.ObjectId, ref: 'Theme'}
   type: String
   source: mongoose.Schema.Types.Mixed
-  primary: Boolean
+  primary:
+    type: Boolean,
+    default: true
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
   description: String
 )
