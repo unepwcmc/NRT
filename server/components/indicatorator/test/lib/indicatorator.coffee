@@ -84,7 +84,7 @@ test(".getData loads, formats, converts and sorts the data based on its source",
 
       sortDataCallArgs = sortDataStub.getCall(0).args
       assert.isTrue(
-        sortDataStub.calledWith(indicator.indicatorationConfig.sorting, formattedData),
+        sortDataStub.calledWith(indicator.indicatorationConfig.sorting, convertedData),
         "Expected sortData to be called with the indicatoration sorting configuration
         and the formatted data, but was called with #{JSON.stringify sortDataCallArgs}"
       )

@@ -35,7 +35,7 @@ exports.getData = (indicator) ->
     else
       formattedData
   ).then( (formattedData) =>
-	exports.convertData(indicatorDefinition.fields, formattedData)
+    exports.convertData(indicatorDefinition.fields, formattedData)
   ).then( (convertedData) =>
     if indicatorationConfig.sorting?
       exports.sortData(indicatorationConfig.sorting, convertedData)
