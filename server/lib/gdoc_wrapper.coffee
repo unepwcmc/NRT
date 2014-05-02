@@ -1,10 +1,13 @@
 Promise = require 'bluebird'
-fetchSpreadsheet = Promise.promisify(require "google-spreadsheets")
 
 module.exports = class GDocWrapper
+  constructor: (@spreadsheet)->
+
+  @fetchSpreadsheet: Promise.promisify(require "google-spreadsheets")
 
   @importByKey: (key) ->
-    fetchSpreadsheet(key: key).then((spreadsheet) ->
+    GDocWrapper.fetchSpreadsheet(key: key).then((spreadsheet) ->
+      new GDocWrapper(spreadsheet)
     )
 
   getWorksheetData: ->
