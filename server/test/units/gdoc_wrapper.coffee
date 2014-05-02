@@ -31,8 +31,51 @@ test("#importByKey fetches the spreadsheet for the given key
     catch err
       done(err)
 
-  ).catch(done)
-  .finally(->
+  ).catch((err)->
+    console.log err
+    done(err)
+  ).finally(->
     fetchStub.restore()
   )
+)
+
+test('.getWorksheetData returns the data of the worksheet with the
+  given name', (done) ->
+
+  definitionData = {some: 'data'}
+
+  gdoc = new GDocWrapper({})
+
+  sinon.stub(gdoc, 'getWorksheetByName', ->
+    title: 'Definition', cells: (range, cb) ->
+      cb(null, definitionData)
+  )
+
+  gdoc.getWorksheetData('definition').then((fetchedData) ->
+
+    try
+      assert.strictEqual fetchedData, definitionData,
+        "Expected the right data to returned"
+
+      done()
+    catch err
+      done(err)
+
+  ).catch(done)
+)
+
+test('.getWorksheetByName returns the worksheet with the given name', ->
+
+  fakeSpreadsheet =
+    worksheets: [
+      { id: 1, title: 'Data' },
+      { id: 2, title: 'Definition' }
+    ]
+
+  gdoc = new GDocWrapper(fakeSpreadsheet)
+
+  worksheet = gdoc.getWorksheetByName('Definition')
+
+  assert.strictEqual worksheet, fakeSpreadsheet.worksheets[1],
+    "Expected the correct worksheet to be returned"
 )

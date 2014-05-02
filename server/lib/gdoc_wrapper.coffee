@@ -1,4 +1,5 @@
 Promise = require 'bluebird'
+_ = require 'underscore'
 
 module.exports = class GDocWrapper
   constructor: (@spreadsheet)->
@@ -7,7 +8,14 @@ module.exports = class GDocWrapper
 
   @importByKey: (key) ->
     GDocWrapper.fetchSpreadsheet(key: key).then((spreadsheet) ->
+      console.log spreadsheet
       new GDocWrapper(spreadsheet)
     )
 
-  getWorksheetData: ->
+  getWorksheetByName: (name)->
+    _.findWhere(@spreadsheet.worksheets, {title: name})
+
+  getWorksheetData: (worksheetName) ->
+    worksheet = @getWorksheetByName(worksheetName)
+
+    Promise.promisify(worksheet.cells, worksheet)({})
