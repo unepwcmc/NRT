@@ -1359,14 +1359,14 @@
       {
         "source": {
           "name": "year",
-          "type": "integer"
+          "type": "year"
         },
         "name": "year",
-        "type": "integer"
+        "type": "year"
       }, {
         "source": {
           "name": "value",
-          "type": "decimalPercentage"
+          "type": "percentage"
         },
         "name": "value",
         "type": "integer"

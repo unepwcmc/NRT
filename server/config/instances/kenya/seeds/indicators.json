@@ -28,7 +28,7 @@
     {
       "source": {
         "name": "periodStart",
-        "type": "epoch"
+        "type": "year"
       },
       "name": "date",
       "type": "date"
@@ -79,14 +79,14 @@
       {
         "source": {
           "name": "periodStart",
-          "type": "epoch"
+          "type": "year"
         },
         "name": "date",
         "type": "date"
       }, {
         "source": {
           "name": "value",
-          "type": "decimalPercentage"
+          "type": "percentage"
         },
         "name": "value",
         "type": "integer"
@@ -127,14 +127,14 @@
       {
         "source": {
           "name": "periodStart",
-          "type": "epoch"
+          "type": "text"
         },
         "name": "date",
         "type": "date"
       }, {
         "source": {
           "name": "value",
-          "type": "decimalPercentage"
+          "type": "percentage"
         },
         "name": "value",
         "type": "integer"
@@ -174,14 +174,14 @@
       {
         "source": {
           "name": "periodStart",
-          "type": "epoch"
+          "type": "text"
         },
         "name": "date",
         "type": "date"
       }, {
         "source": {
           "name": "value",
-          "type": "decimalPercentage"
+          "type": "percentage"
         },
         "name": "value",
         "type": "integer"
@@ -221,14 +221,14 @@
       {
         "source": {
           "name": "periodStart",
-          "type": "epoch"
+          "type": "text"
         },
         "name": "date",
         "type": "date"
       }, {
         "source": {
           "name": "value",
-          "type": "decimalPercentage"
+          "type": "percentage"
         },
         "name": "value",
         "type": "integer"
@@ -268,14 +268,14 @@
       {
         "source": {
           "name": "periodStart",
-          "type": "epoch"
+          "type": "text"
         },
         "name": "date",
         "type": "date"
       }, {
         "source": {
           "name": "value",
-          "type": "decimalPercentage"
+          "type": "percentage"
         },
         "name": "value",
         "type": "integer"
@@ -315,14 +315,14 @@
       {
         "source": {
           "name": "periodStart",
-          "type": "epoch"
+          "type": "text"
         },
         "name": "date",
         "type": "date"
       }, {
         "source": {
           "name": "value",
-          "type": "decimalPercentage"
+          "type": "percentage"
         },
         "name": "value",
         "type": "integer"
@@ -362,14 +362,14 @@
       {
         "source": {
           "name": "periodStart",
-          "type": "epoch"
+          "type": "text"
         },
         "name": "date",
         "type": "date"
       }, {
         "source": {
           "name": "value",
-          "type": "decimalPercentage"
+          "type": "percentage"
         },
         "name": "value",
         "type": "integer"
@@ -409,14 +409,14 @@
       {
         "source": {
           "name": "periodStart",
-          "type": "epoch"
+          "type": "text"
         },
         "name": "date",
         "type": "date"
       }, {
         "source": {
           "name": "value",
-          "type": "decimalPercentage"
+          "type": "percentage"
         },
         "name": "value",
         "type": "integer"
@@ -456,14 +456,14 @@
       {
         "source": {
           "name": "periodStart",
-          "type": "epoch"
+          "type": "text"
         },
         "name": "date",
         "type": "date"
       }, {
         "source": {
           "name": "value",
-          "type": "decimalPercentage"
+          "type": "percentage"
         },
         "name": "value",
         "type": "integer"
