@@ -34,7 +34,10 @@ module.exports =
       spreadsheet.getWorksheetData('Range')
     ).then((worksheet) ->
 
-      definition.ranges = extractRangesFromWorksheet(worksheet)
+      definition.indicatorationConfig =
+        source: 'gdoc'
+        spreadsheet_key: key
+        range: extractRangesFromWorksheet(worksheet)
 
       indicator = Indicator.buildWithDefaults(definition)
 

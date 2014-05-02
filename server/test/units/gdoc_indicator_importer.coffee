@@ -17,10 +17,13 @@ test('#import when given a valid spreadsheet key
     name: 'Fish Landings'
     theme: 'Coastal'
     unit: 'landings'
-    ranges: [
-      {threshold: 50, text: 'Good'},
-      {threshold: 0, text: 'Bad'}
-    ]
+    indicatorationConfig:
+      source: 'gdoc'
+      spreadsheet_key: '12-n-xlzFlT3T1dScfaI7a7ZnhEILbtSCjXSNKbfLJEI'
+      range: [
+        {threshold: 50, text: 'Good'},
+        {threshold: 0, text: 'Bad'}
+      ]
 
   fakeGdoc = {
     'Definition':
@@ -40,12 +43,28 @@ test('#import when given a valid spreadsheet key
         '2': { row: '1', col: '2', value: 'Text'}
       },
       '2': {
-        '1': { row: '1', col: '1', value: indicatorDefinition.ranges[0].threshold},
-        '2': { row: '1', col: '2', value: indicatorDefinition.ranges[0].text}
+        '1': {
+          row: '1',
+          col: '1',
+          value: indicatorDefinition.indicatorationConfig.range[0].threshold
+        },
+        '2': {
+          row: '1',
+          col: '2',
+          value: indicatorDefinition.indicatorationConfig.range[0].text
+        }
       }
       '3': {
-        '1': { row: '1', col: '1', value: indicatorDefinition.ranges[1].threshold},
-        '2': { row: '1', col: '2', value: indicatorDefinition.ranges[1].text}
+        '1': {
+          row: '1',
+          col: '1',
+          value: indicatorDefinition.indicatorationConfig.range[1].threshold
+        },
+        '2': {
+          row: '1',
+          col: '2',
+          value: indicatorDefinition.indicatorationConfig.range[1].text
+        }
       }
   }
 
@@ -70,7 +89,9 @@ test('#import when given a valid spreadsheet key
     save: (cb)-> cb(null, true)
   )
 
-  key = '12-n-xlzFlT3T1dScfaI7a7ZnhEILbtSCjXSNKbfLJEI'
+
+  key = indicatorDefinition.indicatorationConfig.spreadsheet_key
+
   GDocIndicatorImporter.import(key).then( (createdIndicator)->
 
     try
