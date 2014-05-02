@@ -12,10 +12,13 @@ SubIndicatorator = require('../../lib/subindicatorator')
 
 suite('Indicatorator')
 
-test(".getData loads, formats and converts the data based on its source", (done) ->
+test(".getData loads, formats, converts and sorts the data based on its source", (done) ->
   indicator = new Indicator(
     indicatorationConfig:
       source: "esri"
+      sorting:
+        field: "year"
+        order: "asc"
     indicatorDefinition:
       fields: [
           source:
@@ -48,9 +51,15 @@ test(".getData loads, formats and converts the data based on its source", (done)
 
   convertedData = [
     {superFancy: 'data', superYear: 978307200000}
-    {superFancy: 'otherData', superYear: 883612800000},
+    {superFancy: 'otherData', superYear: 883612800000}
   ]
   convertDataStub = sandbox.stub(Indicatorator, 'convertData', -> convertedData)
+
+  sortedData = [
+    {superFancy: 'otherData', superYear: 883612800000}
+    {superFancy: 'data', superYear: 978307200000}
+  ]
+  sortDataStub = sandbox.stub(Indicatorator, 'sortData', -> sortedData)
 
   Indicatorator.getData(indicator).then( (data) ->
     try
@@ -73,8 +82,15 @@ test(".getData loads, formats and converts the data based on its source", (done)
         and the formatted data, but was called with #{JSON.stringify convertDataCallArgs}"
       )
 
-      assert.deepEqual data, convertedData,
-        "Expected the converted data to be returned"
+      sortDataCallArgs = sortDataStub.getCall(0).args
+      assert.isTrue(
+        sortDataStub.calledWith(indicator.indicatorationConfig.sorting, convertedData),
+        "Expected sortData to be called with the indicatoration sorting configuration
+        and the formatted data, but was called with #{JSON.stringify sortDataCallArgs}"
+      )
+
+      assert.deepEqual data, sortedData,
+        "Expected the sorted data to be returned"
 
       done()
     catch err
@@ -256,6 +272,49 @@ test('.convertData gets the formatted data and returns it converted', (done) ->
 
     assert.deepEqual convertedData, expectedData,
       "Expected the data to be correctly converted"
+    done()
+  ).fail((err) ->
+    done(err)
+  )
+)
+
+test('.sortData gets the formatted data and returns it sorted', (done) ->
+  indicator = new Indicator(
+    indicatorationConfig:
+      source: "worldBank"
+      sorting:
+        field: "year"
+        order: "asc"
+  )
+
+  data = [
+    year: 2012
+    value: 0.2
+  ,
+    year: 1999
+    value: 4
+  ,
+    year: 2010
+    value: 0.1
+  ]
+
+  Indicatorator.sortData(
+    indicator.indicatorationConfig.sorting,
+    data
+  ).then( (orderedData) ->
+    expectedData = [
+      year: 1999
+      value: 4
+    ,
+      year: 2010
+      value: 0.1
+    ,
+      year: 2012
+      value: 0.2
+    ]
+
+    assert.deepEqual orderedData, expectedData,
+      "Expected the data to be correctly ordered"
     done()
   ).fail((err) ->
     done(err)

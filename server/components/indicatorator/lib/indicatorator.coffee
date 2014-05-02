@@ -1,4 +1,5 @@
 Converter        = require('../lib/converter')
+Sorter           = require('../lib/sorter')
 RangeApplicator  = require('../lib/range_applicator')
 SubIndicatorator = require('../lib/subindicatorator')
 
@@ -35,6 +36,11 @@ exports.getData = (indicator) ->
       formattedData
   ).then( (formattedData) =>
     exports.convertData(indicatorDefinition.fields, formattedData)
+  ).then( (convertedData) =>
+    if indicatorationConfig.sorting?
+      exports.sortData(indicatorationConfig.sorting, convertedData)
+    else
+      convertedData
   )
 
 exports.fetchData = (indicator) ->
@@ -54,6 +60,12 @@ exports.formatData = (source, data) ->
 
 exports.convertData = (indicatorFields, data) ->
   Converter.convertData(indicatorFields, data)
+
+exports.sortData = (sorting, data) ->
+  if sorting?
+    return Sorter.sortData(sorting, data)
+  else
+    return data
 
 applyRanges = (ranges, data) ->
   RangeApplicator.applyRanges(data, ranges)
