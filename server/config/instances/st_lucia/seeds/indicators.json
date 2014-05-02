@@ -10,7 +10,11 @@
     "range": [
         {"minValue": 0.5, "message": "Good"},
         {"minValue": 0, "message": "Bad"}
-    ]
+    ],
+    "sorting": {
+      "field": "year",
+      "order": "asc"
+    }
   },
   "indicatorDefinition": {
     "name": "Fish Landings",
@@ -24,14 +28,14 @@
       {
         "source": {
           "name": "periodStart",
-          "type": "epoch"
+          "type": "integer"
         },
         "name": "year",
         "type": "integer"
       }, {
         "source": {
           "name": "value",
-          "type": "integer"
+          "type": "text"
         },
         "name": "value",
         "type": "integer"
@@ -57,7 +61,11 @@
     "range": [
         {"minValue": 0.5, "message": "Good"},
         {"minValue": 0, "message": "Bad"}
-    ]
+    ],
+    "sorting": {
+      "field": "year",
+      "order": "asc"
+    }
   },
   "indicatorDefinition": {
     "name": "% of households using gas or electricity for cooking",
@@ -71,14 +79,14 @@
       {
         "source": {
           "name": "periodStart",
-          "type": "epoch"
+          "type": "integer"
         },
         "name": "year",
         "type": "integer"
       }, {
         "source": {
           "name": "value",
-          "type": "integer"
+          "type": "text"
         },
         "name": "value",
         "type": "integer"
@@ -107,7 +115,11 @@
     "range": [
       {"minValue": 0, "message": "Good"},
       {"minValue": 20, "message": "Bad"}
-    ]
+    ],
+    "sorting": {
+      "field": "year",
+      "order": "asc"
+    }
   },
   "indicatorDefinition": {
     "unit": "metric tons",
@@ -156,7 +168,11 @@
     "range": [
       {"minValue": 50, "message": "Good"},
       {"minValue": 0, "message": "Bad"}
-    ]
+    ],
+    "sorting": {
+      "field": "year",
+      "order": "asc"
+    }
   },
   "indicatorDefinition": {
     "unit": "percentage",
@@ -205,7 +221,11 @@
     "range": [
       {"minValue": 0, "message": "Good"},
       {"minValue": 20, "message": "Bad"}
-    ]
+    ],
+    "sorting": {
+      "field": "year",
+      "order": "asc"
+    }
   },
   "indicatorDefinition": {
     "unit": "threatened species",
