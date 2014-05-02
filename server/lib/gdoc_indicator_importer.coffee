@@ -17,30 +17,26 @@ extractRangesFromWorksheet = (worksheet) ->
 
 module.exports =
   import: (key) ->
-    new Promise((resolve, reject) ->
 
-      spreadsheet = null
-      definition = {}
+    spreadsheet = null
+    definition = {}
 
-      GDocWrapper.importByKey(key).then((spr)->
-        spreadsheet = spr
+    GDocWrapper.importByKey(key).then((spr)->
+      spreadsheet = spr
 
-        spreadsheet.getWorksheetData('Definition')
-      ).then((worksheet) ->
+      spreadsheet.getWorksheetData('Definition')
+    ).then((worksheet) ->
 
-        definition.name = worksheet['2']['1'].value
-        definition.theme = worksheet['2']['2'].value
-        definition.unit = worksheet['2']['3'].value
+      definition.name = worksheet['2']['1'].value
+      definition.theme = worksheet['2']['2'].value
+      definition.unit = worksheet['2']['3'].value
 
-        spreadsheet.getWorksheetData('Range')
-      ).then((worksheet) ->
+      spreadsheet.getWorksheetData('Range')
+    ).then((worksheet) ->
 
-        definition.ranges = extractRangesFromWorksheet(worksheet)
+      definition.ranges = extractRangesFromWorksheet(worksheet)
 
-        indicator = Indicator.buildWithDefaults(definition)
+      indicator = Indicator.buildWithDefaults(definition)
 
-        Promise.promisify(indicator.save, indicator)()
-      ).then(
-        resolve, reject
-      )
+      Promise.promisify(indicator.save, indicator)()
     )
