@@ -40,7 +40,7 @@ test('.convertResponseToIndicatorData puts the indicator data into
 
     done()
 
-  ).fail(done)
+  ).catch(done)
 )
 
 test('.convertResponseToIndicatorData when given a garbage response
@@ -177,7 +177,7 @@ test(".replaceIndicatorData when called on an  indicator where indicator data
     )
     done()
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw err
   )
@@ -224,7 +224,7 @@ test(".updateIndicatorData calls Indicatorator.getData(indicator) and updates
       done(err)
     finally
       indicatoratorGetDataStub.restore()
-  ).fail((err)->
+  ).catch((err)->
     indicatoratorGetDataStub.restore()
     done(err)
   )

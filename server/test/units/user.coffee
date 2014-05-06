@@ -44,7 +44,7 @@ test('.canEdit resolves when given a page whose parent is owned by the user', (d
     theOwner.canEdit(page)
   ).then(->
     done()
-  ).fail(done)
+  ).catch(done)
 )
 
 test(".isValidPassword returns false if bcrypt(password)
@@ -61,7 +61,7 @@ test(".isValidPassword returns false if bcrypt(password)
       )
 
       done()
-    ).fail(done)
+    ).catch(done)
   )
 )
 
@@ -79,7 +79,7 @@ test(".isValidPassword returns true if bcrypt(password)
       )
 
       done()
-    ).fail(done)
+    ).catch(done)
   )
 )
 
@@ -138,7 +138,7 @@ test(".loginFromLocalDb succeeds if the user's password is correct", (done) ->
       done()
 
     user.loginFromLocalDb("boats", authenticationCallback)
-  ).fail(done)
+  ).catch(done)
 )
 
 test(".loginFromLocalDb fails if the user's password is incorrect", (done) ->
@@ -151,7 +151,7 @@ test(".loginFromLocalDb fails if the user's password is incorrect", (done) ->
       done()
 
     user.loginFromLocalDb("ships", callback)
-  ).fail(done)
+  ).catch(done)
 )
 
 test("Usernames must be unique", (done) ->
@@ -159,7 +159,7 @@ test("Usernames must be unique", (done) ->
     helpers.createUser()
   ).then( ->
     done(new Error("Expected duplicate user creation to fail"))
-  ).fail( (err) ->
+  ).catch( (err) ->
     assert.match err, /duplicate key error index/
     done()
   )

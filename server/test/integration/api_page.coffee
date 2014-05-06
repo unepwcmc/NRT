@@ -33,7 +33,7 @@ test('GET show', (done) ->
 
         done()
       )
-    ).fail( (err) ->
+    ).catch( (err) ->
       console.error err
       throw new Error(err)
     )
@@ -54,7 +54,7 @@ test('GET index', (done) ->
 
         done()
       )
-    ).fail( (err) ->
+    ).catch( (err) ->
       console.error err
       throw new Error(err)
     )
@@ -75,7 +75,7 @@ test('DELETE page', (done) ->
             done()
         )
       )
-    ).fail( (err) ->
+    ).catch( (err) ->
       console.error err
       throw new Error(err)
     )
@@ -104,7 +104,7 @@ test('PUT page', (done) ->
             )
         )
       )
-    ).fail( (err) ->
+    ).catch( (err) ->
       console.error err
       throw new Error(err)
     )
@@ -132,7 +132,7 @@ test('PUT page succeeds with an _id sent', (done) ->
             done()
         )
       )
-    ).fail( (err) ->
+    ).catch( (err) ->
       console.error err
       throw new Error(err)
     )
@@ -160,7 +160,7 @@ test('PUT page succeeds with an _id sent', (done) ->
             done()
           )
       )
-    ).fail( (err) ->
+    ).catch( (err) ->
       console.error err
       throw new Error(err)
     )
@@ -189,7 +189,7 @@ test('PUT nesting a section in a page with existing sections', (done) ->
 
         done()
       )
-    ).fail( (err) ->
+    ).catch( (err) ->
       console.error err
       throw new Error(err)
     )
@@ -258,7 +258,7 @@ test('POST create - nesting a section in a page when authenticated', (done) ->
     catch e
       done(e)
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw err
   )
@@ -304,7 +304,7 @@ test('POST create - nesting a section in a page fails when not authenticated', (
     assert.equal res.statusCode, 401
 
     done()
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw err
   )

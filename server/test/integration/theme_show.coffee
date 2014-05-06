@@ -73,7 +73,7 @@ test("GET /:id/draft clones the Theme's Page and renders the theme", (done) ->
 
     done()
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     console.error err
     throw err
   )
@@ -136,7 +136,7 @@ test('GET /:id/publish publishes the current draft and makes it publicly viewabl
 
     done()
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     console.error err
     throw err
   )
@@ -187,7 +187,7 @@ test("GET /:id/discard_draft discards all drafts and renders the published versi
 
     done()
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     console.error err
     throw err
   )

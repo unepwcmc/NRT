@@ -52,7 +52,7 @@ test(".fetch builds a request URL, queries it, and returns the data", (done) ->
 
     finally
       getStub.restore()
-  ).fail((err) ->
+  ).catch((err) ->
     getStub.restore()
     done(err)
   )

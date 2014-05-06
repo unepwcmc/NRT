@@ -103,7 +103,7 @@ test("GET /indicators/:id/fat returns the indicator with its nested page ", (don
     finally
       toObjectWithNestedPageStub.restore()
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     toObjectWithNestedPageStub.restore()
     done(err)
   )
@@ -160,7 +160,7 @@ test('GET /api/indicators?withData=true only returns indicators with indicator d
           done(err)
       )
 
-    ).fail(done)
+    ).catch(done)
   )
 )
 
@@ -249,7 +249,7 @@ test('PUT indicator does not fail when Theme is given as an object', (done) ->
     assert.equal res.statusCode, 200
 
     done()
-  ).fail( (err) ->
+  ).catch( (err) ->
     console.error err
     console.error err.stack
     done(err)
@@ -299,7 +299,7 @@ test('GET indicator/:id/data returns the indicator data and bounds as JSON', (do
       done()
     )
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     console.error err
     throw new Error(err)
   )
@@ -351,7 +351,7 @@ test('GET indicator/:id/data with a \'min\' filter filters the result', (done) -
 
       done()
     )
-  ).fail( (err) ->
+  ).catch( (err) ->
     console.error err
     throw new Error(err)
   )
@@ -458,7 +458,7 @@ test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
         restoreStubs()
     )
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     console.error err
     restoreStubs()
     done(err)
@@ -539,7 +539,7 @@ test('GET /:id/headlines returns the 5 most recent headlines in descending order
     catch e
       done(e)
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw err
   )
@@ -616,7 +616,7 @@ test('GET /:id/headlines/:number returns the n most recent headlines', (done) ->
     catch e
       done(e)
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw err
   )

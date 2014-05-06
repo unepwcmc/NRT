@@ -29,7 +29,7 @@ test("When logged in and visiting the theme index page, I see my name", (done)->
     assert.match body, new RegExp(".*#{theUser.name}.*")
     done()
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw err
   )

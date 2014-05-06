@@ -61,7 +61,7 @@ test('.getIndicatorDataForCSV with no filters returns all indicator data in a 2D
       done()
     )
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw err
   )
@@ -158,7 +158,7 @@ test('.getIndicatorDataForCSV with filters returns data matching filters in a 2D
       done()
     )
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw err
   )
@@ -201,7 +201,7 @@ test('.getIndicatorData with no filters returns all indicator data for this indi
       done()
     )
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw err
   )
@@ -250,7 +250,7 @@ test('.getIndicatorData with an integer filter \'min\' value
       done()
     )
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw err
   )
@@ -324,7 +324,7 @@ test('#calculateIndicatorDataBounds should return the upper and lower bounds of 
       done()
     )
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw err
   )
@@ -368,7 +368,7 @@ test("#findWhereIndicatorHasData returns only indicators with indicator data", (
 
     done()
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     console.error err.stack
     throw err
@@ -408,7 +408,7 @@ test("#findWhereIndicatorHasData respects the given filters", (done)->
 
     done()
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     console.error err.stack
     throw err
@@ -437,7 +437,7 @@ test(".hasData returns true when an indicator has data", (done)->
     catch err
       done(err)
 
-  ).fail(done)
+  ).catch(done)
 )
 
 test(".hasData returns false when an indicator has no data", (done)->
@@ -449,7 +449,7 @@ test(".hasData returns false when an indicator has no data", (done)->
       done()
     catch err
       done(err)
-  ).fail(done)
+  ).catch(done)
 )
 
 test('#populatePages given an array of indicators, populates their page attributes', (done) ->
@@ -465,7 +465,7 @@ test('#populatePages given an array of indicators, populates their page attribut
     assert.ok _.isEqual(indicator.page, page),
       "Expected the page attribute to be populated with the indicator page"
     done()
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw err
   )
@@ -577,7 +577,7 @@ test(".generateMetadataCSV returns CSV arrays containing the name, theme,
     finally
       newestHeadlineStub.restore()
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     done(err)
     newestHeadlineStub.restore()
   )
@@ -608,7 +608,7 @@ returns blank values for those fields", (done) ->
     catch e
       done(e)
 
- ).fail( (err) ->
+ ).catch( (err) ->
    done(err)
  )
 
@@ -622,7 +622,7 @@ test("#seedData when no seed file exist reports an appropriate error", (done) ->
 
   Indicator.seedData().then(->
     done("Expected Indicator.seedData to fail")
-  ).fail((err)->
+  ).catch((err)->
 
     try
       console.log err
@@ -659,7 +659,7 @@ test('#CONDITIONS.IS_PRIMARY only returns indicators with indicators
       done()
     catch err
       done(err)
-  ).fail(done)
+  ).catch(done)
 
 )
 

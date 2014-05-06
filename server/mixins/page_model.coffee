@@ -148,7 +148,7 @@ module.exports = {
         )
       ).then( (fatPage) ->
         deferred.resolve(fatPage)
-      ).fail( (err) ->
+      ).catch( (err) ->
         deferred.reject(err)
       )
 

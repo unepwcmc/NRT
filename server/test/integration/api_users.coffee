@@ -29,7 +29,7 @@ test('GET index', (done) ->
 
       done()
     )
-  ).fail( (err) ->
+  ).catch( (err) ->
     console.error err
     throw new Error(err)
   )
