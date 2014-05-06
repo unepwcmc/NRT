@@ -31,7 +31,7 @@ module.exports =
       definition.theme = worksheet['2']['2'].value
       definition.unit = worksheet['2']['3'].value
 
-      spreadsheet.getWorksheetData('Range')
+      spreadsheet.getWorksheetData('Ranges')
     ).then((worksheet) ->
 
       definition.indicatorationConfig =
