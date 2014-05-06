@@ -50,13 +50,10 @@ replaceThemeNameWithId = (indicators) ->
   deferred = Q.defer()
 
   getThemeFromTitle = (indicator, callback) ->
-    Theme.findOne(title: indicator.theme, (err, theme) ->
-      if err? or !theme?
-        return callback(err)
-
+    Theme.findOrCreateByTitle(indicator.theme).then((theme) ->
       indicator.theme = theme._id
-      callback(null, indicator)
-    )
+      callback(null, theme)
+    ).catch(callback)
 
   async.map(indicators, getThemeFromTitle, (err, indicatorsWithThemes) ->
     if err?
