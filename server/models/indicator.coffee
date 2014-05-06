@@ -24,7 +24,9 @@ indicatorSchema = mongoose.Schema(
   theme: {type: mongoose.Schema.Types.ObjectId, ref: 'Theme'}
   type: String
   source: mongoose.Schema.Types.Mixed
-  primary: Boolean
+  primary:
+    type: Boolean,
+    default: true
   owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
   description: String
 )
@@ -381,6 +383,50 @@ indicatorSchema.statics.convertNestedParametersToAssociationIds = (attributes) -
     attributes.theme = attributes.theme._id.toString()
 
   return attributes
+
+DEFAULT_INDICATOR_DEFINITION =
+  "unit": "landings",
+  "short_unit": "landings",
+  "period": "yearly",
+  "xAxis": "year",
+  "yAxis": "value",
+  "geometryField": "geometry",
+  "fields": [
+    {
+      "source": {
+        "name": "periodStart",
+        "type": "epoch"
+      },
+      "name": "year",
+      "type": "integer"
+    }, {
+      "source": {
+        "name": "value",
+        "type": "integer"
+      },
+      "name": "value",
+      "type": "integer"
+    }, {
+      "source": {
+        "name": "text",
+        "type": "text"
+      },
+      "name": "text",
+      "type": "text"
+    }
+  ]
+
+indicatorSchema.statics.buildWithDefaults = (attributes) ->
+  definition =
+    unit: attributes.unit
+    short_unit: attributes.unit
+
+  definition = _.extend(DEFAULT_INDICATOR_DEFINITION, definition)
+  new Indicator(
+    title: attributes.name
+    short_name: attributes.name
+    indicatorDefinition: definition
+  )
 
 Indicator = mongoose.model('Indicator', indicatorSchema)
 
