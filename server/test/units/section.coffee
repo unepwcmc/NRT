@@ -1,12 +1,14 @@
 assert = require('chai').assert
-helpers = require '../helpers'
 Q = require('q')
+
+helpers = require('../helpers')
 Narrative = require('../../models/narrative.coffee').model
 Visualisation = require('../../models/visualisation.coffee').model
 Indicator = require('../../models/indicator.coffee').model
 Section = require('../../models/section.coffee').model
 
 suite('Section')
+
 test('.create', (done) ->
   Section = require('../../models/section').model
 

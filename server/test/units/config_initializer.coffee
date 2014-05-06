@@ -1,7 +1,6 @@
 assert = require('chai').assert
 helpers = require '../helpers'
 sinon = require 'sinon'
-fs = require 'fs'
 path = require 'path'
 
 appConfig = require('../../initializers/config')

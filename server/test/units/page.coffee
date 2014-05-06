@@ -1,10 +1,9 @@
 assert = require('chai').assert
-helpers = require '../helpers'
 _ = require('underscore')
-async = require('async')
 Q = require('q')
 sinon = require('sinon')
 
+helpers = require('../helpers.coffee')
 User = require('../../models/user.coffee').model
 Narrative = require('../../models/narrative.coffee').model
 Visualisation = require('../../models/visualisation.coffee').model

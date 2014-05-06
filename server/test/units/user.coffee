@@ -1,7 +1,8 @@
 assert = require('chai').assert
-helpers = require '../helpers'
 Q = require('q')
+
 User = require('../../models/user').model
+helpers = require '../helpers'
 
 suite('User')
 

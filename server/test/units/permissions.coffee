@@ -1,6 +1,5 @@
 assert = require('chai').assert
-helpers = require '../helpers'
-sinon = require 'sinon'
+sinon = require('sinon')
 
 AppConfig = require('../../initializers/config')
 Permissions = require('../../lib/services/permissions')

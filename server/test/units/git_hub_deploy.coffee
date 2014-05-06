@@ -1,8 +1,7 @@
 assert = require('chai').assert
-helpers = require '../helpers'
-sinon = require 'sinon'
-request = require 'request'
-Promise = require 'bluebird'
+sinon = require('sinon')
+request = require('request')
+Promise = require('bluebird')
 AppConfig = require('../../initializers/config')
 
 GitHubDeploy = require('../../lib/git_hub_deploy')

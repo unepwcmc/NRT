@@ -5,7 +5,7 @@ url = require('url')
 _ = require('underscore')
 async = require('async')
 passportStub = require 'passport-stub'
-Q = require 'q'
+Q = require('q')
 
 suite('API - Page')
 

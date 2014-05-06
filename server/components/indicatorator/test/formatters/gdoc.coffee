@@ -1,7 +1,4 @@
 assert = require('chai').assert
-sinon = require('sinon')
-Q = require('q')
-_ = require('underscore')
 
 GDocFormatter = require('../../formatters/gdoc')
 

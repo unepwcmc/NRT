@@ -1,10 +1,11 @@
+_ = require('underscore')
 assert = require('chai').assert
-helpers = require '../helpers'
-Indicator = require('../../models/indicator').model
 Q = require('q')
 request = require 'request'
 sinon = require 'sinon'
-_ = require('underscore')
+
+helpers = require '../helpers'
+Indicator = require('../../models/indicator').model
 
 suite('Update Indicator Mixin')
 

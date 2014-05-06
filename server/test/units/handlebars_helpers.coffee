@@ -1,5 +1,4 @@
 assert = require('chai').assert
-helpers = require '../helpers'
 hbs = require('express-hbs')
 sinon = require('sinon')
 

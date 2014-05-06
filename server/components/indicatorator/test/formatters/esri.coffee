@@ -1,5 +1,4 @@
 assert = require('chai').assert
-sinon = require('sinon')
 
 EsriFormatter = require('../../formatters/esri')
 

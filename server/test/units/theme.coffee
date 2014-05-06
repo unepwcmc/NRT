@@ -1,11 +1,12 @@
+_ = require('underscore')
 assert = require('chai').assert
-helpers = require '../helpers'
-Theme = require('../../models/theme').model
-Indicator = require('../../models/indicator').model
 async = require('async')
 Q = require('q')
-_ = require('underscore')
 sinon = require('sinon')
+
+helpers = require('../helpers')
+Theme = require('../../models/theme').model
+Indicator = require('../../models/indicator').model
 
 suite('Theme')
 

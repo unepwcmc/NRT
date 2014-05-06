@@ -1,12 +1,12 @@
+_ = require('underscore')
 assert = require('chai').assert
-helpers = require '../helpers'
+async = require('async')
+fs = require('fs')
+Q = require('q')
+sinon = require('sinon')
+
 IndicatorData = require('../../models/indicator_data').model
 Indicator = require('../../models/indicator').model
-async = require('async')
-_ = require('underscore')
-Q = require 'q'
-fs = require 'fs'
-sinon = require 'sinon'
 
 suite('Indicator Data')
 

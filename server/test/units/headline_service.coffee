@@ -1,9 +1,8 @@
 assert = require('chai').assert
-helpers = require '../helpers'
 async = require('async')
 _ = require('underscore')
-Q = require 'q'
-sinon = require 'sinon'
+Q = require('q')
+sinon = require('sinon')
 
 HeadlineService = require('../../lib/services/headline')
 Indicator = require('../../models/indicator').model

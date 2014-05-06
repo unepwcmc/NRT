@@ -1,7 +1,6 @@
 assert = require('chai').assert
 helpers = require '../helpers'
 sinon = require 'sinon'
-request = require 'request'
 Promise = require 'bluebird'
 
 CommandRunner = require('../../bin/command-runner')

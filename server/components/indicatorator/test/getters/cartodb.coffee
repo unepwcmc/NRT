@@ -1,7 +1,5 @@
 assert = require('chai').assert
 sinon = require('sinon')
-Q = require('q')
-_ = require('underscore')
 request = require('request')
 
 Indicator = require('../../../../models/indicator').model

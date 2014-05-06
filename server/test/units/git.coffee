@@ -1,5 +1,4 @@
 assert = require('chai').assert
-helpers = require '../helpers'
 sinon = require 'sinon'
 
 Git = require '../../lib/git'

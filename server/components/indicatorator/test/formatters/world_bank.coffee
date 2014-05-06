@@ -1,5 +1,4 @@
 assert = require('chai').assert
-sinon = require('sinon')
 
 WorldBankFormatter = require('../../formatters/world_bank')
 

@@ -1,14 +1,15 @@
 assert = require('chai').assert
-helpers = require '../helpers'
-Indicator = require('../../models/indicator').model
-Section = require('../../models/section').model
-Theme = require('../../models/theme').model
-Page = require('../../models/page').model
-IndicatorData = require('../../models/indicator_data').model
 async = require('async')
 _ = require('underscore')
 Q = require('q')
 sinon = require('sinon')
+
+helpers = require('../helpers')
+Indicator = require('../../models/indicator').model
+IndicatorData = require('../../models/indicator_data').model
+Section = require('../../models/section').model
+Theme = require('../../models/theme').model
+Page = require('../../models/page').model
 
 suite('Page Model Mixin')
 
