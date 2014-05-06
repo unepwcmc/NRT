@@ -640,9 +640,7 @@ test('#CONDITIONS.IS_PRIMARY only returns indicators with indicators
   }, {
     primary: false
   }]).then(->
-    Q.nsend(
-      Indicator, 'find', Indicator.CONDITIONS.IS_PRIMARY
-    )
+    Indicator.find(Indicator.CONDITIONS.IS_PRIMARY).exec()
   ).then((indicators)->
     try
       assert.lengthOf indicators, 1,
