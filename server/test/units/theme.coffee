@@ -44,9 +44,9 @@ test('.getFatThemes returns all the themes
       helpers.createIndicatorData({
         indicator: indicator
         data: [{data: 'yeah'}]
-      }, ->
+      }).then( (indicatorData) ->
         callback()
-      )
+      ).catch(callback)
 
     async.each subIndicators, createIndicatorData, (err) ->
       if err?
@@ -107,8 +107,10 @@ test('#getFetThemes only returns themes with indicators of type ESRI', (done) ->
       helpers.createIndicatorData({
         indicator: indicator
         data: [{data: 'yeah'}]
-      }, ->
+      }).then( (indicatorData) ->
         callback()
+      ).catch( (err) ->
+        callback(err)
       )
 
     async.each subIndicators, createIndicatorData, (err) ->

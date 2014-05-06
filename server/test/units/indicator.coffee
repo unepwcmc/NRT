@@ -352,12 +352,10 @@ test("#findWhereIndicatorHasData returns only indicators with indicator data", (
     indicatorWithData = indicators[0]
     indicatorWithoutData = indicators[1]
 
-    Q.nfcall(
-      helpers.createIndicatorData, {
-        indicator: indicatorWithData
-        data: [{some: 'data'}]
-      }
-    )
+    helpers.createIndicatorData({
+      indicator: indicatorWithData
+      data: [{some: 'data'}]
+    })
   ).then((indicatorData) ->
     Indicator.findWhereIndicatorHasData()
   ).then((indicators) ->
@@ -384,20 +382,16 @@ test("#findWhereIndicatorHasData respects the given filters", (done)->
     indicatorToFind = indicators[0]
     indicatorToFilterOut = indicators[1]
 
-    Q.nfcall(
-      helpers.createIndicatorData, {
-        indicator: indicatorToFind
-        data: [{some: 'data'}]
-      }
-    )
+    helpers.createIndicatorData({
+      indicator: indicatorToFind
+      data: [{some: 'data'}]
+    })
   ).then((indicatorData) ->
 
-    Q.nfcall(
-      helpers.createIndicatorData, {
-        indicator: indicatorToFilterOut
-        data: [{some: 'data'}]
-      }
-    )
+    helpers.createIndicatorData({
+      indicator: indicatorToFilterOut
+      data: [{some: 'data'}]
+    })
   ).then((indicatorData) ->
     Indicator.findWhereIndicatorHasData(_id: indicatorToFind._id)
   ).then((indicators) ->
@@ -421,12 +415,10 @@ test(".hasData returns true when an indicator has data", (done)->
   helpers.createIndicatorModels([{}]).then((indicators) ->
     indicatorWithData = indicators[0]
 
-    Q.nfcall(
-      helpers.createIndicatorData, {
-        indicator: indicatorWithData
-        data: [{some: 'data'}]
-      }
-    )
+    helpers.createIndicatorData({
+      indicator: indicatorWithData
+      data: [{some: 'data'}]
+    })
   ).then((indicatorData) ->
     indicatorWithData.hasData()
   ).then((hasData) ->

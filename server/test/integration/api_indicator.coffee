@@ -137,8 +137,8 @@ test('GET /api/indicators?withData=true only returns indicators with indicator d
   async.series([helpers.createIndicator, helpers.createIndicator], (err, indicators) ->
     indicatorWithData = indicators[0]
 
-    Q.nfcall(
-      helpers.createIndicatorData, indicator: indicatorWithData._id
+    helpers.createIndicatorData(
+      indicator: indicatorWithData._id
     ).then( ->
 
       request.get({
@@ -276,12 +276,10 @@ test('GET indicator/:id/data returns the indicator data and bounds as JSON', (do
   ]).then( (indicators) ->
     theIndicator = indicators[0]
 
-    Q.nfcall(
-      helpers.createIndicatorData, {
-        data: theData
-        indicator: theIndicator
-      }
-    )
+    helpers.createIndicatorData({
+      data: theData
+      indicator: theIndicator
+    })
   ).then( ->
 
     request.get({
@@ -329,12 +327,10 @@ test('GET indicator/:id/data with a \'min\' filter filters the result', (done) -
   ]).then( (indicators) ->
     theIndicator = indicators[0]
 
-    Q.nfcall(
-      helpers.createIndicatorData, {
-        data: theData
-        indicator: theIndicator
-      }
-    )
+    helpers.createIndicatorData({
+      data: theData
+      indicator: theIndicator
+    })
   ).then( ->
     request.get({
       url: helpers.appurl("/api/indicators/#{theIndicator.id}/data?filters[value][min]=5")

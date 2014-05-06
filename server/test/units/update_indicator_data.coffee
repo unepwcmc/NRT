@@ -145,12 +145,10 @@ test(".replaceIndicatorData when called on an  indicator where indicator data
     indicator = indicators[0]
 
     # populate existing indicator data
-    Q.nfcall(
-      helpers.createIndicatorData, {
-        indicator: indicator
-        data: [old: 'data']
-      }
-    )
+    helpers.createIndicatorData({
+      indicator: indicator
+      data: [old: 'data']
+    })
   ).then( (indicatorData) ->
     oldIndicatorData = indicatorData
 
