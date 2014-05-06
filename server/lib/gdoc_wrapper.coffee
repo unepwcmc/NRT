@@ -8,7 +8,6 @@ module.exports = class GDocWrapper
 
   @importByKey: (key) ->
     GDocWrapper.fetchSpreadsheet(key: key).then((spreadsheet) ->
-      console.log spreadsheet
       new GDocWrapper(spreadsheet)
     )
 
