@@ -18,6 +18,9 @@ module.exports = class GDocWrapper
   getWorksheetData: (worksheetName) ->
     worksheet = @getWorksheetByName(worksheetName)
 
+    unless worksheet?
+      throw new Error("Couldn't find worksheet named '#{worksheetName}'")
+
     Promise.promisify(worksheet.cells, worksheet)({}).then((result)->
       result.cells
     )
