@@ -674,26 +674,3 @@ test('.buildWithDefaults fills in the default indicatorDefintion', ->
   assert.typeOf indicator.indicatorDefinition.fields, 'Array',
     "Expected the indicator definition to have a field array"
 )
-
-test(".setThemeByTitle finds or creates a theme with the given title
-  and sets the theme attribute to that theme's id", (done) ->
-  themeTitle = 'hats'
-  theme = new Theme(title: themeTitle)
-
-  themeStub = sinon.stub(Theme, 'findOrCreateByTitle', ->
-    Promise.resolve(theme)
-  )
-
-  indicator = new Indicator()
-
-  indicator.setThemeByTitle(themeTitle).then( ->
-    try
-      assert.strictEqual indicator.theme, theme._id,
-        "Expected the indicator to be associated with the found theme"
-      done()
-    catch err
-      done(err)
-  ).catch(done).finally(->
-    themeStub.restore()
-  )
-)

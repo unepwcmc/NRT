@@ -284,12 +284,6 @@ indicatorSchema.methods.generateMetadataCSV = ->
 
   return deferred.promise
 
-indicatorSchema.methods.setThemeByTitle = (title) ->
-  Theme = require('./theme').model
-  Theme.findOrCreateByTitle(title).then((theme) =>
-    @theme = theme
-  )
-
 # Add currentYValue to a collection of indicators
 indicatorSchema.statics.calculateCurrentValues = (indicators, callback) ->
   currentValueGatherers = []
