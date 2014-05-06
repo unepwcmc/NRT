@@ -73,7 +73,7 @@ test('.getPage when a non-draft page is associated should get the page', (done) 
 )
 
 test('.getFatPage returns fat pages', (done) ->
-  helpers.createIndicator {}, (err, indicator) ->
+  helpers.createIndicator({}, (err, indicator) ->
     theFatPage = null
 
     helpers.createPage(

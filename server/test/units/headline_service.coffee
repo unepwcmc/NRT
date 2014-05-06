@@ -325,7 +325,7 @@ test(".parseDateInHeadlines on an indicator with no xAxis defined does no proces
     "Expected the headline data not to be modified"
 )
 
-test(".parseDateInHeadlines on an indicator where the frequency is 'quarterly' 
+test(".parseDateInHeadlines on an indicator where the frequency is 'quarterly'
   sets periodEnd to 3 months after the initial 'date'", ->
 
   indicator = new Indicator(
@@ -350,7 +350,7 @@ test(".parseDateInHeadlines on an indicator where the frequency is 'quarterly'
     "Expected the periodEnd to be 3 months from the period start"
 )
 
-test("#populateNarrativeRecencyOfIndicators populates the narrative recency attribute for 
+test("#populateNarrativeRecencyOfIndicators populates the narrative recency attribute for
 the given indicators", (done)->
   indicator = new Indicator()
   indicators = [indicator]
@@ -360,7 +360,7 @@ the given indicators", (done)->
       'Up-to-date'
     )
   )
-    
+
   HeadlineService.populateNarrativeRecencyOfIndicators(indicators).then(->
 
     assert.property indicator, 'narrativeRecency',

@@ -39,7 +39,7 @@ test('#seedData given some indicators, links the seed data correctly', (done) ->
     done(err)
     readFileStub.restore()
   )
-  
+
 )
 
 test("#seedData if the seed includes a 'date' field, convert it to an actual date", (done) ->
@@ -69,7 +69,7 @@ test("#seedData if the seed includes a 'date' field, convert it to an actual dat
     done(err)
     readFileStub.restore()
   )
-  
+
 )
 
 test("#dataToSeedJSON returns indicator data as JSON with the indicator field
@@ -140,6 +140,6 @@ denormalised to the indicator name", (done) ->
       done()
     catch e
       done(e)
-    
+
   ).fail(done)
 )

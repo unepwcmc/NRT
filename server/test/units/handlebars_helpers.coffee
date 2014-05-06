@@ -6,7 +6,7 @@ Permissions = require('../../lib/services/permissions')
 
 suite('Handlebars helpers')
 
-test('#ifCanEdit calls options.fn if Permissions(currentUser).canEdit 
+test('#ifCanEdit calls options.fn if Permissions(currentUser).canEdit
   returns true', ->
 
   canEditStub = sinon.stub(Permissions::, 'canEdit', ->
@@ -25,7 +25,7 @@ test('#ifCanEdit calls options.fn if Permissions(currentUser).canEdit
     canEditStub.restore()
 )
 
-test("#ifCanEdit doesn't call options.fn if Permissions(currentUser).canEdit 
+test("#ifCanEdit doesn't call options.fn if Permissions(currentUser).canEdit
   returns false", ->
 
   canEditStub = sinon.stub(Permissions::, 'canEdit', ->

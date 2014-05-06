@@ -173,7 +173,7 @@ test('.deploy posts the error status if an error occurs', (done) ->
   )
 
   failMessage = "Big end has gone"
-  
+
   sandbox.stub(Deploy, 'updateFromTag', ->
     new Promise((resolve, reject) -> reject(new Error(failMessage)))
   )
