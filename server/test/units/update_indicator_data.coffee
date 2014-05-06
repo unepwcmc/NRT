@@ -1,10 +1,11 @@
+_ = require('underscore')
 assert = require('chai').assert
-helpers = require '../helpers'
-Indicator = require('../../models/indicator').model
 Q = require('q')
 request = require 'request'
 sinon = require 'sinon'
-_ = require('underscore')
+
+helpers = require '../helpers'
+Indicator = require('../../models/indicator').model
 
 suite('Update Indicator Mixin')
 
@@ -39,7 +40,7 @@ test('.convertResponseToIndicatorData puts the indicator data into
 
     done()
 
-  ).fail(done)
+  ).catch(done)
 )
 
 test('.convertResponseToIndicatorData when given a garbage response
@@ -144,12 +145,10 @@ test(".replaceIndicatorData when called on an  indicator where indicator data
     indicator = indicators[0]
 
     # populate existing indicator data
-    Q.nfcall(
-      helpers.createIndicatorData, {
-        indicator: indicator
-        data: [old: 'data']
-      }
-    )
+    helpers.createIndicatorData({
+      indicator: indicator
+      data: [old: 'data']
+    })
   ).then( (indicatorData) ->
     oldIndicatorData = indicatorData
 
@@ -176,7 +175,7 @@ test(".replaceIndicatorData when called on an  indicator where indicator data
     )
     done()
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw err
   )
@@ -223,7 +222,7 @@ test(".updateIndicatorData calls Indicatorator.getData(indicator) and updates
       done(err)
     finally
       indicatoratorGetDataStub.restore()
-  ).fail((err)->
+  ).catch((err)->
     indicatoratorGetDataStub.restore()
     done(err)
   )

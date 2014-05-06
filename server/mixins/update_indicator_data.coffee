@@ -66,7 +66,7 @@ module.exports =
           throw new Error("Validation of indicator data fields failed")
       ).then( (indicatorData) ->
         deferred.resolve(indicatorData)
-      ).fail( (err) ->
+      ).catch( (err) ->
         deferred.reject(err)
       )
 

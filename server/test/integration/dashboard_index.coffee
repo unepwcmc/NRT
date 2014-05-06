@@ -30,7 +30,7 @@ test('GET index has latest edited reports listed', (done) ->
         assert.match body, new RegExp(".*#{report.title}.*")
 
       done()
-  ).fail((error) ->
+  ).catch((error) ->
     console.error error
     throw "Unable to create reports"
   )

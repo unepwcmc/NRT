@@ -1,8 +1,7 @@
 assert = require('chai').assert
-helpers = require '../helpers'
-sinon = require 'sinon'
-fs = require 'fs'
-mongoose = require 'mongoose'
+sinon = require('sinon')
+fs = require('fs')
+mongoose = require('mongoose')
 
 AppConfig = require('../../initializers/config')
 MongoInitializer = require('../../initializers/mongo')

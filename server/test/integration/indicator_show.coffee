@@ -238,7 +238,7 @@ test("GET /:id/draft clones the Indicator's Page and renders the indicator", (do
 
     done()
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     done(err)
   )
 )
@@ -276,7 +276,7 @@ test("GET /:id/draft redirects back if the user is not logged in", (done) ->
 
     done()
 
-  ).fail(done)
+  ).catch(done)
 )
 
 test("GET /:id/discard_draft discards all drafts and renders the published version", (done) ->
@@ -327,7 +327,7 @@ test("GET /:id/discard_draft discards all drafts and renders the published versi
 
     done()
 
-  ).fail(done)
+  ).catch(done)
 )
 
 test("GET /:id/discard_draft redirects back if the user is not logged in", (done) ->
@@ -366,7 +366,7 @@ test("GET /:id/discard_draft redirects back if the user is not logged in", (done
 
     done()
 
-  ).fail(done)
+  ).catch(done)
 )
 
 test('GET /:id/publish publishes the current draft and makes it publicly
@@ -430,7 +430,7 @@ test('GET /:id/publish publishes the current draft and makes it publicly
 
     done()
 
-  ).fail(done)
+  ).catch(done)
 )
 
 test('GET /:id/publish redirects back if the user is not logged in', (done) ->
@@ -468,5 +468,5 @@ test('GET /:id/publish redirects back if the user is not logged in', (done) ->
 
     done()
 
-  ).fail(done)
+  ).catch(done)
 )

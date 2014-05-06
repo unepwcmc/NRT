@@ -67,11 +67,11 @@ exports.appurl = (path) ->
 
 exports.createReport = factory.defineWithCallback("report", title: 'new report')
 exports.createIndicator = factory.defineWithCallback("indicator", title: 'new indicator')
-exports.createIndicatorData = factory.defineWithCallback("indicator_data", data: 'data')
 exports.createVisualisation = factory.defineWithCallback("visualisation", data: 'new viz')
 exports.createNarrative = factory.defineWithCallback("narrative", content: 'new narrative')
 exports.createSection = factory.defineWithCallback("section", title: 'a section')
 
+exports.createIndicatorData = factory.define("indicator_data", data: 'data')
 exports.createIndicatorModels = factory.define("indicator", title: "new report")
 exports.createReportModels = factory.define("report", title: "new report")
 exports.createThemesFromAttributes = factory.define("theme", title: "new theme")
