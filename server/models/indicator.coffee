@@ -287,6 +287,11 @@ indicatorSchema.methods.generateMetadataCSV = ->
 
   return deferred.promise
 
+indicatorSchema.methods.setThemeByTitle = (title) ->
+  Theme = require('./theme').model
+  Theme.findOrCreateByTitle(title).then((theme) =>
+    @theme = theme
+  )
 
 # Add currentYValue to a collection of indicators
 indicatorSchema.statics.calculateCurrentValues = (indicators, callback) ->
@@ -417,16 +422,12 @@ DEFAULT_INDICATOR_DEFINITION =
   ]
 
 indicatorSchema.statics.buildWithDefaults = (attributes) ->
-  definition =
-    unit: attributes.unit
-    short_unit: attributes.unit
 
-  definition = _.extend(DEFAULT_INDICATOR_DEFINITION, definition)
-  new Indicator(
-    title: attributes.name
-    short_name: attributes.name
-    indicatorDefinition: definition
+  attributes.indicatorDefinition = _.extend(
+    DEFAULT_INDICATOR_DEFINITION, attributes.indicatorDefinition
   )
+
+  new Indicator(attributes)
 
 Indicator = mongoose.model('Indicator', indicatorSchema)
 

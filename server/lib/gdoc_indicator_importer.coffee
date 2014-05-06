@@ -15,31 +15,43 @@ extractRangesFromWorksheet = (worksheet) ->
 
   return ranges
 
+buildIndicatorPropertiesFromWorksheet = (worksheet) ->
+  return {
+    short_name: worksheet['2']['1'].value
+    title: worksheet['2']['1'].value
+    indicatorDefinition:
+      unit: worksheet['2']['3'].value
+      short_unit: worksheet['2']['3'].value
+  }
+
 module.exports =
   import: (key) ->
 
     spreadsheet = null
-    definition = {}
+    themeTitle = null
+    indicatorProperties = {indicatorDefinition: {}}
 
     GDocWrapper.importByKey(key).then((spr)->
       spreadsheet = spr
 
       spreadsheet.getWorksheetData('Definition')
     ).then((worksheet) ->
+      themeTitle = worksheet['2']['2'].value
 
-      definition.name = worksheet['2']['1'].value
-      definition.theme = worksheet['2']['2'].value
-      definition.unit = worksheet['2']['3'].value
+      indicatorProperties = buildIndicatorPropertiesFromWorksheet(worksheet)
 
       spreadsheet.getWorksheetData('Ranges')
     ).then((worksheet) ->
 
-      definition.indicatorationConfig =
+      indicatorProperties.indicatorationConfig =
         source: 'gdoc'
         spreadsheet_key: key
         range: extractRangesFromWorksheet(worksheet)
 
-      indicator = Indicator.buildWithDefaults(definition)
+      indicator = Indicator.buildWithDefaults(indicatorProperties)
 
-      Promise.promisify(indicator.save, indicator)()
+      indicator.setThemeByTitle(themeTitle)
+        .then(->
+          Promise.promisify(indicator.save, indicator)()
+        )
     )

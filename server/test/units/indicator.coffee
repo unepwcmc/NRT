@@ -2,6 +2,7 @@ assert = require('chai').assert
 helpers = require '../helpers'
 _ = require('underscore')
 Q = require('q')
+Promise = require('bluebird')
 sinon = require('sinon')
 
 Theme = require('../../models/theme').model
@@ -661,29 +662,6 @@ test('creating a new Indicator without an "indicatorationConfig" attribute
     "Expected indicator.indicatoration to be defaulted to {}"
 )
 
-test('.buildWithDefaults fills in all name fields based on the given
-  name attribute', ->
-  name = 'My lovely indicator'
-  indicator = Indicator.buildWithDefaults(name: name)
-
-  assert.strictEqual indicator.title, name,
-    "Expected the title field to be set correctly"
-
-  assert.strictEqual indicator.short_name, name,
-    "Expected the short_name field to be set correctly"
-)
-
-test('.buildWithDefaults fills in the unit fields with the given attribute', ->
-  unit = 'Kg'
-  indicator = Indicator.buildWithDefaults(unit: unit)
-
-  assert.strictEqual indicator.indicatorDefinition.unit, unit,
-    "Expected the unit field to be set correctly"
-
-  assert.strictEqual indicator.indicatorDefinition.short_unit, unit,
-    "Expected the short_unit field to be set correctly"
-)
-
 test('.buildWithDefaults fills in the default indicatorDefintion', ->
   indicator = Indicator.buildWithDefaults({})
 
@@ -695,4 +673,27 @@ test('.buildWithDefaults fills in the default indicatorDefintion', ->
 
   assert.typeOf indicator.indicatorDefinition.fields, 'Array',
     "Expected the indicator definition to have a field array"
+)
+
+test(".setThemeByTitle finds or creates a theme with the given title
+  and sets the theme attribute to that theme's id", (done) ->
+  themeTitle = 'hats'
+  theme = new Theme(title: themeTitle)
+
+  themeStub = sinon.stub(Theme, 'findOrCreateByTitle', ->
+    Promise.resolve(theme)
+  )
+
+  indicator = new Indicator()
+
+  indicator.setThemeByTitle(themeTitle).then( ->
+    try
+      assert.strictEqual indicator.theme, theme._id,
+        "Expected the indicator to be associated with the found theme"
+      done()
+    catch err
+      done(err)
+  ).catch(done).finally(->
+    themeStub.restore()
+  )
 )

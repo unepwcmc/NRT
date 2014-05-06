@@ -13,10 +13,13 @@ test('#import when given a valid spreadsheet key
   pulls that spreadsheet and creates a new indicator with
   attributes from the spreadsheet', (done) ->
 
-  indicatorDefinition =
-    name: 'Fish Landings'
-    theme: 'Coastal'
-    unit: 'landings'
+  indicatorThemeTitle = 'Coastal'
+  indicatorProperties =
+    short_name: 'Fish Landings'
+    title: 'Fish Landings'
+    indicatorDefinition:
+      unit: 'landings'
+      short_unit: 'landings'
     indicatorationConfig:
       source: 'gdoc'
       spreadsheet_key: '12-n-xlzFlT3T1dScfaI7a7ZnhEILbtSCjXSNKbfLJEI'
@@ -33,9 +36,9 @@ test('#import when given a valid spreadsheet key
         '3': { row: '1', col: '3', value: 'What unit does the indicator value use?'}
       },
       '2': {
-        '1': { row: '1', col: '1', value: indicatorDefinition.name},
-        '2': { row: '1', col: '2', value: indicatorDefinition.theme},
-        '3': { row: '1', col: '3', value: indicatorDefinition.unit}
+        '1': { row: '1', col: '1', value: indicatorProperties.short_name},
+        '2': { row: '1', col: '2', value: indicatorThemeTitle},
+        '3': { row: '1', col: '3', value: indicatorProperties.indicatorDefinition.unit}
       }
     'Ranges':
       '1': {
@@ -46,24 +49,24 @@ test('#import when given a valid spreadsheet key
         '1': {
           row: '1',
           col: '1',
-          value: indicatorDefinition.indicatorationConfig.range[0].threshold
+          value: indicatorProperties.indicatorationConfig.range[0].threshold
         },
         '2': {
           row: '1',
           col: '2',
-          value: indicatorDefinition.indicatorationConfig.range[0].text
+          value: indicatorProperties.indicatorationConfig.range[0].text
         }
       }
       '3': {
         '1': {
           row: '1',
           col: '1',
-          value: indicatorDefinition.indicatorationConfig.range[1].threshold
+          value: indicatorProperties.indicatorationConfig.range[1].threshold
         },
         '2': {
           row: '1',
           col: '2',
-          value: indicatorDefinition.indicatorationConfig.range[1].text
+          value: indicatorProperties.indicatorationConfig.range[1].text
         }
       }
   }
@@ -85,12 +88,18 @@ test('#import when given a valid spreadsheet key
 
       cb(gdoc)
 
-  indicatorBuildStub = sandbox.stub(Indicator, 'buildWithDefaults', (definition)->
+  stubIndicator =
     save: (cb)-> cb(null, true)
+    setThemeByTitle: sinon.spy(->
+      Promise.resolve()
+    )
+
+  indicatorBuildStub = sandbox.stub(Indicator, 'buildWithDefaults', (definition)->
+    return stubIndicator
   )
 
 
-  key = indicatorDefinition.indicatorationConfig.spreadsheet_key
+  key = indicatorProperties.indicatorationConfig.spreadsheet_key
 
   GDocIndicatorImporter.import(key).then( (createdIndicator)->
 
@@ -105,9 +114,17 @@ test('#import when given a valid spreadsheet key
         "Expected Indicator.buildWithDefaults to be called"
 
       indicatorBuildArgs = indicatorBuildStub.getCall(0).args[0]
-      assert.deepEqual indicatorBuildArgs, indicatorDefinition,
+      assert.deepEqual indicatorBuildArgs, indicatorProperties,
         "Expected Indicator.buildWithDefaults to be called with the
           spreadsheet definition"
+
+      assert.strictEqual stubIndicator.setThemeByTitle.callCount, 1,
+        "Expected indicator.setThemeByName to be called once"
+
+      assert.isTrue(
+        stubIndicator.setThemeByTitle.calledWith(indicatorThemeTitle),
+        "Expected fetch to be called with the given spreadsheet key"
+      )
 
       done()
     catch err
