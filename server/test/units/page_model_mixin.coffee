@@ -83,28 +83,28 @@ test('.getFatPage returns fat pages', (done) ->
         title: 'hat'
         indicator: indicator._id
       )]
-    ).done( (page)->
-      Page.findFatModel(page._id, (err, theFatPage) ->
-        if err?
-          console.error err
-          throw err
-
-        indicator.getFatPage().done((foundPage) ->
-          assert.ok(
-            _.isEqual(theFatPage, foundPage),
-            """
-              Expected \n
-              #{JSON.stringify(theFatPage)}\n
-              to be equal to\n
-              #{JSON.stringify(foundPage)}
-            """
-          )
-
-          assert.property foundPage, 'sections'
-          done()
-        )
+    ).then( (page) ->
+      Page.findFatModel(page._id)
+    ).then( (foundFatPage) ->
+      theFatPage = foundFatPage
+      indicator.getFatPage()
+    ).then( (foundPage) ->
+      assert.ok(
+        _.isEqual(theFatPage, foundPage),
+        """
+          Expected \n
+          #{JSON.stringify(theFatPage)}\n
+          to be equal to\n
+          #{JSON.stringify(foundPage)}
+        """
       )
+
+      assert.property foundPage, 'sections'
+      done()
+    ).catch( (err) ->
+      done(err)
     )
+  )
 )
 
 test(".toObjectWithNestedPage returns an object representation of the

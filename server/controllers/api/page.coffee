@@ -20,19 +20,20 @@ exports.create = (req, res) ->
   page = new Page(params)
 
   page.canBeEditedBy(req.user).then( ->
-    page.save (err, page) ->
+    page.save( (err, page) ->
       if err?
         console.error err
         return res.send(500, "Could not save page")
 
-      Page
-        .findFatModel(page._id, (err, page) ->
-          if err?
-            console.error err
-            res.send(500, "Update to retrieve created page")
-
-          res.send(201, JSON.stringify(page))
-        )
+      Page.findFatModel(
+        page._id
+      ).then( (page) ->
+        res.send(201, JSON.stringify(page))
+      ).catch( (err) ->
+        console.error err
+        res.send(500, "Update to retrieve created page")
+      )
+    )
   ).fail( (err) ->
     console.error err
     res.send(401, err)

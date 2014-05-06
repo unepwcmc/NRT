@@ -1,22 +1,21 @@
 async = require('async')
+Promise = require('bluebird')
 Narrative = require('../models/narrative.coffee').model
 Visualisation = require('../models/visualisation.coffee').model
 
 module.exports = {
-  findFatModel: (id, callback) ->
+  findFatModel: (id) ->
     # Make ID object consistent
     if typeof id == 'object' && id.constructor.name != "ObjectID"
       id = id._id
 
-    @findOne(_id: id)
-      .populate('sections.indicator')
-      .exec( (err, model) ->
-        if err?
-          console.log "error populating model"
-          return callback(err, null)
+    new Promise( (resolve, reject) =>
+      findPromise = @findOne(_id: id).populate('sections.indicator').exec()
+
+      findPromise.onFulfill( (model) ->
 
         unless model?
-          return callback({message: "Unable to find model"}, {})
+          return resolve({message: "Unable to find model"}, {})
 
         model = model.toObject()
         fetchResultFunctions = []
@@ -43,7 +42,11 @@ module.exports = {
           )()
 
         async.parallel(fetchResultFunctions, (err, results) ->
-          callback(err, model)
+          resolve(model)
         )
+      ).onReject( (err) ->
+        console.log "error populating model"
+        reject(err)
       )
+    )
 }

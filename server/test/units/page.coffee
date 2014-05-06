@@ -67,7 +67,7 @@ test('get "fat" page with all related children by page ID', (done) ->
             {section: section._id}
             (err, narrative) ->
               helpers.createPage( {sections: [section]}).then((page) ->
-                Page.findFatModel(page._id, (err, fatPage) ->
+                Page.findFatModel(page._id).then( (fatPage) ->
                   assert.equal fatPage._id, page.id
 
                   reloadedSection = fatPage.sections[0]
@@ -100,25 +100,22 @@ test('get "fat" page with no related children by page ID', (done) ->
   Page = require('../../models/page.coffee').model
 
   helpers.createSection(indicator: undefined, (err, section) ->
-    helpers.createPage({sections: [section]}).then(
-      (page) ->
-        Page.findFatModel(page._id, (err, fatPage) ->
-          assert.equal fatPage._id, page.id
+    helpers.createPage(
+      {sections: [section]}
+    ).then( (page) ->
+      Page.findFatModel(page._id).then( (fatPage) ->
+        reloadedSection = fatPage.sections[0]
 
-          reloadedSection = fatPage.sections[0]
-          assert.equal reloadedSection._id, section.id
+        assert.equal fatPage._id, page.id
+        assert.equal reloadedSection._id, section.id
+        assert.notProperty reloadedSection, 'indicator'
+        assert.notProperty reloadedSection, 'visualisation'
+        assert.notProperty reloadedSection, 'narrative'
 
-          assert.notProperty reloadedSection, 'indicator'
-
-          assert.notProperty reloadedSection, 'visualisation'
-
-          assert.notProperty reloadedSection, 'narrative'
-
-          done()
-        )
-    ).fail((err) ->
-      console.error err
-      throw err
+        done()
+      )
+    ).catch((err) ->
+      done(err)
     )
   )
 )
@@ -296,9 +293,8 @@ test('.createDraftClone clones a public page,
       "Expected clonedSection (id: #{clonedSection.id}) to be a new record, but had same id
         as originalSection (#{originalSection.id})"
 
-    Q.nsend(
-      Page, 'findFatModel', clonedPage.id,
-    )
+    Page.findFatModel(clonedPage.id)
+
   ).then( (reloadedPage) ->
     reloadedSection = reloadedPage.sections[0]
 
