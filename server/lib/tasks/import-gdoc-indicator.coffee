@@ -1,3 +1,4 @@
+require('../../initializers/mongo')()
 GDocIndicatorImporter = require '../gdoc_indicator_importer'
 readline = require('readline')
 
