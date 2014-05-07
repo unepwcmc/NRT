@@ -5,7 +5,7 @@ expected to have, and how they affect the behavior of the application
 
 ## Fields
 
-* **short_name** - The short title of the indicator.
+* **shortName** - The short title of the indicator.
 * **title** - Full title of the indicator
 * **sections** - A array of sections to seed the page with. Each section should consist of a title and content attribute.
 * **theme** - The title of the theme that the indicators refers to. This is turned into a proper ID association when seeded.

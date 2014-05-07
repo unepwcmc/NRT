@@ -15,7 +15,7 @@ HeadlineService = require '../lib/services/headline'
 
 indicatorSchema = mongoose.Schema(
   name: String
-  short_name: String
+  shortName: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
   indicatorationConfig:
     type: mongoose.Schema.Types.Mixed

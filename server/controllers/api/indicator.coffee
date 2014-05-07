@@ -114,7 +114,7 @@ exports.dataAsCSV = (req, res) ->
 
             res.set('Content-Type', 'application/zip')
             res.set('Content-Disposition',
-              "attachment; filename=NRT #{indicator.short_name} Data.zip"
+              "attachment; filename=NRT #{indicator.shortName} Data.zip"
             )
 
             res.end(data, 'binary')

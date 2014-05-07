@@ -100,7 +100,7 @@ test('.setDefinitionFromWorksheet builds the indicatorProperties from
 
   indicatorThemeTitle = 'Coastal'
   indicatorProperties =
-    short_name: 'Fish Landings'
+    shortName: 'Fish Landings'
     name: 'Fish Landings'
     indicatorDefinition:
       unit: 'landings'
@@ -116,7 +116,7 @@ test('.setDefinitionFromWorksheet builds the indicatorProperties from
       '3': { row: '1', col: '3', value: 'What unit does the indicator value use?'}
     },
     '2': {
-      '1': { row: '1', col: '1', value: indicatorProperties.short_name},
+      '1': { row: '1', col: '1', value: indicatorProperties.shortName},
       '2': { row: '1', col: '2', value: indicatorThemeTitle},
       '3': { row: '1', col: '3', value: indicatorProperties.indicatorDefinition.unit}
     }

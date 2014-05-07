@@ -1,5 +1,5 @@
 [{
-  "short_name": "GHG Emission",
+  "shortName": "GHG Emission",
   "name": "Total GHG emissions as % of year 2010 level of emissions",
   "theme": "Air Quality",
   "sections": [
@@ -14,7 +14,7 @@
   "indicatorDefinition": {
   }
 }, {
-  "short_name": "CO Concentration",
+  "shortName": "CO Concentration",
   "name": "Average annual CO concentration in µg per m3",
   "theme": "Air Quality",
   "sections": [
@@ -87,7 +87,7 @@
     ]
   }
 }, {
-  "short_name": "NO2 Concentration",
+  "shortName": "NO2 Concentration",
   "name": "Average annual NO2 concentration in µg per m3",
   "theme": "Air Quality",
   "sections": [
@@ -160,7 +160,7 @@
       ]
   }
 }, {
-  "short_name": "SO2 Concentration",
+  "shortName": "SO2 Concentration",
   "name": "Hourly average SO2 concentration in µg per m3",
   "theme": "Air Quality",
   "sections": [
@@ -233,7 +233,7 @@
       ]
   }
 },{
-  "short_name": "PM10 Concentration",
+  "shortName": "PM10 Concentration",
   "name": "Daily average PM10 concentration in µg per m3",
   "theme": "Air Quality",
   "sections": [
@@ -306,7 +306,7 @@
       ]
   }
 },{
-  "short_name": "PM25 Concentration",
+  "shortName": "PM25 Concentration",
   "name": "Annual average PM25 concentration in µg per m3",
   "theme": "Air Quality",
   "sections": [
@@ -362,7 +362,7 @@
       ]
   }
 },{
-  "short_name": "O3 Concentration",
+  "shortName": "O3 Concentration",
   "name": "1-hr and 8-hr O3 concentration in µg per m3",
   "theme": "Air Quality",
   "sections": [
@@ -435,7 +435,7 @@
       ]
   }
 },{
-  "short_name": "Protected areas",
+  "shortName": "Protected areas",
   "name": "Protected Area as a Percent of Total area",
 
   "theme": "Biodiversity",
@@ -500,7 +500,7 @@
       ]
     }
 }, {
-  "short_name": "Area of Key Ecosystems",
+  "shortName": "Area of Key Ecosystems",
   "name": "Area of Selected Key Ecosystems as a Percent of Total Area",
   "theme": "Biodiversity",
   "sections": [
@@ -522,7 +522,7 @@
   "indicatorDefinition": {
   }
 },{
-  "short_name": "Threatened species",
+  "shortName": "Threatened species",
   "name": "Percentage of Threatened Species",
   "description": "Number of species at risk of extinction in proportion to the total number of native species.",
   "theme": "Biodiversity",
@@ -548,7 +548,7 @@
       ]
     }
 }, {
-  "short_name": "Abundance of Key Species",
+  "shortName": "Abundance of Key Species",
   "name": "Abundance of Selected Key Species",
   "theme": "Biodiversity",
   "sections": [
@@ -570,7 +570,7 @@
   "indicatorDefinition": {
   }
 },{
-  "short_name": "Fish Resource Status",
+  "shortName": "Fish Resource Status",
   "name": "Annual fish catch from sustainable fisheries",
   "theme": "Productive Natural Resources",
   "sections": [
@@ -592,7 +592,7 @@
   "indicatorDefinition": {
   }
 }, {
-  "short_name": "Ammonia",
+  "shortName": "Ammonia",
   "name": "Ammonia",
   "theme": "Water",
   "sections": [
@@ -665,7 +665,7 @@
       ]
   }
 }, {
-  "short_name": "Coastal Chlorophyll",
+  "shortName": "Coastal Chlorophyll",
   "name": "Coastal Chlorophyll",
   "theme": "Water",
   "sections": [
@@ -738,7 +738,7 @@
       ]
   }
 }, {
-  "short_name": "Dissolved Oxygen",
+  "shortName": "Dissolved Oxygen",
   "name": "Dissolved Oxygen",
   "theme": "Water",
   "sections": [
@@ -811,7 +811,7 @@
       ]
   }
 }, {
-  "short_name": "Nitrate-N Concentrations",
+  "shortName": "Nitrate-N Concentrations",
   "name": "Nitrate –N concentration in coastal waters (µg per L)",
   "theme": "Water",
   "sections": [
@@ -884,7 +884,7 @@
       ]
   }
 }, {
-  "short_name": "Phosphate P",
+  "shortName": "Phosphate P",
   "name": "Phosphate P",
   "theme": "Water",
   "sections": [
@@ -957,7 +957,7 @@
       ]
   }
 }, {
-  "short_name": "Enterococci Concentrations",
+  "shortName": "Enterococci Concentrations",
   "name": "Enterococci concentration in 100 ml of coastal waters",
   "theme": "Water",
   "sections": [
@@ -1029,7 +1029,7 @@
       ]
   }
 }, {
-  "short_name": "Groundwater Reserves",
+  "shortName": "Groundwater Reserves",
   "name": "Effective years remaining in usable groundwater reserves",
   "theme": "Water",
   "sections": [
@@ -1051,7 +1051,7 @@
   "indicatorDefinition": {
   }
 }, {
-  "short_name": "Salinity",
+  "shortName": "Salinity",
   "name": "Area (km2) of aquifer where water quality is <= 1500 ppm TDS concentration",
   "theme": "Water",
   "sections": [
@@ -1073,7 +1073,7 @@
   "indicatorDefinition": {
   }
 },{
-  "short_name": "Awareness of Water",
+  "shortName": "Awareness of Water",
   "name": "Awareness on ground water depletion and high domestic water consumption",
   "theme": "Environmental Awareness",
   "sections": [
@@ -1095,7 +1095,7 @@
   "indicatorDefinition": {
   }
 },{
-  "short_name": "Awareness of Fish Stocks",
+  "shortName": "Awareness of Fish Stocks",
   "name": "Awareness on diminishing fish stock",
   "theme": "Environmental Awareness",
   "sections": [
@@ -1117,7 +1117,7 @@
   "indicatorDefinition": {
   }
 },{
-  "short_name": "Awareness of air quality",
+  "shortName": "Awareness of air quality",
   "name": "Awareness on air quality (indoor and outdoor) & noise pollution",
   "theme": "Environmental Awareness",
   "sections": [
@@ -1139,7 +1139,7 @@
   "indicatorDefinition": {
   }
 },{
-  "short_name": "Awareness of biodiversity",
+  "shortName": "Awareness of biodiversity",
   "name": "Awareness on Biodiversity (marine and terrestrial",
   "theme": "Environmental Awareness",
   "sections": [
@@ -1164,7 +1164,7 @@
 
 
 {
-  "short_name": "Urban air pollution",
+  "shortName": "Urban air pollution",
   "name": "Ambient Concentration of Air Pollutants in Urban Areas",
   "description": "Ambient air pollution concentrations of ozone, particulate matter (PM10, and PM2,5, if those are not available: SPM, black smoke), sulfur dioxide, nitrogen dioxide, lead. Additional:  carbon monoxide, volatile organic compounds including benzene (VOCs). The priority is collection of the indicator in large cities (over 1 million population).",
   "theme": "Air Quality",
@@ -1191,7 +1191,7 @@
       ]
     }
 }, {
-  "short_name": "Red List species",
+  "shortName": "Red List species",
   "name": "Abu Dhabi Red List Indices For All Species Groups",
   "description": "",
   "theme": "Biodiversity",
@@ -1218,7 +1218,7 @@
       ]
     }
 }, {
-  "short_name": "Annual Fish Catch",
+  "shortName": "Annual Fish Catch",
   "name": "Abu Dhabi Red List Indices For All Species Groups",
   "description": "Annual catch of major species in relation to spawning biomass if available or in relation to the year of maximum catches in the time series.",
   "theme": "Productive Natural Resources",
@@ -1245,7 +1245,7 @@
       ]
     }
 }, {
-  "short_name": "World Bank PA cover",
+  "shortName": "World Bank PA cover",
   "name": "Protected Area coverage (World Bank)",
   "description": "Protected Area coverage (World Bank)",
   "theme": "Biodiversity",
@@ -1290,7 +1290,7 @@
       ]
     }
 }, {
-  "short_name": "Cereals Production",
+  "shortName": "Cereals Production",
   "name": "Cereals Production (UNEP EDE)",
   "description": "Production of Cereals",
   "theme": "Environmental Awareness",
@@ -1334,7 +1334,7 @@
       ]
     }
 }, {
-  "short_name": "Seagrass area (Blue carbon)",
+  "shortName": "Seagrass area (Blue carbon)",
   "name": "Seagrass area (Blue Carbon)",
   "description": "Seagrass area (Blue carbon)",
   "theme": "Biodiversity",

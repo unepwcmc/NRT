@@ -129,7 +129,7 @@ test('.buildUrl throws an error if the Indicator cartodb_config does not specify
 
 test('.buildUrl constructs the correct URL with username and query', ->
   indicator = new Indicator(
-    short_name: "CO 2"
+    shortName: "CO 2"
     indicatorationConfig:
       cartodb_config:
         username: 'someguy'

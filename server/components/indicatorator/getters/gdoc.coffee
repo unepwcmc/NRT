@@ -13,7 +13,7 @@ module.exports = class GDoc
         spreadsheet.worksheets[0].cells({}, (err, cells) =>
           headers = cells.cells['1']
           indicatorData = _.filter(cells.cells, (row) =>
-            row['2'].value is @indicator.short_name
+            row['2'].value is @indicator.shortName
           )
 
           resolve({

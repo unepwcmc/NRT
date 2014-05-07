@@ -83,7 +83,7 @@ module.exports = class GDocIndicatorImporter
 
     return Theme.findOrCreateByTitle(themeTitle).then((theme) =>
       _.extend(@indicatorProperties, {
-        short_name: worksheet['2']['1'].value
+        shortName: worksheet['2']['1'].value
         name: worksheet['2']['1'].value
         theme: theme._id
         indicatorDefinition:
