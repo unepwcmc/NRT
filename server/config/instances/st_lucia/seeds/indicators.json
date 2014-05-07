@@ -18,7 +18,7 @@
   },
   "indicatorDefinition": {
     "unit": "landings",
-    "short_unit": "landings",
+    "shortUnit": "landings",
     "period": "yearly",
     "xAxis": "year",
     "yAxis": "value",
@@ -68,7 +68,7 @@
   },
   "indicatorDefinition": {
     "unit": "percentage",
-    "short_unit": "percentage",
+    "shortUnit": "percentage",
     "period": "yearly",
     "xAxis": "year",
     "yAxis": "value",
@@ -121,7 +121,7 @@
   },
   "indicatorDefinition": {
     "unit": "metric tons",
-    "short_unit": "t",
+    "shortUnit": "t",
     "period": "annual",
     "xAxis": "year",
     "yAxis": "value",
@@ -174,7 +174,7 @@
   },
   "indicatorDefinition": {
     "unit": "percentage",
-    "short_unit": "%",
+    "shortUnit": "%",
     "period": "annual",
     "xAxis": "year",
     "yAxis": "value",
@@ -227,7 +227,7 @@
   },
   "indicatorDefinition": {
     "unit": "threatened species",
-    "short_unit": "species",
+    "shortUnit": "species",
     "period": "annual",
     "xAxis": "year",
     "yAxis": "value",

@@ -45,7 +45,7 @@
   },
   "indicatorDefinition": {
     "unit": "stations",
-    "short_unit": "stations",
+    "shortUnit": "stations",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -118,7 +118,7 @@
   },
   "indicatorDefinition": {
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -191,7 +191,7 @@
   },
   "indicatorDefinition": {
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -264,7 +264,7 @@
   },
   "indicatorDefinition": {
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -329,7 +329,7 @@
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": -1,
       "unit": "µg per m3",
-      "short_unit": "µg/m3",
+      "shortUnit": "µg/m3",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -393,7 +393,7 @@
   },
   "indicatorDefinition": {
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -467,7 +467,7 @@
   },
   "indicatorDefinition": {
       "unit": "%",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -623,7 +623,7 @@
   },
   "indicatorDefinition": {
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -696,7 +696,7 @@
   },
   "indicatorDefinition": {
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -769,7 +769,7 @@
   },
   "indicatorDefinition": {
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -842,7 +842,7 @@
   },
   "indicatorDefinition": {
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -915,7 +915,7 @@
   },
   "indicatorDefinition": {
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -987,7 +987,7 @@
   },
   "indicatorDefinition": {
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -1171,7 +1171,7 @@
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
-      "short_unit": "µg/m3",
+      "shortUnit": "µg/m3",
       "unit": "µg/m3, ppm or ppb, as appropriate",
       "outFields": "shape.area",
       "dateField": "datedes",
@@ -1198,7 +1198,7 @@
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
-      "short_unit": "",
+      "shortUnit": "",
       "unit": "",
       "outFields": "shape.area",
       "dateField": "datedes",
@@ -1225,7 +1225,7 @@
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
-      "short_unit": "t",
+      "shortUnit": "t",
       "unit": "metric tons",
       "outFields": "shape.area",
       "dateField": "datedes",
@@ -1257,7 +1257,7 @@
   },
   "indicatorDefinition": {
       "unit": "%",
-      "short_unit": "%",
+      "shortUnit": "%",
       "apiUrl": "http://localhost:3002/wb/ARE",
       "apiIndicatorName": "NY.ADJ.DCO2.GN.ZS",
       "period": "annual",
@@ -1302,7 +1302,7 @@
   },
   "indicatorDefinition": {
       "unit": "Metric tons",
-      "short_unit": "T",
+      "shortUnit": "T",
       "apiUrl": "http://localhost:3002/ede/AE",
       "apiVariableId": "1",
       "period": "annual",
@@ -1350,7 +1350,7 @@
     "cartodb_tablename": "nrt_bc_seagrass_copy",
     "query": "SELECT SUM(area_ha) FROM nrt_bc_seagrass_copy",
     "unit": "ha",
-    "short_unit": "ha",
+    "shortUnit": "ha",
     "period": "annual",
     "xAxis": "year",
     "yAxis": "value",

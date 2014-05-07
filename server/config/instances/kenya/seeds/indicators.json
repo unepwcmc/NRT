@@ -19,7 +19,7 @@
   "primary": true,
   "indicatorDefinition": {
     "unit": "% contribution",
-    "short_unit": "%",
+    "shortUnit": "%",
     "period": "annual",
     "xAxis": "date",
     "yAxis": "value",
@@ -70,7 +70,7 @@
     "primary": true,
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -118,7 +118,7 @@
     "primary": true,
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -165,7 +165,7 @@
     },
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -212,7 +212,7 @@
     },
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -259,7 +259,7 @@
     },
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -306,7 +306,7 @@
     },
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -353,7 +353,7 @@
     },
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -400,7 +400,7 @@
     },
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -447,7 +447,7 @@
     },
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",

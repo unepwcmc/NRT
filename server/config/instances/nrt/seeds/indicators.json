@@ -15,7 +15,7 @@
   "indicatorDefinition": {
     "name": "Key stakeholders identified",
     "unit": "% of countries with named key stakeholders",
-    "short_unit": "%",
+    "shortUnit": "%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -64,10 +64,10 @@
   },
   "indicatorDefinition": {
     "unit":"% of countries with written endorsement for project",
-    "short_unit":"%",
+    "shortUnit":"%",
     "name": "Key stakeholders identified",
     "unit": "% of countries with named key stakeholders",
-    "short_unit": "%",
+    "shortUnit": "%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -114,7 +114,7 @@
   "indicatorDefinition": {
     "name": "Indicator objectives identified",
     "unit": "% of countries with completed indicator objectives",
-    "short_unit": "%",
+    "shortUnit": "%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -171,7 +171,7 @@
   },
   "indicatorDefinition": {
     "unit":"% of countries with completed indicator descriptions",
-    "short_unit":"%",
+    "shortUnit":"%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -228,7 +228,7 @@
   },
     "indicatorDefinition": {
       "unit":"% of indicators for all countries with raw data flowing",
-      "short_unit":"%",
+      "shortUnit":"%",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -285,7 +285,7 @@
   },
   "indicatorDefinition": {
     "unit":"% of indicators for all countries with live indicators feeds",
-    "short_unit":"%",
+    "shortUnit":"%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -342,7 +342,7 @@
   },
   "indicatorDefinition": {
     "unit":"code available = 1",
-    "short_unit":"YES/NO",
+    "shortUnit":"YES/NO",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -390,7 +390,7 @@
   },
   "indicatorDefinition": {
     "unit":"% progress on development of SaaS",
-    "short_unit":"%",
+    "shortUnit":"%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -438,7 +438,7 @@
   },
   "indicatorDefinition": {
     "unit":"# of live instances",
-    "short_unit":"instances",
+    "shortUnit":"instances",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -486,7 +486,7 @@
   },
   "indicatorDefinition": {
     "unit":"% of instances running latest release",
-    "short_unit":"%",
+    "shortUnit":"%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -534,7 +534,7 @@
   },
   "indicatorDefinition": {
     "unit":"% progress on development",
-    "short_unit":"%",
+    "shortUnit":"%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -582,7 +582,7 @@
   },
   "indicatorDefinition": {
     "unit":"% progress on development",
-    "short_unit":"%",
+    "shortUnit":"%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -630,7 +630,7 @@
   },
   "indicatorDefinition": {
     "unit":"% progress on development",
-    "short_unit":"%",
+    "shortUnit":"%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -678,7 +678,7 @@
   },
   "indicatorDefinition": {
     "unit":"# of feeds/country",
-    "short_unit":"feeds/country",
+    "shortUnit":"feeds/country",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -735,7 +735,7 @@
   },
   "indicatorDefinition": {
     "unit":"# of feeds/country",
-    "short_unit":"feeds/country",
+    "shortUnit":"feeds/country",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
