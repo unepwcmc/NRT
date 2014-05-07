@@ -86,7 +86,7 @@ test('Renders a ThemeFilters sub view with the collection of indicators', sinon.
     _id: Factory.findNextFreeId('Section')
   )
 
-  indicators = [{_id: 1, name: "Such Theme"}]
+  indicators = [{_id: 1, name: "Such Indicator"}]
 
   @stub(Backbone.Collections.IndicatorCollection::, 'fetch', ->
     Helpers.promisify(=>
