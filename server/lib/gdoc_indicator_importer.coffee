@@ -59,7 +59,7 @@ module.exports = class GDocIndicatorImporter
     @indicatorProperties = {
       indicatorationConfig:
         source: 'gdoc'
-        spreadsheet_key: key
+        spreadsheetKey: key
     }
 
   @import: (key) ->
@@ -99,7 +99,7 @@ module.exports = class GDocIndicatorImporter
 
   createOrUpdateIndicator: ->
     existingIndicator = Promise.promisify(Indicator.findOne, Indicator)(
-      'indicatorationConfig.spreadsheet_key': @indicatorProperties.indicatorationConfig.spreadsheet_key
+      'indicatorationConfig.spreadsheetKey': @indicatorProperties.indicatorationConfig.spreadsheetKey
     ).then( (indicator) =>
       @indicatorProperties = mergeAttributesWithDefaults(@indicatorProperties)
       if indicator?

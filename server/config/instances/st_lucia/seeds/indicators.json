@@ -6,7 +6,7 @@
   "primary": true,
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "1IsJzMWxbj0ljOnpA9tszIaajZtoCrsGm1eEwT_riDfc",
+    "spreadsheetKey": "1IsJzMWxbj0ljOnpA9tszIaajZtoCrsGm1eEwT_riDfc",
     "range": [
         {"threshold": 0.5, "message": "Good"},
         {"threshold": 0, "message": "Bad"}
@@ -56,7 +56,7 @@
   "primary": true,
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "10Ulqfl6W8DtMV1USAYHOifLiGrozRZ7JzBJx4lN1alY",
+    "spreadsheetKey": "10Ulqfl6W8DtMV1USAYHOifLiGrozRZ7JzBJx4lN1alY",
     "range": [
         {"threshold": 0.5, "message": "Good"},
         {"threshold": 0, "message": "Bad"}

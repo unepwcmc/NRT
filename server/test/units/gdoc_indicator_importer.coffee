@@ -40,7 +40,7 @@ test('#import when given a valid spreadsheet key
   setDefinitionStub = sandbox.stub(
     GDocIndicatorImporter::, 'setDefinitionFromWorksheet', ->
       assert.strictEqual(
-        @indicatorProperties.indicatorationConfig.spreadsheet_key,
+        @indicatorProperties.indicatorationConfig.spreadsheetKey,
         spreadsheetKey,
         "Expected the spreadsheet key to be set"
       )
@@ -107,7 +107,7 @@ test('.setDefinitionFromWorksheet builds the indicatorProperties from
       short_unit: 'landings'
     indicatorationConfig:
       source: 'gdoc'
-      spreadsheet_key: key
+      spreadsheetKey: key
 
   definitionWorksheet =
     '1': {
@@ -142,7 +142,7 @@ test('.setRangesFromWorksheet builds the indicatorProperties from
   indicatorProperties =
     indicatorationConfig:
       source: 'gdoc'
-      spreadsheet_key: key
+      spreadsheetKey: key
       range: [
         {threshold: 0, text: 'Bad'}
         {threshold: 0.5, text: 'Good'}
@@ -194,7 +194,7 @@ test('.createOrUpdateIndicator when there is no existing indicator
   ).then( (indicator)->
     assert.isNotNull indicator, "Expected an indicator to be created"
     assert.strictEqual(
-      indicator.indicatorationConfig.spreadsheet_key,
+      indicator.indicatorationConfig.spreadsheetKey,
       theKey,
       "Expected the created indicator to have the given spreadsheet key"
     )
@@ -213,7 +213,7 @@ test('.createOrUpdateIndicator when there is an existing indicator
 
   helpers.createIndicatorModels([
     indicatorationConfig:
-      spreadsheet_key: theKey
+      spreadsheetKey: theKey
     name: 'a name'
   ]).get(0).then((indicator) ->
     theIndicator = indicator
@@ -223,7 +223,7 @@ test('.createOrUpdateIndicator when there is an existing indicator
 
     Promise.all([
       findIndicators(
-        'indicatorationConfig.spreadsheet_key': theKey
+        'indicatorationConfig.spreadsheetKey': theKey
       ),
       findIndicators({})
     ])
@@ -236,7 +236,7 @@ test('.createOrUpdateIndicator when there is an existing indicator
       "Expected only one indicator to exist"
 
     assert.strictEqual(
-      spreadsheetIndicators[0].indicatorationConfig.spreadsheet_key,
+      spreadsheetIndicators[0].indicatorationConfig.spreadsheetKey,
       theKey,
       "Expected the found indicator to have the given spreadsheet key"
     )

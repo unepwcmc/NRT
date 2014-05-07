@@ -7,7 +7,7 @@ module.exports = class GDoc
   fetch: ->
     new Promise( (resolve, reject) =>
       @queryGoogleSpreadsheet(
-        key: @indicator.indicatorationConfig.spreadsheet_key
+        key: @indicator.indicatorationConfig.spreadsheetKey
       ).then( (spreadsheet) =>
 
         spreadsheet.worksheets[0].cells({}, (err, cells) =>

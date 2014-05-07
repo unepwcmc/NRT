@@ -106,7 +106,7 @@
     "theme": "Contribution of the forestry sector",
     "sections": [],
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
           {"threshold": 0.35, "message": "Excellent"},
@@ -155,7 +155,7 @@
     "type": "standard",
     "primary": true,
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
           {"threshold": 0.35, "message": "Excellent"},
@@ -202,7 +202,7 @@
     "type": "standard",
     "primary": true,
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
           {"threshold": 0.35, "message": "Excellent"},
@@ -249,7 +249,7 @@
     "type": "standard",
     "primary": true,
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
           {"threshold": 0.35, "message": "Excellent"},
@@ -296,7 +296,7 @@
     "type": "standard",
     "primary": true,
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
           {"threshold": 0.35, "message": "Excellent"},
@@ -343,7 +343,7 @@
     "type": "standard",
     "primary": true,
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
           {"threshold": 0.35, "message": "Excellent"},
@@ -390,7 +390,7 @@
     "type": "standard",
     "primary": true,
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
           {"threshold": 0.35, "message": "Excellent"},
@@ -437,7 +437,7 @@
     "type": "standard",
     "primary": true,
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
           {"threshold": 0.35, "message": "Excellent"},
