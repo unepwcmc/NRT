@@ -289,3 +289,50 @@ test("#seedData when no seed file exist reports an appropriate error", (done) ->
     readFileStub.restore()
   )
 )
+
+test('#findOrCreateByTitle when a theme exists with that title, returns
+  the existing theme', (done) ->
+  title = 'magic theme'
+  helpers.createThemesFromAttributes(
+    [{title: title}, {title: "Some rubbish"}]
+  ).then((themes) ->
+    theTheme = themes[0]
+
+    Theme.findOrCreateByTitle(title).then( (theme)->
+      try
+        assert.strictEqual theme.id, theTheme.id,
+          "Expected the existing theme to be returned"
+        done()
+      catch err
+        done(err)
+    )
+  ).catch(done)
+)
+
+test("#findOrCreateByTitle when a theme doesn't exists, creates a
+  new theme and returns it", (done) ->
+  title = 'magic theme'
+  nonExistingTitle = 'super theme'
+
+  helpers.createThemesFromAttributes(
+    [{title: title}, {title: "Some rubbish"}]
+  ).then((themes) ->
+    theTheme = themes[0]
+
+    createThemeStub = sinon.stub(Theme, 'create', (attributes, cb) ->
+      cb(null, new Theme(title: attributes.title))
+    )
+
+    Theme.findOrCreateByTitle(nonExistingTitle).then( (theme)->
+      try
+        assert.strictEqual createThemeStub.callCount, 1,
+          "Expected Theme.create to be called once"
+
+        assert.strictEqual theme.title, nonExistingTitle,
+          "Expected the created theme to have the right title"
+        done()
+      catch err
+        done(err)
+    )
+  ).catch(done)
+)

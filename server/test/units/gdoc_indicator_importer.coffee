@@ -13,59 +13,11 @@ test('#import when given a valid spreadsheet key
   pulls that spreadsheet and creates a new indicator with
   attributes from the spreadsheet', (done) ->
 
-  indicatorDefinition =
-    name: 'Fish Landings'
-    theme: 'Coastal'
-    unit: 'landings'
-    indicatorationConfig:
-      source: 'gdoc'
-      spreadsheet_key: '12-n-xlzFlT3T1dScfaI7a7ZnhEILbtSCjXSNKbfLJEI'
-      range: [
-        {threshold: 50, text: 'Good'},
-        {threshold: 0, text: 'Bad'}
-      ]
+  spreadsheetKey = '12-n-xlzFlT3T1dScfaI7a7ZnhEILbtSCjXSNKbfLJEI'
 
   fakeGdoc = {
-    'Definition':
-      '1': {
-        '1': { row: '1', col: '1', value: 'What\'s the name of this indicator?' },
-        '2': { row: '1', col: '2', value: 'What theme does this indicator relate to?'},
-        '3': { row: '1', col: '3', value: 'What unit does the indicator value use?'}
-      },
-      '2': {
-        '1': { row: '1', col: '1', value: indicatorDefinition.name},
-        '2': { row: '1', col: '2', value: indicatorDefinition.theme},
-        '3': { row: '1', col: '3', value: indicatorDefinition.unit}
-      }
-    'Ranges':
-      '1': {
-        '1': { row: '1', col: '1', value: 'Threshold' },
-        '2': { row: '1', col: '2', value: 'Text'}
-      },
-      '2': {
-        '1': {
-          row: '1',
-          col: '1',
-          value: indicatorDefinition.indicatorationConfig.range[0].threshold
-        },
-        '2': {
-          row: '1',
-          col: '2',
-          value: indicatorDefinition.indicatorationConfig.range[0].text
-        }
-      }
-      '3': {
-        '1': {
-          row: '1',
-          col: '1',
-          value: indicatorDefinition.indicatorationConfig.range[1].threshold
-        },
-        '2': {
-          row: '1',
-          col: '2',
-          value: indicatorDefinition.indicatorationConfig.range[1].text
-        }
-      }
+    'Definition': {indicator: 'Definition'}
+    'Ranges': {range: 'Definitions'}
   }
 
   sandbox = sinon.sandbox.create()
@@ -78,36 +30,57 @@ test('#import when given a valid spreadsheet key
           if name in ['Definition', 'Ranges']
             resolve(fakeGdoc[name])
           else
-            reject(new Error("Expected the 'Definition' worksheet to be requested,
+            reject(new Error("Expected the 'Definition' or 'Ranges' worksheet to be requested,
             but got '#{name}' instead"))
         )
       )
 
       cb(gdoc)
 
-  indicatorBuildStub = sandbox.stub(Indicator, 'buildWithDefaults', (definition)->
-    save: (cb)-> cb(null, true)
+  setDefinitionStub = sandbox.stub(
+    GDocIndicatorImporter::, 'setDefinitionFromWorksheet', ->
+      assert.strictEqual(
+        @indicatorProperties.indicatorationConfig.spreadsheet_key,
+        spreadsheetKey,
+        "Expected the spreadsheet key to be set"
+      )
+      Promise.resolve()
+  )
+  setRangesStub = sandbox.stub(
+    GDocIndicatorImporter::, 'setRangesFromWorksheet', ->
+  )
+  createOrUpdateStub = sandbox.stub(
+    GDocIndicatorImporter::, 'createOrUpdateIndicator', ->
+      Promise.resolve()
   )
 
-
-  key = indicatorDefinition.indicatorationConfig.spreadsheet_key
-
-  GDocIndicatorImporter.import(key).then( (createdIndicator)->
+  GDocIndicatorImporter.import(spreadsheetKey).then( (createdIndicator)->
 
     try
       assert.strictEqual gdocFetchStub.callCount, 1,
         "Expected fetch to be called"
 
-      assert.isTrue gdocFetchStub.calledWith(key),
+      assert.isTrue gdocFetchStub.calledWith(spreadsheetKey),
         "Expected fetch to be called with the given spreadsheet key"
 
-      assert.strictEqual indicatorBuildStub.callCount, 1,
-        "Expected Indicator.buildWithDefaults to be called"
+      assert.strictEqual setDefinitionStub.callCount, 1,
+        "Expected gdocIndicatorBuilder.setDefinitionFromWorksheet to be called"
 
-      indicatorBuildArgs = indicatorBuildStub.getCall(0).args[0]
-      assert.deepEqual indicatorBuildArgs, indicatorDefinition,
-        "Expected Indicator.buildWithDefaults to be called with the
-          spreadsheet definition"
+      setDefinitionArg = setDefinitionStub.getCall(0).args[0]
+      assert.deepEqual setDefinitionArg, fakeGdoc.Definition,
+        "Expected gdocIndicatorBuilder.setDefinitionFromWorksheet to be called
+         with the indicator definition worksheet"
+
+      assert.strictEqual setRangesStub.callCount, 1,
+        "Expected gdocIndicatorBuilder.setRangesFromWorksheet to be called"
+
+      setRangesArg = setRangesStub.getCall(0).args[0]
+      assert.deepEqual setRangesArg, fakeGdoc.Ranges,
+        "Expected gdocIndicatorBuilder.setRangesFromWorksheet to be called
+         with the ranges worksheet"
+
+      assert.strictEqual createOrUpdateStub.callCount, 1,
+        "Expected gdocIndicatorBuilder.createIndicator to be called"
 
       done()
     catch err
@@ -118,4 +91,162 @@ test('#import when given a valid spreadsheet key
   ).finally(->
     sandbox.restore()
   )
+)
+
+test('.setDefinitionFromWorksheet builds the indicatorProperties from
+  from the given definition worksheet', (done) ->
+  key = 574289
+  builder = new GDocIndicatorImporter(key)
+
+  indicatorThemeTitle = 'Coastal'
+  indicatorProperties =
+    short_name: 'Fish Landings'
+    title: 'Fish Landings'
+    indicatorDefinition:
+      unit: 'landings'
+      short_unit: 'landings'
+    indicatorationConfig:
+      source: 'gdoc'
+      spreadsheet_key: key
+
+  definitionWorksheet =
+    '1': {
+      '1': { row: '1', col: '1', value: 'What\'s the name of this indicator?' },
+      '2': { row: '1', col: '2', value: 'What theme does this indicator relate to?'},
+      '3': { row: '1', col: '3', value: 'What unit does the indicator value use?'}
+    },
+    '2': {
+      '1': { row: '1', col: '1', value: indicatorProperties.short_name},
+      '2': { row: '1', col: '2', value: indicatorThemeTitle},
+      '3': { row: '1', col: '3', value: indicatorProperties.indicatorDefinition.unit}
+    }
+
+  helpers.createThemesFromAttributes(
+    [{title: indicatorThemeTitle}]
+  ).get(0).then((theme) ->
+    indicatorProperties.theme = theme._id
+    builder.setDefinitionFromWorksheet(definitionWorksheet)
+  ).then( ->
+    assert.deepEqual builder.indicatorProperties, indicatorProperties,
+      "Expected the indicator properties to be set from the definition worksheet"
+    done()
+  ).catch(done)
+
+)
+
+test('.setRangesFromWorksheet builds the indicatorProperties from
+  from the given ranges worksheet', ->
+  key = 574289
+  builder = new GDocIndicatorImporter(key)
+
+  indicatorProperties =
+    indicatorationConfig:
+      source: 'gdoc'
+      spreadsheet_key: key
+      range: [
+        {minValue: 0, message: 'Bad'}
+        {minValue: 0.5, message: 'Good'}
+      ]
+
+  rangesWorksheet =
+    '1': {
+      '1': { row: '1', col: '1', value: 'Threshold' },
+      '2': { row: '1', col: '2', value: 'Text'}
+    },
+    '2': {
+      '1': {
+        row: '1',
+        col: '1',
+        value: indicatorProperties.indicatorationConfig.range[0].minValue
+      },
+      '2': {
+        row: '1',
+        col: '2',
+        value: indicatorProperties.indicatorationConfig.range[0].message
+      }
+    }
+    '3': {
+      '1': {
+        row: '1',
+        col: '1',
+        value: indicatorProperties.indicatorationConfig.range[1].minValue
+      },
+      '2': {
+        row: '1',
+        col: '2',
+        value: indicatorProperties.indicatorationConfig.range[1].message
+      }
+    }
+
+  builder.setRangesFromWorksheet(rangesWorksheet)
+
+  assert.deepEqual builder.indicatorProperties, indicatorProperties,
+    "Expected the indicator properties to be set from the ranges worksheet"
+)
+
+test('.createOrUpdateIndicator when there is no existing indicator
+  with the given spreadsheet key, it creates a new indicator', (done)->
+  theKey = 'hat'
+  builder = new GDocIndicatorImporter(theKey)
+
+  builder.createOrUpdateIndicator().then(->
+    Promise.promisify(Indicator.findOne, Indicator)({})
+  ).then( (indicator)->
+    assert.isNotNull indicator, "Expected an indicator to be created"
+    assert.strictEqual(
+      indicator.indicatorationConfig.spreadsheet_key,
+      theKey,
+      "Expected the created indicator to have the given spreadsheet key"
+    )
+    done()
+  ).catch(done)
+)
+
+test('.createOrUpdateIndicator when there is an existing indicator
+  with the given spreadsheet key, it updates the indicator', (done)->
+
+  theKey = 'hat'
+  theIndicator = null
+  theNewTitle = 'new title'
+  builder = new GDocIndicatorImporter(theKey)
+  builder.indicatorProperties.title = theNewTitle
+
+  helpers.createIndicatorModels([
+    indicatorationConfig:
+      spreadsheet_key: theKey
+    title: 'a title'
+  ]).get(0).then((indicator) ->
+    theIndicator = indicator
+    builder.createOrUpdateIndicator()
+  ).then(->
+    findIndicators = Promise.promisify(Indicator.find, Indicator)
+
+    Promise.all([
+      findIndicators(
+        'indicatorationConfig.spreadsheet_key': theKey
+      ),
+      findIndicators({})
+    ])
+  ).spread((spreadsheetIndicators, allIndicators) ->
+
+    assert.strictEqual allIndicators.length, 1,
+      "Expected no more indicators to be created"
+
+    assert.strictEqual spreadsheetIndicators.length, 1,
+      "Expected only one indicator to exist"
+
+    assert.strictEqual(
+      spreadsheetIndicators[0].indicatorationConfig.spreadsheet_key,
+      theKey,
+      "Expected the found indicator to have the given spreadsheet key"
+    )
+
+    assert.strictEqual(
+      spreadsheetIndicators[0].title,
+      theNewTitle,
+      "Expected the found indicator to have the updated title"
+    )
+
+    done()
+  ).catch(done)
 )
