@@ -1,6 +1,6 @@
 [{
   "short_name": "Key stakeholders identified",
-  "title": "Key stakeholders identified",
+  "name": "Key stakeholders identified",
   "theme": "Application",
   "sections": [],
   "primary": true,
@@ -46,7 +46,7 @@
     ]
   }
 }, {
-  "title":"Key stakeholders on-board",
+  "name":"Key stakeholders on-board",
   "short_name":"Key stakeholders on-board",
   "theme":"Stakeholders",
   "primary": true,
@@ -99,7 +99,7 @@
   }
 }, {
   "short_name": "Indicator objectives identified",
-  "title": "Indicator objectives identified",
+  "name": "Indicator objectives identified",
   "theme": "Data and indicators",
   "sections": [],
   "primary": true,
@@ -154,7 +154,7 @@
     ]
   }
 }, {
-  "title":"Indicators described and documented",
+  "name":"Indicators described and documented",
   "short_name":"Indicators described and documented",
   "theme":"Data and indicators",
   "primary": true,
@@ -211,7 +211,7 @@
     ]
   }
 }, {
-  "title":"Raw data collected and flowing",
+  "name":"Raw data collected and flowing",
   "short_name":"Raw data collected and flowing",
   "theme":"Data and indicators",
   "primary": true,
@@ -268,7 +268,7 @@
       ]
     }
 }, {
-  "title":"Indicators data feeds",
+  "name":"Indicators data feeds",
   "short_name":"Indicators data feeds",
   "theme":"Data and indicators",
   "primary": true,
@@ -325,7 +325,7 @@
     ]
   }
 }, {
-  "title":"Source code available and accessible",
+  "name":"Source code available and accessible",
   "short_name":"Source code available and accessible",
   "theme":"Infrastructure",
   "primary": true,
@@ -373,7 +373,7 @@
     ]
   }
 }, {
-  "title":"SaaS system deployed",
+  "name":"SaaS system deployed",
   "short_name":"SaaS system deployed",
   "theme":"Infrastructure",
   "primary": true,
@@ -421,7 +421,7 @@
     ]
   }
 }, {
-  "title":"SaaS system is used",
+  "name":"SaaS system is used",
   "short_name":"SaaS system is used",
   "theme":"Infrastructure",
   "primary": true,
@@ -469,7 +469,7 @@
     ]
   }
 }, {
-  "title":"NRT network instances are up to date",
+  "name":"NRT network instances are up to date",
   "short_name":"NRT network instances are up to date",
   "theme":"Infrastructure",
   "primary": true,
@@ -517,7 +517,7 @@
     ]
   }
 }, {
-  "title":"Reporting GUI complete",
+  "name":"Reporting GUI complete",
   "short_name":"Reporting GUI complete",
   "theme":"Application",
   "primary": true,
@@ -565,7 +565,7 @@
     ]
   }
 }, {
-  "title":"Indicator management GUI complete",
+  "name":"Indicator management GUI complete",
   "short_name":"Indicator management GUI complete",
   "theme":"Application",
   "primary": true,
@@ -613,7 +613,7 @@
     ]
   }
 }, {
-  "title":"Admin GUI complete",
+  "name":"Admin GUI complete",
   "short_name":"Admin GUI complete",
   "theme":"Application",
   "primary": true,
@@ -661,7 +661,7 @@
     ]
   }
 }, {
-  "title":"Local NRTs exposing data to UNEP-Live",
+  "name":"Local NRTs exposing data to UNEP-Live",
   "short_name":"Local NRTs exposing data to UNEP-Live",
   "theme":"Sharing data",
   "primary": true,
@@ -718,7 +718,7 @@
     ]
   }
 }, {
-  "title":"Local NRTs consuming data",
+  "name":"Local NRTs consuming data",
   "short_name":"Local NRTs consuming data",
   "theme":"Sharing data",
   "primary": true,

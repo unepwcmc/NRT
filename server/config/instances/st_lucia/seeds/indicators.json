@@ -1,6 +1,6 @@
 [{
   "short_name": "Fish Landings",
-  "title": "Fish Landings",
+  "name": "Fish Landings",
   "theme": "Coastal and Marine resources",
   "sections": [],
   "primary": true,
@@ -50,7 +50,7 @@
   }
 }, {
   "short_name": "% of households using gas or electricity for cooking",
-  "title": "% of households using gas or electricity for cooking",
+  "name": "% of households using gas or electricity for cooking",
   "theme": "Energy and Minerals",
   "sections": [],
   "primary": true,
@@ -100,7 +100,7 @@
   }
 }, {
   "short_name": "CO2 emissions (metric tons per capita)",
-  "title": "CO2 emissions (metric tons per capita)",
+  "name": "CO2 emissions (metric tons per capita)",
   "theme": "Air",
   "sections": [],
   "primary": true,
@@ -153,7 +153,7 @@
   }
 }, {
   "short_name": "Terrestrial protected areas (% of total land area)",
-  "title": "Terrestrial protected areas (% of total land area)",
+  "name": "Terrestrial protected areas (% of total land area)",
   "theme": "Biodiversity",
   "sections": [],
   "primary": true,
@@ -206,7 +206,7 @@
   }
 }, {
   "short_name": "Fish species, threatened",
-  "title": "Fish species, threatened",
+  "name": "Fish species, threatened",
   "theme": "Biodiversity",
   "sections": [],
   "primary": true,
