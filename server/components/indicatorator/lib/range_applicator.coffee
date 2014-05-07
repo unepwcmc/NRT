@@ -21,6 +21,6 @@ calculateIndicatorText = (value, ranges) ->
   value = parseFloat(value)
 
   for range in ranges
-    return range.message if value >= range.threshold
+    return range.text if value >= range.threshold
 
   return "Error: Value #{value} outside expected range"

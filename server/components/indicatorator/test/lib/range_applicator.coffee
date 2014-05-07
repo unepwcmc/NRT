@@ -14,9 +14,9 @@ adds a 'text' attribute with the correct values based on the range", ->
   ]
 
   ranges = [
-    {threshold: 1000, "message": "Excellent"},
-    {threshold: 500, "message": "Moderate"},
-    {threshold: 0, "message": "Poor"}
+    {threshold: 1000, text: "Excellent"},
+    {threshold: 500, text: "Moderate"},
+    {threshold: 0, text: "Poor"}
   ]
 
   rangedData = RangeApplicator.applyRanges(data, ranges)
@@ -52,9 +52,9 @@ adds a 'text' to both the indicator and subindicators", ->
   }]
 
   ranges = [
-    {threshold: 0.7, "message": "Excellent"},
-    {threshold: 0.2, "message": "Moderate"},
-    {threshold: 0, "message": "Poor"}
+    {threshold: 0.7, text: "Excellent"},
+    {threshold: 0.2, text: "Moderate"},
+    {threshold: 0, text: "Poor"}
   ]
 
   rangedData = RangeApplicator.applyRanges(data, ranges)

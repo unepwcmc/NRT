@@ -144,8 +144,8 @@ test('.setRangesFromWorksheet builds the indicatorProperties from
       source: 'gdoc'
       spreadsheet_key: key
       range: [
-        {threshold: 0, message: 'Bad'}
-        {threshold: 0.5, message: 'Good'}
+        {threshold: 0, text: 'Bad'}
+        {threshold: 0.5, text: 'Good'}
       ]
 
   rangesWorksheet =
@@ -162,7 +162,7 @@ test('.setRangesFromWorksheet builds the indicatorProperties from
       '2': {
         row: '1',
         col: '2',
-        value: indicatorProperties.indicatorationConfig.range[0].message
+        value: indicatorProperties.indicatorationConfig.range[0].text
       }
     }
     '3': {
@@ -174,7 +174,7 @@ test('.setRangesFromWorksheet builds the indicatorProperties from
       '2': {
         row: '1',
         col: '2',
-        value: indicatorProperties.indicatorationConfig.range[1].message
+        value: indicatorProperties.indicatorationConfig.range[1].text
       }
     }
 
