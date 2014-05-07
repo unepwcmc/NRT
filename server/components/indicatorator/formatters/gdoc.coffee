@@ -1,33 +1,11 @@
 module.exports = (data) ->
   records = []
-  for key, value of data.headers
-    index = parseInt(key, 10)
+  for rowIndex, rowContent of data
 
-    if index >= 4
-      record =
-        periodStart: value.value
-        value: data.data[0][key].value
-
-
-      if data.data.length > 1
-        subIndicators = extractSubIndicators(
-          data.data, key, value.value
-        )
-        record.subIndicator = subIndicators
-
-      records.push record
+    if rowIndex != '1' # Avoid headers
+      records.push({
+        periodStart: rowContent['1'].value
+        value: rowContent['2'].value
+      })
 
   records
-
-extractSubIndicators = (data, key, periodStart) ->
-  subIndicators = []
-  for i in [1..data.length - 1]
-    row = data[i]
-
-    subIndicators.push(
-      subIndicator: row['3'].value
-      value: row[key].value
-      periodStart: periodStart
-    )
-
-  return subIndicators
