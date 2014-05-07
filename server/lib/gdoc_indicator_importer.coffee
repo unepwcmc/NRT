@@ -88,7 +88,7 @@ module.exports = class GDocIndicatorImporter
         theme: theme._id
         indicatorDefinition:
           unit: worksheet['2']['3'].value
-          short_unit: worksheet['2']['3'].value
+          shortUnit: worksheet['2']['3'].value
       })
     )
 

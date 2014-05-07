@@ -104,7 +104,7 @@ test('.setDefinitionFromWorksheet builds the indicatorProperties from
     name: 'Fish Landings'
     indicatorDefinition:
       unit: 'landings'
-      short_unit: 'landings'
+      shortUnit: 'landings'
     indicatorationConfig:
       source: 'gdoc'
       spreadsheetKey: key

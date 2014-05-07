@@ -1,7 +1,7 @@
 # Defining indicators
 The indicators the application is seeded with are defined inside
 config/seeds/indicators.json. This document describes the fields indicators are
-expected to have, and how they affect the behavior of the application 
+expected to have, and how they affect the behavior of the application
 
 ## Fields
 
@@ -32,7 +32,7 @@ These attributes are used to build the query that gets sent to the indicatorator
 These fields tell the application how to interpret the indicator data.
 
 * **unit**: The full name of the unit of the yAxis
-* **short_unit**: The short name of above
+* **shortUnit**: The short name of above
 * **period**: The frequency at which the indicator is calculated, e.g. 'annual'
 * **xAxis**: The name of the field which acts as the xAxis. This is typically a temporal field
 * **yAxis**: The name of the field which acts as the yAxis. This is typically an amount, e.g. number of exceedances.
