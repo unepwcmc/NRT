@@ -47,7 +47,7 @@ extractRangesFromWorksheet = (worksheet) ->
   ranges = []
   while (range = worksheet[index.toString()])?
     ranges.push(
-      minValue: parseFloat(range['1'].value, 10)
+      threshold: parseFloat(range['1'].value, 10)
       message: range['2'].value
     )
     index = index + 1

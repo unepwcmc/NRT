@@ -27,9 +27,9 @@ test("calling /admin/updateIndicatorData/{indicatorId}
         featureServer: 1
       }
       range: [
-        {minValue: 0.35, message: "Excellent"},
-        {minValue: 0.15, message: "Good"},
-        {minValue: 0, message: "Bad"}
+        {threshold: 0.35, message: "Excellent"},
+        {threshold: 0.15, message: "Good"},
+        {threshold: 0, message: "Bad"}
       ]
     }
   )
@@ -109,9 +109,9 @@ test("calling /admin/updateIndicatorData/{indicatorId}
         indicatorCode: 'AG.LND.FRST.ZS'
       }
       range: [
-        {minValue: 0.35, message: "Excellent"},
-        {minValue: 0.15, message: "Good"},
-        {minValue: 0, message: "Bad"}
+        {threshold: 0.35, message: "Excellent"},
+        {threshold: 0.15, message: "Good"},
+        {threshold: 0, message: "Bad"}
       ]
     }
   )
