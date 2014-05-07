@@ -47,8 +47,8 @@ extractRangesFromWorksheet = (worksheet) ->
   ranges = []
   while (range = worksheet[index.toString()])?
     ranges.push(
-      minValue: parseFloat(range['1'].value, 10)
-      message: range['2'].value
+      threshold: parseFloat(range['1'].value, 10)
+      text: range['2'].value
     )
     index = index + 1
 
@@ -59,7 +59,7 @@ module.exports = class GDocIndicatorImporter
     @indicatorProperties = {
       indicatorationConfig:
         source: 'gdoc'
-        spreadsheet_key: key
+        spreadsheetKey: key
     }
 
   @import: (key) ->
@@ -83,12 +83,12 @@ module.exports = class GDocIndicatorImporter
 
     return Theme.findOrCreateByTitle(themeTitle).then((theme) =>
       _.extend(@indicatorProperties, {
-        short_name: worksheet['2']['1'].value
-        title: worksheet['2']['1'].value
+        shortName: worksheet['2']['1'].value
+        name: worksheet['2']['1'].value
         theme: theme._id
         indicatorDefinition:
           unit: worksheet['2']['3'].value
-          short_unit: worksheet['2']['3'].value
+          shortUnit: worksheet['2']['3'].value
       })
     )
 
@@ -99,7 +99,7 @@ module.exports = class GDocIndicatorImporter
 
   createOrUpdateIndicator: ->
     existingIndicator = Promise.promisify(Indicator.findOne, Indicator)(
-      'indicatorationConfig.spreadsheet_key': @indicatorProperties.indicatorationConfig.spreadsheet_key
+      'indicatorationConfig.spreadsheetKey': @indicatorProperties.indicatorationConfig.spreadsheetKey
     ).then( (indicator) =>
       @indicatorProperties = mergeAttributesWithDefaults(@indicatorProperties)
       if indicator?

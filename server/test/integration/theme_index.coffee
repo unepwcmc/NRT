@@ -17,7 +17,7 @@ test("With a series of themes and indicators, I should see their titles", (done)
     title: 'Theme 1'
   })
   theme1.indicators = [{
-    title: "I am an indicator of theme 1"
+    name: "I am an indicator of theme 1"
     narrativeRecency: "Out of date"
     type: 'esri'
   }]
@@ -25,7 +25,7 @@ test("With a series of themes and indicators, I should see their titles", (done)
     title: 'Theme 2'
   })
   theme2.indicators = [{
-    title: "theme 2 indicator"
+    name: "theme 2 indicator"
     narrativeRecency: "Out of date"
     type: 'esri'
   }]
@@ -47,7 +47,7 @@ test("With a series of themes and indicators, I should see their titles", (done)
       assert.match body, new RegExp(".*#{theme.title}.*")
 
       for indicator in theme.indicators
-        assert.match body, new RegExp(".*#{indicator.title}.*")
+        assert.match body, new RegExp(".*#{indicator.name}.*")
 
     done()
 

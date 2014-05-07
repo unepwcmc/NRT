@@ -1,15 +1,15 @@
 [{
-  "short_name": "Fish Landings",
-  "title": "Fish Landings",
+  "shortName": "Fish Landings",
+  "name": "Fish Landings",
   "theme": "Coastal and Marine resources",
   "sections": [],
   "primary": true,
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "1IsJzMWxbj0ljOnpA9tszIaajZtoCrsGm1eEwT_riDfc",
+    "spreadsheetKey": "1IsJzMWxbj0ljOnpA9tszIaajZtoCrsGm1eEwT_riDfc",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ],
     "sorting": {
       "field": "year",
@@ -17,9 +17,8 @@
     }
   },
   "indicatorDefinition": {
-    "name": "Fish Landings",
     "unit": "landings",
-    "short_unit": "landings",
+    "shortUnit": "landings",
     "period": "yearly",
     "xAxis": "year",
     "yAxis": "value",
@@ -50,17 +49,17 @@
     ]
   }
 }, {
-  "short_name": "% of households using gas or electricity for cooking",
-  "title": "% of households using gas or electricity for cooking",
+  "shortName": "% of households using gas or electricity for cooking",
+  "name": "% of households using gas or electricity for cooking",
   "theme": "Energy and Minerals",
   "sections": [],
   "primary": true,
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "10Ulqfl6W8DtMV1USAYHOifLiGrozRZ7JzBJx4lN1alY",
+    "spreadsheetKey": "10Ulqfl6W8DtMV1USAYHOifLiGrozRZ7JzBJx4lN1alY",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ],
     "sorting": {
       "field": "year",
@@ -68,9 +67,8 @@
     }
   },
   "indicatorDefinition": {
-    "name": "% of households using gas or electricity for cooking",
     "unit": "percentage",
-    "short_unit": "percentage",
+    "shortUnit": "percentage",
     "period": "yearly",
     "xAxis": "year",
     "yAxis": "value",
@@ -101,8 +99,8 @@
     ]
   }
 }, {
-  "short_name": "CO2 emissions (metric tons per capita)",
-  "title": "CO2 emissions (metric tons per capita)",
+  "shortName": "CO2 emissions (metric tons per capita)",
+  "name": "CO2 emissions (metric tons per capita)",
   "theme": "Air",
   "sections": [],
   "primary": true,
@@ -113,8 +111,8 @@
       "countryCode": "LC"
     },
     "range": [
-      {"minValue": 0, "message": "Good"},
-      {"minValue": 20, "message": "Bad"}
+      {"threshold": 0, "text": "Good"},
+      {"threshold": 20, "text": "Bad"}
     ],
     "sorting": {
       "field": "year",
@@ -123,7 +121,7 @@
   },
   "indicatorDefinition": {
     "unit": "metric tons",
-    "short_unit": "t",
+    "shortUnit": "t",
     "period": "annual",
     "xAxis": "year",
     "yAxis": "value",
@@ -154,8 +152,8 @@
     ]
   }
 }, {
-  "short_name": "Terrestrial protected areas (% of total land area)",
-  "title": "Terrestrial protected areas (% of total land area)",
+  "shortName": "Terrestrial protected areas (% of total land area)",
+  "name": "Terrestrial protected areas (% of total land area)",
   "theme": "Biodiversity",
   "sections": [],
   "primary": true,
@@ -166,8 +164,8 @@
       "countryCode": "LC"
     },
     "range": [
-      {"minValue": 50, "message": "Good"},
-      {"minValue": 0, "message": "Bad"}
+      {"threshold": 50, "text": "Good"},
+      {"threshold": 0, "text": "Bad"}
     ],
     "sorting": {
       "field": "year",
@@ -176,7 +174,7 @@
   },
   "indicatorDefinition": {
     "unit": "percentage",
-    "short_unit": "%",
+    "shortUnit": "%",
     "period": "annual",
     "xAxis": "year",
     "yAxis": "value",
@@ -207,8 +205,8 @@
     ]
   }
 }, {
-  "short_name": "Fish species, threatened",
-  "title": "Fish species, threatened",
+  "shortName": "Fish species, threatened",
+  "name": "Fish species, threatened",
   "theme": "Biodiversity",
   "sections": [],
   "primary": true,
@@ -219,8 +217,8 @@
       "countryCode": "LC"
     },
     "range": [
-      {"minValue": 0, "message": "Good"},
-      {"minValue": 20, "message": "Bad"}
+      {"threshold": 0, "text": "Good"},
+      {"threshold": 20, "text": "Bad"}
     ],
     "sorting": {
       "field": "year",
@@ -229,7 +227,7 @@
   },
   "indicatorDefinition": {
     "unit": "threatened species",
-    "short_unit": "species",
+    "shortUnit": "species",
     "period": "annual",
     "xAxis": "year",
     "yAxis": "value",

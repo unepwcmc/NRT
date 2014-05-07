@@ -8,10 +8,10 @@ createAndShowVisualisationViewForOptions = (options) ->
 
 suite('ReportEditVisualisationView')
 
-test("Shows the given indicator title", ->
-  indicatorTitle = "my lovely indicator"
+test("Shows the given indicator name", ->
+  indicatorName = "my lovely indicator"
   indicator = Factory.indicator()
-  indicator.set('title', indicatorTitle)
+  indicator.set('name', indicatorName)
 
   section = new Backbone.Models.Section(
     indicator: indicator
@@ -26,7 +26,7 @@ test("Shows the given indicator title", ->
 
   assert.match(
     $('#test-container').text(),
-    new RegExp(".*#{indicatorTitle}.*")
+    new RegExp(".*#{indicatorName}.*")
   )
   view.close()
 )

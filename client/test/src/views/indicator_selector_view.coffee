@@ -10,7 +10,7 @@ dummyFetch = ->
 test('populateCollections populates indicators from the server', (done)->
   server = sinon.fakeServer.create()
 
-  indicators = [title: 'hat']
+  indicators = [name: 'hat']
 
   indicatorSelector =
     indicators: new Backbone.Collections.IndicatorCollection([], withData: true)
@@ -20,7 +20,7 @@ test('populateCollections populates indicators from the server', (done)->
       Helpers.Assertions.assertPathVisited(server, new RegExp("/api/indicators"))
 
       assert.strictEqual(
-        indicatorSelector.indicators.at(0).get('title'), indicators[0].title
+        indicatorSelector.indicators.at(0).get('name'), indicators[0].name
       )
 
       done()
@@ -46,8 +46,8 @@ test('.initialize populates the indicators collection,
     _id: Factory.findNextFreeId('Section')
   )
 
-  indicatorTitle = 'An indicator'
-  indicators = [{_id: 1, title: indicatorTitle}]
+  indicatorName = 'An indicator'
+  indicators = [{_id: 1, name: indicatorName}]
 
   @stub(Backbone.Collections.IndicatorCollection::, 'fetch', ->
     Helpers.promisify(=>
@@ -86,7 +86,7 @@ test('Renders a ThemeFilters sub view with the collection of indicators', sinon.
     _id: Factory.findNextFreeId('Section')
   )
 
-  indicators = [{_id: 1, title: "Such Theme"}]
+  indicators = [{_id: 1, name: "Such Indicator"}]
 
   @stub(Backbone.Collections.IndicatorCollection::, 'fetch', ->
     Helpers.promisify(=>
@@ -154,10 +154,10 @@ test("When 'indicator_selector:theme_selected' is triggered,
 
 test('When `indicator_selector:indicator_selected` event is fired on backbone
  it triggers the `indicatorSelected` event on itself', (done)->
-  indicatorText = 'hats'
+  indicatorName = 'hats'
   indicatorAttributes = [{
     type: 'cartodb'
-    title: indicatorText
+    name: indicatorName
   }]
 
   sandbox = sinon.sandbox.create()
@@ -177,7 +177,7 @@ test('When `indicator_selector:indicator_selected` event is fired on backbone
 
   indicatorSelectedCallback = (indicator) ->
     try
-      assert.strictEqual indicator.get('title'), indicatorText
+      assert.strictEqual indicator.get('name'), indicatorName
       done()
     catch err
       done(err)
@@ -223,8 +223,8 @@ test(".filterByTheme given a theme sets the results object to only
   assert.isTrue collectionFilterByThemeStub.calledWith(filterTheme)
 )
 
-test(".filterByTitle given an input event sets the results object to only
- indicators with a matching title", ->
+test(".filterByName given an input event sets the results object to only
+ indicators with a matching name", ->
   view =
     indicators: new Backbone.Collections.IndicatorCollection([])
     results: new Backbone.Collections.IndicatorCollection()
@@ -234,30 +234,30 @@ test(".filterByTitle given an input event sets the results object to only
 
   event = target: '<input value="hats and boats and cats">'
 
-  filterTitleIndicator = Factory.indicator()
-  collectionFilterByTitleStub = sinon.stub(
-    Backbone.Collections.IndicatorCollection::, 'filterByTitle', ->
-      return [filterTitleIndicator]
+  filterNameIndicator = Factory.indicator()
+  collectionfilterByNameStub = sinon.stub(
+    Backbone.Collections.IndicatorCollection::, 'filterByName', ->
+      return [filterNameIndicator]
   )
 
-  Backbone.Views.IndicatorSelectorView::filterByTitle.call(
+  Backbone.Views.IndicatorSelectorView::filterByName.call(
     view, event
   )
 
   try
     assert.ok(
-      collectionFilterByTitleStub.calledOnce,
-      "Expected filterByTitle to be called once but was called
-        #{collectionFilterByTitleStub.callCount} times"
+      collectionfilterByNameStub.calledOnce,
+      "Expected filterByName to be called once but was called
+        #{collectionfilterByNameStub.callCount} times"
     )
 
     assert.lengthOf view.results.models, 1,
       "Expected the collection to be filtered to only the correct indicator"
 
-    assert.deepEqual view.results.at(0), filterTitleIndicator,
+    assert.deepEqual view.results.at(0), filterNameIndicator,
       "Expected the result indicator to be the correct one for the given theme"
   finally
-    collectionFilterByTitleStub.restore()
+    collectionfilterByNameStub.restore()
 )
 
 test('.filterBySource sets a sourceName attribute on the @filter', ->
@@ -276,7 +276,7 @@ test('.filterBySource sets a sourceName attribute on the @filter', ->
     "Expected filterIndicators to be called with the new filters"
 )
 
-test("When the data origin sub view triggers 'selected', 
+test("When the data origin sub view triggers 'selected',
  filterBySource is triggered", sinon.test(->
 
   section = new Backbone.Models.Section(
@@ -345,7 +345,7 @@ sinon.test(->
 
   theme = Factory.theme()
   matchingIndicator = Factory.indicator(
-    title: "Matching title, theme and type"
+    name: "Matching name, theme and type"
     theme: theme.get('_id')
     source: name: 'cygnet'
   )
@@ -353,14 +353,14 @@ sinon.test(->
   indicators = [
     matchingIndicator
     {
-      title: "Matching title and theme only", theme: theme.get('_id')}
+      name: "Matching name and theme only", theme: theme.get('_id')}
     {
-      title: "Matches theme and source only",
+      name: "Matches theme and source only",
       theme: theme.get('_id'),
       source: name: 'cygnet'
     },
     {
-      title: "Matching title and source only",
+      name: "Matching name and source only",
       theme: Factory.findNextFreeId('Theme'),
       source: name: 'cygnet'
     }
@@ -378,7 +378,7 @@ sinon.test(->
   )
 
   view.filterByTheme(theme)
-  view.filterByTitle({target: '<input value="Matching">'})
+  view.filterByName({target: '<input value="Matching">'})
   view.filterBySource('cygnet')
 
   try

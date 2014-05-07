@@ -1,11 +1,11 @@
 # Defining indicators
 The indicators the application is seeded with are defined inside
 config/seeds/indicators.json. This document describes the fields indicators are
-expected to have, and how they affect the behavior of the application 
+expected to have, and how they affect the behavior of the application
 
 ## Fields
 
-* **short_name** - The short title of the indicator.
+* **shortName** - The short title of the indicator.
 * **title** - Full title of the indicator
 * **sections** - A array of sections to seed the page with. Each section should consist of a title and content attribute.
 * **theme** - The title of the theme that the indicators refers to. This is turned into a proper ID association when seeded.
@@ -32,7 +32,7 @@ These attributes are used to build the query that gets sent to the indicatorator
 These fields tell the application how to interpret the indicator data.
 
 * **unit**: The full name of the unit of the yAxis
-* **short_unit**: The short name of above
+* **shortUnit**: The short name of above
 * **period**: The frequency at which the indicator is calculated, e.g. 'annual'
 * **xAxis**: The name of the field which acts as the xAxis. This is typically a temporal field
 * **yAxis**: The name of the field which acts as the yAxis. This is typically an amount, e.g. number of exceedances.

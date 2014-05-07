@@ -22,7 +22,7 @@ test('.toJSON returns the indicator: as indicator._id instead of the model attri
   visualisation = new Backbone.Models.Visualisation(
     indicator: {
       _id: indicatorId
-      title: 'hey'
+      name: 'hey'
     }
   )
 
@@ -200,7 +200,7 @@ test(".mapDataToXAndY should return data as an array of X and Y objects, with
     "Expected the formatted attribute to include the y axis"
 )
 
-test('.setFilterParameter when filter is undefined 
+test('.setFilterParameter when filter is undefined
   creates the object and insert the correct values', ->
   visualisation = Factory.visualisation()
 

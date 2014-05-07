@@ -10,7 +10,7 @@ indicatorDataSchema = mongoose.Schema(
 
 findIndicatorWithShortName = (indicators, shortName) ->
   for indicator in indicators
-    return indicator if indicator.short_name is shortName
+    return indicator if indicator.shortName is shortName
 
   return null
 
@@ -58,7 +58,7 @@ convertIndicatorDataToJSONBackup = (indicatorData, cb) ->
   Q.nsend(
     Indicator, 'findOne', _id: indicatorData.indicator
   ).then( (indicator)->
-    indicatorData.indicator = indicator.short_name
+    indicatorData.indicator = indicator.shortName
     cb(null, indicatorData)
   ).fail(cb)
 

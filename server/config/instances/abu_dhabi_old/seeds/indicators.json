@@ -1,6 +1,6 @@
 [{
-  "short_name": "GHG Emission",
-  "title": "Total GHG emissions as % of year 2010 level of emissions",
+  "shortName": "GHG Emission",
+  "name": "Total GHG emissions as % of year 2010 level of emissions",
   "theme": "Air Quality",
   "sections": [
     {"title": "Description", "content": "Total GHG emissions as % of year 2010 level of emissions"}
@@ -9,8 +9,8 @@
   "indicatorDefinition": {
   }
 }, {
-  "short_name": "CO Concentration",
-  "title": "Average annual CO concentration in µg per m3",
+  "shortName": "CO Concentration",
+  "name": "Average annual CO concentration in µg per m3",
   "theme": "Air Quality",
   "sections": [
     {"title": "Description", "content": "Average annual CO concentration in µg per m3"}
@@ -27,7 +27,7 @@
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 1,
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -69,8 +69,8 @@
       ]
   }
 }, {
-  "short_name": "NO2 Concentration",
-  "title": "Average annual NO2 concentration in µg per m3",
+  "shortName": "NO2 Concentration",
+  "name": "Average annual NO2 concentration in µg per m3",
   "theme": "Air Quality",
   "sections": [
     {"title": "Description", "content": "Average annual NO2 concentration in µg per m3"}
@@ -87,7 +87,7 @@
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 2,
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -129,8 +129,8 @@
       ]
   }
 }, {
-  "short_name": "SO2 Concentration",
-  "title": "Hourly average SO2 concentration in µg per m3",
+  "shortName": "SO2 Concentration",
+  "name": "Hourly average SO2 concentration in µg per m3",
   "theme": "Air Quality",
   "sections": [
     {"title": "Description", "content": "Hourly average SO2 concentration in µg per m3"}
@@ -147,7 +147,7 @@
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 5,
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -189,8 +189,8 @@
       ]
   }
 },{
-  "short_name": "PM10 Concentration",
-  "title": "Daily average PM10 concentration in µg per m3",
+  "shortName": "PM10 Concentration",
+  "name": "Daily average PM10 concentration in µg per m3",
   "theme": "Air Quality",
   "sections": [
     {"title": "Description", "content": "Daily average PM10 concentration in µg per m3"}
@@ -207,7 +207,7 @@
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 4,
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -249,8 +249,8 @@
       ]
   }
 },{
-  "short_name": "PM25 Concentration",
-  "title": "Annual average PM25 concentration in µg per m3",
+  "shortName": "PM25 Concentration",
+  "name": "Annual average PM25 concentration in µg per m3",
   "theme": "Air Quality",
   "sections": [
     {"title": "Description", "content": "Annual average PM25 concentration in µg per m3"}
@@ -267,7 +267,7 @@
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": -1,
       "unit": "µg per m3",
-      "short_unit": "µg/m3",
+      "shortUnit": "µg/m3",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -300,8 +300,8 @@
       ]
   }
 },{
-  "short_name": "O3 Concentration",
-  "title": "1-hr and 8-hr O3 concentration in µg per m3",
+  "shortName": "O3 Concentration",
+  "name": "1-hr and 8-hr O3 concentration in µg per m3",
   "theme": "Air Quality",
   "sections": [
     {"title": "Description", "content": "Daily average PM10 concentration in µg per m3"}
@@ -318,7 +318,7 @@
       "serviceName": "NRT_AD_AirQuality",
       "featureServer": 3,
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -360,9 +360,9 @@
       ]
   }
 },{
-  "short_name": "Protected areas",
-  "title": "Protected Area as a Percent of Total area",
-  
+  "shortName": "Protected areas",
+  "name": "Protected Area as a Percent of Total area",
+
   "theme": "Biodiversity",
   "sections": [
     {"title": "Description", "content": "This indicator measures the area of protected land ecosystems, inland water ecosystems, and marine ecosystems expressed as a percentage of the total area of land ecosystems, inland water ecosystems and marine ecosystems respectively.  Protected Area refers to all or partially protected areas of at least 1000 hectares that are designated as national parks, natural monuments, natural reserves or wildlife sanctuaries, protected landscapes and seascapes or scientific reserves with limited public access. The data do not include sites protected under local or provincial law."}
@@ -379,7 +379,7 @@
       "serviceName": "NRT_AD_ProtectedArea",
       "featureServer": 2,
       "unit": "%",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -412,8 +412,8 @@
       ]
     }
 }, {
-  "short_name": "Area of Key Ecosystems",
-  "title": "Area of Selected Key Ecosystems as a Percent of Total Area",
+  "shortName": "Area of Key Ecosystems",
+  "name": "Area of Selected Key Ecosystems as a Percent of Total Area",
   "theme": "Biodiversity",
   "sections": [
     {"title": "Description", "content": "Area of Selected Key Ecosystems as a Percent of Total Area"}
@@ -429,8 +429,8 @@
   "indicatorDefinition": {
   }
 },{
-  "short_name": "Threatened species",
-  "title": "Percentage of Threatened Species",
+  "shortName": "Threatened species",
+  "name": "Percentage of Threatened Species",
   "description": "Number of species at risk of extinction in proportion to the total number of native species.",
   "theme": "Biodiversity",
   "indicatorDefinition": {
@@ -455,8 +455,8 @@
       ]
     }
 }, {
-  "short_name": "Abundance of Key Species",
-  "title": "Abundance of Selected Key Species",
+  "shortName": "Abundance of Key Species",
+  "name": "Abundance of Selected Key Species",
   "theme": "Biodiversity",
   "sections": [
     {"title": "Description", "content": "Abundance of Selected Key Species"}
@@ -472,8 +472,8 @@
   "indicatorDefinition": {
   }
 },{
-  "short_name": "Fish Resource Status",
-  "title": "Annual fish catch from sustainable fisheries",
+  "shortName": "Fish Resource Status",
+  "name": "Annual fish catch from sustainable fisheries",
   "theme": "Productive Natural Resources",
   "sections": [
     {"title": "Description", "content": "Annual fish catch from sustainable fisheries"}
@@ -489,8 +489,8 @@
   "indicatorDefinition": {
   }
 }, {
-  "short_name": "Ammonia",
-  "title": "Ammonia",
+  "shortName": "Ammonia",
+  "name": "Ammonia",
   "theme": "Water",
   "sections": [
     {"title": "Description", "content": ""}
@@ -507,7 +507,7 @@
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": 0,
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -549,8 +549,8 @@
       ]
   }
 }, {
-  "short_name": "Coastal Chlorophyll",
-  "title": "Coastal Chlorophyll",
+  "shortName": "Coastal Chlorophyll",
+  "name": "Coastal Chlorophyll",
   "theme": "Water",
   "sections": [
     {"title": "Description", "content": ""}
@@ -567,7 +567,7 @@
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": 1,
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -609,8 +609,8 @@
       ]
   }
 }, {
-  "short_name": "Dissolved Oxygen",
-  "title": "Dissolved Oxygen",
+  "shortName": "Dissolved Oxygen",
+  "name": "Dissolved Oxygen",
   "theme": "Water",
   "sections": [
     {"title": "Description", "content": ""}
@@ -627,7 +627,7 @@
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": 2,
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -669,8 +669,8 @@
       ]
   }
 }, {
-  "short_name": "Nitrate-N Concentrations",
-  "title": "Nitrate –N concentration in coastal waters (µg per L)",
+  "shortName": "Nitrate-N Concentrations",
+  "name": "Nitrate –N concentration in coastal waters (µg per L)",
   "theme": "Water",
   "sections": [
     {"title": "Description", "content": "Area of Selected Key Ecosystems as a Percent of Total Area"}
@@ -687,7 +687,7 @@
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": 4,
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -729,8 +729,8 @@
       ]
   }
 }, {
-  "short_name": "Phosphate P",
-  "title": "Phosphate P",
+  "shortName": "Phosphate P",
+  "name": "Phosphate P",
   "theme": "Water",
   "sections": [
     {"title": "Description", "content": ""}
@@ -747,7 +747,7 @@
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": 5,
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -789,8 +789,8 @@
       ]
   }
 }, {
-  "short_name": "Enterococci Concentrations",
-  "title": "Enterococci concentration in 100 ml of coastal waters",
+  "shortName": "Enterococci Concentrations",
+  "name": "Enterococci concentration in 100 ml of coastal waters",
   "theme": "Water",
   "sections": [
     {"title": "Description", "content": "Enterococci concentration in 100 ml of coastal waters"}
@@ -807,7 +807,7 @@
       "serviceName": "NRT_AD_MarineWQ",
       "featureServer": 3,
       "unit": "stations",
-      "short_unit": "stations",
+      "shortUnit": "stations",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -849,8 +849,8 @@
       ]
   }
 }, {
-  "short_name": "Groundwater Reserves",
-  "title": "Effective years remaining in usable groundwater reserves",
+  "shortName": "Groundwater Reserves",
+  "name": "Effective years remaining in usable groundwater reserves",
   "theme": "Water",
   "sections": [
     {"title": "Description", "content": "Effective years remaining in usable groundwater reserves"}
@@ -866,8 +866,8 @@
   "indicatorDefinition": {
   }
 }, {
-  "short_name": "Salinity",
-  "title": "Area (km2) of aquifer where water quality is <= 1500 ppm TDS concentration",
+  "shortName": "Salinity",
+  "name": "Area (km2) of aquifer where water quality is <= 1500 ppm TDS concentration",
   "theme": "Water",
   "sections": [
     {"title": "Description", "content": "Area (km2) of aquifer where water quality is less than or equal to 1500 ppm TDS concentration"}
@@ -883,8 +883,8 @@
   "indicatorDefinition": {
   }
 },{
-  "short_name": "Awareness of Water",
-  "title": "Awareness on ground water depletion and high domestic water consumption",
+  "shortName": "Awareness of Water",
+  "name": "Awareness on ground water depletion and high domestic water consumption",
   "theme": "Environmental Awareness",
   "sections": [
     {"title": "Description", "content": "Awareness on ground water depletion and high domestic water consumption"}
@@ -900,8 +900,8 @@
   "indicatorDefinition": {
   }
 },{
-  "short_name": "Awareness of Fish Stocks",
-  "title": "Awareness on diminishing fish stock",
+  "shortName": "Awareness of Fish Stocks",
+  "name": "Awareness on diminishing fish stock",
   "theme": "Environmental Awareness",
   "sections": [
     {"title": "Description", "content": "Awareness on diminishing fish stock"}
@@ -917,8 +917,8 @@
   "indicatorDefinition": {
   }
 },{
-  "short_name": "Awareness of air quality",
-  "title": "Awareness on air quality (indoor and outdoor) & noise pollution",
+  "shortName": "Awareness of air quality",
+  "name": "Awareness on air quality (indoor and outdoor) & noise pollution",
   "theme": "Environmental Awareness",
   "sections": [
     {"title": "Description", "content": "Awareness on air quality (indoor and outdoor) & noise pollution"}
@@ -934,8 +934,8 @@
   "indicatorDefinition": {
   }
 },{
-  "short_name": "Awareness of biodiversity",
-  "title": "Awareness on Biodiversity (marine and terrestrial",
+  "shortName": "Awareness of biodiversity",
+  "name": "Awareness on Biodiversity (marine and terrestrial",
   "theme": "Environmental Awareness",
   "sections": [
     {"title": "Description", "content": "Awareness on Biodiversity (marine and terrestrial"}
@@ -954,14 +954,14 @@
 
 
 {
-  "short_name": "Urban air pollution",
-  "title": "Ambient Concentration of Air Pollutants in Urban Areas",
+  "shortName": "Urban air pollution",
+  "name": "Ambient Concentration of Air Pollutants in Urban Areas",
   "description": "Ambient air pollution concentrations of ozone, particulate matter (PM10, and PM2,5, if those are not available: SPM, black smoke), sulfur dioxide, nitrogen dioxide, lead. Additional:  carbon monoxide, volatile organic compounds including benzene (VOCs). The priority is collection of the indicator in large cities (over 1 million population).",
   "theme": "Air Quality",
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
-      "short_unit": "µg/m3",
+      "shortUnit": "µg/m3",
       "unit": "µg/m3, ppm or ppb, as appropriate",
       "outFields": "shape.area",
       "dateField": "datedes",
@@ -981,14 +981,14 @@
       ]
     }
 }, {
-  "short_name": "Red List species",
-  "title": "Abu Dhabi Red List Indices For All Species Groups",
+  "shortName": "Red List species",
+  "name": "Abu Dhabi Red List Indices For All Species Groups",
   "description": "",
   "theme": "Biodiversity",
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
-      "short_unit": "",
+      "shortUnit": "",
       "unit": "",
       "outFields": "shape.area",
       "dateField": "datedes",
@@ -1008,14 +1008,14 @@
       ]
     }
 }, {
-  "short_name": "Annual Fish Catch",
-  "title": "Abu Dhabi Red List Indices For All Species Groups",
+  "shortName": "Annual Fish Catch",
+  "name": "Abu Dhabi Red List Indices For All Species Groups",
   "description": "Annual catch of major species in relation to spawning biomass if available or in relation to the year of maximum catches in the time series.",
   "theme": "Productive Natural Resources",
   "indicatorDefinition": {
       "sourceUrl": "/MapThemes/TerrestrialHabitat/MapServer/14",
       "operation": "sum",
-      "short_unit": "t",
+      "shortUnit": "t",
       "unit": "metric tons",
       "outFields": "shape.area",
       "dateField": "datedes",
@@ -1035,14 +1035,14 @@
       ]
     }
 }, {
-  "short_name": "World Bank PA cover",
-  "title": "Protected Area coverage (World Bank)",
+  "shortName": "World Bank PA cover",
+  "name": "Protected Area coverage (World Bank)",
   "description": "Protected Area coverage (World Bank)",
   "theme": "Biodiversity",
   "type": "worldBank",
   "indicatorDefinition": {
       "unit": "%",
-      "short_unit": "%",
+      "shortUnit": "%",
       "apiUrl": "http://localhost:3002/wb/ARE",
       "apiIndicatorName": "NY.ADJ.DCO2.GN.ZS",
       "period": "annual",
@@ -1075,14 +1075,14 @@
       ]
     }
 }, {
-  "short_name": "Cereals Production",
-  "title": "Cereals Production (UNEP EDE)",
+  "shortName": "Cereals Production",
+  "name": "Cereals Production (UNEP EDE)",
   "description": "Production of Cereals",
   "theme": "Environmental Awareness",
   "type": "ede",
   "indicatorDefinition": {
       "unit": "Metric tons",
-      "short_unit": "T",
+      "shortUnit": "T",
       "apiUrl": "http://localhost:3002/ede/AE",
       "apiVariableId": "1",
       "period": "annual",
@@ -1114,8 +1114,8 @@
       ]
     }
 }, {
-  "short_name": "Seagrass area (Blue carbon)",
-  "title": "Seagrass area (Blue Carbon)",
+  "shortName": "Seagrass area (Blue carbon)",
+  "name": "Seagrass area (Blue Carbon)",
   "description": "Seagrass area (Blue carbon)",
   "theme": "Biodiversity",
   "type": "cartodb",
@@ -1125,7 +1125,7 @@
     "cartodb_tablename": "nrt_bc_seagrass_copy",
     "query": "SELECT SUM(area_ha) FROM nrt_bc_seagrass_copy",
     "unit": "ha",
-    "short_unit": "ha",
+    "shortUnit": "ha",
     "period": "annual",
     "xAxis": "year",
     "yAxis": "value",

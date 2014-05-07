@@ -16,7 +16,7 @@ Page = require('../../models/page').model
 
 test('POST create', (done) ->
   data =
-    title: "new indicator"
+    name: "new indicator"
 
   request.post({
     url: helpers.appurl('api/indicators/')
@@ -30,7 +30,7 @@ test('POST create', (done) ->
     Indicator
       .findOne(_id: id)
       .exec( (err, indicator) ->
-        assert.equal indicator.title, data.title
+        assert.equal indicator.name, data.name
         done()
       )
   )
@@ -120,14 +120,14 @@ test('GET /api/indicators/ returns all indicators', (done) ->
       indicatorJson = body
 
       assert.equal indicatorJson.length, indicators.length
-      jsonTitles = _.map(indicatorJson, (indicator)->
-        indicator.title
+      jsonNames = _.map(indicatorJson, (indicator)->
+        indicator.name
       )
-      indicatorTitles = _.map(indicators, (indicator)->
-        indicator.title
+      indicatorNames = _.map(indicators, (indicator)->
+        indicator.name
       )
 
-      assert.deepEqual jsonTitles, indicatorTitles
+      assert.deepEqual jsonNames, indicatorNames
       done()
     )
   )
@@ -183,12 +183,12 @@ test('DELETE indicator', (done) ->
 
 test('PUT indicator', (done) ->
   helpers.createIndicator( (err, indicator) ->
-    new_title = "Updated title"
+    newName = "Updated name"
     request.put({
       url: helpers.appurl("/api/indicators/#{indicator.id}")
       json: true
       body:
-        title: new_title
+        name: newName
     }, (err, res, body) ->
       id = body.id
 
@@ -197,7 +197,7 @@ test('PUT indicator', (done) ->
       Indicator
         .findOne(id)
         .exec( (err, indicator) ->
-          assert.equal indicator.title, new_title
+          assert.equal indicator.name, newName
 
           done()
         )
@@ -207,13 +207,13 @@ test('PUT indicator', (done) ->
 
 test('PUT indicator does not fail when an _id is given', (done) ->
   helpers.createIndicator( (err, indicator) ->
-    new_title = "Updated title"
+    newName = "Updated name"
     request.put({
       url: helpers.appurl("/api/indicators/#{indicator.id}")
       json: true
       body:
         _id: indicator.id
-        title: new_title
+        name: newName
     }, (err, res, body) ->
       id = body.id
 
@@ -222,7 +222,7 @@ test('PUT indicator does not fail when an _id is given', (done) ->
       Indicator
         .findOne(id)
         .exec( (err, indicator) ->
-          assert.equal indicator.title, new_title
+          assert.equal indicator.name, newName
           done()
         )
     )
