@@ -380,46 +380,6 @@ indicatorSchema.statics.convertNestedParametersToAssociationIds = (attributes) -
 
   return attributes
 
-DEFAULT_INDICATOR_DEFINITION =
-  "unit": "landings",
-  "short_unit": "landings",
-  "period": "yearly",
-  "xAxis": "year",
-  "yAxis": "value",
-  "geometryField": "geometry",
-  "fields": [
-    {
-      "source": {
-        "name": "periodStart",
-        "type": "epoch"
-      },
-      "name": "year",
-      "type": "integer"
-    }, {
-      "source": {
-        "name": "value",
-        "type": "integer"
-      },
-      "name": "value",
-      "type": "integer"
-    }, {
-      "source": {
-        "name": "text",
-        "type": "text"
-      },
-      "name": "text",
-      "type": "text"
-    }
-  ]
-
-indicatorSchema.statics.buildWithDefaults = (attributes) ->
-
-  attributes.indicatorDefinition = _.extend(
-    DEFAULT_INDICATOR_DEFINITION, attributes.indicatorDefinition
-  )
-
-  new Indicator(attributes)
-
 Indicator = mongoose.model('Indicator', indicatorSchema)
 
 module.exports = {

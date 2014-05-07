@@ -661,16 +661,3 @@ test('creating a new Indicator without an "indicatorationConfig" attribute
   assert.deepEqual indicator.indicatorationConfig, {},
     "Expected indicator.indicatoration to be defaulted to {}"
 )
-
-test('.buildWithDefaults fills in the default indicatorDefintion', ->
-  indicator = Indicator.buildWithDefaults({})
-
-  assert.isDefined indicator.indicatorDefinition.xAxis,
-    "Expected the indicator definition to have an xAxis defined"
-
-  assert.isDefined indicator.indicatorDefinition.yAxis,
-    "Expected the indicator definition to have an yAxis defined"
-
-  assert.typeOf indicator.indicatorDefinition.fields, 'Array',
-    "Expected the indicator definition to have a field array"
-)

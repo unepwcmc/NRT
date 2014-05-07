@@ -5,6 +5,42 @@ GDocWrapper = require('./gdoc_wrapper')
 Indicator = require('../models/indicator').model
 Theme = require('../models/theme').model
 
+DEFAULT_INDICATOR_DEFINITION =
+  "period": "yearly",
+  "xAxis": "year",
+  "yAxis": "value",
+  "geometryField": "geometry",
+  "fields": [
+    {
+      "source": {
+        "name": "periodStart",
+        "type": "integer"
+      },
+      "name": "year",
+      "type": "integer"
+    }, {
+      "source": {
+        "name": "value",
+        "type": "text"
+      },
+      "name": "value",
+      "type": "integer"
+    }, {
+      "source": {
+        "name": "text",
+        "type": "text"
+      },
+      "name": "text",
+      "type": "text"
+    }
+  ]
+
+mergeAttributesWithDefaults = (attributes) ->
+  attributes.indicatorDefinition = _.extend(
+    DEFAULT_INDICATOR_DEFINITION, attributes.indicatorDefinition
+  )
+  return attributes
+
 extractRangesFromWorksheet = (worksheet) ->
   index = 2
 
