@@ -8,8 +8,8 @@
     "source": "gdoc",
     "spreadsheet_key": "1IsJzMWxbj0ljOnpA9tszIaajZtoCrsGm1eEwT_riDfc",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ],
     "sorting": {
       "field": "year",
@@ -58,8 +58,8 @@
     "source": "gdoc",
     "spreadsheet_key": "10Ulqfl6W8DtMV1USAYHOifLiGrozRZ7JzBJx4lN1alY",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ],
     "sorting": {
       "field": "year",
@@ -111,8 +111,8 @@
       "countryCode": "LC"
     },
     "range": [
-      {"minValue": 0, "message": "Good"},
-      {"minValue": 20, "message": "Bad"}
+      {"threshold": 0, "message": "Good"},
+      {"threshold": 20, "message": "Bad"}
     ],
     "sorting": {
       "field": "year",
@@ -164,8 +164,8 @@
       "countryCode": "LC"
     },
     "range": [
-      {"minValue": 50, "message": "Good"},
-      {"minValue": 0, "message": "Bad"}
+      {"threshold": 50, "message": "Good"},
+      {"threshold": 0, "message": "Bad"}
     ],
     "sorting": {
       "field": "year",
@@ -217,8 +217,8 @@
       "countryCode": "LC"
     },
     "range": [
-      {"minValue": 0, "message": "Good"},
-      {"minValue": 20, "message": "Bad"}
+      {"threshold": 0, "message": "Good"},
+      {"threshold": 20, "message": "Bad"}
     ],
     "sorting": {
       "field": "year",

@@ -8,8 +8,8 @@
     "source": "gdoc",
     "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ]
   },
   "indicatorDefinition": {
@@ -58,8 +58,8 @@
     "name": "Key stakeholders on-board",
     "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ]
   },
   "indicatorDefinition": {
@@ -107,8 +107,8 @@
     "source": "gdoc",
     "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ]
   },
   "indicatorDefinition": {
@@ -165,8 +165,8 @@
     "source": "gdoc",
     "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ]
   },
   "indicatorDefinition": {
@@ -222,8 +222,8 @@
     "source": "gdoc",
     "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ]
   },
     "indicatorDefinition": {
@@ -279,8 +279,8 @@
     "source": "gdoc",
     "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ]
   },
   "indicatorDefinition": {
@@ -336,8 +336,8 @@
     "source": "gdoc",
     "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ]
   },
   "indicatorDefinition": {
@@ -384,8 +384,8 @@
     "source": "gdoc",
     "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ]
   },
   "indicatorDefinition": {
@@ -432,8 +432,8 @@
     "source": "gdoc",
     "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ]
   },
   "indicatorDefinition": {
@@ -480,8 +480,8 @@
     "source": "gdoc",
     "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ]
   },
   "indicatorDefinition": {
@@ -528,8 +528,8 @@
     "source": "gdoc",
     "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ]
   },
   "indicatorDefinition": {
@@ -576,8 +576,8 @@
     "source": "gdoc",
     "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ]
   },
   "indicatorDefinition": {
@@ -624,8 +624,8 @@
     "source": "gdoc",
     "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ]
   },
   "indicatorDefinition": {
@@ -672,8 +672,8 @@
     "source": "gdoc",
     "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ]
   },
   "indicatorDefinition": {
@@ -729,8 +729,8 @@
     "source": "gdoc",
     "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "message": "Good"},
+        {"threshold": 0, "message": "Bad"}
     ]
   },
   "indicatorDefinition": {
