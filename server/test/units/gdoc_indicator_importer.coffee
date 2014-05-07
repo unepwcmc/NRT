@@ -44,6 +44,7 @@ test('#import when given a valid spreadsheet key
         spreadsheetKey,
         "Expected the spreadsheet key to be set"
       )
+      Promise.resolve()
   )
   setRangesStub = sandbox.stub(
     GDocIndicatorImporter::, 'setRangesFromWorksheet', ->

@@ -34,15 +34,18 @@ module.exports = class GDocIndicatorImporter
       ])
     ).spread((definitionWorksheet, rangesWorksheet) ->
       indicatorImporter = new GDocIndicatorImporter(key)
-      indicatorImporter.setDefinitionFromWorksheet(definitionWorksheet)
-      indicatorImporter.setRangesFromWorksheet(rangesWorksheet)
-      indicatorImporter.createIndicator()
+      indicatorImporter.setDefinitionFromWorksheet(
+        definitionWorksheet
+      ).then( ->
+        indicatorImporter.setRangesFromWorksheet(rangesWorksheet)
+        indicatorImporter.createIndicator()
+      )
     )
 
   setDefinitionFromWorksheet: (worksheet) ->
     themeTitle = worksheet['2']['2'].value
 
-    Theme.findOrCreateByTitle(themeTitle).then((theme) =>
+    return Theme.findOrCreateByTitle(themeTitle).then((theme) =>
       _.extend(@indicatorProperties, {
         short_name: worksheet['2']['1'].value
         title: worksheet['2']['1'].value
