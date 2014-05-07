@@ -8,7 +8,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
   events:
     "click .close": "close"
     "click .clear-search": "clearSearch"
-    "keyup input": "filterByTitle"
+    "keyup input": "filterByName"
 
   initialize: (options = {}) ->
     @currentIndicator  = options.currentIndicator
@@ -55,7 +55,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
 
     @filterIndicators()
 
-  filterByTitle: (event) =>
+  filterByName: (event) =>
     searchTerm = $(event.target).val()
 
     @updateClearSearchButton()
@@ -75,7 +75,7 @@ class Backbone.Views.IndicatorSelectorView extends Backbone.Diorama.NestingView
     results = @indicators.filterBySource(@filter.sourceName)
     @results.set(results)
 
-    results = @results.filterByTitle(@filter.searchTerm)
+    results = @results.filterByName(@filter.searchTerm)
     @textFilteredIndicators.reset(results)
     @results.set(results)
 

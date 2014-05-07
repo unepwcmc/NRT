@@ -17,7 +17,7 @@ test("When intialising a section with a nested visualisation,
 
 test("When calling .toJSON on a section with an indicator model attribute,
   the indicator model should be deserialized to the indicator _id", ->
-  indicatorAttributes = _id: 5, title: 'hat'
+  indicatorAttributes = _id: 5, name: 'hat'
 
   section = new Backbone.Models.Section(indicator: indicatorAttributes)
   assert.equal section.toJSON().indicator, indicatorAttributes._id
@@ -56,7 +56,7 @@ test(".hasTitleOrIndicator returns true if there is a title present", ->
 )
 
 test(".hasTitleOrIndicator returns true if there is an indicator present", ->
-  section = new Backbone.Models.Section(indicator: {title: 'an indicator'})
+  section = new Backbone.Models.Section(indicator: {name: 'an indicator'})
 
   assert.ok section.hasTitleOrIndicator()
 )
@@ -81,12 +81,12 @@ test("When initialised with narrative attributes,
 
 test("When setting 'indicator' with indicator attributes,
   it creates a Backbone.Models.Indicator model in the indicator attribute", ->
-  indicatorAttributes = title: "I'm an indicator"
+  indicatorAttributes = name: "I'm an indicator"
   section = new Backbone.Models.Section()
   section.set('indicator', indicatorAttributes)
 
   assert.equal section.get('indicator').constructor.name, 'Indicator'
-  assert.equal section.get('indicator').get('title'), indicatorAttributes.title
+  assert.equal section.get('indicator').get('name'), indicatorAttributes.name
 )
 
 test(".save should actually call save on the parent page model", (done)->

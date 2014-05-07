@@ -18,7 +18,7 @@ module.exports =
     validateIndicatorDataFields: (indicatorData) ->
       firstRow = indicatorData.data[0]
 
-      errorMsg = "Error validating indicator data for indicator '#{@title}'\n* "
+      errorMsg = "Error validating indicator data for indicator '#{@name}'\n* "
       errors = []
 
       for field in @indicatorDefinition.fields

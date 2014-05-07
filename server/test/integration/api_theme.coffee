@@ -46,7 +46,7 @@ of child indicators", (done) ->
   )
 
   subIndicators = [
-    new Indicator(title: 'Sub indicator, yo')
+    new Indicator(name: 'Sub indicator, yo')
   ]
   getIndicatorsStub = sinon.stub(Theme::, 'getIndicators', (callback)->
     callback(null, subIndicators)
@@ -89,7 +89,7 @@ of child indicators", (done) ->
       assert.lengthOf reloadedTheme.indicators, 1,
         "Expected one indicator to be returned"
 
-      assert.equal reloadedTheme.indicators[0].title, subIndicators[0].title,
+      assert.equal reloadedTheme.indicators[0].name, subIndicators[0].name,
         "Expected the returned indicators to be correct"
 
       assert.ok getIndicatorsStub.calledOnce,
@@ -120,14 +120,14 @@ test('GET index', (done) ->
       themeJson = body
 
       assert.equal themeJson.length, themes.length
-      jsonTitles = _.map(themeJson, (theme)->
-        theme.title
+      jsonNames = _.map(themeJson, (theme)->
+        theme.name
       )
-      themeTitles = _.map(themes, (theme)->
-        theme.title
+      themeNames = _.map(themes, (theme)->
+        theme.name
       )
 
-      assert.deepEqual jsonTitles, themeTitles
+      assert.deepEqual jsonNames, themeNames
       done()
     )
   ).catch((err) ->

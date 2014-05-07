@@ -13,12 +13,12 @@ class Backbone.Collections.IndicatorCollection extends Backbone.Collection
       url += "?withData=true"
     url
 
-  filterByTitle: (title='') ->
-    title = title.trim()
+  filterByName: (name='') ->
+    name = name.trim()
 
-    regexp = new RegExp(".*#{title}.*", 'i')
+    regexp = new RegExp(".*#{name}.*", 'i')
     @filter( (indicator) ->
-      regexp.test indicator.get('title')
+      regexp.test indicator.get('name')
     )
 
   filterByTheme: (theme) ->

@@ -101,7 +101,7 @@ test('.setDefinitionFromWorksheet builds the indicatorProperties from
   indicatorThemeTitle = 'Coastal'
   indicatorProperties =
     short_name: 'Fish Landings'
-    title: 'Fish Landings'
+    name: 'Fish Landings'
     indicatorDefinition:
       unit: 'landings'
       short_unit: 'landings'
@@ -207,14 +207,14 @@ test('.createOrUpdateIndicator when there is an existing indicator
 
   theKey = 'hat'
   theIndicator = null
-  theNewTitle = 'new title'
+  theNewName = 'new name'
   builder = new GDocIndicatorImporter(theKey)
-  builder.indicatorProperties.title = theNewTitle
+  builder.indicatorProperties.name = theNewName
 
   helpers.createIndicatorModels([
     indicatorationConfig:
       spreadsheet_key: theKey
-    title: 'a title'
+    name: 'a name'
   ]).get(0).then((indicator) ->
     theIndicator = indicator
     builder.createOrUpdateIndicator()
@@ -242,9 +242,9 @@ test('.createOrUpdateIndicator when there is an existing indicator
     )
 
     assert.strictEqual(
-      spreadsheetIndicators[0].title,
-      theNewTitle,
-      "Expected the found indicator to have the updated title"
+      spreadsheetIndicators[0].name,
+      theNewName,
+      "Expected the found indicator to have the updated name"
     )
 
     done()
