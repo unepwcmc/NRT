@@ -1,11 +1,12 @@
+_ = require('underscore')
 assert = require('chai').assert
-helpers = require '../helpers'
-Theme = require('../../models/theme').model
-Indicator = require('../../models/indicator').model
 async = require('async')
 Q = require('q')
-_ = require('underscore')
 sinon = require('sinon')
+
+helpers = require('../helpers')
+Theme = require('../../models/theme').model
+Indicator = require('../../models/indicator').model
 
 suite('Theme')
 
@@ -43,9 +44,9 @@ test('.getFatThemes returns all the themes
       helpers.createIndicatorData({
         indicator: indicator
         data: [{data: 'yeah'}]
-      }, ->
+      }).then( (indicatorData) ->
         callback()
-      )
+      ).catch(callback)
 
     async.each subIndicators, createIndicatorData, (err) ->
       if err?
@@ -78,7 +79,7 @@ test('.getFatThemes returns all the themes
       "Expected indicators to have their narrative recency attribute calculated"
 
     done()
-  ).fail(done)
+  ).catch(done)
 )
 
 test('#getFetThemes only returns themes with indicators of type ESRI', (done) ->
@@ -106,8 +107,10 @@ test('#getFetThemes only returns themes with indicators of type ESRI', (done) ->
       helpers.createIndicatorData({
         indicator: indicator
         data: [{data: 'yeah'}]
-      }, ->
+      }).then( (indicatorData) ->
         callback()
+      ).catch( (err) ->
+        callback(err)
       )
 
     async.each subIndicators, createIndicatorData, (err) ->
@@ -131,7 +134,7 @@ test('#getFetThemes only returns themes with indicators of type ESRI', (done) ->
       "Expected the returned indicator to be an ESRI indicator"
 
     done()
-  ).fail(done)
+  ).catch(done)
 )
 
 test('.getIndicatorsByTheme returns all Indicators for given Theme', (done) ->
@@ -166,7 +169,7 @@ test('.getIndicatorsByTheme returns all Indicators for given Theme', (done) ->
       assert.strictEqual returnedIndicators[0].title, indicatorAttributes[0].title
       done()
     )
-  ).fail(done)
+  ).catch(done)
 )
 
 test('.getIndicatorsByTheme supports an optional filter object', (done) ->
@@ -208,7 +211,7 @@ test('.getIndicatorsByTheme supports an optional filter object', (done) ->
       done()
     catch err
       done(err)
-  ).fail(done)
+  ).catch(done)
 )
 
 test('.getIndicators returns all Indicators for given Theme', (done) ->
@@ -237,11 +240,11 @@ test('.getIndicators returns all Indicators for given Theme', (done) ->
 
         done()
       )
-    ).fail( (err) ->
+    ).catch( (err) ->
       console.error err
       throw new Error(err)
     )
-  ).fail( (err) ->
+  ).catch( (err) ->
     console.error err
     throw new Error(err)
   )
@@ -270,7 +273,7 @@ test("#seedData when no seed file exist reports an appropriate error", (done) ->
 
   Theme.seedData().then(->
     done("Expected Theme.seedData to fail")
-  ).fail((err)->
+  ).catch((err)->
 
     try
       console.log err

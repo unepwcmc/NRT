@@ -1,7 +1,5 @@
 assert = require('chai').assert
 sinon = require('sinon')
-Q = require('q')
-_ = require('underscore')
 request = require('request')
 
 Indicator = require('../../../../models/indicator').model
@@ -54,7 +52,7 @@ test(".fetch builds a request URL, queries it, and returns the data", (done) ->
 
     finally
       getStub.restore()
-  ).fail((err) ->
+  ).catch((err) ->
     getStub.restore()
     done(err)
   )

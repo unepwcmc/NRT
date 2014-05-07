@@ -1,6 +1,6 @@
 assert = require('chai').assert
 sinon = require('sinon')
-Q = require('q')
+Promise = require('bluebird')
 _ = require('underscore')
 
 Indicator = require('../../../../models/indicator').model
@@ -56,13 +56,11 @@ test("GDoc getter takes an Indicator and queries Google Spreadsheets
   )
 
   googleSpreadsheetStub = sinon.stub(GDocGetter::, 'queryGoogleSpreadsheet', (opts) ->
-    Q.fcall( ->
-      {
-        worksheets: [
-          cells: cellsSpy
-        ]
-      }
-    )
+    Promise.resolve({
+      worksheets: [
+        cells: cellsSpy
+      ]
+    })
   )
 
   getter = new GDocGetter(
@@ -81,7 +79,7 @@ test("GDoc getter takes an Indicator and queries Google Spreadsheets
 
     googleSpreadsheetStub.restore()
     done()
-  ).fail( (err) ->
+  ).catch( (err) ->
     console.error err
     googleSpreadsheetStub.restore()
     done(err)
@@ -137,13 +135,11 @@ test(".fetch returns all rows of a sub indicator", (done) ->
   )
 
   googleSpreadsheetStub = sinon.stub(GDocGetter::, 'queryGoogleSpreadsheet', (opts) ->
-    Q.fcall( ->
-      {
-        worksheets: [
-          cells: cellsSpy
-        ]
-      }
-    )
+    Promise.resolve({
+      worksheets: [
+        cells: cellsSpy
+      ]
+    })
   )
 
   getter = new GDocGetter(
@@ -162,7 +158,7 @@ test(".fetch returns all rows of a sub indicator", (done) ->
 
     googleSpreadsheetStub.restore()
     done()
-  ).fail( (err) ->
+  ).catch( (err) ->
     console.error err
     googleSpreadsheetStub.restore()
     done(err)

@@ -37,7 +37,7 @@ test('#import when given a valid spreadsheet key
         '2': { row: '1', col: '2', value: indicatorDefinition.theme},
         '3': { row: '1', col: '3', value: indicatorDefinition.unit}
       }
-    'Range':
+    'Ranges':
       '1': {
         '1': { row: '1', col: '1', value: 'Threshold' },
         '2': { row: '1', col: '2', value: 'Text'}
@@ -75,7 +75,7 @@ test('#import when given a valid spreadsheet key
       gdoc = new GDocWrapper({})
       sandbox.stub(gdoc, 'getWorksheetData', (name) ->
         new Promise((resolve, reject) ->
-          if name in ['Definition', 'Range']
+          if name in ['Definition', 'Ranges']
             resolve(fakeGdoc[name])
           else
             reject(new Error("Expected the 'Definition' worksheet to be requested,

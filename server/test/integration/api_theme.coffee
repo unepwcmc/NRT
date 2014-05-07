@@ -27,7 +27,7 @@ test("GET show", (done) ->
 
       done()
     )
-  ).fail( (err) ->
+  ).catch( (err) ->
     console.error err
     throw new Error(err)
   )
@@ -102,7 +102,7 @@ of child indicators", (done) ->
       toObjectWithNestedPageStub.restore()
       getIndicatorsStub.restore()
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     toObjectWithNestedPageStub.restore()
     getIndicatorsStub.restore()
     done(err)
@@ -130,7 +130,7 @@ test('GET index', (done) ->
       assert.deepEqual jsonTitles, themeTitles
       done()
     )
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw new Error(err)
   )

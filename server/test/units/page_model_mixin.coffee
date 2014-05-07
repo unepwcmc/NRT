@@ -1,14 +1,15 @@
 assert = require('chai').assert
-helpers = require '../helpers'
-Indicator = require('../../models/indicator').model
-Section = require('../../models/section').model
-Theme = require('../../models/theme').model
-Page = require('../../models/page').model
-IndicatorData = require('../../models/indicator_data').model
 async = require('async')
 _ = require('underscore')
 Q = require('q')
 sinon = require('sinon')
+
+helpers = require('../helpers')
+Indicator = require('../../models/indicator').model
+IndicatorData = require('../../models/indicator_data').model
+Section = require('../../models/section').model
+Theme = require('../../models/theme').model
+Page = require('../../models/page').model
 
 suite('Page Model Mixin')
 
@@ -72,7 +73,7 @@ test('.getPage when a non-draft page is associated should get the page', (done) 
 )
 
 test('.getFatPage returns fat pages', (done) ->
-  helpers.createIndicator {}, (err, indicator) ->
+  helpers.createIndicator({}, (err, indicator) ->
     theFatPage = null
 
     helpers.createPage(
@@ -82,28 +83,28 @@ test('.getFatPage returns fat pages', (done) ->
         title: 'hat'
         indicator: indicator._id
       )]
-    ).done( (page)->
-      Page.findFatModel(page._id, (err, theFatPage) ->
-        if err?
-          console.error err
-          throw err
-
-        indicator.getFatPage().done((foundPage) ->
-          assert.ok(
-            _.isEqual(theFatPage, foundPage),
-            """
-              Expected \n
-              #{JSON.stringify(theFatPage)}\n
-              to be equal to\n
-              #{JSON.stringify(foundPage)}
-            """
-          )
-
-          assert.property foundPage, 'sections'
-          done()
-        )
+    ).then( (page) ->
+      Page.findFatModel(page._id)
+    ).then( (foundFatPage) ->
+      theFatPage = foundFatPage
+      indicator.getFatPage()
+    ).then( (foundPage) ->
+      assert.ok(
+        _.isEqual(theFatPage, foundPage),
+        """
+          Expected \n
+          #{JSON.stringify(theFatPage)}\n
+          to be equal to\n
+          #{JSON.stringify(foundPage)}
+        """
       )
+
+      assert.property foundPage, 'sections'
+      done()
+    ).catch( (err) ->
+      done(err)
     )
+  )
 )
 
 test(".toObjectWithNestedPage returns an object representation of the

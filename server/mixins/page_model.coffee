@@ -92,24 +92,14 @@ module.exports = {
         Page.findOne({parent_id: @_id, is_draft: true}), 'exec'
       ).then( (page) =>
         if page?
-          Q.nsend(
-            Page, 'findFatModel', page._id
-          ).then( (fatPage) ->
-            deferred.resolve(fatPage)
-          )
+          Page.findFatModel(page._id).then(deferred.resolve)
         else
           @getPage().then( (nonDraftPage) ->
             nonDraftPage.createDraftClone()
           ).then( (clonedPage) ->
-            Q.nsend(
-              Page, 'findFatModel', clonedPage._id
-            )
-          ).then( (fatPage) ->
-            deferred.resolve(fatPage)
-          )
-      ).fail( (err) ->
-        deferred.reject(err)
-      )
+            Page.findFatModel(clonedPage._id)
+          ).then(deferred.resolve)
+      ).catch(deferred.reject)
 
       return deferred.promise
 
@@ -143,12 +133,10 @@ module.exports = {
       deferred = Q.defer()
 
       @getPage().then( (page) ->
-        Q.nsend(
-          Page, 'findFatModel', page._id
-        )
+        Page.findFatModel(page._id)
       ).then( (fatPage) ->
         deferred.resolve(fatPage)
-      ).fail( (err) ->
+      ).catch( (err) ->
         deferred.reject(err)
       )
 

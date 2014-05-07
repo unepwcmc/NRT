@@ -1,5 +1,4 @@
 assert = require('chai').assert
-helpers = require '../helpers'
 
 suite('Narrative')
 test('.create', (done) ->

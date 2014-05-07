@@ -64,6 +64,17 @@ test('.getWorksheetData returns the data of the worksheet with the
   ).catch(done)
 )
 
+test('.getWorksheetData throws an appropriate error if no worksheet
+ is found', (done) ->
+
+  gdoc = new GDocWrapper({})
+
+  assert.throws((->
+    gdoc.getWorksheetData('nonsense').catch(done)
+  ), "Couldn't find worksheet named 'nonsense'")
+  done()
+)
+
 test('.getWorksheetByName returns the worksheet with the given name', ->
 
   fakeSpreadsheet =

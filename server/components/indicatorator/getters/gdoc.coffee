@@ -1,32 +1,30 @@
 _ = require('underscore')
-Q = require('q')
+Promise = require('bluebird')
 
 module.exports = class GDoc
   constructor: (@indicator) ->
 
   fetch: ->
-    deferred = Q.defer()
+    new Promise( (resolve, reject) =>
+      @queryGoogleSpreadsheet(
+        key: @indicator.indicatorationConfig.spreadsheet_key
+      ).then( (spreadsheet) =>
 
-    @queryGoogleSpreadsheet(
-      key: @indicator.indicatorationConfig.spreadsheet_key
-    ).then( (spreadsheet) =>
+        spreadsheet.worksheets[0].cells({}, (err, cells) =>
+          headers = cells.cells['1']
+          indicatorData = _.filter(cells.cells, (row) =>
+            row['2'].value is @indicator.short_name
+          )
 
-      spreadsheet.worksheets[0].cells({}, (err, cells) =>
-        headers = cells.cells['1']
-        indicatorData = _.filter(cells.cells, (row) =>
-          row['2'].value is @indicator.short_name
+          resolve({
+            headers: headers
+            data: indicatorData
+          })
         )
 
-        deferred.resolve {
-          headers: headers
-          data: indicatorData
-        }
+      ).catch( (err) ->
+        reject(err)
       )
-
-    ).fail( (err) ->
-      deferred.reject(err)
     )
 
-    return deferred.promise
-
-  queryGoogleSpreadsheet: Q.denodeify(require("google-spreadsheets"))
+  queryGoogleSpreadsheet: Promise.promisify(require("google-spreadsheets"))

@@ -1,7 +1,8 @@
 assert = require('chai').assert
-helpers = require '../helpers'
 _ = require('underscore')
 async = require('async')
+
+helpers = require '../helpers'
 Visualisation = require('../../models/visualisation').model
 
 suite('Visualisation')

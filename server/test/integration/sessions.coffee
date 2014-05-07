@@ -21,7 +21,7 @@ test('GET /login renders a log in form', (done) ->
 
     done()
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw err
   )
@@ -52,7 +52,7 @@ test('POST /login redirects to GET / if successful', (done) ->
 
     done()
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw err
   )
@@ -74,7 +74,7 @@ test('POST /login redirects to the GET /login if unsuccessful', (done) ->
 
     done()
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     throw err
   )

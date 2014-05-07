@@ -1,8 +1,7 @@
 assert = require('chai').assert
-helpers = require '../helpers'
-sinon = require 'sinon'
-request = require 'request'
-Promise = require 'bluebird'
+sinon = require('sinon')
+request = require('request')
+Promise = require('bluebird')
 AppConfig = require('../../initializers/config')
 
 GitHubDeploy = require('../../lib/git_hub_deploy')
@@ -293,7 +292,7 @@ with a deploy instance with the correct ID", (done) ->
 
 )
 
-test("#getDeployForTag polls github for deployments if 
+test("#getDeployForTag polls github for deployments if
 deployment not included in first result", (done) ->
   deployId = 345
   tagName = 'hippy-banana'

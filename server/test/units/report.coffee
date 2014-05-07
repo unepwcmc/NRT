@@ -1,5 +1,4 @@
 assert = require('chai').assert
-helpers = require '../helpers'
 _ = require('underscore')
 async = require('async')
 
