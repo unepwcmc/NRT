@@ -2,10 +2,11 @@ mongoose = require('mongoose')
 fs = require('fs')
 _ = require('underscore')
 async = require('async')
+Q = require('q')
+Promise = require('bluebird')
+
 Indicator = require('./indicator').model
 HeadlineService = require('../lib/services/headline')
-Q = require('q')
-
 pageModelMixin = require('../mixins/page_model.coffee')
 
 themeSchema = mongoose.Schema(
@@ -138,6 +139,20 @@ themeSchema.methods.populateIndicators = ->
   ).then(=>
     @indicators = theIndicators.sort(_id: 1)
     Q.fcall(=> @)
+  )
+
+themeSchema.statics.findOrCreateByTitle = (title) ->
+  new Promise((resolve, reject) =>
+    @findOne({title: title}, (err, theme) ->
+      return reject(err) if err?
+      if theme?
+        resolve(theme)
+      else
+        Promise.promisify(Theme.create, Theme)(title: title).then(
+          resolve, reject
+        )
+
+    )
   )
 
 Theme = mongoose.model('Theme', themeSchema)
