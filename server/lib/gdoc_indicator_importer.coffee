@@ -74,7 +74,7 @@ module.exports = class GDocIndicatorImporter
         definitionWorksheet
       ).then( ->
         indicatorImporter.setRangesFromWorksheet(rangesWorksheet)
-        indicatorImporter.createIndicator()
+        indicatorImporter.createOrUpdateIndicator()
       )
     )
 
@@ -97,7 +97,13 @@ module.exports = class GDocIndicatorImporter
       worksheet
     )
 
-  createIndicator: ->
-    indicator = Indicator.buildWithDefaults(@indicatorProperties)
-    Promise.promisify(indicator.save, indicator)()
-
+  createOrUpdateIndicator: ->
+    existingIndicator = Promise.promisify(Indicator.findOne, Indicator)(
+      'indicatorationConfig.spreadsheet_key': @indicatorProperties.indicatorationConfig.spreadsheet_key
+    ).then( (indicator) =>
+      @indicatorProperties = mergeAttributesWithDefaults(@indicatorProperties)
+      if indicator?
+        Promise.promisify(indicator.update, indicator)(@indicatorProperties)
+      else
+        Promise.promisify(Indicator.create, Indicator)(@indicatorProperties)
+    )

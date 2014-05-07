@@ -49,8 +49,8 @@ test('#import when given a valid spreadsheet key
   setRangesStub = sandbox.stub(
     GDocIndicatorImporter::, 'setRangesFromWorksheet', ->
   )
-  createIndicatorStub = sandbox.stub(
-    GDocIndicatorImporter::, 'createIndicator', ->
+  createOrUpdateStub = sandbox.stub(
+    GDocIndicatorImporter::, 'createOrUpdateIndicator', ->
       Promise.resolve()
   )
 
@@ -79,7 +79,7 @@ test('#import when given a valid spreadsheet key
         "Expected gdocIndicatorBuilder.setRangesFromWorksheet to be called
          with the ranges worksheet"
 
-      assert.strictEqual createIndicatorStub.callCount, 1,
+      assert.strictEqual createOrUpdateStub.callCount, 1,
         "Expected gdocIndicatorBuilder.createIndicator to be called"
 
       done()
@@ -182,4 +182,71 @@ test('.setRangesFromWorksheet builds the indicatorProperties from
 
   assert.deepEqual builder.indicatorProperties, indicatorProperties,
     "Expected the indicator properties to be set from the ranges worksheet"
+)
+
+test('.createOrUpdateIndicator when there is no existing indicator
+  with the given spreadsheet key, it creates a new indicator', (done)->
+  theKey = 'hat'
+  builder = new GDocIndicatorImporter(theKey)
+
+  builder.createOrUpdateIndicator().then(->
+    Promise.promisify(Indicator.findOne, Indicator)({})
+  ).then( (indicator)->
+    assert.isNotNull indicator, "Expected an indicator to be created"
+    assert.strictEqual(
+      indicator.indicatorationConfig.spreadsheet_key,
+      theKey,
+      "Expected the created indicator to have the given spreadsheet key"
+    )
+    done()
+  ).catch(done)
+)
+
+test('.createOrUpdateIndicator when there is an existing indicator
+  with the given spreadsheet key, it updates the indicator', (done)->
+
+  theKey = 'hat'
+  theIndicator = null
+  theNewTitle = 'new title'
+  builder = new GDocIndicatorImporter(theKey)
+  builder.indicatorProperties.title = theNewTitle
+
+  helpers.createIndicatorModels([
+    indicatorationConfig:
+      spreadsheet_key: theKey
+    title: 'a title'
+  ]).get(0).then((indicator) ->
+    theIndicator = indicator
+    builder.createOrUpdateIndicator()
+  ).then(->
+    findIndicators = Promise.promisify(Indicator.find, Indicator)
+
+    Promise.all([
+      findIndicators(
+        'indicatorationConfig.spreadsheet_key': theKey
+      ),
+      findIndicators({})
+    ])
+  ).spread((spreadsheetIndicators, allIndicators) ->
+
+    assert.strictEqual allIndicators.length, 1,
+      "Expected no more indicators to be created"
+
+    assert.strictEqual spreadsheetIndicators.length, 1,
+      "Expected only one indicator to exist"
+
+    assert.strictEqual(
+      spreadsheetIndicators[0].indicatorationConfig.spreadsheet_key,
+      theKey,
+      "Expected the found indicator to have the given spreadsheet key"
+    )
+
+    assert.strictEqual(
+      spreadsheetIndicators[0].title,
+      theNewTitle,
+      "Expected the found indicator to have the updated title"
+    )
+
+    done()
+  ).catch(done)
 )
