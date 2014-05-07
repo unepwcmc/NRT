@@ -3,13 +3,13 @@ assert = chai.assert
 suite('IndicatorSelectorResultsView')
 
 test('renders an IndicatorSelectorItem sub view for each result in the given collection  ', ->
-  indicator = Factory.indicator(title: 'test indicator')
+  indicator = Factory.indicator(name: 'test indicator')
   indicators = new Backbone.Collections.IndicatorCollection([indicator])
 
   view = new Backbone.Views.IndicatorSelectorResultsView(indicators: indicators)
 
-  assert.match view.$el.text(), new RegExp(indicator.get('title')),
-    "Expected to see the indicator title"
+  assert.match view.$el.text(), new RegExp(indicator.get('name')),
+    "Expected to see the indicator name"
 
   for key, v of view.subViews
     subView = v
@@ -23,7 +23,7 @@ test('renders an IndicatorSelectorItem sub view for each result in the given col
 )
 
 test('re-renders when the indicator collection resets', ->
-  indicator = Factory.indicator(title: 'test indicator')
+  indicator = Factory.indicator(name: 'test indicator')
   indicators = new Backbone.Collections.IndicatorCollection([])
 
   view = new Backbone.Views.IndicatorSelectorResultsView(indicators: indicators)
@@ -33,8 +33,8 @@ test('re-renders when the indicator collection resets', ->
 
   indicators.reset([indicator])
 
-  assert.match view.$el.text(), new RegExp(indicator.get('title')),
-    "Expected to see the indicator title"
+  assert.match view.$el.text(), new RegExp(indicator.get('name')),
+    "Expected to see the indicator name"
 
   for key, v of view.subViews
     subView = v

@@ -521,7 +521,7 @@ test(".generateMetadataCSV returns CSV arrays containing the name, theme,
 
     Q.nsend(
       Indicator, 'create', {
-        title: "Anne Test Indicator"
+        name: "Anne Test Indicator"
         theme: theme
         indicatorDefinition:
           period: 'quarterly'
@@ -546,9 +546,9 @@ test(".generateMetadataCSV returns CSV arrays containing the name, theme,
       dataRow = csvData[1]
 
       assert.strictEqual titleRow[0], 'Indicator',
-        "Expected the first column to be the indicator title"
-      assert.strictEqual dataRow[0], theIndicator.title,
-        "Expected the indicator title to be the title of the indicator"
+        "Expected the first column to be the indicator name"
+      assert.strictEqual dataRow[0], theIndicator.name,
+        "Expected the indicator name to be the name of the indicator"
 
       assert.strictEqual titleRow[1], 'Theme', "Expected the second column to be the theme"
       assert.strictEqual dataRow[1], theTheme.title,

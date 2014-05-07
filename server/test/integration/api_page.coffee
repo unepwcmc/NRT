@@ -207,7 +207,7 @@ test('POST create - nesting a section in a page when authenticated', (done) ->
 
     Q.nfcall(
       helpers.createIndicator, {
-        title: 'dat indicator'
+        name: 'dat indicator'
         owner: user
       }
     )
@@ -247,7 +247,7 @@ test('POST create - nesting a section in a page when authenticated', (done) ->
       assert.isDefined body.sections[0]._id, "New page Section not assigned an ID"
       assert.equal body.sections[0].title, data.sections[0].title
 
-      assert.equal body.sections[0].indicator.title, theIndicator.title
+      assert.equal body.sections[0].indicator.name, theIndicator.name
 
       Page
         .findOne(_id: id)
@@ -270,7 +270,7 @@ test('POST create - nesting a section in a page fails when not authenticated', (
   helpers.createUser().then((user) ->
     Q.nfcall(
       helpers.createIndicator, {
-        title: 'dat indicator'
+        name: 'dat indicator'
         owner: user
       }
     )

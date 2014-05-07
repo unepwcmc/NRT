@@ -1,6 +1,6 @@
 [{
-  "short_name": "Contribution to agriculture section",
-  "title": "Forestry sector contribution to the agriculture section",
+  "shortName": "Contribution to agriculture section",
+  "name": "Forestry sector contribution to the agriculture section",
   "theme": "Contribution of the forestry sector",
   "sections": [],
   "indicatorationConfig": {
@@ -10,16 +10,16 @@
       "table_name": "kenya_20indicator_20data_20feed"
     },
     "range": [
-        {"minValue": 0.35, "message": "Excellent"},
-        {"minValue": 0.15, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.35, "text": "Excellent"},
+        {"threshold": 0.15, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
   "type": "standard",
   "primary": true,
   "indicatorDefinition": {
     "unit": "% contribution",
-    "short_unit": "%",
+    "shortUnit": "%",
     "period": "annual",
     "xAxis": "date",
     "yAxis": "value",
@@ -50,7 +50,7 @@
     ]
   }
 }, {
-    "short_name": "Contribution other primary industries",
+    "shortName": "Contribution other primary industries",
     "title": "Forestry sector contribution to other primary industries",
     "theme": "Contribution of the forestry sector",
     "sections": [],
@@ -61,16 +61,16 @@
         "table_name": "kenya_20indicator_20data_20feed"
       },
       "range": [
-          {"minValue": 0.35, "message": "Excellent"},
-          {"minValue": 0.15, "message": "Good"},
-          {"minValue": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "type": "standard",
     "primary": true,
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -101,24 +101,24 @@
       ]
     }
   }, {
-    "short_name": "Manufacture of food, beverages and tobacco",
+    "shortName": "Manufacture of food, beverages and tobacco",
     "title": "Manufacture of food, beverages and tobacco",
     "theme": "Contribution of the forestry sector",
     "sections": [],
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
-          {"minValue": 0.35, "message": "Excellent"},
-          {"minValue": 0.15, "message": "Good"},
-          {"minValue": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "type": "standard",
     "primary": true,
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -149,23 +149,23 @@
       ]
     }
   }, {
-    "short_name": "Contribution to wood and paper sector",
+    "shortName": "Contribution to wood and paper sector",
     "title": "Forestry sector contribution to the wood and paper sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "primary": true,
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
-          {"minValue": 0.35, "message": "Excellent"},
-          {"minValue": 0.15, "message": "Good"},
-          {"minValue": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -196,23 +196,23 @@
       ]
     }
   }, {
-    "short_name": "Contribution to chemical industry sector",
+    "shortName": "Contribution to chemical industry sector",
     "title": "Forestry sector contribution to the chemical industry sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "primary": true,
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
-          {"minValue": 0.35, "message": "Excellent"},
-          {"minValue": 0.15, "message": "Good"},
-          {"minValue": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -243,23 +243,23 @@
       ]
     }
   }, {
-    "short_name": "Contribution to other manufacturing sector",
+    "shortName": "Contribution to other manufacturing sector",
     "title": "Forestry sector contribution to other manufacturing sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "primary": true,
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
-          {"minValue": 0.35, "message": "Excellent"},
-          {"minValue": 0.15, "message": "Good"},
-          {"minValue": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -290,23 +290,23 @@
       ]
     }
   }, {
-    "short_name": "Contribution to construction sector",
+    "shortName": "Contribution to construction sector",
     "title": "Forestry sector contribution to the construction sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "primary": true,
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
-          {"minValue": 0.35, "message": "Excellent"},
-          {"minValue": 0.15, "message": "Good"},
-          {"minValue": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -337,23 +337,23 @@
       ]
     }
   }, {
-    "short_name": "Contribution to wholesale and retail trade sector",
+    "shortName": "Contribution to wholesale and retail trade sector",
     "title": "Forestry sector contribution to wholesale and retail trade sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "primary": true,
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
-          {"minValue": 0.35, "message": "Excellent"},
-          {"minValue": 0.15, "message": "Good"},
-          {"minValue": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -384,23 +384,23 @@
       ]
     }
   }, {
-    "short_name": "Contribution to hotels and transport sector",
+    "shortName": "Contribution to hotels and transport sector",
     "title": "Forestry sector contribution to the hotels and transport sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "primary": true,
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
-          {"minValue": 0.35, "message": "Excellent"},
-          {"minValue": 0.15, "message": "Good"},
-          {"minValue": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",
@@ -431,23 +431,23 @@
       ]
     }
   }, {
-    "short_name": "Contribution to other services sector",
+    "shortName": "Contribution to other services sector",
     "title": "Forestry sector contribution to the other services sector",
     "theme": "Contribution of the forestry sector",
     "type": "standard",
     "primary": true,
     "indicatorationConfig": {
-      "spreadsheet_key": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
+      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
-          {"minValue": 0.35, "message": "Excellent"},
-          {"minValue": 0.15, "message": "Good"},
-          {"minValue": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "indicatorDefinition": {
       "unit": "% contribution",
-      "short_unit": "%",
+      "shortUnit": "%",
       "period": "annual",
       "xAxis": "date",
       "yAxis": "value",

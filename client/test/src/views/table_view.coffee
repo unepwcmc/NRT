@@ -60,7 +60,7 @@ test('Should render formatted visualisation data into a table', ->
     indicatorDefinition:
       xAxis: 'year'
       yAxis: 'value'
-    title: 'An indicatr'
+    name: 'An indicator'
   )
 
   view = new Backbone.Views.TableView(visualisation: visualisation)
@@ -68,7 +68,7 @@ test('Should render formatted visualisation data into a table', ->
 
   assert.strictEqual(
     $('#test-container').find('table caption').text(),
-    indicator.get('title')
+    indicator.get('name')
   )
 
   headerText = $('#test-container').find('table thead').text()

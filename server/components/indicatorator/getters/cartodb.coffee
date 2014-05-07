@@ -33,7 +33,7 @@ module.exports = class CartoDBGetter
     table_name = @indicator.indicatorationConfig.cartodb_config.table_name
     query = """
       SELECT * FROM #{table_name}
-      WHERE field_2 = '#{@indicator.short_name}'
+      WHERE field_2 = '#{@indicator.shortName}'
       OR field_1 = 'Theme'
     """
 

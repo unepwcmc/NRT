@@ -8,9 +8,9 @@ createAndShowVisualisationViewForVisualisation = (visualisation) ->
 
 suite('Visualisation View')
 
-test("Shows the title of the indicator", ->
+test("Shows the name of the indicator", ->
   indicator = Factory.indicator(
-    title: "Such indicator"
+    name: "Such indicator"
   )
 
   view = new Backbone.Views.VisualisationView(
@@ -23,8 +23,8 @@ test("Shows the title of the indicator", ->
 
   assert.match(
     view.$el.find('h4').text(),
-    new RegExp(".*#{indicator.get('title')}.*"),
-    "Expected to see the indicator title"
+    new RegExp(".*#{indicator.get('name')}.*"),
+    "Expected to see the indicator name"
   )
 
   view.close()

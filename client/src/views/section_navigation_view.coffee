@@ -17,8 +17,8 @@ class Backbone.Views.SectionNavigationView extends Backbone.View
       sections: @sections.map (section)->
         title = section.get('title')
         if section.get('indicator')?
-          title = section.get('indicator').get('title')
-  
+          title = section.get('indicator').get('name')
+
         return {
           cid: section.cid
           _id: section.get('_id')

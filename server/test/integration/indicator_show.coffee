@@ -14,9 +14,9 @@ User = require('../../models/user').model
 
 suite('Indicator show')
 
-test("When given a valid indicator, I should get a 200 and see the title", (done)->
-  indicatorTitle = "Dat test indicator"
-  indicator = new Indicator(title: indicatorTitle)
+test("When given a valid indicator, I should get a 200 and see the name", (done)->
+  indicatorName = "Dat test indicator"
+  indicator = new Indicator(name: indicatorName)
 
   indicator.save( (err, indicator) ->
     request.get {
@@ -25,7 +25,7 @@ test("When given a valid indicator, I should get a 200 and see the title", (done
       try
         assert.equal res.statusCode, 200
 
-        assert.match body, new RegExp(".*#{indicatorTitle}.*")
+        assert.match body, new RegExp(".*#{indicatorName}.*")
         done()
       catch e
         done(e)
@@ -194,7 +194,7 @@ test("GET /:id/draft clones the Indicator's Page and renders the indicator", (do
   passportStub.login user
 
   helpers.createIndicatorModels([
-    title: 'An indicator'
+    name: 'An indicator'
   ]).then( (indicators) ->
 
     theIndicator = indicators[0]
@@ -247,7 +247,7 @@ test("GET /:id/draft redirects back if the user is not logged in", (done) ->
   theIndicator = originalPage = null
 
   helpers.createIndicatorModels([
-    title: 'An indicator'
+    name: 'An indicator'
   ]).then( (indicators) ->
 
     theIndicator = indicators[0]
@@ -286,7 +286,7 @@ test("GET /:id/discard_draft discards all drafts and renders the published versi
   passportStub.login user
 
   helpers.createIndicatorModels([
-    title: 'An indicator'
+    name: 'An indicator'
   ]).then( (indicators) ->
 
     theIndicator = indicators[0]
@@ -334,7 +334,7 @@ test("GET /:id/discard_draft redirects back if the user is not logged in", (done
   theIndicator = originalPage = draftPage = null
 
   helpers.createIndicatorModels([
-    title: 'An indicator'
+    name: 'An indicator'
   ]).then( (indicators) ->
 
     theIndicator = indicators[0]
@@ -377,7 +377,7 @@ test('GET /:id/publish publishes the current draft and makes it publicly
   passportStub.login user
 
   helpers.createIndicatorModels([
-    title: 'An indicator'
+    name: 'An indicator'
   ]).then( (indicators) ->
 
     theIndicator = indicators[0]

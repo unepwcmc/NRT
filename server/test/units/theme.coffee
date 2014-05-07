@@ -24,11 +24,11 @@ test('.getFatThemes returns all the themes
     themeAttributes
   ).then((themes) ->
     indicatorAttributes = [{
-      title: "I'm an indicator of theme 1"
+      name: "I'm an indicator of theme 1"
       theme: themes[0]._id
       type: "esri"
     },{
-      title: "theme 2 indicator"
+      name: "theme 2 indicator"
       theme: themes[1]._id
       type: "esri"
     }]
@@ -69,8 +69,8 @@ test('.getFatThemes returns all the themes
     assert.lengthOf returnedThemes[0].indicators, 1
     assert.lengthOf returnedThemes[1].indicators, 1
 
-    assert.strictEqual returnedThemes[0].indicators[0].title, indicatorAttributes[0].title
-    assert.strictEqual returnedThemes[1].indicators[0].title, indicatorAttributes[1].title
+    assert.strictEqual returnedThemes[0].indicators[0].name, indicatorAttributes[0].name
+    assert.strictEqual returnedThemes[1].indicators[0].name, indicatorAttributes[1].name
 
     assert.property returnedThemes[0].indicators[0], 'page',
       "Expected indicators to have their page attribute populated"
@@ -87,11 +87,11 @@ test('#getFetThemes only returns themes with indicators of type ESRI', (done) ->
     [{title: 'a theme'}]
   ).then((themes) ->
     indicatorAttributes = [{
-      title: "ESRI indicator"
+      name: "ESRI indicator"
       theme: themes[0]._id
       type: "esri"
     },{
-      title: "world bank indicator"
+      name: "world bank indicator"
       theme: themes[0]._id
       type: "worldbank"
     }]
@@ -150,7 +150,7 @@ test('.getIndicatorsByTheme returns all Indicators for given Theme', (done) ->
     theThemes = themes
 
     indicatorAttributes = [{
-      title: "I'm an indicator of theme 1"
+      name: "I'm an indicator of theme 1"
       theme: themes[0]._id
       type: 'esri'
     }]
@@ -166,7 +166,7 @@ test('.getIndicatorsByTheme returns all Indicators for given Theme', (done) ->
 
       assert.lengthOf returnedIndicators, 1
 
-      assert.strictEqual returnedIndicators[0].title, indicatorAttributes[0].title
+      assert.strictEqual returnedIndicators[0].name, indicatorAttributes[0].name
       done()
     )
   ).catch(done)
@@ -185,11 +185,11 @@ test('.getIndicatorsByTheme supports an optional filter object', (done) ->
     theThemes = themes
 
     indicatorAttributes = [{
-      title: "I'm an indicator of theme 1"
+      name: "I'm an indicator of theme 1"
       theme: themes[0]._id
       dpsir: pressure: true
     }, {
-      title: "I'm also an indicator of theme 1"
+      name: "I'm also an indicator of theme 1"
       theme: themes[0]._id
       dpsir: state: true
     }]
@@ -206,7 +206,7 @@ test('.getIndicatorsByTheme supports an optional filter object', (done) ->
       assert.lengthOf indicators, 1,
         "Expected 1 indicator to be returned"
 
-      assert.strictEqual indicators[0].title, indicatorAttributes[1].title
+      assert.strictEqual indicators[0].name, indicatorAttributes[1].name
 
       done()
     catch err
@@ -223,7 +223,7 @@ test('.getIndicators returns all Indicators for given Theme', (done) ->
     themeAttributes
   ).then( (themes) ->
     indicatorAttributes = [{
-      title: "I'm an indicator of theme 1"
+      name: "I'm an indicator of theme 1"
       theme: themes[0]._id
     }]
 
@@ -236,7 +236,7 @@ test('.getIndicators returns all Indicators for given Theme', (done) ->
           throw new Error(err)
 
         assert.lengthOf returnedIndicators, 1
-        assert.strictEqual returnedIndicators[0].title, indicatorAttributes[0].title
+        assert.strictEqual returnedIndicators[0].name, indicatorAttributes[0].name
 
         done()
       )

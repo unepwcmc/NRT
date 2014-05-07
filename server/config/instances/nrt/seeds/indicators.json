@@ -1,21 +1,21 @@
 [{
-  "short_name": "Key stakeholders identified",
-  "title": "Key stakeholders identified",
+  "shortName": "Key stakeholders identified",
+  "name": "Key stakeholders identified",
   "theme": "Application",
   "sections": [],
   "primary": true,
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "spreadsheetKey": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
   "indicatorDefinition": {
     "name": "Key stakeholders identified",
     "unit": "% of countries with named key stakeholders",
-    "short_unit": "%",
+    "shortUnit": "%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -46,8 +46,8 @@
     ]
   }
 }, {
-  "title":"Key stakeholders on-board",
-  "short_name":"Key stakeholders on-board",
+  "name":"Key stakeholders on-board",
+  "shortName":"Key stakeholders on-board",
   "theme":"Stakeholders",
   "primary": true,
   "sections": [
@@ -56,18 +56,18 @@
   "indicatorationConfig": {
     "source": "gdoc",
     "name": "Key stakeholders on-board",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "spreadsheetKey": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
   "indicatorDefinition": {
     "unit":"% of countries with written endorsement for project",
-    "short_unit":"%",
+    "shortUnit":"%",
     "name": "Key stakeholders identified",
     "unit": "% of countries with named key stakeholders",
-    "short_unit": "%",
+    "shortUnit": "%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -98,23 +98,23 @@
     ]
   }
 }, {
-  "short_name": "Indicator objectives identified",
-  "title": "Indicator objectives identified",
+  "shortName": "Indicator objectives identified",
+  "name": "Indicator objectives identified",
   "theme": "Data and indicators",
   "sections": [],
   "primary": true,
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "spreadsheetKey": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
   "indicatorDefinition": {
     "name": "Indicator objectives identified",
     "unit": "% of countries with completed indicator objectives",
-    "short_unit": "%",
+    "shortUnit": "%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -154,8 +154,8 @@
     ]
   }
 }, {
-  "title":"Indicators described and documented",
-  "short_name":"Indicators described and documented",
+  "name":"Indicators described and documented",
+  "shortName":"Indicators described and documented",
   "theme":"Data and indicators",
   "primary": true,
   "sections": [
@@ -163,15 +163,15 @@
   ],
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "spreadsheetKey": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
   "indicatorDefinition": {
     "unit":"% of countries with completed indicator descriptions",
-    "short_unit":"%",
+    "shortUnit":"%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -211,8 +211,8 @@
     ]
   }
 }, {
-  "title":"Raw data collected and flowing",
-  "short_name":"Raw data collected and flowing",
+  "name":"Raw data collected and flowing",
+  "shortName":"Raw data collected and flowing",
   "theme":"Data and indicators",
   "primary": true,
   "sections": [
@@ -220,15 +220,15 @@
   ],
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "spreadsheetKey": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
     "indicatorDefinition": {
       "unit":"% of indicators for all countries with raw data flowing",
-      "short_unit":"%",
+      "shortUnit":"%",
       "period": "quarterly",
       "xAxis": "date",
       "yAxis": "value",
@@ -268,8 +268,8 @@
       ]
     }
 }, {
-  "title":"Indicators data feeds",
-  "short_name":"Indicators data feeds",
+  "name":"Indicators data feeds",
+  "shortName":"Indicators data feeds",
   "theme":"Data and indicators",
   "primary": true,
   "sections": [
@@ -277,15 +277,15 @@
   ],
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "spreadsheetKey": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
   "indicatorDefinition": {
     "unit":"% of indicators for all countries with live indicators feeds",
-    "short_unit":"%",
+    "shortUnit":"%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -325,8 +325,8 @@
     ]
   }
 }, {
-  "title":"Source code available and accessible",
-  "short_name":"Source code available and accessible",
+  "name":"Source code available and accessible",
+  "shortName":"Source code available and accessible",
   "theme":"Infrastructure",
   "primary": true,
   "sections": [
@@ -334,15 +334,15 @@
   ],
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "spreadsheetKey": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
   "indicatorDefinition": {
     "unit":"code available = 1",
-    "short_unit":"YES/NO",
+    "shortUnit":"YES/NO",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -373,8 +373,8 @@
     ]
   }
 }, {
-  "title":"SaaS system deployed",
-  "short_name":"SaaS system deployed",
+  "name":"SaaS system deployed",
+  "shortName":"SaaS system deployed",
   "theme":"Infrastructure",
   "primary": true,
   "sections": [
@@ -382,15 +382,15 @@
   ],
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "spreadsheetKey": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
   "indicatorDefinition": {
     "unit":"% progress on development of SaaS",
-    "short_unit":"%",
+    "shortUnit":"%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -421,8 +421,8 @@
     ]
   }
 }, {
-  "title":"SaaS system is used",
-  "short_name":"SaaS system is used",
+  "name":"SaaS system is used",
+  "shortName":"SaaS system is used",
   "theme":"Infrastructure",
   "primary": true,
   "sections": [
@@ -430,15 +430,15 @@
   ],
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "spreadsheetKey": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
   "indicatorDefinition": {
     "unit":"# of live instances",
-    "short_unit":"instances",
+    "shortUnit":"instances",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -469,8 +469,8 @@
     ]
   }
 }, {
-  "title":"NRT network instances are up to date",
-  "short_name":"NRT network instances are up to date",
+  "name":"NRT network instances are up to date",
+  "shortName":"NRT network instances are up to date",
   "theme":"Infrastructure",
   "primary": true,
   "sections": [
@@ -478,15 +478,15 @@
   ],
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "spreadsheetKey": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
   "indicatorDefinition": {
     "unit":"% of instances running latest release",
-    "short_unit":"%",
+    "shortUnit":"%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -517,8 +517,8 @@
     ]
   }
 }, {
-  "title":"Reporting GUI complete",
-  "short_name":"Reporting GUI complete",
+  "name":"Reporting GUI complete",
+  "shortName":"Reporting GUI complete",
   "theme":"Application",
   "primary": true,
   "sections": [
@@ -526,15 +526,15 @@
   ],
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "spreadsheetKey": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
   "indicatorDefinition": {
     "unit":"% progress on development",
-    "short_unit":"%",
+    "shortUnit":"%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -565,8 +565,8 @@
     ]
   }
 }, {
-  "title":"Indicator management GUI complete",
-  "short_name":"Indicator management GUI complete",
+  "name":"Indicator management GUI complete",
+  "shortName":"Indicator management GUI complete",
   "theme":"Application",
   "primary": true,
   "sections": [
@@ -574,15 +574,15 @@
   ],
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "spreadsheetKey": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
   "indicatorDefinition": {
     "unit":"% progress on development",
-    "short_unit":"%",
+    "shortUnit":"%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -613,8 +613,8 @@
     ]
   }
 }, {
-  "title":"Admin GUI complete",
-  "short_name":"Admin GUI complete",
+  "name":"Admin GUI complete",
+  "shortName":"Admin GUI complete",
   "theme":"Application",
   "primary": true,
   "sections": [
@@ -622,15 +622,15 @@
   ],
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "spreadsheetKey": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
   "indicatorDefinition": {
     "unit":"% progress on development",
-    "short_unit":"%",
+    "shortUnit":"%",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -661,8 +661,8 @@
     ]
   }
 }, {
-  "title":"Local NRTs exposing data to UNEP-Live",
-  "short_name":"Local NRTs exposing data to UNEP-Live",
+  "name":"Local NRTs exposing data to UNEP-Live",
+  "shortName":"Local NRTs exposing data to UNEP-Live",
   "theme":"Sharing data",
   "primary": true,
   "sections": [
@@ -670,15 +670,15 @@
   ],
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "spreadsheetKey": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
   "indicatorDefinition": {
     "unit":"# of feeds/country",
-    "short_unit":"feeds/country",
+    "shortUnit":"feeds/country",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",
@@ -718,8 +718,8 @@
     ]
   }
 }, {
-  "title":"Local NRTs consuming data",
-  "short_name":"Local NRTs consuming data",
+  "name":"Local NRTs consuming data",
+  "shortName":"Local NRTs consuming data",
   "theme":"Sharing data",
   "primary": true,
   "sections": [
@@ -727,15 +727,15 @@
   ],
   "indicatorationConfig": {
     "source": "gdoc",
-    "spreadsheet_key": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
+    "spreadsheetKey": "0AlwvbwkzsybqdHo3dnltR2owbFdTS29ZUHUydEIzZkE",
     "range": [
-        {"minValue": 0.5, "message": "Good"},
-        {"minValue": 0, "message": "Bad"}
+        {"threshold": 0.5, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
   "indicatorDefinition": {
     "unit":"# of feeds/country",
-    "short_unit":"feeds/country",
+    "shortUnit":"feeds/country",
     "period": "quarterly",
     "xAxis": "date",
     "yAxis": "value",

@@ -76,7 +76,7 @@ These 3 components can be extracted from an esri rest URL, like so:
 #### gdocs
 
 For indicator data stored in 'google' docs, your indicator definitions need to
-include a `spreadsheet_key` attribute. The spreadsheet in question must be
+include a `spreadsheetKey` attribute. The spreadsheet in question must be
 public *and* 'published for web' from the 'File -> publish for web' in google
 docs.
 
@@ -120,12 +120,12 @@ Docs](https://docs.google.com/spreadsheet/ccc?key=0Aum2hJfH1Ze0dGtybGNCeUdTNFk1Y
 
 #### applyRanges: (true)
 By default, indicatoration applies text values to raw indicator data, using the
-ranges specified in the 'range' attribute. If you don't want this to happen, 
+ranges specified in the 'range' attribute. If you don't want this to happen,
 specify applyRanges: false
 
 #### reduceField: (null)
 Basic sub indicator support is implemented by allowing grouping on a text field.
 For example, if you had a collection of data for the same year but for different
-monitoring stations, specify the group field here, e.g. 'station' to have the 
+monitoring stations, specify the group field here, e.g. 'station' to have the
 data grouped on the station, by periodStart
 

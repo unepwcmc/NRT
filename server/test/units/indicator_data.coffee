@@ -20,7 +20,7 @@ test('#seedData given some indicators, links the seed data correctly', (done) ->
   )
 
   indicatorToLinkTo = new Indicator(
-    short_name: 'NO2 Concentration'
+    shortName: 'NO2 Concentration'
   )
 
   IndicatorData.seedData([indicatorToLinkTo]).then((createdIndicatorData) ->
@@ -75,7 +75,7 @@ test("#seedData if the seed includes a 'date' field, convert it to an actual dat
 test("#dataToSeedJSON returns indicator data as JSON with the indicator field
 denormalised to the indicator name", (done) ->
   indicator = new Indicator(
-    short_name: 'The indicator'
+    shortName: 'The indicator'
   )
   indicatorData = new IndicatorData(
     data: [
@@ -85,7 +85,7 @@ denormalised to the indicator name", (done) ->
     ]
   )
   indicator2 = new Indicator(
-    short_name: 'second Indicator'
+    shortName: 'second Indicator'
   )
   indicatorData2 = new IndicatorData(
     data: [
@@ -118,7 +118,7 @@ denormalised to the indicator name", (done) ->
         "Expected the seed data to have only 1 entry"
 
       indicator1Data = seedData[0]
-      assert.strictEqual indicator1Data.indicator, indicator.short_name,
+      assert.strictEqual indicator1Data.indicator, indicator.shortName,
         "Expected the seed data 'indicator' attribute to be the indicator short name"
 
       assert.deepEqual indicator1Data.data, indicatorData.data,
@@ -128,7 +128,7 @@ denormalised to the indicator name", (done) ->
         "Expected the _id attribute to be removed"
 
       indicator2Data = seedData[1]
-      assert.strictEqual indicator2Data.indicator, indicator2.short_name,
+      assert.strictEqual indicator2Data.indicator, indicator2.shortName,
         "Expected the seed data 'indicator' attribute to be the indicator short name"
 
       assert.deepEqual indicator2Data.data, indicatorData2.data,

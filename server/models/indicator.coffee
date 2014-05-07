@@ -14,8 +14,8 @@ Page = require('./page').model
 HeadlineService = require '../lib/services/headline'
 
 indicatorSchema = mongoose.Schema(
-  title: String
-  short_name: String
+  name: String
+  shortName: String
   indicatorDefinition: mongoose.Schema.Types.Mixed
   indicatorationConfig:
     type: mongoose.Schema.Types.Mixed
@@ -256,7 +256,7 @@ indicatorSchema.methods.generateMetadataCSV = ->
 
   attributes = []
 
-  attributes.push @title
+  attributes.push @name
 
   Q.nsend(
     @, 'populate', 'theme'
