@@ -10,9 +10,9 @@
       "table_name": "kenya_20indicator_20data_20feed"
     },
     "range": [
-        {"threshold": 0.35, "message": "Excellent"},
-        {"threshold": 0.15, "message": "Good"},
-        {"threshold": 0, "message": "Bad"}
+        {"threshold": 0.35, "text": "Excellent"},
+        {"threshold": 0.15, "text": "Good"},
+        {"threshold": 0, "text": "Bad"}
     ]
   },
   "type": "standard",
@@ -61,9 +61,9 @@
         "table_name": "kenya_20indicator_20data_20feed"
       },
       "range": [
-          {"threshold": 0.35, "message": "Excellent"},
-          {"threshold": 0.15, "message": "Good"},
-          {"threshold": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "type": "standard",
@@ -109,9 +109,9 @@
       "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
-          {"threshold": 0.35, "message": "Excellent"},
-          {"threshold": 0.15, "message": "Good"},
-          {"threshold": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "type": "standard",
@@ -158,9 +158,9 @@
       "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
-          {"threshold": 0.35, "message": "Excellent"},
-          {"threshold": 0.15, "message": "Good"},
-          {"threshold": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "indicatorDefinition": {
@@ -205,9 +205,9 @@
       "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
-          {"threshold": 0.35, "message": "Excellent"},
-          {"threshold": 0.15, "message": "Good"},
-          {"threshold": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "indicatorDefinition": {
@@ -252,9 +252,9 @@
       "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
-          {"threshold": 0.35, "message": "Excellent"},
-          {"threshold": 0.15, "message": "Good"},
-          {"threshold": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "indicatorDefinition": {
@@ -299,9 +299,9 @@
       "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
-          {"threshold": 0.35, "message": "Excellent"},
-          {"threshold": 0.15, "message": "Good"},
-          {"threshold": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "indicatorDefinition": {
@@ -346,9 +346,9 @@
       "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
-          {"threshold": 0.35, "message": "Excellent"},
-          {"threshold": 0.15, "message": "Good"},
-          {"threshold": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "indicatorDefinition": {
@@ -393,9 +393,9 @@
       "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
-          {"threshold": 0.35, "message": "Excellent"},
-          {"threshold": 0.15, "message": "Good"},
-          {"threshold": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "indicatorDefinition": {
@@ -440,9 +440,9 @@
       "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
       "source": "gdoc",
       "range": [
-          {"threshold": 0.35, "message": "Excellent"},
-          {"threshold": 0.15, "message": "Good"},
-          {"threshold": 0, "message": "Bad"}
+          {"threshold": 0.35, "text": "Excellent"},
+          {"threshold": 0.15, "text": "Good"},
+          {"threshold": 0, "text": "Bad"}
       ]
     },
     "indicatorDefinition": {
