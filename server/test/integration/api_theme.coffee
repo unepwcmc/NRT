@@ -120,14 +120,14 @@ test('GET index', (done) ->
       themeJson = body
 
       assert.equal themeJson.length, themes.length
-      jsonNames = _.map(themeJson, (theme)->
-        theme.name
+      jsonTitles = _.map(themeJson, (theme)->
+        theme.title
       )
-      themeNames = _.map(themes, (theme)->
-        theme.name
+      themeTitles = _.map(themes, (theme)->
+        theme.title
       )
 
-      assert.deepEqual jsonNames, themeNames
+      assert.deepEqual jsonTitles, themeTitles
       done()
     )
   ).catch((err) ->
