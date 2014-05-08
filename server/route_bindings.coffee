@@ -73,6 +73,7 @@ module.exports = exports = (app) ->
   app.get "/themes", themeRoutes.index
   app.get "/reports", reportRoutes.index
 
+  app.get "/indicators/new", indicatorRoutes.new
   app.get "/indicators/:id", indicatorRoutes.show
   app.get "/indicators/:id/draft", indicatorRoutes.show
   app.get "/indicators/:id/discard_draft", indicatorRoutes.discardDraft
