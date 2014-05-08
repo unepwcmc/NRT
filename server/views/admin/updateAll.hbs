@@ -14,10 +14,18 @@
       Update indicator data
     </h1>
   </header>
-  <a class="button update-all">Update all</a>
-  <a href="/admin/seedIndicatorData" class="button">Seed from backup</a>
+  <div class="pull-left">
+    <a class="button update-all">Update all</a>
+    <a href="/admin/seedIndicatorData" class="button">Seed from backup</a>
+  </div>
+  <div class="pull-right">
+    <a class="button new-indicator">
+      <i class="icon-table append"></i>Add new indicator
+    </a>
+  </div>
+  <div class="clear"></div>
 
-  <table>
+  <table id="indicator-table">
     <thead>
       <tr>
         <td>Short name</td>
@@ -26,17 +34,7 @@
     </thead>
     <tbody>
       {{#indicators}}
-        <tr>
-          <td>
-            <p>
-            <a href="/indicators/{{id}}">{{name}}</a>
-            </p>
-            <small>{{id}}</small>
-          </td>
-          <td class="action-or-response" id="{{id}}">
-            <a id="{{id}}" class="update button">Update </a>
-          </td>
-        </tr>
+        {{> indicator_admin_row this}}
       {{/indicators}}
     </tbody>
   </table>
@@ -64,6 +62,35 @@
         $(elem).trigger('click');
       }, idx*1000);
     })
+  })
+
+  var ajaxFormSubmit = function(ev) {
+    ev.preventDefault();
+
+    return $.ajax({
+      type: this.attr('method'),
+      url: this.attr('action'),
+      data: this.serialize()
+    });
+  };
+
+  $('.new-indicator').click(function(){
+    $.get('/indicators/new').success(function(data) {
+      var table = $('#indicator-table')
+      table.find('tbody').prepend(data);
+
+      table.find('form').submit(function(ev) {
+        ajaxFormSubmit.call(
+          $(this), ev
+        ).success(function() {
+          console.log("OKAY");
+        }).error(function() {
+          console.error("Import call failed");
+        });
+      });
+    }).error(function(err) {
+      console.log(err);
+    });
   })
 
 </script>
