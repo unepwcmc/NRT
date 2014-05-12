@@ -25,19 +25,7 @@
   </div>
   <div class="clear"></div>
 
-  <table id="indicator-table">
-    <thead>
-      <tr>
-        <td>Short name</td>
-        <td>Actions</td>
-      </tr>
-    </thead>
-    <tbody>
-      {{#indicators}}
-        {{> indicator_admin_row this}}
-      {{/indicators}}
-    </tbody>
-  </table>
+  {{> admin_indicator_table indicators}}
 </div>
 
 <script type="text/javascript" charset="utf-8">
