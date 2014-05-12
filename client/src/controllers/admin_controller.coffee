@@ -8,8 +8,8 @@ reloadIndicatorTable = ->
     console.error res
   )
 
-importIndicator = (ev) ->
-  ev.preventDefault()
+importIndicator = () ->
+
   SubmitFormWithAjax(
     @
   ).success( ->
@@ -26,7 +26,9 @@ showNewIndicatorForm = ->
     table = $("#indicator-table")
     table.find("tbody").prepend data
 
-    table.find("form").submit(importIndicator)
+    table.find(".submit-new-indicator").click(
+      importIndicator.bind($("#new-indicator-form"))
+    )
   ).error((err) ->
     console.log err
   )
@@ -43,7 +45,7 @@ updateIndicatorData = (ev) ->
       console.log "Message from remote server for #{id}: #{err.responseText}"
 
 updateAllIndicators =  (e) ->
-  _.each($(".button.update"), (elem, idx) ->
+  _.each($("#indicator-table .update"), (elem, idx) ->
       setTimeout(->
         $(elem).trigger "click"
       , idx * 1000)
@@ -53,6 +55,6 @@ Controllers.Admin =
   start: ->
     $(".new-indicator").click showNewIndicatorForm
 
-    $("a.update-all").click updateAllIndicators
+    $(".update-all").click updateAllIndicators
 
-    $(".content").on("click", "a.update", updateIndicatorData)
+    $(".content").on("click", ".update", updateIndicatorData)

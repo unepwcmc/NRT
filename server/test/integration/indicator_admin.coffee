@@ -46,8 +46,10 @@ test("User can visit the admin page, click 'Add Indicator', enter a google
 
     browser.clickLink('Add new indicator')
   ).then(->
-    browser.fill('Google Spreadsheet Key', spreadsheetKey)
+    browser.fill('Spreadsheet Key', spreadsheetKey)
     browser.pressButton('Import Indicator')
+  ).then(->
+    browser.wait()
   ).then(->
 
     tableText = browser.text('#indicator-table tr')
