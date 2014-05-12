@@ -66,3 +66,24 @@ test("User can visit the admin page, click 'Add Indicator', enter a google
     gdocImportStub.restore()
   )
 )
+
+
+test('GET /partials/admin/indicators/new returns a new indicator form', (done)->
+  browser = new Browser()
+  browser.runScripts = false
+
+  browser.visit(
+    helpers.appurl('/partials/admin/indicators/new')
+  ).then(->
+    assert.equal browser.statusCode, 200,
+      "Expected the request to succeed"
+
+    form = browser.query('form[action="/indicators/import_gdoc"]')
+    assert.isNotNull form, "Expected to see a form with the correct action"
+
+    assert.isNotNull browser.query('input[name="spreadsheetKey"]', form),
+      "Expected to see a spreadsheetKey input element"
+
+    done()
+  ).catch(done)
+)

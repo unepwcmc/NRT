@@ -39,12 +39,15 @@ exports.seedIndicatorData = (req, res) ->
   )
 
 exports.partials = {}
-exports.partials.indicatorTable = (req, res) ->
+exports.partials.indicatorsTable = (req, res) ->
   Promise.promisify(Indicator.find, Indicator)(
     {}
   ).then( (indicators) ->
-    res.send 200, renderPartial('admin_indicator_table', indicators)
+    res.send 200, renderPartial('admin/indicators', indicators)
   ).catch((err) ->
     console.error err.stack
     return res.send(500, "Error getting indicators")
   )
+
+exports.partials.newIndicator = (req, res) ->
+  res.render("partials/admin/new_indicator")

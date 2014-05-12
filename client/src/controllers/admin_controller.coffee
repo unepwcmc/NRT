@@ -1,7 +1,7 @@
 window.Controllers ||= {}
 
 reloadIndicatorTable = ->
-  $.get("/partials/admin/indicator_table").success((indicatorTable) ->
+  $.get("/partials/admin/indicators").success((indicatorTable) ->
     $("#indicator-table").replaceWith indicatorTable
   ).error((res) ->
     console.error "Error reloading indicators:"
@@ -22,7 +22,7 @@ importIndicator = (ev) ->
   )
 
 showNewIndicatorForm = ->
-  $.get("/indicators/new").success((data) ->
+  $.get("/partials/admin/indicators/new").success((data) ->
     table = $("#indicator-table")
     table.find("tbody").prepend data
 

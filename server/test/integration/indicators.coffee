@@ -13,7 +13,7 @@ Indicator = require('../../models/indicator').model
 Page = require('../../models/page').model
 User = require('../../models/user').model
 
-suite('Indicator show')
+suite('Indicator integrations: ')
 
 test("When given a valid indicator, I should get a 200 and see the name", (done)->
   indicatorName = "Dat test indicator"
@@ -469,25 +469,5 @@ test('GET /:id/publish redirects back if the user is not logged in', (done) ->
 
     done()
 
-  ).catch(done)
-)
-
-test('GET /indicators/new returns a new indicator form', (done)->
-  browser = new Browser()
-  browser.runScripts = false
-
-  browser.visit(
-    helpers.appurl('/indicators/new')
-  ).then(->
-    assert.equal browser.statusCode, 200,
-      "Expected the request to succeed"
-
-    form = browser.query('form[action="/indicators/import_gdoc"]')
-    assert.isNotNull form, "Expected to see a form with the correct action"
-
-    assert.isNotNull browser.query('input[name="spreadsheetKey"]', form),
-      "Expected to see a spreadsheetKey input element"
-
-    done()
   ).catch(done)
 )

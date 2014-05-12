@@ -73,7 +73,6 @@ module.exports = exports = (app) ->
   app.get "/themes", themeRoutes.index
   app.get "/reports", reportRoutes.index
 
-  app.get "/indicators/new", indicatorRoutes.new
   app.get "/indicators/:id", indicatorRoutes.show
   app.get "/indicators/:id/draft", indicatorRoutes.show
   app.get "/indicators/:id/discard_draft", indicatorRoutes.discardDraft
@@ -101,4 +100,5 @@ module.exports = exports = (app) ->
   app.get "/admin/updateAll", adminRoutes.updateAll
   app.get "/admin", adminRoutes.updateAll
   app.get "/admin/seedIndicatorData", adminRoutes.seedIndicatorData
-  app.get "/partials/admin/indicator_table", adminRoutes.partials.indicatorTable
+  app.get "/partials/admin/indicators", adminRoutes.partials.indicatorsTable
+  app.get "/partials/admin/indicators/new", adminRoutes.partials.newIndicator
