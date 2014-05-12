@@ -40,57 +40,18 @@
       error: function(err){
         $('#'+id+'.action-or-response').text('Failed');
         console.log('Message from remote server for '+id+': '+ err.responseText);
-      },
+      }
     });
-  })
+  });
 
   $('a.update-all').click(function(e){
     _.each($('.button.update'), function(elem, idx) {
       setTimeout(function() {
         $(elem).trigger('click');
       }, idx*1000);
-    })
-  })
-
-  var ajaxFormSubmit = function(ev) {
-    ev.preventDefault();
-
-    return $.ajax({
-      type: this.attr('method'),
-      url: this.attr('action'),
-      data: this.serialize(),
-      success: function() {
-        console.log("Google Spreadsheet successfully imported");
-
-        $.get("/partials/admin/indicator_table").success(function(indicatorTable) {
-          $("#indicator-table").replaceWith(indicatorTable);
-        }).error(function(res){
-          console.error("Error reloading indicators:")
-          console.error(res);
-        })
-      },
-      error: function(res) {
-        console.log("Error importing google doc");
-        alert("Unable to import google spreadsheet");
-        throw new Error(res.responseText);
-      }
     });
-  };
+  });
 
-  $('.new-indicator').click(function(){
-
-    $.get('/indicators/new').success(function(data) {
-      var table = $('#indicator-table')
-      table.find('tbody').prepend(data);
-
-      table.find('form').submit(function(ev) {
-        ajaxFormSubmit.call(
-          $(this), ev
-        );
-      });
-    }).error(function(err) {
-      console.log(err);
-    });
-  })
+  Controllers.Admin.start()
 
 </script>
