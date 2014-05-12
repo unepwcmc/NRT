@@ -31,7 +31,28 @@ showNewIndicatorForm = ->
     console.log err
   )
 
+updateIndicatorData = (ev) ->
+  id = ev.currentTarget.id
+  $.ajax
+    method: "POST"
+    url: "/admin/updateIndicatorData/" + id
+    success: (data) ->
+      $("##{id}.action-or-response").text "Success"
+    error: (err) ->
+      $("##{id}.action-or-response").text "Failed"
+      console.log "Message from remote server for #{id}: #{err.responseText}"
+
+updateAllIndicators =  (e) ->
+  _.each($(".button.update"), (elem, idx) ->
+      setTimeout(->
+        $(elem).trigger "click"
+      , idx * 1000)
+  )
+
 Controllers.Admin =
   start: ->
     $(".new-indicator").click showNewIndicatorForm
 
+    $("a.update-all").click updateAllIndicators
+
+    $(".content").on("click", "a.update", updateIndicatorData)

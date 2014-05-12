@@ -29,28 +29,7 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
-  $('a.update').click(function(e){
-    var id = e.currentTarget.id;
-    $.ajax({
-      method: 'POST',
-      url: '/admin/updateIndicatorData/'+id,
-      success: function(data) {
-        $('#'+id+'.action-or-response').text('Success');
-      },
-      error: function(err){
-        $('#'+id+'.action-or-response').text('Failed');
-        console.log('Message from remote server for '+id+': '+ err.responseText);
-      }
-    });
-  });
 
-  $('a.update-all').click(function(e){
-    _.each($('.button.update'), function(elem, idx) {
-      setTimeout(function() {
-        $(elem).trigger('click');
-      }, idx*1000);
-    });
-  });
 
   Controllers.Admin.start()
 
