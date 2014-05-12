@@ -78,6 +78,7 @@ module.exports = exports = (app) ->
   app.get "/indicators/:id/draft", indicatorRoutes.show
   app.get "/indicators/:id/discard_draft", indicatorRoutes.discardDraft
   app.get "/indicators/:id/publish", indicatorRoutes.publishDraft
+  app.post "/indicators/import_gdoc", indicatorRoutes.importGdoc
   app.get "/themes/:id", themeRoutes.show
   app.get "/themes/:id/draft", themeRoutes.showDraft
   app.get "/themes/:id/discard_draft", themeRoutes.discardDraft
