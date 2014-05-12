@@ -1,30 +1,13 @@
 _ = require('underscore')
 Promise = require('bluebird')
+GDocWrapper = require("../../../lib/gdoc_wrapper")
 
 module.exports = class GDoc
   constructor: (@indicator) ->
 
   fetch: ->
-    new Promise( (resolve, reject) =>
-      @queryGoogleSpreadsheet(
-        key: @indicator.indicatorationConfig.spreadsheetKey
-      ).then( (spreadsheet) =>
-
-        spreadsheet.worksheets[0].cells({}, (err, cells) =>
-          headers = cells.cells['1']
-          indicatorData = _.filter(cells.cells, (row) =>
-            row['2'].value is @indicator.shortName
-          )
-
-          resolve({
-            headers: headers
-            data: indicatorData
-          })
-        )
-
-      ).catch( (err) ->
-        reject(err)
-      )
+    GDocWrapper.importByKey(
+      @indicator.indicatorationConfig.spreadsheetKey
+    ).then( (gdoc) =>
+      gdoc.getWorksheetData('Data')
     )
-
-  queryGoogleSpreadsheet: Promise.promisify(require("google-spreadsheets"))
