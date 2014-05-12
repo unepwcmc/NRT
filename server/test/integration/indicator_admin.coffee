@@ -11,10 +11,6 @@ GDocIndicatorImporter = require('../../lib/gdoc_indicator_importer')
 
 suite('Indicator Admin')
 
-newFormLoaded = (window) ->
-  element = window.document.getElementById("new-indicator-form")
-  return element?
-
 test("User can visit the admin page, click 'Add Indicator', enter a google
  spreadsheet key and import a new indicator ", (done)->
 
@@ -26,15 +22,6 @@ test("User can visit the admin page, click 'Add Indicator', enter a google
   )
 
   browser = new Browser()
-
-  browser.on('error', (err) ->
-    console.log "Browser error:"
-    console.log err
-  )
-  browser.on('console', (level, msg) ->
-    console.log "Browser #{level}:"
-    console.log msg
-  )
 
   spreadsheetKey = '43289432'
 
@@ -49,8 +36,6 @@ test("User can visit the admin page, click 'Add Indicator', enter a google
     browser.fill('Spreadsheet Key', spreadsheetKey)
     browser.pressButton('Import Indicator')
   ).then(->
-    browser.wait()
-  ).then(->
 
     tableText = browser.text('#indicator-table tr')
     assert.match tableText, new RegExp("#{importedIndicator.name}"),
@@ -61,8 +46,6 @@ test("User can visit the admin page, click 'Add Indicator', enter a google
     else
       done()
   ).catch((err) ->
-    console.log "Some error was thrown"
-    console.log err
     done(err)
   ).finally(->
     gdocImportStub.restore()
