@@ -101,3 +101,4 @@ module.exports = exports = (app) ->
   app.get "/admin/updateAll", adminRoutes.updateAll
   app.get "/admin", adminRoutes.updateAll
   app.get "/admin/seedIndicatorData", adminRoutes.seedIndicatorData
+  app.get "/partials/admin/indicator_table", adminRoutes.partials.indicatorTable

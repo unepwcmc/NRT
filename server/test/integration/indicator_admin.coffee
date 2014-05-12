@@ -18,8 +18,11 @@ newFormLoaded = (window) ->
 test("User can visit the admin page, click 'Add Indicator', enter a google
  spreadsheet key and import a new indicator ", (done)->
 
+  importedIndicator =
+    name: "Spiffing new indiator"
+
   gdocImportStub = sinon.stub(GDocIndicatorImporter, 'import', ->
-    Promise.resolve()
+    Promise.promisify(Indicator.create, Indicator)(importedIndicator)
   )
 
   browser = new Browser()
@@ -46,6 +49,11 @@ test("User can visit the admin page, click 'Add Indicator', enter a google
     browser.fill('Google Spreadsheet Key', spreadsheetKey)
     browser.pressButton('Import Indicator')
   ).then(->
+
+    tableText = browser.text('#indicator-table tr')
+    assert.match tableText, new RegExp("#{importedIndicator.name}"),
+      "Expected to see the new imported indicator in the table"
+
     if browser.errors.length > 0
       done(browser.errors)
     else

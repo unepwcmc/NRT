@@ -61,6 +61,13 @@
       data: this.serialize(),
       success: function() {
         console.log("Google Spreadsheet successfully imported");
+
+        $.get("/partials/admin/indicator_table").success(function(indicatorTable) {
+          $("#indicator-table").replaceWith(indicatorTable);
+        }).error(function(res){
+          console.error("Error reloading indicators:")
+          console.error(res);
+        })
       },
       error: function(res) {
         console.log("Error importing google doc");
