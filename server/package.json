@@ -56,7 +56,7 @@
     "sinon": ">=1.4.0 <2",
     "sinon-chai": "2.4.0",
     "supervisor": "0.5.3",
-    "zombie": "^2.0.0-alpha31"
+    "zombie": "lucidstack/zombie#compiled-raise-xhr-fix"
   },
   "engines": {
     "node": ">=0.8"
