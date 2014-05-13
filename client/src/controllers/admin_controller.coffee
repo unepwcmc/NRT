@@ -52,7 +52,7 @@ updateIndicatorData = (ev) ->
       console.log "Message from remote server for #{id}: #{err.responseText}"
 
 reloadIndicatorDefinition = (ev) ->
-  spreadsheetKey = $(this).attr('data-spreadsheetKey')
+  spreadsheetKey = $(this).attr('data-spreadsheet-key')
   $.ajax
     method: "POST"
     url: "/indicators/import_gdoc"
