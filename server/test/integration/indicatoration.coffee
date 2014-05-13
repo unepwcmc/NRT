@@ -17,7 +17,23 @@ test("calling /admin/updateIndicatorData/{indicatorId}
   indicator = new Indicator(
     type: "standard"
     indicatorDefinition: {
-      fields: []
+      fields: [
+        {
+          name: "year"
+          type: "integer"
+          source: {
+            name: "periodStart"
+            type: "epoch"
+          }
+        }, {
+          name: "value"
+          type: "decimal"
+          source: {
+            name: "value"
+            type: "decimal"
+          }
+        }
+      ]
     }
     indicatorationConfig: {
       source: "esri"
@@ -46,6 +62,16 @@ test("calling /admin/updateIndicatorData/{indicatorId}
           "value": 0.29999999999999999,
           "station": "Sweihan"
         }
+      }, {
+        "geometry": {
+          "x": 65.342883000000029,
+          "y": 34.466660000000047
+        },
+        "attributes": {
+          "periodStart": 1362774400000,
+          "value": 0.1300000000000000,
+          "station": "Redmond"
+        }
       }
     ]
   }
@@ -73,13 +99,22 @@ test("calling /admin/updateIndicatorData/{indicatorId}
           "Expected response to succeed, but got error:
           #{body}"
 
-        indicatorDataIdMatch = "\"_id\":\"#{indicatorData.id}\""
-        indicatorIdMatch = "\"indicator\":\"#{indicator.id}\""
-        dataMatch = "\"data\":\\[null\\]"
-        assert.match body, new RegExp(".*Successfully updated indicator.*")
-        assert.match body, new RegExp(".*#{indicatorDataIdMatch}.*")
-        assert.match body, new RegExp(".*#{indicatorIdMatch}.*")
-        assert.match body, new RegExp(".*#{dataMatch}.*")
+        expectedBody = {
+          _id: indicatorData.id,
+          indicator: indicator.id,
+          data:[{
+            text: "Good"
+            value: 0.3
+            year: 2013
+          }, {
+            text: "Bad"
+            value: 0.13
+            year: 2013
+          }]
+        }
+
+        assert.deepEqual JSON.parse(body), expectedBody,
+          "Expected the response body to contain the correct data"
 
         done()
       catch e
@@ -158,13 +193,14 @@ test("calling /admin/updateIndicatorData/{indicatorId}
           "Expected response to succeed, but got error:
           #{body}"
 
-        indicatorDataIdMatch = "\"_id\":\"#{indicatorData.id}\""
-        indicatorIdMatch = "\"indicator\":\"#{indicator.id}\""
-        dataMatch = "\"data\":\\[null\\]"
-        assert.match body, new RegExp(".*Successfully updated indicator.*")
-        assert.match body, new RegExp(".*#{indicatorDataIdMatch}.*")
-        assert.match body, new RegExp(".*#{indicatorIdMatch}.*")
-        assert.match body, new RegExp(".*#{dataMatch}.*")
+        expectedBody = {
+          _id: indicatorData.id
+          indicator: indicator.id
+          data: []
+        }
+
+        assert.deepEqual JSON.parse(body), expectedBody,
+          "Expected the response body to contain the correct data"
 
         done()
       catch e
