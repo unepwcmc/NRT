@@ -1,5 +1,18 @@
 @import "variables";
 
+.actions {
+  overflow: hidden;
+
+  a {
+    float: left;
+    margin-right: 5px;
+  }
+
+  .new-indicator {
+    float: right;
+  }
+}
+
 table {
   width: 100%;
   margin-top: 10px;

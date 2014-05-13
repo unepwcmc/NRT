@@ -14,22 +14,19 @@
       Update indicator data
     </h1>
   </header>
-  <div class="pull-left">
+
+  <div class="actions">
     <a class="button update-all">Update all</a>
     <a href="/admin/seedIndicatorData" class="button">Seed from backup</a>
-  </div>
-  <div class="pull-right">
     <a class="button new-indicator">
       <i class="icon-table append"></i>Add new indicator
     </a>
   </div>
-  <div class="clear"></div>
 
   {{> admin/indicators indicators}}
 </div>
 
 <script type="text/javascript" charset="utf-8">
-
 
   Controllers.Admin.start()
 
