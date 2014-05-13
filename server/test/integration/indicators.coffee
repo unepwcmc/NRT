@@ -7,7 +7,6 @@ async = require('async')
 Q = require('q')
 sinon = require('sinon')
 passportStub = require 'passport-stub'
-Browser = require("zombie")
 
 Indicator = require('../../models/indicator').model
 Page = require('../../models/page').model
