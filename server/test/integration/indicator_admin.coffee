@@ -21,7 +21,7 @@ test("User can visit the admin page, click 'Add Indicator', enter a google
     Promise.promisify(Indicator.create, Indicator)(importedIndicator)
   )
 
-  browser = new Browser()
+  browser = new Browser(debug: true)
 
   spreadsheetKey = '43289432'
 
