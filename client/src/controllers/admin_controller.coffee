@@ -33,6 +33,13 @@ showNewIndicatorForm = ->
     console.log err
   )
 
+updateAllIndicators = (ev) ->
+  _.each($("#indicator-table .update"), (elem, idx) ->
+      setTimeout(->
+        $(elem).trigger "click"
+      , idx * 1000)
+  )
+
 updateIndicatorData = (ev) ->
   id = ev.currentTarget.id
   $.ajax
@@ -44,12 +51,16 @@ updateIndicatorData = (ev) ->
       $("##{id}.action-or-response").text "Failed"
       console.log "Message from remote server for #{id}: #{err.responseText}"
 
-updateAllIndicators =  (e) ->
-  _.each($("#indicator-table .update"), (elem, idx) ->
-      setTimeout(->
-        $(elem).trigger "click"
-      , idx * 1000)
-  )
+reloadIndicatorDefinition = (ev) ->
+  spreadsheetKey = $(this).attr('data-spreadsheet-key')
+  $.ajax
+    method: "POST"
+    url: "/indicators/import_gdoc"
+    data: {spreadsheetKey: spreadsheetKey}
+    success: reloadIndicatorTable
+    error: (err) =>
+      $(this).parent().text "Failed"
+      console.log "Message from remote server for #{spreadsheetKey}: #{err.responseText}"
 
 Controllers.Admin =
   start: ->
@@ -58,3 +69,5 @@ Controllers.Admin =
     $(".update-all").click updateAllIndicators
 
     $(".content").on("click", ".update", updateIndicatorData)
+
+    $(".content").on("click", ".reload-definition", reloadIndicatorDefinition)
