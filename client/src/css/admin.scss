@@ -1,13 +1,41 @@
+@import "variables";
+
+.actions {
+  overflow: hidden;
+
+  a {
+    float: left;
+    margin-right: 5px;
+  }
+
+  .new-indicator {
+    float: right;
+  }
+}
+
 table {
   width: 100%;
   margin-top: 10px;
+  color: $grey;
+
+  h3 {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  button {
+    color: $linkBlue;
+    padding: 8px 20px;
+    margin-left: 10px;
+  }
+
+  input[type="text"] {
+    margin-left: 10px;
+    border: 1px solid $lightishGrey;
+    border-radius: 5px;
+  }
 
   td:last-child {
     width: 200px;
 
-    a {
-      padding: 8px 20px;
-      margin-left: 10px;
-    }
   }
 }

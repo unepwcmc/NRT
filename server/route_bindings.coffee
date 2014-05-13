@@ -77,6 +77,7 @@ module.exports = exports = (app) ->
   app.get "/indicators/:id/draft", indicatorRoutes.show
   app.get "/indicators/:id/discard_draft", indicatorRoutes.discardDraft
   app.get "/indicators/:id/publish", indicatorRoutes.publishDraft
+  app.post "/indicators/import_gdoc", indicatorRoutes.importGdoc
   app.get "/themes/:id", themeRoutes.show
   app.get "/themes/:id/draft", themeRoutes.showDraft
   app.get "/themes/:id/discard_draft", themeRoutes.discardDraft
@@ -99,3 +100,5 @@ module.exports = exports = (app) ->
   app.get "/admin/updateAll", adminRoutes.updateAll
   app.get "/admin", adminRoutes.updateAll
   app.get "/admin/seedIndicatorData", adminRoutes.seedIndicatorData
+  app.get "/partials/admin/indicators", adminRoutes.partials.indicatorsTable
+  app.get "/partials/admin/indicators/new", adminRoutes.partials.newIndicator

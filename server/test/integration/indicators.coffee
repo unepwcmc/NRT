@@ -12,7 +12,7 @@ Indicator = require('../../models/indicator').model
 Page = require('../../models/page').model
 User = require('../../models/user').model
 
-suite('Indicator show')
+suite('Indicator integrations: ')
 
 test("When given a valid indicator, I should get a 200 and see the name", (done)->
   indicatorName = "Dat test indicator"

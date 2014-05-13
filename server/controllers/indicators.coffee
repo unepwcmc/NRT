@@ -1,12 +1,13 @@
+_ = require('underscore')
+async = require('async')
+Q = require('q')
+
 Indicator = require('../models/indicator').model
 Theme = require('../models/theme').model
 HeadlineService = require('../lib/services/headline')
 Permissions = require('../lib/services/permissions')
 IndicatorPresenter = require('../lib/presenters/indicator')
-
-_ = require('underscore')
-async = require('async')
-Q = require('q')
+GDocIndicatorImporter = require('../lib/gdoc_indicator_importer')
 
 exports.show = (req, res) ->
   theIndicator = theHeadlines = theNarrativeRecency = theIndicatorObject = null
@@ -109,4 +110,17 @@ exports.discardDraft = (req, res) ->
   ).fail((err) ->
     console.error err
     return res.render(500, "Error fetching the indicator")
+  )
+
+exports.new = (req, res) ->
+  res.render("indicators/new")
+
+exports.importGdoc = (req, res) ->
+  GDocIndicatorImporter.import(
+    req.body.spreadsheetKey
+  ).then( ->
+    res.send(201, {message: "OK"})
+  ).catch((err) ->
+    console.error err.stack
+    res.send(500, {error: "Unable to import google doc with key #{req.body.spreadsheetKey}"})
   )
