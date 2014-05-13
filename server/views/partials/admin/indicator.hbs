@@ -3,7 +3,15 @@
     <h4>
       <a href="/indicators/{{id}}">{{name}}</a>
     </h4>
-    <small>{{id}}</small>
+    <small>
+      {{id}}
+      {{#if indicatorationConfig.spreadsheetKey }}
+        -
+        <a  target="_blank" href='https://docs.google.com/spreadsheets/d/{{indicatorationConfig.spreadsheetKey}}'>
+          <i class="icon-external-link"></i> Google Spreadsheet definition
+        </a>
+      {{/if}}
+    </small>
   </td>
   <td class="action-or-response" id="{{id}}">
     <button id="{{id}}" class="update button">Update</button>
