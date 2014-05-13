@@ -8,8 +8,7 @@ node_js:
 branches:
   only:
     - master
+    - fix-travis-build
 notifications:
   email:
-    - adam.mulligan@unep-wcmc.org
-    - jonathan.smith@unep-wcmc.org
-    - james.cox@unep-wcmc.org
+    - andrea.rossi@unep-wcmc.org
