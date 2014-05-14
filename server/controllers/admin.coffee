@@ -9,7 +9,7 @@ exports.updateIndicatorData = (req, res) ->
   ).then( (indicator) ->
     indicator.updateIndicatorData()
   ).then( (indicatorData) ->
-    return res.send(201, "Successfully updated indicator:\n #{JSON.stringify indicatorData}")
+    return res.send(201, indicatorData)
   ).catch((err) ->
     console.log err
     console.log err.stack
