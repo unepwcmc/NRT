@@ -18,7 +18,6 @@ exports.applyRanges = (data, ranges) ->
   return outputRows
 
 calculateIndicatorText = (value, ranges) ->
-  value = value.replace(',', '')
   value = parseFloat(value)
 
   for range in ranges
