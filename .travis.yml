@@ -1,15 +1,17 @@
 language: node_js
 services: mongodb
 before_script:
-  - cd server/
+  - cd client/
+  - npm install
+  - grunt
+  - cd ../server/
   - npm install
 node_js:
   - "0.10"
 branches:
   only:
     - master
+    - fix-travis-build
 notifications:
   email:
-    - adam.mulligan@unep-wcmc.org
-    - jonathan.smith@unep-wcmc.org
-    - james.cox@unep-wcmc.org
+    - andrea.rossi@unep-wcmc.org
