@@ -66,7 +66,7 @@ exports.appurl = (path) ->
   url.resolve('http://localhost:3001', path)
 
 exports.createReport = factory.defineWithCallback("report", title: 'new report')
-exports.createIndicator = factory.defineWithCallback("indicator", title: 'new indicator')
+exports.createIndicator = factory.defineWithCallback("indicator", name: 'new indicator')
 exports.createVisualisation = factory.defineWithCallback("visualisation", data: 'new viz')
 exports.createNarrative = factory.defineWithCallback("narrative", content: 'new narrative')
 exports.createSection = factory.defineWithCallback("section", title: 'a section')
