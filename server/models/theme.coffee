@@ -82,7 +82,7 @@ themeSchema.statics.seedData = (callback) ->
 populateThemeIndicators = (theTheme, cb) ->
   theTheme.populateIndicators().then( ->
     cb()
-  ).fail((err) ->
+  ).catch((err) ->
     cb(err)
   )
 

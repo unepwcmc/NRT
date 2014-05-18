@@ -5,6 +5,7 @@ _ = require('underscore')
 async = require('async')
 Q = require('q')
 moment = require('moment')
+Promise = require('bluebird')
 
 AppConfig = require('../initializers/config')
 
@@ -309,33 +310,29 @@ indicatorSchema.statics.calculateCurrentValues = (indicators, callback) ->
   )
 
 indicatorSchema.statics.findWhereIndicatorHasData = (conditions) ->
-  deferred = Q.defer()
+  new Promise((resolve, reject) ->
+    Promise.promisify(Indicator.find, Indicator)(
+      conditions
+    ).then((indicators) ->
+      indicatorsWithData = []
 
-  Q.nsend(
-    Indicator.find(conditions), 'exec'
-  ).then((indicators) ->
-    indicatorsWithData = []
+      addIndicatorIfHasData = (indicator, callback) ->
+        indicator.getIndicatorData((err, data) ->
+          if err?
+            return callback(err)
+          else if data.length > 0
+            indicatorsWithData.push indicator
+          callback()
+        )
 
-    addIndicatorIfHasData = (indicator, callback) ->
-      indicator.getIndicatorData((err, data) ->
+      async.each indicators, addIndicatorIfHasData, (err) ->
         if err?
-          return callback(err)
-        else if data.length > 0
-          indicatorsWithData.push indicator
-        callback()
-      )
+          reject(err)
+        else
+          resolve(indicatorsWithData)
 
-    async.each indicators, addIndicatorIfHasData, (err) ->
-      if err?
-        deferred.reject(err)
-      else
-        deferred.resolve(indicatorsWithData)
-
-  ).fail((err)->
-    deferred.reject(err)
+    ).catch(reject)
   )
-
-  return deferred.promise
 
 populatePage = (indicator, callback) ->
   indicator.populatePage().then(->
