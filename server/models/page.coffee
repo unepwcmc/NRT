@@ -6,6 +6,7 @@ sectionNestingModel = require('../mixins/section_nesting_model.coffee')
 SectionSchema = require('./section.coffee').schema
 Q = require('q')
 moment = require('moment')
+Promise = require('bluebird')
 
 pageSchema = mongoose.Schema(
   title: String
@@ -24,32 +25,30 @@ pageSchema.methods.getParent = ->
 
 pageSchema.methods.createDraftClone = ->
   Section = require('./section.coffee').model
-  deferred = Q.defer()
   clonedPage = null
 
   attributes = @toObject()
   delete attributes._id
   attributes.is_draft = true
 
-  Q.nsend(
-    Page, 'create', attributes
-  ).then( (page) ->
-    clonedPage = page
+  new Promise( (resolve, reject) ->
+    Promise.promisify(Page.create, Page)(
+      attributes
+    ).then( (page) ->
+      clonedPage = page
 
-    clonedPage.giveSectionsNewIds()
-  ).then( (clonedSectionsAndOriginalSectionIds) ->
-    Q.nfcall(
-      async.each, clonedSectionsAndOriginalSectionIds, Section.cloneChildren
-    )
-  ).then( ->
-    Q.nsend(clonedPage, 'save')
-  ).then( ->
-    deferred.resolve(clonedPage)
-  ).fail( (err) ->
-    deferred.reject(err)
+      clonedPage.giveSectionsNewIds()
+    ).then( (clonedSectionsAndOriginalSectionIds) ->
+      clonePromises = clonedSectionsAndOriginalSectionIds.map(
+        Section.cloneChildren
+      )
+      Promise.all(clonePromises)
+    ).then( ->
+      Promise.promisify(clonedPage.save, clonedPage)()
+    ).then( ->
+      resolve(clonedPage)
+    ).catch(reject)
   )
-
-  return deferred.promise
 
 giveSectionNewId = (section, callback) ->
   originalSectionId = section.id
@@ -66,16 +65,14 @@ giveSectionNewId = (section, callback) ->
   )
 
 pageSchema.methods.giveSectionsNewIds = ->
-  deferred = Q.defer()
+  new Promise( (resolve, reject) =>
+    async.map(@sections, giveSectionNewId, (err, sectionsWithOriginalIds) ->
+      if err?
+        reject(err)
 
-  async.map(@sections, giveSectionNewId, (err, sectionsWithOriginalIds) ->
-    if err?
-      deferred.reject(err)
-
-    deferred.resolve(sectionsWithOriginalIds)
+      resolve(sectionsWithOriginalIds)
+    )
   )
-
-  return deferred.promise
 
 pageSchema.methods.getOwnable = ->
   @getParent()
@@ -96,7 +93,7 @@ pageSchema.pre('save', (next) ->
   else
     @setHeadlineToMostRecentFromParent().then(->
       next()
-    ).fail((err) ->
+    ).catch((err) ->
       console.error err
       next(err)
     )
@@ -121,7 +118,7 @@ pageSchema.methods.setHeadlineToMostRecentFromParent = ->
         @headline = NO_DATA_HEADLINE
 
       deferred.resolve(@headline)
-    ).fail( (err) ->
+    ).catch( (err) ->
       deferred.reject(err)
     )
   else
@@ -147,7 +144,7 @@ pageSchema.methods.createSectionNarratives = (attributes) ->
     )
   ).then(->
     deferred.resolve()
-  ).fail((err) ->
+  ).catch((err) ->
     deferred.reject(err)
   )
 

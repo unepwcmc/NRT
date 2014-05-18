@@ -3,6 +3,7 @@ Visualisation = require("./visualisation.coffee").model
 mongoose = require('mongoose')
 Q = require 'q'
 async = require('async')
+Promise = require('bluebird')
 
 sectionSchema = mongoose.Schema(
   title: String
@@ -19,13 +20,11 @@ sectionSchema.statics.getValidationErrors = (attributes) ->
 
 # Given an object with a cloned section and a target section id,
 # clones the children of the target section to the clone section
-sectionSchema.statics.cloneChildren = (clonedSectionAndOriginalSectionId, callback) ->
+sectionSchema.statics.cloneChildren = (clonedSectionAndOriginalSectionId) ->
   section = clonedSectionAndOriginalSectionId.section
   originalSectionId = clonedSectionAndOriginalSectionId.originalId
 
   section.cloneChildrenBySectionId(originalSectionId)
-    .then(-> callback(null))
-    .fail(callback)
 
 sectionSchema.statics.createSectionWithNarrative = (attributes, callback) ->
   Section = require('./section.coffee').model
@@ -65,18 +64,17 @@ sectionSchema.methods.getNarrative = () ->
   return deferred.promise
 
 sectionSchema.methods.cloneChildrenBySectionId = (originalSectionId) ->
-  deferred = Q.defer()
-
-  @cloneNarrativesFrom(originalSectionId)
-    .then( =>
+  new Promise( (resolve, reject) =>
+    @cloneNarrativesFrom(
+      originalSectionId
+    ).then( =>
       @cloneVisualisationsFrom(originalSectionId)
-    ).then( ->
-      deferred.resolve()
-    ).fail( (err) ->
-      deferred.reject(err)
+    ).then(
+      resolve
+    ).catch(
+      reject
     )
-
-  return deferred.promise
+  )
 
 cloneNarrative = (narrative, callback) ->
   narrativeAttributes = narrative.toObject()
@@ -103,42 +101,35 @@ cloneVisualisation = (visualisation, callback) ->
   )
 
 sectionSchema.methods.cloneVisualisationsFrom = (sectionId) ->
-  deferred = Q.defer()
+  new Promise( (resolve, reject) =>
+    Promise.promisify(Visualisation.find, Visualisation)(
+      section: sectionId
+    ).then( (visualisations) =>
+      async.map(visualisations, cloneVisualisation.bind(@), (err, clonedvisualisations) ->
+        if err?
+          reject(err)
 
-  Q.nsend(
-    Visualisation.find(section: sectionId), 'exec'
-  ).then( (visualisations) =>
-
-    async.map(visualisations, cloneVisualisation.bind(@), (err, clonedvisualisations) ->
-      if err?
-        deferred.reject(err)
-
-      deferred.resolve(clonedvisualisations)
-    )
-
-  ).fail( (err) ->
-    deferred.reject(err)
+        resolve(clonedvisualisations)
+      )
+    ).catch(reject)
   )
-  return deferred.promise
 
 sectionSchema.methods.cloneNarrativesFrom = (sectionId) ->
-  deferred = Q.defer()
 
-  Q.nsend(
-    Narrative.find(section: sectionId), 'exec'
-  ).then( (narratives) =>
+  new Promise( (resolve, reject) =>
+    Promise.promisify(Narrative.find, Narrative)(
+      section: sectionId
+    ).then( (narratives) =>
 
-    async.map(narratives, cloneNarrative.bind(@), (err, clonedNarratives) ->
-      if err?
-        deferred.reject(err)
+      async.map(narratives, cloneNarrative.bind(@), (err, clonedNarratives) ->
+        if err?
+          reject(err)
 
-      deferred.resolve(clonedNarratives)
-    )
-
-  ).fail( (err) ->
-    deferred.reject(err)
+        resolve(clonedNarratives)
+      )
+    ).catch(reject)
   )
-  return deferred.promise
+
 
 Section = mongoose.model('Section', sectionSchema)
 
