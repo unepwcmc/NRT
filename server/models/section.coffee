@@ -95,33 +95,32 @@ cloneVisualisation = (visualisation, callback) ->
   )
 
 sectionSchema.methods.cloneVisualisationsFrom = (sectionId) ->
-  new Promise( (resolve, reject) =>
-    Promise.promisify(Visualisation.find, Visualisation)(
-      section: sectionId
-    ).then( (visualisations) =>
+  Promise.promisify(Visualisation.find, Visualisation)(
+    section: sectionId
+  ).then( (visualisations) =>
+    new Promise((resolve, reject) =>
       async.map(visualisations, cloneVisualisation.bind(@), (err, clonedvisualisations) ->
         if err?
           reject(err)
 
         resolve(clonedvisualisations)
       )
-    ).catch(reject)
+    )
   )
 
 sectionSchema.methods.cloneNarrativesFrom = (sectionId) ->
 
-  new Promise( (resolve, reject) =>
-    Promise.promisify(Narrative.find, Narrative)(
-      section: sectionId
-    ).then( (narratives) =>
-
+  Promise.promisify(Narrative.find, Narrative)(
+    section: sectionId
+  ).then((narratives) =>
+    new Promise((resolve, reject) =>
       async.map(narratives, cloneNarrative.bind(@), (err, clonedNarratives) ->
         if err?
           reject(err)
 
         resolve(clonedNarratives)
       )
-    ).catch(reject)
+    )
   )
 
 
