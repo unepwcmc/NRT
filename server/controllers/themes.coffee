@@ -116,7 +116,7 @@ exports.show = (req, res) ->
           themeJSON: JSON.stringify(themeObject),
           indicators: indicators
 
-      ).fail( (err) ->
+      ).catch( (err) ->
         console.error err
         return res.render(500, "Error fetching theme page")
       )

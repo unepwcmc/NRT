@@ -5,6 +5,7 @@ url = require('url')
 _ = require('underscore')
 async = require('async')
 Q = require('q')
+Promise = require('bluebird')
 
 Theme = require('../../models/theme').model
 Page = require('../../models/page').model
@@ -191,4 +192,33 @@ test("GET /:id/discard_draft discards all drafts and renders the published versi
     console.error err
     throw err
   )
+)
+
+test("show all indicators with some data in theme page", (done) ->
+  themeTitle = "Dat test theme"
+  theme = new Theme(title: themeTitle)
+  theIndicator = null
+
+  Promise.promisify(theme.save, theme)().then( ->
+    Promise.promisify(helpers.createIndicator, helpers)(
+      name: 'An indicator'
+      theme: theme._id
+    )
+  ).then((indicator) ->
+    theIndicator = indicator
+
+    helpers.createIndicatorData({
+      indicator: theIndicator.id
+    })
+  ).then((indicatorData) ->
+    Promise.promisify(request.get, request)({
+      url: helpers.appurl("/themes/#{theme.id}")
+    })
+  ).spread((res, body) ->
+    assert.equal res.statusCode, 200
+
+    assert.match body, new RegExp(".*#{themeTitle}.*")
+    assert.match body, new RegExp(".*#{theIndicator.name}.*")
+    done()
+  ).catch(done)
 )

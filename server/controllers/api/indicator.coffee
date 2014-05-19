@@ -2,24 +2,21 @@ Indicator = require("../../models/indicator").model
 HeadlineService = require('../../lib/services/headline')
 _ = require('underscore')
 Q = require('q')
+Promise = require('bluebird')
 csv = require('csv')
 
 exports.index = (req, res) ->
   if req.query.withData == 'true'
     findPromise = Indicator.findWhereIndicatorHasData()
   else
-    findPromise = Q.nsend(
-      Indicator, 'find'
-    )
+    findPromise = Promise.promisify(Indicator.find, Indicator)()
 
-  findPromise.then( (indicators) ->
-
+  findPromise.then((indicators) ->
     res.send(JSON.stringify(indicators))
-
-  ).fail((err)->
+  ).catch((err)->
     console.error err
     console.error err.stack
-    return res.send(500, "Could not retrieve indicators")
+    res.send(500, "Could not retrieve indicators")
   )
 
 exports.create = (req, res) ->

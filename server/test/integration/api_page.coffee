@@ -1,6 +1,7 @@
 assert = require('chai').assert
 helpers = require '../helpers'
 request = require('request')
+Promise = require('bluebird')
 url = require('url')
 _ = require('underscore')
 async = require('async')
@@ -18,13 +19,12 @@ Section = require('../../models/section').model
 test('GET show', (done) ->
   data =
     title: "new page"
-
   helpers.createPage().
     then( (page) ->
-      request.get({
+      Promise.promisify(request.get, request)({
         url: helpers.appurl("api/pages/#{page.id}")
         json: true
-      }, (err, res, body) ->
+      }).spread( (res, body) ->
         assert.equal res.statusCode, 200
 
         reloadedPage = body
@@ -33,19 +33,16 @@ test('GET show', (done) ->
 
         done()
       )
-    ).catch( (err) ->
-      console.error err
-      throw new Error(err)
-    )
+    ).catch(done)
 )
 
 test('GET index', (done) ->
   helpers.createPage().
     then( (page) ->
-      request.get({
+      Promise.promisify(request.get, request)({
         url: helpers.appurl("api/pages")
         json: true
-      }, (err, res, body) ->
+      }).spread( (res, body) ->
         assert.equal res.statusCode, 200
 
         pages = body
@@ -54,10 +51,7 @@ test('GET index', (done) ->
 
         done()
       )
-    ).catch( (err) ->
-      console.error err
-      throw new Error(err)
-    )
+    ).catch(done)
 )
 
 test('DELETE page', (done) ->
@@ -75,10 +69,7 @@ test('DELETE page', (done) ->
             done()
         )
       )
-    ).catch( (err) ->
-      console.error err
-      throw new Error(err)
-    )
+    ).catch(done)
 )
 
 test('PUT page', (done) ->
@@ -104,10 +95,7 @@ test('PUT page', (done) ->
             )
         )
       )
-    ).catch( (err) ->
-      console.error err
-      throw new Error(err)
-    )
+    ).catch(done)
 )
 
 test('PUT page succeeds with an _id sent', (done) ->
@@ -132,10 +120,7 @@ test('PUT page succeeds with an _id sent', (done) ->
             done()
         )
       )
-    ).catch( (err) ->
-      console.error err
-      throw new Error(err)
-    )
+    ).catch(done)
 )
 
 test('PUT page succeeds with an _id sent', (done) ->
@@ -160,10 +145,7 @@ test('PUT page succeeds with an _id sent', (done) ->
             done()
           )
       )
-    ).catch( (err) ->
-      console.error err
-      throw new Error(err)
-    )
+    ).catch(done)
 )
 
 test('PUT nesting a section in a page with existing sections', (done) ->
@@ -189,10 +171,7 @@ test('PUT nesting a section in a page with existing sections', (done) ->
 
         done()
       )
-    ).catch( (err) ->
-      console.error err
-      throw new Error(err)
-    )
+    ).catch(done)
 
   async.series([helpers.createSection, helpers.createSection], createPageWithSection)
 )
@@ -255,25 +234,20 @@ test('POST create - nesting a section in a page when authenticated', (done) ->
           assert.equal page.title, data.title
           done()
         )
-    catch e
-      done(e)
+    catch err
+      done(err)
 
-  ).catch((err) ->
-    console.error err
-    throw err
-  )
+  ).catch(done)
 )
 
 test('POST create - nesting a section in a page fails when not authenticated', (done) ->
   data = theIndicator = null
 
   helpers.createUser().then((user) ->
-    Q.nfcall(
-      helpers.createIndicator, {
-        name: 'dat indicator'
-        owner: user
-      }
-    )
+    Promise.promisify(helpers.createIndicator, helpers)({
+      name: 'dat indicator'
+      owner: user
+    })
   ).then( (indicator) ->
 
     theIndicator = indicator
@@ -288,14 +262,11 @@ test('POST create - nesting a section in a page fails when not authenticated', (
         indicator: indicator._id
       }]
 
-    Q.nfcall(
-      request.post, {
-        url: helpers.appurl('api/pages/')
-        json: true
-        body: data
-      }
-    )
-
+    Promise.promisify(request.post, request)({
+      url: helpers.appurl('api/pages/')
+      json: true
+      body: data
+    })
   ).spread( (res, body) ->
 
     # Assert expected outcomes
@@ -304,10 +275,7 @@ test('POST create - nesting a section in a page fails when not authenticated', (
     assert.equal res.statusCode, 401
 
     done()
-  ).catch((err) ->
-    console.error err
-    throw err
-  )
+  ).catch(done)
 )
 
 test("PUT update when given a ID which doesn't exist throws an appropriate error", (done)->

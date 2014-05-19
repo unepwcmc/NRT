@@ -134,7 +134,7 @@ test('GET /api/indicators/ returns all indicators', (done) ->
 )
 
 test('GET /api/indicators?withData=true only returns indicators with indicator data associated', (done) ->
-  async.series([helpers.createIndicator, helpers.createIndicator], (err, indicators) ->
+  async.parallel([helpers.createIndicator, helpers.createIndicator], (err, indicators) ->
     indicatorWithData = indicators[0]
 
     helpers.createIndicatorData(

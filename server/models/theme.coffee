@@ -82,7 +82,7 @@ themeSchema.statics.seedData = (callback) ->
 populateThemeIndicators = (theTheme, cb) ->
   theTheme.populateIndicators().then( ->
     cb()
-  ).fail((err) ->
+  ).catch((err) ->
     cb(err)
   )
 
@@ -127,7 +127,7 @@ themeSchema.methods.populateIndicators = ->
   theIndicators = null
   Indicator.findWhereIndicatorHasData(
     theme: @_id
-    type: "esri"
+    primary: true
   ).then( (indicators) ->
     theIndicators = indicators
 
