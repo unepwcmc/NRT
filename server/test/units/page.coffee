@@ -1,6 +1,6 @@
 assert = require('chai').assert
 _ = require('underscore')
-Q = require('q')
+Promise = require('bluebird')
 sinon = require('sinon')
 
 helpers = require('../helpers.coffee')
@@ -135,16 +135,15 @@ test('saving a page with section attributes should assign that section an _id', 
     )
     assert.property page.sections[0], '_id'
     done()
-  ).catch((err) ->
-    console.error err
-    throw err
-  )
+  ).catch(done)
 )
 
 test('.getParent returns the page parent', (done) ->
   theIndicator = null
-  Q.nfcall(helpers.createIndicator)
-  .then((indicator)->
+  Promise.promisify(
+    helpers.createIndicator,
+    helpers
+  )().then((indicator) ->
     theIndicator = indicator
     helpers.createPage(
       parent_id: indicator._id
@@ -160,8 +159,10 @@ test('.getParent returns the page parent', (done) ->
 
 test('.getOwnable returns the page parent', (done) ->
   theIndicator = null
-  Q.nfcall(helpers.createIndicator)
-  .then((indicator)->
+  Promise.promisify(
+    helpers.createIndicator,
+    helpers
+  )().then((indicator) ->
     theIndicator = indicator
     helpers.createPage(
       parent_id: indicator._id
@@ -178,12 +179,9 @@ test('.getOwnable returns the page parent', (done) ->
 test('.canBeEditedBy given a user that is logged in it resolves', (done) ->
   theUser = theIndicator = thePage = null
   helpers.createUser().then((user) ->
-
     theUser = user
-    Q.nfcall(
-      helpers.createIndicator,
-    )
 
+    Promise.promisify(helpers.createIndicator,helpers)()
   ).then((indicator) ->
 
     theIndicator = indicator
@@ -196,39 +194,37 @@ test('.canBeEditedBy given a user that is logged in it resolves', (done) ->
     thePage = page
 
     page.canBeEditedBy(theUser)
-  ).then(->
-    done()
-  ).catch(done)
+  ).then(
+    done
+  ).catch(
+    done
+  )
 )
 
 test('.canBeEditedBy when a user is not logged in fails with an appropriate error', (done) ->
   theOwner = theIndicator = thePage = null
   helpers.createUser().then((user) ->
-
     theOwner = user
-    Q.nfcall(
-      helpers.createIndicator,
+
+    Promise.promisify(helpers.createIndicator, helpers)(
       owner: theOwner
     )
-
   ).then((indicator) ->
-
     theIndicator = indicator
+    
     helpers.createPage(
       parent_id: indicator._id
       parent_type: "Indicator"
     )
-
   ).then((page) ->
-
     thePage = page
-    page.canBeEditedBy().then(->
+
+    page.canBeEditedBy().then( ->
       done(new Error("Expected canBeEditedBy to fail"))
-    ).catch( (err) ->
+    ).catch((err) ->
       assert.strictEqual err.message, "Must be authenticated as a user to edit pages"
       done()
     )
-
   ).catch(done)
 )
 
@@ -237,19 +233,20 @@ test('.createDraftClone clones a public page,
   and sets is_draft to true', (done) ->
 
   publicPage = null
-  Q.nfcall(
-    helpers.createIndicator
-  ).then( (indicator) ->
+  Promise.promisify(
+    helpers.createIndicator,
+    helpers
+  )().then((indicator) ->
     helpers.createPage(
       title: "Lovely Page"
       parent_id: indicator.id
       parent_type: "Indicator"
     )
-  ).then( (page) ->
+  ).then((page) ->
     publicPage = page
 
     publicPage.createDraftClone()
-  ).then( (clonedPage) ->
+  ).then((clonedPage) ->
 
     assert.strictEqual clonedPage.title, publicPage.title
     assert.isTrue clonedPage.is_draft
@@ -262,10 +259,10 @@ test('.createDraftClone clones a public page,
   and duplicates child sections with new IDs', (done) ->
   originalSection = null
 
-  Q.nfcall(
-    helpers.createIndicator
-  ).then( (indicator) ->
-
+  Promise.promisify(
+    helpers.createIndicator,
+    helpers
+  )().then((indicator) ->
     helpers.createPage(
       title: "Lovely Page"
       parent_id: indicator.id
@@ -274,11 +271,11 @@ test('.createDraftClone clones a public page,
         title: "Lovely Section"
       ]
     )
-  ).then( (page) ->
+  ).then((page) ->
     originalSection = page.sections[0]
 
     page.createDraftClone()
-  ).then( (clonedPage) ->
+  ).then((clonedPage) ->
 
     assert.lengthOf clonedPage.sections, 1,
       "cloned page was expected to 1 cloned section, but has #{clonedPage.sections.length}"
@@ -294,20 +291,14 @@ test('.createDraftClone clones a public page,
         as originalSection (#{originalSection.id})"
 
     Page.findFatModel(clonedPage.id)
-
-  ).then( (reloadedPage) ->
+  ).then((reloadedPage) ->
     reloadedSection = reloadedPage.sections[0]
 
-    try
-      assert.notEqual reloadedSection._id.toString(), originalSection._id.toString(),
-        "Expected reloadedSection (id: #{reloadedSection._id}) to have a different
-        id, but had same id as originalSection (#{originalSection.id})"
+    assert.notEqual reloadedSection._id.toString(), originalSection._id.toString(),
+      "Expected reloadedSection (id: #{reloadedSection._id}) to have a different
+      id, but had same id as originalSection (#{originalSection.id})"
 
-      done()
-    catch err
-      console.dir err
-      done(new Error(err.message))
-
+    done()
   ).catch(done)
 )
 
@@ -315,9 +306,10 @@ test('.createDraftClone clones a public page,
   and duplicates child narratives', (done) ->
   publicPage = originalNarrative = null
 
-  Q.nfcall(
-    helpers.createIndicator
-  ).then( (indicator) ->
+  Promise.promisify(
+    helpers.createIndicator,
+    helpers
+  )().then((indicator) ->
     helpers.createPage(
       title: "Lovely Page"
       parent_id: indicator.id
@@ -326,30 +318,26 @@ test('.createDraftClone clones a public page,
         title: "Lovely Section"
       ]
     )
-  ).then( (page) ->
+  ).then((page) ->
     publicPage = page
-
     section = publicPage.sections[0]
-    Q.nfcall(
-      helpers.createNarrative, {
-        content: "Nested Narrative"
-        section: section.id
-      }
-    )
 
-  ).then( (narrative) ->
+    Promise.promisify(helpers.createNarrative, helpers)({
+      content: "Nested Narrative"
+      section: section.id
+    })
+  ).then((narrative) ->
     originalNarrative = narrative
 
     publicPage.createDraftClone()
-  ).then( (clonedPage) ->
+  ).then((clonedPage) ->
 
     clonedSection = clonedPage.sections[0]
 
-    Q.nsend(
-      Narrative.findOne(section: clonedSection.id), 'exec'
+    Promise.promisify(Narrative.findOne, Narrative)(
+      section: clonedSection.id
     )
-
-  ).then( (clonedNarrative) ->
+  ).then((clonedNarrative) ->
     assert.isNotNull clonedNarrative, "Couldn't find a cloned narrative"
 
     assert.strictEqual clonedNarrative.title, originalNarrative.title,
@@ -368,9 +356,9 @@ test('.createDraftClone clones a public page,
   and duplicates child visualisations', (done) ->
   publicPage = originalVisualisation = null
 
-  Q.nfcall(
+  Promise.promisify(
     helpers.createIndicator
-  ).then( (indicator) ->
+  )().then((indicator) ->
     helpers.createPage(
       title: "Lovely Page"
       parent_id: indicator.id
@@ -379,30 +367,26 @@ test('.createDraftClone clones a public page,
         title: "Lovely Section"
       ]
     )
-  ).then( (page) ->
+  ).then((page) ->
     publicPage = page
 
     section = publicPage.sections[0]
-    Q.nfcall(
-      helpers.createVisualisation, {
+    Promise.promisify(helpers.createVisualisation, helpers)({
         type: "Map"
         section: section.id
-      }
-    )
-
-  ).then( (visualisation) ->
+    })
+  ).then((visualisation) ->
     originalVisualisation = visualisation
 
     publicPage.createDraftClone()
-  ).then( (clonedPage) ->
+  ).then((clonedPage) ->
 
     clonedSection = clonedPage.sections[0]
 
-    Q.nsend(
-      Visualisation.findOne(section: clonedSection.id), 'exec'
+    Promise.promisify(Visualisation.findOne, Visualisation)(
+      section: clonedSection.id
     )
-
-  ).then( (clonedVisualisation) ->
+  ).then((clonedVisualisation) ->
     assert.isNotNull clonedVisualisation, "Couldn't find a cloned visualisation"
 
     assert.strictEqual clonedVisualisation.map, originalVisualisation.map,
@@ -422,9 +406,10 @@ test(".giveSectionsNewIds on a page with one section
   and returns an array containing the section and it's original ID", (done) ->
   originalSectionId = null
 
-  Q.nfcall(
-    helpers.createIndicator
-  ).then( (indicator) ->
+  Promise.promisify(
+    helpers.createIndicator,
+    helpers
+  )().then((indicator) ->
     helpers.createPage(
       title: "Lovely Page"
       parent_id: indicator.id
@@ -433,14 +418,13 @@ test(".giveSectionsNewIds on a page with one section
         title: "Lovely Section"
       ]
     )
-  ).then( (page) ->
+  ).then((page) ->
     originalSectionId = page.sections[0].id
 
     assert.ok originalSectionId, "Created Section was expected to have an id"
 
     page.giveSectionsNewIds()
-
-  ).then( (sectionsAndOriginalIds) ->
+  ).then((sectionsAndOriginalIds) ->
 
     assert.lengthOf sectionsAndOriginalIds, 1, "Expected list of sections to have one section"
 
@@ -456,7 +440,6 @@ test(".giveSectionsNewIds on a page with one section
       "Expected the returned originalId to be the same as the original section id"
 
     done()
-
   ).catch(done)
 )
 
@@ -466,23 +449,19 @@ test(".setHeadlineToMostRecentFromParent when the parent is an indicator
 
   headlineTitle = 'Good'
   newestHeadlineStub = sinon.stub(HeadlineService::, 'getNewestHeadline', ->
-    deferred = Q.defer()
-    deferred.resolve {text: headlineTitle}
-    return deferred.promise
+    Promise.resolve({text: headlineTitle})
   )
 
   page = new Page(parent_type: 'Indicator')
   sinon.stub(page, 'getParent', ->
-    deferred = Q.defer()
-    deferred.resolve indicator
-    return deferred.promise
+    Promise.resolve(indicator)
   )
 
-  page.setHeadlineToMostRecentFromParent().then(->
+  page.setHeadlineToMostRecentFromParent().then( ->
     assert.strictEqual page.headline.text, headlineTitle
     newestHeadlineStub.restore()
     done()
-  ).catch(->
+  ).catch( ->
     newestHeadlineStub.restore()
     done()
   )
@@ -492,7 +471,7 @@ test(".setHeadlineToMostRecentFromParent when the parent is not an indicator
   doesn't modify the page headline attribute", (done) ->
   page = new Page(parent_type: 'Theme')
 
-  page.setHeadlineToMostRecentFromParent().then(->
+  page.setHeadlineToMostRecentFromParent().then( ->
     assert.isUndefined page.headline, "Expected the page headline not to be modified"
     done()
   ).catch(done)
@@ -503,15 +482,13 @@ test("When no headline is set,
   page = new Page()
   newHeadline = text: 'hat'
   sinon.stub(page, 'setHeadlineToMostRecentFromParent', ->
-    deferred = Q.defer()
     @headline =  newHeadline
-    deferred.resolve newHeadline
-    return deferred.promise
+    Promise.resolve(newHeadline)
   )
 
-  Q.nsend(
-    page, 'save'
-  ).then(->
+  Promise.promisify(
+    page.save, page
+  )().then( ->
     assert.strictEqual page.headline, newHeadline
     done()
   ).catch(done)
@@ -526,9 +503,7 @@ test('.setHeadlineToMostRecentFromParent when parent indicator has no
 
   page = new Page(parent_type: 'Indicator')
   sinon.stub(page, 'getParent', ->
-    deferred = Q.defer()
-    deferred.resolve indicator
-    return deferred.promise
+    Promise.resolve(indicator)
   )
 
   page.setHeadlineToMostRecentFromParent().then( (headline) ->
