@@ -31,23 +31,21 @@ pageSchema.methods.createDraftClone = ->
   delete attributes._id
   attributes.is_draft = true
 
-  new Promise( (resolve, reject) ->
-    Promise.promisify(Page.create, Page)(
-      attributes
-    ).then( (page) ->
-      clonedPage = page
+  Promise.promisify(Page.create, Page)(
+    attributes
+  ).then( (page) ->
+    clonedPage = page
 
-      clonedPage.giveSectionsNewIds()
-    ).then( (clonedSectionsAndOriginalSectionIds) ->
-      clonePromises = clonedSectionsAndOriginalSectionIds.map(
-        Section.cloneChildren
-      )
-      Promise.all(clonePromises)
-    ).then( ->
-      Promise.promisify(clonedPage.save, clonedPage)()
-    ).then( ->
-      resolve(clonedPage)
-    ).catch(reject)
+    clonedPage.giveSectionsNewIds()
+  ).then( (clonedSectionsAndOriginalSectionIds) ->
+    clonePromises = clonedSectionsAndOriginalSectionIds.map(
+      Section.cloneChildren
+    )
+    Promise.all(clonePromises)
+  ).then( ->
+    Promise.promisify(clonedPage.save, clonedPage)()
+  ).then( ->
+    Promise.resolve(clonedPage)
   )
 
 giveSectionNewId = (section, callback) ->

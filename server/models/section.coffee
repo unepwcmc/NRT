@@ -64,16 +64,10 @@ sectionSchema.methods.getNarrative = () ->
   return deferred.promise
 
 sectionSchema.methods.cloneChildrenBySectionId = (originalSectionId) ->
-  new Promise( (resolve, reject) =>
-    @cloneNarrativesFrom(
-      originalSectionId
-    ).then( =>
-      @cloneVisualisationsFrom(originalSectionId)
-    ).then(
-      resolve
-    ).catch(
-      reject
-    )
+  @cloneNarrativesFrom(
+    originalSectionId
+  ).then( =>
+    @cloneVisualisationsFrom(originalSectionId)
   )
 
 cloneNarrative = (narrative, callback) ->
