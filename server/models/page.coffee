@@ -127,28 +127,20 @@ pageSchema.methods.setHeadlineToMostRecentFromParent = ->
   return deferred.promise
 
 pageSchema.methods.createSectionNarratives = (attributes) ->
-  deferred = Q.defer()
-
   unless attributes?
-    deferred.resolve()
+    return Promise.resolve()
 
   Section = require('./section').model
-  Q.nsend(
-    async, 'map', attributes, Section.createSectionWithNarrative
-  ).then( (sections) =>
+
+  Promise.promisify(async.map, async)(
+    attributes, Section.createSectionWithNarrative
+  ).then((sections) =>
 
     @sections = @sections.concat(sections || [])
 
-    Q.nsend(
-      @, 'save'
-    )
-  ).then(->
-    deferred.resolve()
-  ).catch((err) ->
-    deferred.reject(err)
+    Promise.promisify(@save, @)()
   )
 
-  return deferred.promise
 
 Page = mongoose.model('Page', pageSchema)
 

@@ -153,7 +153,7 @@ module.exports = {
         object.page = page
 
         deferred.resolve(object)
-      ).fail( (err) ->
+      ).catch( (err) ->
         console.error err
         deferred.reject(err)
       )
