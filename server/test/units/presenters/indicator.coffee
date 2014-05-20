@@ -143,3 +143,18 @@ call to headlineService::calculateRecencyOfHeadline", (done) ->
   )
 
 )
+
+test(".populateHeadlineRangesFromHeadlines when given empty headlines
+doesn't throw an exception", ->
+  indicator = Indicator(
+    indicatorDefinition:
+      xAxis: 'year'
+  )
+  headlines = []
+
+  assert.doesNotThrow( ->
+      presenter = new IndicatorPresenter(indicator)
+      presenter.populateHeadlineRangesFromHeadlines(headlines)
+    , Error, "Expected populateHeadlineRangesFromHeadlines to not throw an exception"
+  )
+)
