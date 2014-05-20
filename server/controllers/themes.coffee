@@ -1,12 +1,14 @@
+_ = require('underscore')
+async = require('async')
+Q = require('q')
+Promise = require('bluebird')
+
 Indicator = require('../models/indicator').model
 Theme = require('../models/theme').model
 ThemePresenter = require('../lib/presenters/theme')
 IndicatorPresenter = require('../lib/presenters/theme')
 HeadlineService = require('../lib/services/headline')
 
-_ = require('underscore')
-async = require('async')
-Q = require('q')
 
 paramsToBoolean = (params) ->
   newParams = {}
@@ -91,58 +93,62 @@ exports.index = (req, res) ->
   )
 
 exports.show = (req, res) ->
-  Theme
-    .findOne(_id: req.params.id)
-    .populate('owner')
-    .exec( (err, theme) ->
-      if err?
-        console.error err
-        return res.render(500, "Error fetching the theme")
-
-      unless theme?
-        error = "Could not find theme with ID #{req.params.id}"
-        console.error error
-        return res.send(404, error)
-
-      indicators = []
-      theme.populateIndicators().then(->
-        indicators = theme.indicators
-
-        theme.toObjectWithNestedPage()
-      ).then( (themeObject) ->
-
-        res.render "themes/show",
-          theme: themeObject,
-          themeJSON: JSON.stringify(themeObject),
-          indicators: indicators
-
-      ).catch( (err) ->
-        console.error err
-        return res.render(500, "Error fetching theme page")
-      )
-    )
-
-exports.showDraft = (req, res) ->
-  Q.nsend(
-    Theme.findOne(_id: req.params.id).populate('owner'),
-    'exec'
-  ).then( (theme) ->
+  mongooseChain = Theme.findOne(_id: req.params.id).populate('owner')
+  Promise.promisify(
+    mongooseChain.exec,
+    mongooseChain
+  )().then((theme) ->
     unless theme?
       error = "Could not find theme with ID #{req.params.id}"
       console.error error
       return res.send(404, error)
 
-    theme.toObjectWithNestedPage(draft: true)
-  ).then( (themeObject) ->
+    indicators = []
+    theme.populateIndicators().then(->
+      indicators = theme.indicators
 
-    Theme.getIndicatorsByTheme( themeObject._id, (err, indicators) ->
+      theme.toObjectWithNestedPage()
+    ).then((themeObject) ->
+
       res.render "themes/show",
         theme: themeObject,
         themeJSON: JSON.stringify(themeObject),
         indicators: indicators
-    )
 
-  ).fail((err) ->
+    ).catch((err) ->
+      console.error err
+      return res.render(500, "Error fetching theme page")
+    )
+  ).catch((err) ->
+    console.error err
+    return res.render(500, "Error fetching the theme")
+  )
+
+exports.showDraft = (req, res) ->
+  indicators = theTheme = null
+  mongooseChain = Theme.findOne(_id: req.params.id).populate('owner')
+
+  Promise.promisify(
+    mongooseChain.exec,
+    mongooseChain
+  )().then((theme) ->
+    unless theme?
+      error = "Could not find theme with ID #{req.params.id}"
+      console.error error
+      return res.send(404, error)
+
+    theTheme = theme
+    theTheme.populateIndicators()
+  ).then( ->
+    indicators = theTheme.indicators
+    theTheme.toObjectWithNestedPage(draft: true)
+  ).then((themeObject) ->
+    res.render("themes/show",
+      theme: themeObject,
+      themeJSON: JSON.stringify(themeObject),
+      indicators: indicators
+    )
+  ).catch((err) ->
     console.error err
     return res.render(500, "Error fetching the theme")
   )
