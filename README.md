@@ -9,6 +9,13 @@ United Nations Environment Programme (UNEP) and the Abu Dhabi Global
 Environmental Data Initiative (AGEDI). You can find out more at
 [nrt.io](http://nrt.io)
 
+## Technical Archtecture
+NRT is a web application, written in CoffeeScript. The server component
+runs on Node.js and connects to a MongoDB NoSQL back-end. The client-side
+component (which runs in the user's browser) is also written in CoffeeScript,
+and precompiled to JavaScript before being sent to the user. The more extensive
+client-side components use [Backbone.js](), with [Diorama]() extensions for view nesting.
+
 ## Setup
 Grab the dependencies by running the script for your platform in
 `installers/`. If you're doing this on a development machine, you probably want
