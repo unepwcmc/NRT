@@ -227,20 +227,20 @@ Run them with
 
 `npm test`
 
-##### Using Q for deferreds in tests
+##### Using promises in tests
 
-Q.js is used through-out the application to prevent callback pyramids. One
-thing to note when using it, particularly in tests, is that you must specify a
-fail callback as well as success for every deferred, or your application will
+Promises are used through-out the application to prevent callback pyramids. One
+thing to note when using them, particularly in tests, is that you must specify a
+catch handler as well as success for every deferred, or your application will
 silently fail. In tests, you can usually just handle do this by passing mocha's
-`done` function to fail, e.g:
+`done` function to catch, e.g:
 
 ```coffeescript
 test('somePromiseFunction', (done) ->
   somePromiseFunction.then(->
     # some assertions
     done()
-  ).fail(done) # This will call done with an error as first argument, which triggers mocha's error state
+  ).catch(done) # This will call done with an error as first argument, which triggers mocha's error state
 )
 ```
 
@@ -248,12 +248,8 @@ test('somePromiseFunction', (done) ->
 
 ##### Running 'em
 
-Ensure you've run `grunt` to compile the tests, and fire up the app
-server:
-
-`npm start`
-
-Then visit [http://localhost:3000/tests](http://localhost:3000/tests)
+Ensure you've run `grunt` to compile the tests, and fire up the app, then
+visit [http://localhost:3000/tests](http://localhost:3000/tests)
 
 ##### Writing 'em
 
