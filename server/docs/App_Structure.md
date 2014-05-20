@@ -14,11 +14,12 @@ Environmental data flows into NRT from the outside. It is expected that data
 is ready to be transformed into an indicator when it reaches NRT. This data
 must conform to the structure required by the adapter it is using
 (e.g. CSV imports must conform to the CSV adapter).
-![NRT Application Structure](/unepwcmc/NRT/tree/master/client/src/images/NRT System Flow.png)
+
+![NRT Application Structure](NRT System Flow.png)
 
 # Application structure
 The application is divided into 2 directories for the client and server
-components.
+components. 
 
 ## Server
 
