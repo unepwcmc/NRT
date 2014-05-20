@@ -4,7 +4,7 @@ provides an interface for reporting on and managing the resulting indicators.
 
 Environmental data can be consumed from a variety of data sources, providing
 that data is made to conform to a structure. Different sources are supported
-using the [adaptor pattern](http://en.wikipedia.org/wiki/Adapter_pattern).
+using the [adapter pattern](http://en.wikipedia.org/wiki/Adapter_pattern).
 
 The reporting interface is a Backbone.js client-side application, which uses
 Diorama for view nesting.
