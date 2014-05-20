@@ -80,6 +80,48 @@ test("GET /:id/draft clones the Theme's Page and renders the theme", (done) ->
   )
 )
 
+test("GET /:id/draft populates and shows theme's indicators", (done) ->
+  theTheme = theIndicator = null
+  expectedText = "Very bad"
+
+  helpers.createTheme(
+    title: 'An theme'
+  ).then( (theme) ->
+
+    theTheme = theme
+    Promise.promisify(helpers.createIndicator, helpers)(
+      name: "An indicator"
+      theme: theme._id
+    )
+  ).then( (indicator) ->
+    theIndicator = indicator
+    helpers.createIndicatorData(
+      indicator: indicator._id
+      data: [{
+        value: 100,
+        year: 2013,
+        text: "Good"
+      }, {
+        value: 10,
+        year: 2014,
+        text: expectedText
+      }]
+    )
+  ).then( (indicatorData) ->
+    helpers.createPage(
+      parent_id: theIndicator._id
+      parent_type: "Indicator"
+    )
+  ).then( (page) ->
+    Promise.promisify(request.get, request)({
+      url: helpers.appurl("themes/#{theTheme.id}/draft")
+    })
+  ).spread( (res, body) ->
+    assert.match body, new RegExp(".*#{expectedText}.*")
+    done()
+  ).catch(done)
+)
+
 test('GET /:id/publish publishes the current draft and makes it publicly viewable', (done) ->
   theTheme = originalPage = draftPage = null
 
