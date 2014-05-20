@@ -4,7 +4,6 @@ _ = require('underscore')
 HeadlineService = require('../lib/services/headline.coffee')
 sectionNestingModel = require('../mixins/section_nesting_model.coffee')
 SectionSchema = require('./section.coffee').schema
-Q = require('q')
 moment = require('moment')
 Promise = require('bluebird')
 
@@ -21,7 +20,7 @@ _.extend(pageSchema.statics, sectionNestingModel)
 
 pageSchema.methods.getParent = ->
   Ownable = require("./#{@parent_type.toLowerCase()}.coffee").model
-  return Q.nsend(Ownable, 'findOne', _id: @parent_id)
+  Promise.promisify(Ownable.findOne, Ownable)(_id: @parent_id)
 
 pageSchema.methods.createDraftClone = ->
   Section = require('./section.coffee').model
@@ -76,14 +75,11 @@ pageSchema.methods.getOwnable = ->
   @getParent()
 
 pageSchema.methods.canBeEditedBy = (user) ->
-  deferred = Q.defer()
-
   if user?
-    deferred.resolve()
+    Promise.resolve()
   else
-    deferred.reject(new Error('Must be authenticated as a user to edit pages'))
+    Promise.reject(new Error('Must be authenticated as a user to edit pages'))
 
-  return deferred.promise
 
 pageSchema.pre('save', (next) ->
   if @headline?
@@ -103,26 +99,23 @@ NO_DATA_HEADLINE =
   periodEnd: null
 
 pageSchema.methods.setHeadlineToMostRecentFromParent = ->
-  deferred = Q.defer()
+  new Promise( (resolve, reject) =>
+    if @parent_type is 'Indicator'
+      @getParent().then( (parent) =>
+        headlineService = new HeadlineService(parent)
+        headlineService.getNewestHeadline()
+      ).then( (headline) =>
+        if headline?
+          @headline = headline
+        else
+          @headline = NO_DATA_HEADLINE
 
-  if @parent_type is 'Indicator'
-    @getParent().then( (parent) ->
-      headlineService = new HeadlineService(parent)
-      headlineService.getNewestHeadline()
-    ).then( (headline) =>
-      if headline?
-        @headline = headline
-      else
-        @headline = NO_DATA_HEADLINE
+        resolve(@headline)
+      ).catch(reject)
+    else
+      resolve()
+  )
 
-      deferred.resolve(@headline)
-    ).catch( (err) ->
-      deferred.reject(err)
-    )
-  else
-    deferred.resolve()
-
-  return deferred.promise
 
 pageSchema.methods.createSectionNarratives = (attributes) ->
   unless attributes?
