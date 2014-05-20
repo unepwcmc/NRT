@@ -1,16 +1,15 @@
 assert = require('chai').assert
 helpers = require '../helpers'
 request = require('request')
-url = require('url')
 _ = require('underscore')
-async = require('async')
-Q = require('q')
+Promise = require('bluebird')
 sinon = require('sinon')
-passportStub = require 'passport-stub'
+passportStub = require('passport-stub')
 
 Indicator = require('../../models/indicator').model
 Page = require('../../models/page').model
 User = require('../../models/user').model
+promisifiedRequestGet = Promise.promisify(request.get, request)
 
 suite('Indicator integrations: ')
 
@@ -18,18 +17,16 @@ test("When given a valid indicator, I should get a 200 and see the name", (done)
   indicatorName = "Dat test indicator"
   indicator = new Indicator(name: indicatorName)
 
-  indicator.save( (err, indicator) ->
-    request.get {
+  Promise.promisify(indicator.save, indicator)().then( ->
+    promisifiedRequestGet({
       url: helpers.appurl("/indicators/#{indicator.id}")
-    }, (err, res, body) ->
-      try
-        assert.equal res.statusCode, 200
+    })
+  ).spread( (res, body) ->
+    assert.equal res.statusCode, 200
 
-        assert.match body, new RegExp(".*#{indicatorName}.*")
-        done()
-      catch e
-        done(e)
-  )
+    assert.match body, new RegExp(".*#{indicatorName}.*")
+    done()
+  ).catch(done)
 )
 
 test("When given a valid indicator, I should get a 200 and see the source", (done)->
@@ -40,24 +37,20 @@ test("When given a valid indicator, I should get a 200 and see the source", (don
     }
   )
 
-  theSource = 'The indicator data source'
-
-  indicator.save( (err, indicator) ->
-    request.get {
+  Promise.promisify(indicator.save, indicator)().then( ->
+    promisifiedRequestGet({
       url: helpers.appurl("/indicators/#{indicator.id}")
-    }, (err, res, body) ->
-      try
-        assert.equal res.statusCode, 200
+    })
+  ).spread( (res, body) ->
+    assert.equal res.statusCode, 200
 
-        assert.match body, new RegExp(".*#{indicator.source.name}.*"),
-          "Expected to see the source name"
-        assert.match body, new RegExp(".*#{indicator.source.url}.*"),
-          "Expected to see the source URL"
+    assert.match body, new RegExp(".*#{indicator.source.name}.*"),
+      "Expected to see the source name"
+    assert.match body, new RegExp(".*#{indicator.source.url}.*"),
+      "Expected to see the source URL"
 
-        done()
-      catch e
-        done(e)
-  )
+    done()
+  ).catch(done)
 )
 
 test("When given a valid indicator with headlines,
@@ -72,24 +65,25 @@ test("When given a valid indicator with headlines,
     @indicator.headlineRanges = headlines
   )
 
-  indicator.save( (err, indicator) ->
-    request.get {
+  Promise.promisify(indicator.save, indicator)().then( ->
+    promisifiedRequestGet({
       url: helpers.appurl("/indicators/#{indicator.id}")
-    }, (err, res, body) ->
-      try
-        assert.equal res.statusCode, 200
+    })
+  ).spread( (res, body) ->
 
-        assert.strictEqual populateHeadlineRangeStub.callCount, 1,
-          "Expected IndicatorPresenter::populateHeadlineRangesFromHeadlines to be called"
+    assert.equal res.statusCode, 200
 
-        assert.match body, new RegExp(".*#{headlines.oldest}.*")
-        assert.match body, new RegExp(".*#{headlines.newest}.*")
+    assert.strictEqual populateHeadlineRangeStub.callCount, 1,
+      "Expected IndicatorPresenter::populateHeadlineRangesFromHeadlines to be called"
 
-        done()
-      catch e
-        done(e)
-      finally
-        populateHeadlineRangeStub.restore()
+    assert.match body, new RegExp(".*#{headlines.oldest}.*")
+    assert.match body, new RegExp(".*#{headlines.newest}.*")
+
+    done()
+  ).catch(
+    done
+  ).finally( ->
+    populateHeadlineRangeStub.restore()
   )
 )
 
@@ -100,44 +94,46 @@ test("When given a valid indicator it returns 200 and
 
   narrativeRecency = 'Out-of-date'
   populateNarrativeRecencyStub = sinon.stub(IndicatorPresenter::, 'populateNarrativeRecency', ->
-    Q.fcall(=> @indicator.narrativeRecency = narrativeRecency)
+    @indicator.narrativeRecency = narrativeRecency
+    Promise.resolve()
   )
 
   populateIsUpToDateStub = sinon.stub(IndicatorPresenter::, 'populateIsUpToDate', ->
-    Q.fcall(=> @indicator.isUpToDate = false)
+    @indicator.isUpToDate = false
+    Promise.resolve()
   )
 
-  indicator.save( (err, indicator) ->
-    request.get {
+  Promise.promisify(indicator.save, indicator)().then( ->
+    promisifiedRequestGet({
       url: helpers.appurl("/indicators/#{indicator.id}")
-    }, (err, res, body) ->
+    })
+  ).spread( (res, body) ->
 
-      try
-        assert.equal res.statusCode, 200
+    assert.equal res.statusCode, 200
 
-        assert.strictEqual populateNarrativeRecencyStub.callCount, 1,
-          "Expected IndicatorPresenter::populateNarrativeRecency to be called"
+    assert.strictEqual populateNarrativeRecencyStub.callCount, 1,
+      "Expected IndicatorPresenter::populateNarrativeRecency to be called"
 
-        assert.strictEqual populateIsUpToDateStub.callCount, 1,
-          "Expected IndicatorPresenter::populateIsUpToDate to be called"
+    assert.strictEqual populateIsUpToDateStub.callCount, 1,
+      "Expected IndicatorPresenter::populateIsUpToDate to be called"
 
-        assert.match body, new RegExp(".*#{narrativeRecency}.*"),
-          "Expected the page to include the narrative recency state"
+    assert.match body, new RegExp(".*#{narrativeRecency}.*"),
+      "Expected the page to include the narrative recency state"
 
-        assert.match body, new RegExp(".*\.icon-warning-sign"),
-          "Expected the warnign sign to show, as the indicator is out of date"
+    assert.match body, new RegExp(".*\.icon-warning-sign"),
+      "Expected the warnign sign to show, as the indicator is out of date"
 
-        done()
-      catch e
-        done(e)
-      finally
-        populateNarrativeRecencyStub.restore()
-        populateIsUpToDateStub.restore()
+    done()
+  ).catch(
+    done
+  ).finally( ->
+    populateNarrativeRecencyStub.restore()
+    populateIsUpToDateStub.restore()
   )
 )
 
 test("/indicators/:id When given a valid indicator it returns 200 and
-  shows the correct DPSIR content", (done)->
+  shows the correct DPSIR content", (done) ->
   libxmljs = require("libxmljs")
 
   indicator = new Indicator(
@@ -146,33 +142,31 @@ test("/indicators/:id When given a valid indicator it returns 200 and
       pressure: false
   )
 
-  indicator.save( (err) ->
-    request.get {
+  Promise.promisify(indicator.save, indicator)().then( ->
+    promisifiedRequestGet({
       url: helpers.appurl("/indicators/#{indicator.id}")
-    }, (err, res, body) ->
+    })
+  ).spread( (res, body) ->
 
-      try
-        assert.equal res.statusCode, 200
+    assert.equal res.statusCode, 200
 
-        html = libxmljs.parseHtml(body)
+    html = libxmljs.parseHtml(body)
 
-        dpsirListEl = html.get("//ul[@class='dpsir']")
-        assert.isDefined dpsirListEl, "Expected to see a UL containing the DPSIR list"
+    dpsirListEl = html.get("//ul[@class='dpsir']")
+    assert.isDefined dpsirListEl, "Expected to see a UL containing the DPSIR list"
 
-        activeDPSIRs = dpsirListEl.find("li[@class='active']")
-        assert.lengthOf activeDPSIRs, 1,
-          "Expected one of DPSIR to be active"
+    activeDPSIRs = dpsirListEl.find("li[@class='active']")
+    assert.lengthOf activeDPSIRs, 1,
+      "Expected one of DPSIR to be active"
 
-        assert.strictEqual activeDPSIRs[0].text(), "D",
-          "Expected the active DPSIR to be Driver"
+    assert.strictEqual activeDPSIRs[0].text(), "D",
+      "Expected the active DPSIR to be Driver"
 
-        done()
-      catch e
-        done(e)
-  )
+    done()
+  ).catch(done)
 )
 
-test("When given an indicator that doesn't exist, I should get a 404 response", (done)->
+test("When given an indicator that doesn't exist, I should get a 404 response", (done) ->
   indicatorId = new Indicator().id
 
   request.get {
@@ -204,29 +198,22 @@ test("GET /:id/draft clones the Indicator's Page and renders the indicator", (do
       parent_type: 'Indicator'
       parent_id: theIndicator.id
     )
-
   ).then( (page) ->
-
     originalPage = page
 
-    Q.nfcall(
-      request.get, {
-        url: helpers.appurl("indicators/#{theIndicator.id}/draft")
-      }
-    )
-
+    promisifiedRequestGet({
+      url: helpers.appurl("indicators/#{theIndicator.id}/draft")
+    })
   ).spread( (res, body) ->
 
-    try
     assert.equal res.statusCode, 200
 
     assert.match body, new RegExp(".*An indicator.*")
 
-    Q.nsend(
-      Page.find(parent_id: theIndicator.id, is_draft: true),
-      'exec'
+    Promise.promisify(Page.find, Page)(
+      parent_id: theIndicator.id,
+      is_draft: true
     )
-
   ).then( (clonedPage) ->
 
     assert.isNotNull clonedPage, 'Expected a draft version of the Page'
@@ -238,9 +225,7 @@ test("GET /:id/draft clones the Indicator's Page and renders the indicator", (do
 
     done()
 
-  ).catch( (err) ->
-    done(err)
-  )
+  ).catch(done)
 )
 
 test("GET /:id/draft redirects back if the user is not logged in", (done) ->
@@ -262,12 +247,9 @@ test("GET /:id/draft redirects back if the user is not logged in", (done) ->
 
     originalPage = page
 
-    Q.nfcall(
-      request.get, {
-        url: helpers.appurl("indicators/#{theIndicator.id}/draft")
-      }
-    )
-
+    promisifiedRequestGet({
+      url: helpers.appurl("indicators/#{theIndicator.id}/draft")
+    })
   ).spread( (res, body) ->
 
     assert.equal res.statusCode, 200
@@ -304,23 +286,18 @@ test("GET /:id/discard_draft discards all drafts and renders the published versi
   ).then( (clonedPage) ->
     draftPage = clonedPage
 
-    Q.nfcall(
-      request.get, {
-        url: helpers.appurl("indicators/#{theIndicator.id}/discard_draft")
-      }
-    )
-
+    promisifiedRequestGet({
+      url: helpers.appurl("indicators/#{theIndicator.id}/discard_draft")
+    })
   ).spread( (res, body) ->
 
     assert.equal res.statusCode, 200
 
     assert.match body, new RegExp(".*An indicator.*")
 
-    Q.nsend(
-      Page.find(parent_id: theIndicator.id),
-      'exec'
+    Promise.promisify(Page.find, Page)(
+      parent_id: theIndicator.id
     )
-
   ).then( (pages) ->
 
     assert.lengthOf pages, 1
@@ -352,12 +329,9 @@ test("GET /:id/discard_draft redirects back if the user is not logged in", (done
   ).then( (clonedPage) ->
     draftPage = clonedPage
 
-    Q.nfcall(
-      request.get, {
-        url: helpers.appurl("indicators/#{theIndicator.id}/discard_draft")
-      }
-    )
-
+    promisifiedRequestGet({
+      url: helpers.appurl("indicators/#{theIndicator.id}/discard_draft")
+    })
   ).spread( (res, body) ->
 
     assert.equal res.statusCode, 200
@@ -395,23 +369,26 @@ test('GET /:id/publish publishes the current draft and makes it publicly
   ).then( (clonedPage) ->
     draftPage = clonedPage
 
-    Q.nfcall(
-      request.get, {
-        url: helpers.appurl("indicators/#{theIndicator.id}/publish")
-      }
-    )
+    promisifiedRequestGet({
+      url: helpers.appurl("indicators/#{theIndicator.id}/publish")
+    })
   ).spread( (res, body) ->
 
     assert.equal res.statusCode, 200
-
     assert.match body, new RegExp(".*An indicator.*")
 
-    Q.nsend(
-      Page.find(parent_id: theIndicator.id, is_draft: false),
-      'exec'
+    promisifiedPageFind = Promise.promisify(Page.find, Page)
+    getPublishedPage = promisifiedPageFind(
+      parent_id: theIndicator.id,
+      is_draft: false
+    )
+    getDraftPages = promisifiedPageFind(
+      parent_id: theIndicator.id,
+      is_draft: true
     )
 
-  ).then( (publishedPage) ->
+    Promise.all([getPublishedPage, getDraftPages])
+  ).spread( (publishedPage, draftPages) ->
 
     assert.isNotNull publishedPage, 'Expected a published version of the Page'
     assert.notStrictEqual(
@@ -420,16 +397,9 @@ test('GET /:id/publish publishes the current draft and makes it publicly
       "Expected published page to have a different ID from the original page"
     )
 
-    Q.nsend(
-      Page.find(parent_id: theIndicator.id, is_draft: true),
-      'exec'
-    )
-  ).then( (draftPages) ->
-
     assert.lengthOf draftPages, 0, "Expected no draft pages to exist"
 
     done()
-
   ).catch(done)
 )
 
@@ -455,11 +425,9 @@ test('GET /:id/publish redirects back if the user is not logged in', (done) ->
   ).then( (clonedPage) ->
     draftPage = clonedPage
 
-    Q.nfcall(
-      request.get, {
-        url: helpers.appurl("indicators/#{theIndicator.id}/publish")
-      }
-    )
+    promisifiedRequestGet({
+      url: helpers.appurl("indicators/#{theIndicator.id}/publish")
+    })
   ).spread( (res, body) ->
 
     assert.equal res.statusCode, 200
