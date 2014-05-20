@@ -1,9 +1,6 @@
 assert = require('chai').assert
 helpers = require '../helpers'
 request = require('request')
-async = require('async')
-url = require('url')
-_ = require('underscore')
 
 suite('Dashboard')
 
