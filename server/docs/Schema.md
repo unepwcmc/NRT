@@ -1,4 +1,4 @@
-# Mongo Schema
+# NRT MongoDB Model Schema
 
 ## Indicator
 * name: String
