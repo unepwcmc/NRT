@@ -1,7 +1,7 @@
-#### Automatic deployments
+# Automatic deployments
 Servers can be deployed to automatically using GitHub deploy hooks.
 
-##### Config
+## Config
 Before a server can be deployed to, you must configure it in
 `server/config/<env>.json` with a 'deploy' attribute, containing:
 
@@ -23,7 +23,7 @@ Then, modify your config to include these credentials:
   }
 ```
 
-##### GitHub Deploy hooks
+## GitHub Deploy hooks
 Servers must be configured to listen to the creation of tags on Github:
 
   1. Add a WebHook [service hook](https://github.com/unepwcmc/NRT/settings/hooks)
@@ -41,7 +41,7 @@ pull the new code and update the server's local repository.
 **Make sure you are running your application with `forever`
 or it will not restart after a deploy**.
 
-##### The deploy command
+## The deploy command
 To deploy, run the deploy command on your local machine:
 
     cd server && coffee lib/tasks/deploy.coffee
@@ -49,4 +49,3 @@ To deploy, run the deploy command on your local machine:
 This will ask for the name of your target server (staging/production), and
 what the feature introduces, and then create a tag. Once this tag has been
 pushed, the Github deploy hooks take over
-

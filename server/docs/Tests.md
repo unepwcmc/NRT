@@ -1,6 +1,6 @@
-### Tests
+## Tests
 
-#### Server
+### Server
 
 In the `server/test/` folder (unsurprisingly). We're using mocha with the qunit
 interface and using the chai assertion syntax.
@@ -9,7 +9,7 @@ Run them with
 
 `npm test`
 
-##### Using promises in tests
+#### Using promises in tests
 
 Promises are used through-out the application to prevent callback pyramids. One
 thing to note when using them, particularly in tests, is that you must specify a
@@ -26,14 +26,14 @@ test('somePromiseFunction', (done) ->
 )
 ```
 
-#### Client
+### Client
 
-##### Running 'em
+#### Running 'em
 
 Ensure you've run `grunt` to compile the tests, and fire up the app, then
 visit [http://localhost:3000/tests](http://localhost:3000/tests)
 
-##### Writing 'em
+#### Writing 'em
 
 The tests are written in mocha, using the qunit syntax with chai for
 asserts. Write tests in Coffeescript in the `client/test/src/` folder and

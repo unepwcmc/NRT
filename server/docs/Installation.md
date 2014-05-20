@@ -1,5 +1,5 @@
 
-## Setup
+# Setup
 Grab the dependencies by running the script for your platform in
 `installers/`. If you're doing this on a development machine, you probably want
 to review the installers first and remove any dependencies you already have
@@ -13,53 +13,53 @@ installed (don't worry, they're short!)
 
   `cd server/ && npm run-script setup`
 
-### Configuration
+## Configuration
 Your application needs configuration files for the environment it will
 be run in. View the [configuration README](server/config/README.md) for
 possible options.
 
-#### Installing in windows as a service:
+### Installing in windows as a service:
 Install the application on windows as a service using
 [NSSM](http://nssm.cc/). Configure NSSM as such:
 
-###### Application:
+##### Application:
 * Path: C:\Path\To\node.exe
 * Startup Directory: C:\Path\To\NRT\server
 * Options: .\bin\server.js
 
-###### I/O
+##### I/O
 Port all your IO to NRT\server\logs\service.log to be able to read
 STDOUT/ERR messages
 
-###### Environment Variables
+##### Environment Variables
 ```
 NODE_ENV=production
 AUTH_TOKEN=changeme
 PORT=80
 ```
 
-###### Check your path
+##### Check your path
 If you're intending to use this deployment for automated deploy, check that
 your environment variables are setup for the SYSTEM user which which will run
 the service. Otherwise, your deploy will fail with missing commands.
 
-## Running the application
+# Running the application
 
-### Development
+## Development
 
-#### Start the server
+### Start the server
 
 In **development**, supervisor is used to handle exceptions:
 
 `cd server/ && npm start`
 
-#### Asset compilation
+### Asset compilation
 
 *For more info, check out the [asset README](client/README.md).*
 
 `cd client && grunt && grunt watch`
 
-#### Logging in
+### Logging in
 
 In development, the users will be seeded on application boot. To login,
 pick a user from `server/lib/users.json`, e.g.
@@ -67,13 +67,13 @@ pick a user from `server/lib/users.json`, e.g.
     nrt@nrt.com
     password
 
-### Seeding data
+## Seeding data
 Data is seeded and updated from the /admin route. If you wish to update the
 indicators, you'll also need the
 [Indicatorator](https://github.com/unepwcmc/Indicatorator) running. If backup
 data is ok, just click 'Seed from backup'
 
-#### Faking Indicator Data Backups
+### Faking Indicator Data Backups
 There is a [JSON Generator](http://json-generator.com) script which
 generates data in the same format as the indicator data backup in
 `server/lib/indicator_data.json`. To generate fake data backups:
@@ -84,9 +84,9 @@ generates data in the same format as the indicator data backup in
   3. Seed from backup by visiting `/admin` and clicking 'seed from
      backup'
 
-### Production
+## Production
 
-#### Start the server
+### Start the server
 
 **Windows**
 
@@ -97,19 +97,19 @@ generates data in the same format as the indicator data backup in
 
 * `cd server/ && npm run-script production`
 
-#### Asset compilation
+### Asset compilation
 
 *For more info, check out the [asset README](client/README.md).*
 
 `cd client && grunt`
 
-#### Authentication and logging in
+### Authentication and logging in
 
 In production, no users are seeded and have to be created manually.
 However, you can use an LDAP server for authentication once it has been
 configured. Note that for EAD LDAP use, you must be within the EAD VPN.
 
-##### LDAP
+#### LDAP
 
 NRT can connect to a LDAP to authenticate and create users.
 LDAP is configured by the file `server/config/ldap.json`, and an example
