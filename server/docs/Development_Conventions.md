@@ -17,9 +17,9 @@ obviously comment when your code isn't intuitive.
 
 ## Documentation
 
-New developers will expected to be able to get the application up and running
-on their development machines purely by reading the README. Doing anything in
-the app workflow which isn't intuitive? Make sure it's in here.
+New developers will be expected to be able to get the application up and
+running on their development machines purely by reading the README. Doing
+anything in the app workflow which isn't intuitive? Make sure it's in here.
 
 ## Testing
 The application is built test-first, using TDD. New features are expected to have
