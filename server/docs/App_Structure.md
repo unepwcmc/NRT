@@ -17,6 +17,16 @@ must conform to the structure required by the adapter it is using
 
 ![NRT Application Structure](NRT System Flow.png)
 
+Data starts of on the left side of the diagram, in its raw collected state.
+Data is then collected and processed to be turned into an environmental
+indicator with a single value. Once data conforms to an NRT adapter
+specification, it can be imported into NRT. The 'Indicatorator' then performs
+formatting, type coercion and, finally, optional threshold application. This
+adds a text description to describe what the indicators raw value means, e.g. a
+value of 28% might produce the value 'Good'.
+Once this process has taken place, the indicator is stored in the MongoDB
+database and it ready for use in the application.
+
 # Application structure
 The application is divided into 2 directories for the client and server
 components. 
