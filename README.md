@@ -22,6 +22,7 @@ client-side components use [Backbone.js](), with [Diorama]() extensions for view
 * [Automated Deployment](server/docs/Deployment.md)
 * [Development workflow, conventions and tips](server/docs/Tests.md)
 * [Application architecture and structure](server/docs/App_Structure.md)
+* [Database Entity Schema](server/docs/Schema.md)
 * [Testing](server/docs/Tests.md)
 
 ## User Management
