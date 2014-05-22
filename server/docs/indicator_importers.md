@@ -35,10 +35,10 @@ and can be used for informative headers. As an example:
 
 Threshold | Text
 --------- | ----
-0.5       | Good
-2.5       | Bad
-5         | Dangerous
 100       | Catastrophic
+5         | Dangerous
+2.5       | Bad
+0.5       | Good
 
 #### 'Data' worksheet
 This worksheet is not used during the import process, but has to
