@@ -20,17 +20,25 @@ in no particular order:
 #### 'Definition' worksheet
 This worksheet defines the main properties of the wanted indicator.
 Specifically, three values must be provided on the second row of
-the worksheet. The first row may comprise the following headers:
+the worksheet. The first row may comprise indicative headers.
+As an example:
 
-* What's the name of this indicator?
-* What theme does this indicator relate to?
-* What unit does the indicator value use?
+What's the name of this indicator? | What theme does this indicator relate to? | What unit does the indicator value use?
+---------------------------------- | ----------------------------------------- | ---------------------------------------
+Indicator Name                     | Theme name                                | mg/m3
 
 #### 'Ranges' worksheet
 This worksheet defines the ranges to be applied to the indicator.
 These have to be provided as a list of (Threshold,Text) tuples on
 the first two columns of the worksheet. The first row is skipped,
-and can be used for informative headers.
+and can be used for informative headers. As an example:
+
+Threshold | Text
+--------- | ----
+0.5       | Good
+2.5       | Bad
+5         | Dangerous
+100       | Catastrophic
 
 #### 'Data' worksheet
 This worksheet is not used during the import process, but has to
