@@ -2,7 +2,7 @@ assert = require('chai').assert
 sinon = require 'sinon'
 
 Git = require '../../lib/git'
-CommandRunner = require '../../bin/command-runner'
+CommandRunner = require '../../lib/command_runner'
 
 suite('Git')
 

@@ -11,8 +11,9 @@
     "production": "NODE_ENV=production forever -c node ./bin/server.js",
     "win-production": "start cmd.exe /K bin\\server.bat",
     "setup": "node bin/setup.js",
-    "backup-data": "coffee lib/tasks/backupIndicatorData.coffee",
-    "create-user": "coffee lib/tasks/create-user.coffee"
+    "backup-data": "coffee lib/tasks/backup_indicator_data.coffee",
+    "create-user": "coffee lib/tasks/create_user.coffee",
+    "deploy": "coffee lib/tasks/deploy.coffee"
   },
   "repository": {
     "type": "git",

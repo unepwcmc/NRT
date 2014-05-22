@@ -1,4 +1,4 @@
-var CommandRunner = require('./command-runner')
+var CommandRunner = require('../lib/command_runner')
 var PARENT_DIR = process.cwd() + "/../";
 
 process.chdir(PARENT_DIR + '/client/');

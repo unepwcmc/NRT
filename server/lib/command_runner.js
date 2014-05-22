@@ -8,8 +8,8 @@ printProcessMessages = function(theProcess) {
   });
 };
 
-usingWindows = function() {
-  return new RegExp("^win").test(process.platform);
+var usingWindows = function() {
+  return /^win/.test(process.platform);
 };
 
 exports.spawn = function(processName, args) {

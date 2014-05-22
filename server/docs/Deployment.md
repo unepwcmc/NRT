@@ -44,7 +44,7 @@ or it will not restart after a deploy**.
 ## The deploy command
 To deploy, run the deploy command on your local machine:
 
-    cd server && coffee lib/tasks/deploy.coffee
+    cd server && npm run-script deploy
 
 This will ask for the name of your target server (staging/production), and
 what the feature introduces, and then create a tag. Once this tag has been
