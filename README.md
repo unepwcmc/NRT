@@ -19,6 +19,7 @@ client-side components use [Backbone.js](), with [Diorama]() extensions for view
 ## README Topics
 * [Installing and configuring NRT](server/docs/Installation.md)
 * [Configuring Indicators](server/docs/indicator_definitions.md)
+* [Importing indicators](server/docs/indicator_importers.md)
 * [Indicatoration](server/components/indicatorator/README.md)
 * [Automated Deployment](server/docs/Deployment.md)
 * [Development workflow, conventions and tips](server/docs/Tests.md)
