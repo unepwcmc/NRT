@@ -15,7 +15,7 @@ is ready to be transformed into an indicator when it reaches NRT. This data
 must conform to the structure required by the adapter it is using
 (e.g. CSV imports must conform to the CSV adapter).
 
-![NRT Application Structure](NRT System Flow.png)
+![NRT Application Structure](SystemFlow.png)
 
 Data starts of on the left side of the diagram, in its raw collected state.
 Data is then collected and processed to be turned into an environmental
@@ -29,7 +29,7 @@ database and it ready for use in the application.
 
 # Application structure
 The application is divided into 2 directories for the client and server
-components. 
+components.
 
 ## Server
 
