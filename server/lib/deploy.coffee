@@ -1,7 +1,7 @@
 Promise = require 'bluebird'
 Git = require('./git')
 GitHubDeploy = require('./git_hub_deploy')
-CommandRunner = require('../bin/command-runner')
+CommandRunner = require('../lib/command_runner')
 
 exports.updateFromTag = (tagName, deploy)->
   new Promise( (resolve, reject) ->
