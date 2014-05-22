@@ -68,10 +68,10 @@ pick a user from `server/lib/users.json`, e.g.
     password
 
 ## Seeding data
-Data is seeded and updated from the /admin route. If you wish to update the
-indicators, you'll also need the
-[Indicatorator](https://github.com/unepwcmc/Indicatorator) running. If backup
-data is ok, just click 'Seed from backup'
+Data is seeded and updated from the /admin route. If you wish to add new
+indicators, or update the existing ones, have a look at the
+[Indicatoration](server/components/indicatorator/README.md) documentation.
+If backup data is ok, just click 'Seed from backup'
 
 ### Faking Indicator Data Backups
 There is a [JSON Generator](http://json-generator.com) script which

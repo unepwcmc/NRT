@@ -45,4 +45,4 @@ This worksheet is not used during the import process, but has to
 be present for the indicatoration to succesfully import and
 indicatorate the environmental data. Further information on this
 process can be found in the
-[indicatoration documentation](../components/indicatoration/README.md)
+[indicatoration documentation](server/components/indicatorator/README.md)
