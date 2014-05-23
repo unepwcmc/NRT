@@ -27,7 +27,6 @@ The config is accessible thusly:
 {
   "instance_name": "Abu Dhabi", # The name of the instance
   "iso2": "AD", # ISO 2 country code
-  "server_name": "abu-dhabi-production", # server_name, used to identify deploy targets
   "db": {
     "name: "nrt_production" # The name of your database
   }
@@ -37,6 +36,7 @@ The config is accessible thusly:
     "ldap": true # Enable LDAP authentication
   }
   "deploy": { # Automatic deployment config
+    "server_name": "abu-dhabi-production", # server_name, used to identify deploy targets
     "github": { # Login details for GitHub deployment statuses
       "username": "123abc",
       "password": "x-oauth-token"
