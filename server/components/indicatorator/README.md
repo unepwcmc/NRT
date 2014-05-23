@@ -1,67 +1,29 @@
 Indicatorator
 =================
 
-Turns environmental parameter data into indicators, by adding text!
+Turns environmental parameter data into indicators, by adding text
 
-## Running it
+## Indicatoration configuration
 
-* `npm install`
+Parameter data is indicatorated following the indicatoration configuration
+defined in the indicator schema, under the key 'indicatorationConfig'.
 
-**Development**
+The 'indicatorationConfig' key configures 4 different aspects of the
+indicatoration: sources, ranges, sorting, and subindicatoration.
 
-  * `npm start`
-
-**Production**
-
-  * `node index.js`
-
-### Installing in Windows as a service:
-
-Install the application on Windows as a service using
-[NSSM](http://nssm.cc/). Configure NSSM as such:
-
-###### Application:
-
-* Path: C:\Path\To\node.exe
-* Startup Directory: C:\Path\To\Indicatorator
-* Options: .\index.js
-
-###### I/O
-
-Port all your IO to Indicatorator\logs\service.log to be able to read
-STDOUT/ERR messages
-
-###### Environment Variables
-
-```
-NODE_ENV=production
-PORT=3002
-```
-
-## Indicator definitions
-
-Indicator definitions are stored in `./definitions/indicators.json`. These
-files are responsible for listing the indicator and the ranges for the
-indicator's threshold. Examples are stored in `./definitions/examples/`
-
-Originally, we have different types for different indicators, for
-example 'esri', 'cartodb' etc. Now, we're pushing attributes towards a
-consistent type named 'standard', and instead handling differences using
-the 'source' attribute described below.
-
-### Indicator 'sources'
-Indicators must specify a 'source' attribute. This attribute tells the
-indicatorator where to query the data from, and how to format it.
+### Sources
+Indicators must specify an 'indicatorationConfig.source' attribute. This attribute
+tells the indicatorator where to query the data from, and how to format it.
 
 Each 'source' has a corresponding 'getter' module (responsible for
 fetching the data) and a 'formatter' module (responsible for formatting
 the queried responses).
 
-### Possible Source values
+### Possible 'source' values
 
 #### esri
 For indicator data stored in ESRI services and served over their REST JSON API.
-It is required to specify (in addition to source: 'esri'):
+When the source property is set to 'esri', the following properties have to be provided:
 
 * `esriConfig`:
   * `serverUrl`: The root of the URl of the server, e.g. http://myserver.net/rest/services
@@ -71,26 +33,30 @@ It is required to specify (in addition to source: 'esri'):
 These 3 components can be extracted from an esri rest URL, like so:
 
     http://myserver.net/rest/services/NRT_AD_AirQuality/FeatureServer/2
-    < serverUrl --------------------> < serviceName -->               <featureServer>
+    <---------- serverUrl ----------> <- serviceName ->               ^featureServer
 
 #### gdocs
 
-For indicator data stored in 'google' docs, your indicator definitions need to
-include a `spreadsheetKey` attribute. The spreadsheet in question must be
-public *and* 'published for web' from the 'File -> publish for web' in google
-docs.
+For indicator data stored in Google Drive (aka Google Docs), the property
+'indicatorationConfig.spreadsheetKey' must be provided. The spreadsheet in question
+must be public *and* 'published for web' (to do so, follow 'File -> Publish for web' in
+Google Drive).
 
-The columns for the table are:
+The given spreadsheet must contain a worksheet named 'Data', which may contain data
+formatted as following:
 
-    Theme, Indicator, SubIndicator, <date>, <date>, <date>
+Year  | Value
+----- | -----
+1999  | 150
+2001  | 200
+2014  | 250.2
 
-The first three are simply strings, name is matched on in the indicator
-definition. The date columns should be dates, which will be converted to epochs
+Years must be provided as integers, while values can be either integers or decimals.
 
 #### cartodb
 
-For indicator data stored in CartoDB tables, your indicator definitions
-need to include `table_name` and CartoDB `username` attributes. The
+For indicator data stored in CartoDB tables, the indicatorationConfig
+key needs to have the properties `table_name` and CartoDB `username` set. The
 CartoDB table must be publicly available.
 
 You can also use [CartoDB
@@ -116,16 +82,36 @@ There is an
 data table available on [Google
 Docs](https://docs.google.com/spreadsheet/ccc?key=0Aum2hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE&usp=drive_web#gid=0).
 
-### Optional standard indicator features
+### Ranges
 
-#### applyRanges: (true)
-By default, indicatoration applies text values to raw indicator data, using the
-ranges specified in the 'range' attribute. If you don't want this to happen,
-specify applyRanges: false
+One of the main tasks of the indicatorator is to apply ranges to the
+indicatorated data, following the 'indicatorationConfig.range' property,
+which is an array.
 
-#### reduceField: (null)
+Every element of the 'range' array is an object composed of two properties:
+
+* `threshold`: the minimum value (following default Javascript comparison) to assign
+    a given datum to this range
+* `text`: the text to show when the given data is inside this range
+
+If no range application is needed, a 'indicatorationConfig.applyRanges' property set to false
+can be provided. This will skip the application of ranges during the import of data.
+
+### Subindicatoration
+
 Basic sub indicator support is implemented by allowing grouping on a text field.
-For example, if you had a collection of data for the same year but for different
-monitoring stations, specify the group field here, e.g. 'station' to have the
-data grouped on the station, by periodStart
+This is achieved by setting the property 'indicatorationConfig.reduceField' to the
+group field. For example, if you had a collection of data for the same year but for
+different monitoring stations, specify the group field here, e.g. 'station' to have
+the data grouped on the station, by periodStart.
+
+### Sorting
+
+As last step of the indicatoration process, data can be sorted by setting the
+'indicatorationConfig.sorting' property to an object containing the following two
+fields:
+
+* `field`: the field of the indicator data to sort on
+* `order`: the order to follow when sorting the data.
+    This can be either 'asc' or 'desc', case insensitive.
 

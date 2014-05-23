@@ -3,7 +3,7 @@ helpers = require '../helpers'
 sinon = require 'sinon'
 Promise = require 'bluebird'
 
-CommandRunner = require('../../bin/command-runner')
+CommandRunner = require('../../lib/command_runner')
 Git = require('../../lib/git')
 GitHubDeploy = require('../../lib/git_hub_deploy')
 Deploy = require('../../lib/deploy')

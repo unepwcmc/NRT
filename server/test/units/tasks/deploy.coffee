@@ -7,7 +7,7 @@ Promise = require 'bluebird'
 crypto = require('crypto')
 
 
-CommandRunner = require('../../../bin/command-runner')
+CommandRunner = require('../../../lib/command_runner')
 Git = require('../../../lib/git')
 GitHubDeploy = require('../../../lib/git_hub_deploy')
 

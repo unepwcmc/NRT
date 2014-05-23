@@ -6,7 +6,7 @@ sinon = require('sinon')
 Q = require('q')
 Promise = require('bluebird')
 
-CommandRunner = require('../../bin/command-runner')
+CommandRunner = require('../../lib/command_runner')
 AppConfig = require('../../initializers/config')
 range_check = require('range_check')
 Deploy = require('../../lib/deploy')

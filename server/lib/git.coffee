@@ -1,5 +1,5 @@
 Promise = require('bluebird')
-CommandRunner = require '../bin/command-runner'
+CommandRunner = require '../lib/command_runner'
 
 exports.createTag = (tagName, description) ->
   return new Promise( (resolve, reject) ->
