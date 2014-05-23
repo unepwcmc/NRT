@@ -1,4 +1,5 @@
-express = require("express")
+fs = require('fs')
+express = require('express')
 hbs = require('express-hbs')
 http = require('http')
 path = require('path')
@@ -84,15 +85,28 @@ exports.createApp = ->
 
   app
 
-exports.start = (port, callback) ->
+exports.start = (callback) ->
   app = exports.createApp()
 
   seedData() unless app.get('env') is "test"
+  port = retrievePort()
 
-  server = http.createServer(app).listen port, (err) ->
-    callback err, server
+  server = http.createServer(app).listen(port, (err) ->
+    callback(err, server, port)
+  )
 
   return app
+
+retrievePort = ->
+  serverConfig = appConfig.get('server')
+  deployConfig = appConfig.get('deploy')
+  if serverConfig.use_unix_sockets
+    socketPath = "/tmp/#{deployConfig.server_name}.sock"
+
+    fs.unlinkSync(socketPath) if fs.existsSync(socketPath)
+    return socketPath
+  else
+    return serverConfig.port || 3000
 
 seedData = ->
   Theme = require("./models/theme").model

@@ -7,9 +7,10 @@ factory = require('./factory')
 async = require('async')
 
 before( (done) ->
-  expressApp = app.start 3001, (err, server) ->
+  expressApp = app.start((err, server) ->
     test_server = server
     done()
+  )
   passportStub.install expressApp
 )
 
