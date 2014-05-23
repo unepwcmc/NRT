@@ -91,7 +91,14 @@ exports.start = (callback) ->
   seedData() unless app.get('env') is "test"
   port = retrievePort()
 
+  # replace default umask with 0000 and save
+  # original umask
+  defaultProcessUmask = process.umask(0o000)
+
   server = http.createServer(app).listen(port, (err) ->
+    # reset umask
+    process.umask(defaultProcessUmask)
+
     callback(err, server, port)
   )
 
