@@ -87,12 +87,14 @@
               <a class="source" href="{{indicator.source.url}}">{{indicator.source.name}}</a>
             </span>
           </li>
-          <li>
-            <h4>Indicator definition</h4>
-            <span>
-              <a class="source" href="/assets/Big book of indicators.pdf">Download PDF</a>
-            </span>
-          </li>
+          {{#if APP_CONFIG.features.ad_branding}}
+            <li>
+              <h4>Indicator definition</h4>
+              <span>
+                <a class="source" href="/assets/Big book of indicators.pdf">Download PDF</a>
+              </span>
+            </li>
+          {{/if}}
         </ul>
       </section>
     </aside>
