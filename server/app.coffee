@@ -113,7 +113,7 @@ retrievePort = ->
     fs.unlinkSync(socketPath) if fs.existsSync(socketPath)
     return socketPath
   else
-    return serverConfig.port || 3000
+    return serverConfig.port || process.env.PORT || 3000
 
 seedData = ->
   Theme = require("./models/theme").model
