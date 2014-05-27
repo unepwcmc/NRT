@@ -10,6 +10,7 @@ MongoStore = require('connect-mongo')(express)
 appConfig = require('./initializers/config')
 i18n = require('i18n')
 flash = require('connect-flash')
+Promise = require('bluebird')
 
 
 exports.createApp = ->
@@ -120,9 +121,20 @@ seedData = ->
   Indicator = require("./models/indicator").model
   IndicatorData = require("./models/indicator_data").model
 
-  Theme.seedData()
-  .then(Indicator.seedData)
-  .fail((err) ->
+
+  Promise.promisify(Theme.count, Theme)(
+    null
+  ).then((themeCount) ->
+    if themeCount == 0
+      Theme.seedData()
+    else
+      Promise.promisify(Theme.find, Theme)()
+  ).then((themes) ->
+    Promise.promisify(Indicator.count, Indicator)(null)
+  ).then((indicatorsCount) ->
+    if indicatorsCount == 0
+      Indicator.seedData()
+  ).catch((err) ->
     console.log "error seeding indicator data:"
     console.error err
     console.error err.stack

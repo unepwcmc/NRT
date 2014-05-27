@@ -86,45 +86,29 @@ createIndicatorWithSections = (indicatorAttributes, callback) ->
   )
 
 indicatorSchema.statics.seedData = ->
-  deferred = Q.defer()
+  deferred = Promise.defer()
 
-  getAllIndicators = ->
-    Indicator.find((err, indicators) ->
-      if err?
-        deferred.reject(err)
-      else
-        deferred.resolve(indicators)
+  try
+    dummyIndicators = JSON.parse(
+      fs.readFileSync("#{process.cwd()}/config/seeds/indicators.json", 'UTF8')
+    )
+  catch err
+    console.log err
+    return Promise.reject(
+      "Unable to load indicator seed file, have you copied seeds from config/instances/ to config/seeds/?"
     )
 
-  Indicator.count(null, (error, count) ->
-    if error?
-      return deferred.reject(error)
+  replaceThemeNameWithId(
+    dummyIndicators
+  ).then( (indicators) ->
+    async.map(dummyIndicators, createIndicatorWithSections, (err, indicators) ->
+      if err?
+        return deferred.reject(err)
 
-    if count is 0
-      try
-        dummyIndicators = JSON.parse(
-          fs.readFileSync("#{process.cwd()}/config/seeds/indicators.json", 'UTF8')
-        )
-      catch err
-        console.log err
-        return deferred.reject(
-          "Unable to load indicator seed file, have you copied seeds from config/instances/ to config/seeds/?"
-        )
-
-      replaceThemeNameWithId(
-        dummyIndicators
-      ).then( (indicators) ->
-        async.map(dummyIndicators, createIndicatorWithSections, (err, indicators) ->
-          if err?
-            return deferred.reject(err)
-
-          deferred.resolve(indicators)
-        )
-      ).fail( (err) ->
-        deferred.reject(error)
-      )
-    else
-      getAllIndicators()
+      deferred.resolve(indicators)
+    )
+  ).catch( (err) ->
+    deferred.reject(error)
   )
 
   return deferred.promise
