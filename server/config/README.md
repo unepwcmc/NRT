@@ -26,15 +26,17 @@ The config is accessible thusly:
 ```json
 {
   "instance_name": "Abu Dhabi", # The name of the instance
-  "server_name": "abu-dhabi-production", # server_name, used to identify deploy targets
+  "iso2": "AD", # ISO 2 country code
   "db": {
     "name: "nrt_production" # The name of your database
   }
   "features": { # Toggle features
     "dpsir_filtering": true, # Enable visibility and filtering of DPSIR attributes
+    "open_access": false, # If enabled, user is not required to login
     "ldap": true # Enable LDAP authentication
   }
   "deploy": { # Automatic deployment config
+    "server_name": "abu-dhabi-production", # server_name, used to identify deploy targets
     "github": { # Login details for GitHub deployment statuses
       "username": "123abc",
       "password": "x-oauth-token"

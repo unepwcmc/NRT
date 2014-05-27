@@ -1,4 +1,7 @@
 {
+  "server": {
+    "port": 3001
+  },
   "db": {
     "name": "such_nrt_tests"
   },

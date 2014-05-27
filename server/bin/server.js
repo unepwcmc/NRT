@@ -1,9 +1,8 @@
 require("coffee-script");
-var app = require('../app.coffee'),
-    port = process.env.PORT || 3000;
+var app = require('../app.coffee');
 
-app.start(port, function (err) {
-  if (err) { 
+app.start(function(err, server, port) {
+  if (err) {
     console.error(err);
     process.exit(1);
   } else {
