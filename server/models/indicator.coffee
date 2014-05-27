@@ -95,7 +95,7 @@ indicatorSchema.statics.seedData = (seedsPath) ->
   catch err
     console.log err
     return Promise.reject(
-      "Unable to load indicator seed file, have you copied seeds from config/instances/ to config/seeds/?"
+      new Error("Unable to load indicator seed file, have you copied seeds from config/instances/ to config/seeds/?")
     )
 
   replaceThemeNameWithId(

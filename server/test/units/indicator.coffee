@@ -618,9 +618,8 @@ test("#seedData when no seed file exist reports an appropriate error", (done) ->
   ).catch((err)->
 
     try
-      console.log err
       assert.strictEqual(
-        err,
+        err.message,
         "Unable to load indicator seed file, have you copied seeds from config/instances/ to config/seeds/?"
       )
       done()
