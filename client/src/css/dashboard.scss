@@ -200,10 +200,12 @@ div.row.row-2 {
 
 .reports-container,
 .indicators-container {
-   .theme-list {
-     width: 709px;
-     margin-left: 260px;
-   }
+  min-height: 425px;
+
+  .theme-list {
+    width: 709px;
+    margin-left: 260px;
+  }
 
   .report-content, .theme-list {
     float: left;
