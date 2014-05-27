@@ -271,14 +271,14 @@ test("#seedData when no seed file exist reports an appropriate error", (done) ->
     throw new Error("ENOENT, no such file or directory './config/seeds/themes.json'")
   )
 
-  Theme.seedData().then(->
+  Theme.seedData('./config/seeds/themes.json').then(->
     done("Expected Theme.seedData to fail")
   ).catch((err)->
 
     try
       console.log err
       assert.strictEqual(
-        err,
+        err.message,
         "Unable to load theme seed file, have you copied seeds from config/instances/ to config/seeds/?"
       )
       done()
