@@ -107,13 +107,13 @@ exports.start = (callback) ->
 retrievePort = ->
   serverConfig = appConfig.get('server')
   deployConfig = appConfig.get('deploy')
-  if serverConfig.use_unix_sockets
+  if serverConfig?.use_unix_sockets
     socketPath = "/tmp/#{deployConfig.server_name}.sock"
 
     fs.unlinkSync(socketPath) if fs.existsSync(socketPath)
     return socketPath
   else
-    return serverConfig.port || process.env.PORT || 3000
+    return serverConfig?.port || process.env.PORT || 3000
 
 seedData = ->
   Theme = require("./models/theme").model
