@@ -121,24 +121,19 @@ seedData = ->
   Indicator = require("./models/indicator").model
   IndicatorData = require("./models/indicator_data").model
 
+  themeSeedsPath = "#{process.cwd()}/config/seeds/themes.json"
+  indicatorSeedsPath = "#{process.cwd()}/config/seeds/indicators.json"
 
-  Promise.promisify(Theme.count, Theme)(
-    null
-  ).then((themeCount) ->
-    if themeCount == 0
-      Theme.seedData(
-        "#{process.cwd()}/config/seeds/themes.json"
-      )
-    else
-      Promise.promisify(Theme.find, Theme)()
-  ).then((themes) ->
+  Promise.join(
+    Promise.promisify(Theme.count, Theme)(null),
     Promise.promisify(Indicator.count, Indicator)(null)
-  ).then((indicatorsCount) ->
+  ).spread( (themesCount, indicatorsCount) ->
+    seedingPromise = Promise.resolve()
+    if themeCount == 0
+      seedingPromise = seedingPromise.then(Theme.seedData(themeSeedsPath))
     if indicatorsCount == 0
-      Indicator.seedData(
-        "#{process.cwd()}/config/seeds/indicators.json"
-      )
-  ).catch((err) ->
+      seedingPromise = seedingPromise.then(Indicator.seedData(indicatorSeedsPath))
+  ).catch( (err) ->
     console.log "error seeding indicator data:"
     console.error err
     console.error err.stack
