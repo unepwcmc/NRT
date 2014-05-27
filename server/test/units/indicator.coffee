@@ -613,7 +613,7 @@ test("#seedData when no seed file exist reports an appropriate error", (done) ->
     throw new Error("ENOENT, no such file or directory './config/seeds/indicators.json'")
   )
 
-  Indicator.seedData().then(->
+  Indicator.seedData('./config/seeds/indicators.json').then(->
     done("Expected Indicator.seedData to fail")
   ).catch((err)->
 

@@ -86,32 +86,27 @@ createIndicatorWithSections = (indicatorAttributes, callback) ->
   )
 
 indicatorSchema.statics.seedData = (seedsPath) ->
-  deferred = Promise.defer()
+  new Promise( (resolve, reject) ->
+    if fs.existsSync(seedsPath)
+      throw new Error(
+        "Unable to load indicator seed file, have you copied seeds from config/instances/ to config/seeds/?"
+      )
 
-  try
-    dummyIndicators = JSON.parse(
-      fs.readFileSync(seedsPath, 'UTF8')
-    )
-  catch err
-    console.log err
-    return Promise.reject(
-      new Error("Unable to load indicator seed file, have you copied seeds from config/instances/ to config/seeds/?")
-    )
+    Promise.promisify(fs.readFile, fs)(
+      seedsPath, 'UTF8'
+    ).then(
+      JSON.parse
+    ).then(
+      replaceThemeNameWithId
+    ).then( (dummyIndicators) ->
+      async.map(dummyIndicators, createIndicatorWithSections, (err, indicators) ->
+        if err?
+          return deferred.reject(err)
 
-  replaceThemeNameWithId(
-    dummyIndicators
-  ).then( (indicators) ->
-    async.map(dummyIndicators, createIndicatorWithSections, (err, indicators) ->
-      if err?
-        return deferred.reject(err)
-
-      deferred.resolve(indicators)
+        deferred.resolve(indicators)
+      )
     )
-  ).catch( (err) ->
-    deferred.reject(error)
   )
-
-  return deferred.promise
 
 # Functions to aggregate the data bounds of different types of fields
 boundAggregators = {}
