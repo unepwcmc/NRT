@@ -40,8 +40,7 @@ command', (done) ->
     request.post, {
       url: helpers.appurl('/deploy')
       json: true
-      body:
-        payload: JSON.stringify(commitHookPayload)
+      body: commitHookPayload
     }
   ).spread( (res, body) ->
 
@@ -91,8 +90,7 @@ server", (done) ->
     request.post, {
       url: helpers.appurl('/deploy')
       json: true
-      body:
-        payload: JSON.stringify(commitHookPayload)
+      body: commitHookPayload
     }
   ).spread( (res, body) ->
 

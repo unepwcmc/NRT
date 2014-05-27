@@ -21,12 +21,10 @@ exports.index = (req, res) ->
   if env isnt 'development'
     return res.send 401 unless ipIsFromGithub(remoteIp)
 
-  parsedPayload = JSON.parse(req.body.payload)
-
-  console.log "Got deploy message from #{parsedPayload.ref}"
+  console.log "Got deploy message from #{req.body.ref}"
 
   serverName = AppConfig.get('deploy')?.server_name
-  tagName = parsedPayload.ref
+  tagName = req.body.ref
 
   unless tagRefersToServer(tagName, serverName)
     errMessage = "Only deploys for this server (#{serverName}) are accepted"
