@@ -126,14 +126,18 @@ seedData = ->
     null
   ).then((themeCount) ->
     if themeCount == 0
-      Theme.seedData()
+      Theme.seedData(
+        "#{process.cwd()}/config/seeds/themes.json"
+      )
     else
       Promise.promisify(Theme.find, Theme)()
   ).then((themes) ->
     Promise.promisify(Indicator.count, Indicator)(null)
   ).then((indicatorsCount) ->
     if indicatorsCount == 0
-      Indicator.seedData()
+      Indicator.seedData(
+        "#{process.cwd()}/config/seeds/indicators.json"
+      )
   ).catch((err) ->
     console.log "error seeding indicator data:"
     console.error err

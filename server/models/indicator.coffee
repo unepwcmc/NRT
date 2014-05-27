@@ -85,12 +85,12 @@ createIndicatorWithSections = (indicatorAttributes, callback) ->
     callback(err)
   )
 
-indicatorSchema.statics.seedData = ->
+indicatorSchema.statics.seedData = (seedsPath) ->
   deferred = Promise.defer()
 
   try
     dummyIndicators = JSON.parse(
-      fs.readFileSync("#{process.cwd()}/config/seeds/indicators.json", 'UTF8')
+      fs.readFileSync(seedsPath, 'UTF8')
     )
   catch err
     console.log err

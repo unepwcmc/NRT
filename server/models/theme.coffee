@@ -40,12 +40,12 @@ createThemeWithSections = (themeAttributes, callback) ->
     callback(err)
   )
 
-themeSchema.statics.seedData = (callback) ->
+themeSchema.statics.seedData = (seedsPath) ->
   deferred = Promise.defer()
 
   try
     dummyThemes = JSON.parse(
-      fs.readFileSync("#{process.cwd()}/config/seeds/themes.json", 'UTF8')
+      fs.readFileSync(seedsPath, 'UTF8')
     )
   catch err
     console.log err
