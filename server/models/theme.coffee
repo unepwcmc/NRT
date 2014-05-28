@@ -40,43 +40,27 @@ createThemeWithSections = (themeAttributes, callback) ->
     callback(err)
   )
 
-themeSchema.statics.seedData = (callback) ->
-  deferred = Q.defer()
+themeSchema.statics.seedData = (seedsPath) ->
+  new Promise( (resolve, reject) ->
+    unless fs.existsSync(seedsPath)
+      throw new Error(
+        "Unable to load theme seed file, have you copied seeds from config/instances/ to config/seeds/?"
+      )
 
-  getAllThemes = ->
-    Theme.find((err, themes) ->
-      if err?
-        deferred.reject(err)
-      else
-        deferred.resolve(themes)
-    )
-
-  Theme.count(null, (error, count) ->
-    if error?
-      return deferred.reject(error)
-
-    if count == 0
-      try
-        dummyThemes = JSON.parse(
-          fs.readFileSync("#{process.cwd()}/config/seeds/themes.json", 'UTF8')
-        )
-      catch err
-        console.log err
-        return deferred.reject(
-          "Unable to load theme seed file, have you copied seeds from config/instances/ to config/seeds/?"
-        )
-
+    Promise.promisify(fs.readFile, fs)(
+      seedsPath, 'UTF8'
+    ).then(
+      JSON.parse
+    ).then( (dummyThemes) ->
       async.map(dummyThemes, createThemeWithSections, (error, results) ->
         if error?
-          return deferred.reject(error)
+          return reject(error)
 
-        deferred.resolve(results)
+        resolve(results)
       )
-    else
-      getAllThemes()
+    )
   )
 
-  return deferred.promise
 
 
 populateThemeIndicators = (theTheme, cb) ->

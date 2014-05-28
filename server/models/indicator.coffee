@@ -85,49 +85,29 @@ createIndicatorWithSections = (indicatorAttributes, callback) ->
     callback(err)
   )
 
-indicatorSchema.statics.seedData = ->
-  deferred = Q.defer()
-
-  getAllIndicators = ->
-    Indicator.find((err, indicators) ->
-      if err?
-        deferred.reject(err)
-      else
-        deferred.resolve(indicators)
-    )
-
-  Indicator.count(null, (error, count) ->
-    if error?
-      return deferred.reject(error)
-
-    if count is 0
-      try
-        dummyIndicators = JSON.parse(
-          fs.readFileSync("#{process.cwd()}/config/seeds/indicators.json", 'UTF8')
-        )
-      catch err
-        console.log err
-        return deferred.reject(
-          "Unable to load indicator seed file, have you copied seeds from config/instances/ to config/seeds/?"
-        )
-
-      replaceThemeNameWithId(
-        dummyIndicators
-      ).then( (indicators) ->
-        async.map(dummyIndicators, createIndicatorWithSections, (err, indicators) ->
-          if err?
-            return deferred.reject(err)
-
-          deferred.resolve(indicators)
-        )
-      ).fail( (err) ->
-        deferred.reject(error)
+indicatorSchema.statics.seedData = (seedsPath) ->
+  new Promise( (resolve, reject) ->
+    unless fs.existsSync(seedsPath)
+      throw new Error(
+        "Unable to load indicator seed file, have you copied seeds from config/instances/ to config/seeds/?"
       )
-    else
-      getAllIndicators()
-  )
 
-  return deferred.promise
+    theIndicators = null
+    Promise.promisify(fs.readFile, fs)(
+      seedsPath, 'UTF8'
+    ).then(
+      JSON.parse
+    ).then( (dummyIndicators) ->
+      theIndicators = dummyIndicators
+      replaceThemeNameWithId(dummyIndicators)
+    ).then( ->
+      async.map(theIndicators, createIndicatorWithSections, (err, indicators) ->
+        if err?
+          return reject(err)
+        resolve(indicators)
+      )
+    )
+  )
 
 # Functions to aggregate the data bounds of different types of fields
 boundAggregators = {}

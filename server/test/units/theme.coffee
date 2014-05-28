@@ -267,26 +267,20 @@ test(".toObjectWithNestedPage is mixed in", ->
 
 test("#seedData when no seed file exist reports an appropriate error", (done) ->
   fs = require('fs')
-  readFileStub = sinon.stub(fs, 'readFileSync', ->
-    throw new Error("ENOENT, no such file or directory './config/seeds/themes.json'")
-  )
+  existsSyncStub = sinon.stub(fs, 'existsSync', -> false)
 
-  Theme.seedData().then(->
+  Theme.seedData('fake/path').then( ->
     done("Expected Theme.seedData to fail")
-  ).catch((err)->
+  ).catch( (err) ->
 
-    try
-      console.log err
-      assert.strictEqual(
-        err,
-        "Unable to load theme seed file, have you copied seeds from config/instances/ to config/seeds/?"
-      )
-      done()
-    catch err
-      done(err)
+    assert.strictEqual(
+      err.message,
+      "Unable to load theme seed file, have you copied seeds from config/instances/ to config/seeds/?"
+    )
+    done()
 
-  ).finally(->
-    readFileStub.restore()
+  ).finally( ->
+    existsSyncStub.restore()
   )
 )
 
