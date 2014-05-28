@@ -3,7 +3,6 @@ helpers = require '../helpers'
 request = require('request')
 url = require('url')
 Promise = require('bluebird')
-Browser = require("zombie")
 sinon = require("sinon")
 
 Indicator = require('../../models/indicator').model
@@ -13,6 +12,7 @@ suite('Indicator Admin')
 
 test("User can visit the admin page, click 'Add Indicator', enter a google
  spreadsheet key and import a new indicator ", (done)->
+  Browser = require("zombie")
   @timeout(5000)
 
   importedIndicator =
@@ -55,6 +55,7 @@ test("User can visit the admin page, click 'Add Indicator', enter a google
 
 
 test('GET /partials/admin/indicators/new returns a new indicator form', (done)->
+  Browser = require("zombie")
   browser = new Browser()
   browser.runScripts = false
 
