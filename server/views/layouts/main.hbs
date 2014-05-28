@@ -8,6 +8,9 @@
       {{#if title}}
         | {{title}}
       {{/if}}
+      {{#if APP_CONFIG.features.demo_mode}}
+        | Demo
+      {{/if}}
     </title>
 
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,300' rel='stylesheet' type='text/css'>
@@ -128,6 +131,12 @@
         </ul>
       </div>
     </div>
+
+    {{#if APP_CONFIG.features.demo_mode}}
+      <div id="demo-banner">
+        {{APP_CONFIG.instance_name}} Demo - data may be inaccurate</div>
+      </div>
+    {{/if}}
 
     {{{body}}}
 
