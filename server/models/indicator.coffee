@@ -92,18 +92,19 @@ indicatorSchema.statics.seedData = (seedsPath) ->
         "Unable to load indicator seed file, have you copied seeds from config/instances/ to config/seeds/?"
       )
 
+    theIndicators = null
     Promise.promisify(fs.readFile, fs)(
       seedsPath, 'UTF8'
     ).then(
       JSON.parse
-    ).then(
-      replaceThemeNameWithId
     ).then( (dummyIndicators) ->
-      async.map(dummyIndicators, createIndicatorWithSections, (err, indicators) ->
+      theIndicators = dummyIndicators
+      replaceThemeNameWithId(dummyIndicators)
+    ).then( ->
+      async.map(theIndicators, createIndicatorWithSections, (err, indicators) ->
         if err?
-          return deferred.reject(err)
-
-        deferred.resolve(indicators)
+          return reject(err)
+        resolve(indicators)
       )
     )
   )

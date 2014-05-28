@@ -129,7 +129,7 @@ seedData = ->
     Promise.promisify(Indicator.count, Indicator)(null)
   ).spread( (themesCount, indicatorsCount) ->
     seedingPromise = Promise.resolve()
-    if themeCount == 0
+    if themesCount == 0
       seedingPromise = seedingPromise.then(Theme.seedData(themeSeedsPath))
     if indicatorsCount == 0
       seedingPromise = seedingPromise.then(Indicator.seedData(indicatorSeedsPath))
