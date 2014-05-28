@@ -609,28 +609,21 @@ returns blank values for those fields", (done) ->
 
 test("#seedData when no seed file exist reports an appropriate error", (done) ->
   fs = require('fs')
-  readFileStub = sinon.stub(fs, 'readFileSync', ->
-    throw new Error("ENOENT, no such file or directory './config/seeds/indicators.json'")
-  )
+  existsSyncStub = sinon.stub(fs, 'existsSync', -> false)
 
-  Indicator.seedData('./config/seeds/indicators.json').then(->
+  Indicator.seedData('./config/seeds/indicators.json').then( ->
     done("Expected Indicator.seedData to fail")
-  ).catch((err)->
+  ).catch( (err)->
 
-    try
-      assert.strictEqual(
-        err.message,
-        "Unable to load indicator seed file, have you copied seeds from config/instances/ to config/seeds/?"
-      )
-      done()
-    catch err
-      done(err)
+    assert.strictEqual(
+      err.message,
+      "Unable to load indicator seed file, have you copied seeds from config/instances/ to config/seeds/?"
+    )
+    done()
 
-  ).finally(->
-    readFileStub.restore()
+  ).finally( ->
+    existsSyncStub.restore()
   )
-
-
 )
 
 test('#CONDITIONS.IS_PRIMARY only returns indicators with indicators

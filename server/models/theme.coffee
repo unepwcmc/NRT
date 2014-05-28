@@ -42,7 +42,7 @@ createThemeWithSections = (themeAttributes, callback) ->
 
 themeSchema.statics.seedData = (seedsPath) ->
   new Promise( (resolve, reject) ->
-    if fs.existsSync(seedsPath)
+    unless fs.existsSync(seedsPath)
       throw new Error(
         "Unable to load theme seed file, have you copied seeds from config/instances/ to config/seeds/?"
       )

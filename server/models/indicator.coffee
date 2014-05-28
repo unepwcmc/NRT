@@ -87,7 +87,7 @@ createIndicatorWithSections = (indicatorAttributes, callback) ->
 
 indicatorSchema.statics.seedData = (seedsPath) ->
   new Promise( (resolve, reject) ->
-    if fs.existsSync(seedsPath)
+    unless fs.existsSync(seedsPath)
       throw new Error(
         "Unable to load indicator seed file, have you copied seeds from config/instances/ to config/seeds/?"
       )
