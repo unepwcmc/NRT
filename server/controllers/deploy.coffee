@@ -6,7 +6,7 @@ _ = require('underscore')
 tagRefersToServer = (tag, serverTags) ->
   deploymentTags = tag.split('-')[0]
   deploymentTags = deploymentTags.split(',')
-  return _.intersection(deploymentTags, serverTags).length != 0
+  return _.intersection(deploymentTags, serverTags).length is not 0
 
 getIpFromRequest = (req) ->
   req.headers['x-real-ip'] or req.connection.remoteAddress
