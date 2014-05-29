@@ -15,10 +15,11 @@ importIndicator = () ->
   ).success( ->
     console.log "Google Spreadsheet successfully imported"
     reloadIndicatorTable()
-  ).error((res) ->
+  ).error((xhr, status, err) ->
     console.log "Error importing google doc"
-    alert "Unable to import google spreadsheet"
-    throw new Error(res.responseText)
+    err = xhr.responseJSON.error
+    alert err
+    throw new Error(err)
   )
 
 showNewIndicatorForm = ->
