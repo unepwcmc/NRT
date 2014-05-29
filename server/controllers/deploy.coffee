@@ -3,7 +3,11 @@ Deploy = require('../lib/deploy')
 range_check = require('range_check')
 
 tagRefersToServer = (tag, serverTags) ->
-  regexp = "^[^-]*(#{serverTags.join('|')})[,-]"
+  regexp =  "^"                         # at beginning of line
+  regexp += "[^-]*"                     # accept everything until first hyphen
+  regexp += "(#{serverTags.join('|')})" # meanwhile, look for one of the tags
+  regexp += "[,-]"                      # if found, be sure it is either followed by another one or is the last
+
   regexpMatches = new RegExp(regexp).exec(tag)
   return regexpMatches?[1]?
 
