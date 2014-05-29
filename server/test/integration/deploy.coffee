@@ -124,3 +124,53 @@ test("POST deploy fails if the IP is not of GitHub's servers", (done) ->
     done(err)
   )
 )
+
+
+test('POST /deploy with a github payload for new deploy tag which refers
+to at least one of the tags given to the server causes the server to
+trigger the deploy command', (done) ->
+  sandbox = sinon.sandbox.create()
+
+  deployingTags = ['staging', 'a_tag']
+  tagName = "#{deployingTags.join(',')}-test-webhooks-1bcc7a0470"
+  commitHookPayload = {
+    "ref": tagName,
+    "ref_type": "tag"
+  }
+
+  rangeCheckStub = sandbox.stub(range_check, 'in_range', -> true)
+
+  configStub = sandbox.stub(AppConfig, 'get', (variable)->
+    if variable is 'server'
+      return name: 'doesnt_really_matter_now'
+    if variable is 'deploy'
+      return tags: ['another_tag', 'staging']
+  )
+
+  updateCodeStub = sandbox.stub(Deploy, 'deploy', ->
+    new Promise(() ->)
+  )
+
+  Promise.promisify(request.post, request)({
+    url: helpers.appurl('/deploy')
+    json: true
+    body: commitHookPayload
+  }).spread( (res, body) ->
+
+    assert.equal res.statusCode, 200,
+      "Expected the request to succeed"
+
+    assert.strictEqual updateCodeStub.callCount, 1,
+      "Expected Deploy.deploy to be called once"
+
+    assert.isTrue updateCodeStub.calledWith(tagName),
+      "Expected Deploy.deploy to be called with the tag name"
+
+    sandbox.restore()
+    done()
+  ).catch( (err) ->
+    sandbox.restore()
+    done(err)
+  )
+)
+
