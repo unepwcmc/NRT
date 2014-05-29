@@ -28,8 +28,8 @@ command', (done) ->
   rangeCheckStub = sandbox.stub(range_check, 'in_range', -> true)
 
   configStub = sandbox.stub(AppConfig, 'get', (variable)->
-    if variable is 'deploy'
-      return server_name: deployRole
+    if variable is 'server'
+      return name: deployRole
   )
 
   updateCodeStub = sandbox.stub(Deploy, 'deploy', ->
@@ -82,8 +82,8 @@ server", (done) ->
   updateCodeStub = sandbox.stub(Deploy, 'deploy', ->)
 
   configStub = sandbox.stub(AppConfig, 'get', (variable)->
-    if variable is 'deploy'
-      return server_name: 'not staging'
+    if variable is 'server'
+      return name: 'not staging'
   )
 
   Q.nfcall(

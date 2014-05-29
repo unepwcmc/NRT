@@ -23,7 +23,7 @@ exports.index = (req, res) ->
 
   console.log "Got deploy message from #{req.body.ref}"
 
-  serverName = AppConfig.get('deploy')?.server_name
+  serverName = AppConfig.get('server')?.name
   tagName = req.body.ref
 
   unless tagRefersToServer(tagName, serverName)
