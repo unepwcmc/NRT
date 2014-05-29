@@ -122,5 +122,11 @@ exports.importGdoc = (req, res) ->
     res.send(201, {message: "OK"})
   ).catch((err) ->
     console.error err.stack
-    res.send(500, {error: "Unable to import google doc with key #{req.body.spreadsheetKey}"})
+    errMessage = """
+      Unable to load google doc with key: #{req.body.spreadsheetKey}\n
+      Check that the document loads at:\n
+      https://docs.google.com/spreadsheets/d/#{req.body.spreadsheetKey}\n
+      and that the document has been published to the web
+    """
+    res.send(500, {error: errMessage})
   )
