@@ -5,7 +5,7 @@ range_check = require('range_check')
 tagRefersToServer = (tag, serverTags) ->
   regexp = "^[^-]*(#{serverTags.join('|')})[,-]"
   regexpMatches = new RegExp(regexp).exec(tag)
-  return regexpMatches?[1]
+  return regexpMatches?[1]?
 
 getIpFromRequest = (req) ->
   req.headers['x-real-ip'] or req.connection.remoteAddress
