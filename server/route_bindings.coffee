@@ -2,7 +2,6 @@ _ = require('underscore')
 
 AppConfig = require('./initializers/config')
 passport = require('./initializers/authentication')
-tokenAuthentication = require('./lib/token_authentication')
 sessionAuthentication = require('./lib/session_authentication')
 
 visualisationApi = require('./controllers/api/visualisation')
@@ -29,8 +28,6 @@ indicatorator   = require('./components/indicatorator/app')
 module.exports = exports = (app) ->
   unless AppConfig.get('features')?.open_access
     app.use('/', sessionAuthentication)
-
-  app.use('/api/users', tokenAuthentication)
 
   app.use passport.addCurrentUserToLocals
 
