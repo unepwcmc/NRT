@@ -126,7 +126,7 @@ exports.importGdoc = (req, res) ->
       Unable to load google doc with key: #{req.body.spreadsheetKey}\n
       Check that the document loads at:\n
       https://docs.google.com/spreadsheets/d/#{req.body.spreadsheetKey}\n
-      and that the document has been published for web
+      and that the document has been published to the web
     """
     res.send(500, {error: errMessage})
   )
