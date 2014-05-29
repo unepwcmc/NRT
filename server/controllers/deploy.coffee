@@ -1,15 +1,12 @@
 AppConfig = require('../initializers/config')
 Deploy = require('../lib/deploy')
 range_check = require('range_check')
+_ = require('underscore')
 
 tagRefersToServer = (tag, serverTags) ->
-  regexp =  "^"                         # at beginning of line
-  regexp += "[^-]*"                     # accept everything until first hyphen
-  regexp += "(#{serverTags.join('|')})" # meanwhile, look for one of the tags
-  regexp += "[,-]"                      # if found, be sure it is either followed by another one or is the last
-
-  regexpMatches = new RegExp(regexp).exec(tag)
-  return regexpMatches?[1]?
+  deploymentTags = tag.split('-')[0]
+  deploymentTags = deploymentTags.split(',')
+  return _.intersection(deploymentTags, serverTags).length != 0
 
 getIpFromRequest = (req) ->
   req.headers['x-real-ip'] or req.connection.remoteAddress
