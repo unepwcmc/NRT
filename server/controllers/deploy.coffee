@@ -3,7 +3,9 @@ Deploy = require('../lib/deploy')
 range_check = require('range_check')
 
 tagRefersToServer = (tag, serverTags) ->
-  return new RegExp("^(#{serverTags.join('|')})").test(tag)
+  regexp = "^[^-]*(#{serverTags.join('|')})[,-]"
+  regexpMatches = new RegExp(regexp).exec(tag)
+  return regexpMatches?[1]
 
 getIpFromRequest = (req) ->
   req.headers['x-real-ip'] or req.connection.remoteAddress
