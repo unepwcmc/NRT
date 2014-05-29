@@ -3,7 +3,6 @@ helpers = require '../helpers'
 request = require('request')
 fs = require('fs')
 sinon = require('sinon')
-Q = require('q')
 Promise = require('bluebird')
 
 CommandRunner = require('../../lib/command_runner')
@@ -33,35 +32,27 @@ command', (done) ->
   )
 
   updateCodeStub = sandbox.stub(Deploy, 'deploy', ->
-    new Promise(()->)
+    new Promise(() ->)
   )
 
-  Q.nfcall(
-    request.post, {
-      url: helpers.appurl('/deploy')
-      json: true
-      body: commitHookPayload
-    }
-  ).spread( (res, body) ->
+  Promise.promisify(request.post, request)({
+    url: helpers.appurl('/deploy')
+    json: true
+    body: commitHookPayload
+  }).spread( (res, body) ->
 
-    try
-      assert.equal res.statusCode, 200,
-        "Expected the request to succeed"
+    assert.equal res.statusCode, 200,
+      "Expected the request to succeed"
 
-      assert.strictEqual updateCodeStub.callCount, 1,
-        "Expected Deploy.deploy to be called once"
+    assert.strictEqual updateCodeStub.callCount, 1,
+      "Expected Deploy.deploy to be called once"
 
-      assert.isTrue updateCodeStub.calledWith(tagName),
-        "Expected Deploy.deploy to be called with the tag name"
+    assert.isTrue updateCodeStub.calledWith(tagName),
+      "Expected Deploy.deploy to be called with the tag name"
 
-      done()
-    catch e
-      done(e)
-    finally
-      sandbox.restore()
-
-  ).fail( (err) ->
-    console.error err
+    sandbox.restore()
+    done()
+  ).catch( (err) ->
     sandbox.restore()
     done(err)
   )
@@ -86,26 +77,21 @@ server", (done) ->
       return name: 'not staging'
   )
 
-  Q.nfcall(
-    request.post, {
-      url: helpers.appurl('/deploy')
-      json: true
-      body: commitHookPayload
-    }
-  ).spread( (res, body) ->
+  Promise.promisify(request.post, request)({
+    url: helpers.appurl('/deploy')
+    json: true
+    body: commitHookPayload
+  }).spread( (res, body) ->
 
-    try
-      assert.strictEqual updateCodeStub.callCount, 0,
-        "Expected CommandRunner.spawn to not be called once"
+    assert.strictEqual updateCodeStub.callCount, 0,
+      "Expected CommandRunner.spawn to not be called once"
 
-      assert.equal res.statusCode, 500
-      done()
-    catch e
-      done(e)
-    finally
-      sandbox.restore()
+    assert.equal res.statusCode, 500
 
-  ).fail( (err) ->
+    sandbox.restore()
+    done()
+
+  ).catch( (err) ->
     sandbox.restore()
     done(err)
   )
@@ -118,28 +104,22 @@ test("POST deploy fails if the IP is not of GitHub's servers", (done) ->
 
   updateCodeStub = sandbox.stub(Deploy, 'deploy', ->)
 
-  Q.nfcall(
-    request.post, {
-      url: helpers.appurl('/deploy')
-      json: true
-      body: {}
-    }
-  ).spread( (res, body) ->
+  Promise.promisify(request.post, request)({
+    url: helpers.appurl('/deploy')
+    json: true
+    body: {}
+  }).spread( (res, body) ->
 
-    try
-      console.log body
-      assert.equal res.statusCode, 401
+    console.log body
+    assert.equal res.statusCode, 401
 
-      assert.isFalse updateCodeStub.calledOnce,
-        "Expected CommandRunner.spawn not to be called"
+    assert.isFalse updateCodeStub.calledOnce,
+      "Expected CommandRunner.spawn not to be called"
 
-      done()
-    catch err
-      done(err)
-    finally
-      sandbox.restore()
+    sandbox.restore()
+    done()
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     sandbox.restore()
     done(err)
   )
