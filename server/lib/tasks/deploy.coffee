@@ -1,6 +1,7 @@
 Promise = require('bluebird')
 readline = require('readline')
 crypto = require('crypto')
+_ = require('underscore')
 
 Git = require('../git')
 GitHubDeploy = require('../git_hub_deploy')
@@ -27,10 +28,17 @@ module.exports = new Promise( (resolve, reject) ->
       Git.createTag(tagName, description).then( ->
         Git.push(tagName)
       ).then(->
-        GitHubDeploy.getDeployForTag(tagName)
-      ).then((deploy)->
-        console.log "Found deploy #{deploy.id}, polling status..."
-        deploy.pollStatus()
+        GitHubDeploy.getDeploysForTag(tagName)
+      ).then((deploys)->
+        deployingServers = _.map(deploys, (deploy) -> deploy.server.name)
+
+        console.log """
+          Found #{deploys.length} server(s) to deploy to:
+            * #{deployingServers.join('\n *  ')}
+
+          Polling status...
+        """
+        Promise.all(_.invoke(deploys, 'pollStatus'))
       ).then(
         resolve
       ).catch(reject)

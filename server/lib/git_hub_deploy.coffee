@@ -16,6 +16,7 @@ mergeWithDefaultOptions = (options) ->
 
 module.exports = class GitHubDeploy
   constructor: (@tagName) ->
+    @server = {}
 
   start: ->
     new Promise( (resolve, reject) =>
@@ -23,7 +24,7 @@ module.exports = class GitHubDeploy
         url: "https://api.github.com/repos/unepwcmc/NRT/deployments"
         body: JSON.stringify(
           description: @tagName
-          payload: {}
+          payload: {server: AppConfig.get('server')?.name}
           ref: @tagName
           force: true
         )
@@ -62,7 +63,7 @@ module.exports = class GitHubDeploy
       )
     )
 
-  @getDeployForTag: (tagName) ->
+  @getDeploysForTag: (tagName) ->
     new Promise( (resolve, reject) ->
       requestOptions = mergeWithDefaultOptions(
         url: "https://api.github.com/repos/unepwcmc/NRT/deployments"
@@ -72,16 +73,22 @@ module.exports = class GitHubDeploy
         if err?
           reject(err)
         else
-          deploys = JSON.parse(response.body)
-          deploy = _.findWhere(deploys, {description: tagName})
+          allDeploys = JSON.parse(response.body)
+          deploys = _.filter(allDeploys, (deploy) ->
+            deploy.description is tagName
+          )
 
-          if deploy?
-            githubDeploy = new GitHubDeploy(tagName)
-            githubDeploy.id = deploy.id
-            resolve(githubDeploy)
+          if deploys.length isnt 0
+            gitHubDeploys = deploys.map( (deploy) ->
+              gitHubDeploy = new GitHubDeploy(tagName)
+              gitHubDeploy.id = deploy.id
+              gitHubDeploy.server = deploy.payload.server
+              gitHubDeploy
+            )
+            resolve(gitHubDeploys)
           else
             setTimeout((->
-              GitHubDeploy.getDeployForTag(tagName).then(resolve).catch(reject)
+              GitHubDeploy.getDeploysForTag(tagName).then(resolve).catch(reject)
             ), 1000)
       )
     )
@@ -102,10 +109,10 @@ module.exports = class GitHubDeploy
           for status in statuses
             unless status.id in @printedStatusIDs
               @printedStatusIDs.push status.id
-              console.log "[#{status.created_at}] #{status.state}: #{status.description}"
+              console.log "[ <#{@server.name}> - #{status.created_at} ] #{status.state}: #{status.description}"
               if status.state in ['success', 'failure']
                 return resolve()
-          
+
           setTimeout( =>
             @pollStatus().then(resolve).catch(reject)
           , 1000)

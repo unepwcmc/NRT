@@ -42,52 +42,48 @@ test("Asks for the server target and tag name,
   )
 
   deploy =
+    server:
+      name: 'test-server'
     pollStatus: sandbox.spy(->
       new Promise((resolve) -> resolve())
     )
 
-  getDeployStub = sandbox.stub(GitHubDeploy, 'getDeployForTag', ->
+  getDeploysStub = sandbox.stub(GitHubDeploy, 'getDeploysForTag', ->
     new Promise((resolve) ->
-      resolve(deploy)
+      resolve([deploy])
     )
   )
 
-  require('../../../lib/tasks/deploy').then(->
-    try
-      expectedBranchName = "staging-new-feature-stuff-#{randomNumber}"
+  require('../../../lib/tasks/deploy').then( ->
+    expectedBranchName = "staging-new-feature-stuff-#{randomNumber}"
 
-      assert.isTrue(
-        createTagStub.calledWith(
-          expectedBranchName, 'New feature stuff'
-        ),
-        "Expected Git.createTag to be called
-        with #{expectedBranchName}, 'New feature stuff', but was called with
-        #{createTagStub.getCall(0).args}"
-      )
+    assert.isTrue(
+      createTagStub.calledWith(
+        expectedBranchName, 'New feature stuff'
+      ),
+      "Expected Git.createTag to be called
+      with #{expectedBranchName}, 'New feature stuff', but was called with
+      #{createTagStub.getCall(0).args}"
+    )
 
-      assert.isTrue(
-        pushTagStub.calledWith(expectedBranchName),
-        "Expected the created tag to be pushed"
-      )
+    assert.isTrue(
+      pushTagStub.calledWith(expectedBranchName),
+      "Expected the created tag to be pushed"
+    )
 
-      assert.isTrue getDeployStub.calledOnce,
-        "Expected GitHubDeploy to be called once"
+    assert.isTrue getDeploysStub.calledOnce,
+      "Expected GitHubDeploy to be called once"
 
-      assert.isTrue getDeployStub.calledWith(expectedBranchName),
-        """
-        Expected GitHubDeploy.getDeployForTag to be called
-        with #{expectedBranchName}, but called with
-        #{getDeployStub.getCall(0).args}
-        """
+    assert.isTrue getDeploysStub.calledWith(expectedBranchName),
+      """
+      Expected GitHubDeploy.getDeploysForTag to be called
+      with #{expectedBranchName}, but called with
+      #{getDeploysStub.getCall(0).args}
+      """
 
-      done()
-
-    catch err
-      done(err)
-    finally
-      sandbox.restore()
-
-  ).catch( (err)->
+    sandbox.restore()
+    done()
+  ).catch( (err) ->
     sandbox.restore()
     done(err)
   )
