@@ -1,9 +1,12 @@
 AppConfig = require('../initializers/config')
 Deploy = require('../lib/deploy')
 range_check = require('range_check')
+_ = require('underscore')
 
 tagRefersToServer = (tag, serverTags) ->
-  return new RegExp("^(#{serverTags.join('|')})").test(tag)
+  deploymentTags = tag.split('-')[0]
+  deploymentTags = deploymentTags.split(',')
+  return _.intersection(deploymentTags, serverTags).length isnt 0
 
 getIpFromRequest = (req) ->
   req.headers['x-real-ip'] or req.connection.remoteAddress
