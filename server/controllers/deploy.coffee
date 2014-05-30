@@ -1,9 +1,12 @@
 AppConfig = require('../initializers/config')
 Deploy = require('../lib/deploy')
 range_check = require('range_check')
+_ = require('underscore')
 
-tagRefersToServer = (tag, serverName) ->
-  return new RegExp("^#{serverName}").test(tag)
+tagRefersToServer = (tag, serverTags) ->
+  deploymentTags = tag.split('-')[0]
+  deploymentTags = deploymentTags.split(',')
+  return _.intersection(deploymentTags, serverTags).length isnt 0
 
 getIpFromRequest = (req) ->
   req.headers['x-real-ip'] or req.connection.remoteAddress
@@ -23,11 +26,14 @@ exports.index = (req, res) ->
 
   console.log "Got deploy message from #{req.body.ref}"
 
-  serverName = AppConfig.get('deploy')?.server_name
+  serverTags = AppConfig.get('deploy')?.tags || []
+  serverName = AppConfig.get('server')?.name
+  serverTags.unshift(serverName) if serverName?
+
   tagName = req.body.ref
 
-  unless tagRefersToServer(tagName, serverName)
-    errMessage = "Only deploys for this server (#{serverName}) are accepted"
+  unless tagRefersToServer(tagName, serverTags)
+    errMessage = "Only deploys with tag(s) #{serverTags.join(',')} are accepted"
     console.log errMessage
     return res.send 500, errMessage
 

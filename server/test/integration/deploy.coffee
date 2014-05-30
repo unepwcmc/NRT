@@ -3,7 +3,6 @@ helpers = require '../helpers'
 request = require('request')
 fs = require('fs')
 sinon = require('sinon')
-Q = require('q')
 Promise = require('bluebird')
 
 CommandRunner = require('../../lib/command_runner')
@@ -28,40 +27,32 @@ command', (done) ->
   rangeCheckStub = sandbox.stub(range_check, 'in_range', -> true)
 
   configStub = sandbox.stub(AppConfig, 'get', (variable)->
-    if variable is 'deploy'
-      return server_name: deployRole
+    if variable is 'server'
+      return name: deployRole
   )
 
   updateCodeStub = sandbox.stub(Deploy, 'deploy', ->
-    new Promise(()->)
+    new Promise(() ->)
   )
 
-  Q.nfcall(
-    request.post, {
-      url: helpers.appurl('/deploy')
-      json: true
-      body: commitHookPayload
-    }
-  ).spread( (res, body) ->
+  Promise.promisify(request.post, request)({
+    url: helpers.appurl('/deploy')
+    json: true
+    body: commitHookPayload
+  }).spread( (res, body) ->
 
-    try
-      assert.equal res.statusCode, 200,
-        "Expected the request to succeed"
+    assert.equal res.statusCode, 200,
+      "Expected the request to succeed"
 
-      assert.strictEqual updateCodeStub.callCount, 1,
-        "Expected Deploy.deploy to be called once"
+    assert.strictEqual updateCodeStub.callCount, 1,
+      "Expected Deploy.deploy to be called once"
 
-      assert.isTrue updateCodeStub.calledWith(tagName),
-        "Expected Deploy.deploy to be called with the tag name"
+    assert.isTrue updateCodeStub.calledWith(tagName),
+      "Expected Deploy.deploy to be called with the tag name"
 
-      done()
-    catch e
-      done(e)
-    finally
-      sandbox.restore()
-
-  ).fail( (err) ->
-    console.error err
+    sandbox.restore()
+    done()
+  ).catch( (err) ->
     sandbox.restore()
     done(err)
   )
@@ -82,30 +73,25 @@ server", (done) ->
   updateCodeStub = sandbox.stub(Deploy, 'deploy', ->)
 
   configStub = sandbox.stub(AppConfig, 'get', (variable)->
-    if variable is 'deploy'
-      return server_name: 'not staging'
+    if variable is 'server'
+      return name: 'not staging'
   )
 
-  Q.nfcall(
-    request.post, {
-      url: helpers.appurl('/deploy')
-      json: true
-      body: commitHookPayload
-    }
-  ).spread( (res, body) ->
+  Promise.promisify(request.post, request)({
+    url: helpers.appurl('/deploy')
+    json: true
+    body: commitHookPayload
+  }).spread( (res, body) ->
 
-    try
-      assert.strictEqual updateCodeStub.callCount, 0,
-        "Expected CommandRunner.spawn to not be called once"
+    assert.strictEqual updateCodeStub.callCount, 0,
+      "Expected CommandRunner.spawn to not be called once"
 
-      assert.equal res.statusCode, 500
-      done()
-    catch e
-      done(e)
-    finally
-      sandbox.restore()
+    assert.equal res.statusCode, 500
 
-  ).fail( (err) ->
+    sandbox.restore()
+    done()
+
+  ).catch( (err) ->
     sandbox.restore()
     done(err)
   )
@@ -118,29 +104,73 @@ test("POST deploy fails if the IP is not of GitHub's servers", (done) ->
 
   updateCodeStub = sandbox.stub(Deploy, 'deploy', ->)
 
-  Q.nfcall(
-    request.post, {
-      url: helpers.appurl('/deploy')
-      json: true
-      body: {}
-    }
-  ).spread( (res, body) ->
+  Promise.promisify(request.post, request)({
+    url: helpers.appurl('/deploy')
+    json: true
+    body: {}
+  }).spread( (res, body) ->
 
-    try
-      console.log body
-      assert.equal res.statusCode, 401
+    console.log body
+    assert.equal res.statusCode, 401
 
-      assert.isFalse updateCodeStub.calledOnce,
-        "Expected CommandRunner.spawn not to be called"
+    assert.isFalse updateCodeStub.calledOnce,
+      "Expected CommandRunner.spawn not to be called"
 
-      done()
-    catch err
-      done(err)
-    finally
-      sandbox.restore()
+    sandbox.restore()
+    done()
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     sandbox.restore()
     done(err)
   )
 )
+
+
+test('POST /deploy with a github payload for new deploy tag which refers
+to at least one of the tags given to the server causes the server to
+trigger the deploy command', (done) ->
+  sandbox = sinon.sandbox.create()
+
+  deployingTags = ['staging', 'a_tag']
+  tagName = "#{deployingTags.join(',')}-test-webhooks-1bcc7a0470"
+  commitHookPayload = {
+    "ref": tagName,
+    "ref_type": "tag"
+  }
+
+  rangeCheckStub = sandbox.stub(range_check, 'in_range', -> true)
+
+  configStub = sandbox.stub(AppConfig, 'get', (variable)->
+    if variable is 'server'
+      return name: 'doesnt_really_matter_now'
+    if variable is 'deploy'
+      return tags: ['another_tag', 'staging']
+  )
+
+  updateCodeStub = sandbox.stub(Deploy, 'deploy', ->
+    new Promise(() ->)
+  )
+
+  Promise.promisify(request.post, request)({
+    url: helpers.appurl('/deploy')
+    json: true
+    body: commitHookPayload
+  }).spread( (res, body) ->
+
+    assert.equal res.statusCode, 200,
+      "Expected the request to succeed"
+
+    assert.strictEqual updateCodeStub.callCount, 1,
+      "Expected Deploy.deploy to be called once"
+
+    assert.isTrue updateCodeStub.calledWith(tagName),
+      "Expected Deploy.deploy to be called with the tag name"
+
+    sandbox.restore()
+    done()
+  ).catch( (err) ->
+    sandbox.restore()
+    done(err)
+  )
+)
+
