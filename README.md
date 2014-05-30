@@ -28,29 +28,6 @@ client-side components use [Backbone.js](), with [Diorama]() extensions for view
 * [Testing](server/docs/Tests.md)
 * [Analytics](server/docs/analytics.md)
 
-## User Management
-
-A simple user management system is in place, with a CRUD (minus the U)
-API. A secret token is required to authenticate yourself and manage
-users. This token is set by an environment variable, `AUTH_TOKEN`.
-
-For example, run your app as so:
-
-    AUTH_TOKEN=my-very-secret-token npm start
-
-#### Listing all users
-
-    curl http://<domain>/api/users\?token\=my-very-secret-token
-
-#### Adding a user
-
-    curl -X POST -d "email=hats@boats.com&password=password" http://<domain>/api/users\?token\=my-very-secret-token
-
-#### Deleting a user
-
-    curl -i -X DELETE http://<domain>/api/users/<id>\?token\=my-very-secret-token
-
-
 ## Production
 
 WCMC team should already have access to [this document](https://docs.google.com/a/peoplesized.com/document/d/1dYMO3PJhRlTDQ2BEUUOcLwqX0IfJ5UP_UYyfQllnXeQ/)
