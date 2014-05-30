@@ -55,4 +55,61 @@
         "spreadsheetKey" : "0Aum2hJfH1Ze0dFV5ZW5tbXZIQlBJRUstdUVGRXphWkE",
         "source" : "gdoc"
     }
+}, {
+    "shortName" : "Other Primary Industries",
+    "name" : "Other Primary Industries",
+    "theme" : "Contribution of the forestry sector",
+    "indicatorDefinition" : {
+        "shortUnit" : "%",
+        "unit" : "%",
+        "fields" : [
+            {
+                "type" : "integer",
+                "name" : "year",
+                "source" : {
+                    "type" : "integer",
+                    "name" : "periodStart"
+                }
+            },
+            {
+                "type" : "integer",
+                "name" : "value",
+                "source" : {
+                    "type" : "text",
+                    "name" : "value"
+                }
+            },
+            {
+                "type" : "text",
+                "name" : "text",
+                "source" : {
+                    "type" : "text",
+                    "name" : "text"
+                }
+            }
+        ],
+        "geometryField" : "geometry",
+        "yAxis" : "value",
+        "xAxis" : "year",
+        "period" : "yearly"
+    },
+    "primary" : true,
+    "indicatorationConfig" : {
+        "range" : [
+            {
+                "text" : "Excellent",
+                "threshold" : 35
+            },
+            {
+                "text" : "Good",
+                "threshold" : 15
+            },
+            {
+                "text" : "Bad",
+                "threshold" : 0
+            }
+        ],
+        "spreadsheetKey" : "0Aum2hJfH1Ze0dFdIeEszRlVkLUNxNWd6YXpNbmJHQUE",
+        "source" : "gdoc"
+    }
 }]
