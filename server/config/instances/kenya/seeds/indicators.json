@@ -1,481 +1,571 @@
 [{
-  "shortName": "Contribution to agriculture section",
-  "name": "Forestry sector contribution to the agriculture section",
-  "theme": "Contribution of the forestry sector",
-  "sections": [],
-  "indicatorationConfig": {
-    "source": "cartodb",
-    "cartodb_config": {
-      "username": "carbon-tool",
-      "table_name": "kenya_20indicator_20data_20feed"
+    "shortName" : "Agriculture",
+    "name" : "Agriculture",
+    "theme" : "Contribution of the forestry sector",
+    "indicatorDefinition" : {
+        "shortUnit" : "%",
+        "unit" : "%",
+        "fields" : [ 
+            {
+                "type" : "integer",
+                "name" : "year",
+                "source" : {
+                    "type" : "integer",
+                    "name" : "periodStart"
+                }
+            }, 
+            {
+                "type" : "integer",
+                "name" : "value",
+                "source" : {
+                    "type" : "text",
+                    "name" : "value"
+                }
+            }, 
+            {
+                "type" : "text",
+                "name" : "text",
+                "source" : {
+                    "type" : "text",
+                    "name" : "text"
+                }
+            }
+        ],
+        "geometryField" : "geometry",
+        "yAxis" : "value",
+        "xAxis" : "year",
+        "period" : "yearly"
     },
-    "range": [
-        {"threshold": 0.35, "text": "Excellent"},
-        {"threshold": 0.15, "text": "Good"},
-        {"threshold": 0, "text": "Bad"}
-    ]
-  },
-  "type": "standard",
-  "primary": true,
-  "indicatorDefinition": {
-    "unit": "% contribution",
-    "shortUnit": "%",
-    "period": "annual",
-    "xAxis": "date",
-    "yAxis": "value",
-    "geometryField": "geometry",
-    "fields": [
-    {
-      "source": {
-        "name": "periodStart",
-        "type": "year"
-      },
-      "name": "date",
-      "type": "date"
-    }, {
-      "source": {
-        "name": "value",
-        "type": "decimalPercentage"
-      },
-      "name": "value",
-      "type": "integer"
-    }, {
-      "source": {
-        "name": "text",
-        "type": "text"
-      },
-      "name": "text",
-      "type": "text"
+    "primary" : true,
+    "indicatorationConfig" : {
+        "range" : [ 
+            {
+                "text" : "Excellent",
+                "threshold" : 35
+            }, 
+            {
+                "text" : "Good",
+                "threshold" : 15
+            }, 
+            {
+                "text" : "Bad",
+                "threshold" : 0
+            }
+        ],
+        "spreadsheetKey" : "0Aum2hJfH1Ze0dFV5ZW5tbXZIQlBJRUstdUVGRXphWkE",
+        "source" : "gdoc"
     }
-    ]
-  }
 }, {
-    "shortName": "Contribution other primary industries",
-    "title": "Forestry sector contribution to other primary industries",
-    "theme": "Contribution of the forestry sector",
-    "sections": [],
-    "indicatorationConfig": {
-      "source": "cartodb",
-      "cartodb_config": {
-        "username": "carbon-tool",
-        "table_name": "kenya_20indicator_20data_20feed"
-      },
-      "range": [
-          {"threshold": 0.35, "text": "Excellent"},
-          {"threshold": 0.15, "text": "Good"},
-          {"threshold": 0, "text": "Bad"}
-      ]
+    "shortName" : "Other Primary Industries",
+    "name" : "Other Primary Industries",
+    "theme" : "Contribution of the forestry sector",
+    "indicatorDefinition" : {
+        "shortUnit" : "%",
+        "unit" : "%",
+        "fields" : [ 
+            {
+                "type" : "integer",
+                "name" : "year",
+                "source" : {
+                    "type" : "integer",
+                    "name" : "periodStart"
+                }
+            }, 
+            {
+                "type" : "integer",
+                "name" : "value",
+                "source" : {
+                    "type" : "text",
+                    "name" : "value"
+                }
+            }, 
+            {
+                "type" : "text",
+                "name" : "text",
+                "source" : {
+                    "type" : "text",
+                    "name" : "text"
+                }
+            }
+        ],
+        "geometryField" : "geometry",
+        "yAxis" : "value",
+        "xAxis" : "year",
+        "period" : "yearly"
     },
-    "type": "standard",
-    "primary": true,
-    "indicatorDefinition": {
-      "unit": "% contribution",
-      "shortUnit": "%",
-      "period": "annual",
-      "xAxis": "date",
-      "yAxis": "value",
-      "geometryField": "geometry",
-      "fields": [
-      {
-        "source": {
-          "name": "periodStart",
-          "type": "year"
-        },
-        "name": "date",
-        "type": "date"
-      }, {
-        "source": {
-          "name": "value",
-          "type": "percentage"
-        },
-        "name": "value",
-        "type": "integer"
-      }, {
-        "source": {
-          "name": "text",
-          "type": "text"
-        },
-        "name": "text",
-        "type": "text"
-      }
-      ]
+    "primary" : true,
+    "indicatorationConfig" : {
+        "range" : [ 
+            {
+                "text" : "Excellent",
+                "threshold" : 35
+            }, 
+            {
+                "text" : "Good",
+                "threshold" : 15
+            }, 
+            {
+                "text" : "Bad",
+                "threshold" : 0
+            }
+        ],
+        "spreadsheetKey" : "0Aum2hJfH1Ze0dFdIeEszRlVkLUNxNWd6YXpNbmJHQUE",
+        "source" : "gdoc"
     }
-  }, {
-    "shortName": "Manufacture of food, beverages and tobacco",
-    "title": "Manufacture of food, beverages and tobacco",
-    "theme": "Contribution of the forestry sector",
-    "sections": [],
-    "indicatorationConfig": {
-      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
-      "source": "gdoc",
-      "range": [
-          {"threshold": 0.35, "text": "Excellent"},
-          {"threshold": 0.15, "text": "Good"},
-          {"threshold": 0, "text": "Bad"}
-      ]
+}, {
+    "shortName" : "Manufacture of food, beverages and tobacco",
+    "name" : "Manufacture of food, beverages and tobacco",
+    "theme" : "Contribution of the forestry sector",
+    "indicatorDefinition" : {
+        "shortUnit" : "%",
+        "unit" : "%",
+        "fields" : [ 
+            {
+                "type" : "integer",
+                "name" : "year",
+                "source" : {
+                    "type" : "integer",
+                    "name" : "periodStart"
+                }
+            }, 
+            {
+                "type" : "integer",
+                "name" : "value",
+                "source" : {
+                    "type" : "text",
+                    "name" : "value"
+                }
+            }, 
+            {
+                "type" : "text",
+                "name" : "text",
+                "source" : {
+                    "type" : "text",
+                    "name" : "text"
+                }
+            }
+        ],
+        "geometryField" : "geometry",
+        "yAxis" : "value",
+        "xAxis" : "year",
+        "period" : "yearly"
     },
-    "type": "standard",
-    "primary": true,
-    "indicatorDefinition": {
-      "unit": "% contribution",
-      "shortUnit": "%",
-      "period": "annual",
-      "xAxis": "date",
-      "yAxis": "value",
-      "geometryField": "geometry",
-      "fields": [
-      {
-        "source": {
-          "name": "periodStart",
-          "type": "text"
-        },
-        "name": "date",
-        "type": "date"
-      }, {
-        "source": {
-          "name": "value",
-          "type": "percentage"
-        },
-        "name": "value",
-        "type": "integer"
-      }, {
-        "source": {
-          "name": "text",
-          "type": "text"
-        },
-        "name": "text",
-        "type": "text"
-      }
-      ]
+    "primary" : true,
+    "indicatorationConfig" : {
+        "range" : [ 
+            {
+                "text" : "Excellent",
+                "threshold" : 35
+            }, 
+            {
+                "text" : "Good",
+                "threshold" : 15
+            }, 
+            {
+                "text" : "Bad",
+                "threshold" : 0
+            }
+        ],
+        "spreadsheetKey" : "0Aum2hJfH1Ze0dEY5Z1pjUno1TFRZTlZWVk1Gb3BNVVE",
+        "source" : "gdoc"
     }
-  }, {
-    "shortName": "Contribution to wood and paper sector",
-    "title": "Forestry sector contribution to the wood and paper sector",
-    "theme": "Contribution of the forestry sector",
-    "type": "standard",
-    "primary": true,
-    "indicatorationConfig": {
-      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
-      "source": "gdoc",
-      "range": [
-          {"threshold": 0.35, "text": "Excellent"},
-          {"threshold": 0.15, "text": "Good"},
-          {"threshold": 0, "text": "Bad"}
-      ]
+}, {
+    "shortName" : "Wood and paper",
+    "name" : "Wood and paper",
+    "theme" : "Contribution of the forestry sector",
+    "indicatorDefinition" : {
+        "shortUnit" : "%",
+        "unit" : "%",
+        "fields" : [ 
+            {
+                "type" : "integer",
+                "name" : "year",
+                "source" : {
+                    "type" : "integer",
+                    "name" : "periodStart"
+                }
+            }, 
+            {
+                "type" : "integer",
+                "name" : "value",
+                "source" : {
+                    "type" : "text",
+                    "name" : "value"
+                }
+            }, 
+            {
+                "type" : "text",
+                "name" : "text",
+                "source" : {
+                    "type" : "text",
+                    "name" : "text"
+                }
+            }
+        ],
+        "geometryField" : "geometry",
+        "yAxis" : "value",
+        "xAxis" : "year",
+        "period" : "yearly"
     },
-    "indicatorDefinition": {
-      "unit": "% contribution",
-      "shortUnit": "%",
-      "period": "annual",
-      "xAxis": "date",
-      "yAxis": "value",
-      "geometryField": "geometry",
-      "fields": [
-      {
-        "source": {
-          "name": "periodStart",
-          "type": "text"
-        },
-        "name": "date",
-        "type": "date"
-      }, {
-        "source": {
-          "name": "value",
-          "type": "percentage"
-        },
-        "name": "value",
-        "type": "integer"
-      }, {
-        "source": {
-          "name": "text",
-          "type": "text"
-        },
-        "name": "text",
-        "type": "text"
-      }
-      ]
+    "primary" : true,
+    "indicatorationConfig" : {
+        "range" : [ 
+            {
+                "text" : "Excellent",
+                "threshold" : 35
+            }, 
+            {
+                "text" : "Good",
+                "threshold" : 15
+            }, 
+            {
+                "text" : "Bad",
+                "threshold" : 0
+            }
+        ],
+        "spreadsheetKey" : "0Aum2hJfH1Ze0dGVpeTdFdUlmWUVKVmRGWkVLV0dmV0E",
+        "source" : "gdoc"
     }
-  }, {
-    "shortName": "Contribution to chemical industry sector",
-    "title": "Forestry sector contribution to the chemical industry sector",
-    "theme": "Contribution of the forestry sector",
-    "type": "standard",
-    "primary": true,
-    "indicatorationConfig": {
-      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
-      "source": "gdoc",
-      "range": [
-          {"threshold": 0.35, "text": "Excellent"},
-          {"threshold": 0.15, "text": "Good"},
-          {"threshold": 0, "text": "Bad"}
-      ]
+}, {
+    "shortName" : "Chemical Industry",
+    "name" : "Chemical Industry",
+    "theme" : "Contribution of the forestry sector",
+    "indicatorDefinition" : {
+        "shortUnit" : "%",
+        "unit" : "%",
+        "fields" : [ 
+            {
+                "type" : "integer",
+                "name" : "year",
+                "source" : {
+                    "type" : "integer",
+                    "name" : "periodStart"
+                }
+            }, 
+            {
+                "type" : "integer",
+                "name" : "value",
+                "source" : {
+                    "type" : "text",
+                    "name" : "value"
+                }
+            }, 
+            {
+                "type" : "text",
+                "name" : "text",
+                "source" : {
+                    "type" : "text",
+                    "name" : "text"
+                }
+            }
+        ],
+        "geometryField" : "geometry",
+        "yAxis" : "value",
+        "xAxis" : "year",
+        "period" : "yearly"
     },
-    "indicatorDefinition": {
-      "unit": "% contribution",
-      "shortUnit": "%",
-      "period": "annual",
-      "xAxis": "date",
-      "yAxis": "value",
-      "geometryField": "geometry",
-      "fields": [
-      {
-        "source": {
-          "name": "periodStart",
-          "type": "text"
-        },
-        "name": "date",
-        "type": "date"
-      }, {
-        "source": {
-          "name": "value",
-          "type": "percentage"
-        },
-        "name": "value",
-        "type": "integer"
-      }, {
-        "source": {
-          "name": "text",
-          "type": "text"
-        },
-        "name": "text",
-        "type": "text"
-      }
-      ]
+    "primary" : true,
+    "indicatorationConfig" : {
+        "range" : [ 
+            {
+                "text" : "Excellent",
+                "threshold" : 35
+            }, 
+            {
+                "text" : "Good",
+                "threshold" : 15
+            }, 
+            {
+                "text" : "Bad",
+                "threshold" : 0
+            }
+        ],
+        "spreadsheetKey" : "0Aum2hJfH1Ze0dGZ5RFJEaV84OGhvU2wzMGd5bXQ4emc",
+        "source" : "gdoc"
     }
-  }, {
-    "shortName": "Contribution to other manufacturing sector",
-    "title": "Forestry sector contribution to other manufacturing sector",
-    "theme": "Contribution of the forestry sector",
-    "type": "standard",
-    "primary": true,
-    "indicatorationConfig": {
-      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
-      "source": "gdoc",
-      "range": [
-          {"threshold": 0.35, "text": "Excellent"},
-          {"threshold": 0.15, "text": "Good"},
-          {"threshold": 0, "text": "Bad"}
-      ]
+}, {
+    "shortName" : "Other Manufacturing",
+    "name" : "Other Manufacturing",
+    "theme" : "Contribution of the forestry sector",
+    "indicatorDefinition" : {
+        "shortUnit" : "%",
+        "unit" : "%",
+        "fields" : [ 
+            {
+                "type" : "integer",
+                "name" : "year",
+                "source" : {
+                    "type" : "integer",
+                    "name" : "periodStart"
+                }
+            }, 
+            {
+                "type" : "integer",
+                "name" : "value",
+                "source" : {
+                    "type" : "text",
+                    "name" : "value"
+                }
+            }, 
+            {
+                "type" : "text",
+                "name" : "text",
+                "source" : {
+                    "type" : "text",
+                    "name" : "text"
+                }
+            }
+        ],
+        "geometryField" : "geometry",
+        "yAxis" : "value",
+        "xAxis" : "year",
+        "period" : "yearly"
     },
-    "indicatorDefinition": {
-      "unit": "% contribution",
-      "shortUnit": "%",
-      "period": "annual",
-      "xAxis": "date",
-      "yAxis": "value",
-      "geometryField": "geometry",
-      "fields": [
-      {
-        "source": {
-          "name": "periodStart",
-          "type": "text"
-        },
-        "name": "date",
-        "type": "date"
-      }, {
-        "source": {
-          "name": "value",
-          "type": "percentage"
-        },
-        "name": "value",
-        "type": "integer"
-      }, {
-        "source": {
-          "name": "text",
-          "type": "text"
-        },
-        "name": "text",
-        "type": "text"
-      }
-      ]
+    "primary" : true,
+    "indicatorationConfig" : {
+        "range" : [ 
+            {
+                "text" : "Excellent",
+                "threshold" : 35
+            }, 
+            {
+                "text" : "Good",
+                "threshold" : 15
+            }, 
+            {
+                "text" : "Bad",
+                "threshold" : 0
+            }
+        ],
+        "spreadsheetKey" : "0Aum2hJfH1Ze0dFFjNWRGb2hHWFNLdi1oRFN5N2FCdUE",
+        "source" : "gdoc"
     }
-  }, {
-    "shortName": "Contribution to construction sector",
-    "title": "Forestry sector contribution to the construction sector",
-    "theme": "Contribution of the forestry sector",
-    "type": "standard",
-    "primary": true,
-    "indicatorationConfig": {
-      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
-      "source": "gdoc",
-      "range": [
-          {"threshold": 0.35, "text": "Excellent"},
-          {"threshold": 0.15, "text": "Good"},
-          {"threshold": 0, "text": "Bad"}
-      ]
+}, {
+    "shortName" : "Construction",
+    "name" : "Construction",
+    "theme" : "Contribution of the forestry sector",
+    "indicatorDefinition" : {
+        "shortUnit" : "%",
+        "unit" : "%",
+        "fields" : [ 
+            {
+                "type" : "integer",
+                "name" : "year",
+                "source" : {
+                    "type" : "integer",
+                    "name" : "periodStart"
+                }
+            }, 
+            {
+                "type" : "integer",
+                "name" : "value",
+                "source" : {
+                    "type" : "text",
+                    "name" : "value"
+                }
+            }, 
+            {
+                "type" : "text",
+                "name" : "text",
+                "source" : {
+                    "type" : "text",
+                    "name" : "text"
+                }
+            }
+        ],
+        "geometryField" : "geometry",
+        "yAxis" : "value",
+        "xAxis" : "year",
+        "period" : "yearly"
     },
-    "indicatorDefinition": {
-      "unit": "% contribution",
-      "shortUnit": "%",
-      "period": "annual",
-      "xAxis": "date",
-      "yAxis": "value",
-      "geometryField": "geometry",
-      "fields": [
-      {
-        "source": {
-          "name": "periodStart",
-          "type": "text"
-        },
-        "name": "date",
-        "type": "date"
-      }, {
-        "source": {
-          "name": "value",
-          "type": "percentage"
-        },
-        "name": "value",
-        "type": "integer"
-      }, {
-        "source": {
-          "name": "text",
-          "type": "text"
-        },
-        "name": "text",
-        "type": "text"
-      }
-      ]
+    "primary" : true,
+    "indicatorationConfig" : {
+        "range" : [ 
+            {
+                "text" : "Excellent",
+                "threshold" : 35
+            }, 
+            {
+                "text" : "Good",
+                "threshold" : 15
+            }, 
+            {
+                "text" : "Bad",
+                "threshold" : 0
+            }
+        ],
+        "spreadsheetKey" : "0Aum2hJfH1Ze0dHNfbkUyRUo1UHg0dE9LbXJ1VVYyV3c",
+        "source" : "gdoc"
     }
-  }, {
-    "shortName": "Contribution to wholesale and retail trade sector",
-    "title": "Forestry sector contribution to wholesale and retail trade sector",
-    "theme": "Contribution of the forestry sector",
-    "type": "standard",
-    "primary": true,
-    "indicatorationConfig": {
-      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
-      "source": "gdoc",
-      "range": [
-          {"threshold": 0.35, "text": "Excellent"},
-          {"threshold": 0.15, "text": "Good"},
-          {"threshold": 0, "text": "Bad"}
-      ]
+}, {
+    "shortName" : "Wholesale and Retail Trade",
+    "name" : "Wholesale and Retail Trade",
+    "theme" : "Contribution of the forestry sector",
+    "indicatorDefinition" : {
+        "shortUnit" : "%",
+        "unit" : "%",
+        "fields" : [ 
+            {
+                "type" : "integer",
+                "name" : "year",
+                "source" : {
+                    "type" : "integer",
+                    "name" : "periodStart"
+                }
+            }, 
+            {
+                "type" : "integer",
+                "name" : "value",
+                "source" : {
+                    "type" : "text",
+                    "name" : "value"
+                }
+            }, 
+            {
+                "type" : "text",
+                "name" : "text",
+                "source" : {
+                    "type" : "text",
+                    "name" : "text"
+                }
+            }
+        ],
+        "geometryField" : "geometry",
+        "yAxis" : "value",
+        "xAxis" : "year",
+        "period" : "yearly"
     },
-    "indicatorDefinition": {
-      "unit": "% contribution",
-      "shortUnit": "%",
-      "period": "annual",
-      "xAxis": "date",
-      "yAxis": "value",
-      "geometryField": "geometry",
-      "fields": [
-      {
-        "source": {
-          "name": "periodStart",
-          "type": "text"
-        },
-        "name": "date",
-        "type": "date"
-      }, {
-        "source": {
-          "name": "value",
-          "type": "percentage"
-        },
-        "name": "value",
-        "type": "integer"
-      }, {
-        "source": {
-          "name": "text",
-          "type": "text"
-        },
-        "name": "text",
-        "type": "text"
-      }
-      ]
+    "primary" : true,
+    "indicatorationConfig" : {
+        "range" : [ 
+            {
+                "text" : "Excellent",
+                "threshold" : 35
+            }, 
+            {
+                "text" : "Good",
+                "threshold" : 15
+            }, 
+            {
+                "text" : "Bad",
+                "threshold" : 0
+            }
+        ],
+        "spreadsheetKey" : "0Aum2hJfH1Ze0dDkwSFVwc1B6aXJpSEZuaHRjRFRlZGc",
+        "source" : "gdoc"
     }
-  }, {
-    "shortName": "Contribution to hotels and transport sector",
-    "title": "Forestry sector contribution to the hotels and transport sector",
-    "theme": "Contribution of the forestry sector",
-    "type": "standard",
-    "primary": true,
-    "indicatorationConfig": {
-      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
-      "source": "gdoc",
-      "range": [
-          {"threshold": 0.35, "text": "Excellent"},
-          {"threshold": 0.15, "text": "Good"},
-          {"threshold": 0, "text": "Bad"}
-      ]
+}, {
+    "shortName" : "Hotels and Transport",
+    "name" : "Hotels and Transport",
+    "theme" : "Contribution of the forestry sector",
+    "indicatorDefinition" : {
+        "shortUnit" : "%",
+        "unit" : "%",
+        "fields" : [ 
+            {
+                "type" : "integer",
+                "name" : "year",
+                "source" : {
+                    "type" : "integer",
+                    "name" : "periodStart"
+                }
+            }, 
+            {
+                "type" : "integer",
+                "name" : "value",
+                "source" : {
+                    "type" : "text",
+                    "name" : "value"
+                }
+            }, 
+            {
+                "type" : "text",
+                "name" : "text",
+                "source" : {
+                    "type" : "text",
+                    "name" : "text"
+                }
+            }
+        ],
+        "geometryField" : "geometry",
+        "yAxis" : "value",
+        "xAxis" : "year",
+        "period" : "yearly"
     },
-    "indicatorDefinition": {
-      "unit": "% contribution",
-      "shortUnit": "%",
-      "period": "annual",
-      "xAxis": "date",
-      "yAxis": "value",
-      "geometryField": "geometry",
-      "fields": [
-      {
-        "source": {
-          "name": "periodStart",
-          "type": "text"
-        },
-        "name": "date",
-        "type": "date"
-      }, {
-        "source": {
-          "name": "value",
-          "type": "percentage"
-        },
-        "name": "value",
-        "type": "integer"
-      }, {
-        "source": {
-          "name": "text",
-          "type": "text"
-        },
-        "name": "text",
-        "type": "text"
-      }
-      ]
+    "primary" : true,
+    "indicatorationConfig" : {
+        "range" : [ 
+            {
+                "text" : "Excellent",
+                "threshold" : 35
+            }, 
+            {
+                "text" : "Good",
+                "threshold" : 15
+            }, 
+            {
+                "text" : "Bad",
+                "threshold" : 0
+            }
+        ],
+        "spreadsheetKey" : "0Aum2hJfH1Ze0dEV2c2dVQ2JsQ3g5VEFmT3RuX3J0TVE",
+        "source" : "gdoc"
     }
-  }, {
-    "shortName": "Contribution to other services sector",
-    "title": "Forestry sector contribution to the other services sector",
-    "theme": "Contribution of the forestry sector",
-    "type": "standard",
-    "primary": true,
-    "indicatorationConfig": {
-      "spreadsheetKey": "0Aum3hJfH1Ze0dGtybGNCeUdTNFk1YWozUlJ1Vm5SQlE",
-      "source": "gdoc",
-      "range": [
-          {"threshold": 0.35, "text": "Excellent"},
-          {"threshold": 0.15, "text": "Good"},
-          {"threshold": 0, "text": "Bad"}
-      ]
+}, {
+    "shortName" : "Other Services",
+    "name" : "Other Services",
+    "theme" : "Contribution of the forestry sector",
+    "indicatorDefinition" : {
+        "shortUnit" : "%",
+        "unit" : "%",
+        "fields" : [ 
+            {
+                "type" : "integer",
+                "name" : "year",
+                "source" : {
+                    "type" : "integer",
+                    "name" : "periodStart"
+                }
+            }, 
+            {
+                "type" : "integer",
+                "name" : "value",
+                "source" : {
+                    "type" : "text",
+                    "name" : "value"
+                }
+            }, 
+            {
+                "type" : "text",
+                "name" : "text",
+                "source" : {
+                    "type" : "text",
+                    "name" : "text"
+                }
+            }
+        ],
+        "geometryField" : "geometry",
+        "yAxis" : "value",
+        "xAxis" : "year",
+        "period" : "yearly"
     },
-    "indicatorDefinition": {
-      "unit": "% contribution",
-      "shortUnit": "%",
-      "period": "annual",
-      "xAxis": "date",
-      "yAxis": "value",
-      "geometryField": "geometry",
-      "fields": [
-      {
-        "source": {
-          "name": "periodStart",
-          "type": "text"
-        },
-        "name": "date",
-        "type": "date"
-      }, {
-        "source": {
-          "name": "value",
-          "type": "percentage"
-        },
-        "name": "value",
-        "type": "integer"
-      }, {
-        "source": {
-          "name": "text",
-          "type": "text"
-        },
-        "name": "text",
-        "type": "text"
-      }
-      ]
+    "primary" : true,
+    "indicatorationConfig" : {
+        "range" : [ 
+            {
+                "text" : "Excellent",
+                "threshold" : 35
+            }, 
+            {
+                "text" : "Good",
+                "threshold" : 15
+            }, 
+            {
+                "text" : "Bad",
+                "threshold" : 0
+            }
+        ],
+        "spreadsheetKey" : "0Aum2hJfH1Ze0dENvUVlfZ2Z5c1FSVDdsQVpqODlNRXc",
+        "source" : "gdoc"
     }
-  }
-]
+}]
