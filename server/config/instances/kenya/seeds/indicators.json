@@ -283,4 +283,118 @@
         "spreadsheetKey" : "0Aum2hJfH1Ze0dGZ5RFJEaV84OGhvU2wzMGd5bXQ4emc",
         "source" : "gdoc"
     }
+}, {
+    "shortName" : "Other Manufacturing",
+    "name" : "Other Manufacturing",
+    "theme" : "Contribution of the forestry sector",
+    "indicatorDefinition" : {
+        "shortUnit" : "%",
+        "unit" : "%",
+        "fields" : [
+            {
+                "type" : "integer",
+                "name" : "year",
+                "source" : {
+                    "type" : "integer",
+                    "name" : "periodStart"
+                }
+            },
+            {
+                "type" : "integer",
+                "name" : "value",
+                "source" : {
+                    "type" : "text",
+                    "name" : "value"
+                }
+            },
+            {
+                "type" : "text",
+                "name" : "text",
+                "source" : {
+                    "type" : "text",
+                    "name" : "text"
+                }
+            }
+        ],
+        "geometryField" : "geometry",
+        "yAxis" : "value",
+        "xAxis" : "year",
+        "period" : "yearly"
+    },
+    "primary" : true,
+    "indicatorationConfig" : {
+        "range" : [
+            {
+                "text" : "Excellent",
+                "threshold" : 35
+            },
+            {
+                "text" : "Good",
+                "threshold" : 15
+            },
+            {
+                "text" : "Bad",
+                "threshold" : 0
+            }
+        ],
+        "spreadsheetKey" : "0Aum2hJfH1Ze0dFFjNWRGb2hHWFNLdi1oRFN5N2FCdUE",
+        "source" : "gdoc"
+    }
+}, {
+    "shortName" : "Construction",
+    "name" : "Construction",
+    "theme" : "Contribution of the forestry sector",
+    "indicatorDefinition" : {
+        "shortUnit" : "%",
+        "unit" : "%",
+        "fields" : [
+            {
+                "type" : "integer",
+                "name" : "year",
+                "source" : {
+                    "type" : "integer",
+                    "name" : "periodStart"
+                }
+            },
+            {
+                "type" : "integer",
+                "name" : "value",
+                "source" : {
+                    "type" : "text",
+                    "name" : "value"
+                }
+            },
+            {
+                "type" : "text",
+                "name" : "text",
+                "source" : {
+                    "type" : "text",
+                    "name" : "text"
+                }
+            }
+        ],
+        "geometryField" : "geometry",
+        "yAxis" : "value",
+        "xAxis" : "year",
+        "period" : "yearly"
+    },
+    "primary" : true,
+    "indicatorationConfig" : {
+        "range" : [
+            {
+                "text" : "Excellent",
+                "threshold" : 35
+            },
+            {
+                "text" : "Good",
+                "threshold" : 15
+            },
+            {
+                "text" : "Bad",
+                "threshold" : 0
+            }
+        ],
+        "spreadsheetKey" : "0Aum2hJfH1Ze0dHNfbkUyRUo1UHg0dE9LbXJ1VVYyV3c",
+        "source" : "gdoc"
+    }
 }]
