@@ -59,7 +59,7 @@ test("Asks for the server target and tag name,
     )
   )
 
-  require('../../../lib/tasks/deploy').then( ->
+  require('../../../lib/tasks/deploy')().then( ->
     expectedBranchName = "staging-new-feature-stuff-#{randomNumber}"
 
     assert.isTrue(

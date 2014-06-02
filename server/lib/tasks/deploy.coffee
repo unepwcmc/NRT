@@ -69,7 +69,7 @@ outputDeploymentResults = (deploysWithResolution) ->
     resolve()
   )
 
-module.exports = new Promise( (resolve, reject) ->
+module.exports = ->
   askForTarget().then( (target) ->
     Promise.join(target, askForDescription())
   ).spread( (target, description) ->
@@ -78,10 +78,4 @@ module.exports = new Promise( (resolve, reject) ->
     pollDeploysForTag(tagName)
   ).then( (deploysWithResolution) ->
     outputDeploymentResults(deploysWithResolution)
-  ).then(
-    resolve
-  ).catch(
-    reject
   )
-)
-
