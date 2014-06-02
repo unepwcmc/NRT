@@ -45,7 +45,12 @@ test("Asks for the server target and tag name,
     server:
       name: 'test-server'
     pollStatus: sandbox.spy(->
-      new Promise((resolve) -> resolve())
+      Promise.resolve({
+        deploy:
+          server:
+            name: 'test-server'
+        resolution: 'success'
+      })
     )
 
   getDeploysStub = sandbox.stub(GitHubDeploy, 'getDeploysForTag', ->
@@ -68,7 +73,10 @@ test("Asks for the server target and tag name,
 
     assert.isTrue(
       pushTagStub.calledWith(expectedBranchName),
-      "Expected the created tag to be pushed"
+      """
+        Expected the created tag to be pushed with #{expectedBranchName}
+        but called with #{pushTagStub.getCall(0).args}
+      """
     )
 
     assert.isTrue getDeploysStub.calledOnce,

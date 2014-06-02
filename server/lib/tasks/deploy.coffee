@@ -15,33 +15,73 @@ rl = readline.createInterface(
 normaliseDescription = (tagName) ->
   tagName.toLowerCase().replace(/\s+/g, '-')
 
-console.log "What server do you want to deploy to (e.g. staging, production):"
+askForTarget = ->
+  new Promise( (resolve, reject) ->
+    console.log "What server do you want to deploy to (e.g. staging, production):"
+    rl.once('line', resolve)
+  )
 
-module.exports = new Promise( (resolve, reject) ->
-  rl.once('line', (target) ->
+askForDescription = ->
+  new Promise( (resolve, reject) ->
     console.log "What does this deploy feature?"
     rl.once('line', (description) ->
-      hash = crypto.randomBytes(5).toString('hex')
-      tagName = "#{target}-#{normaliseDescription(description)}-#{hash}"
-
-      console.log "Creating tag '#{tagName}'"
-      Git.createTag(tagName, description).then( ->
-        Git.push(tagName)
-      ).then(->
-        GitHubDeploy.getDeploysForTag(tagName)
-      ).then((deploys)->
-        deployingServers = _.map(deploys, (deploy) -> deploy.server.name)
-
-        console.log """
-          Found #{deploys.length} server(s) to deploy to:
-            * #{deployingServers.join('\n *  ')}
-
-          Polling status...
-        """
-        Promise.all(_.invoke(deploys, 'pollStatus'))
-      ).then(
-        resolve
-      ).catch(reject)
+      resolve(description)
     )
   )
+
+createAndPushTag = (target, description) ->
+  hash = crypto.randomBytes(5).toString('hex')
+  tagName = "#{target}-#{normaliseDescription(description)}-#{hash}"
+
+  console.log "Creating tag '#{tagName}'"
+  Git.createTag(
+    tagName, description
+  ).then( ->
+    Git.push(tagName)
+  ).return(tagName)
+
+pollDeploysForTag = (tagName) ->
+  theDeploys = []
+  finishedDeploys = []
+
+  new Promise( (resolve, reject) ->
+    GitHubDeploy.getDeploysForTag(
+      tagName
+    ).then( (deploys) ->
+      theDeploys = deploys
+      Promise.all(_.invoke(deploys, 'pollStatus'))
+    ).then( (deploysWithResolution) ->
+      finishedDeploys = _.union(finishedDeploys, deploysWithResolution)
+
+      if theDeploys.length is finishedDeploys.length
+        resolve(finishedDeploys)
+      else
+        setTimeout( ->
+          pollDeploysForTag(tagName).then(resolve, reject)
+        , 1000)
+    )
+  )
+
+outputDeploymentResults = (deploysWithResolution) ->
+  new Promise( (resolve, reject) ->
+    for deployWithResolution in deploysWithResolution
+      console.log "Deploy to #{deployWithResolution.deploy.server.name} #{deployWithResolution.resolution}"
+    resolve()
+  )
+
+module.exports = new Promise( (resolve, reject) ->
+  askForTarget().then( (target) ->
+    Promise.join(target, askForDescription())
+  ).spread( (target, description) ->
+    createAndPushTag(target, description)
+  ).then( (tagName) ->
+    pollDeploysForTag(tagName)
+  ).then( (deploysWithResolution) ->
+    outputDeploymentResults(deploysWithResolution)
+  ).then(
+    resolve
+  ).catch(
+    reject
+  )
 )
+
