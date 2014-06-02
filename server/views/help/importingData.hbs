@@ -1,0 +1,55 @@
+{{!< main}}
+
+{{#contentFor 'header'}}
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/about.css">
+{{/contentFor}}
+
+<section class="importing-instructions">
+  <h1>Importing data to NRT</h1>
+  <p>
+    This guide will cover the process of formatting your data in order to import it into the National Reporting Toolkit. Currently, we only support user imports for data inside Google Drive spreadsheets, but we're building support for other forms of data import.  
+  </p>
+
+  <h2>Google Drive indicator import</h2>
+  <p>NRT can import indicator data from Google Drive spreadsheets. For this, you will need:</p>
+  <ul>
+    <li>a Google account, logged in</li>
+    <li>access to the internet</li>
+  </ul>
+  <p>Currently, the Google Drive importer only supports indicators which:</p>
+  <ul>
+    <li>are reported annually</li>
+    <li>have values which are numeric or percentages</li>
+  </ul>
+
+  <h3>Creating an indicator spreadsheet</h3>
+  <p>
+    Log into Google Drive, then clone the template spreadsheet:
+  </p>
+  <a class="url" target="_blank" href="https://docs.google.com/spreadsheets/d/1BttBEKVol0Sxu83t_ZGE0yqh4yxjX5U_OkelkN0ITHM/edit#gid=1475896431">https://docs.google.com/spreadsheets/d/1BttBEKVol0Sxu83t_ZGE0yqh4yxjX5U_OkelkN0ITHM/edit#gid=1475896431</a>
+  
+  <p>Create a copy of this spreadsheet by clicking ‘File’ -> ‘Make a copy’. You will need to create a new spreadsheet like this for each indicator you wish to import. We can now replace the template values with our indicator values.</p>
+
+  <h4>Definition</h4>
+  <p>In your new spreadsheet, first look at the ‘Definition’ worksheet. Here you must define the name of the indicator, the theme it fits under, and the unit it uses.</p>
+  <h4>Data</h4>
+  <p>On the ‘Data’ worksheet, you can insert your environmental data. For the demo, this data must be yearly, and must have a numeric or percentage value.</p>
+  <h4>Ranges</h4>
+  <p>Next, on the ‘Ranges’ worksheet, you define the threshold and text values you want to apply to your data. The ranges must start with the highest value, then descend. The possible text value are “Excellent”, “Good”, “Concerning”, “Bad” and “Catastrophic”. You are not required to provide thresholds for every text value.</p>
+  <h4>Publishing</h4>
+  <p>Finally, you must publish your spreadsheet, so NRT is able to import it. To do this, go to ‘File’ -> ‘Publish to the web’ and click ‘Start publishing’</p>
+
+
+  <h3>Importing the spreadsheet to NRT</h3>
+  <p>Now we can import this spreadsheet to NRT. To do so, visit the <a href="/admin">/admin page</a>.</p>
+  <p>On the page, click the ‘Add indicator’ button. This will then ask for your google spreadsheet key. This key can be found in the address bar for your spreadsheet. For example, for the google doc:</p>
+  <a class="url" href="https://docs.google.com/spreadsheets/d/1BttBEKVol0Sxu83t_ZGE0yqh4yxjX5U_OkelkN0ITHM/edit">https://docs.google.com/spreadsheets/d/1BttBEKVol0Sxu83t_ZGE0yqh4yxjX5U_OkelkN0ITHM/edit</a>
+  <p>the key is between <i>/spreadsheets/d/</i> and <i>/edit</i>:</p>
+  <a class="url" href="https://docs.google.com/spreadsheets/d/1BttBEKVol0Sxu83t_ZGE0yqh4yxjX5U_OkelkN0ITHM/edit">https://docs.google.com/spreadsheets/d/<b>1BttBEKVol0Sxu83t_ZGE0yqh4yxjX5U_OkelkN0ITHM</b>/edit</a>
+  <p>So we would copy the key <b>1BttBEKVol0Sxu83t_ZGE0yqh4yxjX5U_OkelkN0ITHM</b> and paste that into the application. Once that has imported, click the ‘Update’ button to import the data. If all is well, you should see a ‘Success’ message. The indicator will now be visible on your dashboard.</p>
+
+  <h3>Importing changes</h3>
+  <p>When you make changes to the spreadsheet, these must be re-imported into the system. To do this, visit the <a href="/admin">admin page</a> and click ‘Reload’ and ‘Update’ for the indicator you want to update</p>
+
+</section>
