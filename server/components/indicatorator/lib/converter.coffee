@@ -23,6 +23,9 @@ CONVERSIONS =
     integer: (value) ->
       valueWithoutCommas = value.replace(/,/g, '')
       parseInt(valueWithoutCommas, 10)
+    decimal: (value) ->
+      valueWithoutCommas = value.replace(/,/g, '')
+      parseFloat(valueWithoutCommas, 10)
   year:
     epoch: (value) ->
       new Date(value.toString()).getTime()

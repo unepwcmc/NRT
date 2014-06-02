@@ -24,7 +24,7 @@ DEFAULT_INDICATOR_DEFINITION =
         "type": "text"
       },
       "name": "value",
-      "type": "integer"
+      "type": "decimal"
     }, {
       "source": {
         "name": "text",

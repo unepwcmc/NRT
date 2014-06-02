@@ -105,6 +105,15 @@ test(".convertSourceValueToInternalValue when given a decimalPercentage to
     "Expected value to be mutliplied by 100"
 )
 
+test(".convertSourceValueToInternalValue when given a text to
+  decimal conversion parses a float", ->
+
+  result = Converter.convertSourceValueToInternalValue('text', 'decimal', "0.1")
+  assert.strictEqual result, 0.1,
+    "Expected the correct value to be parsed"
+)
+
+
 test(".convertSourceValueToInternalValue when given an epoch to
   date conversion, it converts the value correctly", ->
 
