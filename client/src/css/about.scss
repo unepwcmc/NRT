@@ -131,3 +131,36 @@ footer {
     }
   }
 }
+
+.about-text {
+  h2 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    padding: 0;
+  }
+
+  h3 {
+    margin-top: 20px;
+    margin-bottom:5px;
+    color: #666;
+    font-size: 1.2em;
+  }
+
+  ul {
+    margin-left: 20px;
+    list-style-type: disc;
+
+    li {
+      padding-bottom: 0;
+    }
+  }
+
+  a {
+    text-decoration: underline;
+    color: $linkBlue;
+  }
+
+  .url {
+    color: $grey;
+  }
+}
