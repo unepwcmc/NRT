@@ -409,57 +409,58 @@ test(".pollStatus polls and prints deploy status until success", (done)->
     return githubConf
   )
 
-  deploy.pollStatus().then(->
-    try
-      expectedLogs = [
-        "[ <#{deploy.server.name}> - #{pendingStatusResponse.created_at} ] pending: #{pendingStatusResponse.description}"
-        "[ <#{deploy.server.name}> - #{successStatusResponse.created_at} ] success: #{successStatusResponse.description}"
-      ]
+  deploy.pollStatus().then( (deployWithResolution) ->
+    expectedLogs = [
+      "[ <#{deploy.server.name}> - #{pendingStatusResponse.created_at} ] pending: #{pendingStatusResponse.description}"
+      "[ <#{deploy.server.name}> - #{successStatusResponse.created_at} ] success: #{successStatusResponse.description}"
+    ]
 
-      for message, index in expectedLogs
-        logCall = logSpy.getCall(index)
+    for message, index in expectedLogs
+      logCall = logSpy.getCall(index)
 
-        unless logCall?
-          return done(new Error("Couldn't find console.log call for #{message}"))
-
-        assert.strictEqual(
-          logCall.args[0], message,
-          "Expected console.log to be called with message"
-        )
-
-      assert.strictEqual(logSpy.callCount, expectedLogs.length,
-        "Wrong number of console.log calls"
-      )
-
-      assert.isTrue getStub.calledTwice,
-        "Expected request.get to be called twice"
-
-      requestArgs = getStub.getCall(0).args
+      unless logCall?
+        return done(new Error("Couldn't find console.log call for #{message}"))
 
       assert.strictEqual(
-        requestArgs[0].url,
-        "https://api.github.com/repos/unepwcmc/NRT/deployments/#{deploy.id}/statuses",
-        "Expected a request to be sent to right URL"
+        logCall.args[0], message,
+        "Expected console.log to be called with message"
       )
 
-      assert.deepEqual(
-        requestArgs[0].headers,
-        defaultHeaders,
-        "Expected the github headers to be set"
-      )
+    assert.strictEqual(logSpy.callCount, expectedLogs.length,
+      "Wrong number of console.log calls"
+    )
 
-      assert.deepEqual(
-        requestArgs[0].auth,
-        githubConf,
-        "Expected the github auth to be sent"
-      )
+    assert.isTrue getStub.calledTwice,
+      "Expected request.get to be called twice"
 
-      done()
+    requestArgs = getStub.getCall(0).args
 
-    catch err
-      done(err)
-    finally
-      sandbox.restore()
+    assert.strictEqual(
+      requestArgs[0].url,
+      "https://api.github.com/repos/unepwcmc/NRT/deployments/#{deploy.id}/statuses",
+      "Expected a request to be sent to right URL"
+    )
+
+    assert.deepEqual(
+      requestArgs[0].headers,
+      defaultHeaders,
+      "Expected the github headers to be set"
+    )
+
+    assert.deepEqual(
+      requestArgs[0].auth,
+      githubConf,
+      "Expected the github auth to be sent"
+    )
+
+    assert.deepEqual(
+      deployWithResolution,
+      {deploy: deploy, resolution: successStatusResponse.state},
+      "Expected the final deploy with resolution to be returned"
+    )
+
+    sandbox.restore()
+    done()
 
   ).catch((err) ->
     sandbox.restore()

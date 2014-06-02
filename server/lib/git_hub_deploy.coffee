@@ -111,7 +111,7 @@ module.exports = class GitHubDeploy
               @printedStatusIDs.push status.id
               console.log "[ <#{@server.name}> - #{status.created_at} ] #{status.state}: #{status.description}"
               if status.state in ['success', 'failure']
-                return resolve()
+                return resolve({deploy: @, resolution: status.state})
 
           setTimeout( =>
             @pollStatus().then(resolve).catch(reject)
