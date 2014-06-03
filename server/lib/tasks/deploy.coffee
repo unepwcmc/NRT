@@ -12,7 +12,7 @@ rl = readline.createInterface(
 
 askForTarget = ->
   new Promise( (resolve, reject) ->
-    console.log "What server do you want to deploy to (e.g. staging, production):"
+    console.log "What server(s) do you want to deploy to (use tags or server names separated by commas):"
     rl.once('line', resolve)
   )
 
@@ -25,6 +25,8 @@ askForDescription = ->
   )
 
 startDeployTask = ->
+  clearScreen = '\u001B[2J\u001B[0;0f'
+  process.stdout.write clearScreen
   askForTarget().then( (target) ->
     Promise.join(target, askForDescription())
   ).spread( (target, description) ->
