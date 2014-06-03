@@ -14,7 +14,6 @@
     <link href='//fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/css/main.css">
 
-
     <script src="/js/lib/jquery.min.js"></script>
     <script src="/js/lib/underscore-min.js"></script>
     <script src="/js/lib/backbone-min.js"></script>
@@ -80,7 +79,9 @@
               {{/if}}
             {{/if}}
 
-            <li class="import-link"><p class="import"><a href="/admin">Import data</a></p></li>
+            <li class="import-link">
+              <a href="/admin">Import data</a>
+            </li>
 
             <li class='help-btn {{#unless APP_CONFIG.features.ad_branding}}md-trigger{{/unless}}'>
               {{t "menu/help"}}

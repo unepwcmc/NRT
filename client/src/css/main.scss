@@ -488,21 +488,20 @@ p.readme-link {
 }
 
 .menu ul li.import-link {
-  p.import {
+  a {
     border: 1px solid #008ED6;
     padding: 7px;
     display: inline-block;
     margin-top: 21px;
     border-radius: 5px;
-    a {
-      line-height: 20px;
-      color: #008ED6;
-    }
+
+    line-height: 20px;
+    color: #008ED6;
+
     &:hover, &.active {
       background: #008ED6;
-      a {
-        color: #fff;
-      } 
+
+      color: #fff;
     }
   }
 }
