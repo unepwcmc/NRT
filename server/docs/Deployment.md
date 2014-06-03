@@ -5,11 +5,10 @@ Servers can be deployed to automatically using GitHub deploy hooks.
 Before a server can be deployed to, you must configure it in
 `server/config/<env>.json` with a 'deploy' attribute, containing:
 
-**tags**: An array of strings, which allow your server to be identified
-as a deploy target, e.g. ['ad_staging', 'small_instance'].
-Simply add `tags` as root attribute in the config. Please note that these
-tags are appended to the name of the server, defined
-in the 'server.name' configuration attribute.
+**tags**: An array of strings that allow your server to be identified
+as a deploy target, e.g. ['ad_staging', 'small_instance']. Tags can be
+useful to deploy to various servers at the same time, along with the more standard
+server name, which is set in the top-level configuration attribute 'server.name'.
 **NB: hyphens (-) are not allowed in tags.**
 
 **github authentication**: To notify about deployment, your server must
