@@ -459,23 +459,23 @@ div.row.row-2 {
     }
     &.excellent {
       color: #fff;
-      background-color: #7BAB3C;
+      background-color: $excellentColor;
     }
     &.good {
       color: #fff;
-      background-color: #9BD84C;
+      background-color: $goodColor;
     }
     &.concerning {
       color: #fff;
-      background-color: #FEC060;
+      background-color: $concerningColor;
     }
     &.bad {
       color: #fff;
-      background-color: #FD8C2F;
+      background-color: $badColor;
     }
     &.catastrophic {
       color: #fff;
-      background-color: #E37100;
+      background-color: $catastrophicColor;
     }
   }
 

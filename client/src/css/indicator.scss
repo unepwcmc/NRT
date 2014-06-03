@@ -48,9 +48,10 @@ section.introduction {
             padding: 0 5px;
           }
         }
+
         .score {
           margin-right: 15px;
-          border: 1px solid #7BAB3C;
+          border: 1px solid $mediumGrey;
           display: inline-block;
           float: left;
           height: 35px;
@@ -58,6 +59,7 @@ section.introduction {
           -webkit-border-radius: 4px;
           -moz-border-radius: 4px;
           border-radius: 4px;
+
           span {
             display: inline-block;
             height: 35px;
@@ -67,16 +69,62 @@ section.introduction {
             &.number {
               font-size: 1.2em;
               font-weight: bold;
-              color: #7BAB3C;
+              color: $mediumGrey;
             }
             &.keyword {
-              background-color: #7BAB3C;
+              background-color: $mediumGrey;
               color: rgba(255,255,255, 0.85);
               font-size: 0.85em;
               font-weight: normal;
             }
           }
+
+          &.excellent {
+            border-color: $excellentColor;
+
+            span {
+              &.number { color: $excellentColor; }
+              &.keyword { background-color: $excellentColor; }
+            }
+          }
+
+          &.good {
+            border-color: $goodColor;
+
+            span {
+              &.number { color: $goodColor; }
+              &.keyword { background-color: $goodColor; }
+            }
+          }
+
+          &.concerning {
+            border-color: $concerningColor;
+
+            span {
+              &.number { color: $concerningColor; }
+              &.keyword { background-color: $concerningColor; }
+            }
+          }
+
+          &.bad {
+            border-color: $badColor;
+
+            span {
+              &.number { color: $badColor; }
+              &.keyword { background-color: $badColor; }
+            }
+          }
+
+          &.catastrophic {
+            border-color: $catastrophicColor;
+
+            span {
+              &.number { color: $catastrophicColor; }
+              &.keyword { background-color: $catastrophicColor; }
+            }
+          }
         }
+
       }
     }
   }
