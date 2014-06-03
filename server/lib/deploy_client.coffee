@@ -11,7 +11,7 @@ normaliseDescription = (tagName) ->
 
 createAndPushTag = (target, description) ->
   hash = crypto.randomBytes(5).toString('hex')
-  tagName = "#{target}-#{normaliseDescription(description)}-#{hash}"
+  tagName = "deploy-#{target}-#{normaliseDescription(description)}-#{hash}"
 
   console.log "Creating tag '#{tagName}'"
   Git.createTag(

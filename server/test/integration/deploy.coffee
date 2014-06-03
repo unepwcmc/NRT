@@ -18,7 +18,7 @@ command', (done) ->
   sandbox = sinon.sandbox.create()
 
   deployRole = 'staging'
-  tagName = "#{deployRole}-test-webhooks-1bcc7a0470"
+  tagName = "deploy-#{deployRole}-test-webhooks-1bcc7a0470"
   commitHookPayload = {
     "ref": tagName,
     "ref_type": "tag"
@@ -62,6 +62,44 @@ test("POST deploy fails given tagname doesn't refer to this
 server", (done) ->
   sandbox = sinon.sandbox.create()
 
+  differentDeployRole = 'staging'
+  commitHookPayload = {
+    "ref": "deploy-#{differentDeployRole}-test-webhooks-1bcc7a0470",
+    "ref_type": "tag"
+  }
+
+  rangeCheckStub = sandbox.stub(range_check, 'in_range', -> true)
+
+  updateCodeStub = sandbox.stub(Deploy, 'deploy', ->)
+
+  configStub = sandbox.stub(AppConfig, 'get', (variable)->
+    if variable is 'server'
+      return name: 'not staging'
+  )
+
+  Promise.promisify(request.post, request)({
+    url: helpers.appurl('/deploy')
+    json: true
+    body: commitHookPayload
+  }).spread( (res, body) ->
+
+    assert.strictEqual updateCodeStub.callCount, 0,
+      "Expected CommandRunner.spawn to not be called once"
+
+    assert.equal res.statusCode, 500
+
+    sandbox.restore()
+    done()
+
+  ).catch( (err) ->
+    sandbox.restore()
+    done(err)
+  )
+)
+
+test("POST deploy fails given tagname doesn't start with 'deploy-'", (done) ->
+  sandbox = sinon.sandbox.create()
+
   deployRole = 'staging'
   commitHookPayload = {
     "ref": "#{deployRole}-test-webhooks-1bcc7a0470",
@@ -74,7 +112,7 @@ server", (done) ->
 
   configStub = sandbox.stub(AppConfig, 'get', (variable)->
     if variable is 'server'
-      return name: 'not staging'
+      return name: deployRole
   )
 
   Promise.promisify(request.post, request)({
@@ -132,7 +170,7 @@ trigger the deploy command', (done) ->
   sandbox = sinon.sandbox.create()
 
   deployingTags = ['staging', 'a_tag']
-  tagName = "#{deployingTags.join(',')}-test-webhooks-1bcc7a0470"
+  tagName = "deploy-#{deployingTags.join(',')}-test-webhooks-1bcc7a0470"
   commitHookPayload = {
     "ref": tagName,
     "ref_type": "tag"
