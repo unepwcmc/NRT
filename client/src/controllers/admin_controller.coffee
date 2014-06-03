@@ -52,15 +52,25 @@ updateIndicatorData = (ev) ->
       $("##{id}.action-or-response").text "Failed"
       console.log "Message from remote server for #{id}: #{err.responseText}"
 
+createSpinner = ->
+  $("""
+    <img class="spinner" src="/images/spinner.gif">
+  """)
+
 reloadIndicatorDefinition = (ev) ->
   spreadsheetKey = $(this).attr('data-spreadsheet-key')
+  parentEl = $(this).parent()
+
+  $(this).before(createSpinner())
+  $(this).remove()
+
   $.ajax
     method: "POST"
     url: "/indicators/import_gdoc"
     data: {spreadsheetKey: spreadsheetKey}
     success: reloadIndicatorTable
     error: (err) =>
-      $(this).parent().text "Failed"
+      parentEl.text "Failed"
       console.log "Message from remote server for #{spreadsheetKey}: #{err.responseText}"
 
 Controllers.Admin =

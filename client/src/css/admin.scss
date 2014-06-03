@@ -37,5 +37,10 @@ table {
   td:last-child {
     width: 200px;
 
+    .spinner {
+      float: right;
+      margin-top: 4px;
+      margin-right: 35px;
+    }
   }
 }
