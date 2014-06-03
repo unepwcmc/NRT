@@ -13,7 +13,7 @@ suite('Indicator Admin')
 test("User can visit the admin page, click 'Add Indicator', enter a google
  spreadsheet key and import a new indicator ", (done)->
   Browser = require("zombie")
-  @timeout(5000)
+  @timeout(7000)
 
   importedIndicator =
     name: "Spiffing new indiator"
