@@ -109,7 +109,7 @@ retrievePort = ->
   serverConfig = appConfig.get('server') or {}
 
   if serverConfig.use_unix_sockets
-    socketPath = "/tmp/#{serverConfig.server.name}.sock"
+    socketPath = "/tmp/#{serverConfig.name}.sock"
 
     fs.unlinkSync(socketPath) if fs.existsSync(socketPath)
     return socketPath
