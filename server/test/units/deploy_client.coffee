@@ -10,10 +10,9 @@ Git = require('../../lib/git')
 GitHubDeploy = require('../../lib/git_hub_deploy')
 DeployClient = require('../../lib/deploy_client')
 
-suite('Deploy')
+suite('Deploy Client')
 
-test("Asks for the server target and tag name,
-  then creates a new tag and polls it's deploy state", (done) ->
+test(".start creates a new tag from arguments and polls its deploy(s) state", (done) ->
   target = 'staging'
   description = 'New feature stuff'
 
