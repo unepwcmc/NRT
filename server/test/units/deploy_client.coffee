@@ -1,30 +1,22 @@
 assert = require('chai').assert
-helpers = require '../../helpers'
+helpers = require '../helpers'
 sinon = require 'sinon'
-readline = require 'readline'
 request = require 'request'
 Promise = require 'bluebird'
 crypto = require('crypto')
 
+CommandRunner = require('../../lib/command_runner')
+Git = require('../../lib/git')
+GitHubDeploy = require('../../lib/git_hub_deploy')
+DeployClient = require('../../lib/deploy_client')
 
-CommandRunner = require('../../../lib/command_runner')
-Git = require('../../../lib/git')
-GitHubDeploy = require('../../../lib/git_hub_deploy')
+suite('Deploy Client')
 
-suite('Deploy')
-
-test("Asks for the server target and tag name,
-  then creates a new tag and polls it's deploy state", (done) ->
-  readlineCount = 0
-  responses = ['staging', 'New feature stuff']
+test(".start creates a new tag from arguments and polls its deploy(s) state", (done) ->
+  target = 'staging'
+  description = 'New feature stuff'
 
   sandbox = sinon.sandbox.create()
-
-  sandbox.stub(readline, 'createInterface', ->
-    once: (event, callback) ->
-      readlineCount += 1
-      callback(responses[readlineCount-1])
-  )
 
   # Determined by dice roll, guaranteed to be random
   randomNumber = 4
@@ -59,7 +51,7 @@ test("Asks for the server target and tag name,
     )
   )
 
-  require('../../../lib/tasks/deploy')().then( ->
+  DeployClient.start(target, description).then( ->
     expectedBranchName = "staging-new-feature-stuff-#{randomNumber}"
 
     assert.isTrue(

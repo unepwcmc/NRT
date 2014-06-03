@@ -24,7 +24,10 @@ module.exports = class GitHubDeploy
         url: "https://api.github.com/repos/unepwcmc/NRT/deployments"
         body: JSON.stringify(
           description: @tagName
-          payload: {server: AppConfig.get('server')?.name}
+          payload: {
+            server:
+              name: AppConfig.get('server')?.name
+          }
           ref: @tagName
           force: true
         )

@@ -84,7 +84,7 @@ test(".start creates a GitHub deploy for the given tag name", (done)->
       }
       body: JSON.stringify({
         "description": tagName,
-        "payload": {server: 'server-name'},
+        "payload": {server: name: 'server-name'},
         "ref": tagName,
         "force": true
       })
