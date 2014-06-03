@@ -45,7 +45,7 @@ pollDeploysForTag = (tagName) ->
 outputDeploymentResults = (deploysWithResolution) ->
   new Promise( (resolve, reject) ->
     for deployWithResolution in deploysWithResolution
-      console.log "Deploy to #{deployWithResolution.deploy.server.name} #{deployWithResolution.resolution}"
+      console.log "Deploy to #{deployWithResolution.deploy.server?.name} #{deployWithResolution.resolution}"
     resolve()
   )
 

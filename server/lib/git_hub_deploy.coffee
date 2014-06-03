@@ -85,7 +85,7 @@ module.exports = class GitHubDeploy
             gitHubDeploys = deploys.map( (deploy) ->
               gitHubDeploy = new GitHubDeploy(tagName)
               gitHubDeploy.id = deploy.id
-              gitHubDeploy.server = deploy.payload.server
+              gitHubDeploy.server = deploy.payload.server || {}
               gitHubDeploy
             )
             resolve(gitHubDeploys)
