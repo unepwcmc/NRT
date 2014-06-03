@@ -15,3 +15,7 @@ exports.architecture = (req, res) ->
 exports.partners = (req, res) ->
   res.render "help/partners",
     title: "NRT Partners"
+
+exports.importingData = (req, res) ->
+  res.render "help/importingData",
+    title: "Importing data to NRT"

@@ -65,6 +65,7 @@ module.exports = exports = (app) ->
   app.get "/about", staticRoutes.about
   app.get "/architecture", staticRoutes.architecture
   app.get "/partners", staticRoutes.partners
+  app.get "/importing_data", staticRoutes.importingData
 
   app.get "/dashboard", dashboardRoutes.index
   app.get "/themes", themeRoutes.index
