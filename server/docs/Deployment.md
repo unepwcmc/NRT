@@ -5,8 +5,12 @@ Servers can be deployed to automatically using GitHub deploy hooks.
 Before a server can be deployed to, you must configure it in
 `server/config/<env>.json` with a 'deploy' attribute, containing:
 
-**server_name**: Allows your server to be identified as a deploy target, e.g.
-'ad-staging'. Simply add `server_name` as root attribute in the config.
+**tags**: An array of strings, which allow your server to be identified
+as a deploy target, e.g. ['ad_staging', 'small_instance'].
+Simply add `tags` as root attribute in the config. Please note that these
+tags are appended to the name of the server, defined
+in the 'server.name' configuration attribute.
+**NB: hyphens (-) are not allowed in tags.**
 
 **github authentication**: To notify about deployment, your server must
 authenticate with github. To do this, create an auth token on GitHub:
@@ -15,7 +19,7 @@ Then, modify your config to include these credentials:
 
 ```json
   "deploy": {
-    "server_name": "lovely-staging-server",
+    "tags": ["lovely-staging-server"],
     "github": {
       "password": "x-oauth-basic",
       "username": "<your-auth-token>"
@@ -46,6 +50,7 @@ To deploy, run the deploy command on your local machine:
 
     cd server && npm run-script deploy
 
-This will ask for the name of your target server (staging/production), and
+This will ask for the tags (or server name) you want to deploy to, and
 what the feature introduces, and then create a tag. Once this tag has been
-pushed, the Github deploy hooks take over
+pushed, the Github deploy hooks will take care of streaming the status of the
+spawn deployments back to the deploy command, ending with a summary of the deployment(s).
