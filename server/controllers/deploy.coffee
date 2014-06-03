@@ -4,9 +4,15 @@ range_check = require('range_check')
 _ = require('underscore')
 
 tagRefersToServer = (tag, serverTags) ->
-  deploymentTags = tag.split('-')[0]
-  deploymentTags = deploymentTags.split(',')
-  return _.intersection(deploymentTags, serverTags).length isnt 0
+  chunks = tag.split('-')
+  if chunks[0] is 'deploy'
+
+    deploymentTags = chunks[1]
+    deploymentTags = deploymentTags.split(',')
+    return _.intersection(deploymentTags, serverTags).length isnt 0
+
+  else
+    return false
 
 getIpFromRequest = (req) ->
   req.headers['x-real-ip'] or req.connection.remoteAddress
