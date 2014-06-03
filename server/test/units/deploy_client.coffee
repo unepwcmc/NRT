@@ -52,7 +52,7 @@ test(".start creates a new tag from arguments and polls its deploy(s) state", (d
   )
 
   DeployClient.start(target, description).then( ->
-    expectedBranchName = "staging-new-feature-stuff-#{randomNumber}"
+    expectedBranchName = "deploy-staging-new-feature-stuff-#{randomNumber}"
 
     assert.isTrue(
       createTagStub.calledWith(
