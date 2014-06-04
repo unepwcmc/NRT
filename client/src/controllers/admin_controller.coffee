@@ -109,11 +109,11 @@ reloadIndicatorDefinition = (ev) ->
         reflectSuccess($("[data-spreadsheet-key='#{spreadsheetKey}']"))
       ).error(=>
         $(spinnerEl).replaceWith(@)
-        reflectError($(@))
+        reflectError(@)
       )
     error: (err) =>
       $(spinnerEl).replaceWith(@)
-      reflectError($(@))
+      reflectError(@)
       console.log "Message from remote server for #{spreadsheetKey}: #{err.responseText}"
 
 Controllers.Admin =
