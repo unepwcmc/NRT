@@ -1,7 +1,7 @@
 window.Controllers ||= {}
 
 createSpinner = ->
-  $("<img class=\"spinner\" src=\"/images/spinner.gif\">")
+  $('<img class="spinner" src="/images/spinner.gif">')
 
 reflectSuccess = (el) ->
   $el = $(el)
