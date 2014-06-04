@@ -1,5 +1,23 @@
 window.Controllers ||= {}
 
+createSpinner = ->
+  $("<img class=\"spinner\" src=\"/images/spinner.gif\">")
+
+reflectSuccess = (el) ->
+  $el = $(el)
+
+  oldText = $el.text()
+  $el.text("Done")
+
+  $el.css('background-color', '#7BAB3C')
+  $el.css('border-color', '#7BAB3C')
+  $el.css('color', '#FFF')
+
+  setTimeout(->
+    $el.text(oldText)
+    $el.removeAttr('style')
+  , 1000)
+
 reloadIndicatorTable = ->
   $.get("/partials/admin/indicators").success((indicatorTable) ->
     $("#indicator-table").replaceWith indicatorTable
@@ -8,7 +26,7 @@ reloadIndicatorTable = ->
     console.error res
   )
 
-importIndicator = () ->
+importIndicator = ->
 
   SubmitFormWithAjax(
     @
@@ -44,33 +62,35 @@ updateAllIndicators = (ev) ->
 updateIndicatorData = (ev) ->
   id = ev.currentTarget.id
 
-  $(this).replaceWith(createSpinner())
+  spinnerEl = createSpinner()
+  $(@).replaceWith(spinnerEl)
 
   $.ajax
     method: "POST"
     url: "/admin/updateIndicatorData/" + id
-    success: (data) ->
-      $("##{id}.action-or-response").text "Updated"
+    success: (data) =>
+
+      $(spinnerEl).replaceWith(@)
+      reflectSuccess(@)
+
     error: (err) ->
       $("##{id}.action-or-response").text "Failed"
       console.log "Message from remote server for #{id}: #{err.responseText}"
 
-createSpinner = ->
-  $("""
-    <img class="spinner" src="/images/spinner.gif">
-  """)
-
 reloadIndicatorDefinition = (ev) ->
-  spreadsheetKey = $(this).attr('data-spreadsheet-key')
-  parentEl = $(this).parent()
+  spreadsheetKey = $(@).attr('data-spreadsheet-key')
+  parentEl = $(@).parent()
 
-  $(this).replaceWith(createSpinner())
+  $(@).replaceWith(createSpinner())
 
   $.ajax
     method: "POST"
     url: "/indicators/import_gdoc"
     data: {spreadsheetKey: spreadsheetKey}
-    success: reloadIndicatorTable
+    success: =>
+      reloadIndicatorTable().success(=>
+        reflectSuccess($("[data-spreadsheet-key='#{spreadsheetKey}']"))
+      )
     error: (err) =>
       parentEl.text "Failed"
       console.log "Message from remote server for #{spreadsheetKey}: #{err.responseText}"
