@@ -61,8 +61,7 @@ reloadIndicatorDefinition = (ev) ->
   spreadsheetKey = $(this).attr('data-spreadsheet-key')
   parentEl = $(this).parent()
 
-  $(this).before(createSpinner())
-  $(this).remove()
+  $(this).replaceWith(createSpinner())
 
   $.ajax
     method: "POST"
