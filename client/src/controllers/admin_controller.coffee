@@ -18,6 +18,21 @@ reflectSuccess = (el) ->
     $el.removeAttr('style')
   , 1000)
 
+reflectError = (el) ->
+  $el = $(el)
+
+  oldText = $el.text()
+  $el.text("Error")
+
+  $el.css('background-color', '#E37100')
+  $el.css('border-color', '#E37100')
+  $el.css('color', '#FFF')
+
+  setTimeout(->
+    $el.text(oldText)
+    $el.removeAttr('style')
+  , 1000)
+
 reloadIndicatorTable = ->
   $.get("/partials/admin/indicators").success((indicatorTable) ->
     $("#indicator-table").replaceWith indicatorTable
@@ -73,15 +88,17 @@ updateIndicatorData = (ev) ->
       $(spinnerEl).replaceWith(@)
       reflectSuccess(@)
 
-    error: (err) ->
-      $("##{id}.action-or-response").text "Failed"
+    error: (err) =>
+      $(spinnerEl).replaceWith(@)
+      reflectError(@)
       console.log "Message from remote server for #{id}: #{err.responseText}"
 
 reloadIndicatorDefinition = (ev) ->
   spreadsheetKey = $(@).attr('data-spreadsheet-key')
   parentEl = $(@).parent()
 
-  $(@).replaceWith(createSpinner())
+  spinnerEl = createSpinner()
+  $(@).replaceWith(spinnerEl)
 
   $.ajax
     method: "POST"
@@ -90,9 +107,13 @@ reloadIndicatorDefinition = (ev) ->
     success: =>
       reloadIndicatorTable().success(=>
         reflectSuccess($("[data-spreadsheet-key='#{spreadsheetKey}']"))
+      ).error(=>
+        $(spinnerEl).replaceWith(@)
+        reflectError(@)
       )
     error: (err) =>
-      parentEl.text "Failed"
+      $(spinnerEl).replaceWith(@)
+      reflectError(@)
       console.log "Message from remote server for #{spreadsheetKey}: #{err.responseText}"
 
 Controllers.Admin =
