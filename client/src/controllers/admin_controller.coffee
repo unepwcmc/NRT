@@ -97,7 +97,8 @@ reloadIndicatorDefinition = (ev) ->
   spreadsheetKey = $(@).attr('data-spreadsheet-key')
   parentEl = $(@).parent()
 
-  $(@).replaceWith(createSpinner())
+  spinnerEl = createSpinner()
+  $(@).replaceWith(spinnerEl)
 
   $.ajax
     method: "POST"
@@ -106,9 +107,13 @@ reloadIndicatorDefinition = (ev) ->
     success: =>
       reloadIndicatorTable().success(=>
         reflectSuccess($("[data-spreadsheet-key='#{spreadsheetKey}']"))
+      ).error(=>
+        $(spinnerEl).replaceWith(@)
+        reflectError($(@))
       )
     error: (err) =>
-      parentEl.text "Failed"
+      $(spinnerEl).replaceWith(@)
+      reflectError($(@))
       console.log "Message from remote server for #{spreadsheetKey}: #{err.responseText}"
 
 Controllers.Admin =
