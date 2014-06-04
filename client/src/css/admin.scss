@@ -23,9 +23,11 @@ table {
     margin-bottom: 10px;
   }
   button {
+    float: left;
     color: $linkBlue;
     padding: 8px 20px;
     margin-left: 10px;
+    width: 88px;
   }
 
   input[type="text"] {
@@ -37,5 +39,11 @@ table {
   td:last-child {
     width: 200px;
 
+    .spinner {
+      float: left;
+      margin-top: 4px;
+      margin-left: 42px;
+      margin-right: 30px;
+    }
   }
 }
