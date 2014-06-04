@@ -43,11 +43,14 @@ updateAllIndicators = (ev) ->
 
 updateIndicatorData = (ev) ->
   id = ev.currentTarget.id
+
+  $(this).replaceWith(createSpinner())
+
   $.ajax
     method: "POST"
     url: "/admin/updateIndicatorData/" + id
     success: (data) ->
-      $("##{id}.action-or-response").text "Success"
+      $("##{id}.action-or-response").text "Updated"
     error: (err) ->
       $("##{id}.action-or-response").text "Failed"
       console.log "Message from remote server for #{id}: #{err.responseText}"
