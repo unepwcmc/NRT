@@ -111,10 +111,10 @@ module.exports = class GitHubDeploy
 
       Promise.promisify(request.get, request)(
         requestOptions
-      ).then( (response) =>
+      ).spread( (response, body) =>
         # The .reverse() call is due to Github returning
         # statuses with a descending order on created_at :(
-        parsedStatuses = JSON.parse(response.body).reverse()
+        parsedStatuses = JSON.parse(body).reverse()
 
         @statuses = parsedStatuses.map( (status) ->
           createdAt: status.created_at,

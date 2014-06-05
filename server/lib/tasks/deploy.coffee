@@ -30,7 +30,7 @@ startDeployTask = ->
   askForTarget().then( (target) ->
     Promise.join(target, askForDescription())
   ).spread( (target, description) ->
-    DeployClient.start(target, description)
+    new DeployClient().start(target, description)
   )
 
 startDeployTask().then( ->
