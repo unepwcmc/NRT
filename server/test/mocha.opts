@@ -1,5 +1,6 @@
 --colors
 --compilers coffee:coffee-script
 --ui qunit
+-r coffee-errors
 --reporter spec
 --recursive

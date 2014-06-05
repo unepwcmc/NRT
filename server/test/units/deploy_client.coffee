@@ -1,5 +1,4 @@
 assert = require('chai').assert
-helpers = require '../helpers'
 sinon = require 'sinon'
 request = require 'request'
 Promise = require 'bluebird'
@@ -18,6 +17,11 @@ test(".start creates a new tag from arguments and polls its deploy(s) state", (d
 
   sandbox = sinon.sandbox.create()
 
+  printedLogs = []
+  sandbox.stub(console, 'log', (log) ->
+    printedLogs.push(log)
+  )
+
   # Determined by dice roll, guaranteed to be random
   randomNumber = 4
   randomStub = sandbox.stub(crypto, 'randomBytes', ->
@@ -33,25 +37,63 @@ test(".start creates a new tag from arguments and polls its deploy(s) state", (d
     new Promise((resolve, reject) -> resolve())
   )
 
-  deploy =
+  getDeploysCallCount = 0
+  deploysForFirstCall = [{
+    id: 1
     server:
       name: 'test-server'
-    pollStatus: sandbox.spy(->
-      Promise.resolve({
-        deploy:
-          server:
-            name: 'test-server'
-        resolution: 'success'
-      })
-    )
+    statuses: [
+      {createdAt: "08:05", state: "pending", description: "Being deployed"}
+    ]
+    getResolution: (-> null)
+    isCompleted: (-> false)
+    populateStatuses: sandbox.spy(-> Promise.resolve())
+  }]
+
+  deploysForSecondCall = [{
+    id: 1
+    server:
+      name: 'test-server'
+    statuses: [
+      {createdAt: "08:05", state: "pending", description: "Being deployed"},
+      {createdAt: "08:07", state: "success", description: "Deployed"},
+    ]
+    getResolution: (-> "success")
+    isCompleted: (-> true)
+    populateStatuses: sandbox.spy(-> Promise.resolve())
+  }, {
+    id: 2
+    server:
+      name: 'test-server-2'
+    statuses: [
+      {createdAt: "08:06", state: "pending", description: "Being deployed"}
+      {createdAt: "08:08", state: "success", description: "Deployed"}
+    ]
+    getResolution: (-> "sucess")
+    isCompleted: (-> true)
+    populateStatuses: sandbox.spy(-> Promise.resolve())
+  }]
+
+  deploys = [deploysForFirstCall, deploysForSecondCall]
 
   getDeploysStub = sandbox.stub(GitHubDeploy, 'getDeploysForTag', ->
-    new Promise((resolve) ->
-      resolve([deploy])
-    )
+    promise = Promise.resolve(deploys[getDeploysCallCount])
+    getDeploysCallCount += 1
+    promise
   )
 
-  DeployClient.start(target, description).then( ->
+  expectedLogs = [
+    "Creating tag 'deploy-staging-new-feature-stuff-4'",
+    "[ <test-server> - 08:05 ] pending: Being deployed",
+    "[ <test-server> - 08:07 ] success: Deployed",
+    "[ <test-server-2> - 08:06 ] pending: Being deployed",
+    "[ <test-server-2> - 08:08 ] success: Deployed",
+    "Deploy to test-server success",
+    "Deploy to test-server-2 sucess"
+  ]
+
+  client = new DeployClient()
+  client.start(target, description).then( ->
     expectedBranchName = "deploy-staging-new-feature-stuff-#{randomNumber}"
 
     assert.isTrue(
@@ -71,8 +113,8 @@ test(".start creates a new tag from arguments and polls its deploy(s) state", (d
       """
     )
 
-    assert.isTrue getDeploysStub.calledOnce,
-      "Expected GitHubDeploy to be called once"
+    assert.strictEqual getDeploysStub.callCount, 2,
+      "Expected GitHubDeploy to be called twice"
 
     assert.isTrue getDeploysStub.calledWith(expectedBranchName),
       """
@@ -81,10 +123,22 @@ test(".start creates a new tag from arguments and polls its deploy(s) state", (d
       #{getDeploysStub.getCall(0).args}
       """
 
+    assert.deepEqual printedLogs, expectedLogs,
+      "Expected the deployments statuses to be logged"
+
     sandbox.restore()
     done()
   ).catch( (err) ->
     sandbox.restore()
     done(err)
   )
+
+  # setTimeout is used here to stop sinon.useFakeTimers from blocking time
+  # immediately. We need DeployClient to breathe a bit, as it is
+  # setting a timeout in the middle of the algorithm.
+  setTimeout( ->
+    clock = sinon.useFakeTimers()
+    clock.tick(2000)
+    clock.restore()
+  , 100)
 )
