@@ -116,7 +116,7 @@ module.exports = class GitHubDeploy
         # statuses with a descending order on created_at :(
         parsedStatuses = JSON.parse(response.body).reverse()
 
-        @statuses = parsedStatuses.map( (status) =>
+        @statuses = parsedStatuses.map( (status) ->
           {
             createdAt: status.created_at,
             state: status.state,

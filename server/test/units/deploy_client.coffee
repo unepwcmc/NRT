@@ -17,9 +17,9 @@ test(".start creates a new tag from arguments and polls its deploy(s) state", (d
 
   sandbox = sinon.sandbox.create()
 
-  loggedStatuses = []
-  logSpy = sandbox.stub(console, 'log', (log) ->
-    loggedStatuses.push(log)
+  printedLogs = []
+  sandbox.stub(console, 'log', (log) ->
+    printedLogs.push(log)
   )
 
   # Determined by dice roll, guaranteed to be random
@@ -123,7 +123,7 @@ test(".start creates a new tag from arguments and polls its deploy(s) state", (d
       #{getDeploysStub.getCall(0).args}
       """
 
-    assert.deepEqual loggedStatuses, expectedLogs,
+    assert.deepEqual printedLogs, expectedLogs,
       "Expected the deployments statuses to be logged"
 
     sandbox.restore()
@@ -136,7 +136,7 @@ test(".start creates a new tag from arguments and polls its deploy(s) state", (d
   # Skip to second poll
   setTimeout( ->
     clock = sinon.useFakeTimers()
-    clock.tick(5000)
+    clock.tick(2000)
     clock.restore()
-  , 2000)
+  , 100)
 )
