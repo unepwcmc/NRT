@@ -1,11 +1,11 @@
 assert = require('chai').assert
-helpers = require '../helpers'
+helpers = require '../../helpers'
 sinon = require('sinon')
 Promise = require('bluebird')
 
-IndicatorController = require('../../controllers/indicators')
-GDocIndicatorImporter = require('../../lib/gdoc_indicator_importer')
-Permissions = require('../../lib/services/permissions')
+IndicatorController = require('../../../controllers/indicators')
+GDocIndicatorImporter = require('../../../lib/gdoc_indicator_importer')
+Permissions = require('../../../lib/services/permissions')
 
 suite('Indicator Controller')
 

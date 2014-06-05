@@ -1,14 +1,14 @@
 assert = require('chai').assert
-helpers = require '../helpers'
+helpers = require '../../helpers'
 async = require('async')
 Q = require('q')
 _ = require('underscore')
 sinon = require('sinon')
-Theme = require('../../models/theme').model
-Indicator = require('../../models/indicator').model
-ThemeController = require('../../controllers/themes')
-ThemePresenter = require('../../lib/presenters/theme')
-AppConfig = require('../../initializers/config')
+Theme = require('../../../models/theme').model
+Indicator = require('../../../models/indicator').model
+ThemeController = require('../../../controllers/themes')
+ThemePresenter = require('../../../lib/presenters/theme')
+AppConfig = require('../../../initializers/config')
 
 
 suite('Theme Controller')

@@ -1,7 +1,7 @@
 assert = require('chai').assert
 _ = require('underscore')
 sinon = require('sinon')
-SubIndicatorator = require '../../lib/subindicatorator'
+SubIndicatorator = require '../../../lib/subindicatorator'
 
 suite('SubIndicatorator')
 

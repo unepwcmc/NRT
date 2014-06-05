@@ -1,6 +1,6 @@
 assert = require('chai').assert
 
-WorldBankFormatter = require('../../formatters/world_bank')
+WorldBankFormatter = require('../../../formatters/world_bank')
 
 suite('WorldBank Formatter')
 

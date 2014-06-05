@@ -1,6 +1,6 @@
 assert = require('chai').assert
 
-Sorter = require('../../lib/sorter')
+Sorter = require('../../../lib/sorter')
 
 suite('Sorter')
 

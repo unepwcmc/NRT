@@ -4,13 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha test/ components/**/test/",
-    "test-debug": "NODE_ENV=test mocha --debug",
+    "setup": "node bin/setup.js",
+
     "start": "supervisor -e 'node,js,json,coffee,hbs' -i ./public ./bin/server.js",
     "debug": "node --debug ./bin/server.js",
     "production": "NODE_ENV=production forever -c node ./bin/server.js",
     "win-production": "start cmd.exe /K bin\\server.bat",
-    "setup": "node bin/setup.js",
+
+    "test": "npm run-script test-unit && npm run-script test-integration",
+    "test-unit": "NODE_ENV=test mocha test/units/ components/**/test/units/",
+    "test-integration": "NODE_ENV=test mocha test/integration components/**/test/integration --timeout 10000",
+    "test-debug": "NODE_ENV=test mocha --debug",
+
     "backup-data": "coffee lib/tasks/backup_indicator_data.coffee",
     "create-user": "coffee lib/tasks/create_user.coffee",
     "deploy": "coffee lib/tasks/deploy.coffee"

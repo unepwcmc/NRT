@@ -1,5 +1,0 @@
---colors
---compilers coffee:coffee-script
---ui qunit
---reporter spec
---recursive

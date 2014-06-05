@@ -1,6 +1,6 @@
 assert = require('chai').assert
 
-CartoDBFormatter = require('../../formatters/cartodb')
+CartoDBFormatter = require('../../../formatters/cartodb')
 
 suite('CartoDB Formatter')
 

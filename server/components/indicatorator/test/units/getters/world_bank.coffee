@@ -2,8 +2,8 @@ assert = require('chai').assert
 sinon = require('sinon')
 request = require('request')
 
-Indicator = require('../../../../models/indicator').model
-WorldBankGetter = require("../../getters/world_bank")
+Indicator = require('../../../../../models/indicator').model
+WorldBankGetter = require("../../../getters/world_bank")
 
 suite('WorldBank getter')
 

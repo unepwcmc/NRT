@@ -1,8 +1,8 @@
 assert = require('chai').assert
 sinon = require('sinon')
 
-RangeApplicator = require '../../lib/range_applicator'
-SubIndicator = require '../../lib/subindicatorator'
+RangeApplicator = require '../../../lib/range_applicator'
+SubIndicator = require '../../../lib/subindicatorator'
 
 suite('Standard indicatorator')
 
