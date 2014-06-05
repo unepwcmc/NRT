@@ -17,6 +17,7 @@ mergeWithDefaultOptions = (options) ->
 module.exports = class GitHubDeploy
   constructor: (@tagName) ->
     @server = {}
+    @statuses = []
 
   start: ->
     new Promise( (resolve, reject) =>
@@ -96,30 +97,34 @@ module.exports = class GitHubDeploy
       )
     )
 
-  pollStatus: ->
+  isCompleted: ->
+    _.last(@statuses)?.state in ['success', 'failure']
+
+  getResolution: ->
+    _.last(@statuses)?.state
+
+  populateStatuses: ->
     new Promise( (resolve, reject) =>
       requestOptions = mergeWithDefaultOptions(
         url: "https://api.github.com/repos/unepwcmc/NRT/deployments/#{@id}/statuses"
       )
 
-      request.get(requestOptions, (err, response) =>
-        if err?
-          reject(err)
-        else
-          statuses = JSON.parse(response.body)
+      Promise.promisify(request.get, request)(
+        requestOptions
+      ).then( (response) =>
+        # The .reverse() call is due to Github returning
+        # statuses with a descending order on created_at :(
+        parsedStatuses = JSON.parse(response.body).reverse()
 
-          @printedStatusIDs ||= []
-          for status in statuses
-            unless status.id in @printedStatusIDs
-              @printedStatusIDs.push status.id
-              console.log "[ <#{@server.name}> - #{status.created_at} ] #{status.state}: #{status.description}"
-              if status.state in ['success', 'failure']
-                return resolve({deploy: @, resolution: status.state})
-
-          setTimeout( =>
-            @pollStatus().then(resolve).catch(reject)
-          , 1000)
-      )
+        @statuses = parsedStatuses.map( (status) =>
+          {
+            createdAt: status.created_at,
+            state: status.state,
+            description: status.description
+          }
+        )
+        resolve()
+      ).catch(reject)
     )
 
   @githubConfig: ->

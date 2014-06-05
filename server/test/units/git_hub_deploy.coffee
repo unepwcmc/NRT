@@ -364,7 +364,8 @@ deployment not included in first result", (done) ->
 
 )
 
-test(".pollStatus polls and prints deploy status until success", (done)->
+test(".populateStatuses calls GitHub for statuses and populates
+  deploy's statuses instance variable", (done) ->
   deploy = new GitHubDeploy()
   deploy.id = 5
   deploy.server = {name: "test-server"}
@@ -402,33 +403,36 @@ test(".pollStatus polls and prints deploy status until success", (done)->
     cb(null, response)
   )
 
-  logSpy = sandbox.spy(console, 'log')
-
   githubConf = {dummy: 'config'}
   appConfigStub = sandbox.stub(GitHubDeploy, 'githubConfig', (key) ->
     return githubConf
   )
 
-  deploy.pollStatus().then( (deployWithResolution) ->
-    expectedLogs = [
-      "[ <#{deploy.server.name}> - #{pendingStatusResponse.created_at} ] pending: #{pendingStatusResponse.description}"
-      "[ <#{deploy.server.name}> - #{successStatusResponse.created_at} ] success: #{successStatusResponse.description}"
-    ]
+  deploy.populateStatuses().then( ->
+    expectedStatus = [{
+      createdAt: pendingStatusResponse.created_at,
+      state: 'pending',
+      description: pendingStatusResponse.description
+    }]
 
-    for message, index in expectedLogs
-      logCall = logSpy.getCall(index)
+    assert.deepEqual deploy.statuses, expectedStatus,
+      "Expected pending status to be in the deploy statuses"
 
-      unless logCall?
-        return done(new Error("Couldn't find console.log call for #{message}"))
+    deploy.populateStatuses()
+  ).then( ->
+    expectedStatuses = [{
+      createdAt: successStatusResponse.created_at,
+      state: "success",
+      description: successStatusResponse.description
+    }, {
+      createdAt: pendingStatusResponse.created_at,
+      state: "pending",
+      description: pendingStatusResponse.description
+    }]
 
-      assert.strictEqual(
-        logCall.args[0], message,
-        "Expected console.log to be called with message"
-      )
+    assert.deepEqual deploy.statuses, expectedStatuses,
+      "Expected pending and success statuses to be in the deploy statuses"
 
-    assert.strictEqual(logSpy.callCount, expectedLogs.length,
-      "Wrong number of console.log calls"
-    )
 
     assert.isTrue getStub.calledTwice,
       "Expected request.get to be called twice"
@@ -453,76 +457,8 @@ test(".pollStatus polls and prints deploy status until success", (done)->
       "Expected the github auth to be sent"
     )
 
-    assert.deepEqual(
-      deployWithResolution,
-      {deploy: deploy, resolution: successStatusResponse.state},
-      "Expected the final deploy with resolution to be returned"
-    )
-
     sandbox.restore()
     done()
-
-  ).catch((err) ->
-    sandbox.restore()
-    done(err)
-  )
-
-  # Skip to second poll
-  clock.tick(1000)
-)
-
-test(".pollStatus polls rejects the returned promise if a failure state
-is encountered", (done)->
-  deploy = new GitHubDeploy()
-  deploy.id = 5
-  deploy.server = {name: 'test-server'}
-
-  sandbox = sinon.sandbox.create()
-
-  failedResponse = {
-    id: 1
-    state: "failure"
-    description: "PC Load Letter"
-    created_at: "2014-03-04T10:08:32Z"
-  }
-
-  getStub = sandbox.stub(request, 'get', (options, cb)->
-    response =
-      body: JSON.stringify([
-        failedResponse
-      ])
-    cb(null, response)
-  )
-
-  logSpy = sandbox.spy(console, 'log')
-
-  appConfigStub = sandbox.stub(GitHubDeploy, 'githubConfig', (key) ->
-    return {}
-  )
-
-  deploy.pollStatus().then(->
-    try
-      expectedLog = "[ <#{deploy.server.name}> - #{failedResponse.created_at} ] failure: #{failedResponse.description}"
-
-      logCall = logSpy.getCall(0)
-
-      unless logCall?
-        throw new Error("Couldn't find console.log call for #{expectedLog}")
-
-      assert.strictEqual(
-        logCall.args[0], expectedLog,
-        "Expected console.log to be called with #{expectedLog}"
-      )
-
-      assert.strictEqual(logSpy.callCount, 1,
-        "Expects console.log to be called only once"
-      )
-      done()
-
-    catch err
-      done(err)
-    finally
-      sandbox.restore()
 
   ).catch((err) ->
     sandbox.restore()
