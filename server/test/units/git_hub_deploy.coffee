@@ -400,7 +400,7 @@ test(".populateStatuses calls GitHub for statuses and populates
   getStub = sandbox.stub(request, 'get', (options, cb)->
     response = responses[requestCount]
     requestCount += 1
-    cb(null, response)
+    cb(null, response, response.body)
   )
 
   githubConf = {dummy: 'config'}
