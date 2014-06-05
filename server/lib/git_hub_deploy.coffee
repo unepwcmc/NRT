@@ -98,7 +98,7 @@ module.exports = class GitHubDeploy
     )
 
   isCompleted: ->
-    _.last(@statuses)?.state in ['success', 'failure']
+    @getResolution() in ['success', 'failure']
 
   getResolution: ->
     _.last(@statuses)?.state
@@ -117,11 +117,9 @@ module.exports = class GitHubDeploy
         parsedStatuses = JSON.parse(response.body).reverse()
 
         @statuses = parsedStatuses.map( (status) ->
-          {
-            createdAt: status.created_at,
-            state: status.state,
-            description: status.description
-          }
+          createdAt: status.created_at,
+          state: status.state,
+          description: status.description
         )
         resolve()
       ).catch(reject)

@@ -133,7 +133,9 @@ test(".start creates a new tag from arguments and polls its deploy(s) state", (d
     done(err)
   )
 
-  # Skip to second poll
+  # setTimeout is used here to stop sinon.useFakeTimers from blocking time
+  # immediately. We need DeployClient to breath a bit, as it is
+  # setting a timeout in the middle of the algorithm.
   setTimeout( ->
     clock = sinon.useFakeTimers()
     clock.tick(2000)
