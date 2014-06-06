@@ -16,7 +16,7 @@ tests.
 #### Units
 Typical unit tests. These test system objects, using internal domain language.
 They are small, fast to run and use mocking and stubbing extensively. Run these
-and the integration tests with:
+tests with:
 
 `npm run-script test-units`
 
@@ -28,7 +28,9 @@ that's typically outside of the scope of the integration tests. Similarly, more
 than one route should not be under test. These tests are fast, and expected to
 finish inside 500ms (although the timeout remains 2000ms). Because of their
 speed, these are run alongside units and will be run continuously in the TDD
-red-green-refactor cycle
+red-green-refactor cycle. Run these tests with:
+
+`npm run-script test-integration`
 
 #### Acceptance tests
 These test user features. Test names are written using language understandable
@@ -38,7 +40,10 @@ These tests typically use zombie.js as it is more expressive for describing
 the behaviour under test requires it. These take longer to run and have a
 higher mocha timeout to compensate. These aren't run as part of the short TDD
 loop, but feature development should start with an acceptance test being
-written. These are run before committing (but if not, are caught by travis)
+written. These are run before committing (but if not, are caught by travis).
+Run these tests separately with:
+
+`npm run-script test-acceptance`
 
 ### Using promises in tests
 
