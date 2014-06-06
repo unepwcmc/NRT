@@ -95,8 +95,7 @@ module.exports = exports = (app) ->
     app.get "/tests", testRoutes.test
 
   app.post "/admin/updateIndicatorData/:id", adminRoutes.updateIndicatorData
-  app.get "/admin/updateAll", adminRoutes.updateAll
-  app.get "/admin", adminRoutes.updateAll
+  app.get "/admin", adminRoutes.index
   app.get "/admin/seedIndicatorData", adminRoutes.seedIndicatorData
   app.get "/partials/admin/indicators", adminRoutes.partials.indicatorsTable
   app.get "/partials/admin/indicators/new", adminRoutes.partials.newIndicator

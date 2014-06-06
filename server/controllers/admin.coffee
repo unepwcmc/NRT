@@ -16,11 +16,11 @@ exports.updateIndicatorData = (req, res) ->
     return res.send(500, "Error updating the indicator")
   )
 
-exports.updateAll = (req, res) ->
+exports.index = (req, res) ->
   Promise.promisify(Indicator.find, Indicator)(
     {}
   ).then( (indicators) ->
-    res.render 'admin/updateAll', indicators: indicators
+    res.render 'admin/index', indicators: indicators
   ).catch((err) ->
     console.log err.stack
     return res.send(500, "Error getting indicators")
