@@ -16,7 +16,6 @@ indicatorRoutes = require('./controllers/indicators')
 sessionRoutes   = require('./controllers/session')
 deployRoutes    = require('./controllers/deploy')
 localeRoutes    = require('./controllers/locale')
-reportRoutes    = require('./controllers/reports')
 staticRoutes    = require('./controllers/static')
 adminRoutes     = require('./controllers/admin')
 themeRoutes     = require('./controllers/themes')
@@ -67,7 +66,6 @@ module.exports = exports = (app) ->
   app.get "/importing_data", staticRoutes.importingData
 
   app.get "/themes", themeRoutes.index
-  app.get "/reports", reportRoutes.index
 
   app.get "/indicators/:id", indicatorRoutes.show
   app.get "/indicators/:id/draft", indicatorRoutes.show
@@ -78,10 +76,6 @@ module.exports = exports = (app) ->
   app.get "/themes/:id/draft", themeRoutes.showDraft
   app.get "/themes/:id/discard_draft", themeRoutes.discardDraft
   app.get "/themes/:id/publish", themeRoutes.publishDraft
-
-  app.get "/reports/new", reportRoutes.new
-  app.get "/reports/:id", reportRoutes.show
-  app.get "/reports/:id/present", reportRoutes.present
 
   app.get "/locale/:locale", localeRoutes.index
   app.get "/locales/en-:locale.json", localeRoutes.redirect
