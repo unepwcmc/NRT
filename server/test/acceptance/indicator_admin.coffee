@@ -11,7 +11,7 @@ GDocIndicatorImporter = require('../../lib/gdoc_indicator_importer')
 suite('Indicator Admin')
 
 test("User can visit the admin page, click 'Add Indicator', enter a google
- spreadsheet key and import a new indicator ", (done)->
+ spreadsheet key and import a new indicator", (done)->
   Browser = require("zombie")
 
   importedIndicator =

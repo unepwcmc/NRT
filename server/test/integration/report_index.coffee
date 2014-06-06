@@ -10,7 +10,7 @@ appurl = (path) ->
 
 suite('Report index')
 
-test("GET show", (done) ->
+test("GET show returns a page with the title of the report", (done) ->
   helpers.createReport( (err, report) ->
     request.get {
       url: appurl("/reports/#{report.id}")
