@@ -12,7 +12,6 @@ themeApi         = require('./controllers/api/theme')
 pageApi          = require('./controllers/api/page')
 userApi          = require('./controllers/api/user')
 
-dashboardRoutes = require('./controllers/dashboard')
 indicatorRoutes = require('./controllers/indicators')
 sessionRoutes   = require('./controllers/session')
 deployRoutes    = require('./controllers/deploy')
@@ -67,7 +66,6 @@ module.exports = exports = (app) ->
   app.get "/partners", staticRoutes.partners
   app.get "/importing_data", staticRoutes.importingData
 
-  app.get "/dashboard", dashboardRoutes.index
   app.get "/themes", themeRoutes.index
   app.get "/reports", reportRoutes.index
 
