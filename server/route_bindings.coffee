@@ -7,17 +7,14 @@ sessionAuthentication = require('./lib/session_authentication')
 visualisationApi = require('./controllers/api/visualisation')
 narrativeApi     = require('./controllers/api/narrative')
 indicatorApi     = require('./controllers/api/indicator')
-reportApi        = require('./controllers/api/report')
 themeApi         = require('./controllers/api/theme')
 pageApi          = require('./controllers/api/page')
 userApi          = require('./controllers/api/user')
 
-dashboardRoutes = require('./controllers/dashboard')
 indicatorRoutes = require('./controllers/indicators')
 sessionRoutes   = require('./controllers/session')
 deployRoutes    = require('./controllers/deploy')
 localeRoutes    = require('./controllers/locale')
-reportRoutes    = require('./controllers/reports')
 staticRoutes    = require('./controllers/static')
 adminRoutes     = require('./controllers/admin')
 themeRoutes     = require('./controllers/themes')
@@ -43,7 +40,6 @@ module.exports = exports = (app) ->
   # REST API
   app.resource 'api/narratives', narrativeApi, { format: 'json' }
   app.resource 'api/visualisations', visualisationApi, { format: 'json' }
-  app.resource 'api/reports', reportApi, { format: 'json' }
   app.resource 'api/themes', themeApi, { format: 'json' }
   app.get "/api/themes/:id/fat", themeApi.fatShow
   app.resource 'api/indicators', indicatorApi, { format: 'json' }
@@ -67,9 +63,7 @@ module.exports = exports = (app) ->
   app.get "/partners", staticRoutes.partners
   app.get "/importing_data", staticRoutes.importingData
 
-  app.get "/dashboard", dashboardRoutes.index
   app.get "/themes", themeRoutes.index
-  app.get "/reports", reportRoutes.index
 
   app.get "/indicators/:id", indicatorRoutes.show
   app.get "/indicators/:id/draft", indicatorRoutes.show
@@ -80,10 +74,6 @@ module.exports = exports = (app) ->
   app.get "/themes/:id/draft", themeRoutes.showDraft
   app.get "/themes/:id/discard_draft", themeRoutes.discardDraft
   app.get "/themes/:id/publish", themeRoutes.publishDraft
-
-  app.get "/reports/new", reportRoutes.new
-  app.get "/reports/:id", reportRoutes.show
-  app.get "/reports/:id/present", reportRoutes.present
 
   app.get "/locale/:locale", localeRoutes.index
   app.get "/locales/en-:locale.json", localeRoutes.redirect
