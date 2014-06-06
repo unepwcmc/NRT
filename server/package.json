@@ -12,6 +12,7 @@
     "win-production": "start cmd.exe /K bin\\server.bat",
 
     "test": "npm run-script test-units && npm run-script test-integration && npm run-script test-acceptance",
+    "test-system": "npm run-script test-units && npm run-script test-integration",
     "test-units": "NODE_ENV=test mocha test/units components/**/tests/units",
     "test-integration": "NODE_ENV=test mocha test/integration components/**/tests/integration",
     "test-acceptance": "NODE_ENV=test mocha test/acceptance components/**/test/acceptance --timeout 10000",

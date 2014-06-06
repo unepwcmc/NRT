@@ -10,8 +10,10 @@ Run them with
 `npm test`
 
 ### Test types
-The server tests are separated different types. `npm test` runs types of all
-tests.
+The server tests are separated by type. `npm test` runs all tests.
+`npm run-script test-system` runs unit and integration tests. Because of their
+speed, these are suited to be continuously run in the TDD red-green-refactor
+cycle.
 
 #### Units
 Typical unit tests. These test system objects, using internal domain language.
@@ -26,9 +28,7 @@ codes, and JSON responses. They may also test that methods are called (using
 stubs) or that the database has been altered. HTML outputs can be tested, but
 that's typically outside of the scope of the integration tests. Similarly, more
 than one route should not be under test. These tests are fast, and expected to
-finish inside 500ms (although the timeout remains 2000ms). Because of their
-speed, these are run alongside units and will be run continuously in the TDD
-red-green-refactor cycle. Run these tests with:
+finish inside 500ms (although the timeout remains 2000ms). Run these tests with:
 
 `npm run-script test-integration`
 
