@@ -2,8 +2,8 @@ assert = require('chai').assert
 sinon = require('sinon')
 request = require('request')
 
-Indicator = require('../../../../models/indicator').model
-EsriGetter = require("../../getters/esri")
+Indicator = require('../../../../../models/indicator').model
+EsriGetter = require("../../../getters/esri")
 
 suite('Esri getter')
 

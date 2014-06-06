@@ -1,6 +1,6 @@
 assert = require('chai').assert
 
-EsriFormatter = require('../../formatters/esri')
+EsriFormatter = require('../../../formatters/esri')
 
 suite('Esri Formatter')
 

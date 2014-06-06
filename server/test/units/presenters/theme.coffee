@@ -43,17 +43,17 @@ test("#populateIndicatorRecencyStats given themes populated
     "Expected the outOfDateIndicator.isUpToDate to be fals"
 )
 
-test("#populateIndicators populates the indicators for the given array of themes", ->
+test("#populateIndicators populates the indicators for the given array of themes", (done) ->
   theme1 = new Theme()
   theme1Indicator = new Indicator()
   theme2 = new Theme()
   theme2Indicator = new Indicator()
 
-  getIndicatorsByThemeStub = sinon.stub(Theme, 'getIndicatorsByTheme',  (themeId, callback) ->
+  getIndicatorsByThemeStub = sinon.stub(Theme, 'getIndicatorsByTheme',  (themeId, filter, callback) ->
     if theme1.id is themeId
-      callback(null, theme1Indicator)
+      callback(null, [theme1Indicator])
     else
-      callback(null, theme2Indicator)
+      callback(null, [theme2Indicator])
   )
 
   ThemePresenter.populateIndicators([theme1, theme2]).then(->
@@ -78,7 +78,7 @@ test("#populateIndicators populates the indicators for the given array of themes
       getIndicatorsByThemeStub.restore()
       done(err)
 
-  ).fail((err) ->
+  ).fail( (err) ->
     getIndicatorsByThemeStub.restore()
     done(err)
   )

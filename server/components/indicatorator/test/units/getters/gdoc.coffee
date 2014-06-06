@@ -3,9 +3,9 @@ sinon = require('sinon')
 Promise = require('bluebird')
 _ = require('underscore')
 
-Indicator = require('../../../../models/indicator').model
-GDocGetter = require("../../getters/gdoc")
-GDocWrapper = require("../../../../lib/gdoc_wrapper")
+Indicator = require('../../../../../models/indicator').model
+GDocGetter = require("../../../getters/gdoc")
+GDocWrapper = require("../../../../../lib/gdoc_wrapper")
 
 suite('Google Docs getter')
 

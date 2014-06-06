@@ -2,8 +2,8 @@ assert = require('chai').assert
 sinon = require('sinon')
 request = require('request')
 
-Indicator = require('../../../../models/indicator').model
-CartoDBGetter = require("../../getters/cartodb")
+Indicator = require('../../../../../models/indicator').model
+CartoDBGetter = require("../../../getters/cartodb")
 
 suite('CartoDB getter')
 

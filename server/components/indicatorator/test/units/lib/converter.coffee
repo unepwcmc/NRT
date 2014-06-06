@@ -4,7 +4,7 @@ request = require('request')
 sinon = require('sinon')
 _ = require('underscore')
 
-Converter = require('../../lib/converter')
+Converter = require('../../../lib/converter')
 
 suite('Converter')
 

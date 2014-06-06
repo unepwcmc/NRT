@@ -1,6 +1,6 @@
 assert = require('chai').assert
 
-GDocFormatter = require('../../formatters/gdoc')
+GDocFormatter = require('../../../formatters/gdoc')
 
 suite('Google Docs Spreadsheet Formatter')
 

@@ -4,11 +4,11 @@ sinon = require('sinon')
 fs = require 'fs'
 Q = require('q')
 
-GDocGetter = require('../../getters/gdoc')
-Indicator = require('../../../../models/indicator').model
-Indicatorator = require('../../lib/indicatorator')
-RangeApplicator = require('../../lib/range_applicator')
-SubIndicatorator = require('../../lib/subindicatorator')
+GDocGetter = require('../../../getters/gdoc')
+Indicator = require('../../../../../models/indicator').model
+Indicatorator = require('../../../lib/indicatorator')
+RangeApplicator = require('../../../lib/range_applicator')
+SubIndicatorator = require('../../../lib/subindicatorator')
 
 suite('Indicatorator')
 
