@@ -7,7 +7,6 @@ sessionAuthentication = require('./lib/session_authentication')
 visualisationApi = require('./controllers/api/visualisation')
 narrativeApi     = require('./controllers/api/narrative')
 indicatorApi     = require('./controllers/api/indicator')
-reportApi        = require('./controllers/api/report')
 themeApi         = require('./controllers/api/theme')
 pageApi          = require('./controllers/api/page')
 userApi          = require('./controllers/api/user')
@@ -41,7 +40,6 @@ module.exports = exports = (app) ->
   # REST API
   app.resource 'api/narratives', narrativeApi, { format: 'json' }
   app.resource 'api/visualisations', visualisationApi, { format: 'json' }
-  app.resource 'api/reports', reportApi, { format: 'json' }
   app.resource 'api/themes', themeApi, { format: 'json' }
   app.get "/api/themes/:id/fat", themeApi.fatShow
   app.resource 'api/indicators', indicatorApi, { format: 'json' }
