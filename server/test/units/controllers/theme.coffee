@@ -101,13 +101,12 @@ test(".index given DPSIR parameters excluding everything except drivers,
     Q.fcall(->)
   )
 
-  Q.nsend(
-    theme, 'save'
+  Promise.join(
+    Promise.promisify(theme.save, theme)(),
+    Promise.promisify(driverIndicator.save, driverIndicator)(),
+    Promise.promisify(pressureIndicator.save, pressureIndicator)()
   ).then(->
-    Q.nsend(driverIndicator, 'save')
-  ).then(->
-    Q.nsend(pressureIndicator, 'save')
-  ).then(->
+
     stubReq =
       query:
         dpsir:
@@ -142,7 +141,7 @@ test(".index given DPSIR parameters excluding everything except drivers,
       filterIndicatorsWithDataStub.restore()
       done(err)
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     filterIndicatorsWithDataStub.restore()
     done(err)
   )
@@ -159,15 +158,13 @@ test(".index only returns primary indicators", (done) ->
     dpsir: pressure: true
     primary: false
   )
+  hasDataStub = sinon.stub(Indicator::, 'hasData', -> Q.fcall(->true))
 
-  Q.nsend(
-    theme, 'save'
-  ).then(->
-    Q.nsend(primaryIndicator, 'save')
-  ).then(->
-    Q.nsend(externalIndicator, 'save')
-  ).then(->
-    hasDataStub = sinon.stub(Indicator::, 'hasData', -> Q.fcall(->true))
+  Promise.join(
+    Promise.promisify(theme.save, theme)(),
+    Promise.promisify(primaryIndicator.save, primaryIndicator)(),
+    Promise.promisify(externalIndicator.save, externalIndicator)()
+  ).spread((save1, save2, save3)->
 
     stubReq = {}
 
@@ -200,7 +197,7 @@ test(".index only returns primary indicators", (done) ->
       hasDataStub.restore()
       done(err)
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     hasDataStub.restore()
     done(err)
   )
@@ -220,12 +217,10 @@ test(".index only indicators with data", (done) ->
     Q.fcall(->)
   )
 
-  Q.nsend(
-    theme, 'save'
-  ).then(->
-    Q.nsend(indicator1, 'save')
-  ).then(->
-    Q.nsend(indicator2, 'save')
+  Promise.join(
+    Promise.promisify(theme.save, theme)(),
+    Promise.promisify(indicator1.save, indicator1)(),
+    Promise.promisify(indicator2.save, indicator2)()
   ).then(->
     stubReq = {}
 
@@ -255,7 +250,7 @@ test(".index only indicators with data", (done) ->
       filterIndicatorsWithDataStub.restore()
       done(err)
 
-  ).fail((err)->
+  ).catch((err)->
     filterIndicatorsWithDataStub.restore()
     done(err)
   )
@@ -274,10 +269,9 @@ test(".index given DPSIR parameters driver:false, the clause should be ignored",
     Q.fcall(->)
   )
 
-  Q.nsend(
-    theme, 'save'
-  ).then(->
-    Q.nsend(driverIndicator, 'save')
+  Promise.join(
+    Promise.promisify(theme.save, theme)(),
+    Promise.promisify(driverIndicator.save, driverIndicator)()
   ).then(->
     stubReq = {
       query:
@@ -316,7 +310,7 @@ test(".index given DPSIR parameters driver:false, the clause should be ignored",
       filterIndicatorsWithDataStub.restore()
       done(err)
 
-  ).fail((err)->
+  ).catch((err)->
     filterIndicatorsWithDataStub.restore()
     done(err)
   )
