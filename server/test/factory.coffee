@@ -4,8 +4,8 @@ async = require('async')
 
 class Factory
   define: (modelName, attributes) ->
-    @[modelName] = (_attributes) =>
-      new Promise( (resolve, reject) =>
+    @[modelName] = (_attributes) ->
+      new Promise( (resolve, reject) ->
         Model = require("../models/#{modelName.toLowerCase()}").model
 
         if _.isArray(_attributes)
@@ -33,7 +33,7 @@ class Factory
       )
 
   defineWithCallback: (modelName, attributes) ->
-    @[modelName] = (_attributes, callback) =>
+    @[modelName] = (_attributes, callback) ->
       Model = require("../models/#{modelName.toLowerCase()}").model
 
       unless callback?

@@ -23,11 +23,11 @@ test('.create', (done) ->
       permission = new Permission(permissionAttributes)
       permission.save (err, permission) ->
         if err?
-          throw 'Permission creation failed'
+          throw new Error("Permission creation failed")
 
         Permission.count (err, count) ->
           if err?
-            throw 'Could not find created permission'
+            throw new Error("Could not find created permission")
 
           assert.equal 1, count
           done()

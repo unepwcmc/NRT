@@ -32,7 +32,7 @@ module.exports = class WorldBankGetter
     request.get(
       url: @buildUrl()
       qs: WORLD_BANK_QUERY_SUFFIX
-    , (err, response) =>
+    , (err, response) ->
       if err?
         return deferred.reject(err)
 

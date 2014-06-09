@@ -123,10 +123,9 @@ test(".validateIndicatorDataFields on an indicator with fields with no source
       ]
   )
 
-  assert.throws((->
-      indicator.validateIndicatorDataFields({data: []})
-    ), new RegExp(".*Indicator field definition doesn't include a source attribute.*")
-  )
+  assert.throws( ->
+    indicator.validateIndicatorDataFields({data: []})
+  , new RegExp(".*Indicator field definition doesn't include a source attribute.*"))
 )
 
 

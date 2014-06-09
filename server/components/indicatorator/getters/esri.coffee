@@ -52,7 +52,7 @@ module.exports = class EsriGetter
     request.get({
       url: @buildUrl()
       qs: ESRI_QUERY_PARAMS
-    }, (err, response) =>
+    }, (err, response) ->
       if err
         return deferred.reject(err)
 

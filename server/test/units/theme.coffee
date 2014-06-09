@@ -146,7 +146,7 @@ test('.getIndicatorsByTheme returns all Indicators for given Theme', (done) ->
 
   helpers.createThemesFromAttributes(
     themeAttributes
-  ).then( (themes) =>
+  ).then( (themes) ->
     theThemes = themes
 
     indicatorAttributes = [{
@@ -181,7 +181,7 @@ test('.getIndicatorsByTheme supports an optional filter object', (done) ->
 
   helpers.createThemesFromAttributes(
     themeAttributes
-  ).then( (themes) =>
+  ).then( (themes) ->
     theThemes = themes
 
     indicatorAttributes = [{

@@ -7,7 +7,7 @@ test('.create', (done) ->
   narrative = new Narrative(title: '1234', content: 'narrate this')
   narrative.save( (err, narrative) ->
     if err?
-      throw "Could not save narrative"
+      throw new Error("Could not save narrative")
 
     Narrative.count( (err, count)->
       unless err?

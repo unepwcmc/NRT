@@ -15,12 +15,12 @@ test('.create', (done) ->
   section = new Section(title: 'Head Garments and Sea Vessels')
   section.save (err, section) ->
     if err?
-      throw 'Section saving failed'
+      throw new Error("Section saving failed")
 
     Section.count (err, count) ->
       if err?
         throw err
-        throw 'Failed to find Section'
+        throw new Error("Failed to find Section")
 
       assert.equal 1, count
       done()

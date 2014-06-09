@@ -35,7 +35,7 @@ test('POST create', (done) ->
 test('POST create with nested indicator', (done) ->
   helpers.createIndicator( (err, indicator) ->
     if err?
-      throw 'Could not create indicator'
+      throw new Error("Could not create indicator")
 
     request.post({
       url: helpers.appurl('api/visualisations/')
@@ -85,7 +85,7 @@ test("GET show", (done) ->
 test("GET show returns nested indicator", (done) ->
   helpers.createIndicator( (err, indicator) ->
     if err?
-      throw 'Could not create indicator'
+      throw new Error("Could not create indicator")
 
     helpers.createVisualisation(
       {indicator: indicator._id},
