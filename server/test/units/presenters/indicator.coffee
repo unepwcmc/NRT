@@ -153,8 +153,7 @@ doesn't throw an exception", ->
   headlines = []
 
   assert.doesNotThrow( ->
-      presenter = new IndicatorPresenter(indicator)
-      presenter.populateHeadlineRangesFromHeadlines(headlines)
-    , Error, "Expected populateHeadlineRangesFromHeadlines to not throw an exception"
-  )
+    presenter = new IndicatorPresenter(indicator)
+    presenter.populateHeadlineRangesFromHeadlines(headlines)
+  , Error, "Expected populateHeadlineRangesFromHeadlines to not throw an exception")
 )

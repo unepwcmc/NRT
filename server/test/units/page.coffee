@@ -370,8 +370,8 @@ test('.createDraftClone clones a public page,
 
     section = publicPage.sections[0]
     Promise.promisify(helpers.createVisualisation, helpers)({
-        type: "Map"
-        section: section.id
+      type: "Map"
+      section: section.id
     })
   ).then((visualisation) ->
     originalVisualisation = visualisation

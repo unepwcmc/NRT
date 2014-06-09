@@ -182,7 +182,7 @@ test('.getNewestHeadline returns the most recent headline', (done)->
 )
 
 test('.calculateRecencyOfHeadline when given an indicator with a headline date
-  older than the most recent data returns "Newer data available"', (done) ->
+older than the most recent data returns "Newer data available"', (done) ->
   indicator = new Indicator()
   headlineService = new HeadlineService(indicator)
 
@@ -206,7 +206,7 @@ test('.calculateRecencyOfHeadline when given an indicator with a headline date
 )
 
 test('.calculateRecencyOfHeadline when given an indicator with a headline date
-  equal to or newer than the most recent data returns "Up to date"', (done) ->
+equal to or newer than the most recent data returns "Up to date"', (done) ->
   indicator = new Indicator()
   headlineService = new HeadlineService(indicator)
 
@@ -230,7 +230,7 @@ test('.calculateRecencyOfHeadline when given an indicator with a headline date
 )
 
 test('.calculateRecencyOfHeadline when given an indicator with no data
-  returns "No Data"', (done) ->
+returns "No Data"', (done) ->
   indicator = new Indicator()
   headlineService = new HeadlineService(indicator)
 
@@ -248,7 +248,7 @@ test('.calculateRecencyOfHeadline when given an indicator with no data
 )
 
 test('.calculateRecencyOfHeadline when given a headline with
-  no periodEnd returns "Newer data available"', (done) ->
+no periodEnd returns "Newer data available"', (done) ->
   indicator = new Indicator()
 
   headlineService = new HeadlineService(indicator)
@@ -284,8 +284,8 @@ test("#roundHeadlineValues when given a value which isn't a number, does nothing
 )
 
 test(".parseDateInHeadlines on an indicator with xAxis 'date' (which is an integer),
-  and no period specified, when given an integer date headline row,
-  adds a 'periodEnd' attribute with the date one year in after the 'date' value", ->
+and no period specified, when given an integer date headline row,
+adds a 'periodEnd' attribute with the date one year in after the 'date' value", ->
   indicator = new Indicator(
     indicatorDefinition:
       xAxis: "date",
@@ -326,7 +326,7 @@ test(".parseDateInHeadlines on an indicator with no xAxis defined does no proces
 )
 
 test(".parseDateInHeadlines on an indicator where the frequency is 'quarterly'
-  sets periodEnd to 3 months after the initial 'date'", ->
+sets periodEnd to 3 months after the initial 'date'", ->
 
   indicator = new Indicator(
     indicatorDefinition:

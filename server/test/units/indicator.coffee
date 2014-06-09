@@ -578,9 +578,9 @@ test(".generateMetadataCSV returns CSV arrays containing the name, theme,
 
 test(".generateMetadataCSV on an indicator with no theme or indicator defintion
 returns blank values for those fields", (done) ->
- indicator = new Indicator()
+  indicator = new Indicator()
 
- indicator.generateMetadataCSV().then( (csvData)->
+  indicator.generateMetadataCSV().then( (csvData)->
     try
       assert.lengthOf csvData, 2, "Expected data to have 2 rows: header and data"
       titleRow = csvData[0]
@@ -601,10 +601,9 @@ returns blank values for those fields", (done) ->
     catch e
       done(e)
 
- ).catch( (err) ->
-   done(err)
- )
-
+  ).catch( (err) ->
+    done(err)
+  )
 )
 
 test("#seedData when no seed file exist reports an appropriate error", (done) ->

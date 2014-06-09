@@ -432,9 +432,9 @@ test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
         csvFile = zipFile.file('data.csv')
 
         assert.strictEqual(
-           csvFile.asText(),
-           expectedCSVData,
-           "Expected \n#{csvFile.name} \nto contain \n #{expectedCSVData}"
+          csvFile.asText(),
+          expectedCSVData,
+          "Expected \n#{csvFile.name} \nto contain \n #{expectedCSVData}"
         )
 
         csvFile = zipFile.file('metadata.csv')
@@ -442,9 +442,9 @@ test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
         assert.isNotNull csvFile, "Expected the metadata to be in the zip file"
 
         assert.strictEqual(
-           csvFile.asText(),
-           expectedMetadata,
-           "Expected \n#{csvFile.name} \nto contain \n #{expectedCSVData}"
+          csvFile.asText(),
+          expectedMetadata,
+          "Expected \n#{csvFile.name} \nto contain \n #{expectedCSVData}"
         )
 
         done()
