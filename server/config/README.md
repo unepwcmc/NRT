@@ -41,7 +41,7 @@ The config is accessible thusly:
     "port": 3000 // port to listen on, if use_unix_sockets is false or not defined
   },
   "deploy": { // Automatic deployment config
-    "tags": ["production", "unix"] // optional tags to identify groups of servers on deployment
+    "tags": ["production", "unix"], // optional tags to identify groups of servers on deployment
     "github": { // Login details for GitHub deployment statuses
       "username": "123abc",
       "password": "x-oauth-token"
