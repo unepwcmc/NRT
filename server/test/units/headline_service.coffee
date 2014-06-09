@@ -31,18 +31,18 @@ test('.getRecentHeadlines returns the given number of most recent headlines
   ]
 
   indicatorDefinition =
-    xAxis: 'year'
-    yAxis: 'value'
-    textField: 'text'
+    xAxis: "year"
+    yAxis: "value"
+    textField: "text"
     fields: [{
-      name: 'year'
-      type: 'integer'
-    }, {
-      name: "value",
+      name: "year"
       type: "integer"
     }, {
-      name: 'text'
-      name: 'text'
+      name: "value"
+      type: "integer"
+    }, {
+      name: "text"
+      type: "text"
     }]
 
   theIndicator = null
@@ -137,18 +137,18 @@ test('.getNewestHeadline returns the most recent headline', (done)->
   ]
 
   indicatorDefinition =
-    xAxis: 'date'
-    yAxis: 'value'
-    textField: 'text'
+    xAxis: "date"
+    yAxis: "value"
+    textField: "text"
     fields: [{
-      name: 'date'
+      name: "date"
       type: "date"
     }, {
-      name: "value",
+      name: "value"
       type: "integer"
     }, {
-      name: 'text'
-      name: 'text'
+      name: "text"
+      type: "text"
     }]
 
   theIndicator = null

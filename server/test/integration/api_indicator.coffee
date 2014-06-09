@@ -497,8 +497,8 @@ test('GET /:id/headlines returns the 5 most recent headlines in descending order
       name: "value",
       type: "integer"
     }, {
-      name: 'text'
-      name: 'text'
+      name: "text"
+      type: "text"
     }]
 
   theIndicator = null
@@ -567,18 +567,18 @@ test('GET /:id/headlines/:number returns the n most recent headlines', (done) ->
   ]
 
   indicatorDefinition =
-    xAxis: 'year'
-    yAxis: 'value'
-    textField: 'text'
+    xAxis: "year"
+    yAxis: "value"
+    textField: "text"
     fields: [{
-      name: 'year'
-      type: 'integer'
-    }, {
-      name: "value",
+      name: "year"
       type: "integer"
     }, {
-      name: 'text'
-      name: 'text'
+      name: "value"
+      type: "integer"
+    }, {
+      name: "text"
+      type: "text"
     }]
 
   theIndicator = null
