@@ -28,7 +28,7 @@ The config is accessible thusly:
   "instance_name": "Abu Dhabi", # The name of the instance
   "iso2": "AD", # ISO 2 country code
   "db": {
-    "name: "nrt_production" # The name of your database
+    "name": "nrt_production" # The name of your database
   }
   "features": { # Toggle features
     "dpsir_filtering": true, # Enable visibility and filtering of DPSIR attributes
