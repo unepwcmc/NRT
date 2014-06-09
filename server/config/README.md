@@ -34,9 +34,14 @@ The config is accessible thusly:
     "dpsir_filtering": true, // Enable visibility and filtering of DPSIR attributes
     "open_access": false, // If enabled, user is not required to login
     "ldap": true // Enable LDAP authentication
-  }
+  },
+  "server": {
+    "name": "abu-dhabi-production", // the server name, used to identify deploy targets
+    "use_unix_sockets": true, // listens on a new unix socket at /tmp/abu-dhabi-production.sock
+    "port": 3000 // port to listen on, if use_unix_sockets is false or not defined
+  },
   "deploy": { // Automatic deployment config
-    "server_name": "abu-dhabi-production", // server_name, used to identify deploy targets
+    "tags": ['production', 'unix'] // optional tags to identify groups of servers on deployment
     "github": { // Login details for GitHub deployment statuses
       "username": "123abc",
       "password": "x-oauth-token"
