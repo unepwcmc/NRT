@@ -3,6 +3,8 @@ async = require('async')
 Q = require('q')
 Promise = require('bluebird')
 
+BasicTimer = require('../../../lib/basic_timer')
+
 Indicator = require('../models/indicator').model
 Theme = require('../models/theme').model
 ThemePresenter = require('../lib/presenters/theme')
