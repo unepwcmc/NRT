@@ -1,9 +1,11 @@
 assert = require('chai').assert
 helpers = require '../../helpers'
 async = require('async')
+Promise = require('bluebird')
 Q = require('q')
 _ = require('underscore')
 sinon = require('sinon')
+
 Theme = require('../../../models/theme').model
 Indicator = require('../../../models/indicator').model
 ThemeController = require('../../../controllers/themes')
@@ -16,6 +18,7 @@ suite('Theme Controller')
 test(".index given no DPSIR parameters it returns all indicators
  and an DPSIR object with everything enabled", (done) ->
   theme = new Theme(title: 'test theme')
+
   driverIndicator = new Indicator(
     theme: theme._id
     dpsir: driver: true
@@ -32,13 +35,12 @@ test(".index given no DPSIR parameters it returns all indicators
     Q.fcall(->)
   )
 
-  Q.nsend(
-    theme, 'save'
+  Promise.join(
+    Promise.promisify(theme.save, theme)(),
+    Promise.promisify(driverIndicator.save, driverIndicator)(),
+    Promise.promisify(pressureIndicator.save, pressureIndicator)()
   ).then(->
-    Q.nsend(driverIndicator, 'save')
-  ).then(->
-    Q.nsend(pressureIndicator, 'save')
-  ).then(->
+
     stubReq = {}
     stubRes = {
       send: (code, body) ->
@@ -74,7 +76,7 @@ test(".index given no DPSIR parameters it returns all indicators
       filterIndicatorsWithDataStub.restore()
       done(err)
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     filterIndicatorsWithDataStub.restore()
     done(err)
   )
