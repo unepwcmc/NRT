@@ -8,6 +8,6 @@ module.exports = class GDoc
   fetch: ->
     GDocWrapper.importByKey(
       @indicator.indicatorationConfig.spreadsheetKey
-    ).then( (gdoc) =>
+    ).then( (gdoc) ->
       gdoc.getWorksheetData('Data')
     )
