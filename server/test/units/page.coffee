@@ -211,7 +211,7 @@ test('.canBeEditedBy when a user is not logged in fails with an appropriate erro
     )
   ).then((indicator) ->
     theIndicator = indicator
-    
+
     helpers.createPage(
       parent_id: indicator._id
       parent_type: "Indicator"
