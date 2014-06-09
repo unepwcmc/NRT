@@ -11,11 +11,11 @@ test('.create', (done) ->
   visualisation = new Visualisation(data: {some: 'data'})
   visualisation.save (err, visualisation) ->
     if err?
-      throw 'Visualisation save failed'
+      throw new Error("Visualisation save failed")
 
     Visualisation.count (err, count) ->
       if err?
-        throw 'Failed to find visualisation'
+        throw new Error("Failed to find visualisation")
 
       assert.equal 1, count
       done()
@@ -30,7 +30,7 @@ test('.create with nested indicator', (done) ->
 
     visualisation.save (err, visualisation) ->
       if err?
-        throw 'Visualisation save failed'
+        throw new Error("Visualisation save failed")
 
       Visualisation
         .findOne(_id: visualisation._id)
@@ -57,7 +57,7 @@ test('get "fat" visualisation with all related children by report ID', (done) ->
 
     visualisation.save (err, visualisation) ->
       if err?
-        throw 'Visualisation save failed'
+        throw new Error("Visualisation save failed")
 
       Visualisation.findFatVisualisation({_id: visualisation._id}, (err, visualisation) ->
         assert.isDefined visualisation.indicator
