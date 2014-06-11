@@ -44,9 +44,9 @@ exports.index = (req, res) ->
   dpsirFilter = defaultDpsir if _.isEmpty(dpsirFilter)
 
   theThemes = null
-  Q.nsend(
-    Theme, 'find'
-  ).then((themes) ->
+  Promise.promisify(
+    Theme.find, Theme
+  )().then((themes) ->
     theThemes = themes
 
     if req.query?.dpsir
@@ -58,25 +58,20 @@ exports.index = (req, res) ->
     ThemePresenter.populateIndicators(theThemes, filters)
   ).then(->
 
-    # For each theme
-    Q.nfcall(
-      async.each, theThemes, (theme, callback) ->
+    Promise.all(
+      for theme in theThemes
 
         new ThemePresenter(theme).filterIndicatorsWithData().then(->
           # For each indicator of said theme
-          Q.nfcall(
-            async.each, theme.indicators, (indicator, cb) ->
+          Promise.all(
+            for indicator in theme.indicators
               indicator.populatePage().then(->
                 indicator.populateDescriptionFromPage()
-              ).then(->
-                cb(null)
-              ).fail(cb)
+              )
           )
         ).then(->
           HeadlineService.populateNarrativeRecencyOfIndicators(theme.indicators)
-        ).then(->
-          callback()
-        ).fail(callback)
+        )
     )
   ).then( ->
 
@@ -86,10 +81,10 @@ exports.index = (req, res) ->
     ThemePresenter.populateIndicatorRecencyStats(theThemes)
     res.render "themes/index", themes: theThemes, dpsir: dpsirFilter
 
-  ).fail((err)->
+  ).catch((err)->
     console.error err
     console.error err.stack
-    return res.send(500, "Error populating descriptions")
+    return res.send(500, "Error loading indicators")
   )
 
 exports.show = (req, res) ->
