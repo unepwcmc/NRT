@@ -151,10 +151,11 @@ exports.showDraft = (req, res) ->
 exports.publishDraft = (req, res) ->
   theTheme = null
 
-  Q.nsend(
-    Theme.findOne(_id: req.params.id).populate('owner'),
-    'exec'
-  ).then( (theme) ->
+  finder = Theme.findOne(_id: req.params.id).populate('owner')
+  Promise.promisify(
+    finder.exec,
+    finder
+  )().then( (theme) ->
     theTheme = theme
 
     unless theme?
@@ -167,7 +168,7 @@ exports.publishDraft = (req, res) ->
 
     res.redirect("/themes/#{theTheme.id}")
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     return res.render(500, "Error fetching the theme")
   )
