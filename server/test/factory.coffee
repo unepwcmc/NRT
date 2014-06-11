@@ -13,9 +13,7 @@ class Factory
           _attributes ||= []
 
           async.map(_attributes, Model.create.bind(Model), (err, models) ->
-            if err?
-              deffered.reject(new Error(err))
-
+            return reject(err) if err?
             resolve(models)
           )
 
