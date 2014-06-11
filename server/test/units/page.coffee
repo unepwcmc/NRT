@@ -143,6 +143,7 @@ test('.getParent returns the page parent', (done) ->
     helpers
   )().then((indicator) ->
     theIndicator = indicator
+
     helpers.createPage(
       parent_id: indicator._id
       parent_type: "Indicator"
