@@ -432,9 +432,9 @@ test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
         csvFile = zipFile.file('data.csv')
 
         assert.strictEqual(
-           csvFile.asText(),
-           expectedCSVData,
-           "Expected \n#{csvFile.name} \nto contain \n #{expectedCSVData}"
+          csvFile.asText(),
+          expectedCSVData,
+          "Expected \n#{csvFile.name} \nto contain \n #{expectedCSVData}"
         )
 
         csvFile = zipFile.file('metadata.csv')
@@ -442,9 +442,9 @@ test('GET indicator/:id/data.csv returns the indicator data as a CSV', (done) ->
         assert.isNotNull csvFile, "Expected the metadata to be in the zip file"
 
         assert.strictEqual(
-           csvFile.asText(),
-           expectedMetadata,
-           "Expected \n#{csvFile.name} \nto contain \n #{expectedCSVData}"
+          csvFile.asText(),
+          expectedMetadata,
+          "Expected \n#{csvFile.name} \nto contain \n #{expectedCSVData}"
         )
 
         done()
@@ -497,8 +497,8 @@ test('GET /:id/headlines returns the 5 most recent headlines in descending order
       name: "value",
       type: "integer"
     }, {
-      name: 'text'
-      name: 'text'
+      name: "text"
+      type: "text"
     }]
 
   theIndicator = null
@@ -567,18 +567,18 @@ test('GET /:id/headlines/:number returns the n most recent headlines', (done) ->
   ]
 
   indicatorDefinition =
-    xAxis: 'year'
-    yAxis: 'value'
-    textField: 'text'
+    xAxis: "year"
+    yAxis: "value"
+    textField: "text"
     fields: [{
-      name: 'year'
-      type: 'integer'
-    }, {
-      name: "value",
+      name: "year"
       type: "integer"
     }, {
-      name: 'text'
-      name: 'text'
+      name: "value"
+      type: "integer"
+    }, {
+      name: "text"
+      type: "text"
     }]
 
   theIndicator = null

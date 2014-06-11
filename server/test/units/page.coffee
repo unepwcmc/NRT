@@ -22,12 +22,12 @@ test('.create', (done) ->
   page = new Page(page_attributes)
   page.save (err, page) ->
     if err?
-      throw 'Page saving failed'
+      throw new Error("Page saving failed")
 
     Page.count (err, count) ->
       if err?
         throw err
-        throw 'Failed to find Pages'
+        throw new Error("Failed to find Pages")
 
       assert.equal count, 1
       done()
@@ -43,9 +43,7 @@ test('.create with nested section', (done) ->
   page = new Page(page_attributes)
   page.save((err, page) ->
     if err?
-      console.error err
-      throw 'Page saving failed'
-      done()
+      throw new Error("Page saving failed")
 
     assert.strictEqual page.title, page_attributes.title
     assert.strictEqual page.sections[0].title, page_attributes.sections[0].title
@@ -211,7 +209,7 @@ test('.canBeEditedBy when a user is not logged in fails with an appropriate erro
     )
   ).then((indicator) ->
     theIndicator = indicator
-    
+
     helpers.createPage(
       parent_id: indicator._id
       parent_type: "Indicator"
@@ -372,8 +370,8 @@ test('.createDraftClone clones a public page,
 
     section = publicPage.sections[0]
     Promise.promisify(helpers.createVisualisation, helpers)({
-        type: "Map"
-        section: section.id
+      type: "Map"
+      section: section.id
     })
   ).then((visualisation) ->
     originalVisualisation = visualisation

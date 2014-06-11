@@ -22,21 +22,21 @@ exports.getData = (indicator) ->
 
   exports.fetchData(
     indicator
-  ).then( (rawData) =>
+  ).then( (rawData) ->
     exports.formatData(indicatorationConfig.source, rawData)
-  ).then( (formattedData) =>
+  ).then( (formattedData) ->
     exports.convertData(indicatorDefinition.fields, formattedData)
-  ).then( (convertedData) =>
+  ).then( (convertedData) ->
     if indicatorationConfig.applyRanges is false
       convertedData
     else
       applyRanges(indicatorationConfig.range, convertedData)
-  ).then( (rangedData) =>
+  ).then( (rangedData) ->
     if indicatorationConfig.reduceField?
       reduceFields(indicatorationConfig.reduceField, rangedData)
     else
       rangedData
-  ).then( (indicatoratedData) =>
+  ).then( (indicatoratedData) ->
     if indicatorationConfig.sorting?
       exports.sortData(indicatorationConfig.sorting, indicatoratedData)
     else

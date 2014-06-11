@@ -12,8 +12,8 @@ Page = require('../../models/page').model
 suite('HeadlineService')
 
 test('.getRecentHeadlines returns the given number of most recent headlines
-  in decending date order with the period end calculated for annual
-  indicator data', (done)->
+ in decending date order with the period end calculated for annual
+ indicator data', (done)->
   indicatorData = [
     {
       "year": 2001,
@@ -31,18 +31,18 @@ test('.getRecentHeadlines returns the given number of most recent headlines
   ]
 
   indicatorDefinition =
-    xAxis: 'year'
-    yAxis: 'value'
-    textField: 'text'
+    xAxis: "year"
+    yAxis: "value"
+    textField: "text"
     fields: [{
-      name: 'year'
-      type: 'integer'
-    }, {
-      name: "value",
+      name: "year"
       type: "integer"
     }, {
-      name: 'text'
-      name: 'text'
+      name: "value"
+      type: "integer"
+    }, {
+      name: "text"
+      type: "text"
     }]
 
   theIndicator = null
@@ -83,7 +83,7 @@ test('.getRecentHeadlines returns the given number of most recent headlines
 )
 
 test('.getRecentHeadlines successfully returns all headline when the
-  number of headlines requested is undefined', (done)->
+ number of headlines requested is undefined', (done)->
   indicatorData = [
     {
       "year": 1999,
@@ -137,18 +137,18 @@ test('.getNewestHeadline returns the most recent headline', (done)->
   ]
 
   indicatorDefinition =
-    xAxis: 'date'
-    yAxis: 'value'
-    textField: 'text'
+    xAxis: "date"
+    yAxis: "value"
+    textField: "text"
     fields: [{
-      name: 'date'
+      name: "date"
       type: "date"
     }, {
-      name: "value",
+      name: "value"
       type: "integer"
     }, {
-      name: 'text'
-      name: 'text'
+      name: "text"
+      type: "text"
     }]
 
   theIndicator = null
@@ -182,7 +182,7 @@ test('.getNewestHeadline returns the most recent headline', (done)->
 )
 
 test('.calculateRecencyOfHeadline when given an indicator with a headline date
-  older than the most recent data returns "Newer data available"', (done) ->
+ older than the most recent data returns "Newer data available"', (done) ->
   indicator = new Indicator()
   headlineService = new HeadlineService(indicator)
 
@@ -206,7 +206,7 @@ test('.calculateRecencyOfHeadline when given an indicator with a headline date
 )
 
 test('.calculateRecencyOfHeadline when given an indicator with a headline date
-  equal to or newer than the most recent data returns "Up to date"', (done) ->
+ equal to or newer than the most recent data returns "Up to date"', (done) ->
   indicator = new Indicator()
   headlineService = new HeadlineService(indicator)
 
@@ -230,7 +230,7 @@ test('.calculateRecencyOfHeadline when given an indicator with a headline date
 )
 
 test('.calculateRecencyOfHeadline when given an indicator with no data
-  returns "No Data"', (done) ->
+ returns "No Data"', (done) ->
   indicator = new Indicator()
   headlineService = new HeadlineService(indicator)
 
@@ -248,7 +248,7 @@ test('.calculateRecencyOfHeadline when given an indicator with no data
 )
 
 test('.calculateRecencyOfHeadline when given a headline with
-  no periodEnd returns "Newer data available"', (done) ->
+ no periodEnd returns "Newer data available"', (done) ->
   indicator = new Indicator()
 
   headlineService = new HeadlineService(indicator)
@@ -284,8 +284,8 @@ test("#roundHeadlineValues when given a value which isn't a number, does nothing
 )
 
 test(".parseDateInHeadlines on an indicator with xAxis 'date' (which is an integer),
-  and no period specified, when given an integer date headline row,
-  adds a 'periodEnd' attribute with the date one year in after the 'date' value", ->
+ and no period specified, when given an integer date headline row,
+ adds a 'periodEnd' attribute with the date one year in after the 'date' value", ->
   indicator = new Indicator(
     indicatorDefinition:
       xAxis: "date",
@@ -326,7 +326,7 @@ test(".parseDateInHeadlines on an indicator with no xAxis defined does no proces
 )
 
 test(".parseDateInHeadlines on an indicator where the frequency is 'quarterly'
-  sets periodEnd to 3 months after the initial 'date'", ->
+ sets periodEnd to 3 months after the initial 'date'", ->
 
   indicator = new Indicator(
     indicatorDefinition:
@@ -351,7 +351,7 @@ test(".parseDateInHeadlines on an indicator where the frequency is 'quarterly'
 )
 
 test("#populateNarrativeRecencyOfIndicators populates the narrative recency attribute for
-the given indicators", (done)->
+ the given indicators", (done)->
   indicator = new Indicator()
   indicators = [indicator]
 
@@ -378,11 +378,11 @@ the given indicators", (done)->
 )
 
 test("#narrativeRecencyTextIsUpToDate given text which is in the list of up to
-date statuses returns true", ->
+ date statuses returns true", ->
   assert.isTrue HeadlineService.narrativeRecencyTextIsUpToDate('Up to date')
 )
 
 test("#narrativeRecencyTextIsUpToDate given text which is not in the list of up to
-date statuses returns false", ->
+ date statuses returns false", ->
   assert.isFalse HeadlineService.narrativeRecencyTextIsUpToDate('Newer data available')
 )

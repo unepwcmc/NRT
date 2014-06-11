@@ -40,7 +40,7 @@ test('PUT narrative', (done) ->
 
   narrative.save (err, narrative) ->
     if err?
-      throw 'could not save narrative'
+      throw new Error("Could not save narrative")
 
     newAttributes =
       content: "this is the new content"
@@ -70,7 +70,7 @@ test('PUT narrative does not fail when _id given', (done) ->
 
   narrative.save (err, narrative) ->
     if err?
-      throw 'could not save narrative'
+      throw new Error("Could not save narrative")
 
     newAttributes =
       content: "this is the new content"
@@ -102,7 +102,7 @@ test('GET index', (done) ->
 
   narrative.save (err, narrative) ->
     if err?
-      throw 'could not save narrative'
+      throw new Error("Could not save narrative")
 
     request.get({
       url: helpers.appurl("api/narratives")
@@ -127,7 +127,7 @@ test('GET show', (done) ->
 
   narrative.save (err, narrative) ->
     if err?
-      throw 'could not save narrative'
+      throw new Error("Could not save narrative")
 
     request.get({
       url: helpers.appurl("api/narratives/#{narrative._id}")
@@ -152,7 +152,7 @@ test('DELETE narrative', (done) ->
 
   narrative.save (err, narrative) ->
     if err?
-      throw 'could not save narrative'
+      throw new Error("Could not save narrative")
 
     request.del({
       url: helpers.appurl("api/narratives/#{narrative.id}")

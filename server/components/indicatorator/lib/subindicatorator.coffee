@@ -47,7 +47,7 @@ exports.groupSubIndicatorsUnderAverageIndicators = (subIndicators, indicatorDefi
     if subIndicators.length > 0
       # This periodStart is preferrable, because the grouping casts
       # integer period to a string to us it as a key.
-      # Querying the subIndcator uses the original type 
+      # Querying the subIndcator uses the original type
       averageIndicator.periodStart = subIndicators[0].periodStart
     else
       averageIndicator.periodStart = periodStart

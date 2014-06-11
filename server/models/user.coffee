@@ -158,7 +158,7 @@ fetchUserFromLDAP = (username) ->
     connectTimeout: 10000
   )
 
-  client.bind(ldapConfig.auth_base, ldapConfig.auth_password, (err) =>
+  client.bind(ldapConfig.auth_base, ldapConfig.auth_password, (err) ->
     if err?
       deferred.reject(err)
     else
