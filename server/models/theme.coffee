@@ -97,7 +97,6 @@ themeSchema.statics.getIndicatorsByTheme = (themeId, filters, callback) ->
     .sort(_id: 1)
     .exec( (err, indicators) ->
       if err?
-        console.error(err)
         return callback(err)
 
       callback(err, indicators)
@@ -126,21 +125,16 @@ themeSchema.methods.populateIndicators = ->
   )
 
 themeSchema.statics.findOrCreateByTitle = (title) ->
-  new Promise((resolve, reject) =>
-    @findOne({title: title}, (err, theme) ->
-      return reject(err) if err?
-      if theme?
-        resolve(theme)
-      else
-        Promise.promisify(Theme.create, Theme)(title: title).then(
-          resolve, reject
-        )
-
-    )
+  Promise.promisify(Theme.findOne, Theme)(
+    {title: title}
+  ).then( (theme) ->
+    if theme?
+      return theme
+    else
+      Promise.promisify(Theme.create, Theme)({title: title})
   )
 
 Theme = mongoose.model('Theme', themeSchema)
-
 module.exports = {
   schema: themeSchema
   model: Theme
