@@ -230,17 +230,15 @@ indicatorSchema.methods.getCurrentYAxis = (callback) ->
 
 CSV_HEADERS = ['Indicator', 'Theme', 'Collection Frequency', 'Date Updated']
 indicatorSchema.methods.generateMetadataCSV = ->
-  deferred = Q.defer()
-
   csvData = [CSV_HEADERS]
 
   attributes = []
 
   attributes.push @name
 
-  Q.nsend(
-    @, 'populate', 'theme'
-  ).then(=>
+  Promise.promisify(
+    @populate, @
+  )('theme').then(=>
 
     attributes.push @theme?.title
     attributes.push @indicatorDefinition?.period
@@ -256,13 +254,8 @@ indicatorSchema.methods.generateMetadataCSV = ->
       attributes.push ''
 
     csvData.push attributes
-    deferred.resolve(csvData)
-
-  ).fail((err)->
-    deferred.reject err
+    csvData
   )
-
-  return deferred.promise
 
 # Add currentYValue to a collection of indicators
 indicatorSchema.statics.calculateCurrentValues = (indicators, callback) ->
