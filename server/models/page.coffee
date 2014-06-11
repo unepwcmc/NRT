@@ -78,14 +78,10 @@ pageSchema.methods.getOwnable = ->
   @getParent()
 
 pageSchema.methods.canBeEditedBy = (user) ->
-  deferred = Q.defer()
-
   if user?
-    deferred.resolve()
+    Promise.resolve()
   else
-    deferred.reject(new Error('Must be authenticated as a user to edit pages'))
-
-  return deferred.promise
+    Promise.reject(new Error('Must be authenticated as a user to edit pages'))
 
 pageSchema.pre('save', (next) ->
   if @headline?

@@ -10,6 +10,7 @@ Visualisation = require('../../models/visualisation.coffee').model
 Indicator = require('../../models/indicator.coffee').model
 Section = require('../../models/section.coffee').model
 Page = require('../../models/page').model
+User = require('../../models/user').model
 HeadlineService = require('../../lib/services/headline')
 
 suite('Page')
@@ -176,12 +177,12 @@ test('.getOwnable returns the page parent', (done) ->
 )
 
 test('.canBeEditedBy given a user that is logged in it resolves', (done) ->
-  theUser = theIndicator = thePage = null
-  helpers.createUser().then((user) ->
-    theUser = user
+  theIndicator = thePage = null
+  theUser = new User()
 
-    Promise.promisify(helpers.createIndicator,helpers)()
-  ).then((indicator) ->
+  Promise.promisify(
+    helpers.createIndicator,helpers
+  )().then((indicator) ->
 
     theIndicator = indicator
     helpers.createPage(
@@ -201,13 +202,11 @@ test('.canBeEditedBy given a user that is logged in it resolves', (done) ->
 )
 
 test('.canBeEditedBy when a user is not logged in fails with an appropriate error', (done) ->
-  theOwner = theIndicator = thePage = null
-  helpers.createUser().then((user) ->
-    theOwner = user
+  theIndicator = thePage = null
+  theOwner = new User()
 
-    Promise.promisify(helpers.createIndicator, helpers)(
-      owner: theOwner
-    )
+  Promise.promisify(helpers.createIndicator, helpers)(
+    owner: theOwner
   ).then((indicator) ->
     theIndicator = indicator
 
