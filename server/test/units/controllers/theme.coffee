@@ -285,8 +285,6 @@ test(".index given DPSIR parameters driver:false, the clause should be ignored",
         done(new Error("Expected res.send not to be called, but called with #{code}: #{body}"))
       render: (templateName, data) ->
         try
-          console.log data.dpsir
-
           assert.lengthOf data.themes, 1, "Expected one theme to be returned"
           assert.lengthOf data.themes[0].indicators, 1,
             "Expected the one driver indicator to be returned, regardless of the filter"
