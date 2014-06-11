@@ -289,53 +289,41 @@ indicatorSchema.statics.calculateCurrentValues = (indicators, callback) ->
   )
 
 indicatorSchema.statics.findWhereIndicatorHasData = (conditions) ->
-  new Promise((resolve, reject) ->
-    Promise.promisify(Indicator.find, Indicator)(
-      conditions
-    ).then((indicators) ->
-      indicatorsWithData = []
+  Promise.promisify(Indicator.find, Indicator)(
+    conditions
+  ).then((indicators) ->
+    indicatorsWithData = []
 
-      addIndicatorIfHasData = (indicator, callback) ->
-        indicator.getIndicatorData((err, data) ->
-          if err?
-            return callback(err)
-          else if data.length > 0
-            indicatorsWithData.push indicator
-          callback()
-        )
+    addIndicatorIfHasData = (indicator, callback) ->
+      indicator.getIndicatorData((err, data) ->
+        if err?
+          return callback(err)
+        else if data.length > 0
+          indicatorsWithData.push indicator
+        callback()
+      )
 
+    new Promise((resolve, reject) ->
       async.each indicators, addIndicatorIfHasData, (err) ->
         if err?
           reject(err)
         else
           resolve(indicatorsWithData)
-
-    ).catch(reject)
-  )
-
-populatePage = (indicator, callback) ->
-  indicator.populatePage().then(->
-    callback()
-  ).fail((err) ->
-    callback(err)
+    )
   )
 
 indicatorSchema.statics.populatePages = (indicators) ->
-  deferred = Q.defer()
-
-  async.each indicators, populatePage, (err) ->
-    if err?
-      deferred.reject(err)
-    else
-      deferred.resolve()
-
-  return deferred.promise
+  Promise.all(
+    _.map(indicators, (indicator)->
+      indicator.populatePage()
+    )
+  )
 
 calculateRecency = (indicator, callback) ->
   indicator.calculateRecencyOfHeadline().then((recency)->
     indicator.narrativeRecency = recency
     callback()
-  ).fail((err) ->
+  ).catch((err) ->
     callback(err)
   )
 
