@@ -1,6 +1,5 @@
 _ = require('underscore')
 async = require('async')
-Q = require('q')
 Promise = require('bluebird')
 
 Indicator = require('../models/indicator').model
@@ -151,10 +150,10 @@ exports.showDraft = (req, res) ->
 exports.publishDraft = (req, res) ->
   theTheme = null
 
-  finder = Theme.findOne(_id: req.params.id).populate('owner')
+  themeFinder = Theme.findOne(_id: req.params.id).populate('owner')
   Promise.promisify(
-    finder.exec,
-    finder
+    themeFinder.exec,
+    themeFinder
   )().then( (theme) ->
     theTheme = theme
 
@@ -176,10 +175,11 @@ exports.publishDraft = (req, res) ->
 exports.discardDraft = (req, res) ->
   theTheme = null
 
-  Q.nsend(
-    Theme.findOne(_id: req.params.id).populate('owner'),
-    'exec'
-  ).then( (theme) ->
+  themeFinder = Theme.findOne(_id: req.params.id).populate('owner')
+  Promise.promisify(
+    themeFinder.exec,
+    themeFinder
+  )().then( (theme) ->
     theTheme = theme
 
     unless theme?
@@ -192,7 +192,7 @@ exports.discardDraft = (req, res) ->
 
     res.redirect("/themes/#{theTheme.id}")
 
-  ).fail((err) ->
+  ).catch((err) ->
     console.error err
     return res.render(500, "Error fetching the theme")
   )
