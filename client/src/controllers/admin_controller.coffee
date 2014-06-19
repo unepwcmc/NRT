@@ -62,7 +62,7 @@ showNewIndicatorForm = ->
 
     gapi.savetodrive.render(
       table.find('.g-savetodrive')[0], {
-        src: "//#{document.domain}/NRT GDoc Indicator Template.xlsx"
+        src: "//#{document.domain}/assets/NRT GDoc Indicator Template.xlsx"
         filename: "NRT Indicator.xlsx"
         sitename: "National Reporting Toolkit"
       }
