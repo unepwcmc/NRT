@@ -46,4 +46,13 @@ table {
       margin-right: 30px;
     }
   }
+
+  .import-options {
+    overflow: hidden;
+    padding: 0;
+
+    li {
+      list-style-type: none;
+    }
+  }
 }
