@@ -133,23 +133,9 @@ NRT configuration file
 
 ```json
 {
-  "instance_name": "Production",
-  "db": {
-    "name": "nrt_production"
-  },
-  "features": {
-    "ldap": false,
-    "dpsir_filtering": true
-  },
   "server": {
     "name": "production-1",
     "use_unix_sockets": true
-  },
-  "deploy": {
-    "github": {
-      "password": "x-oauth-basic",
-      "username": "61f5fef3273deaa707484d56d65857a723dce56a"
-    }
   }
 }
 ```
