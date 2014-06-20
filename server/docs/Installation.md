@@ -120,3 +120,52 @@ for the production details you need.
 LDAP is a optional feature which can be disabled in the application config:
 https://github.com/unepwcmc/NRT/tree/master/server/config#example
 
+#### Appendix: running NRT on UNIX sockets behind a reverse proxy
+
+When running NRT in a UNIX environment, it might be useful to use UNIX sockets
+instead of ports, in order to have a more descriptive access point to the NRT
+instance. A reverse proxy can then be set to listen on the newly created socket.
+Here we provide a configuration example to setup an NRT server running
+behind [nginx](http://wiki.nginx.org/Main), the popular high-performance HTTP
+server and reverse proxy.
+
+NRT configuration file
+
+```json
+{
+  "server": {
+    "name": "production-1",
+    "use_unix_sockets": true
+  }
+}
+```
+
+Firing up NRT with this configuration file will create a UNIX socket located at
+`/tmp/production-1.sock`. Note how the UNIX socket takes its name from the
+`server.name` attribute defined in the configuration file.
+
+To listen on the newly created socket, configure nginx appropriately. Here, we
+use the common sites-enabled/sites-available paradigm, and create a new
+configuration file called nrt-production-1 in the sites-available folder.
+
+```
+server {
+  listen 0.0.0.0:80;
+  server_name production-1.nrt.io nrt-production-1;
+  access_log /var/log/nginx/nrt-production-1.log;
+
+  # pass the request to the node.js server with the correct headers and much more can be added, see nginx config options
+  location / {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-NginX-Proxy true;
+
+    proxy_pass http://unix:/tmp/production-1.sock:/;
+    proxy_redirect off;
+  }
+}
+```
+
+After restarting nginx, accessing `production-1.nrt.io` will connect to
+nginx, thus the production-1 UNIX socket and the underlying node server.
