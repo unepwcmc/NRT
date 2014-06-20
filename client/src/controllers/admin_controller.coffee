@@ -60,12 +60,9 @@ showNewIndicatorForm = ->
     table = $("#indicator-table")
     table.find("tbody").prepend data
 
-    gapi.savetodrive.render(
-      table.find('.g-savetodrive')[0], {
-        src: "//#{document.domain}/assets/NRT GDoc Indicator Template.xlsx"
-        filename: "NRT Indicator.xlsx"
-        sitename: "National Reporting Toolkit"
-      }
+    button = new SaveToDriveButton(
+      table.find('.g-savetodrive')[0],
+      "//#{document.domain}/assets/NRT GDoc Indicator Template.xlsx"
     )
 
     table.find(".submit-new-indicator").click(

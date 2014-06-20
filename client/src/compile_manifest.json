@@ -56,6 +56,7 @@
   "src/lib/data/sample_esri_service.coffee",
   "src/lib/bar_chart.coffee",
   "src/lib/submit_form_with_ajax.coffee",
+  "src/lib/save_to_drive_button.coffee",
   "src/views/line_chart_view.coffee",
   "src/views/bar_chart_view.coffee",
   "src/controllers/report_controller.coffee",
