@@ -34,7 +34,7 @@ exports.create = (req, res) ->
         res.send(500, "Update to retrieve created page")
       )
     )
-  ).fail( (err) ->
+  ).catch( (err) ->
     console.error err
     res.send(401, err)
   )
