@@ -150,17 +150,16 @@ indicatorSchema.methods.getIndicatorDataForCSV = (filters, callback) ->
     callback(err, rows)
   )
 
+
 indicatorSchema.methods.hasData = ->
-  deferred = Q.defer()
-
-  @getIndicatorData( (err, data) ->
-    if err?
-      deferred.reject(err)
-    else
-      deferred.resolve(data.length > 0)
+  new Promise((resolve, reject) =>
+    @getIndicatorData( (err, data) ->
+      if err?
+        reject(err)
+      else
+        resolve(data.length > 0)
+    )
   )
-
-  return deferred.promise
 
 indicatorSchema.methods.getIndicatorData = (filters, callback) ->
   if arguments.length == 1
@@ -231,17 +230,15 @@ indicatorSchema.methods.getCurrentYAxis = (callback) ->
 
 CSV_HEADERS = ['Indicator', 'Theme', 'Collection Frequency', 'Date Updated']
 indicatorSchema.methods.generateMetadataCSV = ->
-  deferred = Q.defer()
-
   csvData = [CSV_HEADERS]
 
   attributes = []
 
   attributes.push @name
 
-  Q.nsend(
-    @, 'populate', 'theme'
-  ).then(=>
+  Promise.promisify(
+    @populate, @
+  )('theme').then(=>
 
     attributes.push @theme?.title
     attributes.push @indicatorDefinition?.period
@@ -257,13 +254,8 @@ indicatorSchema.methods.generateMetadataCSV = ->
       attributes.push ''
 
     csvData.push attributes
-    deferred.resolve(csvData)
-
-  ).fail((err)->
-    deferred.reject err
+    csvData
   )
-
-  return deferred.promise
 
 # Add currentYValue to a collection of indicators
 indicatorSchema.statics.calculateCurrentValues = (indicators, callback) ->
@@ -290,66 +282,35 @@ indicatorSchema.statics.calculateCurrentValues = (indicators, callback) ->
   )
 
 indicatorSchema.statics.findWhereIndicatorHasData = (conditions) ->
-  new Promise((resolve, reject) ->
-    Promise.promisify(Indicator.find, Indicator)(
-      conditions
-    ).then((indicators) ->
-      indicatorsWithData = []
+  Promise.promisify(Indicator.find, Indicator)(
+    conditions
+  ).then((indicators) ->
+    indicatorsWithData = []
 
-      addIndicatorIfHasData = (indicator, callback) ->
-        indicator.getIndicatorData((err, data) ->
-          if err?
-            return callback(err)
-          else if data.length > 0
-            indicatorsWithData.push indicator
-          callback()
-        )
+    addIndicatorIfHasData = (indicator, callback) ->
+      indicator.getIndicatorData((err, data) ->
+        if err?
+          return callback(err)
+        else if data.length > 0
+          indicatorsWithData.push indicator
+        callback()
+      )
 
+    new Promise((resolve, reject) ->
       async.each indicators, addIndicatorIfHasData, (err) ->
         if err?
           reject(err)
         else
           resolve(indicatorsWithData)
-
-    ).catch(reject)
-  )
-
-populatePage = (indicator, callback) ->
-  indicator.populatePage().then(->
-    callback()
-  ).fail((err) ->
-    callback(err)
+    )
   )
 
 indicatorSchema.statics.populatePages = (indicators) ->
-  deferred = Q.defer()
-
-  async.each indicators, populatePage, (err) ->
-    if err?
-      deferred.reject(err)
-    else
-      deferred.resolve()
-
-  return deferred.promise
-
-calculateRecency = (indicator, callback) ->
-  indicator.calculateRecencyOfHeadline().then((recency)->
-    indicator.narrativeRecency = recency
-    callback()
-  ).fail((err) ->
-    callback(err)
+  Promise.all(
+    _.map(indicators, (indicator)->
+      indicator.populatePage()
+    )
   )
-
-indicatorSchema.statics.calculateNarrativeRecency = (indicators) ->
-  deferred = Q.defer()
-
-  async.each indicators, calculateRecency, (err) ->
-    if err?
-      deferred.reject(err)
-    else
-      deferred.resolve()
-
-  return deferred.promise
 
 indicatorSchema.statics.convertNestedParametersToAssociationIds = (attributes) ->
   if attributes.theme? and typeof attributes.theme is 'object'

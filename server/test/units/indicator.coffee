@@ -449,9 +449,8 @@ test('#populatePages given an array of indicators, populates their page attribut
   indicator = new Indicator()
   page = new Page()
   sinon.stub(indicator, 'populatePage', ->
-    deferred = Q.defer()
-    deferred.resolve indicator.page = page
-    return deferred.promise
+    indicator.page = page
+    Promise.resolve()
   )
 
   Indicator.populatePages([indicator]).then( ->

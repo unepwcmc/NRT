@@ -28,7 +28,7 @@ module.exports = class ThemePresenter
           indicatorsWithData.push(indicator)
 
         callback(null)
-      ).fail(callback)
+      ).catch(callback)
 
     if @theme.indicators?
       async.each @theme.indicators, indicatorHasData, (err) =>
@@ -50,5 +50,5 @@ module.exports = class ThemePresenter
         ).then( (indicators) ->
           theme.indicators = indicators
           callback()
-        ).fail(callback)
+        ).catch(callback)
     )
