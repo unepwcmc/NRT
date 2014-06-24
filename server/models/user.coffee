@@ -90,8 +90,6 @@ userSchema.methods.isValidPassword = (password) ->
 
   generateHash(password, @salt).then( (hashComponents) =>
     deferred.resolve(hashComponents.hash == @password)
-  ).fail( (err) ->
-    deferred.reject(err)
   )
 
   return deferred.promise
@@ -110,7 +108,7 @@ userSchema.methods.loginFromLocalDb = (password, callback) ->
     else
       return callback(null, false, message: KNOWN_LDAP_ERRORS["InvalidCredentialsError"])
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     console.error err
     return callback(err, false)
   )
