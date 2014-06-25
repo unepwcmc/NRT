@@ -61,8 +61,6 @@ themeSchema.statics.seedData = (seedsPath) ->
     )
   )
 
-
-
 populateThemeIndicators = (theTheme, cb) ->
   theTheme.populateIndicators().then( ->
     cb()
