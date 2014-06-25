@@ -1,0 +1,11 @@
+# Why use this rather than just modifying the model?
+* Handlebars disallows logic, so instead you must pre-build objects in the controller with all needed data
+* Mongoose instances are fussy about modifying attributes
+* Extensive modification of model objects feels "odd" anyway
+
+# What do presenters do?
+* Creates a object clone of given model
+* Populate methods:
+  1. Query the model for data
+  2. Modifies the object clone
+* presenter[modelName] returns the populated object
