@@ -1,3 +1,4 @@
+Promise = require('bluebird')
 assert = require('chai').assert
 sinon = require('sinon')
 Q = require('q')
@@ -49,11 +50,13 @@ test("#populateIndicators populates the indicators for the given array of themes
   theme2 = new Theme()
   theme2Indicator = new Indicator()
 
-  getIndicatorsByThemeStub = sinon.stub(Theme, 'getIndicatorsByTheme',  (themeId, filter, callback) ->
-    if theme1.id is themeId
-      callback(null, [theme1Indicator])
+  getIndicatorsByThemeStub = sinon.stub(Theme::, 'populateIndicators',  (filter) ->
+    if @ is theme1
+      @indicators = [theme1Indicator]
+      Promise.resolve(@)
     else
-      callback(null, [theme2Indicator])
+      @indicators = [theme2Indicator]
+      Promise.resolve(@)
   )
 
   ThemePresenter.populateIndicators([theme1, theme2]).then(->
@@ -78,7 +81,7 @@ test("#populateIndicators populates the indicators for the given array of themes
       getIndicatorsByThemeStub.restore()
       done(err)
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     getIndicatorsByThemeStub.restore()
     done(err)
   )
@@ -87,22 +90,22 @@ test("#populateIndicators populates the indicators for the given array of themes
 test("#populateIndicators passes filters to Theme.getIndicatorsByTheme", (done) ->
   filter = {"dpsir.driver": true}
   theme = new Theme()
-  getIndicatorsByThemeSpy = sinon.spy(Theme, 'getIndicatorsByTheme')
+  populateIndicatorsSpy = sinon.spy(Theme::, 'populateIndicators')
   ThemePresenter.populateIndicators([theme], filter).then(->
     try
-      assert.strictEqual getIndicatorsByThemeSpy.callCount, 1,
-        "Expected Theme.getIndicatorsByTheme to be called once"
+      assert.strictEqual populateIndicatorsSpy.callCount, 1,
+        "Expected Theme.populateIndicatorsSpy to be called once"
 
-      assert.deepEqual getIndicatorsByThemeSpy.firstCall.args[1], filter,
-        "Expected the filter to be passed to Theme.getIndicatorsByTheme as the second argument"
+      assert.deepEqual populateIndicatorsSpy.firstCall.args[0], filter,
+        "Expected the filter to be passed to Theme.populateIndicatorsSpy as the first argument"
 
       done()
     catch err
       done(err)
     finally
-      getIndicatorsByThemeSpy.restore()
-  ).fail((err) ->
-    getIndicatorsByThemeSpy.restore()
+      populateIndicatorsSpy.restore()
+  ).catch((err) ->
+    populateIndicatorsSpy.restore()
     done(err)
   )
 )

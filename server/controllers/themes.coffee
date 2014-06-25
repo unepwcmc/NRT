@@ -56,27 +56,8 @@ exports.index = (req, res) ->
     filters = _.extend(filters, Indicator.CONDITIONS.IS_PRIMARY)
     ThemePresenter.populateIndicators(theThemes, filters)
   ).then(->
-
-    Promise.all(
-      for theme in theThemes
-
-        new ThemePresenter(theme).filterIndicatorsWithData().then(->
-          # For each indicator of said theme
-          Promise.all(
-            for indicator in theme.indicators
-              indicator.populatePage().then(->
-                indicator.populateDescriptionFromPage()
-              )
-          )
-        ).then(->
-          HeadlineService.populateNarrativeRecencyOfIndicators(theme.indicators)
-        )
-    )
-  ).then( ->
-
     Theme.populateDescriptionsFromPages(theThemes)
   ).then(->
-
     ThemePresenter.populateIndicatorRecencyStats(theThemes)
     res.render "themes/index", themes: theThemes, dpsir: dpsirFilter
 

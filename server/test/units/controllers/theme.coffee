@@ -31,8 +31,8 @@ test(".index given no DPSIR parameters it returns all indicators
   )
 
   # Don't filter indicators
-  filterIndicatorsWithDataStub = sinon.stub(ThemePresenter::, 'filterIndicatorsWithData', ->
-    Q.fcall(->)
+  filterIndicatorsWithDataStub = sinon.stub(Indicator, 'findWhereIndicatorHasData', ->
+    Promise.resolve([driverIndicator, pressureIndicator])
   )
 
   Promise.join(
@@ -97,8 +97,8 @@ test(".index given DPSIR parameters excluding everything except drivers,
   )
 
   # Don't filter indicators
-  filterIndicatorsWithDataStub = sinon.stub(ThemePresenter::, 'filterIndicatorsWithData', ->
-    Q.fcall(->)
+  filterIndicatorsWithDataStub = sinon.stub(Indicator, 'findWhereIndicatorHasData', ->
+    Promise.resolve([driverIndicator])
   )
 
   Promise.join(
@@ -127,6 +127,11 @@ test(".index given DPSIR parameters excluding everything except drivers,
           indicator = data.themes[0].indicators[0]
           assert.strictEqual indicator._id.toString(), driverIndicator.id,
             "Expected the returned indicator to be the driver"
+
+          expectedFilters = {theme: theme._id, '$or': ['dpsir.driver': true], primary: true}
+          filterIndicatorsArgs = filterIndicatorsWithDataStub.getCall(0).args
+          assert.deepEqual expectedFilters, filterIndicatorsArgs[0],
+            "Expected findIndicatorWithData to be called with correct filters"
 
           filterIndicatorsWithDataStub.restore()
           done()
@@ -158,7 +163,11 @@ test(".index only returns primary indicators", (done) ->
     dpsir: pressure: true
     primary: false
   )
-  hasDataStub = sinon.stub(Indicator::, 'hasData', -> Q.fcall(->true))
+
+  # Don't filter indicators
+  filterIndicatorsWithDataStub = sinon.stub(Indicator, 'findWhereIndicatorHasData', ->
+    Promise.resolve([primaryIndicator])
+  )
 
   Promise.join(
     Promise.promisify(theme.save, theme)(),
@@ -170,7 +179,7 @@ test(".index only returns primary indicators", (done) ->
 
     stubRes = {
       send: (code, body) ->
-        hasDataStub.restore()
+        filterIndicatorsWithDataStub.restore()
         done(new Error("Expected res.send not to be called, but called with #{code}: #{body}"))
       render: (templateName, data) ->
         try
@@ -184,21 +193,21 @@ test(".index only returns primary indicators", (done) ->
           assert.strictEqual indicator._id.toString(), primaryIndicator.id,
             "Expected the returned indicator to be the primary indicator"
 
-          hasDataStub.restore()
+          filterIndicatorsWithDataStub.restore()
           done()
         catch err
-          hasDataStub.restore()
+          filterIndicatorsWithDataStub.restore()
           done(err)
     }
 
     try
       ThemeController.index(stubReq, stubRes)
     catch
-      hasDataStub.restore()
+      filterIndicatorsWithDataStub.restore()
       done(err)
 
   ).catch( (err) ->
-    hasDataStub.restore()
+    filterIndicatorsWithDataStub.restore()
     done(err)
   )
 )
@@ -212,9 +221,9 @@ test(".index only indicators with data", (done) ->
     theme: theme._id, primary: true
   )
 
-  filterIndicatorsWithDataStub = sinon.stub(ThemePresenter::, 'filterIndicatorsWithData', ->
-    @theme.indicators = [@theme.indicators[0]]
-    Q.fcall(->)
+  # Don't filter indicators
+  filterIndicatorsWithDataStub = sinon.stub(Indicator, 'findWhereIndicatorHasData', ->
+    Promise.resolve([indicator1])
   )
 
   Promise.join(
@@ -264,9 +273,9 @@ test(".index given DPSIR parameters driver:false, the clause should be ignored",
     dpsir: driver: true
   )
 
-  # Stub to prevent filtering of indicators
-  filterIndicatorsWithDataStub = sinon.stub(ThemePresenter::, 'filterIndicatorsWithData', ->
-    Q.fcall(->)
+  # Don't filter indicators
+  filterIndicatorsWithDataStub = sinon.stub(Indicator, 'findWhereIndicatorHasData', ->
+    Promise.resolve([driverIndicator])
   )
 
   Promise.join(
