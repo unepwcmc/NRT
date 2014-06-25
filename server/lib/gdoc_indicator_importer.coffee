@@ -1,9 +1,11 @@
 Promise = require 'bluebird'
 _ = require 'underscore'
+request = require 'request'
 
 GDocWrapper = require('./gdoc_wrapper')
 Indicator = require('../models/indicator').model
 Theme = require('../models/theme').model
+AppConfig = require('../initializers/config')
 
 DEFAULT_INDICATOR_DEFINITION =
   "period": "yearly",
@@ -55,11 +57,11 @@ extractRangesFromWorksheet = (worksheet) ->
   return ranges
 
 module.exports = class GDocIndicatorImporter
-  constructor: (key) ->
+  constructor: (@key) ->
     @indicatorProperties = {
       indicatorationConfig:
         source: 'gdoc'
-        spreadsheetKey: key
+        spreadsheetKey: @key
     }
 
   @import: (key) ->
@@ -106,4 +108,21 @@ module.exports = class GDocIndicatorImporter
         Promise.promisify(indicator.update, indicator)(@indicatorProperties)
       else
         Promise.promisify(Indicator.create, Indicator)(@indicatorProperties)
+    )
+
+  registerChangeCallback: (url) ->
+    new Promise((resolve, reject) =>
+      body = {
+        id: @key
+        type: "web_hook"
+        address: "https://secure.nrt.io/indicators/#{@key}/change_event"
+        token: "instance=#{AppConfig.get("instance_name")}"
+      }
+
+      request.post({
+        url: "https://www.googleapis.com/drive/v2/files/#{@key}/watch"
+        headers:
+          "Authorization": "Bearer #{AppConfig.get('google_oauth_key')}"
+        body: JSON.stringify(body)
+      }, resolve)
     )

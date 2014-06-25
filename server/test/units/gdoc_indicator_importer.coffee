@@ -2,10 +2,12 @@ assert = require('chai').assert
 helpers = require '../helpers'
 sinon = require 'sinon'
 Promise = require 'bluebird'
+request = require 'request'
 
 GDocIndicatorImporter = require '../../lib/gdoc_indicator_importer'
 GDocWrapper = require '../../lib/gdoc_wrapper'
 Indicator = require('../../models/indicator').model
+AppConfig = require('../../initializers/config')
 
 suite('GdocIndicatorImporter')
 
@@ -250,3 +252,61 @@ test('.createOrUpdateIndicator when there is an existing indicator
     done()
   ).catch(done)
 )
+
+test('.registerChangeCallback registers a callback with the google api
+  for the change event, proxying through secure.nrt.io', (done) ->
+  documentKey = "flippers"
+  oAuthKey = "some-random-hash"
+
+  sandbox = sinon.sandbox.create()
+
+  importer = new GDocIndicatorImporter(documentKey)
+
+  sandbox.stub(AppConfig, 'get', (key) ->
+    if key is "google_oauth_key"
+      return oAuthKey
+  )
+
+  postStub = sandbox.stub(request, 'post', (options, callback) ->
+    callback(null)
+  )
+
+  importer.registerChangeCallback().then(->
+    assert.isTrue postStub.calledOnce, "Expected a request to be sent"
+
+    postCall = postStub.getCall(0)
+    postCallOptions = postCall.args[0]
+
+    assert.strictEqual(
+      postCallOptions.url,
+      "https://www.googleapis.com/drive/v2/files/#{documentKey}/watch",
+      "Expected the request to be sent to the google API"
+    )
+
+    assert.strictEqual(
+      postCallOptions.headers.Authorization,
+      "Bearer #{oAuthKey}",
+      "Expected the OAuth token to be sent"
+    )
+
+    expectedBody =
+      id: documentKey,
+      type: "web_hook",
+      address: "https://secure.nrt.io/indicators/#{documentKey}/change_event",
+      token: "instance=#{AppConfig.get("instance_name")}"
+
+    assert.deepEqual(
+      JSON.parse(postCallOptions.body),
+      expectedBody,
+      "Expected the correct body to be sent"
+    )
+
+    done()
+  ).catch(done).finally(->
+    sandbox.restore()
+  )
+
+)
+
+test(".registerChangeCallback throws an appropriate error when the OAuth
+  key isn't specified")
