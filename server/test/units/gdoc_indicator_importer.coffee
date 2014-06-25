@@ -268,7 +268,7 @@ test('.registerChangeCallback registers a callback with the google api
   )
 
   postStub = sandbox.stub(request, 'post', (options, callback) ->
-    callback(null)
+    callback(null, {statusCode: 200})
   )
 
   importer.registerChangeCallback().then(->
@@ -309,4 +309,59 @@ test('.registerChangeCallback registers a callback with the google api
 )
 
 test(".registerChangeCallback throws an appropriate error when the OAuth
-  key isn't specified")
+  key isn't specified", (done) ->
+  importer = new GDocIndicatorImporter('some-key')
+
+  configStub = sinon.stub(AppConfig, 'get', (key) ->
+    if key is "google_oauth_key"
+      return null
+  )
+
+  importer.registerChangeCallback().then(->
+    done(new Error("Expected registerChangeCallback to fail, but it didn't"))
+  ).catch((err)->
+    assert.strictEqual(
+      "To register for Google Sheet changes you must provide a google OAuth bearer token in the  'google_oauth_key' attribute in your application config.",
+      err.message,
+      "Expected the correct message"
+    )
+
+    done()
+  ).finally(->
+    configStub.restore()
+  )
+
+)
+
+test(".registerChangeCallback throws an appropriate error when the google
+  API call throws an error", (done)->
+  sandbox = sinon.sandbox.create()
+
+  importer = new GDocIndicatorImporter("some-key")
+
+  sandbox.stub(AppConfig, 'get', (key) ->
+    if key is "google_oauth_key"
+      return "bear-er"
+  )
+
+  errorStatus = 401
+  errorBody =
+    error: "Not authorized"
+  postStub = sandbox.stub(request, 'post', (options, callback) ->
+    callback(null, {statusCode: errorStatus}, errorBody)
+  )
+
+  importer.registerChangeCallback().then(->
+    done(new Error("Expected registerChangeCallback to fail, but it didn't"))
+  ).catch((err)->
+    assert.strictEqual(
+      "Error registering change callback: #{errorStatus} #{errorBody}",
+      err.message,
+      "Expected the correct message"
+    )
+
+    done()
+  ).finally(->
+    sandbox.restore()
+  )
+)
