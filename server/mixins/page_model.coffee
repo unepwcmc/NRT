@@ -9,7 +9,7 @@ findSectionWithTitle = (page, title) ->
 
 module.exports = {
   statics:
-    populateDescriptionsFromPages: (models, callback) ->
+    populateDescriptionsFromPages: (models) ->
       deferred = Q.defer()
 
       populateDescriptions = (model, callback) ->
