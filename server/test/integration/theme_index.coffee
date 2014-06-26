@@ -51,7 +51,7 @@ test("With a series of themes and indicators, I should see their titles", (done)
 
     done()
 
-  ).fail( (err) ->
+  ).catch( (err) ->
     console.error err
 
     throw new Error(err)
