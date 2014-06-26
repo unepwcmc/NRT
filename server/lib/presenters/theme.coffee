@@ -1,3 +1,4 @@
+Promise = require('bluebird')
 Q = require('q')
 async = require('async')
 
@@ -43,12 +44,6 @@ module.exports = class ThemePresenter
     deferred.promise
 
   @populateIndicators: (themes, filter) ->
-    Q.nfcall(
-      async.each, themes, (theme, callback) ->
-        Q.nfcall(
-          Theme.getIndicatorsByTheme, theme.id, filter
-        ).then( (indicators) ->
-          theme.indicators = indicators
-          callback()
-        ).catch(callback)
+    Promise.all(
+      Promise.map(themes, (theme) -> theme.populateIndicators(filter))
     )

@@ -105,11 +105,14 @@ themeSchema.methods.getIndicators = (callback) ->
   Theme = require('./theme.coffee').model
   Theme.getIndicatorsByTheme(@_id, callback)
 
-themeSchema.methods.populateIndicators = ->
+themeSchema.methods.populateIndicators = (filters) ->
   theIndicators = null
+
+  filters ||= {primary: true}
+  filters = _.extend({theme: @_id}, filters)
+
   Indicator.findWhereIndicatorHasData(
-    theme: @_id
-    primary: true
+    filters
   ).then( (indicators) ->
     theIndicators = indicators
 
