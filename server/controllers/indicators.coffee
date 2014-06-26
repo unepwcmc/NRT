@@ -1,6 +1,7 @@
 _ = require('underscore')
 async = require('async')
 Q = require('q')
+Promise = require('bluebird')
 
 Indicator = require('../models/indicator').model
 Theme = require('../models/theme').model
@@ -8,6 +9,7 @@ HeadlineService = require('../lib/services/headline')
 Permissions = require('../lib/services/permissions')
 IndicatorPresenter = require('../lib/presenters/indicator')
 GDocIndicatorImporter = require('../lib/gdoc_indicator_importer')
+AppConfig = require('../initializers/config')
 
 exports.show = (req, res) ->
   theIndicator = theHeadlines = theNarrativeRecency = theIndicatorObject = null
@@ -116,9 +118,19 @@ exports.new = (req, res) ->
   res.render("indicators/new")
 
 exports.importGdoc = (req, res) ->
+  spreadsheetKey = req.body.spreadsheetKey
+
   GDocIndicatorImporter.import(
-    req.body.spreadsheetKey
+    spreadsheetKey
   ).then( ->
+
+    if AppConfig.get('features').auto_update_google_sheets?
+      importer = new GDocIndicatorImporter(spreadsheetKey)
+      return importer.registerChangeCallback()
+    else
+      return Promise.resolve()
+  ).then( ->
+
     res.send(201, {message: "OK"})
   ).catch((err) ->
     console.error err.stack
