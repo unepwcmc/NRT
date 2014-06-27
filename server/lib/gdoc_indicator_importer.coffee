@@ -128,10 +128,11 @@ module.exports = class GDocIndicatorImporter
         url: "https://www.googleapis.com/drive/v2/files/#{@key}/watch"
         headers:
           "Authorization": "Bearer #{AppConfig.get('google_oauth_key')}"
-        body: JSON.stringify(body)
+        json: body
       }, (err, res, body) ->
         if err?
           return reject(err)
+
         unless res.statusCode is 200
           return reject(new Error(
             "Error registering change callback: #{res.statusCode} #{body}"

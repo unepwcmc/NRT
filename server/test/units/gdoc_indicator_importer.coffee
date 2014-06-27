@@ -289,16 +289,16 @@ test('.registerChangeCallback registers a callback with the google api
       "Expected the OAuth token to be sent"
     )
 
-    expectedBody =
+    expectedJson =
       id: documentKey,
       type: "web_hook",
       address: "https://secure.nrt.io/indicators/#{documentKey}/change_event",
       token: "instance=#{AppConfig.get("instance_name")}"
 
     assert.deepEqual(
-      JSON.parse(postCallOptions.body),
-      expectedBody,
-      "Expected the correct body to be sent"
+      postCallOptions.json,
+      expectedJson,
+      "Expected the correct JSON to be sent"
     )
 
     done()
