@@ -89,3 +89,6 @@ have this, add it to your application config like so:
     "auto_update_google_sheets": true
   }
 ```
+
+##### HTTPS reverse proxying callbacks
+As mentioned above, Google's webhooks api requires the callback URLs to use HTTPS. Rather than aquiring HTTPs certificates for all instances, instead, we have a single reverse proxying running at secure.nrt.io. This proxy receives the callbacks, then sends the webhook notifications to the corresponding instance. The source code for this proxy is at: https://github.com/unepwcmc/NRTGoogleDriveApiProxy
