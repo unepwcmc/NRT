@@ -21,6 +21,9 @@
     <script src="/js/lib/handlebars.js"></script>
     <script src="/js/lib/diorama.js"></script>
     <script src="/js/lib/i18next.min.js"></script>
+
+    <script src="/js/lib/konami.js"></script>
+
     <script src="/js/templates.js"></script>
     <script src="/js/application.js"></script>
 
@@ -168,6 +171,12 @@
         })()
       </script>
     {{/if}}
+
+    <script>
+      (function() {
+        var WCMCTips = new WcmcTipController();
+      })()
+    </script>
 
     <footer>
       <div class="inner">
