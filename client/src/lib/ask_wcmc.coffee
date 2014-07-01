@@ -54,6 +54,7 @@ class window.WcmcTipController
     )
 
   showATip: ->
+    $('#wcmc-tip').remove()
     new WcmcTipView()
 
 ###
