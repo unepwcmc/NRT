@@ -4,21 +4,28 @@ class window.WcmcTipView
     @renderTip(tip)
 
   pickATip: ->
-    debugger
     WCMCTips[getRandomInt(0, WCMCTips.length-1)]
 
   renderTip: (tip) ->
-    html = """
+    html = $("""
       <div id="wcmc-tip">
-        <h1>#{tip[0]}</h1>
-        <p>#{tip[1]}</p>
+        <div class="strip">
+          <img src="/images/staff/#{tip[0]}.jpg"/>
+          <p>#{tip[1]}</p>
+        </div>
+        <a class="button close">Close</a>
       </div>
-    """
-    $('body').append($(html))
+    """)
+    $('body').append(html)
+    html.find('.close').on('click', @removeView)
+
+  removeView: ->
+    $('#wcmc-tip').remove()
+
 
 WCMCTips = [
-  ["Me", "Get back to work"]
-  ["You", "Why this happened?"]
+  ["james", "Get back to work"]
+  ["james", "Why this happened?"]
 ]
 
 class window.WcmcTipController

@@ -1558,3 +1558,35 @@ section.importing-instructions {
   width: 26px;
   height: 26px;
 }
+
+#wcmc-tip {
+
+  overflow: hidden;
+  width: 300px;
+  background-color: white;
+  border: 1px solid #CCC;
+  position: absolute;
+  top: 35%;
+  left: 35%; 
+  padding: 15px;
+
+  .strip {
+    overflow: hidden;
+
+    img {
+      float: left;
+      padding: 10px;
+      width: 113px;
+      height: 113px;
+    }
+    p {
+      float: left;
+      padding: 5px 15px;
+    }
+  }
+
+  .close {
+    float: right;
+    margin-right: 15px;
+  }
+}
