@@ -11,7 +11,7 @@ class window.WcmcTipView
       <div id="wcmc-tip">
         <div class="strip">
           <img src="/images/staff/#{tip[0]}.jpg"/>
-          <p>#{tip[1]}</p>
+          <p>"#{tip[1]}"</p>
         </div>
         <a class="button close">Close</a>
       </div>
@@ -24,13 +24,13 @@ class window.WcmcTipView
 
 
 WCMCTips = [
-  ["adam", "You probably have to many gears"]
+  ["adam", "You probably have too many gears"]
   ["agnieszka", "Limit your work in progress!"]
   ["andrea", "cat-falls-down-stairs.gif"]
   ["blanca", "Surfaces and edges provide visual clues which are grounded in reality"]
   ["craig", "Do what you want, I'm leaving"]
   ["decio", "That pie-chart should probably be 3D"]
-  ["james", "No tips, just a sincere for being such a wonderful team to work with. Best of luck for the future"]
+  ["james", "No tips, just a sincere thank you for being such a wonderful team to work with.<br/> Best of luck for the future"]
   ["miguel", "It's probably a projection issue"]
   ["simao", "Got, Got, Need, Got..."]
   ["stuart", "<i>Quietly gets on with his work</i>"]
