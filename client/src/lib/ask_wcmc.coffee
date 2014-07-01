@@ -24,8 +24,17 @@ class window.WcmcTipView
 
 
 WCMCTips = [
-  ["james", "Get back to work"]
-  ["james", "Why this happened?"]
+  ["adam", "You probably have to many gears"]
+  ["agnieszka", "Limit your work in progress!"]
+  ["andrea", "cat-falls-down-stairs.gif"]
+  ["blanca", "Surfaces and edges provide visual clues which are grounded in reality"]
+  ["craig", "Do what you want, I'm leaving"]
+  ["decio", "That pie-chart should probably be 3D"]
+  ["james", "No tips, just a sincere for being such a wonderful team to work with. Best of luck for the future"]
+  ["miguel", "It's probably a projection issue"]
+  ["simao", "Got, Got, Need, Got..."]
+  ["stuart", "<i>Quietly gets on with his work</i>"]
+  ["tim", "Have you tried nextifying your brand proposition?"]
 ]
 
 class window.WcmcTipController
