@@ -35,6 +35,8 @@ WCMCTips = [
   ["simao", "Got, Got, Need, Got..."]
   ["stuart", "<i>Quietly gets on with his work</i>"]
   ["tim", "Have you tried nextifying your brand proposition?"]
+  ["jonathan", "If you skipped the tests, you'd be done by now"]
+  ["clive", "¿Habla inglés?"]
 ]
 
 class window.WcmcTipController
