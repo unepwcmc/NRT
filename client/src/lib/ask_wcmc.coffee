@@ -28,7 +28,7 @@ WCMCTips = [
   ["agnieszka", "Limit your work in progress!"]
   ["andrea", "cat-falls-down-stairs.gif"]
   ["blanca", "Surfaces and edges provide visual clues which are grounded in reality"]
-  ["craig", "Do what you want, I'm leaving"]
+  ["craig", "I could make you one, out of scaffolding"]
   ["decio", "That pie-chart should probably be 3D"]
   ["james", "No tips, just a sincere thank you for being such a wonderful team to work with.<br/> Best of luck for the future"]
   ["miguel", "It's probably a projection issue"]
